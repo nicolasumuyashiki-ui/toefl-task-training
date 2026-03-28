@@ -352,6 +352,10 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
+    var ca={'1':'B','2':'B','3':'B','4':'B','5':'B','6':'B'};
+    var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
+    var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
+    sessionStorage.setItem('training_score_academic_p1',JSON.stringify({correct:sc,total:6}));
     window.location.href = 'practice-1-answers.html';
     return;
   }

@@ -175,7 +175,16 @@ function goNext(){
   saveCurrentInputs();
   saveSetToSession(currentSet);
   if(currentSet<2){loadSet(currentSet+1);window.scrollTo(0,0);}
-  else{window.location.href='practice-1-answers.html';}
+  else{
+    /* Save combined score for menu badge */
+    var totalCorrect=0,totalQ=0;
+    for(var si=0;si<3;si++){
+      var raw=sessionStorage.getItem('ctw_p1_answers_'+(si+1));
+      if(raw){var d=JSON.parse(raw);totalCorrect+=d.score;totalQ+=d.total;}
+    }
+    if(totalQ>0)sessionStorage.setItem('training_score_ctw_p1',JSON.stringify({correct:totalCorrect,total:totalQ}));
+    window.location.href='practice-1-answers.html';
+  }
 }
 
 function saveSetToSession(idx){
