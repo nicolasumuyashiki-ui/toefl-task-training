@@ -46,6 +46,17 @@ body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#
 .tip-banner-text{font-size:.82em;color:var(--accent-dark);line-height:1.6}
 .tip-banner-text strong{font-weight:800}
 .audio-badge{display:inline-block;background:#fef3c7;color:#92400e;font-size:.65em;font-weight:700;padding:2px 8px;border-radius:6px;margin-left:8px}
+.practice-btn{position:relative}
+.score-badge{position:absolute;top:-6px;right:-6px;display:flex;align-items:center;gap:3px;padding:2px 7px;border-radius:8px;font-size:.58em;font-weight:800;line-height:1;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.score-badge.perfect{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+.score-badge.great{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+.score-badge.good{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.score-fraction{font-size:.65em;font-weight:700;color:#8898a8;margin-top:2px}
+.score-gauge{width:100%;height:3px;background:#e8ecf0;border-radius:2px;margin-top:3px;overflow:hidden}
+.score-gauge-fill{height:100%;border-radius:2px;transition:width .3s}
+.score-gauge-fill.perfect{background:#22c55e}
+.score-gauge-fill.great{background:#3b82f6}
+.score-gauge-fill.good{background:#f59e0b}
 </style>
 </head>
 <body>
@@ -102,7 +113,6 @@ body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#
     <div class="practice-btn locked"><span class="practice-num">9</span><span class="practice-label">Practice</span></div>
     <div class="practice-btn locked"><span class="practice-num">10</span><span class="practice-label">Practice</span></div>
   </div>
-  <a class="answers-link" href="lcr/practice-1-answers.html">Practice 1 解答・解説 &#8250;</a>
 </div>
 
 <!-- Conversation -->
@@ -126,7 +136,6 @@ body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#
     <div class="practice-btn locked"><span class="practice-num">9</span><span class="practice-label">Practice</span></div>
     <div class="practice-btn locked"><span class="practice-num">10</span><span class="practice-label">Practice</span></div>
   </div>
-  <a class="answers-link" href="conv/practice-1-answers.html">Practice 1 解答・解説 &#8250;</a>
 </div>
 
 <!-- Announcement -->
@@ -150,7 +159,6 @@ body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#
     <div class="practice-btn locked"><span class="practice-num">9</span><span class="practice-label">Practice</span></div>
     <div class="practice-btn locked"><span class="practice-num">10</span><span class="practice-label">Practice</span></div>
   </div>
-  <a class="answers-link" href="announce/practice-1-answers.html">Practice 1 解答・解説 &#8250;</a>
 </div>
 
 <!-- Academic Talk -->
@@ -174,7 +182,6 @@ body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#
     <div class="practice-btn locked"><span class="practice-num">9</span><span class="practice-label">Practice</span></div>
     <div class="practice-btn locked"><span class="practice-num">10</span><span class="practice-label">Practice</span></div>
   </div>
-  <a class="answers-link" href="talk/practice-1-answers.html">Practice 1 解答・解説 &#8250;</a>
 </div>
 
 <script src="../js/auth.js"></script>
@@ -183,6 +190,45 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 var u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
 if(u.userName){document.getElementById('userName').textContent=u.userName;document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();}
 function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='../index.html';}
+
+(function(){
+  var tasks=['lcr','conv','announce','talk'];
+  tasks.forEach(function(task){
+    for(var i=1;i<=10;i++){
+      var key='training_score_'+task+'_p'+i;
+      var raw=sessionStorage.getItem(key);
+      if(!raw) continue;
+      try{
+        var d=JSON.parse(raw);
+        if(!d||!d.total) continue;
+        var pct=Math.round(d.correct/d.total*100);
+        var grade=pct===100?'perfect':pct>=80?'great':'good';
+        var label=pct===100?'Perfect!':pct>=80?'Great':'Good';
+        var icon=pct===100?'\u25ce':pct>=80?'\u25ce':'\u25b3';
+        var section=document.querySelectorAll('.task-section')[tasks.indexOf(task)];
+        if(!section) continue;
+        var btns=section.querySelectorAll('.practice-btn');
+        var btn=btns[i-1];
+        if(!btn||btn.classList.contains('locked')) continue;
+        var badge=document.createElement('span');
+        badge.className='score-badge '+grade;
+        badge.textContent=label;
+        btn.appendChild(badge);
+        var frac=document.createElement('span');
+        frac.className='score-fraction';
+        frac.textContent=icon+' '+d.correct+'/'+d.total;
+        btn.appendChild(frac);
+        var gauge=document.createElement('div');
+        gauge.className='score-gauge';
+        var fill=document.createElement('div');
+        fill.className='score-gauge-fill '+grade;
+        fill.style.width=pct+'%';
+        gauge.appendChild(fill);
+        btn.appendChild(gauge);
+      }catch(e){}
+    }
+  });
+})();
 </script>
 </body>
 </html>
