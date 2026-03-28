@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build a Sentence — 解答解説 | Practice 1</title>
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px}
+.container{max-width:880px;margin:0 auto;padding:0 20px 40px}
+.tips-card{background:#fff;border-left:4px solid #4a90d9;margin:20px 0;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tips-card h2{font-size:1em;color:#4a90d9;margin-bottom:12px}
+.step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.step-grid{grid-template-columns:1fr}}
+.step{background:#ebf4ff;border-radius:8px;padding:14px;text-align:center}
+.step-num{display:inline-block;background:#4a90d9;color:#fff;width:28px;height:28px;line-height:28px;border-radius:50%;font-size:.8em;font-weight:700;margin-bottom:6px}
+.step h4{font-size:.85em;margin-bottom:4px}
+.step p{font-size:.75em;color:#4a5568}
+
+.patterns-card{background:#fff;border-left:4px solid #81d4d4;margin:20px 0;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.patterns-card h2{font-size:1em;color:#2b6cb0;margin-bottom:12px}
+.pattern-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:600px){.pattern-grid{grid-template-columns:1fr}}
+.pattern{background:#f0fff4;border-radius:8px;padding:12px;font-size:.82em}
+.pattern h5{color:#276749;margin-bottom:4px}
+.pattern p{color:#4a5568}
+
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:14px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid #edf2f7}
+.q-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}
+.q-num.wrong{background:#e53e3e}
+.q-num.default{background:#4a90d9}
+.q-prompt{font-size:.88em;color:#718096;flex:1;font-style:italic}
+.q-body{padding:14px 18px}
+.q-sentence{font-size:.92em;font-weight:600;color:#2d3748;margin-bottom:6px}
+.q-grammar{font-size:.8em;color:#718096;background:#f7fafc;padding:8px 12px;border-radius:6px;border-left:3px solid #4a90d9}
+.q-user{font-size:.82em;margin-bottom:6px;padding:6px 10px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.nav-bottom{text-align:center;padding:24px 0}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;text-decoration:none;margin:4px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔤 Build a Sentence — 解答解説</h1>
+  <p>Practice 1 | 16問</p>
+</div>
+
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
+</div>
+
+<div class="container">
+
+<div class="tips-card">
+  <h2>💡 Build a Sentence 攻略 3ステップ</h2>
+  <div class="step-grid">
+    <div class="step"><div class="step-num">1</div><h4>主語と動詞を見つける</h4><p>「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</p></div>
+    <div class="step"><div class="step-num">2</div><h4>骨格を作る</h4><p>S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</p></div>
+    <div class="step"><div class="step-num">3</div><h4>残りを配置</h4><p>修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</p></div>
+  </div>
+</div>
+
+<div class="patterns-card">
+  <h2>📐 今回の語順パターン</h2>
+  <div class="pattern-grid">
+    <div class="pattern"><h5>🔹 Wh疑問文への応答</h5><p>Q12「How about ~?」のように提案文もWh系。主語+動詞で返答を組み立てる。</p></div>
+    <div class="pattern"><h5>🔹 間接疑問文</h5><p>Q9「where I can」Q13「how well」のように、wh節内は平叙文語順（S+V）になる。</p></div>
+    <div class="pattern"><h5>🔹 関係代名詞（主格/目的格）</h5><p>Q5「in a way that is easy」Q12「a book that is related to」— 主格thatの後はすぐ動詞。</p></div>
+    <div class="pattern"><h5>🔹 It is + 形容詞 + to不定詞 / 仮定法</h5><p>Q13「It depends on ~」Q16「I would talk to ~」— 仮定法wouldは丁寧・仮定を表す。</p></div>
+  </div>
+</div>
+
+<div id="qList"></div>
+
+</div>
+
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-1.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
+</div>
+
+<script>
+const answers=[
+{id:1,prompt:"What time does the library close tonight?",sentence:"I think it closes at nine o'clock.",grammar:"SVO構文: I think (that) + S + V。間接的に答えるパターン。前置詞 at + 時刻。"},
+{id:2,prompt:"Have you finished the assignment for tomorrow?",sentence:"No, I have not started it yet.",grammar:"現在完了の否定: have not + Vpp。yet は否定文の文末に置く。"},
+{id:3,prompt:"Why did you choose to study psychology?",sentence:"I have always been interested in how people think.",grammar:"現在完了 + 間接疑問文: have always been + 形容詞。interested in + wh節（平叙文語順）。"},
+{id:4,prompt:"Do you know where the science building is?",sentence:"It is the tall building right behind the cafeteria.",grammar:"SVC構文: It is + 名詞句。場所の前置詞句 right behind ~ で修飾。"},
+{id:5,prompt:"What do you think about the new professor?",sentence:"She explains difficult concepts in a way that is easy to understand.",grammar:"関係代名詞 that（主格）: a way that is easy to understand。SVOC的な構造。"},
+{id:6,prompt:"Can I borrow your notes from last week?",sentence:"Sure, but I need them back by Friday.",grammar:"等位接続詞 but: 承諾＋条件。by + 期限 =「〜までに」。"},
+{id:7,prompt:"How did you do on the midterm exam?",sentence:"I did much better than I had expected.",grammar:"比較級 much better than ~。過去完了 had expected で「期待していたより」。"},
+{id:8,prompt:"Are you going to the study group tonight?",sentence:"Actually, I was planning to study on my own at the library.",grammar:"過去進行形 was planning to ~: 予定を述べる。on my own =「一人で」。"},
+{id:9,prompt:"What kind of job are you looking for after graduation?",sentence:"I would like to find a job where I can use my language skills.",grammar:"would like to + V: 丁寧な希望表現。関係副詞 where で場所的修飾。"},
+{id:10,prompt:"Did you hear that the field trip was canceled?",sentence:"Yes, that is really disappointing because I was looking forward to it.",grammar:"because節（理由）: 主節 + because + 理由節。look forward to + 名詞/動名詞。"},
+{id:11,prompt:"Why didn't you sign up for the workshop?",sentence:"I did not know about it until the deadline had passed.",grammar:"否定文 + until: 「〜するまで知らなかった」。過去完了 had passed で時制の前後関係を明示。"},
+{id:12,prompt:"What should we get the professor as a thank-you gift?",sentence:"How about a book that is related to her research?",grammar:"提案表現 How about ~? 関係代名詞 that（主格）+ be related to ~。"},
+{id:13,prompt:"Do you think online classes are better than in-person classes?",sentence:"It depends on the subject and how well the professor uses technology.",grammar:"It depends on ~: 「〜による」。間接疑問文 how well + S + V（平叙文語順）。"},
+{id:14,prompt:"Could you tell me what the homework is for tomorrow?",sentence:"We need to read and summarize chapter five.",grammar:"等位接続詞 and: read and summarize（2つの動詞を並列）。need to + V。"},
+{id:15,prompt:"How do you manage your time between work and school?",sentence:"I make a schedule every week so that I do not fall behind.",grammar:"目的の接続詞 so that: 「〜するために」。fall behind =「遅れをとる」。"},
+{id:16,prompt:"What would you do if you failed the final exam?",sentence:"I would talk to the professor about what I could do to improve my grade.",grammar:"仮定法 would + V: 仮定の状況への回答。間接疑問文 what I could do。to不定詞で目的を表す。"}
+];
+
+const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers')||'null');
+let score=0;
+
+if(stored){
+  score=stored.score||0;
+  document.getElementById('scoreBig').textContent=score+' / '+stored.total;
+  document.getElementById('scoreBar').style.width=(score/stored.total*100)+'%';
+  const pct=Math.round(score/stored.total*100);
+  document.getElementById('scoreMsg').textContent=pct+'% 正答率'+(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');
+}
+
+let html='';
+answers.forEach((a,i)=>{
+  html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"</div></div>'
+    +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
+    +'<div class="q-grammar">📝 '+a.grammar+'</div></div></div>';
+});
+document.getElementById('qList').innerHTML=html;
+</script>
+</body>
+</html>

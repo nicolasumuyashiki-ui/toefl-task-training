@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading — TOEFL iBT タスク別トレーニング</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3b82f6;--accent-bg:#eff6ff;--accent-light:#bfdbfe}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748}
+.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:10px}
+.header-logo{font-size:.72em;font-weight:800;color:#2563eb;letter-spacing:.1em;text-transform:uppercase}
+.header-title{font-size:.95em;font-weight:700;color:#2d3748}
+.header-right{display:flex;align-items:center;gap:14px}
+.user-pill{display:flex;align-items:center;gap:6px;background:var(--accent-bg);padding:6px 14px;border-radius:20px;font-size:.8em;font-weight:600;color:var(--accent)}
+.user-pill .avatar{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.65em;font-weight:800}
+.btn-logout{background:none;border:1px solid #dfe3e8;border-radius:8px;padding:5px 12px;font-size:.75em;font-weight:600;color:#8898a8;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-logout:hover{background:#f9fafb;color:#5a6878}
+.breadcrumb{padding:12px 24px;font-size:.8em;color:#8898a8}
+.breadcrumb a{color:var(--accent);text-decoration:none;font-weight:600}
+.breadcrumb a:hover{text-decoration:underline}
+.page-title{padding:0 24px 24px;max-width:900px;margin:0 auto}
+.page-title h1{font-size:1.4em;font-weight:800;color:#2d3748;margin-bottom:4px}
+.page-title p{font-size:.85em;color:#8898a8}
+.task-section{max-width:900px;margin:0 auto 28px;padding:0 24px}
+.task-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;cursor:pointer}
+.task-icon{width:40px;height:40px;border-radius:10px;background:var(--accent-bg);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.1em;flex-shrink:0}
+.task-name{font-size:1em;font-weight:800;color:#2d3748}
+.task-subtitle{font-size:.75em;color:#8898a8;font-weight:600}
+.practice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:8px}
+@media(max-width:640px){.practice-grid{grid-template-columns:repeat(3,1fr)}}
+.practice-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 8px;background:#fff;border:1.5px solid #e8ecf0;border-radius:12px;cursor:pointer;transition:all .2s;text-decoration:none;color:#2d3748}
+.practice-btn:hover{border-color:var(--accent-light);background:var(--accent-bg);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.practice-btn.locked{opacity:.4;cursor:not-allowed;pointer-events:none}
+.practice-num{font-size:1.1em;font-weight:800;color:var(--accent)}
+.practice-label{font-size:.68em;font-weight:600;color:#8898a8}
+.practice-btn.locked .practice-num{color:#c0c8d4}
+.answers-link{font-size:.75em;color:var(--accent);font-weight:600;text-decoration:none;margin-left:52px}
+.answers-link:hover{text-decoration:underline}
+.tip-banner{max-width:900px;margin:10px auto 30px;padding:0 24px}
+.tip-banner-inner{background:var(--accent-bg);border:1px solid var(--accent-light);border-radius:12px;padding:16px 20px;display:flex;align-items:flex-start;gap:12px}
+.tip-banner-icon{font-size:1.2em;flex-shrink:0;margin-top:2px}
+.tip-banner-text{font-size:.82em;color:#1e40af;line-height:1.6}
+.tip-banner-text strong{font-weight:800}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-left">
+    <span class="header-logo">TCK Workshop</span>
+    <span class="header-title">タスク別トレーニング</span>
+  </div>
+  <div class="header-right">
+    <div class="user-pill">
+      <span class="avatar" id="avatarInit">?</span>
+      <span id="userName">---</span>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">ログアウト</button>
+  </div>
+</div>
+
+<div class="breadcrumb">
+  <a href="../menu.html">&#8592; ホーム</a> &gt; Reading
+</div>
+
+<div class="page-title">
+  <h1>&#128214; Reading 攻略</h1>
+  <p>3つのタスクタイプ &#215; Practice 1〜10</p>
+</div>
+
+<div class="tip-banner">
+  <div class="tip-banner-inner">
+    <span class="tip-banner-icon">&#128161;</span>
+    <div class="tip-banner-text">
+      <strong>Reading攻略の鉄則：</strong>前半（ルーティングモジュール）は「速さ」より「正確さ」を優先。品詞の特定 &#8594; 文脈推測 &#8594; パラフレーズ発見の流れを身につけよう。
+    </div>
+  </div>
+</div>
+
+<!-- CTW -->
+<div class="task-section">
+  <div class="task-header">
+    <div class="task-icon">&#9999;&#65039;</div>
+    <div>
+      <div class="task-name">Complete the Words</div>
+      <div class="task-subtitle">空欄の文字を入力して単語を完成させる（各3問）</div>
+    </div>
+  </div>
+  <div class="practice-grid">
+    <a class="practice-btn" href="ctw/practice-1.html"><span class="practice-num">1</span><span class="practice-label">Practice</span></a>
+    <div class="practice-btn locked"><span class="practice-num">2</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">3</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">4</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">5</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">6</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">7</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">8</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">9</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">10</span><span class="practice-label">Practice</span></div>
+  </div>
+  <a class="answers-link" href="ctw/practice-1-answers.html">Practice 1 解答・解説 &#8250;</a>
+</div>
+
+<!-- RDL -->
+<div class="task-section">
+  <div class="task-header">
+    <div class="task-icon">&#128231;</div>
+    <div>
+      <div class="task-name">Read in Daily Life</div>
+      <div class="task-subtitle">メール・通知など日常文書の読解（各2問）</div>
+    </div>
+  </div>
+  <div class="practice-grid">
+    <a class="practice-btn" href="rdl/practice-1.html"><span class="practice-num">1</span><span class="practice-label">Practice</span></a>
+    <div class="practice-btn locked"><span class="practice-num">2</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">3</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">4</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">5</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">6</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">7</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">8</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">9</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">10</span><span class="practice-label">Practice</span></div>
+  </div>
+  <a class="answers-link" href="rdl/practice-1-answers.html">Practice 1 解答・解説 &#8250;</a>
+</div>
+
+<!-- Academic Passage -->
+<div class="task-section">
+  <div class="task-header">
+    <div class="task-icon">&#128218;</div>
+    <div>
+      <div class="task-name">Read an Academic Passage</div>
+      <div class="task-subtitle">学術的な長文の読解（各2問）</div>
+    </div>
+  </div>
+  <div class="practice-grid">
+    <a class="practice-btn" href="academic/practice-1.html"><span class="practice-num">1</span><span class="practice-label">Practice</span></a>
+    <div class="practice-btn locked"><span class="practice-num">2</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">3</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">4</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">5</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">6</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">7</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">8</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">9</span><span class="practice-label">Practice</span></div>
+    <div class="practice-btn locked"><span class="practice-num">10</span><span class="practice-label">Practice</span></div>
+  </div>
+  <a class="answers-link" href="academic/practice-1-answers.html">Practice 1 解答・解説 &#8250;</a>
+</div>
+
+<script src="../js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+var u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
+if(u.userName){document.getElementById('userName').textContent=u.userName;document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();}
+function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='../index.html';}
+</script>
+</body>
+</html>

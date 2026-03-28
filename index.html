@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOEFL iBT タスク別トレーニング — ログイン</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#f0f4f8;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#2d3748;padding:20px}
+.card{background:#fff;border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,.07);padding:44px 38px 36px;width:100%;max-width:400px;text-align:center;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#2563eb,#3b82f6,#60a5fa)}
+.logo{font-size:.75em;font-weight:800;color:#2563eb;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+h1{font-size:1.25em;font-weight:800;color:#2d3748;margin-bottom:2px}
+.sub{font-size:.82em;color:#8898a8;margin-bottom:28px}
+.field{text-align:left;margin-bottom:16px}
+.field label{display:block;font-size:.78em;font-weight:700;color:#5a6878;margin-bottom:5px;letter-spacing:.02em}
+.field input{width:100%;padding:11px 14px;border:1.5px solid #dfe6ed;border-radius:10px;font-size:.9em;font-family:inherit;color:#2d3748;transition:all .2s;background:#fafbfc}
+.field input:focus{outline:none;border-color:#2563eb;background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.08)}
+.field .hint{font-size:.7em;color:#a0aec0;margin-top:3px}
+.btn{width:100%;padding:13px;border:none;border-radius:10px;font-size:.95em;font-weight:700;font-family:inherit;cursor:pointer;transition:all .2s;position:relative}
+.btn-primary{background:#2563eb;color:#fff;margin-top:6px}
+.btn-primary:hover{background:#1d4ed8;transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,.25)}
+.btn-primary:disabled{background:#93c5fd;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-outline{background:#fff;color:#2563eb;border:1.5px solid #2563eb;margin-top:6px}
+.btn-outline:hover{background:#eff6ff}
+.msg{font-size:.82em;margin-top:12px;min-height:1.2em}
+.msg.error{color:#d94f4f}
+.msg.success{color:#2563eb}
+.divider{margin:22px 0 18px;display:flex;align-items:center;gap:12px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:#e8edf2}
+.divider span{font-size:.72em;color:#a0aec0;font-weight:600;white-space:nowrap}
+.links{margin-top:14px;font-size:.8em}
+.links a{color:#2563eb;text-decoration:none;font-weight:600;transition:color .2s}
+.links a:hover{color:#1d4ed8;text-decoration:underline}
+.spinner{display:none;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.view{display:none}.view.active{display:block}
+.back-link{display:inline-flex;align-items:center;gap:4px;font-size:.8em;color:#8898a8;font-weight:600;cursor:pointer;margin-bottom:16px;transition:color .2s;background:none;border:none;font-family:inherit}
+.back-link:hover{color:#2563eb}
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">TCK Workshop</div>
+  <h1>TOEFL iBT タスク別トレーニング</h1>
+  <p class="sub">Practice Platform</p>
+
+  <!-- ===== LOGIN VIEW ===== -->
+  <div class="view active" id="viewLogin">
+    <div class="field">
+      <label>ID</label>
+      <input type="text" id="loginId" placeholder="IDを入力" autocomplete="username">
+    </div>
+    <div class="field">
+      <label>パスワード</label>
+      <input type="password" id="loginPass" placeholder="パスワードを入力" autocomplete="current-password">
+    </div>
+    <button class="btn btn-primary" id="btnLogin" onclick="doLogin()">
+      <span class="btn-text">ログイン</span>
+      <div class="spinner" id="spinLogin"></div>
+    </button>
+    <div class="msg error" id="errLogin"></div>
+
+    <div class="divider"><span>はじめての方は</span></div>
+    <button class="btn btn-outline" onclick="showView('viewRegister')">初回ログインはこちら（アカウント作成）</button>
+
+    <div class="links" style="margin-top:16px">
+      <a href="#" onclick="showView('viewRecover');return false;">パスワードを忘れた方</a>
+    </div>
+  </div>
+
+  <!-- ===== REGISTER VIEW ===== -->
+  <div class="view" id="viewRegister">
+    <button class="back-link" onclick="showView('viewLogin')">&#8592; ログインに戻る</button>
+    <p style="font-size:.88em;font-weight:700;color:#2d3748;margin-bottom:18px;text-align:left">アカウントを作成</p>
+    <div class="field">
+      <label>お名前</label>
+      <input type="text" id="regName" placeholder="例：山田太郎">
+    </div>
+    <div class="field">
+      <label>ID</label>
+      <input type="text" id="regId" placeholder="半角英数字で入力" autocomplete="username">
+      <div class="hint">3〜20文字（半角英数字・アンダースコア）</div>
+    </div>
+    <div class="field">
+      <label>パスワード</label>
+      <input type="password" id="regPass" placeholder="4文字以上" autocomplete="new-password">
+    </div>
+    <div class="field">
+      <label>メールアドレス</label>
+      <input type="email" id="regEmail" placeholder="example@email.com" autocomplete="email">
+    </div>
+    <button class="btn btn-primary" id="btnRegister" onclick="doRegister()">
+      <span class="btn-text">登録してスタート</span>
+      <div class="spinner" id="spinReg"></div>
+    </button>
+    <div class="msg error" id="errReg"></div>
+    <div class="msg success" id="succReg"></div>
+  </div>
+
+  <!-- ===== RECOVER VIEW ===== -->
+  <div class="view" id="viewRecover">
+    <button class="back-link" onclick="showView('viewLogin')">&#8592; ログインに戻る</button>
+    <p style="font-size:.88em;font-weight:700;color:#2d3748;margin-bottom:6px;text-align:left">パスワードの確認</p>
+    <p style="font-size:.78em;color:#8898a8;margin-bottom:18px;text-align:left">登録時のメールアドレスにID・パスワードを送信します。</p>
+    <div class="field">
+      <label>メールアドレス</label>
+      <input type="email" id="recoverEmail" placeholder="登録したメールアドレス" autocomplete="email">
+    </div>
+    <button class="btn btn-primary" id="btnRecover" onclick="doRecover()">
+      <span class="btn-text">送信する</span>
+      <div class="spinner" id="spinRecover"></div>
+    </button>
+    <div class="msg error" id="errRecover"></div>
+    <div class="msg success" id="succRecover"></div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+function showView(id) {
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.msg').forEach(function(m){ m.textContent=''; });
+}
+function setLoading(btnId, spinId, on) {
+  var b=document.getElementById(btnId), s=document.getElementById(spinId), t=b.querySelector('.btn-text');
+  b.disabled=on; t.style.display=on?'none':''; s.style.display=on?'inline-block':'none';
+}
+function saveAndGo(res) {
+  sessionStorage.setItem('kickstart_user', JSON.stringify({userId:res.userId,userName:res.userName}));
+  window.location.href='menu.html';
+}
+function doLogin() {
+  var id=document.getElementById('loginId').value.trim(), pass=document.getElementById('loginPass').value.trim(), err=document.getElementById('errLogin');
+  err.textContent='';
+  if(!id||!pass){err.textContent='IDとパスワードを入力してください';return;}
+  setLoading('btnLogin','spinLogin',true);
+  Api.login(id,pass).then(function(r){
+    if(r.success){saveAndGo(r);}
+    else{err.textContent=r.error||'ログインに失敗しました';setLoading('btnLogin','spinLogin',false);}
+  }).catch(function(){err.textContent='通信エラーが発生しました';setLoading('btnLogin','spinLogin',false);});
+}
+function doRegister() {
+  var name=document.getElementById('regName').value.trim(), id=document.getElementById('regId').value.trim(),
+      pass=document.getElementById('regPass').value.trim(), email=document.getElementById('regEmail').value.trim(),
+      err=document.getElementById('errReg'), succ=document.getElementById('succReg');
+  err.textContent=''; succ.textContent='';
+  if(!name||!id||!pass||!email){err.textContent='すべての項目を入力してください';return;}
+  setLoading('btnRegister','spinReg',true);
+  Api.register(id,pass,name,email).then(function(r){
+    if(r.success){succ.textContent='登録完了！';setTimeout(function(){saveAndGo(r);},400);}
+    else{err.textContent=r.error||'登録に失敗しました';setLoading('btnRegister','spinReg',false);}
+  }).catch(function(){err.textContent='通信エラーが発生しました';setLoading('btnRegister','spinReg',false);});
+}
+function doRecover() {
+  var email=document.getElementById('recoverEmail').value.trim(),
+      err=document.getElementById('errRecover'), succ=document.getElementById('succRecover');
+  err.textContent=''; succ.textContent='';
+  if(!email){err.textContent='メールアドレスを入力してください';return;}
+  setLoading('btnRecover','spinRecover',true);
+  Api.recover(email).then(function(r){
+    setLoading('btnRecover','spinRecover',false);
+    if(r.success){succ.textContent=r.message;}
+    else{err.textContent=r.error||'送信に失敗しました';}
+  }).catch(function(){err.textContent='通信エラーが発生しました';setLoading('btnRecover','spinRecover',false);});
+}
+document.getElementById('loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+document.getElementById('regPass').addEventListener('keydown',function(e){if(e.key==='Enter')doRegister();});
+document.getElementById('recoverEmail').addEventListener('keydown',function(e){if(e.key==='Enter')doRecover();});
+</script>
+</body>
+</html>

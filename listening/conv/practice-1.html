@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen to a Conversation — Practice 1</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
+.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px}
+.header strong{font-size:.95em;color:#2d3748}
+.container{max-width:800px;margin:0 auto;padding:30px 24px 80px}
+.audio-pending-banner{background:#fffbeb;border:2px dashed #fde68a;border-radius:16px;padding:40px 30px;margin-bottom:30px;text-align:center}
+.audio-pending-banner h2{font-size:1.2em;font-weight:800;color:#92400e;margin-bottom:12px}
+.audio-pending-banner p{font-size:.9em;color:#b45309;line-height:1.6;margin-bottom:8px}
+.conv-section{background:#fff;border:1px solid #e8ecf0;border-radius:12px;padding:24px;margin-bottom:24px}
+.conv-section h3{font-size:1em;font-weight:800;color:#2d3748;margin-bottom:6px}
+.conv-section .setting{font-size:.82em;color:#8898a8;margin-bottom:16px}
+.turn{padding:8px 0;font-size:.88em;border-bottom:1px solid #f0f2f5}
+.turn:last-child{border-bottom:none}
+.turn .speaker{font-weight:700;color:#f59e0b;margin-right:6px}
+.q-block{background:#f9fafb;border:1px solid #e8ecf0;border-radius:10px;padding:16px;margin-top:16px}
+.q-block h4{font-size:.9em;font-weight:700;margin-bottom:10px}
+.q-block .opt{padding:6px 0;font-size:.85em}
+.q-block .opt-letter{font-weight:800;color:#f59e0b;margin-right:6px}
+.footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.footer a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
+.footer a:hover{color:#2d3748}
+.btn-next{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#2d3748;text-decoration:none}
+.btn-next:hover{background:#1a202c}
+</style>
+</head>
+<body>
+<div class="header"><strong>Listen to a Conversation — Practice 1</strong></div>
+
+<div class="container">
+<div class="audio-pending-banner">
+  <h2>&#128266; 音声準備中</h2>
+  <p>音声ファイルは現在作成中です。以下にスクリプトと設問を掲載しています。</p>
+</div>
+
+<!-- Conversation 1 -->
+<div class="conv-section">
+  <h3>Conversation 1</h3>
+  <div class="setting">Setting: University IT Help Desk — Student (female) + IT Staff (male)</div>
+  <div class="turn"><span class="speaker">Student:</span> Hi, I'm having trouble connecting to the campus Wi-Fi on my laptop. It was working fine yesterday.</div>
+  <div class="turn"><span class="speaker">Staff:</span> I see. Have you tried restarting your laptop? Sometimes that clears up connection issues.</div>
+  <div class="turn"><span class="speaker">Student:</span> Yeah, I did that already, but it still won't connect. It keeps saying "authentication failed."</div>
+  <div class="turn"><span class="speaker">Staff:</span> That usually means your network password has expired. We reset all student passwords at the beginning of each month for security purposes.</div>
+  <div class="turn"><span class="speaker">Student:</span> Oh, I didn't know that. How do I set a new one?</div>
+  <div class="turn"><span class="speaker">Staff:</span> You can reset it through the student portal, or I can do it for you right here. You'll just need your student ID.</div>
+  <div class="turn"><span class="speaker">Student:</span> That would be great. Here's my ID. I have a class in twenty minutes, so I really need this fixed quickly.</div>
+  <div class="turn"><span class="speaker">Staff:</span> No problem. It'll only take a minute. I'll also send you an email reminder before next month's reset so you won't have this issue again.</div>
+  <div class="turn"><span class="speaker">Student:</span> That's really helpful, thank you so much!</div>
+
+  <div class="q-block">
+    <h4>Q1. Why does the student visit the IT help desk?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> To report a stolen laptop</div>
+    <div class="opt"><span class="opt-letter">B)</span> To get help connecting to the campus Wi-Fi</div>
+    <div class="opt"><span class="opt-letter">C)</span> To request a new student ID card</div>
+    <div class="opt"><span class="opt-letter">D)</span> To install new software on her computer</div>
+  </div>
+  <div class="q-block">
+    <h4>Q2. What will the staff member do for the student?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> Replace her laptop battery</div>
+    <div class="opt"><span class="opt-letter">B)</span> Reset her network password and send a monthly reminder</div>
+    <div class="opt"><span class="opt-letter">C)</span> Give her a temporary Wi-Fi hotspot device</div>
+    <div class="opt"><span class="opt-letter">D)</span> Schedule a follow-up appointment for tomorrow</div>
+  </div>
+</div>
+
+<!-- Conversation 2 -->
+<div class="conv-section">
+  <h3>Conversation 2</h3>
+  <div class="setting">Setting: Campus Bookstore — Student (male) + Bookstore Staff (female)</div>
+  <div class="turn"><span class="speaker">Student:</span> Excuse me, I ordered a textbook online for pickup, but I received the wrong edition.</div>
+  <div class="turn"><span class="speaker">Staff:</span> Oh, I'm sorry about that. Do you have your order confirmation?</div>
+  <div class="turn"><span class="speaker">Student:</span> Yes, here it is. I ordered the third edition of Introduction to Psychology, but I got the second edition instead.</div>
+  <div class="turn"><span class="speaker">Staff:</span> Let me check our inventory. Unfortunately, we're currently out of stock on the third edition.</div>
+  <div class="turn"><span class="speaker">Student:</span> That's a problem. My professor specifically said we need the third edition because some chapters were reorganized.</div>
+  <div class="turn"><span class="speaker">Staff:</span> I understand. We have a new shipment arriving on Wednesday. I can reserve a copy for you and give you a ten percent discount for the inconvenience.</div>
+  <div class="turn"><span class="speaker">Student:</span> Wednesday works. Can I keep the second edition until then, just so I can start reading the parts that didn't change?</div>
+  <div class="turn"><span class="speaker">Staff:</span> Of course. Just bring it back when you pick up the new one, and we'll process the exchange then.</div>
+
+  <div class="q-block">
+    <h4>Q3. What is the student's problem?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> He cannot afford the textbook</div>
+    <div class="opt"><span class="opt-letter">B)</span> He received the wrong edition of a textbook</div>
+    <div class="opt"><span class="opt-letter">C)</span> His textbook was damaged during shipping</div>
+    <div class="opt"><span class="opt-letter">D)</span> The bookstore lost his order</div>
+  </div>
+  <div class="q-block">
+    <h4>Q4. What does the staff member suggest?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> Return the book for a full refund</div>
+    <div class="opt"><span class="opt-letter">B)</span> Use the second edition for the entire semester</div>
+    <div class="opt"><span class="opt-letter">C)</span> Wait until Wednesday for the correct edition with a discount</div>
+    <div class="opt"><span class="opt-letter">D)</span> Order the book from a different bookstore</div>
+  </div>
+</div>
+</div>
+
+<div class="footer">
+  <a href="../menu.html">&#8592; メニューに戻る</a>
+  <a class="btn-next" href="practice-1-answers.html">解答・解説 &#8250;</a>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+</body>
+</html>

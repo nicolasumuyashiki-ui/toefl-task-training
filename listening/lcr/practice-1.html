@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen and Choose a Response — Practice 1</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
+.top-nav-left strong{color:#2d3748}
+.top-nav-right{display:flex;align-items:center;gap:12px}
+.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#2d3748;font-weight:600;min-width:60px;text-align:center}
+.progress-bar{height:4px;background:#ebf4ff;width:100%}
+.progress-fill{height:100%;background:#f59e0b;border-radius:2px;transition:width .3s}
+.main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}
+.content{width:100%;max-width:660px;text-align:center}
+.audio-pending-banner{background:#fffbeb;border:2px dashed #fde68a;border-radius:16px;padding:40px 30px;margin-bottom:30px}
+.audio-pending-banner h2{font-size:1.2em;font-weight:800;color:#92400e;margin-bottom:12px}
+.audio-pending-banner p{font-size:.9em;color:#b45309;line-height:1.6;margin-bottom:8px}
+.script-section{background:#f9fafb;border:1px solid #e8ecf0;border-radius:12px;padding:24px;margin-bottom:20px;text-align:left}
+.script-section h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.script-section .q-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.8em;font-weight:800}
+.script-prompt{font-size:.88em;color:#4a5568;margin-bottom:16px;padding:10px 14px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;font-style:italic}
+.options{list-style:none;padding:0}
+.options li{padding:10px 14px;margin-bottom:8px;border:1.5px solid #e8ecf0;border-radius:10px;font-size:.88em;cursor:pointer;transition:all .15s}
+.options li:hover{border-color:#fde68a;background:#fffbeb}
+.options li .opt-letter{font-weight:800;color:#f59e0b;margin-right:8px}
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.footer-left a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
+.footer-left a:hover{color:#2d3748}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.btn-next{color:#fff;background:#2d3748}
+.btn-next:hover{background:#1a202c}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="top-nav-left">
+    <strong>Listen and Choose a Response</strong>
+    <span>Practice 1 — 8 Questions</span>
+  </div>
+  <div class="top-nav-right">
+    <span class="timer-display">--:--</span>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+
+<div class="main">
+<div class="content">
+
+<div class="audio-pending-banner">
+  <h2>&#128266; 音声準備中</h2>
+  <p>このPracticeの音声ファイルは現在作成中です。<br>以下にスクリプトと選択肢を掲載していますので、内容の確認は可能です。</p>
+  <p style="font-size:.78em;color:#92400e">音声が完成次第、自動再生形式に切り替わります。</p>
+</div>
+
+<!-- Q1 -->
+<div class="script-section">
+  <h3><span class="q-num">1</span> Question 1</h3>
+  <div class="script-prompt">Audio: "Do you know if the library is open on Sundays?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Yes, it opens at ten and closes at six.</li>
+    <li><span class="opt-letter">B)</span> I usually study at home on weekends.</li>
+    <li><span class="opt-letter">C)</span> The library has a great collection of books.</li>
+    <li><span class="opt-letter">D)</span> I returned my books last Friday.</li>
+  </ul>
+</div>
+
+<!-- Q2 -->
+<div class="script-section">
+  <h3><span class="q-num">2</span> Question 2</h3>
+  <div class="script-prompt">Audio: "Could you show me where the registration office is?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Registration starts next Monday.</li>
+    <li><span class="opt-letter">B)</span> Sure, it's just down the hall on your left.</li>
+    <li><span class="opt-letter">C)</span> I already registered for all my classes.</li>
+    <li><span class="opt-letter">D)</span> The office is quite modern and spacious.</li>
+  </ul>
+</div>
+
+<!-- Q3 -->
+<div class="script-section">
+  <h3><span class="q-num">3</span> Question 3</h3>
+  <div class="script-prompt">Audio: "How about we grab lunch before the afternoon lecture?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> The lecture was really interesting yesterday.</li>
+    <li><span class="opt-letter">B)</span> I had a sandwich for breakfast.</li>
+    <li><span class="opt-letter">C)</span> That sounds great. The cafeteria or somewhere off campus?</li>
+    <li><span class="opt-letter">D)</span> Lunch is the most important meal of the day.</li>
+  </ul>
+</div>
+
+<!-- Q4 -->
+<div class="script-section">
+  <h3><span class="q-num">4</span> Question 4</h3>
+  <div class="script-prompt">Audio: "I can't believe the bookstore is already sold out of the biology textbook."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Biology is one of the most popular courses this semester.</li>
+    <li><span class="opt-letter">B)</span> Have you tried checking the online store? They might still have copies.</li>
+    <li><span class="opt-letter">C)</span> I bought mine at the beginning of the semester.</li>
+    <li><span class="opt-letter">D)</span> The bookstore also sells school supplies and snacks.</li>
+  </ul>
+</div>
+
+<!-- Q5 -->
+<div class="script-section">
+  <h3><span class="q-num">5</span> Question 5</h3>
+  <div class="script-prompt">Audio: "Didn't the professor say the deadline was moved to Friday?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Actually, I think she said it was pushed back to next Monday.</li>
+    <li><span class="opt-letter">B)</span> The professor is very strict about deadlines.</li>
+    <li><span class="opt-letter">C)</span> I already submitted my paper yesterday.</li>
+    <li><span class="opt-letter">D)</span> Friday is my favorite day of the week.</li>
+  </ul>
+</div>
+
+<!-- Q6 -->
+<div class="script-section">
+  <h3><span class="q-num">6</span> Question 6</h3>
+  <div class="script-prompt">Audio: "I'm thinking about switching my major to computer science, but I'm not sure it's the right move."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Computer science is a very competitive field these days.</li>
+    <li><span class="opt-letter">B)</span> Why don't you talk to an academic advisor before making a decision?</li>
+    <li><span class="opt-letter">C)</span> I switched my major last year and it went smoothly.</li>
+    <li><span class="opt-letter">D)</span> The computer lab is open until midnight during finals week.</li>
+  </ul>
+</div>
+
+<!-- Q7 -->
+<div class="script-section">
+  <h3><span class="q-num">7</span> Question 7</h3>
+  <div class="script-prompt">Audio: "Would you mind if I borrowed your notes from yesterday's history class?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> History is one of my strongest subjects.</li>
+    <li><span class="opt-letter">B)</span> Not at all. I'll send you a photo of them after lunch.</li>
+    <li><span class="opt-letter">C)</span> I didn't take very good notes in high school.</li>
+    <li><span class="opt-letter">D)</span> The class was canceled due to the professor's illness.</li>
+  </ul>
+</div>
+
+<!-- Q8 -->
+<div class="script-section">
+  <h3><span class="q-num">8</span> Question 8</h3>
+  <div class="script-prompt">Audio: "I heard the campus shuttle service is being reduced next semester because of budget cuts."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> That's unfortunate. I rely on it to get to my early morning classes.</li>
+    <li><span class="opt-letter">B)</span> The shuttle buses are always very clean and comfortable.</li>
+    <li><span class="opt-letter">C)</span> I usually drive my own car to campus anyway.</li>
+    <li><span class="opt-letter">D)</span> Budget cuts have affected many departments this year.</li>
+  </ul>
+</div>
+
+</div>
+</div>
+
+<div class="reading-footer">
+  <div class="footer-left">
+    <a href="../menu.html">&#8592; メニューに戻る</a>
+  </div>
+  <button class="btn-nav btn-next" onclick="location.href='practice-1-answers.html'">解答・解説 &#8250;</button>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();}
+</script>
+</body>
+</html>

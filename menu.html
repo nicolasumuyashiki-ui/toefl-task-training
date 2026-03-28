@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEFL iBT タスク別トレーニング</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+--blue:#2563eb;--blue-bg:#eff6ff;--blue-accent:#bfdbfe;
+--reading:#3b82f6;--reading-bg:#eff6ff;
+--listening:#f59e0b;--listening-bg:#fffbeb;
+--writing:#8b5cf6;--writing-bg:#f5f3ff;
+--speaking:#ec4899;--speaking-bg:#fdf2f8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748}
+.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:10px}
+.header-logo{font-size:.72em;font-weight:800;color:var(--blue);letter-spacing:.1em;text-transform:uppercase}
+.header-title{font-size:.95em;font-weight:700;color:#2d3748}
+.header-right{display:flex;align-items:center;gap:14px}
+.user-pill{display:flex;align-items:center;gap:6px;background:var(--blue-bg);padding:6px 14px;border-radius:20px;font-size:.8em;font-weight:600;color:var(--blue)}
+.user-pill .avatar{width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.65em;font-weight:800}
+.btn-logout{background:none;border:1px solid #dfe3e8;border-radius:8px;padding:5px 12px;font-size:.75em;font-weight:600;color:#8898a8;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-logout:hover{background:#f9fafb;color:#5a6878}
+.hero{background:linear-gradient(135deg,#1e40af 0%,#2563eb 50%,#3b82f6 100%);padding:36px 24px 60px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:-30px;left:-10%;width:120%;height:80px;background:#f5f7fa;border-radius:50% 50% 0 0}
+.hero h1{font-size:1.5em;font-weight:800;margin-bottom:6px;position:relative;z-index:1}
+.hero p{font-size:.9em;opacity:1;position:relative;z-index:1;color:rgba(255,255,255,.9)}
+.skill-grid{max-width:900px;margin:-20px auto 40px;padding:0 20px;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;position:relative;z-index:2}
+@media(max-width:640px){.skill-grid{grid-template-columns:1fr}}
+.skill-card{background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.05);overflow:hidden;transition:all .25s;cursor:pointer;border:2px solid transparent;position:relative}
+.skill-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.skill-card-top{padding:20px 22px 16px;display:flex;align-items:flex-start;gap:14px}
+.skill-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.35em;flex-shrink:0}
+.skill-card[data-skill="reading"] .skill-icon{background:var(--reading-bg);color:var(--reading)}
+.skill-card[data-skill="listening"] .skill-icon{background:var(--listening-bg);color:var(--listening)}
+.skill-card[data-skill="writing"] .skill-icon{background:var(--writing-bg);color:var(--writing)}
+.skill-card[data-skill="speaking"] .skill-icon{background:var(--speaking-bg);color:var(--speaking)}
+.skill-info{flex:1}
+.skill-label{font-size:.68em;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.skill-card[data-skill="reading"] .skill-label{color:var(--reading)}
+.skill-card[data-skill="listening"] .skill-label{color:var(--listening)}
+.skill-card[data-skill="writing"] .skill-label{color:var(--writing)}
+.skill-card[data-skill="speaking"] .skill-label{color:var(--speaking)}
+.skill-title{font-size:1.05em;font-weight:800;color:#2d3748;margin-bottom:4px}
+.skill-desc{font-size:.78em;color:#8898a8;line-height:1.5}
+.skill-card-bottom{padding:0 22px 18px;display:flex;align-items:center;justify-content:space-between}
+.skill-tasks{font-size:.72em;color:#a0aec0;font-weight:600}
+.skill-arrow{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85em;transition:all .2s}
+.skill-card[data-skill="reading"] .skill-arrow{background:var(--reading-bg);color:var(--reading)}
+.skill-card[data-skill="listening"] .skill-arrow{background:var(--listening-bg);color:var(--listening)}
+.skill-card[data-skill="writing"] .skill-arrow{background:var(--writing-bg);color:var(--writing)}
+.skill-card[data-skill="speaking"] .skill-arrow{background:var(--speaking-bg);color:var(--speaking)}
+.skill-card:hover .skill-arrow{transform:translateX(2px)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-left">
+    <span class="header-logo">TCK Workshop</span>
+    <span class="header-title">タスク別トレーニング</span>
+  </div>
+  <div class="header-right">
+    <div class="user-pill">
+      <span class="avatar" id="avatarInit">?</span>
+      <span id="userName">---</span>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">ログアウト</button>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>TOEFL iBT タスク別トレーニング</h1>
+  <p>全タスク対応 Practice 1〜10</p>
+</div>
+
+<div class="skill-grid">
+  <div class="skill-card" data-skill="reading" onclick="location.href='reading/menu.html'">
+    <div class="skill-card-top">
+      <div class="skill-icon">&#128214;</div>
+      <div class="skill-info">
+        <div class="skill-label">Reading</div>
+        <div class="skill-title">Reading 攻略</div>
+        <div class="skill-desc">Complete the Words / Read in Daily Life / Read an Academic Passage</div>
+      </div>
+    </div>
+    <div class="skill-card-bottom">
+      <span class="skill-tasks">3 タスク</span>
+      <div class="skill-arrow">&#8250;</div>
+    </div>
+  </div>
+
+  <div class="skill-card" data-skill="listening" onclick="location.href='listening/menu.html'">
+    <div class="skill-card-top">
+      <div class="skill-icon">&#127911;</div>
+      <div class="skill-info">
+        <div class="skill-label">Listening</div>
+        <div class="skill-title">Listening 攻略</div>
+        <div class="skill-desc">Listen and Choose a Response / Conversation / Announcement / Academic Talk</div>
+      </div>
+    </div>
+    <div class="skill-card-bottom">
+      <span class="skill-tasks">4 タスク</span>
+      <div class="skill-arrow">&#8250;</div>
+    </div>
+  </div>
+
+  <div class="skill-card" data-skill="writing" onclick="location.href='writing/menu.html'">
+    <div class="skill-card-top">
+      <div class="skill-icon">&#9997;&#65039;</div>
+      <div class="skill-info">
+        <div class="skill-label">Writing</div>
+        <div class="skill-title">Writing 攻略</div>
+        <div class="skill-desc">Build a Sentence / Write an Email / Academic Discussion</div>
+      </div>
+    </div>
+    <div class="skill-card-bottom">
+      <span class="skill-tasks">3 タスク</span>
+      <div class="skill-arrow">&#8250;</div>
+    </div>
+  </div>
+
+  <div class="skill-card" data-skill="speaking" onclick="location.href='speaking/menu.html'">
+    <div class="skill-card-top">
+      <div class="skill-icon">&#127908;</div>
+      <div class="skill-info">
+        <div class="skill-label">Speaking</div>
+        <div class="skill-title">Speaking 攻略</div>
+        <div class="skill-desc">Listen and Repeat / Take an Interview</div>
+      </div>
+    </div>
+    <div class="skill-card-bottom">
+      <span class="skill-tasks">2 タスク</span>
+      <div class="skill-arrow">&#8250;</div>
+    </div>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+var u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
+if(u.userName){
+  document.getElementById('userName').textContent=u.userName;
+  document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();
+}
+function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='index.html';}
+</script>
+</body>
+</html>
