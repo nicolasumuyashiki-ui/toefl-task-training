@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEFL iBT - Read in Daily Life: Practice 3</title>
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+
+/* TOP NAV */
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
+.top-nav-left strong{color:#2d3748}
+.top-nav-right{display:flex;align-items:center;gap:12px}
+.timer-btn{background:none;border:1px solid #cbd5e0;border-radius:6px;padding:6px 14px;font-size:.85em;color:#4a5568;cursor:pointer;font-family:inherit;transition:all .2s}
+.timer-btn:hover{background:#f7fafc}
+.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#2d3748;font-weight:600;min-width:60px;text-align:center}
+.review-btn{background:#4a90d9;color:#fff;border:none;border-radius:14px;padding:6px 18px;font-size:.85em;cursor:pointer;font-family:inherit;font-weight:500;transition:all .2s}
+.review-btn:hover{background:#3a7bc8}
+.user-badge{font-size:.8em;color:#718096}
+.user-badge strong{color:#2d3748}
+
+/* PROGRESS BAR */
+.progress-bar{height:4px;background:#ebf4ff;width:100%}
+.progress-fill{height:100%;background:#3182ce;border-radius:2px;transition:width .3s}
+
+/* FOOTER NAV */
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:flex-end;gap:12px;z-index:100}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.btn-back{color:#4a5568;background:#fff;border:1px solid #e2e8f0}
+.btn-back:hover{background:#f7fafc}
+.btn-back:disabled{opacity:.5;cursor:not-allowed}
+.btn-next{color:#fff;background:#2d3748}
+.btn-next:hover{background:#4a5568}
+
+/* SPLIT LAYOUT */
+.split-main{flex:1;display:flex;padding:0 0 80px 0;overflow:hidden}
+.passage-panel{flex:1;padding:32px 28px;overflow-y:auto;border-right:1px solid #e2e8f0;background:#f9fafb}
+.question-panel{flex:1;padding:32px 28px;overflow-y:auto}
+.instruction{font-weight:700;font-size:1em;color:#2d3748;margin-bottom:16px}
+
+/* PAGE INDICATOR */
+.page-indicator{display:inline-block;background:#ebf4ff;color:#2b6cb0;font-size:.8em;font-weight:600;padding:4px 12px;border-radius:12px;margin-bottom:16px}
+
+/* QUESTION STYLES */
+.question-page{display:none}
+.question-page.active{display:block}
+.question-text{font-size:.95em;font-weight:600;color:#2d3748;margin-bottom:20px;line-height:1.6}
+.question-number{color:#4a90d9;margin-right:6px}
+.options{display:flex;flex-direction:column;gap:10px}
+.option{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:all .15s;font-size:.92em;line-height:1.5}
+.option:hover{background:#f7fafc;border-color:#cbd5e0}
+.option.selected{background:#ebf4ff;border-color:#4a90d9}
+.option input{display:none}
+.option-label{font-weight:600;color:#4a90d9;min-width:28px}
+.option-text{flex:1;color:#2d3748}
+
+/* EMAIL STYLES */
+.email-container{background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.email-subject{background:#f7fafc;padding:14px 20px;font-weight:700;font-size:.95em;color:#2d3748;border-bottom:1px solid #e2e8f0}
+.email-meta{padding:10px 20px;font-size:.85em;color:#718096;border-bottom:1px solid #f0f0f0;display:flex;flex-direction:column;gap:2px}
+.email-meta span{display:block}
+.email-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#2d3748}
+.email-body p{margin-bottom:10px}
+.email-body p:last-child{margin-bottom:0}
+
+/* NOTICE STYLES */
+.notice-container{background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.notice-header{background:#2d3748;color:#fff;padding:16px 20px;text-align:center}
+.notice-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
+.notice-header p{font-size:.8em;color:rgba(255,255,255,.7)}
+.notice-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#2d3748}
+.notice-body p{margin-bottom:10px}
+.notice-body p:last-child{margin-bottom:0}
+.notice-body ul{margin:8px 0 10px 20px}
+.notice-body li{margin-bottom:4px}
+
+/* REVIEW OVERLAY */
+.overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}
+.overlay.active{display:flex}
+.overlay-box{background:#fff;border-radius:12px;padding:28px 32px;max-width:520px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 8px 30px rgba(0,0,0,.15)}
+.overlay-title{font-size:1.1em;font-weight:700;margin-bottom:16px;color:#2d3748}
+.overlay-close{background:#2d3748;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.9em;cursor:pointer;margin-top:16px;font-family:inherit}
+.review-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:.9em}
+.review-item:last-child{border-bottom:none}
+.review-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.review-dot.answered{background:#48bb78}
+.review-dot.unanswered{background:#e2e8f0}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+  <div class="top-nav-left">
+    <span>Question <span id="qLabel"><strong>1</strong></span> of 4</span>
+    <span>|</span>
+    <span>Reading in Daily Life</span>
+  </div>
+  <div class="top-nav-right">
+    <button class="timer-btn" onclick="toggleTimer()">Hide Time</button>
+    <span class="timer-display" id="timerDisplay">10:00</span>
+    <button class="review-btn" onclick="openReview()">Review</button>
+    <span class="user-badge" id="userBadge"></span>
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<!-- ========== PAGE 1: Passage 1 — Email (Short ~100w) ========== -->
+<div class="split-main" id="passagePage1">
+  <!-- LEFT: PASSAGE -->
+  <div class="passage-panel">
+    <div class="page-indicator">Page 1 of 2</div>
+    <div class="instruction">Read an email.</div>
+    <div class="email-container">
+      <div class="email-subject">Subject: Mandatory Password Reset — Action Required by October 15</div>
+      <div class="email-meta">
+        <span><strong>From:</strong> Greenfield University IT Department &lt;itsecurity@greenfield.edu&gt;</span>
+        <span><strong>To:</strong> All Students and Staff</span>
+        <span><strong>Date:</strong> October 1, 2025</span>
+      </div>
+      <div class="email-body">
+        <p>Dear Members of the Greenfield University Community,</p>
+        <p>As part of our annual security update, all university accounts must undergo a mandatory password reset by October 15. To reset your password, log in to the university portal at myaccount.greenfield.edu and follow the instructions under "Security Settings." Your new password must be at least 12 characters long and include a combination of uppercase letters, lowercase letters, and numbers.</p>
+        <p>Accounts that have not been updated by the deadline will be temporarily locked until the password is reset. If you experience any difficulties, please contact the IT Help Desk at ext. 4200 or visit Room 108 in the Technology Building during business hours.</p>
+        <p>Thank you for your cooperation.<br>IT Security Team<br>Greenfield University</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: QUESTIONS -->
+  <div class="question-panel">
+    <!-- Q1: Main Purpose -->
+    <div class="question-page active" id="page1">
+      <div class="question-text">
+        <span class="question-number">1.</span>What is the primary purpose of this email?
+      </div>
+      <div class="options">
+        <div class="option" data-q="1" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">To notify users that their accounts have been compromised</span>
+        </div>
+        <div class="option" data-q="1" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">To announce the launch of a new university portal</span>
+        </div>
+        <div class="option" data-q="1" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">To instruct users to reset their passwords before a deadline</span>
+        </div>
+        <div class="option" data-q="1" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">To explain how to create a new university account</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2: Detail -->
+    <div class="question-page" id="page2">
+      <div class="question-text">
+        <span class="question-number">2.</span>According to the email, what will happen to accounts that are not updated by October 15?
+      </div>
+      <div class="options">
+        <div class="option" data-q="2" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">They will be permanently deleted from the system.</span>
+        </div>
+        <div class="option" data-q="2" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">They will be temporarily locked until the password is reset.</span>
+        </div>
+        <div class="option" data-q="2" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">They will be automatically assigned a new password.</span>
+        </div>
+        <div class="option" data-q="2" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">They will lose access to email but retain portal access.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PAGE 2: Passage 2 — Notice (Longer ~180w) ========== -->
+<div class="split-main" id="passagePage2" style="display:none">
+  <!-- LEFT: PASSAGE -->
+  <div class="passage-panel">
+    <div class="page-indicator">Page 2 of 2</div>
+    <div class="instruction">Read a notice.</div>
+    <div class="notice-container">
+      <div class="notice-header">
+        <h3>Student Club Funding Applications — Spring 2026</h3>
+        <p>Office of Student Activities</p>
+      </div>
+      <div class="notice-body">
+        <p>The Office of Student Activities is now accepting funding applications for registered student clubs for the Spring 2026 semester. All recognized clubs are eligible to apply for up to $500 in activity funding to support events, guest speakers, supplies, or travel related to club purposes.</p>
+        <p>To apply, club presidents must submit a completed funding request form along with a proposed budget and a brief description of the planned activity. Applications must be submitted online through the Student Activities Portal by November 30, 2025. Late submissions will not be accepted.</p>
+        <p>Please note the following important guidelines:</p>
+        <ul>
+          <li>Funding cannot be used for food, personal items, or gifts.</li>
+          <li>Clubs that received funding in the previous semester must submit a spending report before applying again.</li>
+          <li>Approved funds will be deposited into the club's official university account within two weeks of approval.</li>
+        </ul>
+        <p>For questions or assistance with the application process, please visit the Student Activities Office in the Campus Center, Room 215, or email activities@greenfield.edu.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: QUESTIONS -->
+  <div class="question-panel">
+    <!-- Q3: NOT/EXCEPT -->
+    <div class="question-page active" id="page3">
+      <div class="question-text">
+        <span class="question-number">3.</span>According to the notice, funding may be used for all of the following EXCEPT
+      </div>
+      <div class="options">
+        <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">purchasing food for club members</span>
+        </div>
+        <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">inviting guest speakers to campus</span>
+        </div>
+        <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">buying supplies for club activities</span>
+        </div>
+        <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">covering travel expenses for club events</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4: Inference -->
+    <div class="question-page" id="page4">
+      <div class="question-text">
+        <span class="question-number">4.</span>What can be inferred about clubs that received funding in the previous semester?
+      </div>
+      <div class="options">
+        <div class="option" data-q="4" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">They are automatically approved for funding in the next semester.</span>
+        </div>
+        <div class="option" data-q="4" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">They are no longer eligible to apply for additional funding.</span>
+        </div>
+        <div class="option" data-q="4" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">They will receive a larger amount of funding than new applicants.</span>
+        </div>
+        <div class="option" data-q="4" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">They must account for how they spent their previous funds before reapplying.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER NAV -->
+<div class="reading-footer">
+  <button class="btn-nav btn-back" id="btnBack" onclick="navigate(-1)" disabled>&lsaquo; Back</button>
+  <button class="btn-nav btn-next" id="btnNext" onclick="navigate(1)">Next &rsaquo;</button>
+</div>
+
+<!-- REVIEW OVERLAY -->
+<div class="overlay" id="reviewOverlay">
+  <div class="overlay-box">
+    <div class="overlay-title">Review Questions</div>
+    <div id="reviewList"></div>
+    <button class="overlay-close" onclick="closeReview()">Close</button>
+  </div>
+</div>
+
+<script>
+var currentQ = 1;
+var totalQ = 4;
+var userAnswers = {};
+var timerVisible = true;
+var timeLeft = 600; // 10 minutes
+var timerInterval;
+var storageKey = 'training_rdl_p3_answers';
+var timerKey = 'training_rdl_p3_timer';
+
+// Passage page mapping: questions 1-2 = passage 1, questions 3-4 = passage 2
+function getPassagePage(q){ return q <= 2 ? 1 : 2; }
+
+function selectOption(el){
+  var q = el.getAttribute('data-q');
+  var v = el.getAttribute('data-v');
+  userAnswers[q] = v;
+  el.parentElement.querySelectorAll('.option').forEach(function(o){
+    o.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+  sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+}
+
+function navigate(dir){
+  var next = currentQ + dir;
+  if(next < 1 || next > totalQ + 1) return;
+  if(next > totalQ){
+    var ca={'1':'C','2':'B','3':'A','4':'D'};
+    var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
+    var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
+    sessionStorage.setItem('training_score_rdl_p3',JSON.stringify({correct:sc,total:4}));
+    window.location.href = 'practice-3-answers.html';
+    return;
+  }
+  // Hide current question page
+  document.getElementById('page'+currentQ).classList.remove('active');
+  // Switch passage panel if needed
+  var oldPassage = getPassagePage(currentQ);
+  var newPassage = getPassagePage(next);
+  if(oldPassage !== newPassage){
+    document.getElementById('passagePage'+oldPassage).style.display = 'none';
+    document.getElementById('passagePage'+newPassage).style.display = 'flex';
+  }
+  currentQ = next;
+  document.getElementById('page'+currentQ).classList.add('active');
+  document.getElementById('qLabel').innerHTML = '<strong>'+currentQ+'</strong>';
+  document.getElementById('btnBack').disabled = (currentQ === 1);
+  if(currentQ === totalQ){
+    document.getElementById('btnNext').textContent = 'Finish \u203A';
+  } else {
+    document.getElementById('btnNext').textContent = 'Next \u203A';
+  }
+  updateProgress();
+}
+
+function updateProgress(){
+  var pct = ((currentQ - 1) / totalQ) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function toggleTimer(){
+  timerVisible = !timerVisible;
+  document.getElementById('timerDisplay').style.visibility = timerVisible ? 'visible' : 'hidden';
+  document.querySelector('.timer-btn').textContent = timerVisible ? 'Hide Time' : 'Show Time';
+}
+
+function formatTime(s){
+  var m = Math.floor(s/60);
+  var sec = s%60;
+  return m + ':' + (sec<10?'0':'') + sec;
+}
+
+function startTimer(){
+  var saved = sessionStorage.getItem(timerKey);
+  if(saved) timeLeft = parseInt(saved);
+  document.getElementById('timerDisplay').textContent = formatTime(timeLeft);
+  timerInterval = setInterval(function(){
+    timeLeft--;
+    if(timeLeft <= 0){ clearInterval(timerInterval); timeLeft = 0; }
+    sessionStorage.setItem(timerKey, timeLeft);
+    document.getElementById('timerDisplay').textContent = formatTime(timeLeft);
+  }, 1000);
+}
+
+function openReview(){
+  var list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  for(var i = 1; i <= totalQ; i++){
+    var answered = userAnswers[i] ? true : false;
+    var div = document.createElement('div');
+    div.className = 'review-item';
+    div.innerHTML = '<div class="review-dot '+(answered?'answered':'unanswered')+'"></div>' +
+      '<span>Question '+i+'</span>' +
+      (answered ? '<span style="color:#48bb78;font-size:.85em">Answered: '+userAnswers[i]+'</span>' : '<span style="color:#e53e3e;font-size:.85em">Not answered</span>');
+    list.appendChild(div);
+  }
+  document.getElementById('reviewOverlay').classList.add('active');
+}
+
+function closeReview(){
+  document.getElementById('reviewOverlay').classList.remove('active');
+}
+
+// Restore answers
+(function(){
+  var saved = sessionStorage.getItem(storageKey);
+  if(saved){
+    var parsed = JSON.parse(saved);
+    for(var q in parsed){
+      userAnswers[q] = parsed[q];
+      var opts = document.querySelectorAll('[data-q="'+q+'"][data-v="'+parsed[q]+'"]');
+      if(opts.length){
+        opts[0].classList.add('selected');
+        opts[0].querySelector('input').checked = true;
+      }
+    }
+  }
+})();
+
+startTimer();
+updateProgress();
+
+// Auth guard
+if(typeof Auth !== 'undefined'){
+  Auth.require();
+  Auth.showBadge('userBadge');
+}
+</script>
+<script src="../../js/auth.js"></script>
+</body>
+</html>

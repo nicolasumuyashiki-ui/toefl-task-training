@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen to a Conversation — Practice 3</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
+.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px}
+.header strong{font-size:.95em;color:#2d3748}
+.container{max-width:800px;margin:0 auto;padding:30px 24px 80px}
+.audio-pending-banner{background:#fffbeb;border:2px dashed #fde68a;border-radius:16px;padding:40px 30px;margin-bottom:30px;text-align:center}
+.audio-pending-banner h2{font-size:1.2em;font-weight:800;color:#92400e;margin-bottom:12px}
+.audio-pending-banner p{font-size:.9em;color:#b45309;line-height:1.6;margin-bottom:8px}
+.conv-section{background:#fff;border:1px solid #e8ecf0;border-radius:12px;padding:24px;margin-bottom:24px}
+.conv-section h3{font-size:1em;font-weight:800;color:#2d3748;margin-bottom:6px}
+.conv-section .setting{font-size:.82em;color:#8898a8;margin-bottom:16px}
+.turn{padding:8px 0;font-size:.88em;border-bottom:1px solid #f0f2f5}
+.turn:last-child{border-bottom:none}
+.turn .speaker{font-weight:700;color:#f59e0b;margin-right:6px}
+.q-block{background:#f9fafb;border:1px solid #e8ecf0;border-radius:10px;padding:16px;margin-top:16px}
+.q-block h4{font-size:.9em;font-weight:700;margin-bottom:10px}
+.q-block .opt{padding:6px 0;font-size:.85em}
+.q-block .opt-letter{font-weight:800;color:#f59e0b;margin-right:6px}
+.footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.footer a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
+.footer a:hover{color:#2d3748}
+.btn-next{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#2d3748;text-decoration:none}
+.btn-next:hover{background:#1a202c}
+</style>
+</head>
+<body>
+<div class="header"><strong>Listen to a Conversation — Practice 3</strong></div>
+
+<div class="container">
+<div class="audio-pending-banner">
+  <h2>&#128266; 音声準備中</h2>
+  <p>音声ファイルは現在作成中です。以下にスクリプトと設問を掲載しています。</p>
+</div>
+
+<!-- Conversation 1 -->
+<div class="conv-section">
+  <h3>Conversation 1</h3>
+  <div class="setting">Setting: Registrar's Office — Student (male) + Registrar Staff (female)</div>
+  <div class="turn"><span class="speaker">Student:</span> Hi, I transferred here from a community college, and I'm trying to figure out which of my credits will count toward my degree here.</div>
+  <div class="turn"><span class="speaker">Staff:</span> Welcome! We get a lot of transfer students. Do you have your unofficial transcript from your previous school?</div>
+  <div class="turn"><span class="speaker">Student:</span> Yes, I brought a printed copy. I completed sixty credits there, mostly general education courses.</div>
+  <div class="turn"><span class="speaker">Staff:</span> Great. Generally, most general education credits transfer without any issues. The tricky part is usually with major-specific courses. Which major are you pursuing here?</div>
+  <div class="turn"><span class="speaker">Student:</span> Business administration. I took an introductory accounting course and a statistics course at the community college.</div>
+  <div class="turn"><span class="speaker">Staff:</span> Let me pull up the equivalency chart. The statistics course should transfer directly, but for the accounting course, we'll need to verify the syllabus matches our curriculum. Can you provide the course syllabus?</div>
+  <div class="turn"><span class="speaker">Student:</span> I think I have it saved in my email. How long does the evaluation process usually take?</div>
+  <div class="turn"><span class="speaker">Staff:</span> Once we have all the documents, it typically takes about two weeks. I'll also set you up with an academic advisor who specializes in transfer students to make sure you're on the right track for graduation.</div>
+
+  <div class="q-block">
+    <h4>Q1. Why does the student visit the registrar's office?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> To find out which credits from his community college will transfer</div>
+    <div class="opt"><span class="opt-letter">B)</span> To register for classes for the upcoming semester</div>
+    <div class="opt"><span class="opt-letter">C)</span> To request a copy of his transcript</div>
+    <div class="opt"><span class="opt-letter">D)</span> To change his major to business administration</div>
+  </div>
+  <div class="q-block">
+    <h4>Q2. What does the staff member ask the student to provide?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> A letter of recommendation from his previous professor</div>
+    <div class="opt"><span class="opt-letter">B)</span> The course syllabus for his accounting class</div>
+    <div class="opt"><span class="opt-letter">C)</span> His official high school diploma</div>
+    <div class="opt"><span class="opt-letter">D)</span> A completed application form for credit transfer</div>
+  </div>
+</div>
+
+<!-- Conversation 2 -->
+<div class="conv-section">
+  <h3>Conversation 2</h3>
+  <div class="setting">Setting: Professor's Office — Student (female) + Professor (male)</div>
+  <div class="turn"><span class="speaker">Student:</span> Professor Nakamura, thank you for meeting with me. I wanted to discuss my research paper topic for the final project.</div>
+  <div class="turn"><span class="speaker">Professor:</span> Of course. What topic are you considering?</div>
+  <div class="turn"><span class="speaker">Student:</span> I was thinking about writing on the impact of social media on political campaigns. I find it really interesting how candidates use platforms like Instagram and TikTok now.</div>
+  <div class="turn"><span class="speaker">Professor:</span> That's a relevant topic, but it's also quite broad. For a fifteen-page paper, you'd need to narrow it down significantly. Have you thought about focusing on a specific aspect?</div>
+  <div class="turn"><span class="speaker">Student:</span> Hmm, maybe I could focus on how social media affected voter turnout among young adults in the last election?</div>
+  <div class="turn"><span class="speaker">Professor:</span> Now that's much more manageable. There's also a good amount of recent research on that specific topic, so you'll have solid sources to work with. I'd suggest starting with the Journal of Political Communication for peer-reviewed articles.</div>
+  <div class="turn"><span class="speaker">Student:</span> That's really helpful. When is the topic proposal due again?</div>
+  <div class="turn"><span class="speaker">Professor:</span> The written proposal is due next Friday. It should be about one page, including your thesis statement and a preliminary list of at least five sources.</div>
+
+  <div class="q-block">
+    <h4>Q3. What concern does the professor raise about the student's original topic?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> It has already been covered by too many students</div>
+    <div class="opt"><span class="opt-letter">B)</span> It is not related to the course material</div>
+    <div class="opt"><span class="opt-letter">C)</span> It is too broad for a fifteen-page paper</div>
+    <div class="opt"><span class="opt-letter">D)</span> It lacks sufficient academic sources</div>
+  </div>
+  <div class="q-block">
+    <h4>Q4. What must the student submit by next Friday?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> The complete research paper</div>
+    <div class="opt"><span class="opt-letter">B)</span> A one-page summary of the final project</div>
+    <div class="opt"><span class="opt-letter">C)</span> A list of ten peer-reviewed sources</div>
+    <div class="opt"><span class="opt-letter">D)</span> A topic proposal with a thesis statement and at least five sources</div>
+  </div>
+</div>
+</div>
+
+<div class="footer">
+  <a href="../menu.html">&#8592; メニューに戻る</a>
+  <a class="btn-next" href="practice-3-answers.html">解答・解説 &#8250;</a>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+</body>
+</html>

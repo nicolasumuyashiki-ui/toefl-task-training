@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEFL iBT - Read an Academic Passage: Practice 3</title>
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+
+/* TOP NAV */
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
+.top-nav-left strong{color:#2d3748}
+.top-nav-right{display:flex;align-items:center;gap:12px}
+.timer-btn{background:none;border:1px solid #cbd5e0;border-radius:6px;padding:6px 14px;font-size:.85em;color:#4a5568;cursor:pointer;font-family:inherit;transition:all .2s}
+.timer-btn:hover{background:#f7fafc}
+.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#2d3748;font-weight:600;min-width:60px;text-align:center}
+.review-btn{background:#4a90d9;color:#fff;border:none;border-radius:14px;padding:6px 18px;font-size:.85em;cursor:pointer;font-family:inherit;font-weight:500;transition:all .2s}
+.review-btn:hover{background:#3a7bc8}
+.user-badge{font-size:.8em;color:#718096}
+.user-badge strong{color:#2d3748}
+
+/* PROGRESS BAR */
+.progress-bar{height:4px;background:#ebf4ff;width:100%}
+.progress-fill{height:100%;background:#3182ce;border-radius:2px;transition:width .3s}
+
+/* FOOTER NAV */
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:flex-end;gap:12px;z-index:100}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.btn-back{color:#4a5568;background:#fff;border:1px solid #e2e8f0}
+.btn-back:hover{background:#f7fafc}
+.btn-back:disabled{opacity:.5;cursor:not-allowed}
+.btn-next{color:#fff;background:#2d3748}
+.btn-next:hover{background:#4a5568}
+
+/* SPLIT LAYOUT */
+.split-main{flex:1;display:flex;padding:0 0 80px 0;overflow:hidden}
+.passage-panel{flex:1;padding:32px 28px;overflow-y:auto;border-right:1px solid #e2e8f0;background:#f9fafb}
+.question-panel{flex:1;padding:32px 28px;overflow-y:auto}
+
+/* PAGE INDICATOR */
+.page-indicator{display:inline-block;background:#ebf4ff;color:#2b6cb0;font-size:.8em;font-weight:600;padding:4px 12px;border-radius:12px;margin-bottom:16px}
+
+/* PASSAGE */
+.passage-title{font-size:1.15em;font-weight:700;color:#2d3748;margin-bottom:16px;line-height:1.4}
+.passage-content{font-size:.93em;line-height:1.8;color:#2d3748}
+.passage-content p{margin-bottom:14px;text-indent:1.5em}
+.passage-content p:first-child{text-indent:0}
+.passage-content p:last-child{margin-bottom:0}
+
+/* HIGHLIGHT WORD */
+.highlight-word{background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:600}
+
+/* QUESTION STYLES */
+.question-page{display:none}
+.question-page.active{display:block}
+.question-text{font-size:.95em;font-weight:600;color:#2d3748;margin-bottom:20px;line-height:1.6}
+.question-number{color:#4a90d9;margin-right:6px}
+.options{display:flex;flex-direction:column;gap:10px}
+.option{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:all .15s;font-size:.92em;line-height:1.5}
+.option:hover{background:#f7fafc;border-color:#cbd5e0}
+.option.selected{background:#ebf4ff;border-color:#4a90d9}
+.option input{display:none}
+.option-label{font-weight:600;color:#4a90d9;min-width:28px}
+.option-text{flex:1;color:#2d3748}
+
+/* REVIEW OVERLAY */
+.overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}
+.overlay.active{display:flex}
+.overlay-box{background:#fff;border-radius:12px;padding:28px 32px;max-width:520px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 8px 30px rgba(0,0,0,.15)}
+.overlay-title{font-size:1.1em;font-weight:700;margin-bottom:16px;color:#2d3748}
+.overlay-close{background:#2d3748;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.9em;cursor:pointer;margin-top:16px;font-family:inherit}
+.review-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:.9em}
+.review-item:last-child{border-bottom:none}
+.review-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.review-dot.answered{background:#48bb78}
+.review-dot.unanswered{background:#e2e8f0}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+  <div class="top-nav-left">
+    <span>Question <span id="qLabel"><strong>1</strong></span> of 6</span>
+    <span>|</span>
+    <span>Academic Reading</span>
+  </div>
+  <div class="top-nav-right">
+    <button class="timer-btn" onclick="toggleTimer()">Hide Time</button>
+    <span class="timer-display" id="timerDisplay">20:00</span>
+    <button class="review-btn" onclick="openReview()">Review</button>
+    <span class="user-badge" id="userBadge"></span>
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<!-- ========== PAGE 1: Passage 1 — The Psychology of First Impressions ========== -->
+<div class="split-main" id="passagePage1">
+  <div class="passage-panel">
+    <div class="page-indicator">Page 1 of 2</div>
+    <h2 class="passage-title">The Psychology of First Impressions</h2>
+    <div class="passage-content">
+      <p>When people meet someone for the first time, they tend to form an opinion about that person within just a few seconds. Psychologists have long been interested in understanding how these rapid judgments are made and how accurate they actually are. Research suggests that first impressions are shaped primarily by visual cues such as facial expressions, body language, and clothing, rather than by what a person says.</p>
+      <p>One of the most influential findings in this area comes from studies on the "halo effect," a <span class="highlight-word">cognitive</span> bias in which a single positive trait, such as physical attractiveness, leads people to assume that the person also possesses other positive qualities like intelligence or kindness. This effect can have significant consequences in real-world situations, including job interviews and courtroom decisions, where appearance may unfairly influence outcomes.</p>
+      <p>Despite their speed, first impressions are remarkably difficult to change. Researchers have found that even when people are presented with new information that contradicts their initial judgment, they tend to hold on to their original opinion. This phenomenon, known as "anchoring," suggests that the brain gives <span class="highlight-word">disproportionate</span> weight to the earliest pieces of information it receives. Understanding these biases is important not only for psychologists but also for anyone who wants to communicate more effectively in social and professional settings.</p>
+    </div>
+  </div>
+
+  <div class="question-panel">
+    <!-- Q1: Main Idea -->
+    <div class="question-page active" id="page1">
+      <div class="question-text">
+        <span class="question-number">1.</span>What is the passage mainly about?
+      </div>
+      <div class="options">
+        <div class="option" data-q="1" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">The importance of physical appearance in job interviews</span>
+        </div>
+        <div class="option" data-q="1" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">How first impressions are formed and why they are hard to change</span>
+        </div>
+        <div class="option" data-q="1" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">A comparison of different psychological research methods</span>
+        </div>
+        <div class="option" data-q="1" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">The history of psychology as an academic discipline</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2: Vocabulary in Context -->
+    <div class="question-page" id="page2">
+      <div class="question-text">
+        <span class="question-number">2.</span>The word "<span style="background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:700">cognitive</span>" in paragraph 2 is closest in meaning to
+      </div>
+      <div class="options">
+        <div class="option" data-q="2" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">emotional</span>
+        </div>
+        <div class="option" data-q="2" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">physical</span>
+        </div>
+        <div class="option" data-q="2" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">related to mental processes</span>
+        </div>
+        <div class="option" data-q="2" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">socially acceptable</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3: Detail -->
+    <div class="question-page" id="page3">
+      <div class="question-text">
+        <span class="question-number">3.</span>According to the passage, why is the halo effect significant?
+      </div>
+      <div class="options">
+        <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">It causes people to form impressions more slowly than usual.</span>
+        </div>
+        <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">It proves that first impressions are always accurate.</span>
+        </div>
+        <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">It helps people make better decisions in professional settings.</span>
+        </div>
+        <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">It can lead to unfair judgments based on a single positive trait.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PAGE 2: Passage 2 — The Formation and Classification of Rocks ========== -->
+<div class="split-main" id="passagePage2" style="display:none">
+  <div class="passage-panel">
+    <div class="page-indicator">Page 2 of 2</div>
+    <h2 class="passage-title">The Formation and Classification of Rocks</h2>
+    <div class="passage-content">
+      <p>Rocks are the solid materials that make up the outer layer of the Earth, and geologists classify them into three main categories based on how they are formed: igneous, sedimentary, and metamorphic. Each type has distinct characteristics that reveal important information about the conditions under which it was created. Understanding rock formation is essential for fields ranging from construction and mining to environmental science and planetary exploration.</p>
+      <p>Igneous rocks form when molten material called magma cools and solidifies. When this cooling happens beneath the Earth's surface, the process is slow, allowing large crystals to develop; granite is a well-known example of this type. When magma reaches the surface as lava during a volcanic eruption, it cools rapidly, producing fine-grained rocks such as basalt. The texture and mineral composition of igneous rocks provide geologists with clues about the <span class="highlight-word">intensity</span> and depth of the volcanic activity that produced them.</p>
+      <p>Sedimentary rocks, by contrast, are formed through a gradual process of accumulation and compression. Over thousands or millions of years, layers of sand, mud, shells, and other materials are deposited by wind, water, or ice. As these layers build up, the weight of the upper layers compresses the lower ones, eventually binding the particles together into solid rock. Limestone and sandstone are common examples. Because sedimentary rocks often contain fossils, they are particularly valuable for studying the history of life on Earth.</p>
+      <p>Metamorphic rocks are created when existing rocks are <span class="highlight-word">subjected</span> to extreme heat, pressure, or chemical processes deep within the Earth. These conditions cause the minerals in the original rock to reorganize and form new structures without the rock actually melting. For instance, limestone can be transformed into marble, and shale can become slate. The study of metamorphic rocks helps scientists understand the powerful geological forces that reshape the Earth's crust over time.</p>
+    </div>
+  </div>
+
+  <div class="question-panel">
+    <!-- Q4: Purpose -->
+    <div class="question-page active" id="page4">
+      <div class="question-text">
+        <span class="question-number">4.</span>Why does the author mention granite and basalt in paragraph 2?
+      </div>
+      <div class="options">
+        <div class="option" data-q="4" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">To illustrate how different cooling speeds produce different igneous rocks</span>
+        </div>
+        <div class="option" data-q="4" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">To argue that igneous rocks are more useful than sedimentary rocks</span>
+        </div>
+        <div class="option" data-q="4" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">To explain why volcanic eruptions are becoming less frequent</span>
+        </div>
+        <div class="option" data-q="4" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">To compare igneous rocks with metamorphic rocks</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Vocabulary in Context -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>The word "<span style="background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:700">subjected</span>" in paragraph 4 is closest in meaning to
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">resistant to</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">exposed to</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">protected from</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">attracted to</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6: Inference -->
+    <div class="question-page" id="page6">
+      <div class="question-text">
+        <span class="question-number">6.</span>Based on the passage, what can be inferred about sedimentary rocks?
+      </div>
+      <div class="options">
+        <div class="option" data-q="6" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">They form more quickly than igneous or metamorphic rocks.</span>
+        </div>
+        <div class="option" data-q="6" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">They are the hardest and most durable type of rock.</span>
+        </div>
+        <div class="option" data-q="6" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">They can provide evidence of organisms that lived in the past.</span>
+        </div>
+        <div class="option" data-q="6" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">They are only found near rivers and oceans.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER NAV -->
+<div class="reading-footer">
+  <button class="btn-nav btn-back" id="btnBack" onclick="navigate(-1)" disabled>&lsaquo; Back</button>
+  <button class="btn-nav btn-next" id="btnNext" onclick="navigate(1)">Next &rsaquo;</button>
+</div>
+
+<!-- REVIEW OVERLAY -->
+<div class="overlay" id="reviewOverlay">
+  <div class="overlay-box">
+    <div class="overlay-title">Review Questions</div>
+    <div id="reviewList"></div>
+    <button class="overlay-close" onclick="closeReview()">Close</button>
+  </div>
+</div>
+
+<script>
+var currentQ = 1;
+var totalQ = 6;
+var userAnswers = {};
+var timerVisible = true;
+var timeLeft = 1200; // 20 minutes
+var timerInterval;
+var storageKey = 'training_academic_p3_answers';
+var timerKey = 'training_academic_p3_timer';
+
+// Passage page mapping: questions 1-3 = passage 1, questions 4-6 = passage 2
+function getPassagePage(q){ return q <= 3 ? 1 : 2; }
+
+// Track which question is "active" within each passage page
+function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 4; }
+
+function selectOption(el){
+  var q = el.getAttribute('data-q');
+  var v = el.getAttribute('data-v');
+  userAnswers[q] = v;
+  el.parentElement.querySelectorAll('.option').forEach(function(o){
+    o.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+  sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+}
+
+function navigate(dir){
+  var next = currentQ + dir;
+  if(next < 1 || next > totalQ + 1) return;
+  if(next > totalQ){
+    var ca={'1':'B','2':'C','3':'D','4':'A','5':'B','6':'C'};
+    var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
+    var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
+    sessionStorage.setItem('training_score_academic_p3',JSON.stringify({correct:sc,total:6}));
+    window.location.href = 'practice-3-answers.html';
+    return;
+  }
+  // Hide current question
+  document.getElementById('page'+currentQ).classList.remove('active');
+  // Switch passage panel if needed
+  var oldPassage = getPassagePage(currentQ);
+  var newPassage = getPassagePage(next);
+  if(oldPassage !== newPassage){
+    document.getElementById('passagePage'+oldPassage).style.display = 'none';
+    document.getElementById('passagePage'+newPassage).style.display = 'flex';
+    // Deactivate all question pages in old passage
+    var oldStart = getLocalFirst(oldPassage);
+    var oldEnd = oldPassage === 1 ? 3 : 6;
+    for(var i = oldStart; i <= oldEnd; i++){
+      document.getElementById('page'+i).classList.remove('active');
+    }
+  }
+  currentQ = next;
+  document.getElementById('page'+currentQ).classList.add('active');
+  document.getElementById('qLabel').innerHTML = '<strong>'+currentQ+'</strong>';
+  document.getElementById('btnBack').disabled = (currentQ === 1);
+  if(currentQ === totalQ){
+    document.getElementById('btnNext').textContent = 'Finish \u203A';
+  } else {
+    document.getElementById('btnNext').textContent = 'Next \u203A';
+  }
+  updateProgress();
+}
+
+function updateProgress(){
+  var pct = ((currentQ - 1) / totalQ) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function toggleTimer(){
+  timerVisible = !timerVisible;
+  document.getElementById('timerDisplay').style.visibility = timerVisible ? 'visible' : 'hidden';
+  document.querySelector('.timer-btn').textContent = timerVisible ? 'Hide Time' : 'Show Time';
+}
+
+function formatTime(s){
+  var m = Math.floor(s/60);
+  var sec = s%60;
+  return m + ':' + (sec<10?'0':'') + sec;
+}
+
+function startTimer(){
+  var saved = sessionStorage.getItem(timerKey);
+  if(saved) timeLeft = parseInt(saved);
+  document.getElementById('timerDisplay').textContent = formatTime(timeLeft);
+  timerInterval = setInterval(function(){
+    timeLeft--;
+    if(timeLeft <= 0){ clearInterval(timerInterval); timeLeft = 0; }
+    sessionStorage.setItem(timerKey, timeLeft);
+    document.getElementById('timerDisplay').textContent = formatTime(timeLeft);
+  }, 1000);
+}
+
+function openReview(){
+  var list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  for(var i = 1; i <= totalQ; i++){
+    var answered = userAnswers[i] ? true : false;
+    var div = document.createElement('div');
+    div.className = 'review-item';
+    div.innerHTML = '<div class="review-dot '+(answered?'answered':'unanswered')+'"></div>' +
+      '<span>Question '+i+'</span>' +
+      (answered ? '<span style="color:#48bb78;font-size:.85em">Answered: '+userAnswers[i]+'</span>' : '<span style="color:#e53e3e;font-size:.85em">Not answered</span>');
+    list.appendChild(div);
+  }
+  document.getElementById('reviewOverlay').classList.add('active');
+}
+
+function closeReview(){
+  document.getElementById('reviewOverlay').classList.remove('active');
+}
+
+// Restore answers
+(function(){
+  var saved = sessionStorage.getItem(storageKey);
+  if(saved){
+    var parsed = JSON.parse(saved);
+    for(var q in parsed){
+      userAnswers[q] = parsed[q];
+      var opts = document.querySelectorAll('[data-q="'+q+'"][data-v="'+parsed[q]+'"]');
+      if(opts.length){
+        opts[0].classList.add('selected');
+        opts[0].querySelector('input').checked = true;
+      }
+    }
+  }
+})();
+
+startTimer();
+updateProgress();
+
+if(typeof Auth !== 'undefined'){
+  Auth.require();
+  Auth.showBadge('userBadge');
+}
+</script>
+<script src="../../js/auth.js"></script>
+</body>
+</html>
