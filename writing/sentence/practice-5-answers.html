@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build a Sentence — 解答解説 | Practice 5</title>
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px}
+.container{max-width:880px;margin:0 auto;padding:0 20px 40px}
+.tips-card{background:#fff;border-left:4px solid #4a90d9;margin:20px 0;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tips-card h2{font-size:1em;color:#4a90d9;margin-bottom:12px}
+.step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.step-grid{grid-template-columns:1fr}}
+.step{background:#ebf4ff;border-radius:8px;padding:14px;text-align:center}
+.step-num{display:inline-block;background:#4a90d9;color:#fff;width:28px;height:28px;line-height:28px;border-radius:50%;font-size:.8em;font-weight:700;margin-bottom:6px}
+.step h4{font-size:.85em;margin-bottom:4px}
+.step p{font-size:.75em;color:#4a5568}
+
+.patterns-card{background:#fff;border-left:4px solid #81d4d4;margin:20px 0;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.patterns-card h2{font-size:1em;color:#2b6cb0;margin-bottom:12px}
+.pattern-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:600px){.pattern-grid{grid-template-columns:1fr}}
+.pattern{background:#f0fff4;border-radius:8px;padding:12px;font-size:.82em}
+.pattern h5{color:#276749;margin-bottom:4px}
+.pattern p{color:#4a5568}
+
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:14px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid #edf2f7}
+.q-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}
+.q-num.wrong{background:#e53e3e}
+.q-num.default{background:#4a90d9}
+.q-prompt{font-size:.88em;color:#718096;flex:1;font-style:italic}
+.q-body{padding:14px 18px}
+.q-sentence{font-size:.92em;font-weight:600;color:#2d3748;margin-bottom:6px}
+.q-grammar{font-size:.8em;color:#718096;background:#f7fafc;padding:8px 12px;border-radius:6px;border-left:3px solid #4a90d9}
+.q-user{font-size:.82em;margin-bottom:6px;padding:6px 10px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.nav-bottom{text-align:center;padding:24px 0}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;text-decoration:none;margin:4px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔤 Build a Sentence — 解答解説</h1>
+  <p>Practice 5 | 16問</p>
+</div>
+
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
+</div>
+
+<div class="container">
+
+<div class="tips-card">
+  <h2>💡 Build a Sentence 攻略 3ステップ</h2>
+  <div class="step-grid">
+    <div class="step"><div class="step-num">1</div><h4>主語と動詞を見つける</h4><p>「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</p></div>
+    <div class="step"><div class="step-num">2</div><h4>骨格を作る</h4><p>S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</p></div>
+    <div class="step"><div class="step-num">3</div><h4>残りを配置</h4><p>修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</p></div>
+  </div>
+</div>
+
+<div class="patterns-card">
+  <h2>📐 今回の語順パターン</h2>
+  <div class="pattern-grid">
+    <div class="pattern"><h5>🔹 未来完了 (will have + Vpp)</h5><p>Q1「will have snowed」Q6「will have completed」Q10「will have visited」— By + 時点 と組み合わせて「〜までに…しているだろう」。</p></div>
+    <div class="pattern"><h5>🔹 unless / as long as</h5><p>Q2「unless it rains」Q9「as long as the trail is not」Q13「unless I have to」Q16「as long as there is no」— 条件の接続詞。unless =「〜しない限り」、as long as =「〜する限り」。</p></div>
+    <div class="pattern"><h5>🔹 both...and / neither...nor</h5><p>Q3「both the warm weather and」Q7「neither the weather nor」Q11「both swimming ... and」— 相関接続詞。並列する要素の品詞を揃える。</p></div>
+    <div class="pattern"><h5>🔹 使役動詞 (have/get + O + Vpp)</h5><p>Q4「had it repaired」Q8「got the engine checked」Q12「had my brother help me」Q15「got it washed」— have/get + 目的語 + 過去分詞で「〜してもらう」。</p></div>
+    <div class="pattern"><h5>🔹 前置詞付き関係代名詞</h5><p>Q5「in which we played」Q14「at which we stayed」— 前置詞 + which で場所や手段を説明する形容詞節を作る。</p></div>
+  </div>
+</div>
+
+<div id="qList"></div>
+
+</div>
+
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-5.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
+</div>
+
+<script>
+const answers=[
+{id:1,prompt:"Do you think it will snow this weekend?",sentence:"By Sunday, it will have snowed at least three times.",grammar:"未来完了: By + 時点, S + will have + Vpp。「日曜日までに3回は降っているだろう」。at least =「少なくとも」。"},
+{id:2,prompt:"Are you going to the beach tomorrow?",sentence:"I will go unless it rains in the morning.",grammar:"unless =「〜しない限り」: I will go unless + S + V。unless節内は現在形（未来のことでも）。"},
+{id:3,prompt:"What do you like about spring?",sentence:"I enjoy both the warm weather and the cherry blossoms.",grammar:"both A and B: 2つの名詞を並列。both と and の間に同じ品詞（名詞句）を入れる。"},
+{id:4,prompt:"Did you fix the broken window yourself?",sentence:"No, I had it repaired by a professional.",grammar:"使役の have: have + O + Vpp =「〜を…してもらう」。by + 動作主で誰にしてもらったか明示。"},
+{id:5,prompt:"Which park is good for jogging?",sentence:"The park in which we played last summer is perfect for jogging.",grammar:"前置詞 + 関係代名詞: in which = where。「去年の夏に遊んだ公園」が主語。is perfect for ~ で補語。"},
+{id:6,prompt:"Will the project be done by next Friday?",sentence:"By next Friday, we will have completed the entire project.",grammar:"未来完了: By next Friday, S + will have + Vpp。「来週の金曜までに完了しているだろう」。"},
+{id:7,prompt:"Why did you cancel the camping trip?",sentence:"We canceled it because neither the weather nor the road conditions were safe.",grammar:"neither A nor B: 否定の相関接続詞。A も B も〜ない。because節で理由を述べる。"},
+{id:8,prompt:"Is your car ready for the road trip?",sentence:"Yes, I got the engine checked before the trip.",grammar:"使役の get: get + O + Vpp =「〜を…してもらう」。before + 名詞で時を表す。"},
+{id:9,prompt:"Can we go hiking as long as it stays dry?",sentence:"Yes, we can go hiking as long as the trail is not too muddy.",grammar:"as long as =「〜する限り」: 条件を表す接続詞。否定 is not を含む条件節。"},
+{id:10,prompt:"What will you have accomplished by the end of summer?",sentence:"By the end of summer, I will have visited five national parks.",grammar:"未来完了: By the end of ~, S + will have + Vpp。「夏の終わりまでに5つの国立公園を訪れているだろう」。"},
+{id:11,prompt:"How do you stay cool in the summer?",sentence:"I enjoy both swimming in the pool and eating ice cream.",grammar:"both A and B: 動名詞句を並列。both swimming ~ and eating ~ で2つの行動を対等に結ぶ。"},
+{id:12,prompt:"Did you paint the fence by yourself?",sentence:"No, I had my brother help me paint it.",grammar:"使役の have: have + 人 + V原形 =「人に〜してもらう」。目的語が人の場合は原形不定詞。"},
+{id:13,prompt:"Will you join us for the outdoor concert?",sentence:"I will join you unless I have to work overtime that evening.",grammar:"unless =「〜しない限り」: unless + S + V。have to =「〜しなければならない」。"},
+{id:14,prompt:"Where is the campsite you mentioned?",sentence:"The campsite at which we stayed last fall is near the lake.",grammar:"前置詞 + 関係代名詞: at which = where。stay at a campsite → the campsite at which we stayed。"},
+{id:15,prompt:"Did you wash your car before the trip?",sentence:"No, I got it washed at the shop.",grammar:"使役の get: get + O + Vpp。「洗車してもらった」。at the shop で場所を補足。"},
+{id:16,prompt:"What happens if it rains during the festival?",sentence:"The festival will continue as long as there is no lightning or strong wind.",grammar:"as long as =「〜する限り」: 条件を表す。there is no ~ =「〜がない限り」。or で2つの否定条件を並列。"}
+];
+
+const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p5')||'null');
+let score=0;
+
+if(stored){
+  score=stored.score||0;
+  document.getElementById('scoreBig').textContent=score+' / '+stored.total;
+  document.getElementById('scoreBar').style.width=(score/stored.total*100)+'%';
+  const pct=Math.round(score/stored.total*100);
+  document.getElementById('scoreMsg').textContent=pct+'% 正答率'+(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');
+}
+
+let html='';
+answers.forEach((a,i)=>{
+  html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"</div></div>'
+    +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
+    +'<div class="q-grammar">📝 '+a.grammar+'</div></div></div>';
+});
+document.getElementById('qList').innerHTML=html;
+</script>
+</body>
+</html>
