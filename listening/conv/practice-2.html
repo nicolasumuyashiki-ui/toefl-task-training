@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen to a Conversation — Practice 2</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
+.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px}
+.header strong{font-size:.95em;color:#2d3748}
+.container{max-width:800px;margin:0 auto;padding:30px 24px 80px}
+.audio-pending-banner{background:#fffbeb;border:2px dashed #fde68a;border-radius:16px;padding:40px 30px;margin-bottom:30px;text-align:center}
+.audio-pending-banner h2{font-size:1.2em;font-weight:800;color:#92400e;margin-bottom:12px}
+.audio-pending-banner p{font-size:.9em;color:#b45309;line-height:1.6;margin-bottom:8px}
+.conv-section{background:#fff;border:1px solid #e8ecf0;border-radius:12px;padding:24px;margin-bottom:24px}
+.conv-section h3{font-size:1em;font-weight:800;color:#2d3748;margin-bottom:6px}
+.conv-section .setting{font-size:.82em;color:#8898a8;margin-bottom:16px}
+.turn{padding:8px 0;font-size:.88em;border-bottom:1px solid #f0f2f5}
+.turn:last-child{border-bottom:none}
+.turn .speaker{font-weight:700;color:#f59e0b;margin-right:6px}
+.q-block{background:#f9fafb;border:1px solid #e8ecf0;border-radius:10px;padding:16px;margin-top:16px}
+.q-block h4{font-size:.9em;font-weight:700;margin-bottom:10px}
+.q-block .opt{padding:6px 0;font-size:.85em}
+.q-block .opt-letter{font-weight:800;color:#f59e0b;margin-right:6px}
+.footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.footer a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
+.footer a:hover{color:#2d3748}
+.btn-next{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#2d3748;text-decoration:none}
+.btn-next:hover{background:#1a202c}
+</style>
+</head>
+<body>
+<div class="header"><strong>Listen to a Conversation — Practice 2</strong></div>
+
+<div class="container">
+<div class="audio-pending-banner">
+  <h2>&#128266; 音声準備中</h2>
+  <p>音声ファイルは現在作成中です。以下にスクリプトと設問を掲載しています。</p>
+</div>
+
+<!-- Conversation 1 -->
+<div class="conv-section">
+  <h3>Conversation 1</h3>
+  <div class="setting">Setting: Academic Advisor's Office — Student (male) + Academic Advisor (female)</div>
+  <div class="turn"><span class="speaker">Student:</span> Hi, Professor Daniels. I was hoping to talk to you about changing my major. I'm currently in economics, but I've been thinking about switching to environmental science.</div>
+  <div class="turn"><span class="speaker">Advisor:</span> Of course. What's making you consider the change?</div>
+  <div class="turn"><span class="speaker">Student:</span> Well, I took an environmental studies elective last semester and really enjoyed it. I feel more passionate about it than my economics courses.</div>
+  <div class="turn"><span class="speaker">Advisor:</span> That's a good reason. However, you should know that switching at this point means you'd need to complete several prerequisite courses, including Introduction to Ecology and Earth Systems Science.</div>
+  <div class="turn"><span class="speaker">Student:</span> Would that push back my graduation date?</div>
+  <div class="turn"><span class="speaker">Advisor:</span> It could, by one semester. But there is another option. You could keep your economics major and add an environmental science minor. That way, you'd still graduate on time and get exposure to the field.</div>
+  <div class="turn"><span class="speaker">Student:</span> That's actually a great idea. I hadn't thought about a minor. Can I still take the upper-level environmental science courses with a minor?</div>
+  <div class="turn"><span class="speaker">Advisor:</span> Yes, you can take up to three upper-level courses as part of the minor. Let me print out the minor requirements for you, and you can decide by the end of the week.</div>
+
+  <div class="q-block">
+    <h4>Q1. Why does the student visit the academic advisor?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> To drop a course he is failing</div>
+    <div class="opt"><span class="opt-letter">B)</span> To discuss changing his major</div>
+    <div class="opt"><span class="opt-letter">C)</span> To ask about study abroad opportunities</div>
+    <div class="opt"><span class="opt-letter">D)</span> To request a letter of recommendation</div>
+  </div>
+  <div class="q-block">
+    <h4>Q2. What does the advisor suggest as an alternative?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> Taking a gap year to explore interests</div>
+    <div class="opt"><span class="opt-letter">B)</span> Transferring to a different university</div>
+    <div class="opt"><span class="opt-letter">C)</span> Adding an environmental science minor while keeping economics</div>
+    <div class="opt"><span class="opt-letter">D)</span> Completing both majors simultaneously</div>
+  </div>
+</div>
+
+<!-- Conversation 2 -->
+<div class="conv-section">
+  <h3>Conversation 2</h3>
+  <div class="setting">Setting: University Library Front Desk — Student (female) + Librarian (male)</div>
+  <div class="turn"><span class="speaker">Student:</span> Hi, I'd like to reserve a group study room for this Saturday. We have a big project presentation on Monday.</div>
+  <div class="turn"><span class="speaker">Librarian:</span> Sure. How many people will be in your group?</div>
+  <div class="turn"><span class="speaker">Student:</span> There will be five of us. We need a room with a whiteboard and a projector so we can practice our presentation.</div>
+  <div class="turn"><span class="speaker">Librarian:</span> Let me check availability. Unfortunately, all the large rooms with projectors are already booked for Saturday. We do have a medium-sized room available, but it only has a whiteboard — no projector.</div>
+  <div class="turn"><span class="speaker">Student:</span> Hmm, we really need the projector. Is there anything else available?</div>
+  <div class="turn"><span class="speaker">Librarian:</span> Well, there is one option. The media center on the third floor has presentation rooms that are available on a first-come, first-served basis on weekends. They have projectors and screens.</div>
+  <div class="turn"><span class="speaker">Student:</span> Oh, I didn't know about that. What time does the media center open on Saturdays?</div>
+  <div class="turn"><span class="speaker">Librarian:</span> It opens at nine AM. I'd suggest arriving early to make sure you get a room. They also have a portable speaker system you can borrow if you need to practice with audio.</div>
+
+  <div class="q-block">
+    <h4>Q3. What is the student's problem?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> She needs to return overdue books</div>
+    <div class="opt"><span class="opt-letter">B)</span> She cannot find a group study room with the equipment she needs</div>
+    <div class="opt"><span class="opt-letter">C)</span> The library is closed on weekends</div>
+    <div class="opt"><span class="opt-letter">D)</span> Her library card has expired</div>
+  </div>
+  <div class="q-block">
+    <h4>Q4. What does the librarian recommend?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> Booking a room at a different library</div>
+    <div class="opt"><span class="opt-letter">B)</span> Rescheduling the study session to a weekday</div>
+    <div class="opt"><span class="opt-letter">C)</span> Using a room without a projector</div>
+    <div class="opt"><span class="opt-letter">D)</span> Going to the media center on the third floor early on Saturday</div>
+  </div>
+</div>
+</div>
+
+<div class="footer">
+  <a href="../menu.html">&#8592; メニューに戻る</a>
+  <a class="btn-next" href="practice-2-answers.html">解答・解説 &#8250;</a>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+</body>
+</html>

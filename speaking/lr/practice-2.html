@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen and Repeat — Practice 2</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#ec4899;--accent-bg:#fdf2f8;--accent-light:#f9a8d4;--accent-dark:#9d174d}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
+.top-nav-left strong{color:#2d3748}
+.top-nav-right{display:flex;align-items:center;gap:12px}
+.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#2d3748;font-weight:600;min-width:60px;text-align:center}
+.progress-bar{height:4px;background:var(--accent-bg);width:100%}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
+.main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}
+.content{width:100%;max-width:760px}
+.audio-pending-banner{background:var(--accent-bg);border:2px dashed var(--accent-light);border-radius:16px;padding:40px 30px;margin-bottom:30px;text-align:center}
+.audio-pending-banner h2{font-size:1.2em;font-weight:800;color:var(--accent-dark);margin-bottom:12px}
+.audio-pending-banner p{font-size:.9em;color:#be185d;line-height:1.6;margin-bottom:8px}
+.theme-badge{display:inline-block;background:var(--accent-bg);border:1.5px solid var(--accent-light);border-radius:10px;padding:8px 18px;font-size:.85em;font-weight:700;color:var(--accent-dark);margin-bottom:24px}
+h2.section-title{font-size:1.1em;font-weight:800;color:#2d3748;margin-bottom:16px;text-align:center}
+.sentence-table{width:100%;border-collapse:separate;border-spacing:0;border:1.5px solid #e8ecf0;border-radius:12px;overflow:hidden;margin-bottom:20px}
+.sentence-table thead th{background:var(--accent-bg);color:var(--accent-dark);font-size:.78em;font-weight:800;padding:12px 14px;text-align:left;border-bottom:1.5px solid #e8ecf0;text-transform:uppercase;letter-spacing:.04em}
+.sentence-table thead th:first-child{width:36px;text-align:center}
+.sentence-table thead th:last-child{text-align:center;width:70px}
+.sentence-table tbody tr{transition:background .15s}
+.sentence-table tbody tr:hover{background:var(--accent-bg)}
+.sentence-table tbody tr:not(:last-child) td{border-bottom:1px solid #f0f2f5}
+.sentence-table tbody td{padding:14px;font-size:.85em;vertical-align:top}
+.sentence-table tbody td:first-child{text-align:center;font-weight:800;color:var(--accent)}
+.sentence-text{font-weight:700;color:#2d3748;margin-bottom:4px}
+.sentence-meta{font-size:.78em;color:#8898a8;font-weight:600}
+.chunk-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chunk-tag{display:inline-block;background:#fff;border:1.5px solid var(--accent-light);border-radius:6px;padding:3px 10px;font-size:.78em;font-weight:600;color:var(--accent-dark)}
+.stars{color:var(--accent);font-size:.85em;letter-spacing:1px}
+.stars .empty{color:#e2e8f0}
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.footer-left a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
+.footer-left a:hover{color:#2d3748}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;color:#fff;background:var(--accent-dark)}
+.btn-nav:hover{background:#831843}
+@media(max-width:640px){
+  .sentence-table thead th,.sentence-table tbody td{padding:10px 8px;font-size:.78em}
+  .chunk-list{gap:4px}
+  .chunk-tag{font-size:.7em;padding:2px 7px}
+}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="top-nav-left">
+    <strong>Listen and Repeat</strong>
+    <span>Practice 2 &#8212; 7 Sentences</span>
+  </div>
+  <div class="top-nav-right">
+    <span class="timer-display">--:--</span>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+
+<div class="main">
+<div class="content">
+
+<div class="audio-pending-banner">
+  <h2>&#128266; 音声準備中</h2>
+  <p>このPracticeの音声ファイルは現在作成中です。<br>以下にスクリプトとチャンク分割を掲載していますので、内容の確認は可能です。</p>
+  <p style="font-size:.78em;color:#9d174d">音声が完成次第、自動再生形式に切り替わります。</p>
+</div>
+
+<div class="theme-badge">&#127979; Theme: University Campus Tour for New Students</div>
+
+<h2 class="section-title">Sentences</h2>
+
+<table class="sentence-table">
+<thead>
+  <tr>
+    <th>#</th>
+    <th>Sentence &amp; Chunks</th>
+    <th>Difficulty</th>
+    <th>Time</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>1</td>
+    <td>
+      <div class="sentence-text">Welcome to our university campus.</div>
+      <div class="sentence-meta">5 words</div>
+      <div class="chunk-list">
+        <span class="chunk-tag">Welcome</span>
+        <span class="chunk-tag">to our university campus.</span>
+      </div>
+    </td>
+    <td><span class="stars">&#9733;<span class="empty">&#9733;&#9733;&#9733;&#9733;</span></span></td>
+    <td style="text-align:center;font-weight:700;color:#4a5568">8s</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>
+      <div class="sentence-text">The student center is right next to the cafeteria.</div>
+      <div class="sentence-meta">9 words</div>
+      <div class="chunk-list">
+        <span class="chunk-tag">The student center</span>
+        <span class="chunk-tag">is right next to</span>
+        <span class="chunk-tag">the cafeteria.</span>
+      </div>
+    </td>
+    <td><span class="stars">&#9733;&#9733;<span class="empty">&#9733;&#9733;&#9733;</span></span></td>
+    <td style="text-align:center;font-weight:700;color:#4a5568">8s</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>
+      <div class="sentence-text">You can pick up your student ID at the registration office.</div>
+      <div class="sentence-meta">11 words</div>
+      <div class="chunk-list">
+        <span class="chunk-tag">You can pick up</span>
+        <span class="chunk-tag">your student ID</span>
+        <span class="chunk-tag">at the registration office.</span>
+      </div>
+    </td>
+    <td><span class="stars">&#9733;&#9733;<span class="empty">&#9733;&#9733;&#9733;</span></span></td>
+    <td style="text-align:center;font-weight:700;color:#4a5568">9s</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>
+      <div class="sentence-text">The gymnasium is open to all students from seven AM to ten PM.</div>
+      <div class="sentence-meta">13 words</div>
+      <div class="chunk-list">
+        <span class="chunk-tag">The gymnasium is open</span>
+        <span class="chunk-tag">to all students</span>
+        <span class="chunk-tag">from seven AM to ten PM.</span>
+      </div>
+    </td>
+    <td><span class="stars">&#9733;&#9733;&#9733;<span class="empty">&#9733;&#9733;</span></span></td>
+    <td style="text-align:center;font-weight:700;color:#4a5568">10s</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>
+      <div class="sentence-text">If you have any questions, please visit the information desk on the first floor.</div>
+      <div class="sentence-meta">14 words</div>
+      <div class="chunk-list">
+        <span class="chunk-tag">If you have any questions,</span>
+        <span class="chunk-tag">please visit the information desk</span>
+        <span class="chunk-tag">on the first floor.</span>
+      </div>
+    </td>
+    <td><span class="stars">&#9733;&#9733;&#9733;<span class="empty">&#9733;&#9733;</span></span></td>
+    <td style="text-align:center;font-weight:700;color:#4a5568">10s</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>
+      <div class="sentence-text">The computer lab on the third floor is available for printing and research.</div>
+      <div class="sentence-meta">13 words</div>
+      <div class="chunk-list">
+        <span class="chunk-tag">The computer lab</span>
+        <span class="chunk-tag">on the third floor</span>
+        <span class="chunk-tag">is available</span>
+        <span class="chunk-tag">for printing and research.</span>
+      </div>
+    </td>
+    <td><span class="stars">&#9733;&#9733;&#9733;&#9733;<span class="empty">&#9733;</span></span></td>
+    <td style="text-align:center;font-weight:700;color:#4a5568">11s</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>
+      <div class="sentence-text">We strongly recommend that new students attend the orientation session scheduled for next Monday morning.</div>
+      <div class="sentence-meta">15 words</div>
+      <div class="chunk-list">
+        <span class="chunk-tag">We strongly recommend</span>
+        <span class="chunk-tag">that new students attend</span>
+        <span class="chunk-tag">the orientation session</span>
+        <span class="chunk-tag">scheduled for next Monday morning.</span>
+      </div>
+    </td>
+    <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></td>
+    <td style="text-align:center;font-weight:700;color:#4a5568">12s</td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+
+<div class="reading-footer">
+  <div class="footer-left">
+    <a href="../menu.html">&#8592; メニューに戻る</a>
+  </div>
+  <a class="btn-nav" href="practice-2-tips.html">攻略コツ &#8250;</a>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();}
+</script>
+</body>
+</html>

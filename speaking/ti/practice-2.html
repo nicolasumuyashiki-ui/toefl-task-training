@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Take an Interview — Practice 2</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#ec4899;--accent-bg:#fdf2f8;--accent-light:#f9a8d4;--accent-dark:#9d174d}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
+.top-nav-left strong{color:#2d3748}
+.top-nav-right{display:flex;align-items:center;gap:12px}
+.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#2d3748;font-weight:600;min-width:60px;text-align:center}
+.progress-bar{height:4px;background:var(--accent-bg);width:100%}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
+.main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}
+.content{width:100%;max-width:700px}
+.audio-pending-banner{background:var(--accent-bg);border:2px dashed var(--accent-light);border-radius:16px;padding:40px 30px;margin-bottom:30px;text-align:center}
+.audio-pending-banner h2{font-size:1.2em;font-weight:800;color:var(--accent-dark);margin-bottom:12px}
+.audio-pending-banner p{font-size:.9em;color:#be185d;line-height:1.6;margin-bottom:8px}
+.theme-badge{display:inline-block;background:var(--accent-bg);border:1.5px solid var(--accent-light);border-radius:10px;padding:8px 18px;font-size:.85em;font-weight:700;color:var(--accent-dark);margin-bottom:28px}
+.question-card{background:#f9fafb;border:1.5px solid #e8ecf0;border-radius:14px;padding:24px;margin-bottom:20px;transition:box-shadow .2s}
+.question-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.q-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.q-num{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85em;font-weight:800;flex-shrink:0}
+.q-type{font-size:.75em;font-weight:700;color:#8898a8;text-transform:uppercase;letter-spacing:.05em}
+.q-type span{display:inline-block;background:var(--accent-bg);color:var(--accent-dark);padding:2px 10px;border-radius:6px;margin-left:8px}
+.q-text{font-size:1.05em;font-weight:700;color:#2d3748;margin-bottom:16px;padding:14px 18px;background:#fff;border-radius:10px;border-left:4px solid var(--accent)}
+.q-meta{display:flex;align-items:center;gap:16px;font-size:.8em;color:#8898a8;font-weight:600;margin-bottom:14px}
+.q-meta .time-badge{display:inline-flex;align-items:center;gap:4px;background:var(--accent-bg);color:var(--accent-dark);padding:4px 12px;border-radius:6px;font-weight:700}
+.record-area{background:var(--accent-bg);border:2px dashed var(--accent-light);border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:all .2s}
+.record-area:hover{border-color:var(--accent);background:#fce7f3}
+.record-area .mic-icon{font-size:1.6em;margin-bottom:6px}
+.record-area p{font-size:.82em;color:var(--accent-dark);font-weight:600}
+.record-area .sub{font-size:.75em;color:#8898a8;font-weight:400;margin-top:4px}
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.footer-left a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
+.footer-left a:hover{color:#2d3748}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;color:#fff;background:var(--accent-dark)}
+.btn-nav:hover{background:#831843}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="top-nav-left">
+    <strong>Take an Interview</strong>
+    <span>Practice 2 &#8212; 4 Questions</span>
+  </div>
+  <div class="top-nav-right">
+    <span class="timer-display">--:--</span>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+
+<div class="main">
+<div class="content">
+
+<div class="audio-pending-banner">
+  <h2>&#128266; 音声準備中</h2>
+  <p>このPracticeの音声ファイルは現在作成中です。<br>以下に質問を掲載していますので、回答の練習は可能です。</p>
+  <p style="font-size:.78em;color:#9d174d">音声が完成次第、自動再生形式に切り替わります。</p>
+</div>
+
+<div class="theme-badge">&#128218; Theme: Education and Learning Styles</div>
+
+<!-- Q1 -->
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">1</span>
+    <div class="q-type">Factual <span>事実質問</span></div>
+  </div>
+  <div class="q-text">What subjects are you currently studying, and which one do you find most interesting?</div>
+  <div class="q-meta">
+    <span class="time-badge">&#9201; 45秒</span>
+    <span>Response time</span>
+  </div>
+  <div class="record-area">
+    <div class="mic-icon">&#127908;</div>
+    <p>Record your answer</p>
+    <p class="sub">音声機能は準備中です</p>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">2</span>
+    <div class="q-type">Behavioral <span>経験質問</span></div>
+  </div>
+  <div class="q-text">Can you describe a study method that has worked well for you in the past?</div>
+  <div class="q-meta">
+    <span class="time-badge">&#9201; 45秒</span>
+    <span>Response time</span>
+  </div>
+  <div class="record-area">
+    <div class="mic-icon">&#127908;</div>
+    <p>Record your answer</p>
+    <p class="sub">音声機能は準備中です</p>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">3</span>
+    <div class="q-type">Opinion <span>意見質問</span></div>
+  </div>
+  <div class="q-text">Do you think online classes are as effective as in-person classes? Why or why not?</div>
+  <div class="q-meta">
+    <span class="time-badge">&#9201; 45秒</span>
+    <span>Response time</span>
+  </div>
+  <div class="record-area">
+    <div class="mic-icon">&#127908;</div>
+    <p>Record your answer</p>
+    <p class="sub">音声機能は準備中です</p>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">4</span>
+    <div class="q-type">Broader <span>発展質問</span></div>
+  </div>
+  <div class="q-text">Some educators believe that students should be allowed to choose what they study. Do you agree or disagree with this idea?</div>
+  <div class="q-meta">
+    <span class="time-badge">&#9201; 45秒</span>
+    <span>Response time</span>
+  </div>
+  <div class="record-area">
+    <div class="mic-icon">&#127908;</div>
+    <p>Record your answer</p>
+    <p class="sub">音声機能は準備中です</p>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="reading-footer">
+  <div class="footer-left">
+    <a href="../menu.html">&#8592; メニューに戻る</a>
+  </div>
+  <a class="btn-nav" href="practice-2-tips.html">攻略コツ &#8250;</a>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();}
+</script>
+</body>
+</html>
