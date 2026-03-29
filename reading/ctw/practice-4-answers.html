@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Complete the Words Practice 4 解答解説</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Nunito',sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#1a6b6a,#2a8a8a);color:#fff;padding:28px 24px;text-align:center;position:relative}
+.header h1{font-size:1.5em;font-weight:800;margin-bottom:4px}
+.header p{font-size:.88em;opacity:.85}
+.btn-menu{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:8px;font-size:.78em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.btn-menu:hover{background:rgba(255,255,255,.25)}
+.score-summary{max-width:880px;margin:20px auto;background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:22px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.score-card{flex:1;min-width:180px;text-align:center;padding:14px;border-radius:10px;background:#f9fafb;border:1.5px solid #eef1f5}
+.score-card h3{font-size:.78em;color:#8898a8;font-weight:700;margin-bottom:2px}
+.score-card .score-num{font-size:1.8em;font-weight:800;color:#2d3748}
+.score-card .score-num .correct{color:#1a6b6a}
+.score-card .score-detail{font-size:.72em;color:#a0aec0;margin-top:2px;font-weight:600}
+.score-card.total{background:#e8f5f4;border-color:#1a6b6a}
+.tips-banner{background:#fff;border-left:4px solid #1a6b6a;margin:20px auto;max-width:880px;padding:18px 22px;border-radius:0 10px 10px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.tips-banner h2{font-size:1em;color:#1a6b6a;margin-bottom:10px;font-weight:800}
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.tip-card{background:#f0faf9;border-radius:10px;padding:12px 14px}
+.tip-num{display:inline-block;background:#1a6b6a;color:#fff;font-size:.7em;font-weight:800;padding:2px 10px;border-radius:8px;margin-bottom:6px}
+.tip-card h3{font-size:.88em;color:#2d3748;margin-bottom:4px;font-weight:700}
+.tip-card p{font-size:.78em;color:#5a6878;line-height:1.6}
+.tip-card .ex{font-size:.75em;color:#8898a8;margin-top:3px;font-style:italic}
+.set-nav{max-width:880px;margin:20px auto 0;display:flex;gap:6px;padding:0}
+.set-nav button{flex:1;padding:10px;font-size:.82em;font-family:inherit;font-weight:700;border:none;border-radius:10px 10px 0 0;cursor:pointer;transition:all .2s;background:#e2e8f0;color:#5a6878}
+.set-nav button.active{background:#fff;color:#2d3748;box-shadow:0 -2px 8px rgba(0,0,0,.05)}
+.set-nav button:hover:not(.active){background:#edf2f7}
+.set-panel{display:none;max-width:880px;margin:0 auto}.set-panel.active{display:block}
+.set-section{background:#fff;border-radius:0 0 14px 14px;box-shadow:0 2px 12px rgba(0,0,0,.06);overflow:hidden}
+.set-header{background:#2d3748;color:#fff;padding:14px 22px;display:flex;align-items:center;gap:10px}
+.set-badge{background:#4a90d9;font-size:.7em;font-weight:800;padding:3px 12px;border-radius:8px}
+.set-badge.m2h{background:#e53e3e}
+.passage-block{padding:18px 22px;background:#fafbfc;border-bottom:1px solid #e2e8f0}
+.passage-label{font-size:.7em;font-weight:700;color:#8898a8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.passage-text{font-size:.9em;line-height:2;color:#2d3748}
+.blank-word{font-weight:700;color:#1a6b6a}.blank-answer{background:#e6fffa;padding:1px 4px;border-radius:3px;border-bottom:2px solid #1a6b6a}
+.answers-block{padding:18px 22px}
+.answers-block h3{font-size:.92em;color:#2d3748;margin-bottom:12px;font-weight:800}
+.answer-row{display:flex;align-items:flex-start;padding:11px 14px;border-bottom:1px solid #f0f0f0;gap:10px}
+.answer-row:hover{background:#f7fafc}.answer-row.incorrect{background:#fff5f5}
+.q-num{min-width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:800;flex-shrink:0}
+.q-num.correct{background:#c6f6d5;color:#22543d}.q-num.wrong{background:#fed7d7;color:#9b2c2c}
+.q-content{flex:1}
+.q-word{font-weight:700;color:#2d3748;font-size:.88em;margin-bottom:2px}
+.q-word .shown{color:#8898a8}.q-word .ans{color:#1a6b6a;font-weight:800}
+.q-user{font-size:.78em;margin-bottom:3px}
+.q-explain{font-size:.78em;color:#5a6878;line-height:1.5}
+.q-tag{display:inline-block;font-size:.68em;font-weight:700;padding:1px 8px;border-radius:6px;margin-left:4px;vertical-align:middle}
+.tag-hard{background:#fed7d7;color:#9b2c2c}.tag-mod{background:#c6f6d5;color:#22543d}
+.scoring-reminder{max-width:880px;margin:20px auto 40px;background:#fffbeb;border:1.5px solid #fbbf24;border-radius:12px;padding:16px 22px;display:flex;align-items:flex-start;gap:10px}
+.scoring-reminder .icon{font-size:1.3em;flex-shrink:0}
+.scoring-reminder .text h3{font-size:.9em;color:#92400e;margin-bottom:3px;font-weight:700}
+.scoring-reminder .text p{font-size:.82em;color:#a16207;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="header">
+  <a class="btn-menu" href="../menu.html">&larr; メニュー</a>
+  <h1>Complete the Words 解答解説</h1>
+  <p>Practice 4 — 3セット分</p>
+</div>
+<div class="score-summary" id="scoreSummary"></div>
+<div class="tips-banner">
+  <h2>&#128161; Complete the Words 攻略 4つのポイント</h2>
+  <div class="tips-grid">
+    <div class="tip-card"><span class="tip-num">01</span><h3>品詞を特定してから埋める</h3><p>冠詞＋空欄 &rarr; 名詞<br>主語＋空欄 &rarr; 動詞<br>be動詞＋空欄 &rarr; 形容詞/過去分詞<br>空欄＋名詞 &rarr; 形容詞</p></div>
+    <div class="tip-card"><span class="tip-num">02</span><h3>頻出パターンを暗記する</h3><p>however, therefore, although<br>particularly, especially<br>significant, demonstrate, evidence</p><div class="ex">&rarr; 見たら即座に埋められるように！</div></div>
+    <div class="tip-card"><span class="tip-num">03</span><h3>推測でも必ず埋める</h3><p>正解 &rarr; 得点 / 不正解 &rarr; 0点 / 空欄 &rarr; 0点</p><div class="ex">&rarr; 推測しないと損！必ず何か入れよう</div></div>
+    <div class="tip-card"><span class="tip-num">04</span><h3>INTROとCONCLUSIONを先に読む</h3><p>最初と最後の文を先に読めば、トピックと流れが掴める。空欄の推測精度が上がる！</p><div class="ex">&rarr; 本文に入る前にまず全体像を把握</div></div>
+  </div>
+</div>
+<div class="set-nav" id="setNav">
+  <button class="active" onclick="showSet(0)">Set 1: Printing Press</button>
+  <button onclick="showSet(1)">Set 2: Animal Migration</button>
+  <button onclick="showSet(2)">Set 3: Renewable Energy</button>
+</div>
+<div class="set-panel active" id="set0"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 1: The Invention of the Printing Press</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage0"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag0"></div></div></div></div>
+<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 2: Why Animals Migrate</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
+<div class="set-panel" id="set2"><div class="set-section"><div class="set-header"><span class="set-badge m2h">M2H</span><h2>Set 3: Advances in Renewable Energy Technology</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage2"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag2"></div></div></div></div>
+<div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
+
+<script src="../../js/auth.js"></script>
+<script>
+var SD=[
+{intro:"Before the mid-fifteenth century, books in Europe were copied by hand, making them extremely expensive and rare. Only wealthy individuals and religious institutions could afford to own written works. The need for a faster method of producing books was growing steadily.",conclusion:"This remarkable invention transformed the way knowledge was shared and helped bring about major changes in education, religion, and science across Europe.",target:[
+{w:"Johannes",a:"annes",s:"Joh",p:""},
+{w:"Gutenberg",a:null,s:null,p:""},
+{w:"developed",a:"oped",s:"devel",p:""},
+{w:"a",a:null,s:null,p:""},
+{w:"machine",a:"hine",s:"mac",p:""},
+{w:"that",a:null,s:null,p:""},
+{w:"could",a:"uld",s:"co",p:""},
+{w:"press",a:null,s:null,p:""},
+{w:"ink",a:"nk",s:"i",p:""},
+{w:"onto",a:null,s:null,p:""},
+{w:"paper",a:"per",s:"pa",p:""},
+{w:"quickly",a:null,s:null,p:""},
+{w:"allowing",a:"wing",s:"allo",p:""},
+{w:"printers",a:null,s:null,p:""},
+{w:"to",a:null,s:null,p:""},
+{w:"produce",a:"duce",s:"pro",p:""},
+{w:"hundreds",a:null,s:null,p:""},
+{w:"of",a:null,s:null,p:""},
+{w:"copies",a:"pies",s:"co",p:""},
+{w:"within",a:null,s:null,p:"."}
+],exp:[
+{pos:"固有名詞",d:"MOD",e:"「空欄＋Gutenberg」→名前。\"Joh\"→Johannes。歴史的人物の名前。"},
+{pos:"動詞",d:"MOD",e:"「Gutenberg＋空欄」→動詞。\"devel\"→developed。過去形。"},
+{pos:"名詞",d:"MOD",e:"「a＋空欄＋that」→名詞。\"mac\"→machine。冠詞＋名詞パターン。"},
+{pos:"助動詞",d:"MOD",e:"「that＋空欄＋press」→助動詞。\"co\"→could。"},
+{pos:"名詞",d:"HARD",e:"「press＋空欄＋onto」→名詞。\"i\"→ink。1文字ヒントで難。"},
+{pos:"名詞",d:"MOD",e:"「onto＋空欄」→名詞。\"pa\"→paper。"},
+{pos:"動名詞",d:"MOD",e:"「quickly＋空欄＋printers」→動名詞（分詞構文）。\"allo\"→allowing。"},
+{pos:"動詞",d:"MOD",e:"「printers to＋空欄」→動詞。\"pro\"→produce。不定詞パターン。"},
+{pos:"名詞",d:"HARD",e:"「hundreds of＋空欄」→名詞。\"co\"→copies。表示少なめ。"}
+]},
+{intro:"Every year, millions of animals travel long distances across land, sea, and sky. These seasonal journeys, known as migration, are among the most impressive behaviors observed in the natural world. Scientists have studied migration for centuries and continue to learn new things about it.",conclusion:"By understanding these patterns, scientists hope to protect the routes and habitats that migrating animals depend on for survival.",target:[
+{w:"Many",a:"ny",s:"Ma",p:""},
+{w:"species",a:null,s:null,p:""},
+{w:"migrate",a:"rate",s:"mig",p:""},
+{w:"to",a:null,s:null,p:""},
+{w:"find",a:"nd",s:"fi",p:""},
+{w:"warmer",a:null,s:null,p:""},
+{w:"climates",a:"mates",s:"cli",p:""},
+{w:"during",a:null,s:null,p:""},
+{w:"winter",a:"ter",s:"win",p:""},
+{w:"while",a:null,s:null,p:""},
+{w:"others",a:"ers",s:"oth",p:""},
+{w:"travel",a:null,s:null,p:""},
+{w:"long",a:"ng",s:"lo",p:""},
+{w:"distances",a:null,s:null,p:""},
+{w:"to",a:null,s:null,p:""},
+{w:"reach",a:"ach",s:"re",p:""},
+{w:"safe",a:null,s:null,p:""},
+{w:"breeding",a:"eding",s:"bre",p:""},
+{w:"grounds",a:null,s:null,p:""},
+{w:"each",a:"ch",s:"ea",p:"."}
+],exp:[
+{pos:"形容詞",d:"MOD",e:"「空欄＋species」→形容詞/限定詞。\"Ma\"→Many。頻出パターン。"},
+{pos:"動詞",d:"MOD",e:"「species＋空欄」→動詞。\"mig\"→migrate。トピック語。"},
+{pos:"動詞",d:"MOD",e:"「migrate to＋空欄」→動詞。\"fi\"→find。不定詞パターン。"},
+{pos:"名詞",d:"MOD",e:"「warmer＋空欄」→名詞。\"cli\"→climates。形容詞＋名詞パターン。"},
+{pos:"名詞",d:"MOD",e:"「during＋空欄」→名詞。\"win\"→winter。前置詞＋名詞パターン。"},
+{pos:"代名詞",d:"MOD",e:"「while＋空欄＋travel」→主語。\"oth\"→others。対比の構文。"},
+{pos:"形容詞",d:"MOD",e:"「travel＋空欄＋distances」→形容詞。\"lo\"→long。"},
+{pos:"動詞",d:"HARD",e:"「to＋空欄＋safe」→動詞。\"re\"→reach。表示少なめ。"},
+{pos:"名詞",d:"HARD",e:"「safe＋空欄＋grounds」→形容詞的名詞。\"bre\"→breeding。breeding grounds（繁殖地）。"},
+{pos:"形容詞",d:"MOD",e:"「grounds＋空欄」→形容詞。\"ea\"→each。各の意味。"}
+]},
+{intro:"As concerns about climate change continue to grow, governments and businesses around the world are investing heavily in cleaner sources of power. Fossil fuels such as coal and oil have long been the primary sources of energy, but they release harmful gases into the atmosphere. The search for sustainable alternatives has become one of the most urgent priorities of the twenty-first century.",conclusion:"Although significant challenges remain, continued investment in research and development is expected to make renewable energy increasingly affordable and reliable in the coming decades.",target:[
+{w:"Solar",a:"lar",s:"So",p:""},
+{w:"panels",a:null,s:null,p:""},
+{w:"convert",a:"vert",s:"con",p:""},
+{w:"sunlight",a:null,s:null,p:""},
+{w:"directly",a:"ectly",s:"dir",p:""},
+{w:"into",a:null,s:null,p:""},
+{w:"electricity",a:"tricity",s:"elec",p:""},
+{w:"and",a:null,s:null,p:""},
+{w:"modern",a:"ern",s:"mod",p:""},
+{w:"wind",a:null,s:null,p:""},
+{w:"turbines",a:"bines",s:"tur",p:""},
+{w:"capture",a:null,s:null,p:""},
+{w:"energy",a:"ergy",s:"en",p:""},
+{w:"from",a:null,s:null,p:""},
+{w:"strong",a:"ong",s:"str",p:""},
+{w:"air",a:null,s:null,p:""},
+{w:"currents",a:"rents",s:"cur",p:""},
+{w:"providing",a:null,s:null,p:""},
+{w:"communities",a:"munities",s:"com",p:""},
+{w:"with",a:null,s:null,p:""},
+{w:"cleaner",a:"aner",s:"cle",p:""},
+{w:"alternatives",a:null,s:null,p:"."}
+],exp:[
+{pos:"形容詞",d:"MOD",e:"「空欄＋panels」→形容詞。\"So\"→Solar。トピック語。"},
+{pos:"動詞",d:"HARD",e:"「panels＋空欄＋sunlight」→動詞。\"con\"→convert。convert...intoの構文。"},
+{pos:"副詞",d:"HARD",e:"「convert sunlight＋空欄＋into」→副詞。\"dir\"→directly。5文字の答え。"},
+{pos:"名詞",d:"HARD",e:"「into＋空欄」→名詞。\"elec\"→electricity。7文字の長い答え。"},
+{pos:"形容詞",d:"MOD",e:"「and＋空欄＋wind」→形容詞。\"mod\"→modern。"},
+{pos:"名詞",d:"HARD",e:"「wind＋空欄」→名詞。\"tur\"→turbines。専門用語で難。"},
+{pos:"名詞",d:"MOD",e:"「capture＋空欄＋from」→名詞。\"en\"→energy。トピック語。"},
+{pos:"形容詞",d:"MOD",e:"「from＋空欄＋air」→形容詞。\"str\"→strong。"},
+{pos:"名詞",d:"HARD",e:"「air＋空欄」→名詞。\"cur\"→currents（気流）。専門語彙。"},
+{pos:"名詞",d:"HARD",e:"「providing＋空欄＋with」→名詞。\"com\"→communities。provide A with B構文。"},
+{pos:"形容詞",d:"MOD",e:"「with＋空欄＋alternatives」→形容詞。\"cle\"→cleaner。比較級。"}
+]}
+];
+
+function renderAll(){
+  var ts=0,tq=0,sh='';
+  SD.forEach(function(s,si){
+    var bl=s.target.filter(function(t){return t.a!==null;});
+    var st=null;try{st=JSON.parse(sessionStorage.getItem('ctw_p4_answers_'+(si+1)));}catch(e){}
+    var ua=st?st.answers:[];var sc=st?st.score:0;ts+=sc;tq+=bl.length;
+    sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+bl.length+'</div><div class="score-detail">'+(st?Math.round(sc/bl.length*100)+'%':'—')+'</div></div>';
+    var ph='<span>'+s.intro+'</span> ';
+    s.target.forEach(function(t){if(t.a!==null){ph+='<span class="blank-word">'+t.s+'<span class="blank-answer">'+t.a+'</span></span>';if(t.p)ph+=t.p;ph+=' ';}else{ph+=t.w+(t.p||'')+' ';}});
+    ph+='<span>'+s.conclusion+'</span>';
+    document.getElementById('passage'+si).innerHTML=ph;
+    var ag='';
+    bl.forEach(function(b,qi){
+      var ex=s.exp[qi];var uans=ua[qi]||'';var ok=uans.toLowerCase()===b.a.toLowerCase();
+      var dt=ex.d==='HARD'?'<span class="q-tag tag-hard">HARD</span>':'<span class="q-tag tag-mod">MOD</span>';
+      var ul='';
+      if(st){if(ok){ul='<div class="q-user" style="color:#22543d">&#10004; 正解！ あなたの回答: '+b.s+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#9b2c2c">&#11036; 未回答 — 推測でも必ず埋めよう！</div>';}else{ul='<div class="q-user" style="color:#9b2c2c">&#10060; あなた: <span style="text-decoration:line-through">'+b.s+uans+'</span> &rarr; 正解: '+b.w+'</div>';}}
+      ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+b.s+'</span><span class="ans">'+b.a+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong>品詞：'+ex.pos+'</strong> '+ex.e+'</div></div></div>';
+    });
+    document.getElementById('ag'+si).innerHTML=ag;
+  });
+  sh+='<div class="score-card total"><h3>合計</h3><div class="score-num"><span class="correct">'+ts+'</span>/'+tq+'</div><div class="score-detail">'+Math.round(ts/tq*100)+'%</div></div>';
+  document.getElementById('scoreSummary').innerHTML=sh;
+}
+function showSet(i){document.querySelectorAll('.set-panel').forEach(function(p,j){p.classList.toggle('active',j===i);});document.querySelectorAll('.set-nav button').forEach(function(b,j){b.classList.toggle('active',j===i);});}
+renderAll();
+</script>
+</body>
+</html>

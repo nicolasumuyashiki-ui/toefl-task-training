@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Take an Interview 攻略コツ — Practice 4</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#ec4899;--accent-bg:#fdf2f8;--accent-light:#f9a8d4;--accent-dark:#9d174d}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
+.top-nav-left strong{color:#2d3748}
+.main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}
+.content{width:100%;max-width:720px}
+h1.page-heading{font-size:1.3em;font-weight:800;color:#2d3748;margin-bottom:6px}
+.page-sub{font-size:.85em;color:#8898a8;margin-bottom:28px}
+.tip-card{background:#fff;border:1.5px solid #e8ecf0;border-radius:14px;padding:24px;margin-bottom:20px;transition:box-shadow .2s}
+.tip-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.tip-card h3{font-size:1em;font-weight:800;color:var(--accent-dark);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.tip-card h3 .icon{width:32px;height:32px;border-radius:8px;background:var(--accent-bg);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.95em;flex-shrink:0}
+.tip-card p,.tip-card li{font-size:.88em;color:#4a5568;margin-bottom:6px}
+.tip-card ul{padding-left:20px;margin-top:6px}
+.tip-card li{margin-bottom:8px}
+.time-breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+@media(max-width:640px){.time-breakdown{grid-template-columns:repeat(2,1fr)}}
+.time-block{background:var(--accent-bg);border-radius:10px;padding:12px;text-align:center}
+.time-block .seconds{font-size:1.4em;font-weight:800;color:var(--accent)}
+.time-block .label{font-size:.72em;font-weight:700;color:var(--accent-dark);margin-top:2px}
+.template-step{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:var(--accent-bg);border-radius:10px;margin-bottom:8px}
+.template-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:800;flex-shrink:0;margin-top:2px}
+.template-text{font-size:.85em;color:var(--accent-dark)}
+.template-text strong{display:block;font-weight:800;margin-bottom:2px}
+.template-text span{color:#6b7280;font-weight:400}
+.phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+@media(max-width:640px){.phrase-grid{grid-template-columns:1fr}}
+.phrase-item{background:var(--accent-bg);border-radius:8px;padding:10px 14px}
+.phrase-item .jp{font-size:.78em;color:#8898a8;font-weight:600;margin-bottom:2px}
+.phrase-item .en{font-size:.88em;color:var(--accent-dark);font-weight:700}
+.fail-grid{margin-top:10px}
+.fail-row{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:10px;margin-bottom:8px}
+.fail-row.bad{background:#fef2f2;border:1px solid #fecaca}
+.fail-row.good{background:#f0fdf4;border:1px solid #bbf7d0}
+.fail-icon{font-size:1em;flex-shrink:0;margin-top:2px}
+.fail-text{font-size:.85em;font-weight:600}
+.fail-row.bad .fail-text{color:#991b1b}
+.fail-row.good .fail-text{color:#166534}
+.example-list{margin-top:10px}
+.example-tag{display:inline-block;background:var(--accent-bg);border:1.5px solid var(--accent-light);border-radius:8px;padding:6px 14px;margin:0 6px 8px 0;font-size:.82em;font-weight:600;color:var(--accent-dark)}
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.footer-left a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
+.footer-left a:hover{color:#2d3748}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;color:#fff;background:var(--accent-dark)}
+.btn-nav:hover{background:#831843}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="top-nav-left">
+    <strong>Take an Interview</strong>
+    <span>Practice 4 &#8212; 攻略コツ</span>
+  </div>
+</div>
+
+<div class="main">
+<div class="content">
+
+<h1 class="page-heading">&#128161; Take an Interview 攻略コツ</h1>
+<p class="page-sub">45秒テンプレートで健康・フィットネスの質問を攻略</p>
+
+<!-- Strategy 1: 45-second breakdown -->
+<div class="tip-card">
+  <h3><span class="icon">&#9201;&#65039;</span> 45秒の時間配分</h3>
+  <p>45秒は短いようで、テンプレートに沿えば十分な内容を詰め込める。時間配分を体に覚えさせることが重要。</p>
+  <div class="time-breakdown">
+    <div class="time-block"><div class="seconds">5秒</div><div class="label">主張</div></div>
+    <div class="time-block"><div class="seconds">15秒</div><div class="label">理由</div></div>
+    <div class="time-block"><div class="seconds">15秒</div><div class="label">具体例</div></div>
+    <div class="time-block"><div class="seconds">10秒</div><div class="label">まとめ</div></div>
+  </div>
+</div>
+
+<!-- Strategy 2: Template -->
+<div class="tip-card">
+  <h3><span class="icon">&#128203;</span> 45秒テンプレート（Health テーマ版）</h3>
+  <p>健康・フィットネスの質問に特化したテンプレート。このパターンを覚えれば即座に回答を組み立てられる。</p>
+  <div class="template-step">
+    <span class="template-num">1</span>
+    <div class="template-text"><strong>In my opinion, ... / I believe that ...</strong><span>主張を1文で明確に述べる（5秒）</span></div>
+  </div>
+  <div class="template-step">
+    <span class="template-num">2</span>
+    <div class="template-text"><strong>The main reason is that ... / This is because ...</strong><span>理由を具体的に1つ説明する（15秒）</span></div>
+  </div>
+  <div class="template-step">
+    <span class="template-num">3</span>
+    <div class="template-text"><strong>For example, when I ... / In my experience, ...</strong><span>自分の経験や具体的なエピソードを入れる（15秒）</span></div>
+  </div>
+  <div class="template-step">
+    <span class="template-num">4</span>
+    <div class="template-text"><strong>So that's why I believe ... / Overall, ...</strong><span>最初の主張を別の言葉で繰り返して締める（10秒）</span></div>
+  </div>
+</div>
+
+<!-- Strategy 3: Filler phrases -->
+<div class="tip-card">
+  <h3><span class="icon">&#128172;</span> Health テーマで使えるフレーズ</h3>
+  <p>健康・フィットネスの話題で頻出するフレーズを事前に準備しておく。</p>
+  <div class="phrase-grid">
+    <div class="phrase-item">
+      <div class="jp">運動の習慣</div>
+      <div class="en">I try to exercise regularly...</div>
+    </div>
+    <div class="phrase-item">
+      <div class="jp">健康の重要性</div>
+      <div class="en">Health is one of the most important things...</div>
+    </div>
+    <div class="phrase-item">
+      <div class="jp">生活習慣</div>
+      <div class="en">In terms of my daily routine...</div>
+    </div>
+    <div class="phrase-item">
+      <div class="jp">意見を述べる</div>
+      <div class="en">From my perspective...</div>
+    </div>
+  </div>
+</div>
+
+<!-- Strategy 4: Failure patterns -->
+<div class="tip-card">
+  <h3><span class="icon">&#9888;&#65039;</span> よくある失敗パターンと対策</h3>
+  <div class="fail-grid">
+    <div class="fail-row bad">
+      <span class="fail-icon">&#10007;</span>
+      <div class="fail-text">具体例なしで抽象的に話し続ける</div>
+    </div>
+    <div class="fail-row good">
+      <span class="fail-icon">&#10003;</span>
+      <div class="fail-text">&#8594; "For example, last month I started jogging..." のように自分の体験を入れる</div>
+    </div>
+    <div class="fail-row bad">
+      <span class="fail-icon">&#10007;</span>
+      <div class="fail-text">理由を2つ挙げて両方中途半端</div>
+    </div>
+    <div class="fail-row good">
+      <span class="fail-icon">&#10003;</span>
+      <div class="fail-text">&#8594; 理由は1つに絞り、具体例で深く掘り下げる</div>
+    </div>
+    <div class="fail-row bad">
+      <span class="fail-icon">&#10007;</span>
+      <div class="fail-text">時間が余って沈黙で終わる</div>
+    </div>
+    <div class="fail-row good">
+      <span class="fail-icon">&#10003;</span>
+      <div class="fail-text">&#8594; まとめで「That's why I strongly believe...」と繰り返して時間を使い切る</div>
+    </div>
+    <div class="fail-row bad">
+      <span class="fail-icon">&#10007;</span>
+      <div class="fail-text">難しい単語を使おうとして詰まる</div>
+    </div>
+    <div class="fail-row good">
+      <span class="fail-icon">&#10003;</span>
+      <div class="fail-text">&#8594; シンプルな単語で流暢に話す方が高得点</div>
+    </div>
+  </div>
+</div>
+
+<!-- Strategy 5: Reusable examples -->
+<div class="tip-card">
+  <h3><span class="icon">&#128218;</span> 使い回せる具体例ストック</h3>
+  <p>健康テーマでどんな質問にも応用できるエピソードを準備しておく。</p>
+  <div class="example-list">
+    <span class="example-tag">&#127939; ジョギングを始めた経験</span>
+    <span class="example-tag">&#129367; 食生活を変えた経験</span>
+    <span class="example-tag">&#128164; 睡眠習慣の改善</span>
+    <span class="example-tag">&#127947; 部活・スポーツクラブ</span>
+    <span class="example-tag">&#129656; 健康診断のエピソード</span>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="reading-footer">
+  <div class="footer-left">
+    <a href="../menu.html">&#8592; メニューに戻る</a>
+  </div>
+  <a class="btn-nav" href="practice-4.html">Practice 4 に戻る &#8250;</a>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();}
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen and Choose a Response — Practice 4</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
+.top-nav-left strong{color:#2d3748}
+.top-nav-right{display:flex;align-items:center;gap:12px}
+.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#2d3748;font-weight:600;min-width:60px;text-align:center}
+.progress-bar{height:4px;background:#ebf4ff;width:100%}
+.progress-fill{height:100%;background:#f59e0b;border-radius:2px;transition:width .3s}
+.main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}
+.content{width:100%;max-width:660px;text-align:center}
+.audio-pending-banner{background:#fffbeb;border:2px dashed #fde68a;border-radius:16px;padding:40px 30px;margin-bottom:30px}
+.audio-pending-banner h2{font-size:1.2em;font-weight:800;color:#92400e;margin-bottom:12px}
+.audio-pending-banner p{font-size:.9em;color:#b45309;line-height:1.6;margin-bottom:8px}
+.script-section{background:#f9fafb;border:1px solid #e8ecf0;border-radius:12px;padding:24px;margin-bottom:20px;text-align:left}
+.script-section h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.script-section .q-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.8em;font-weight:800}
+.script-prompt{font-size:.88em;color:#4a5568;margin-bottom:16px;padding:10px 14px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;font-style:italic}
+.options{list-style:none;padding:0}
+.options li{padding:10px 14px;margin-bottom:8px;border:1.5px solid #e8ecf0;border-radius:10px;font-size:.88em;cursor:pointer;transition:all .15s}
+.options li:hover{border-color:#fde68a;background:#fffbeb}
+.options li .opt-letter{font-weight:800;color:#f59e0b;margin-right:8px}
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.footer-left a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
+.footer-left a:hover{color:#2d3748}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.btn-next{color:#fff;background:#2d3748}
+.btn-next:hover{background:#1a202c}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="top-nav-left">
+    <strong>Listen and Choose a Response</strong>
+    <span>Practice 4 — 8 Questions</span>
+  </div>
+  <div class="top-nav-right">
+    <span class="timer-display">--:--</span>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+
+<div class="main">
+<div class="content">
+
+<div class="audio-pending-banner">
+  <h2>&#128266; 音声準備中</h2>
+  <p>このPracticeの音声ファイルは現在作成中です。<br>以下にスクリプトと選択肢を掲載していますので、内容の確認は可能です。</p>
+  <p style="font-size:.78em;color:#92400e">音声が完成次第、自動再生形式に切り替わります。</p>
+</div>
+
+<!-- Q1: campus events — correct A -->
+<div class="script-section">
+  <h3><span class="q-num">1</span> Question 1</h3>
+  <div class="script-prompt">Audio: "Do you know what time the welcome festival starts this Saturday?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> I think it starts at noon in the main quad.</li>
+    <li><span class="opt-letter">B)</span> The festival food was delicious last year.</li>
+    <li><span class="opt-letter">C)</span> I usually spend my Saturdays at the library.</li>
+    <li><span class="opt-letter">D)</span> We should invite more people to join.</li>
+  </ul>
+</div>
+
+<!-- Q2: housing — correct B -->
+<div class="script-section">
+  <h3><span class="q-num">2</span> Question 2</h3>
+  <div class="script-prompt">Audio: "I'm having trouble with the heating in my dorm room. It's been freezing all week."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> The dorm has a nice lounge on the first floor.</li>
+    <li><span class="opt-letter">B)</span> You should submit a maintenance request online. They usually fix it within a day.</li>
+    <li><span class="opt-letter">C)</span> I prefer living off campus because it's quieter.</li>
+    <li><span class="opt-letter">D)</span> Winter is always the coldest season here.</li>
+  </ul>
+</div>
+
+<!-- Q3: dining — correct C -->
+<div class="script-section">
+  <h3><span class="q-num">3</span> Question 3</h3>
+  <div class="script-prompt">Audio: "Have you tried the new salad bar they added to the dining hall?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> The dining hall closes at eight on weekdays.</li>
+    <li><span class="opt-letter">B)</span> I don't have a meal plan this semester.</li>
+    <li><span class="opt-letter">C)</span> Yes, it's actually really good. The dressings are all homemade.</li>
+    <li><span class="opt-letter">D)</span> Salads are healthier than most fast food options.</li>
+  </ul>
+</div>
+
+<!-- Q4: study abroad — correct D -->
+<div class="script-section">
+  <h3><span class="q-num">4</span> Question 4</h3>
+  <div class="script-prompt">Audio: "I'm thinking about applying for the exchange program in Spain, but I'm worried about the language barrier."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Spain has beautiful architecture and rich history.</li>
+    <li><span class="opt-letter">B)</span> The application deadline was last month.</li>
+    <li><span class="opt-letter">C)</span> I studied abroad in Japan last summer.</li>
+    <li><span class="opt-letter">D)</span> Most of the classes are taught in English, so you should be fine.</li>
+  </ul>
+</div>
+
+<!-- Q5: career services — correct A -->
+<div class="script-section">
+  <h3><span class="q-num">5</span> Question 5</h3>
+  <div class="script-prompt">Audio: "I have a job interview next week, but I don't know what to wear."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> The career center offers free mock interviews and dress code advice.</li>
+    <li><span class="opt-letter">B)</span> Job interviews can be very stressful for everyone.</li>
+    <li><span class="opt-letter">C)</span> I got my current job through an online listing.</li>
+    <li><span class="opt-letter">D)</span> Most companies these days allow casual clothing.</li>
+  </ul>
+</div>
+
+<!-- Q6: tutoring — correct B -->
+<div class="script-section">
+  <h3><span class="q-num">6</span> Question 6</h3>
+  <div class="script-prompt">Audio: "I'm struggling with organic chemistry. The concepts just aren't clicking for me."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Chemistry is one of the hardest subjects in the science department.</li>
+    <li><span class="opt-letter">B)</span> Have you tried the free tutoring sessions at the learning center? They have chemistry specialists.</li>
+    <li><span class="opt-letter">C)</span> I dropped that class last semester because I didn't like it.</li>
+    <li><span class="opt-letter">D)</span> The textbook has a lot of practice problems you could try.</li>
+  </ul>
+</div>
+
+<!-- Q7: recreation center — correct C -->
+<div class="script-section">
+  <h3><span class="q-num">7</span> Question 7</h3>
+  <div class="script-prompt">Audio: "I heard they just renovated the swimming pool at the recreation center."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Swimming is great exercise for building endurance.</li>
+    <li><span class="opt-letter">B)</span> The recreation center is located near the science building.</li>
+    <li><span class="opt-letter">C)</span> Yeah, they added new lanes and extended the hours until ten PM.</li>
+    <li><span class="opt-letter">D)</span> I prefer playing basketball at the outdoor courts.</li>
+  </ul>
+</div>
+
+<!-- Q8: student government — correct D -->
+<div class="script-section">
+  <h3><span class="q-num">8</span> Question 8</h3>
+  <div class="script-prompt">Audio: "Are you going to vote in the student government election tomorrow?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Student government elections happen every spring.</li>
+    <li><span class="opt-letter">B)</span> I was the class president in high school.</li>
+    <li><span class="opt-letter">C)</span> The candidates gave their speeches at the assembly yesterday.</li>
+    <li><span class="opt-letter">D)</span> Definitely. I really like the candidate who's pushing for longer library hours.</li>
+  </ul>
+</div>
+
+</div>
+</div>
+
+<div class="reading-footer">
+  <div class="footer-left">
+    <a href="../menu.html">&#8592; メニューに戻る</a>
+  </div>
+  <button class="btn-nav btn-next" onclick="location.href='practice-4-answers.html'">解答・解説 &#8250;</button>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();}
+</script>
+</body>
+</html>
