@@ -1,13 +1,44 @@
 /**
- * api.js — GAS API通信モジュール
- * 【重要】デプロイ後、下のURLを自分のGASウェブアプリURLに置換すること
+ * api.js — GAS API通信モジュール (JSONP方式)
+ * Google Workspace アカウントのGASはCORS制約があるため、
+ * scriptタグ注入 (JSONP) でリダイレクト問題を回避する。
+ * GAS側の doGet に callback パラメータ対応が必要。
  */
 var API_URL = 'https://script.google.com/macros/s/AKfycbwjI8n86Cu1ar1IsPffyq9mboDrUNpG-SsVpFtURjP6AmCFHD3Zbw5_qcJJUksz_UDyyw/exec';
 
+var _jsonpCounter = 0;
+
+function _jsonpRequest(url) {
+  return new Promise(function(resolve, reject) {
+    var cbName = '_gasCallback_' + (++_jsonpCounter) + '_' + Date.now();
+    var timeout = setTimeout(function() {
+      delete window[cbName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+      reject(new Error('Request timeout'));
+    }, 15000);
+
+    window[cbName] = function(data) {
+      clearTimeout(timeout);
+      delete window[cbName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+      resolve(data);
+    };
+
+    var script = document.createElement('script');
+    script.src = url + '&callback=' + cbName;
+    script.onerror = function() {
+      clearTimeout(timeout);
+      delete window[cbName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+      reject(new Error('Network error'));
+    };
+    document.head.appendChild(script);
+  });
+}
+
 var Api = {
   login: function(id, pass) {
-    return fetch(API_URL + '?action=login&id=' + encodeURIComponent(id) + '&pass=' + encodeURIComponent(pass))
-      .then(function(r) { return r.json(); });
+    return _jsonpRequest(API_URL + '?action=login&id=' + encodeURIComponent(id) + '&pass=' + encodeURIComponent(pass));
   },
 
   register: function(id, pass, name, email) {
@@ -15,27 +46,21 @@ var Api = {
       + '&pass=' + encodeURIComponent(pass)
       + '&name=' + encodeURIComponent(name)
       + '&email=' + encodeURIComponent(email || '');
-    return fetch(url).then(function(r) { return r.json(); });
+    return _jsonpRequest(url);
   },
 
   recover: function(email) {
-    return fetch(API_URL + '?action=recover&email=' + encodeURIComponent(email))
-      .then(function(r) { return r.json(); });
+    return _jsonpRequest(API_URL + '?action=recover&email=' + encodeURIComponent(email));
   },
 
   saveAnswers: function(setName, answers, score) {
     var user = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
-    return fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({
-        action: 'saveAnswers',
-        userId: user.userId || '',
-        userName: user.userName || '',
-        set: setName,
-        answers: answers,
-        score: score
-      })
-    }).then(function(r) { return r.json(); });
+    var url = API_URL + '?action=saveAnswers'
+      + '&userId=' + encodeURIComponent(user.userId || '')
+      + '&userName=' + encodeURIComponent(user.userName || '')
+      + '&set=' + encodeURIComponent(setName)
+      + '&answers=' + encodeURIComponent(JSON.stringify(answers))
+      + '&score=' + encodeURIComponent(score);
+    return _jsonpRequest(url);
   }
 };
