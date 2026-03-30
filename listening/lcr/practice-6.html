@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen and Choose a Response — Practice 6</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
+.top-nav-left strong{color:#2d3748}
+.top-nav-right{display:flex;align-items:center;gap:12px}
+.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#2d3748;font-weight:600;min-width:60px;text-align:center}
+.progress-bar{height:4px;background:#ebf4ff;width:100%}
+.progress-fill{height:100%;background:#f59e0b;border-radius:2px;transition:width .3s}
+.main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}
+.content{width:100%;max-width:660px;text-align:center}
+.audio-pending-banner{background:#fffbeb;border:2px dashed #fde68a;border-radius:16px;padding:40px 30px;margin-bottom:30px}
+.audio-pending-banner h2{font-size:1.2em;font-weight:800;color:#92400e;margin-bottom:12px}
+.audio-pending-banner p{font-size:.9em;color:#b45309;line-height:1.6;margin-bottom:8px}
+.script-section{background:#f9fafb;border:1px solid #e8ecf0;border-radius:12px;padding:24px;margin-bottom:20px;text-align:left}
+.script-section h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.script-section .q-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.8em;font-weight:800}
+.script-prompt{font-size:.88em;color:#4a5568;margin-bottom:16px;padding:10px 14px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;font-style:italic}
+.options{list-style:none;padding:0}
+.options li{padding:10px 14px;margin-bottom:8px;border:1.5px solid #e8ecf0;border-radius:10px;font-size:.88em;cursor:pointer;transition:all .15s}
+.options li:hover{border-color:#fde68a;background:#fffbeb}
+.options li .opt-letter{font-weight:800;color:#f59e0b;margin-right:8px}
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.footer-left a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
+.footer-left a:hover{color:#2d3748}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.btn-next{color:#fff;background:#2d3748}
+.btn-next:hover{background:#1a202c}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="top-nav-left">
+    <strong>Listen and Choose a Response</strong>
+    <span>Practice 6 — 8 Questions</span>
+  </div>
+  <div class="top-nav-right">
+    <span class="timer-display">--:--</span>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+
+<div class="main">
+<div class="content">
+
+<div class="audio-pending-banner">
+  <h2>&#128266; 音声準備中</h2>
+  <p>このPracticeの音声ファイルは現在作成中です。<br>以下にスクリプトと選択肢を掲載していますので、内容の確認は可能です。</p>
+  <p style="font-size:.78em;color:#92400e">音声が完成次第、自動再生形式に切り替わります。</p>
+</div>
+
+<!-- Q1: campus bookstore return — correct A -->
+<div class="script-section">
+  <h3><span class="q-num">1</span> Question 1</h3>
+  <div class="script-prompt">Audio: "I bought this notebook at the campus bookstore, but it has some pages missing. Can I get a replacement?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Of course. Just bring your receipt and we'll exchange it right away.</li>
+    <li><span class="opt-letter">B)</span> The bookstore has a wide selection of stationery items.</li>
+    <li><span class="opt-letter">C)</span> I always buy my school supplies at the beginning of the semester.</li>
+    <li><span class="opt-letter">D)</span> Notebooks are on sale this week at the bookstore.</li>
+  </ul>
+</div>
+
+<!-- Q2: study group location — correct B -->
+<div class="script-section">
+  <h3><span class="q-num">2</span> Question 2</h3>
+  <div class="script-prompt">Audio: "Where are we meeting for the study group tonight? The usual spot in the library?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> I really enjoyed studying with the group last semester.</li>
+    <li><span class="opt-letter">B)</span> Actually, the library closes early tonight, so let's meet at the student center instead.</li>
+    <li><span class="opt-letter">C)</span> Study groups are a great way to prepare for exams.</li>
+    <li><span class="opt-letter">D)</span> The library has a lot of useful reference books on the topic.</li>
+  </ul>
+</div>
+
+<!-- Q3: library fine — correct C -->
+<div class="script-section">
+  <h3><span class="q-num">3</span> Question 3</h3>
+  <div class="script-prompt">Audio: "I just found out I have a five-dollar fine on my library account. Do you know what it's for?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> The library charges a fee for printing and copying services.</li>
+    <li><span class="opt-letter">B)</span> I always return my books on time to avoid any penalties.</li>
+    <li><span class="opt-letter">C)</span> It's probably from that book you returned a week late last month.</li>
+    <li><span class="opt-letter">D)</span> Library fines can be paid online or at the front desk.</li>
+  </ul>
+</div>
+
+<!-- Q4: volunteer sign-up — correct D -->
+<div class="script-section">
+  <h3><span class="q-num">4</span> Question 4</h3>
+  <div class="script-prompt">Audio: "I heard there's a volunteer event at the community garden this Saturday. Are you planning to go?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Volunteering looks great on a resume.</li>
+    <li><span class="opt-letter">B)</span> The community garden grows vegetables and herbs.</li>
+    <li><span class="opt-letter">C)</span> I volunteered at a hospital during high school.</li>
+    <li><span class="opt-letter">D)</span> Yes, I already signed up. Do you want me to register you too?</li>
+  </ul>
+</div>
+
+<!-- Q5: class registration — correct A -->
+<div class="script-section">
+  <h3><span class="q-num">5</span> Question 5</h3>
+  <div class="script-prompt">Audio: "I've been trying to register for Professor Kim's economics class, but it keeps saying the section is full."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> You should email her directly. She sometimes adds extra seats for students who are really interested.</li>
+    <li><span class="opt-letter">B)</span> Economics is one of the most popular majors at our university.</li>
+    <li><span class="opt-letter">C)</span> Professor Kim is known for being a very engaging lecturer.</li>
+    <li><span class="opt-letter">D)</span> I took economics last year and found it really challenging.</li>
+  </ul>
+</div>
+
+<!-- Q6: apartment search — correct B -->
+<div class="script-section">
+  <h3><span class="q-num">6</span> Question 6</h3>
+  <div class="script-prompt">Audio: "I need to find a new apartment before the end of the month. The rent in the dorms is getting too expensive."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Living on campus has a lot of advantages for first-year students.</li>
+    <li><span class="opt-letter">B)</span> Have you checked the bulletin board in the student center? People post affordable listings there all the time.</li>
+    <li><span class="opt-letter">C)</span> My apartment is about fifteen minutes from campus by bus.</li>
+    <li><span class="opt-letter">D)</span> Rent prices have been going up everywhere in the city lately.</li>
+  </ul>
+</div>
+
+<!-- Q7: lost item — correct C -->
+<div class="script-section">
+  <h3><span class="q-num">7</span> Question 7</h3>
+  <div class="script-prompt">Audio: "I think I left my umbrella in the lecture hall after class this morning. Have you seen it?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> The weather forecast says it's going to rain all week.</li>
+    <li><span class="opt-letter">B)</span> I always keep a spare umbrella in my locker just in case.</li>
+    <li><span class="opt-letter">C)</span> I didn't notice it, but you should check with the lost and found office on the first floor.</li>
+    <li><span class="opt-letter">D)</span> That lecture hall is one of the largest rooms on campus.</li>
+  </ul>
+</div>
+
+<!-- Q8: weather cancellation — correct D -->
+<div class="script-section">
+  <h3><span class="q-num">8</span> Question 8</h3>
+  <div class="script-prompt">Audio: "Did you hear that the outdoor music festival this weekend might be canceled because of the storm warning?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> The festival had a great lineup of performers last year.</li>
+    <li><span class="opt-letter">B)</span> I prefer indoor concerts because the sound quality is usually better.</li>
+    <li><span class="opt-letter">C)</span> Storm warnings have become more frequent due to climate change.</li>
+    <li><span class="opt-letter">D)</span> That's disappointing. I was really looking forward to it. Hopefully they'll reschedule.</li>
+  </ul>
+</div>
+
+</div>
+</div>
+
+<div class="reading-footer">
+  <div class="footer-left">
+    <a href="../menu.html">&#8592; メニューに戻る</a>
+  </div>
+  <button class="btn-nav btn-next" onclick="location.href='practice-6-answers.html'">解答・解説 &#8250;</button>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();}
+</script>
+</body>
+</html>
