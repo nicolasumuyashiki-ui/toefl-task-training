@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build a Sentence — 解答解説 | Practice 7</title>
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px}
+.container{max-width:880px;margin:0 auto;padding:0 20px 40px}
+.tips-card{background:#fff;border-left:4px solid #4a90d9;margin:20px 0;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tips-card h2{font-size:1em;color:#4a90d9;margin-bottom:12px}
+.step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.step-grid{grid-template-columns:1fr}}
+.step{background:#ebf4ff;border-radius:8px;padding:14px;text-align:center}
+.step-num{display:inline-block;background:#4a90d9;color:#fff;width:28px;height:28px;line-height:28px;border-radius:50%;font-size:.8em;font-weight:700;margin-bottom:6px}
+.step h4{font-size:.85em;margin-bottom:4px}
+.step p{font-size:.75em;color:#4a5568}
+
+.patterns-card{background:#fff;border-left:4px solid #81d4d4;margin:20px 0;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.patterns-card h2{font-size:1em;color:#2b6cb0;margin-bottom:12px}
+.pattern-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:600px){.pattern-grid{grid-template-columns:1fr}}
+.pattern{background:#f0fff4;border-radius:8px;padding:12px;font-size:.82em}
+.pattern h5{color:#276749;margin-bottom:4px}
+.pattern p{color:#4a5568}
+
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:14px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid #edf2f7}
+.q-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}
+.q-num.wrong{background:#e53e3e}
+.q-num.default{background:#4a90d9}
+.q-prompt{font-size:.88em;color:#718096;flex:1;font-style:italic}
+.q-body{padding:14px 18px}
+.q-sentence{font-size:.92em;font-weight:600;color:#2d3748;margin-bottom:6px}
+.q-grammar{font-size:.8em;color:#718096;background:#f7fafc;padding:8px 12px;border-radius:6px;border-left:3px solid #4a90d9}
+.q-user{font-size:.82em;margin-bottom:6px;padding:6px 10px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.nav-bottom{text-align:center;padding:24px 0}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;text-decoration:none;margin:4px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔤 Build a Sentence — 解答解説</h1>
+  <p>Practice 7 | 16問 — University Social Events & Campus Life</p>
+</div>
+
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
+</div>
+
+<div class="container">
+
+<div class="tips-card">
+  <h2>💡 Build a Sentence 攻略 3ステップ</h2>
+  <div class="step-grid">
+    <div class="step"><div class="step-num">1</div><h4>主語と動詞を見つける</h4><p>「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</p></div>
+    <div class="step"><div class="step-num">2</div><h4>骨格を作る</h4><p>S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</p></div>
+    <div class="step"><div class="step-num">3</div><h4>残りを配置</h4><p>修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</p></div>
+  </div>
+</div>
+
+<div class="patterns-card">
+  <h2>📐 今回の語順パターン</h2>
+  <div class="pattern-grid">
+    <div class="pattern"><h5>🔹 仮定法現在（subjunctive）</h5><p>Q1「suggest that the festival be held」Q2「recommended that every member attend」— suggest/recommend/propose の後は that + S + 動詞原形。</p></div>
+    <div class="pattern"><h5>🔹 並列構造（parallel structure）</h5><p>Q4「plan ahead, stay organized, and set clear priorities」Q12「looked into..., picked out..., and ordered...」— and で結ぶ要素は同じ形にする。</p></div>
+    <div class="pattern"><h5>🔹 否定副詞の倒置（inversion）</h5><p>Q5「Not only did I miss...」Q6「Never have I been...」Q13「Rarely have I regretted...」— 否定語が文頭に来ると疑問文語順になる。</p></div>
+    <div class="pattern"><h5>🔹 強調構文（cleft sentence）</h5><p>Q7「It is the variety... that makes...」Q8「It was the volunteer club that organized...」Q11「It is the opportunity... that I value...」— It is/was + 強調部分 + that。</p></div>
+  </div>
+</div>
+
+<div id="qList"></div>
+
+</div>
+
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-7.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
+</div>
+
+<script>
+const answers=[
+{id:1,prompt:"What does the student council suggest about the spring festival?",sentence:"They suggest that the festival be held outdoors this year.",grammar:"仮定法現在（subjunctive）: suggest that + S + 動詞原形。be held は受動態の原形。「〜することを提案する」。"},
+{id:2,prompt:"Why did the club president recommend changes to the meeting schedule?",sentence:"She recommended that every member attend at least two meetings a month.",grammar:"仮定法現在: recommended that + S + 動詞原形。attendにsが付かないのがポイント（× attends）。"},
+{id:3,prompt:"What should students do before the welcome party?",sentence:"It is important that each student sign up before the deadline.",grammar:"仮定法現在: It is important that + S + 動詞原形。形容詞 important/necessary/essential の後も仮定法現在を使う。"},
+{id:4,prompt:"How do you balance studying and campus activities?",sentence:"I try to plan ahead, stay organized, and set clear priorities.",grammar:"並列構造（parallel structure）: try to + V1, V2, and V3。3つの動詞原形が and で並列。カンマの使い方にも注意。"},
+{id:5,prompt:"What happened when you forgot to sign up for the event?",sentence:"Not only did I miss the event, but I also lost my deposit.",grammar:"否定副詞の倒置: Not only + 疑問文語順(did I miss), but (S) also + V。「〜だけでなく…も」。"},
+{id:6,prompt:"Have you ever been late to a campus event?",sentence:"Never have I been so embarrassed as when I arrived an hour late.",grammar:"否定副詞の倒置: Never + have I + Vpp。文頭のNeverにより疑問文語順。so...as when で「〜したときほど」。"},
+{id:7,prompt:"What is it that makes the annual talent show so popular?",sentence:"It is the variety of performances that makes the show so exciting.",grammar:"強調構文（cleft sentence）: It is + 強調部分 + that + V。the variety（単数）なので makes。"},
+{id:8,prompt:"Who organized the charity fundraiser last semester?",sentence:"It was the volunteer club that organized the fundraiser last semester.",grammar:"強調構文: It was + 強調部分 + that + 過去形。「〜したのは…だ」と主語を強調。"},
+{id:9,prompt:"What do the organizers recommend for the homecoming dance?",sentence:"They recommend that students dress up in formal attire.",grammar:"仮定法現在: recommend that + S + 動詞原形。dress up =「着飾る」（句動詞）。attire =「服装」。"},
+{id:10,prompt:"Did the dormitory advisor suggest anything about the noise policy?",sentence:"Yes, she suggested that quiet hours be extended to ten o'clock.",grammar:"仮定法現在: suggested that + S + be + Vpp（受動態の原形）。「静粛時間を延長すること」を提案。"},
+{id:11,prompt:"Why is the cultural festival important to you?",sentence:"It is the opportunity to learn about different cultures that I value the most.",grammar:"強調構文: It is + 名詞句 + that + S + V。「私が最も大切にしているのは〜だ」。the most で最上級の意味。"},
+{id:12,prompt:"What did your roommate do about the party preparations?",sentence:"She looked into the decorations, picked out the music, and ordered the food.",grammar:"並列構造 + 句動詞: looked into（調べた）, picked out（選んだ）, and ordered（注文した）。3つの過去形が並列。"},
+{id:13,prompt:"Have you ever regretted not joining a club?",sentence:"Rarely have I regretted a decision as much as not joining the drama club.",grammar:"否定副詞の倒置: Rarely + have I + Vpp。as much as =「〜と同じくらい」。not joining は動名詞の否定。"},
+{id:14,prompt:"What does the committee propose about the graduation ceremony?",sentence:"The committee proposes that the ceremony be moved to the main auditorium.",grammar:"仮定法現在: proposes that + S + 動詞原形（be moved）。propose も suggest/recommend と同様に仮定法現在を取る。"},
+{id:15,prompt:"How did the event turn out after all the problems?",sentence:"Not only was the event a success, but it also brought the campus community together.",grammar:"否定副詞の倒置: Not only + was + S + C, but S also + V。bring together =「一つにまとめる」（句動詞）。"},
+{id:16,prompt:"Why did you come back to campus so early today?",sentence:"I came back early to help set up for the surprise party.",grammar:"句動詞: came back（戻った）, set up（準備する）。to help は目的を表す不定詞。set up for =「〜の準備をする」。"}
+];
+
+const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p7')||'null');
+let score=0;
+
+if(stored){
+  score=stored.score||0;
+  document.getElementById('scoreBig').textContent=score+' / '+stored.total;
+  document.getElementById('scoreBar').style.width=(score/stored.total*100)+'%';
+  const pct=Math.round(score/stored.total*100);
+  document.getElementById('scoreMsg').textContent=pct+'% 正答率'+(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');
+}
+
+let html='';
+answers.forEach((a,i)=>{
+  html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"</div></div>'
+    +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
+    +'<div class="q-grammar">📝 '+a.grammar+'</div></div></div>';
+});
+document.getElementById('qList').innerHTML=html;
+</script>
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEFL iBT - Read an Academic Passage: Practice 7</title>
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+
+/* TOP NAV */
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
+.top-nav-left strong{color:#2d3748}
+.top-nav-right{display:flex;align-items:center;gap:12px}
+.timer-btn{background:none;border:1px solid #cbd5e0;border-radius:6px;padding:6px 14px;font-size:.85em;color:#4a5568;cursor:pointer;font-family:inherit;transition:all .2s}
+.timer-btn:hover{background:#f7fafc}
+.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#2d3748;font-weight:600;min-width:60px;text-align:center}
+.review-btn{background:#4a90d9;color:#fff;border:none;border-radius:14px;padding:6px 18px;font-size:.85em;cursor:pointer;font-family:inherit;font-weight:500;transition:all .2s}
+.review-btn:hover{background:#3a7bc8}
+.user-badge{font-size:.8em;color:#718096}
+.user-badge strong{color:#2d3748}
+
+/* PROGRESS BAR */
+.progress-bar{height:4px;background:#ebf4ff;width:100%}
+.progress-fill{height:100%;background:#3182ce;border-radius:2px;transition:width .3s}
+
+/* FOOTER NAV */
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:flex-end;gap:12px;z-index:100}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.btn-back{color:#4a5568;background:#fff;border:1px solid #e2e8f0}
+.btn-back:hover{background:#f7fafc}
+.btn-back:disabled{opacity:.5;cursor:not-allowed}
+.btn-next{color:#fff;background:#2d3748}
+.btn-next:hover{background:#4a5568}
+
+/* SPLIT LAYOUT */
+.split-main{flex:1;display:flex;padding:0 0 80px 0;overflow:hidden}
+.passage-panel{flex:1;padding:32px 28px;overflow-y:auto;border-right:1px solid #e2e8f0;background:#f9fafb}
+.question-panel{flex:1;padding:32px 28px;overflow-y:auto}
+
+/* PAGE INDICATOR */
+.page-indicator{display:inline-block;background:#ebf4ff;color:#2b6cb0;font-size:.8em;font-weight:600;padding:4px 12px;border-radius:12px;margin-bottom:16px}
+
+/* PASSAGE */
+.passage-title{font-size:1.15em;font-weight:700;color:#2d3748;margin-bottom:16px;line-height:1.4}
+.passage-content{font-size:.93em;line-height:1.8;color:#2d3748}
+.passage-content p{margin-bottom:14px;text-indent:1.5em}
+.passage-content p:first-child{text-indent:0}
+.passage-content p:last-child{margin-bottom:0}
+
+/* HIGHLIGHT WORD */
+.highlight-word{background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:600}
+
+/* QUESTION STYLES */
+.question-page{display:none}
+.question-page.active{display:block}
+.question-text{font-size:.95em;font-weight:600;color:#2d3748;margin-bottom:20px;line-height:1.6}
+.question-number{color:#4a90d9;margin-right:6px}
+.options{display:flex;flex-direction:column;gap:10px}
+.option{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:all .15s;font-size:.92em;line-height:1.5}
+.option:hover{background:#f7fafc;border-color:#cbd5e0}
+.option.selected{background:#ebf4ff;border-color:#4a90d9}
+.option input{display:none}
+.option-label{font-weight:600;color:#4a90d9;min-width:28px}
+.option-text{flex:1;color:#2d3748}
+
+/* REVIEW OVERLAY */
+.overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}
+.overlay.active{display:flex}
+.overlay-box{background:#fff;border-radius:12px;padding:28px 32px;max-width:520px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 8px 30px rgba(0,0,0,.15)}
+.overlay-title{font-size:1.1em;font-weight:700;margin-bottom:16px;color:#2d3748}
+.overlay-close{background:#2d3748;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.9em;cursor:pointer;margin-top:16px;font-family:inherit}
+.review-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:.9em}
+.review-item:last-child{border-bottom:none}
+.review-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.review-dot.answered{background:#48bb78}
+.review-dot.unanswered{background:#e2e8f0}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+  <div class="top-nav-left">
+    <span>Question <span id="qLabel"><strong>1</strong></span> of 6</span>
+    <span>|</span>
+    <span>Academic Reading</span>
+  </div>
+  <div class="top-nav-right">
+    <button class="timer-btn" onclick="toggleTimer()">Hide Time</button>
+    <span class="timer-display" id="timerDisplay">20:00</span>
+    <button class="review-btn" onclick="openReview()">Review</button>
+    <span class="user-badge" id="userBadge"></span>
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<!-- ========== PAGE 1: Passage 1 — The Rise and Fall of the Roman Republic (~230w) ========== -->
+<div class="split-main" id="passagePage1">
+  <div class="passage-panel">
+    <div class="page-indicator">Page 1 of 2</div>
+    <h2 class="passage-title">The Rise and Fall of the Roman Republic</h2>
+    <div class="passage-content">
+      <p>The Roman Republic, established around 509 BCE, represented a dramatic shift in governance from monarchy to a system in which elected officials shared power. The Republic was led by two consuls who served one-year terms and were advised by the Senate, a body of wealthy and influential citizens. This structure was designed to prevent any single individual from gaining too much control over the state.</p>
+      <p>For several centuries, the Republic expanded its territory through military conquest and strategic alliances. Roman armies conquered much of the Mediterranean region, bringing enormous wealth and resources back to Rome. However, this rapid expansion also created serious <span class="highlight-word">tensions</span> within Roman society. Wealthy generals began to build personal armies loyal to them rather than to the Republic, and political rivalries grew increasingly violent.</p>
+      <p>By the first century BCE, a series of civil wars had weakened the Republic beyond repair. Powerful leaders such as Julius Caesar challenged the authority of the Senate and concentrated power in their own hands. After Caesar's assassination in 44 BCE, further conflict eventually led to the rise of Augustus, who became the first emperor of Rome in 27 BCE. The transition from Republic to Empire marked the end of a political experiment that had lasted nearly five hundred years and profoundly influenced the development of democratic institutions in the Western world.</p>
+    </div>
+  </div>
+
+  <div class="question-panel">
+    <!-- Q1: Main Idea -->
+    <div class="question-page active" id="page1">
+      <div class="question-text">
+        <span class="question-number">1.</span>What is the passage mainly about?
+      </div>
+      <div class="options">
+        <div class="option" data-q="1" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">How the Roman Republic was established, expanded, and eventually collapsed</span>
+        </div>
+        <div class="option" data-q="1" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">The military strategies that made Rome the strongest empire in history</span>
+        </div>
+        <div class="option" data-q="1" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">A detailed biography of Julius Caesar and his rise to power</span>
+        </div>
+        <div class="option" data-q="1" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q1" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">The differences between Roman and Greek systems of government</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2: Vocabulary in Context -->
+    <div class="question-page" id="page2">
+      <div class="question-text">
+        <span class="question-number">2.</span>The word "<span style="background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:700">tensions</span>" in paragraph 2 is closest in meaning to
+      </div>
+      <div class="options">
+        <div class="option" data-q="2" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">celebrations</span>
+        </div>
+        <div class="option" data-q="2" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">conflicts and disagreements</span>
+        </div>
+        <div class="option" data-q="2" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">improvements</span>
+        </div>
+        <div class="option" data-q="2" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q2" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">traditions</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3: Detail -->
+    <div class="question-page" id="page3">
+      <div class="question-text">
+        <span class="question-number">3.</span>According to the passage, what was the purpose of having two consuls lead the Republic?
+      </div>
+      <div class="options">
+        <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">To allow citizens to vote directly on laws</span>
+        </div>
+        <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">To ensure that military campaigns were always successful</span>
+        </div>
+        <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">To prevent one person from holding too much power</span>
+        </div>
+        <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">To represent the interests of both wealthy and poor citizens equally</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PAGE 2: Passage 2 — How the Human Immune System Fights Disease (~280w) ========== -->
+<div class="split-main" id="passagePage2" style="display:none">
+  <div class="passage-panel">
+    <div class="page-indicator">Page 2 of 2</div>
+    <h2 class="passage-title">How the Human Immune System Fights Disease</h2>
+    <div class="passage-content">
+      <p>The human immune system is a complex network of cells, tissues, and organs that work together to defend the body against harmful invaders such as bacteria, viruses, and parasites. Without a functioning immune system, even minor infections could become life-threatening. Scientists divide the immune response into two main categories: innate immunity and adaptive immunity.</p>
+      <p>Innate immunity is the body's first line of defense. It includes physical barriers such as the skin and mucous membranes, as well as general-purpose immune cells that respond quickly to any foreign substance. When a pathogen enters the body, these cells — including neutrophils and macrophages — immediately <span class="highlight-word">mobilize</span> to contain and destroy the threat. However, innate immunity does not target specific pathogens; instead, it provides a broad, non-specific response.</p>
+      <p>Adaptive immunity, by contrast, develops over time and is highly specific. When the body encounters a particular pathogen for the first time, specialized white blood cells called lymphocytes learn to recognize its unique molecular markers. B lymphocytes produce antibodies that bind to the pathogen and mark it for destruction, while T lymphocytes directly attack infected cells. Crucially, the adaptive immune system also creates memory cells that remain in the body long after the initial infection has been cleared.</p>
+      <p>These memory cells are the basis for long-term immunity. If the same pathogen enters the body again, the immune system can mount a much faster and stronger response, often eliminating the threat before any symptoms appear. This principle is the foundation of vaccination, which introduces a harmless form of a pathogen to train the immune system without causing disease.</p>
+    </div>
+  </div>
+
+  <div class="question-panel">
+    <!-- Q4: Purpose -->
+    <div class="question-page active" id="page4">
+      <div class="question-text">
+        <span class="question-number">4.</span>Why does the author mention neutrophils and macrophages in paragraph 2?
+      </div>
+      <div class="options">
+        <div class="option" data-q="4" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">To give examples of cells involved in the body's immediate defense</span>
+        </div>
+        <div class="option" data-q="4" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">To explain how vaccines stimulate the immune system</span>
+        </div>
+        <div class="option" data-q="4" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">To contrast the functions of B lymphocytes and T lymphocytes</span>
+        </div>
+        <div class="option" data-q="4" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q4" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">To argue that innate immunity is more important than adaptive immunity</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Vocabulary in Context -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>The word "<span style="background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:700">mobilize</span>" in paragraph 2 is closest in meaning to
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">disappear</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">divide into smaller parts</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">become organized and ready for action</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">slowly weaken over time</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6: Inference -->
+    <div class="question-page" id="page6">
+      <div class="question-text">
+        <span class="question-number">6.</span>Based on the passage, what can be inferred about a person who has recovered from a particular viral infection?
+      </div>
+      <div class="options">
+        <div class="option" data-q="6" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">They will never be exposed to that virus again.</span>
+        </div>
+        <div class="option" data-q="6" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">Their body will likely respond more quickly if they encounter the same virus again.</span>
+        </div>
+        <div class="option" data-q="6" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">Their innate immune system will become permanently stronger.</span>
+        </div>
+        <div class="option" data-q="6" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">They no longer need physical barriers such as skin to protect them.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER NAV -->
+<div class="reading-footer">
+  <button class="btn-nav btn-back" id="btnBack" onclick="navigate(-1)" disabled>&lsaquo; Back</button>
+  <button class="btn-nav btn-next" id="btnNext" onclick="navigate(1)">Next &rsaquo;</button>
+</div>
+
+<!-- REVIEW OVERLAY -->
+<div class="overlay" id="reviewOverlay">
+  <div class="overlay-box">
+    <div class="overlay-title">Review Questions</div>
+    <div id="reviewList"></div>
+    <button class="overlay-close" onclick="closeReview()">Close</button>
+  </div>
+</div>
+
+<script>
+var currentQ = 1;
+var totalQ = 6;
+var userAnswers = {};
+var timerVisible = true;
+var timeLeft = 1200; // 20 minutes
+var timerInterval;
+var storageKey = 'training_academic_p7_answers';
+var timerKey = 'training_academic_p7_timer';
+
+// Passage page mapping: questions 1-3 = passage 1, questions 4-6 = passage 2
+function getPassagePage(q){ return q <= 3 ? 1 : 2; }
+
+// Track which question is "active" within each passage page
+function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 4; }
+
+function selectOption(el){
+  var q = el.getAttribute('data-q');
+  var v = el.getAttribute('data-v');
+  userAnswers[q] = v;
+  el.parentElement.querySelectorAll('.option').forEach(function(o){
+    o.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+  sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+}
+
+function navigate(dir){
+  var next = currentQ + dir;
+  if(next < 1 || next > totalQ + 1) return;
+  if(next > totalQ){
+    var ca={'1':'A','2':'B','3':'C','4':'A','5':'C','6':'B'};
+    var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
+    var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
+    sessionStorage.setItem('training_score_academic_p7',JSON.stringify({correct:sc,total:6}));
+    window.location.href = 'practice-7-answers.html';
+    return;
+  }
+  // Hide current question
+  document.getElementById('page'+currentQ).classList.remove('active');
+  // Switch passage panel if needed
+  var oldPassage = getPassagePage(currentQ);
+  var newPassage = getPassagePage(next);
+  if(oldPassage !== newPassage){
+    document.getElementById('passagePage'+oldPassage).style.display = 'none';
+    document.getElementById('passagePage'+newPassage).style.display = 'flex';
+    // Deactivate all question pages in old passage
+    var oldStart = getLocalFirst(oldPassage);
+    var oldEnd = oldPassage === 1 ? 3 : 6;
+    for(var i = oldStart; i <= oldEnd; i++){
+      document.getElementById('page'+i).classList.remove('active');
+    }
+  }
+  currentQ = next;
+  document.getElementById('page'+currentQ).classList.add('active');
+  document.getElementById('qLabel').innerHTML = '<strong>'+currentQ+'</strong>';
+  document.getElementById('btnBack').disabled = (currentQ === 1);
+  if(currentQ === totalQ){
+    document.getElementById('btnNext').textContent = 'Finish \u203A';
+  } else {
+    document.getElementById('btnNext').textContent = 'Next \u203A';
+  }
+  updateProgress();
+}
+
+function updateProgress(){
+  var pct = ((currentQ - 1) / totalQ) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function toggleTimer(){
+  timerVisible = !timerVisible;
+  document.getElementById('timerDisplay').style.visibility = timerVisible ? 'visible' : 'hidden';
+  document.querySelector('.timer-btn').textContent = timerVisible ? 'Hide Time' : 'Show Time';
+}
+
+function formatTime(s){
+  var m = Math.floor(s/60);
+  var sec = s%60;
+  return m + ':' + (sec<10?'0':'') + sec;
+}
+
+function startTimer(){
+  var saved = sessionStorage.getItem(timerKey);
+  if(saved) timeLeft = parseInt(saved);
+  document.getElementById('timerDisplay').textContent = formatTime(timeLeft);
+  timerInterval = setInterval(function(){
+    timeLeft--;
+    if(timeLeft <= 0){ clearInterval(timerInterval); timeLeft = 0; }
+    sessionStorage.setItem(timerKey, timeLeft);
+    document.getElementById('timerDisplay').textContent = formatTime(timeLeft);
+  }, 1000);
+}
+
+function openReview(){
+  var list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  for(var i = 1; i <= totalQ; i++){
+    var answered = userAnswers[i] ? true : false;
+    var div = document.createElement('div');
+    div.className = 'review-item';
+    div.innerHTML = '<div class="review-dot '+(answered?'answered':'unanswered')+'"></div>' +
+      '<span>Question '+i+'</span>' +
+      (answered ? '<span style="color:#48bb78;font-size:.85em">Answered: '+userAnswers[i]+'</span>' : '<span style="color:#e53e3e;font-size:.85em">Not answered</span>');
+    list.appendChild(div);
+  }
+  document.getElementById('reviewOverlay').classList.add('active');
+}
+
+function closeReview(){
+  document.getElementById('reviewOverlay').classList.remove('active');
+}
+
+// Restore answers
+(function(){
+  var saved = sessionStorage.getItem(storageKey);
+  if(saved){
+    var parsed = JSON.parse(saved);
+    for(var q in parsed){
+      userAnswers[q] = parsed[q];
+      var opts = document.querySelectorAll('[data-q="'+q+'"][data-v="'+parsed[q]+'"]');
+      if(opts.length){
+        opts[0].classList.add('selected');
+        opts[0].querySelector('input').checked = true;
+      }
+    }
+  }
+})();
+
+startTimer();
+updateProgress();
+
+if(typeof Auth !== 'undefined'){
+  Auth.require();
+  Auth.showBadge('userBadge');
+}
+</script>
+<script src="../../js/auth.js"></script>
+</body>
+</html>
