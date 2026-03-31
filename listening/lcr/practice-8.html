@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen and Choose a Response — Practice 8</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
+.top-nav-left strong{color:#2d3748}
+.top-nav-right{display:flex;align-items:center;gap:12px}
+.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#2d3748;font-weight:600;min-width:60px;text-align:center}
+.progress-bar{height:4px;background:#ebf4ff;width:100%}
+.progress-fill{height:100%;background:#f59e0b;border-radius:2px;transition:width .3s}
+.main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}
+.content{width:100%;max-width:660px;text-align:center}
+.audio-pending-banner{background:#fffbeb;border:2px dashed #fde68a;border-radius:16px;padding:40px 30px;margin-bottom:30px}
+.audio-pending-banner h2{font-size:1.2em;font-weight:800;color:#92400e;margin-bottom:12px}
+.audio-pending-banner p{font-size:.9em;color:#b45309;line-height:1.6;margin-bottom:8px}
+.script-section{background:#f9fafb;border:1px solid #e8ecf0;border-radius:12px;padding:24px;margin-bottom:20px;text-align:left}
+.script-section h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.script-section .q-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.8em;font-weight:800}
+.script-prompt{font-size:.88em;color:#4a5568;margin-bottom:16px;padding:10px 14px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;font-style:italic}
+.options{list-style:none;padding:0}
+.options li{padding:10px 14px;margin-bottom:8px;border:1.5px solid #e8ecf0;border-radius:10px;font-size:.88em;cursor:pointer;transition:all .15s}
+.options li:hover{border-color:#fde68a;background:#fffbeb}
+.options li .opt-letter{font-weight:800;color:#f59e0b;margin-right:8px}
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.footer-left a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
+.footer-left a:hover{color:#2d3748}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.btn-next{color:#fff;background:#2d3748}
+.btn-next:hover{background:#1a202c}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="top-nav-left">
+    <strong>Listen and Choose a Response</strong>
+    <span>Practice 8 &#8212; 8 Questions</span>
+  </div>
+  <div class="top-nav-right">
+    <span class="timer-display">--:--</span>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+
+<div class="main">
+<div class="content">
+
+<div class="audio-pending-banner">
+  <h2>&#128266; &#38899;&#22768;&#28310;&#20633;&#20013;</h2>
+  <p>&#12371;&#12398;Practice&#12398;&#38899;&#22768;&#12501;&#12449;&#12452;&#12523;&#12399;&#29694;&#22312;&#20316;&#25104;&#20013;&#12391;&#12377;&#12290;<br>&#20197;&#19979;&#12395;&#12473;&#12463;&#12522;&#12503;&#12488;&#12392;&#36984;&#25246;&#32930;&#12434;&#25522;&#36617;&#12375;&#12390;&#12356;&#12414;&#12377;&#12398;&#12391;&#12289;&#20869;&#23481;&#12398;&#30906;&#35469;&#12399;&#21487;&#33021;&#12391;&#12377;&#12290;</p>
+  <p style="font-size:.78em;color:#92400e">&#38899;&#22768;&#12364;&#23436;&#25104;&#27425;&#31532;&#12289;&#33258;&#21205;&#20877;&#29983;&#24418;&#24335;&#12395;&#20999;&#12426;&#26367;&#12431;&#12426;&#12414;&#12377;&#12290;</p>
+</div>
+
+<!-- Q1: campus printing — correct A -->
+<div class="script-section">
+  <h3><span class="q-num">1</span> Question 1</h3>
+  <div class="script-prompt">Audio: "Excuse me, do you know how to add money to my printing account?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> You can load funds at the kiosk next to the computer lab.</li>
+    <li><span class="opt-letter">B)</span> The printer on the third floor is out of paper.</li>
+    <li><span class="opt-letter">C)</span> I printed my essay this morning.</li>
+    <li><span class="opt-letter">D)</span> Printing in color costs more than black and white.</li>
+  </ul>
+</div>
+
+<!-- Q2: study abroad deadline — correct B -->
+<div class="script-section">
+  <h3><span class="q-num">2</span> Question 2</h3>
+  <div class="script-prompt">Audio: "Have you submitted your study abroad application yet? The deadline is this Friday."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> I studied abroad in high school and loved it.</li>
+    <li><span class="opt-letter">B)</span> Not yet. I still need to get a recommendation letter from my professor.</li>
+    <li><span class="opt-letter">C)</span> The study abroad office is on the second floor.</li>
+    <li><span class="opt-letter">D)</span> Friday is the last day of classes before spring break.</li>
+  </ul>
+</div>
+
+<!-- Q3: dorm laundry — correct C -->
+<div class="script-section">
+  <h3><span class="q-num">3</span> Question 3</h3>
+  <div class="script-prompt">Audio: "All three washing machines in the dorm are broken again. I have no clean clothes left."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> I always do my laundry on Sunday mornings.</li>
+    <li><span class="opt-letter">B)</span> The dorm has a nice common room on the first floor.</li>
+    <li><span class="opt-letter">C)</span> That's frustrating. Why don't we go to the laundromat on Oak Street?</li>
+    <li><span class="opt-letter">D)</span> Washing machines use a lot of water and electricity.</li>
+  </ul>
+</div>
+
+<!-- Q4: faculty office location — correct D -->
+<div class="script-section">
+  <h3><span class="q-num">4</span> Question 4</h3>
+  <div class="script-prompt">Audio: "Could you tell me where Professor Kim's office is? I need to drop off my assignment."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Professor Kim teaches organic chemistry this semester.</li>
+    <li><span class="opt-letter">B)</span> I already turned in my assignment yesterday.</li>
+    <li><span class="opt-letter">C)</span> The assignment is due at the end of the week.</li>
+    <li><span class="opt-letter">D)</span> It's in the Science Building, room 314. Take the elevator to the third floor.</li>
+  </ul>
+</div>
+
+<!-- Q5: campus map — correct A -->
+<div class="script-section">
+  <h3><span class="q-num">5</span> Question 5</h3>
+  <div class="script-prompt">Audio: "I'm a transfer student and I keep getting lost on campus. Is there a map I can use?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Yes, you can download the campus map app. It even shows indoor routes.</li>
+    <li><span class="opt-letter">B)</span> Transfer students need to complete an orientation session.</li>
+    <li><span class="opt-letter">C)</span> The campus is much bigger than my old school.</li>
+    <li><span class="opt-letter">D)</span> I transferred here from a community college two years ago.</li>
+  </ul>
+</div>
+
+<!-- Q6: student discount — correct B -->
+<div class="script-section">
+  <h3><span class="q-num">6</span> Question 6</h3>
+  <div class="script-prompt">Audio: "I heard we can get student discounts at the bookstore. Do you know how it works?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> The bookstore has a wide selection of school merchandise.</li>
+    <li><span class="opt-letter">B)</span> Just show your student ID at checkout and they'll take ten percent off.</li>
+    <li><span class="opt-letter">C)</span> I never buy anything from the bookstore because it's too expensive.</li>
+    <li><span class="opt-letter">D)</span> Student discounts are becoming less common these days.</li>
+  </ul>
+</div>
+
+<!-- Q7: weather alert — correct C -->
+<div class="script-section">
+  <h3><span class="q-num">7</span> Question 7</h3>
+  <div class="script-prompt">Audio: "Did you see the weather alert? They're saying there might be a severe thunderstorm tonight."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> I love watching thunderstorms from my window.</li>
+    <li><span class="opt-letter">B)</span> The weather has been really unpredictable this spring.</li>
+    <li><span class="opt-letter">C)</span> Thanks for the heads up. I should probably move my bike inside then.</li>
+    <li><span class="opt-letter">D)</span> I don't usually check the weather forecast.</li>
+  </ul>
+</div>
+
+<!-- Q8: club meeting — correct D -->
+<div class="script-section">
+  <h3><span class="q-num">8</span> Question 8</h3>
+  <div class="script-prompt">Audio: "Are you coming to the photography club meeting tomorrow? We're planning the end-of-year exhibition."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Photography is a great hobby for creative people.</li>
+    <li><span class="opt-letter">B)</span> I took some amazing photos during my trip last summer.</li>
+    <li><span class="opt-letter">C)</span> The exhibition hall is being renovated right now.</li>
+    <li><span class="opt-letter">D)</span> Definitely! I have some ideas for the exhibition theme I'd like to share.</li>
+  </ul>
+</div>
+
+</div>
+</div>
+
+<div class="reading-footer">
+  <div class="footer-left">
+    <a href="../menu.html">&#8592; &#12513;&#12491;&#12517;&#12540;&#12395;&#25147;&#12427;</a>
+  </div>
+  <button class="btn-nav btn-next" onclick="location.href='practice-8-answers.html'">&#35299;&#31572;&#12539;&#35299;&#35500; &#8250;</button>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();}
+</script>
+</body>
+</html>

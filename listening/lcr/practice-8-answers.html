@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LCR Practice 8 &#8212; &#35299;&#31572;&#12539;&#35299;&#35500;</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
+.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:10px}
+.header-logo{font-size:.72em;font-weight:800;color:#2563eb;letter-spacing:.1em;text-transform:uppercase}
+.header-title{font-size:.95em;font-weight:700;color:#2d3748}
+.breadcrumb{padding:12px 24px;font-size:.8em;color:#8898a8}
+.breadcrumb a{color:#b45309;text-decoration:none;font-weight:600}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:0 24px 60px}
+h1{font-size:1.3em;font-weight:800;margin-bottom:20px}
+.answer-card{background:#fff;border-radius:12px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px}
+.answer-card h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.75em;font-weight:800;flex-shrink:0}
+.prompt{font-size:.85em;color:#4a5568;padding:8px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;margin-bottom:12px;font-style:italic}
+.correct{font-size:.9em;font-weight:700;color:#16a34a;margin-bottom:8px}
+.explanation{font-size:.82em;color:#4a5568;line-height:1.65}
+.explanation .wrong{color:#dc2626;font-weight:600}
+.tip-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;margin-bottom:24px}
+.tip-box h2{font-size:1.05em;font-weight:800;color:#92400e;margin-bottom:14px}
+.tip-box ul{padding-left:20px;font-size:.85em;color:#92400e;line-height:1.8}
+.tip-box li{margin-bottom:6px}
+.tip-box strong{font-weight:800}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-size:.9em;font-weight:700;color:#fff;background:#f59e0b;border:none;border-radius:10px;cursor:pointer;text-decoration:none;transition:all .2s;font-family:inherit}
+.back-btn:hover{background:#d97706}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-left">
+    <span class="header-logo">TCK Workshop</span>
+    <span class="header-title">&#12479;&#12473;&#12463;&#21029;&#12488;&#12524;&#12540;&#12491;&#12531;&#12464;</span>
+  </div>
+</div>
+<div class="breadcrumb">
+  <a href="../menu.html">&#8592; Listening &#12513;&#12491;&#12517;&#12540;</a> &gt; LCR Practice 8 &#35299;&#31572;
+</div>
+
+<div class="container">
+<h1>Listen and Choose a Response &#8212; Practice 8 &#35299;&#31572;&#12539;&#35299;&#35500;</h1>
+
+<div class="tip-box">
+  <h2>&#128161; LCR &#25915;&#30053;&#12467;&#12484;</h2>
+  <ul>
+    <li><strong>&#26368;&#21021;&#12398;2&#35486;&#12395;&#20840;&#38598;&#20013;&#65306;</strong>Do you/Did you &#8594; Yes/No&#31995;&#12289;What/Where &#8594; Wh&#30097;&#21839;&#25991;&#12289;Could you &#8594; &#20381;&#38972;&#12289;How about &#8594; &#25552;&#26696;</li>
+    <li><strong>&#36074;&#21839;&#12479;&#12452;&#12503;&#12434;&#21028;&#26029;&#12375;&#12390;&#12363;&#12425;&#36984;&#12406;&#65306;</strong>&#12479;&#12452;&#12503;&#12395;&#21512;&#12358;&#24540;&#31572;&#12497;&#12479;&#12540;&#12531;&#12434;&#20104;&#28204;&#12377;&#12427;</li>
+    <li><strong>&#12300;&#20250;&#35441;&#12434;&#21069;&#12395;&#36914;&#12417;&#12427;&#24540;&#31572;&#12301;&#12364;&#27491;&#35299;&#65306;</strong>&#36074;&#21839;&#12398;&#21336;&#35486;&#12364;&#21547;&#12414;&#12428;&#12390;&#12356;&#12390;&#12418;&#12289;&#20250;&#35441;&#12364;&#27490;&#12414;&#12427;&#36984;&#25246;&#32930;&#12399;&#19981;&#27491;&#35299;</li>
+    <li><strong>&#30452;&#25509;&#30340;&#12377;&#12366;&#12427;&#31572;&#12360;&#12399;&#30097;&#12358;&#65306;</strong>"Do you know where...?" &#12395;&#23550;&#12375;&#12390; "Yes, I know." &#12399;&#19981;&#33258;&#28982;&#12290;&#24773;&#22577;&#12434;&#25552;&#20379;&#12377;&#12427;&#24540;&#31572;&#12364;&#27491;&#35299;</li>
+    <li><strong>&#21542;&#23450;&#24418;&#12395;&#27880;&#24847;&#65306;</strong>Isn't...? / Don't you...? &#12399;&#30906;&#35469;&#12398;&#24847;&#21619;&#12290;&#24847;&#21619;&#12434;&#36870;&#12395;&#21462;&#12425;&#12394;&#12356;</li>
+  </ul>
+</div>
+
+<div class="answer-card">
+  <h3><span class="q-num">1</span> Question 1</h3>
+  <div class="prompt">"Excuse me, do you know how to add money to my printing account?"</div>
+  <div class="correct">&#27491;&#35299;: A) You can load funds at the kiosk next to the computer lab.</div>
+  <div class="explanation">
+    <strong>&#12479;&#12452;&#12503;&#65306;Yes/No&#30097;&#21839;&#25991;&#65288;Do you know how to...&#65289;</strong><br>
+    &#12300;&#12420;&#12426;&#26041;&#12434;&#30693;&#12387;&#12390;&#12356;&#12414;&#12377;&#12363;&#65311;&#12301;&#12395;&#23550;&#12375;&#12390;&#12289;A&#12399;&#20855;&#20307;&#30340;&#12394;&#26041;&#27861;&#12434;&#25945;&#12360;&#12390;&#12356;&#12427;&#12290;<br>
+    <span class="wrong">B)</span> &#12503;&#12522;&#12531;&#12479;&#12540;&#12398;&#32025;&#20999;&#12428;&#12399;&#36074;&#21839;&#12392;&#28961;&#38306;&#12290;
+    <span class="wrong">C)</span> &#33258;&#20998;&#12364;&#21360;&#21047;&#12375;&#12383;&#35441;&#12391;&#12289;&#36074;&#21839;&#12395;&#31572;&#12360;&#12390;&#12356;&#12394;&#12356;&#12290;
+    <span class="wrong">D)</span> &#21360;&#21047;&#12467;&#12473;&#12488;&#12398;&#35500;&#26126;&#12391;&#12289;&#20837;&#37329;&#26041;&#27861;&#12408;&#12398;&#22238;&#31572;&#12391;&#12399;&#12394;&#12356;&#12290;
+  </div>
+</div>
+
+<div class="answer-card">
+  <h3><span class="q-num">2</span> Question 2</h3>
+  <div class="prompt">"Have you submitted your study abroad application yet? The deadline is this Friday."</div>
+  <div class="correct">&#27491;&#35299;: B) Not yet. I still need to get a recommendation letter from my professor.</div>
+  <div class="explanation">
+    <strong>&#12479;&#12452;&#12503;&#65306;Yes/No&#30097;&#21839;&#25991;&#65288;Have you...yet?&#65289;</strong><br>
+    &#12300;&#12418;&#12358;&#25552;&#20986;&#12375;&#12383;&#65311;&#12301;&#12395;&#23550;&#12375;&#12390;&#12289;B&#12399;&#12300;&#12414;&#12384;&#12290;&#25512;&#34214;&#29366;&#12364;&#24517;&#35201;&#12301;&#12392;&#20855;&#20307;&#30340;&#12395;&#36820;&#31572;&#12290;&#20250;&#35441;&#12364;&#21069;&#12395;&#36914;&#12416;&#12290;<br>
+    <span class="wrong">A)</span> &#36942;&#21435;&#12398;&#30041;&#23398;&#32076;&#39443;&#12290;&#29694;&#22312;&#12398;&#30003;&#35531;&#12395;&#12388;&#12356;&#12390;&#31572;&#12360;&#12390;&#12356;&#12394;&#12356;&#12290;
+    <span class="wrong">C)</span> &#12458;&#12501;&#12451;&#12473;&#12398;&#22580;&#25152;&#24773;&#22577;&#12290;&#25552;&#20986;&#29366;&#27841;&#12408;&#12398;&#36820;&#31572;&#12391;&#12399;&#12394;&#12356;&#12290;
+    <span class="wrong">D)</span> &#37329;&#26332;&#26085;&#12364;&#25480;&#26989;&#26368;&#32066;&#26085;&#12392;&#12356;&#12358;&#35441;&#38988;&#12395;&#33073;&#32218;&#12290;
+  </div>
+</div>
+
+<div class="answer-card">
+  <h3><span class="q-num">3</span> Question 3</h3>
+  <div class="prompt">"All three washing machines in the dorm are broken again. I have no clean clothes left."</div>
+  <div class="correct">&#27491;&#35299;: C) That's frustrating. Why don't we go to the laundromat on Oak Street?</div>
+  <div class="explanation">
+    <strong>&#12479;&#12452;&#12503;&#65306;&#19981;&#28288;&#12539;&#22256;&#12426;&#12372;&#12392;&#12398;&#34920;&#26126; &#8594; &#20849;&#24863;&#65291;&#35299;&#27770;&#31574;&#12364;&#33258;&#28982;</strong><br>
+    C&#12399;&#20849;&#24863;&#65288;That's frustrating&#65289;&#65291;&#20195;&#26367;&#26696;&#65288;&#12467;&#12452;&#12531;&#12521;&#12531;&#12489;&#12522;&#12540;&#65289;&#12434;&#25552;&#31034;&#12290;&#20250;&#35441;&#12364;&#21069;&#12395;&#36914;&#12416;&#12290;<br>
+    <span class="wrong">A)</span> &#33258;&#20998;&#12398;&#27927;&#28655;&#32722;&#24931;&#12290;&#30456;&#25163;&#12398;&#21839;&#38988;&#12395;&#23550;&#20966;&#12375;&#12390;&#12356;&#12394;&#12356;&#12290;
+    <span class="wrong">B)</span> &#23534;&#12398;&#35373;&#20633;&#32057;&#20171;&#12290;&#35441;&#38988;&#12364;&#12378;&#12428;&#12390;&#12356;&#12427;&#12290;
+    <span class="wrong">D)</span> &#27927;&#28655;&#27231;&#12398;&#19968;&#33324;&#35542;&#12290;&#20849;&#24863;&#12364;&#12394;&#12367;&#12289;&#35299;&#27770;&#31574;&#12418;&#12394;&#12356;&#12290;
+  </div>
+</div>
+
+<div class="answer-card">
+  <h3><span class="q-num">4</span> Question 4</h3>
+  <div class="prompt">"Could you tell me where Professor Kim's office is? I need to drop off my assignment."</div>
+  <div class="correct">&#27491;&#35299;: D) It's in the Science Building, room 314. Take the elevator to the third floor.</div>
+  <div class="explanation">
+    <strong>&#12479;&#12452;&#12503;&#65306;&#20381;&#38972;&#65288;Could you tell me where...&#65289;</strong><br>
+    &#22580;&#25152;&#12434;&#23563;&#12397;&#12427;&#20381;&#38972;&#12395;&#23550;&#12375;&#12289;D&#12399;&#20855;&#20307;&#30340;&#12394;&#22580;&#25152;&#12434;&#25945;&#12360;&#12390;&#12356;&#12427;&#12290;<br>
+    <span class="wrong">A)</span> &#25945;&#25480;&#12398;&#25285;&#24403;&#31185;&#30446;&#12290;&#22580;&#25152;&#12434;&#32862;&#12356;&#12390;&#12356;&#12427;&#12398;&#12395;&#12378;&#12428;&#12390;&#12356;&#12427;&#12290;
+    <span class="wrong">B)</span> &#33258;&#20998;&#12398;&#25552;&#20986;&#29366;&#27841;&#12290;&#20381;&#38972;&#12408;&#12398;&#36820;&#31572;&#12391;&#12399;&#12394;&#12356;&#12290;
+    <span class="wrong">C)</span> &#32224;&#20999;&#12398;&#35441;&#12290;&#22580;&#25152;&#12398;&#36074;&#21839;&#12395;&#31572;&#12360;&#12390;&#12356;&#12394;&#12356;&#12290;
+  </div>
+</div>
+
+<div class="answer-card">
+  <h3><span class="q-num">5</span> Question 5</h3>
+  <div class="prompt">"I'm a transfer student and I keep getting lost on campus. Is there a map I can use?"</div>
+  <div class="correct">&#27491;&#35299;: A) Yes, you can download the campus map app. It even shows indoor routes.</div>
+  <div class="explanation">
+    <strong>&#12479;&#12452;&#12503;&#65306;Yes/No&#30097;&#21839;&#25991;&#65288;Is there...&#65289;</strong><br>
+    &#12300;&#22320;&#22259;&#12399;&#12354;&#12426;&#12414;&#12377;&#12363;&#65311;&#12301;&#12395;&#23550;&#12375;&#12289;A&#12399;&#20855;&#20307;&#30340;&#12394;&#35299;&#27770;&#31574;&#65288;&#12450;&#12503;&#12522;&#65289;&#12434;&#25552;&#31034;&#12290;<br>
+    <span class="wrong">B)</span> &#12458;&#12522;&#12456;&#12531;&#12486;&#12540;&#12471;&#12519;&#12531;&#12398;&#35441;&#12290;&#22320;&#22259;&#12398;&#36074;&#21839;&#12395;&#31572;&#12360;&#12390;&#12356;&#12394;&#12356;&#12290;
+    <span class="wrong">C)</span> &#12461;&#12515;&#12531;&#12497;&#12473;&#12398;&#22823;&#12365;&#12373;&#12398;&#24863;&#24819;&#12290;&#35299;&#27770;&#31574;&#12364;&#12394;&#12356;&#12290;
+    <span class="wrong">D)</span> &#33258;&#20998;&#12398;&#32232;&#20837;&#32076;&#39443;&#12290;&#30456;&#25163;&#12398;&#36074;&#21839;&#12395;&#31572;&#12360;&#12390;&#12356;&#12394;&#12356;&#12290;
+  </div>
+</div>
+
+<div class="answer-card">
+  <h3><span class="q-num">6</span> Question 6</h3>
+  <div class="prompt">"I heard we can get student discounts at the bookstore. Do you know how it works?"</div>
+  <div class="correct">&#27491;&#35299;: B) Just show your student ID at checkout and they'll take ten percent off.</div>
+  <div class="explanation">
+    <strong>&#12479;&#12452;&#12503;&#65306;Yes/No&#30097;&#21839;&#25991;&#65288;Do you know how...&#65289;</strong><br>
+    &#12300;&#20181;&#32068;&#12415;&#12434;&#30693;&#12387;&#12390;&#12414;&#12377;&#12363;&#65311;&#12301;&#12395;&#23550;&#12375;&#12289;B&#12399;&#20855;&#20307;&#30340;&#12394;&#25163;&#38918;&#12434;&#35500;&#26126;&#12290;<br>
+    <span class="wrong">A)</span> &#26360;&#24215;&#12398;&#21697;&#25539;&#12360;&#12290;&#21106;&#24341;&#12398;&#26041;&#27861;&#12395;&#12388;&#12356;&#12390;&#31572;&#12360;&#12390;&#12356;&#12394;&#12356;&#12290;
+    <span class="wrong">C)</span> &#33258;&#20998;&#12399;&#36023;&#12431;&#12394;&#12356;&#12392;&#12356;&#12358;&#35441;&#12290;&#36074;&#21839;&#12395;&#31572;&#12360;&#12390;&#12356;&#12394;&#12356;&#12290;
+    <span class="wrong">D)</span> &#23398;&#29983;&#21106;&#24341;&#12398;&#19968;&#33324;&#35542;&#12290;&#20855;&#20307;&#30340;&#12394;&#26041;&#27861;&#12434;&#25945;&#12360;&#12390;&#12356;&#12394;&#12356;&#12290;
+  </div>
+</div>
+
+<div class="answer-card">
+  <h3><span class="q-num">7</span> Question 7</h3>
+  <div class="prompt">"Did you see the weather alert? They're saying there might be a severe thunderstorm tonight."</div>
+  <div class="correct">&#27491;&#35299;: C) Thanks for the heads up. I should probably move my bike inside then.</div>
+  <div class="explanation">
+    <strong>&#12479;&#12452;&#12503;&#65306;&#24773;&#22577;&#20849;&#26377; &#8594; &#24863;&#35613;&#65291;&#34892;&#21205;&#12364;&#33258;&#28982;</strong><br>
+    C&#12399;&#24863;&#35613;&#65288;Thanks for the heads up&#65289;&#65291;&#20855;&#20307;&#30340;&#12394;&#34892;&#21205;&#65288;&#33258;&#36578;&#36554;&#12434;&#23627;&#20869;&#12395;&#31227;&#12377;&#65289;&#12434;&#36848;&#12409;&#12390;&#12362;&#12426;&#12289;&#20250;&#35441;&#12364;&#33258;&#28982;&#12395;&#36914;&#12416;&#12290;<br>
+    <span class="wrong">A)</span> &#38647;&#38632;&#12434;&#35211;&#12427;&#12398;&#12364;&#22909;&#12365;&#12392;&#12356;&#12358;&#24863;&#24819;&#12290;&#35686;&#21578;&#12408;&#12398;&#36969;&#20999;&#12394;&#21453;&#24540;&#12391;&#12399;&#12394;&#12356;&#12290;
+    <span class="wrong">B)</span> &#22825;&#27671;&#12398;&#19968;&#33324;&#35542;&#12290;&#20170;&#22812;&#12398;&#35686;&#22577;&#12395;&#23550;&#12377;&#12427;&#21453;&#24540;&#12392;&#12375;&#12390;&#19981;&#21313;&#20998;&#12290;
+    <span class="wrong">D)</span> &#22825;&#27671;&#20104;&#22577;&#12434;&#30906;&#35469;&#12375;&#12394;&#12356;&#32722;&#24931;&#12290;&#20250;&#35441;&#12364;&#27490;&#12414;&#12427;&#12290;
+  </div>
+</div>
+
+<div class="answer-card">
+  <h3><span class="q-num">8</span> Question 8</h3>
+  <div class="prompt">"Are you coming to the photography club meeting tomorrow? We're planning the end-of-year exhibition."</div>
+  <div class="correct">&#27491;&#35299;: D) Definitely! I have some ideas for the exhibition theme I'd like to share.</div>
+  <div class="explanation">
+    <strong>&#12479;&#12452;&#12503;&#65306;Yes/No&#30097;&#21839;&#25991;&#65288;&#35480;&#12356;&#65289;</strong><br>
+    &#12300;&#26126;&#26085;&#26469;&#12427;&#65311;&#12301;&#12392;&#12356;&#12358;&#35480;&#12356;&#12395;&#23550;&#12375;&#12289;D&#12399;&#21069;&#21521;&#12365;&#12394;&#36820;&#31572;&#65288;Definitely!&#65289;&#65291;&#20855;&#20307;&#30340;&#12394;&#36002;&#29486;&#12434;&#31034;&#21766;&#12290;<br>
+    <span class="wrong">A)</span> &#20889;&#30495;&#12398;&#19968;&#33324;&#35542;&#12290;&#35480;&#12356;&#12408;&#12398;&#36820;&#31572;&#12391;&#12399;&#12394;&#12356;&#12290;
+    <span class="wrong">B)</span> &#36942;&#21435;&#12398;&#26053;&#34892;&#20889;&#30495;&#12398;&#35441;&#12290;&#26126;&#26085;&#12398;&#12511;&#12540;&#12486;&#12451;&#12531;&#12464;&#12395;&#38306;&#20418;&#12394;&#12356;&#12290;
+    <span class="wrong">C)</span> &#23637;&#31034;&#20250;&#22580;&#12398;&#24037;&#20107;&#24773;&#22577;&#12290;&#35480;&#12356;&#12408;&#12398;&#36820;&#31572;&#12391;&#12399;&#12394;&#12356;&#12290;
+  </div>
+</div>
+
+<div style="text-align:center;margin-top:30px">
+  <a class="back-btn" href="../menu.html">&#8592; Listening &#12513;&#12491;&#12517;&#12540;&#12395;&#25147;&#12427;</a>
+</div>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing for an Academic Discussion — 解答解説・模範回答 | Practice 8</title>
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.container{max-width:880px;margin:0 auto;padding:20px}
+.card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:20px;overflow:hidden}
+.card-header{padding:16px 20px;border-bottom:1px solid #edf2f7;font-weight:700;font-size:1em;color:#4a90d9}
+.card-body{padding:20px}
+
+.structure-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+@media(max-width:700px){.structure-grid{grid-template-columns:1fr 1fr}}
+.struct-item{background:#ebf4ff;border-radius:8px;padding:14px;text-align:center}
+.struct-time{display:inline-block;background:#4a90d9;color:#fff;padding:2px 10px;border-radius:10px;font-size:.7em;font-weight:700;margin-bottom:6px}
+.struct-item h4{font-size:.82em;color:#2b6cb0;margin-bottom:4px}
+.struct-item p{font-size:.75em;color:#4a5568}
+
+.discussion-recap{background:#f7fafc;border-radius:8px;padding:16px;margin-bottom:16px}
+.discussion-recap .post{margin-bottom:10px;padding-left:12px;border-left:3px solid #e2e8f0;font-size:.85em}
+.discussion-recap .post.prof{border-color:#4a90d9}
+.discussion-recap .post.student{border-color:#81d4d4}
+.discussion-recap .author{font-weight:700;font-size:.82em;margin-bottom:2px}
+
+.model-answer{background:#f0fff4;border:1px solid #c6f6d5;border-radius:8px;padding:20px;font-size:.88em;line-height:1.8;color:#22543d}
+.model-answer .highlight{background:#c6f6d5;padding:1px 4px;border-radius:3px}
+.part-tag{display:inline-block;font-size:.68em;padding:1px 8px;border-radius:10px;font-weight:700;margin-right:4px;vertical-align:middle;color:#fff}
+.part-tag.claim{background:#4a90d9}
+.part-tag.reference{background:#81d4d4}
+.part-tag.reason{background:#ed8936}
+.part-tag.example{background:#38a169}
+
+.user-preview{background:#f7fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;font-size:.85em;color:#4a5568;white-space:pre-wrap;max-height:200px;overflow-y:auto;margin-bottom:12px}
+.no-response{color:#a0aec0;font-style:italic}
+
+.checklist{margin:14px 0}
+.check-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:.85em}
+
+.mistakes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+@media(max-width:600px){.mistakes-grid{grid-template-columns:1fr}}
+.mistake{background:#fff5f5;border-radius:8px;padding:12px;font-size:.82em}
+.mistake h5{color:#e53e3e;margin-bottom:4px}
+.mistake p{color:#718096}
+
+.nav-bottom{text-align:center;padding:24px 0 40px}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;text-decoration:none;margin:4px}
+.btn-back:hover{background:#3a7cc0}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Academic Discussion — 解答解説・模範回答</h1>
+  <p>Practice 8 | Health Sciences</p>
+</div>
+
+<div class="container">
+
+  <!-- Your response -->
+  <div class="card">
+    <div class="card-header">あなたの回答</div>
+    <div class="card-body">
+      <div class="user-preview" id="userPreview"><span class="no-response">問題を先に解いてからこのページを見ると、あなたの回答が表示されます</span></div>
+      <div id="userStats" style="font-size:.82em;color:#718096"></div>
+    </div>
+  </div>
+
+  <!-- Structure guide -->
+  <div class="card">
+    <div class="card-header">Academic Discussion 攻略：回答の構成</div>
+    <div class="card-body">
+      <div class="structure-grid">
+        <div class="struct-item">
+          <div class="struct-time">1文</div>
+          <h4>主張</h4>
+          <p>I believe that...<br>質問に対して立場を明確に</p>
+        </div>
+        <div class="struct-item">
+          <div class="struct-time">2-3文</div>
+          <h4>理由</h4>
+          <p>なぜその主張をするのか<br>抽象的でなく具体的に</p>
+        </div>
+        <div class="struct-item">
+          <div class="struct-time">2-3文</div>
+          <h4>具体例</h4>
+          <p>理由を裏付ける例を1つ<br>1つだけ深く掘り下げる</p>
+        </div>
+        <div class="struct-item">
+          <div class="struct-time">1-2文</div>
+          <h4>他の学生への言及</h4>
+          <p>I agree with...<br>Building on what X said...</p>
+        </div>
+      </div>
+      <p style="font-size:.82em;color:#718096;margin-top:8px">目標語数: <strong>100〜130語</strong>。具体例は「1つだけ」「短く」が鉄則。2つ書くと時間切れリスク大。</p>
+    </div>
+  </div>
+
+  <!-- Discussion recap -->
+  <div class="card">
+    <div class="card-header">ディスカッション内容の確認</div>
+    <div class="card-body">
+      <div class="discussion-recap">
+        <div class="post prof">
+          <div class="author" style="color:#4a90d9">Dr. Anderson</div>
+          Should junk food advertising be banned during children's TV programs? Why or why not?
+        </div>
+        <div class="post student">
+          <div class="author">Yuki（広告禁止賛成派）</div>
+          子どもは広告と娯楽の区別がつかない。カラフルなCMに影響されやすい。広告を無くせば親への負担も減る。
+        </div>
+        <div class="post student">
+          <div class="author">Ryan（広告禁止反対派）</div>
+          広告禁止は行き過ぎ。食事の判断は親の責任。広告規制より学校での栄養教育に投資すべき。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Model Answer -->
+  <div class="card">
+    <div class="card-header">模範回答（約115語）</div>
+    <div class="card-body">
+      <div class="model-answer">
+<span class="highlight"><span class="part-tag claim">主張</span> I believe that junk food advertising should be banned during children's television programs.</span><br><br>
+<span class="highlight"><span class="part-tag reference">言及</span> As Yuki pointed out, young children lack the ability to distinguish between advertising and regular programming. While I understand Ryan's point about parental responsibility, I think expecting parents to counteract the influence of constant advertising is unrealistic.</span><br><br>
+<span class="highlight"><span class="part-tag reason">理由</span> Research has shown that children who are frequently exposed to food advertisements are more likely to request and consume unhealthy products. Reducing this exposure could be an effective first step in addressing childhood obesity.</span><br><br>
+<span class="highlight"><span class="part-tag example">具体例</span> In fact, countries like Sweden and Norway have already implemented such bans, and studies suggest that these policies have contributed to lower rates of childhood obesity compared to countries without similar regulations.</span><br><br>
+Therefore, banning junk food ads during children's programs is a reasonable public health measure that complements, rather than replaces, parental guidance.
+      </div>
+      <p style="font-size:.8em;color:#718096;margin-top:10px">※ この模範回答は「禁止賛成」の立場を取っています。反対の立場でもOKです。</p>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div class="card">
+    <div class="card-header">自己チェックリスト</div>
+    <div class="card-body">
+      <div class="checklist">
+        <div class="check-item"><span class="icon">&#9745;&#65039;</span> 最初の1文で立場を明確にしている（I believe that...）</div>
+        <div class="check-item"><span class="icon">&#9745;&#65039;</span> 他の学生の意見に言及している（As Yuki pointed out... / While I understand Ryan's point...）</div>
+        <div class="check-item"><span class="icon">&#9745;&#65039;</span> 明確な理由が1つ以上ある</div>
+        <div class="check-item"><span class="icon">&#9745;&#65039;</span> 具体例が1つある（スウェーデン・ノルウェーの事例）</div>
+        <div class="check-item"><span class="icon">&#9745;&#65039;</span> 100語以上ある</div>
+        <div class="check-item"><span class="icon">&#9745;&#65039;</span> まとめの文で締めくくっている（Therefore...）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Common mistakes -->
+  <div class="card">
+    <div class="card-header">よくあるミス</div>
+    <div class="card-body">
+      <div class="mistakes-grid">
+        <div class="mistake"><h5>&#10007; 立場が不明確</h5><p>"This is a very interesting question..." で始めて立場を述べない → I believe that... ですぐ始める</p></div>
+        <div class="mistake"><h5>&#10007; 理由が2つで浅い</h5><p>2つの理由を浅く並べるより、1つの理由を深く掘り下げる方が高得点</p></div>
+        <div class="mistake"><h5>&#10007; 他の学生への言及なし</h5><p>ディスカッションなので他の投稿に触れることが期待されている</p></div>
+        <div class="mistake"><h5>&#10007; 具体例が長すぎる</h5><p>具体例は2-3文で十分。長すぎると時間切れのリスク</p></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-8.html">&larr; もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">メニューに戻る</a>
+</div>
+
+<script>
+const stored = JSON.parse(sessionStorage.getItem('discussionResponse_p8')||'null');
+if(stored && stored.text){
+  document.getElementById('userPreview').textContent = stored.text;
+  document.getElementById('userStats').textContent = '語数: ' + stored.words + ' | 使用時間: ' + stored.time;
+}
+</script>
+<script src="../../js/auth.js"></script>
+</body>
+</html>
