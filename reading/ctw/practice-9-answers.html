@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Complete the Words Practice 9 解答解説</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Nunito',sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#1a6b6a,#2a8a8a);color:#fff;padding:28px 24px;text-align:center;position:relative}
+.header h1{font-size:1.5em;font-weight:800;margin-bottom:4px}
+.header p{font-size:.88em;opacity:.85}
+.btn-menu{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:8px;font-size:.78em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.btn-menu:hover{background:rgba(255,255,255,.25)}
+.score-summary{max-width:880px;margin:20px auto;background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:22px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.score-card{flex:1;min-width:180px;text-align:center;padding:14px;border-radius:10px;background:#f9fafb;border:1.5px solid #eef1f5}
+.score-card h3{font-size:.78em;color:#8898a8;font-weight:700;margin-bottom:2px}
+.score-card .score-num{font-size:1.8em;font-weight:800;color:#2d3748}
+.score-card .score-num .correct{color:#1a6b6a}
+.score-card .score-detail{font-size:.72em;color:#a0aec0;margin-top:2px;font-weight:600}
+.score-card.total{background:#e8f5f4;border-color:#1a6b6a}
+.tips-banner{background:#fff;border-left:4px solid #1a6b6a;margin:20px auto;max-width:880px;padding:18px 22px;border-radius:0 10px 10px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.tips-banner h2{font-size:1em;color:#1a6b6a;margin-bottom:10px;font-weight:800}
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.tip-card{background:#f0faf9;border-radius:10px;padding:12px 14px}
+.tip-num{display:inline-block;background:#1a6b6a;color:#fff;font-size:.7em;font-weight:800;padding:2px 10px;border-radius:8px;margin-bottom:6px}
+.tip-card h3{font-size:.88em;color:#2d3748;margin-bottom:4px;font-weight:700}
+.tip-card p{font-size:.78em;color:#5a6878;line-height:1.6}
+.tip-card .ex{font-size:.75em;color:#8898a8;margin-top:3px;font-style:italic}
+.set-nav{max-width:880px;margin:20px auto 0;display:flex;gap:6px;padding:0}
+.set-nav button{flex:1;padding:10px;font-size:.82em;font-family:inherit;font-weight:700;border:none;border-radius:10px 10px 0 0;cursor:pointer;transition:all .2s;background:#e2e8f0;color:#5a6878}
+.set-nav button.active{background:#fff;color:#2d3748;box-shadow:0 -2px 8px rgba(0,0,0,.05)}
+.set-nav button:hover:not(.active){background:#edf2f7}
+.set-panel{display:none;max-width:880px;margin:0 auto}.set-panel.active{display:block}
+.set-section{background:#fff;border-radius:0 0 14px 14px;box-shadow:0 2px 12px rgba(0,0,0,.06);overflow:hidden}
+.set-header{background:#2d3748;color:#fff;padding:14px 22px;display:flex;align-items:center;gap:10px}
+.set-badge{background:#4a90d9;font-size:.7em;font-weight:800;padding:3px 12px;border-radius:8px}
+.set-badge.m2{background:#e53e3e}
+.set-header h2{font-size:1.05em;font-weight:700}
+.passage-block{padding:18px 22px;background:#fafbfc;border-bottom:1px solid #e2e8f0}
+.passage-label{font-size:.7em;font-weight:700;color:#8898a8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.passage-text{font-size:.9em;line-height:2;color:#2d3748}
+.blank-word{font-weight:700;color:#1a6b6a}.blank-answer{background:#e6fffa;padding:1px 4px;border-radius:3px;border-bottom:2px solid #1a6b6a}
+.answers-block{padding:18px 22px}
+.answers-block h3{font-size:.92em;color:#2d3748;margin-bottom:12px;font-weight:800}
+.answer-row{display:flex;align-items:flex-start;padding:11px 14px;border-bottom:1px solid #f0f0f0;gap:10px}
+.answer-row:hover{background:#f7fafc}.answer-row.incorrect{background:#fff5f5}
+.q-num{min-width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:800;flex-shrink:0}
+.q-num.correct{background:#c6f6d5;color:#22543d}.q-num.wrong{background:#fed7d7;color:#9b2c2c}
+.q-content{flex:1}
+.q-word{font-weight:700;color:#2d3748;font-size:.88em;margin-bottom:2px}
+.q-word .shown{color:#8898a8}.q-word .ans{color:#1a6b6a;font-weight:800}
+.q-user{font-size:.78em;margin-bottom:3px}
+.q-explain{font-size:.78em;color:#5a6878;line-height:1.5}
+.q-tag{display:inline-block;font-size:.68em;font-weight:700;padding:1px 8px;border-radius:6px;margin-left:4px;vertical-align:middle}
+.tag-hard{background:#fed7d7;color:#9b2c2c}.tag-mod{background:#c6f6d5;color:#22543d}
+.scoring-reminder{max-width:880px;margin:20px auto 40px;background:#fffbeb;border:1.5px solid #fbbf24;border-radius:12px;padding:16px 22px;display:flex;align-items:flex-start;gap:10px}
+.scoring-reminder .icon{font-size:1.3em;flex-shrink:0}
+.scoring-reminder .text h3{font-size:.9em;color:#92400e;margin-bottom:3px;font-weight:700}
+.scoring-reminder .text p{font-size:.82em;color:#a16207;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="header">
+  <a class="btn-menu" href="../menu.html">&larr; メニュー</a>
+  <h1>Complete the Words 解答解説</h1>
+  <p>Practice 9 — 3セット分</p>
+</div>
+<div class="score-summary" id="scoreSummary"></div>
+<div class="tips-banner">
+  <h2>&#128161; Complete the Words 攻略 4つのポイント</h2>
+  <div class="tips-grid">
+    <div class="tip-card"><span class="tip-num">01</span><h3>品詞を特定してから埋める</h3><p>冠詞＋空欄 &rarr; 名詞<br>主語＋空欄 &rarr; 動詞<br>be動詞＋空欄 &rarr; 形容詞/過去分詞<br>空欄＋名詞 &rarr; 形容詞</p></div>
+    <div class="tip-card"><span class="tip-num">02</span><h3>頻出パターンを暗記する</h3><p>however, therefore, although<br>particularly, especially<br>significant, demonstrate, evidence</p><div class="ex">&rarr; 見たら即座に埋められるように！</div></div>
+    <div class="tip-card"><span class="tip-num">03</span><h3>推測でも必ず埋める</h3><p>正解 &rarr; 得点 / 不正解 &rarr; 0点 / 空欄 &rarr; 0点</p><div class="ex">&rarr; 推測しないと損！必ず何か入れよう</div></div>
+    <div class="tip-card"><span class="tip-num">04</span><h3>INTROとCONCLUSIONを先に読む</h3><p>最初と最後の文を先に読めば、トピックと流れが掴める。空欄の推測精度が上がる！</p><div class="ex">&rarr; 本文に入る前にまず全体像を把握</div></div>
+  </div>
+</div>
+<div class="set-nav" id="setNav">
+  <button class="active" onclick="showSet(0)">Set 1: Antibiotics</button>
+  <button onclick="showSet(1)">Set 2: Ocean Climate</button>
+  <button onclick="showSet(2)">Set 3: Language Neuroscience</button>
+</div>
+<div class="set-panel active" id="set0"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 1: The Discovery of Antibiotics</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage0"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag0"></div></div></div></div>
+<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 2: How Oceans Regulate Climate</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
+<div class="set-panel" id="set2"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 3: The Neuroscience of Language Learning</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage2"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag2"></div></div></div></div>
+<div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
+
+<script src="../../js/auth.js"></script>
+<script>
+var SD=[
+{intro:"Before the twentieth century, even minor infections could be fatal because doctors had no effective way to fight bacteria. The discovery of antibiotics transformed medicine and saved countless lives around the world.",conclusion:"Today, antibiotics remain one of the most important tools in modern medicine, although their overuse has created new challenges.",target:[
+{w:"In",a:null,s:null,p:""},
+{w:"1928",a:null,s:null,p:","},
+{w:"Alexander",a:"ander",s:"Alex",p:""},
+{w:"Fleming",a:null,s:null,p:""},
+{w:"noticed",a:"iced",s:"not",p:""},
+{w:"that",a:null,s:null,p:""},
+{w:"a",a:null,s:null,p:""},
+{w:"mold",a:"ld",s:"mo",p:""},
+{w:"growing",a:null,s:null,p:""},
+{w:"on",a:null,s:null,p:""},
+{w:"one",a:"ne",s:"o",p:""},
+{w:"of",a:null,s:null,p:""},
+{w:"his",a:null,s:null,p:""},
+{w:"laboratory",a:"ratory",s:"labo",p:""},
+{w:"dishes",a:null,s:null,p:""},
+{w:"was",a:"as",s:"w",p:""},
+{w:"killing",a:null,s:null,p:""},
+{w:"the",a:null,s:null,p:""},
+{w:"bacteria",a:"teria",s:"bac",p:""},
+{w:"around",a:null,s:null,p:""},
+{w:"it",a:null,s:null,p:"."}
+],exp:[
+{pos:"固有名詞",d:"MOD",e:"「1928, 空欄 Fleming」→人名。\"Alex\"→Alexander。固有名詞は文脈から推測。"},
+{pos:"動詞",d:"MOD",e:"「Fleming＋空欄＋that」→動詞。\"not\"→noticed（気づいた）。過去形。"},
+{pos:"名詞",d:"MOD",e:"「a＋空欄＋growing」→名詞。\"mo\"→mold（カビ）。文脈でカビと推測。"},
+{pos:"数詞",d:"HARD",e:"「on＋空欄＋of」→数詞。\"o\"→one。1文字のみで難しい。"},
+{pos:"名詞",d:"HARD",e:"「his＋空欄＋dishes」→名詞。\"labo\"→laboratory（実験室）。6文字の答え。"},
+{pos:"動詞",d:"HARD",e:"「空欄＋killing」→be動詞。\"w\"→was。1文字表示で難。"},
+{pos:"名詞",d:"MOD",e:"「the＋空欄＋around」→名詞。\"bac\"→bacteria（細菌）。introからの推測。"}
+]},
+{intro:"The world's oceans play a crucial role in controlling the global climate. They absorb heat from the sun and distribute it around the planet through a system of powerful currents.",conclusion:"Without the ocean's ability to store and move heat, temperatures on land would be far more extreme and unpredictable.",target:[
+{w:"Warm",a:"rm",s:"Wa",p:""},
+{w:"water",a:null,s:null,p:""},
+{w:"near",a:"ar",s:"ne",p:""},
+{w:"the",a:null,s:null,p:""},
+{w:"equator",a:"ator",s:"equ",p:""},
+{w:"travels",a:null,s:null,p:""},
+{w:"toward",a:"ard",s:"tow",p:""},
+{w:"the",a:null,s:null,p:""},
+{w:"poles",a:"les",s:"po",p:""},
+{w:"while",a:null,s:null,p:""},
+{w:"cold",a:"ld",s:"co",p:""},
+{w:"water",a:null,s:null,p:""},
+{w:"from",a:null,s:null,p:""},
+{w:"deeper",a:"per",s:"dee",p:""},
+{w:"layers",a:null,s:null,p:""},
+{w:"rises",a:"ses",s:"ri",p:""},
+{w:"to",a:null,s:null,p:""},
+{w:"replace",a:"place",s:"re",p:""},
+{w:"it",a:null,s:null,p:"."}
+],exp:[
+{pos:"形容詞",d:"MOD",e:"「空欄＋water」→形容詞。\"Wa\"→Warm（温かい）。文脈から推測。"},
+{pos:"前置詞",d:"MOD",e:"「water＋空欄＋the equator」→前置詞。\"ne\"→near（近くの）。"},
+{pos:"名詞",d:"HARD",e:"「the＋空欄」→名詞。\"equ\"→equator（赤道）。科学用語。"},
+{pos:"前置詞",d:"MOD",e:"「travels＋空欄＋the poles」→前置詞。\"tow\"→toward（〜に向かって）。"},
+{pos:"名詞",d:"MOD",e:"「the＋空欄」→名詞。\"po\"→poles（極地）。equatorとの対比。"},
+{pos:"形容詞",d:"MOD",e:"「while＋空欄＋water」→形容詞。\"co\"→cold。Warmとの対比で推測。"},
+{pos:"形容詞",d:"MOD",e:"「from＋空欄＋layers」→形容詞。\"dee\"→deeper（より深い）。比較級。"},
+{pos:"動詞",d:"HARD",e:"「layers＋空欄＋to」→動詞。\"ri\"→rises（上昇する）。3人称単数。"},
+{pos:"動詞",d:"HARD",e:"「to＋空欄＋it」→動詞。\"re\"→replace（置き換える）。5文字で難しい。"}
+]},
+{intro:"Learning a new language is one of the most complex tasks the human brain can perform. It requires the coordination of multiple brain regions responsible for memory, attention, and pattern recognition.",conclusion:"These findings suggest that the brain's remarkable plasticity allows people of all ages to acquire new languages, though the process becomes more effortful over time.",target:[
+{w:"Researchers",a:"rchers",s:"Resea",p:""},
+{w:"have",a:null,s:null,p:""},
+{w:"demonstrated",a:"strated",s:"demon",p:""},
+{w:"that",a:null,s:null,p:""},
+{w:"acquiring",a:"iring",s:"acqu",p:""},
+{w:"vocabulary",a:null,s:null,p:""},
+{w:"primarily",a:"marily",s:"pri",p:""},
+{w:"engages",a:null,s:null,p:""},
+{w:"the",a:null,s:null,p:""},
+{w:"hippocampus",a:"campus",s:"hippo",p:","},
+{w:"whereas",a:"reas",s:"whe",p:""},
+{w:"mastering",a:null,s:null,p:""},
+{w:"grammar",a:"mmar",s:"gra",p:""},
+{w:"relies",a:null,s:null,p:""},
+{w:"heavily",a:"vily",s:"hea",p:""},
+{w:"on",a:null,s:null,p:""},
+{w:"procedural",a:"dural",s:"proce",p:""},
+{w:"memory",a:null,s:null,p:""},
+{w:"circuits",a:"cuits",s:"cir",p:""},
+{w:"located",a:null,s:null,p:""},
+{w:"in",a:null,s:null,p:""},
+{w:"the",a:null,s:null,p:""},
+{w:"frontal",a:"ntal",s:"fro",p:""},
+{w:"cortex",a:null,s:null,p:"."}
+],exp:[
+{pos:"名詞（主語）",d:"HARD",e:"「空欄＋have demonstrated」→主語。\"Resea\"→Researchers。6文字の答え。"},
+{pos:"動詞",d:"HARD",e:"「Researchers have＋空欄」→過去分詞。\"demon\"→demonstrated。7文字の答え。"},
+{pos:"動名詞",d:"HARD",e:"「that＋空欄＋vocabulary」→主語（動名詞）。\"acqu\"→acquiring（習得すること）。"},
+{pos:"副詞",d:"HARD",e:"「vocabulary＋空欄＋engages」→副詞。\"pri\"→primarily（主に）。"},
+{pos:"名詞",d:"HARD",e:"「the＋空欄」→名詞。\"hippo\"→hippocampus（海馬）。専門用語。"},
+{pos:"接続詞",d:"MOD",e:"「hippocampus,＋空欄＋mastering」→接続詞。\"whe\"→whereas（一方で）。"},
+{pos:"名詞",d:"MOD",e:"「mastering＋空欄」→名詞。\"gra\"→grammar（文法）。"},
+{pos:"副詞",d:"MOD",e:"「relies＋空欄＋on」→副詞。\"hea\"→heavily。relies heavily onは頻出。"},
+{pos:"形容詞",d:"HARD",e:"「on＋空欄＋memory」→形容詞。\"proce\"→procedural（手続き的な）。専門用語。"},
+{pos:"名詞",d:"HARD",e:"「memory＋空欄」→名詞。\"cir\"→circuits（回路）。5文字の答え。"},
+{pos:"形容詞",d:"MOD",e:"「the＋空欄＋cortex」→形容詞。\"fro\"→frontal（前頭の）。"}
+]}
+];
+
+function renderAll(){
+  var ts=0,tq=0,sh='';
+  SD.forEach(function(s,si){
+    var bl=s.target.filter(function(t){return t.a!==null;});
+    var st=null;try{st=JSON.parse(sessionStorage.getItem('ctw_p9_answers_'+(si+1)));}catch(e){}
+    var ua=st?st.answers:[];var sc=st?st.score:0;ts+=sc;tq+=bl.length;
+    sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+bl.length+'</div><div class="score-detail">'+(st?Math.round(sc/bl.length*100)+'%':'—')+'</div></div>';
+    var ph='<span>'+s.intro+'</span> ';
+    s.target.forEach(function(t){if(t.a!==null){ph+='<span class="blank-word">'+t.s+'<span class="blank-answer">'+t.a+'</span></span>';if(t.p)ph+=t.p;ph+=' ';}else{ph+=t.w+(t.p||'')+' ';}});
+    ph+='<span>'+s.conclusion+'</span>';
+    document.getElementById('passage'+si).innerHTML=ph;
+    var ag='';
+    bl.forEach(function(b,qi){
+      var ex=s.exp[qi];var uans=ua[qi]||'';var ok=uans.toLowerCase()===b.a.toLowerCase();
+      var dt=ex.d==='HARD'?'<span class="q-tag tag-hard">HARD</span>':'<span class="q-tag tag-mod">MOD</span>';
+      var ul='';
+      if(st){if(ok){ul='<div class="q-user" style="color:#22543d">&#10004; 正解！ あなたの回答: '+b.s+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#9b2c2c">&#11036; 未回答 — 推測でも必ず埋めよう！</div>';}else{ul='<div class="q-user" style="color:#9b2c2c">&#10060; あなた: <span style="text-decoration:line-through">'+b.s+uans+'</span> &rarr; 正解: '+b.w+'</div>';}}
+      ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+b.s+'</span><span class="ans">'+b.a+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong>品詞：'+ex.pos+'</strong> '+ex.e+'</div></div></div>';
+    });
+    document.getElementById('ag'+si).innerHTML=ag;
+  });
+  sh+='<div class="score-card total"><h3>合計</h3><div class="score-num"><span class="correct">'+ts+'</span>/'+tq+'</div><div class="score-detail">'+Math.round(ts/tq*100)+'%</div></div>';
+  document.getElementById('scoreSummary').innerHTML=sh;
+}
+function showSet(i){document.querySelectorAll('.set-panel').forEach(function(p,j){p.classList.toggle('active',j===i);});document.querySelectorAll('.set-nav button').forEach(function(b,j){b.classList.toggle('active',j===i);});}
+renderAll();
+</script>
+</body>
+</html>

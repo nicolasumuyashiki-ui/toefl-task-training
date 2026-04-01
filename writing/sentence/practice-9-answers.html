@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build a Sentence — 解答解説 | Practice 9</title>
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px}
+.container{max-width:880px;margin:0 auto;padding:0 20px 40px}
+.tips-card{background:#fff;border-left:4px solid #4a90d9;margin:20px 0;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tips-card h2{font-size:1em;color:#4a90d9;margin-bottom:12px}
+.step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.step-grid{grid-template-columns:1fr}}
+.step{background:#ebf4ff;border-radius:8px;padding:14px;text-align:center}
+.step-num{display:inline-block;background:#4a90d9;color:#fff;width:28px;height:28px;line-height:28px;border-radius:50%;font-size:.8em;font-weight:700;margin-bottom:6px}
+.step h4{font-size:.85em;margin-bottom:4px}
+.step p{font-size:.75em;color:#4a5568}
+
+.patterns-card{background:#fff;border-left:4px solid #81d4d4;margin:20px 0;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.patterns-card h2{font-size:1em;color:#2b6cb0;margin-bottom:12px}
+.pattern-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:600px){.pattern-grid{grid-template-columns:1fr}}
+.pattern{background:#f0fff4;border-radius:8px;padding:12px;font-size:.82em}
+.pattern h5{color:#276749;margin-bottom:4px}
+.pattern p{color:#4a5568}
+
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:14px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid #edf2f7}
+.q-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}
+.q-num.wrong{background:#e53e3e}
+.q-num.default{background:#4a90d9}
+.q-prompt{font-size:.88em;color:#718096;flex:1;font-style:italic}
+.q-body{padding:14px 18px}
+.q-sentence{font-size:.92em;font-weight:600;color:#2d3748;margin-bottom:6px}
+.q-grammar{font-size:.8em;color:#718096;background:#f7fafc;padding:8px 12px;border-radius:6px;border-left:3px solid #4a90d9}
+.q-user{font-size:.82em;margin-bottom:6px;padding:6px 10px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.nav-bottom{text-align:center;padding:24px 0}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;text-decoration:none;margin:4px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔤 Build a Sentence — 解答解説</h1>
+  <p>Practice 9 | Technology, Internet & Digital Life | 16問</p>
+</div>
+
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
+</div>
+
+<div class="container">
+
+<div class="tips-card">
+  <h2>💡 Build a Sentence 攻略 3ステップ</h2>
+  <div class="step-grid">
+    <div class="step"><div class="step-num">1</div><h4>主語と動詞を見つける</h4><p>「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</p></div>
+    <div class="step"><div class="step-num">2</div><h4>骨格を作る</h4><p>S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</p></div>
+    <div class="step"><div class="step-num">3</div><h4>残りを配置</h4><p>修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</p></div>
+  </div>
+</div>
+
+<div class="patterns-card">
+  <h2>📐 今回の語順パターン</h2>
+  <div class="pattern-grid">
+    <div class="pattern"><h5>🔹 wish + would（不満・願望）</h5><p>Q1「I wish people would stop」Q6「I wish the developers would listen」— 現在の習慣的行為への不満を表す。wishの後はwouldを使う。</p></div>
+    <div class="pattern"><h5>🔹 非制限関係代名詞（, which / , who）</h5><p>Q3「Online learning, which allows...」Q8「Dr. Park, who is an expert...」— コンマ付きで追加情報を挿入。先行詞を補足説明する。</p></div>
+    <div class="pattern"><h5>🔹 have something done（使役）</h5><p>Q2「had the website designed」Q7「had my screen replaced」Q13「had my photos taken」— 「〜してもらう」の受身使役。have + O + 過去分詞。</p></div>
+    <div class="pattern"><h5>🔹 by the time + 過去完了 / provided (that)</h5><p>Q4「By the time the deadline arrives」Q9「By the time the system crashed」— 時間の前後関係を明示。Q10「provided that」= 条件「〜する限り」。</p></div>
+  </div>
+</div>
+
+<div id="qList"></div>
+
+</div>
+
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-9.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
+</div>
+
+<script>
+const answers=[
+{id:1,prompt:"Are you happy with the new social media app?",sentence:"I wish people would stop sharing so much personal information.",grammar:"wish + would: 他者の習慣的行為への不満を表す。I wish + S + would + V。stop + V-ing（〜するのをやめる）。"},
+{id:2,prompt:"Who designed your company's website?",sentence:"We had the website designed by a professional agency.",grammar:"使役構文 have + O + 過去分詞:「〜してもらう」。by + 動作主で誰に依頼したかを示す。"},
+{id:3,prompt:"What do you think about online learning?",sentence:"Online learning, which allows students to study at their own pace, is becoming very popular.",grammar:"非制限関係代名詞 , which ~: 先行詞 Online learning に補足情報を追加。コンマで挟む。allow + O + to V。"},
+{id:4,prompt:"Will you finish the project before the deadline?",sentence:"By the time the deadline arrives, I will have completed every section.",grammar:"by the time + 現在形, S + will have + Vpp: 未来完了。「〜するまでには…し終えている」。"},
+{id:5,prompt:"Can I use your streaming account?",sentence:"You can use it as long as you do not change the password.",grammar:"as long as =「〜する限り」条件を表す接続詞。provided that と同義。否定は do not + V。"},
+{id:6,prompt:"Why are you upset about the update?",sentence:"I wish the developers would listen to user feedback more carefully.",grammar:"wish + would: 不満・願望。listen to ~（〜に耳を傾ける）。副詞 more carefully は文末に置く。"},
+{id:7,prompt:"How did you get your phone screen fixed?",sentence:"I had my screen replaced at the repair shop.",grammar:"使役構文 have + O + 過去分詞: had my screen replaced =「画面を交換してもらった」。場所は at + 場所。"},
+{id:8,prompt:"Do you know Dr. Park from the tech conference?",sentence:"Dr. Park, who is an expert in artificial intelligence, gave an excellent presentation.",grammar:"非制限関係代名詞 , who ~: 人の先行詞に補足情報を追加。コンマで挟み、主節に戻る。"},
+{id:9,prompt:"Did you back up your files before the crash?",sentence:"By the time the system crashed, I had already saved all my important files.",grammar:"by the time + 過去形, S + had + Vpp: 過去完了で「〜した時にはもう…していた」。already で強調。"},
+{id:10,prompt:"Will the company approve the remote work policy?",sentence:"They will approve it provided that employees maintain their productivity levels.",grammar:"provided (that) =「〜という条件で」。as long as と同義の条件接続詞。maintain =「維持する」。"},
+{id:11,prompt:"What bothers you about online shopping?",sentence:"I wish delivery companies would provide more accurate tracking information.",grammar:"wish + would: 不満・改善の願望。provide + O（目的語）。more accurate は tracking information を修飾する形容詞。"},
+{id:12,prompt:"Is that the programmer who built your app?",sentence:"Yes, that is the programmer who built the app for our startup.",grammar:"制限関係代名詞 who（主格）: 先行詞 the programmer を修飾。for our startup は目的を示す前置詞句。"},
+{id:13,prompt:"Where did you get those professional headshots?",sentence:"I had my photos taken at a photography studio.",grammar:"使役構文 have + O + 過去分詞: had my photos taken =「写真を撮ってもらった」。at + 場所。"},
+{id:14,prompt:"Had the students submitted their work when the server went down?",sentence:"By the time most students had submitted their assignments, the server went down.",grammar:"by the time + S + had Vpp, S + 過去形: 時系列を明示。「提出し終えた頃にサーバーがダウンした」。"},
+{id:15,prompt:"Can anyone access this Wi-Fi network?",sentence:"You can connect to it as long as you have the correct password.",grammar:"as long as =「〜する限り」条件。connect to ~（〜に接続する）。have + O（持っている）。"},
+{id:16,prompt:"Tell me about the cybersecurity expert you mentioned.",sentence:"Ms. Chen, who works for a major technology firm, has won several industry awards.",grammar:"非制限関係代名詞 , who ~: Ms. Chen に追加情報を挿入。work for ~（〜に勤めている）。現在完了 has won で実績を述べる。"}
+];
+
+const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p9')||'null');
+let score=0;
+
+if(stored){
+  score=stored.score||0;
+  document.getElementById('scoreBig').textContent=score+' / '+stored.total;
+  document.getElementById('scoreBar').style.width=(score/stored.total*100)+'%';
+  const pct=Math.round(score/stored.total*100);
+  document.getElementById('scoreMsg').textContent=pct+'% 正答率'+(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');
+}
+
+let html='';
+answers.forEach((a,i)=>{
+  html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"</div></div>'
+    +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
+    +'<div class="q-grammar">📝 '+a.grammar+'</div></div></div>';
+});
+document.getElementById('qList').innerHTML=html;
+</script>
+</body>
+</html>

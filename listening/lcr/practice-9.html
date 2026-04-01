@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen and Choose a Response — Practice 9</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
+.top-nav-left strong{color:#2d3748}
+.top-nav-right{display:flex;align-items:center;gap:12px}
+.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#2d3748;font-weight:600;min-width:60px;text-align:center}
+.progress-bar{height:4px;background:#ebf4ff;width:100%}
+.progress-fill{height:100%;background:#f59e0b;border-radius:2px;transition:width .3s}
+.main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}
+.content{width:100%;max-width:660px;text-align:center}
+.audio-pending-banner{background:#fffbeb;border:2px dashed #fde68a;border-radius:16px;padding:40px 30px;margin-bottom:30px}
+.audio-pending-banner h2{font-size:1.2em;font-weight:800;color:#92400e;margin-bottom:12px}
+.audio-pending-banner p{font-size:.9em;color:#b45309;line-height:1.6;margin-bottom:8px}
+.script-section{background:#f9fafb;border:1px solid #e8ecf0;border-radius:12px;padding:24px;margin-bottom:20px;text-align:left}
+.script-section h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.script-section .q-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.8em;font-weight:800}
+.script-prompt{font-size:.88em;color:#4a5568;margin-bottom:16px;padding:10px 14px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;font-style:italic}
+.options{list-style:none;padding:0}
+.options li{padding:10px 14px;margin-bottom:8px;border:1.5px solid #e8ecf0;border-radius:10px;font-size:.88em;cursor:pointer;transition:all .15s}
+.options li:hover{border-color:#fde68a;background:#fffbeb}
+.options li .opt-letter{font-weight:800;color:#f59e0b;margin-right:8px}
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.footer-left a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
+.footer-left a:hover{color:#2d3748}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.btn-next{color:#fff;background:#2d3748}
+.btn-next:hover{background:#1a202c}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="top-nav-left">
+    <strong>Listen and Choose a Response</strong>
+    <span>Practice 9 — 8 Questions</span>
+  </div>
+  <div class="top-nav-right">
+    <span class="timer-display">--:--</span>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+
+<div class="main">
+<div class="content">
+
+<div class="audio-pending-banner">
+  <h2>&#128266; 音声準備中</h2>
+  <p>このPracticeの音声ファイルは現在作成中です。<br>以下にスクリプトと選択肢を掲載していますので、内容の確認は可能です。</p>
+  <p style="font-size:.78em;color:#92400e">音声が完成次第、自動再生形式に切り替わります。</p>
+</div>
+
+<!-- Q1: campus event tickets — correct A -->
+<div class="script-section">
+  <h3><span class="q-num">1</span> Question 1</h3>
+  <div class="script-prompt">Audio: "Where can I pick up my tickets for the homecoming concert this weekend?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> You can get them at the student activities office on the second floor.</li>
+    <li><span class="opt-letter">B)</span> The concert was really amazing last year.</li>
+    <li><span class="opt-letter">C)</span> I already have my tickets for the basketball game.</li>
+    <li><span class="opt-letter">D)</span> Homecoming is always held in the fall semester.</li>
+  </ul>
+</div>
+
+<!-- Q2: roommate conflict — correct B -->
+<div class="script-section">
+  <h3><span class="q-num">2</span> Question 2</h3>
+  <div class="script-prompt">Audio: "My roommate keeps playing loud music late at night, and I can't sleep."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> I love listening to music when I'm studying.</li>
+    <li><span class="opt-letter">B)</span> Have you tried talking to her about it? You could also contact your RA for help.</li>
+    <li><span class="opt-letter">C)</span> My roommate and I get along really well.</li>
+    <li><span class="opt-letter">D)</span> The dorms have quiet hours posted in the hallway.</li>
+  </ul>
+</div>
+
+<!-- Q3: library card renewal — correct C -->
+<div class="script-section">
+  <h3><span class="q-num">3</span> Question 3</h3>
+  <div class="script-prompt">Audio: "Do you know how to renew my library card? It expired last week."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> The library has an excellent digital collection.</li>
+    <li><span class="opt-letter">B)</span> I lost my library card during finals week.</li>
+    <li><span class="opt-letter">C)</span> Just bring your student ID to the front desk and they'll renew it for free.</li>
+    <li><span class="opt-letter">D)</span> Library cards are issued to all first-year students.</li>
+  </ul>
+</div>
+
+<!-- Q4: professor recommendation letter — correct D -->
+<div class="script-section">
+  <h3><span class="q-num">4</span> Question 4</h3>
+  <div class="script-prompt">Audio: "I need to ask Professor Kim for a recommendation letter, but I'm nervous about it."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Professor Kim teaches organic chemistry this semester.</li>
+    <li><span class="opt-letter">B)</span> Recommendation letters are required for most graduate programs.</li>
+    <li><span class="opt-letter">C)</span> I submitted my application last month.</li>
+    <li><span class="opt-letter">D)</span> Don't worry. Just go to her office hours and explain what you need. She's very approachable.</li>
+  </ul>
+</div>
+
+<!-- Q5: campus shuttle pass — correct A -->
+<div class="script-section">
+  <h3><span class="q-num">5</span> Question 5</h3>
+  <div class="script-prompt">Audio: "Is the campus shuttle free for students, or do I need to buy a pass?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> It's free. Just show your student ID when you board.</li>
+    <li><span class="opt-letter">B)</span> The shuttle runs every thirty minutes on weekdays.</li>
+    <li><span class="opt-letter">C)</span> I usually ride my bicycle to campus.</li>
+    <li><span class="opt-letter">D)</span> The bus stop is right next to the science building.</li>
+  </ul>
+</div>
+
+<!-- Q6: computer lab hours — correct B -->
+<div class="script-section">
+  <h3><span class="q-num">6</span> Question 6</h3>
+  <div class="script-prompt">Audio: "I need to print my research paper tonight, but I'm not sure if the computer lab is still open."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> The computer lab has over fifty workstations.</li>
+    <li><span class="opt-letter">B)</span> It should be. During finals week, it stays open until midnight.</li>
+    <li><span class="opt-letter">C)</span> I finished my research paper two days ago.</li>
+    <li><span class="opt-letter">D)</span> You should always save your documents to a flash drive.</li>
+  </ul>
+</div>
+
+<!-- Q7: student health insurance — correct C -->
+<div class="script-section">
+  <h3><span class="q-num">7</span> Question 7</h3>
+  <div class="script-prompt">Audio: "I just received a bill for student health insurance, but I thought it was included in tuition."</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> The health center is located near the main gate.</li>
+    <li><span class="opt-letter">B)</span> Student insurance covers dental and vision as well.</li>
+    <li><span class="opt-letter">C)</span> You can waive it if you already have coverage from your parents' plan. Check with the bursar's office.</li>
+    <li><span class="opt-letter">D)</span> Tuition has increased by five percent this year.</li>
+  </ul>
+</div>
+
+<!-- Q8: graduation rehearsal — correct D -->
+<div class="script-section">
+  <h3><span class="q-num">8</span> Question 8</h3>
+  <div class="script-prompt">Audio: "Did you hear that the graduation rehearsal has been moved to a different building?"</div>
+  <ul class="options">
+    <li><span class="opt-letter">A)</span> Graduation is the most exciting event of the year.</li>
+    <li><span class="opt-letter">B)</span> I need to order my cap and gown soon.</li>
+    <li><span class="opt-letter">C)</span> The ceremony will last about two hours.</li>
+    <li><span class="opt-letter">D)</span> Yes, they sent an email this morning. It's now in the gymnasium instead of the auditorium.</li>
+  </ul>
+</div>
+
+</div>
+</div>
+
+<div class="reading-footer">
+  <div class="footer-left">
+    <a href="../menu.html">&#8592; メニューに戻る</a>
+  </div>
+  <button class="btn-nav btn-next" onclick="location.href='practice-9-answers.html'">解答・解説 &#8250;</button>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();}
+</script>
+</body>
+</html>
