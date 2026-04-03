@@ -3,119 +3,253 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Conversation Practice 8 &#8212; &#35299;&#31572;&#12539;&#35299;&#35500;</title>
-<link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Listen to a Conversation — Practice 8 解答解説</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
-.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:10px}
-.header-logo{font-size:.72em;font-weight:800;color:#2563eb;letter-spacing:.1em;text-transform:uppercase}
-.header-title{font-size:.95em;font-weight:700;color:#2d3748}
-.breadcrumb{padding:12px 24px;font-size:.8em;color:#8898a8}
-.breadcrumb a{color:#b45309;text-decoration:none;font-weight:600}
-.breadcrumb a:hover{text-decoration:underline}
-.container{max-width:800px;margin:0 auto;padding:0 24px 60px}
-h1{font-size:1.3em;font-weight:800;margin-bottom:20px}
-.answer-card{background:#fff;border-radius:12px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px}
-.answer-card h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.75em;font-weight:800;flex-shrink:0}
-.prompt{font-size:.85em;color:#4a5568;padding:8px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;margin-bottom:12px;font-style:italic}
-.correct{font-size:.9em;font-weight:700;color:#16a34a;margin-bottom:8px}
-.explanation{font-size:.82em;color:#4a5568;line-height:1.65}
-.explanation .wrong{color:#dc2626;font-weight:600}
-.tip-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;margin-bottom:24px}
-.tip-box h2{font-size:1.05em;font-weight:800;color:#92400e;margin-bottom:14px}
-.tip-box ul{padding-left:20px;font-size:.85em;color:#92400e;line-height:1.8}
-.tip-box li{margin-bottom:6px}
-.tip-box strong{font-weight:800}
-.back-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-size:.9em;font-weight:700;color:#fff;background:#f59e0b;border:none;border-radius:10px;cursor:pointer;text-decoration:none;transition:all .2s;font-family:inherit}
-.back-btn:hover{background:#d97706}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px;transition:width .5s}
+.tips-banner{background:#fff;border-left:4px solid #4a90d9;margin:20px auto;max-width:880px;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tips-banner h2{font-size:1em;color:#4a90d9;margin-bottom:14px}
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.tips-grid{grid-template-columns:1fr}}
+.tip-card{background:#ebf4ff;border-radius:8px;padding:14px;text-align:center}
+.tip-icon{font-size:1.5em;margin-bottom:6px}
+.tip-card h3{font-size:.85em;margin-bottom:4px}
+.tip-card p{font-size:.75em;color:#4a5568}
+.conv-section{max-width:880px;margin:20px auto}
+.conv-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #4a90d9;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.conv-header h3{font-size:1em;color:#4a90d9}
+.conv-header p{font-size:.82em;color:#718096;margin-top:4px}
+.script-box{background:#fff;padding:16px 20px;margin-bottom:2px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.script-box details{cursor:pointer}
+.script-box summary{font-size:.88em;font-weight:600;color:#4a90d9;padding:8px 0}
+.script-line{font-size:.82em;color:#4a5568;margin:4px 0;padding-left:12px}
+.script-line strong{color:#2d3748}
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #edf2f7}
+.q-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}.q-num.wrong{background:#e53e3e}.q-num.skip{background:#a0aec0}
+.q-prompt{font-size:.92em;font-weight:600;flex:1}
+.q-badge{font-size:.72em;padding:3px 10px;border-radius:12px;font-weight:600}
+.q-badge.detail{background:#ebf8ff;color:#2b6cb0}
+.q-badge.inference{background:#fefcbf;color:#975a16}
+.q-body{padding:16px 20px}
+.q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.q-user.is-skip{background:#f7fafc;color:#718096}
+.options-list{margin:10px 0}
+.opt-row{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:6px;font-size:.85em;margin-bottom:4px}
+.opt-row.is-correct{background:#f0fff4;font-weight:600}
+.opt-row.is-wrong-selected{background:#fff5f5;text-decoration:line-through;color:#e53e3e}
+.opt-label{font-weight:700;min-width:24px}
+.q-explain{background:#f7fafc;border-left:3px solid #4a90d9;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
+.q-explain strong{color:#2b6cb0}
+.q-hint{margin-top:6px;font-size:.8em;color:#718096;font-style:italic}
+.nav-bottom{max-width:880px;margin:24px auto;text-align:center;padding-bottom:40px}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
+.btn-back:hover{background:#3a7cc0}
 </style>
 </head>
 <body>
+
 <div class="header">
-  <div class="header-left">
-    <span class="header-logo">TCK Workshop</span>
-    <span class="header-title">&#12479;&#12473;&#12463;&#21029;&#12488;&#12524;&#12540;&#12491;&#12531;&#12464;</span>
-  </div>
-</div>
-<div class="breadcrumb">
-  <a href="../menu.html">&#8592; Listening &#12513;&#12491;&#12517;&#12540;</a> &gt; Conversation Practice 8 &#35299;&#31572;
+  <h1>🎧 Listen to a Conversation — Practice 8 解答解説</h1>
+  <p>Task Training — Listening</p>
 </div>
 
-<div class="container">
-<h1>Listen to a Conversation &#8212; Practice 8 &#35299;&#31572;&#12539;&#35299;&#35500;</h1>
-
-<div class="tip-box">
-  <h2>&#128161; Conversation &#25915;&#30053;&#12467;&#12484;</h2>
-  <ul>
-    <li><strong>&#21839;&#38988;&#8594;&#35299;&#27770;&#31574;&#8594;&#32080;&#35542;&#12497;&#12479;&#12540;&#12531;&#12434;&#24847;&#35672;&#65306;</strong>&#22823;&#23398;&#12398;&#20250;&#35441;&#12391;&#12399;&#12300;&#22256;&#12387;&#12390;&#12356;&#12427;&#8594;&#12473;&#12479;&#12483;&#12501;&#12364;&#35299;&#27770;&#31574;&#12434;&#25552;&#31034;&#8594;&#21512;&#24847;&#12301;&#12392;&#12356;&#12358;&#27969;&#12428;&#12364;&#22810;&#12356;</li>
-    <li><strong>&#24863;&#24773;&#34920;&#29694;&#12395;&#27880;&#30446;&#65306;</strong>"That's a problem" "That would be great" &#12394;&#12393;&#12398;&#21453;&#24540;&#12363;&#12425;&#35441;&#32773;&#12398;&#29366;&#27841;&#12434;&#25226;&#25569;&#12377;&#12427;</li>
-    <li><strong>&#12513;&#12514;&#12399;&#12461;&#12540;&#12527;&#12540;&#12489;&#12384;&#12369;&#65306;</strong>&#20840;&#25991;&#12434;&#26360;&#12365;&#21462;&#12429;&#12358;&#12392;&#12379;&#12378;&#12289;&#20154;&#29289;&#12539;&#22580;&#25152;&#12539;&#21839;&#38988;&#12539;&#35299;&#27770;&#31574;&#12434;&#12513;&#12514;&#12377;&#12427;</li>
-    <li><strong>&#26368;&#24460;&#12398;&#30330;&#35328;&#12395;&#27880;&#24847;&#65306;</strong>&#32080;&#35542;&#12539;&#27425;&#12398;&#12450;&#12463;&#12471;&#12519;&#12531;&#12399;&#20250;&#35441;&#12398;&#32066;&#30436;&#12395;&#20986;&#12427;&#12371;&#12392;&#12364;&#22810;&#12356;</li>
-    <li><strong>2&#20154;&#12398;&#24441;&#21106;&#12434;&#21306;&#21029;&#65306;</strong>&#23398;&#29983;&#65309;&#21839;&#38988;&#12434;&#25345;&#12385;&#36796;&#12416;&#20596;&#12289;&#12473;&#12479;&#12483;&#12501;&#65309;&#35299;&#27770;&#31574;&#12434;&#25552;&#31034;&#12377;&#12427;&#20596;</li>
-  </ul>
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 4</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">1</span> Question 1</h3>
-  <div class="prompt">Why hasn't the student's work-study application been processed?</div>
-  <div class="correct">&#27491;&#35299;: B) He is missing required tax documents</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#21407;&#22240;&#21839;&#38988;&#65288;Why hasn't...&#65289;</strong><br>
-    &#12450;&#12489;&#12496;&#12452;&#12470;&#12540;&#12364;&#12300;you haven't submitted your most recent tax documents&#12301;&#12392;&#26126;&#30906;&#12395;&#36848;&#12409;&#12390;&#12356;&#12427;&#12290;&#31246;&#38306;&#36899;&#26360;&#39006;&#12398;&#26410;&#25552;&#20986;&#12364;&#21407;&#22240;&#12290;<br>
-    <span class="wrong">A)</span> &#32224;&#20999;&#12434;&#36942;&#12366;&#12383;&#12392;&#12399;&#35328;&#12431;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">C)</span> GPA&#12395;&#12388;&#12356;&#12390;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">D)</span> &#12503;&#12525;&#12464;&#12521;&#12512;&#12364;&#28288;&#21729;&#12392;&#12399;&#35328;&#12431;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
+<div class="tips-banner">
+  <h2>💡 Conversation 攻略のコツ</h2>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">📝</div>
+      <h3>メモの取り方</h3>
+      <p>問題は何か？解決策は何か？をキーワードだけメモ。全文書き取ろうとしない！</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔚</div>
+      <h3>最後の発言に注意</h3>
+      <p>結論・次のアクションは会話の終盤に出ることが多い。「I'll...」に全集中！</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔄</div>
+      <h3>2人の役割を区別</h3>
+      <p>学生＝問題を持ち込む側、スタッフ＝解決策を提示する側。役割を意識してメモ</p>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">2</span> Question 2</h3>
-  <div class="prompt">What will the student do next?</div>
-  <div class="correct">&#27491;&#35299;: C) Upload tax documents through the student portal</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#27425;&#12398;&#12450;&#12463;&#12471;&#12519;&#12531;&#21839;&#38988;</strong><br>
-    &#23398;&#29983;&#12399;&#26368;&#24460;&#12395;&#12300;I'll upload those documents today&#12301;&#12392;&#26126;&#35328;&#12290;&#12450;&#12489;&#12496;&#12452;&#12470;&#12540;&#12418;&#12300;upload your most recent tax return through the student portal&#12301;&#12392;&#25351;&#31034;&#12375;&#12390;&#12356;&#12427;&#12290;<br>
-    <span class="wrong">A)</span> &#21029;&#12398;&#20104;&#32004;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">B)</span> &#26032;&#12375;&#12356;FAFSA&#30003;&#35531;&#12399;&#27714;&#12417;&#12425;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">D)</span> &#26360;&#39006;&#25215;&#35469;&#24460;&#12395;&#27714;&#20154;&#12434;&#38322;&#35239;&#12391;&#12365;&#12427;&#12364;&#12289;&#27425;&#12398;&#12473;&#12486;&#12483;&#12503;&#12399;&#26360;&#39006;&#12398;&#12450;&#12483;&#12503;&#12525;&#12540;&#12489;&#12290;
+<!-- Conversation 1 -->
+<div class="conv-section">
+  <div class="conv-header">
+    <h3>🗣️ Conversation 1 — ワークスタディの申請</h3>
+    <p>場面：Financial Aid Office ｜ 学生（男性）＋ アドバイザー（女性）</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <div class="script-line"><strong>[Student]</strong> Hi, I was wondering if I'm eligible for the work-study program this semester. I applied last month but haven't heard back.</div>
+      <div class="script-line"><strong>[Advisor]</strong> Let me pull up your file. Could I have your student ID number?</div>
+      <div class="script-line"><strong>[Student]</strong> Sure, it's 4-7-2-9-0-1.</div>
+      <div class="script-line"><strong>[Advisor]</strong> Okay, I see your application here. It looks like you haven't submitted your most recent tax documents. We need those to verify your financial need.</div>
+      <div class="script-line"><strong>[Student]</strong> Oh, I thought the documents I submitted with my FAFSA would be enough.</div>
+      <div class="script-line"><strong>[Advisor]</strong> Unfortunately, the work-study program requires additional verification. You'll need to upload your most recent tax return through the student portal by the end of this week.</div>
+      <div class="script-line"><strong>[Student]</strong> Got it. And if everything checks out, when could I start working?</div>
+      <div class="script-line"><strong>[Advisor]</strong> Once your documents are approved, usually within three business days, you can browse available positions on the employment page. Most on-campus jobs offer between ten and fifteen hours per week.</div>
+      <div class="script-line"><strong>[Student]</strong> That sounds perfect. I'll upload those documents today. Thanks for your help.</div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q1icon">1</div>
+      <div class="q-prompt">Why hasn't the student's work-study application been processed?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q1user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> He missed the application deadline.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> He is missing required tax documents.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> His GPA does not meet the minimum requirement.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> The program is already full for this semester.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> アドバイザーが「you haven't submitted your most recent tax documents」と明確に述べている。税関連書類の未提出が原因。</div>
+      <div class="q-hint">🔑 原因問題は「Why hasn't...」：スタッフの説明部分に理由が示される。「It looks like...」の後に注目。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q2icon">2</div>
+      <div class="q-prompt">What will the student do next?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q2user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Schedule another appointment with the advisor.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Submit a new FAFSA application.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> Upload tax documents through the student portal.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Apply directly to on-campus employers.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 学生は最後に「I'll upload those documents today」と明言。アドバイザーも「upload your most recent tax return through the student portal」と指示している。</div>
+      <div class="q-hint">🔑 「次に何をするか」は常に会話の締めに出る：最後の1〜2文に全集中！「I'll...」が直接のヒント。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">3</span> Question 3</h3>
-  <div class="prompt">What is the likely cause of the discrepancy in results?</div>
-  <div class="correct">&#27491;&#35299;: B) The solution may not have been fully dissolved during measurement</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#21407;&#22240;&#29305;&#23450;&#21839;&#38988;</strong><br>
-    Student B&#12364;&#12300;the solution looked a bit cloudy&#12301;&#12300;some of the solid hadn't fully dissolved yet&#12301;&#12392;&#36848;&#12409;&#12289;Student A&#12418;&#12300;undissolved particles might have affected the spectrophotometer reading&#12301;&#12392;&#21516;&#24847;&#12290;<br>
-    <span class="wrong">A)</span> &#30064;&#12394;&#12427;&#21270;&#23398;&#29289;&#36074;&#12434;&#20351;&#12387;&#12383;&#12392;&#12399;&#35328;&#12431;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">C)</span> &#20998;&#20809;&#20809;&#24230;&#35336;&#12398;&#25925;&#38556;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">D)</span> &#21029;&#12398;&#26085;&#12395;&#23455;&#39443;&#12375;&#12383;&#12392;&#12399;&#35328;&#12431;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
+<!-- Conversation 2 -->
+<div class="conv-section">
+  <div class="conv-header">
+    <h3>🗣️ Conversation 2 — 実験結果の食い違い</h3>
+    <p>場面：Chemistry Lab ｜ 学生A（女性）＋ 学生B / ラボパートナー（男性）</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <div class="script-line"><strong>[Student A]</strong> Hey, did you look at our experiment results from last Thursday? My numbers are totally different from yours.</div>
+      <div class="script-line"><strong>[Student B]</strong> Really? I got a concentration of 0.45 moles per liter. What did you get?</div>
+      <div class="script-line"><strong>[Student A]</strong> I got 0.32. That's a pretty big difference. Do you think one of us made a measurement error?</div>
+      <div class="script-line"><strong>[Student B]</strong> It's possible. I remember the solution looked a bit cloudy when I was measuring it. Maybe some of the solid hadn't fully dissolved yet.</div>
+      <div class="script-line"><strong>[Student A]</strong> That could explain why your reading was higher. The undissolved particles might have affected the spectrophotometer reading.</div>
+      <div class="script-line"><strong>[Student B]</strong> Good point. Should we ask Professor Tanaka if we can redo the experiment before the lab report is due?</div>
+      <div class="script-line"><strong>[Student A]</strong> I think that's a good idea. The report is due on Monday, so we'd need to do it by Friday at the latest.</div>
+      <div class="script-line"><strong>[Student B]</strong> I'll email the professor right now and ask if the lab is available this Friday afternoon.</div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q3icon">3</div>
+      <div class="q-prompt">What is the likely cause of the discrepancy in results?</div>
+      <span class="q-badge inference">Inference</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q3user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> They used different chemicals for the experiment.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> The solution may not have been fully dissolved during measurement.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> The spectrophotometer was broken.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> They conducted the experiment on different days.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> Student Bが「the solution looked a bit cloudy」「some of the solid hadn't fully dissolved yet」と述べ、Student Aも「undissolved particles might have affected the spectrophotometer reading」と同意。溶液が完全に溶けていなかったことが原因。</div>
+      <div class="q-hint">🔑 推論問題：2人が議論して合意した結論が答え。「That could explain...」「Good point」など同意の表現に注目。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q4icon">4</div>
+      <div class="q-prompt">What do the students plan to do?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q4user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Submit the report with both sets of data.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Ask the professor to extend the deadline.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Use the average of their two results.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(D)</span> Request permission to redo the experiment before Friday.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> Student Bが「I'll email the professor right now and ask if the lab is available this Friday afternoon」と述べている。実験のやり直しを金曜日までに行う計画。</div>
+      <div class="q-hint">🔑 計画問題は会話の最後に：「I'll...」「Should we...」「Let's...」が次のアクションを示す。最後の2〜3発話に全集中。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">4</span> Question 4</h3>
-  <div class="prompt">What do the students plan to do?</div>
-  <div class="correct">&#27491;&#35299;: D) Request permission to redo the experiment before Friday</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#35336;&#30011;&#21839;&#38988;</strong><br>
-    Student B&#12364;&#12300;I'll email the professor right now and ask if the lab is available this Friday afternoon&#12301;&#12392;&#36848;&#12409;&#12390;&#12356;&#12427;&#12290;&#23455;&#39443;&#12398;&#12420;&#12426;&#30452;&#12375;&#12434;&#37329;&#26332;&#26085;&#12414;&#12391;&#12395;&#34892;&#12358;&#35336;&#30011;&#12290;<br>
-    <span class="wrong">A)</span> &#20001;&#26041;&#12398;&#12487;&#12540;&#12479;&#12434;&#25552;&#20986;&#12377;&#12427;&#12392;&#12399;&#35328;&#12387;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">B)</span> &#32224;&#20999;&#24310;&#38263;&#12399;&#27714;&#12417;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">C)</span> &#24179;&#22343;&#12434;&#20351;&#12358;&#12392;&#12399;&#35328;&#12387;&#12390;&#12356;&#12394;&#12356;&#12290;
-  </div>
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-8.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
 </div>
 
-<div style="text-align:center;margin-top:30px">
-  <a class="back-btn" href="../menu.html">&#8592; Listening &#12513;&#12491;&#12517;&#12540;&#12395;&#25147;&#12427;</a>
-</div>
-</div>
+<script>
+const labels = ['A','B','C','D'];
+const correctAnswers = [1, 2, 1, 3]; // Q1=B, Q2=C, Q3=B, Q4=D
 
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('convAnswers')||'null');
+  let correct = 0, answered = 0;
+  if(stored && Array.isArray(stored)){
+    for(let i=0;i<4;i++){
+      const userAns = stored[i];
+      const isCorrect = userAns === correctAnswers[i];
+      const isSkip = userAns === null || userAns === undefined;
+      if(!isSkip) answered++;
+      if(isCorrect) correct++;
+      const icon = document.getElementById('q'+(i+1)+'icon');
+      const user = document.getElementById('q'+(i+1)+'user');
+      if(isSkip){ icon.className='q-num skip'; user.className='q-user is-skip'; user.textContent='⏱️ 未回答（タイムアウト）'; }
+      else if(isCorrect){ icon.className='q-num correct'; user.className='q-user is-correct'; user.textContent='✅ 正解！ あなたの回答: ('+labels[userAns]+')'; }
+      else { icon.className='q-num wrong'; user.className='q-user is-wrong'; user.textContent='❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')'; }
+    }
+    document.getElementById('scoreBig').textContent = correct + ' / 4';
+    document.getElementById('scoreBar').style.width = (correct/4*100)+'%';
+    const pct = Math.round(correct/4*100);
+    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+  } else {
+    document.getElementById('scoreBig').textContent = '— / 4';
+    document.getElementById('scoreMsg').textContent = '問題を先に解いてからこのページを見ると、スコアが表示されます';
+    for(let i=1;i<=4;i++) document.getElementById('q'+i+'user').style.display='none';
+  }
+}
+render();
+</script>
 <script src="../../js/auth.js"></script>
 <script>if(typeof Auth!=='undefined'){Auth.require();}</script>
 </body>

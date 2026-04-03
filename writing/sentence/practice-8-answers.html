@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build a Sentence — 解答解説 | Practice 8</title>
-<link rel="stylesheet" href="../../css/common.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
@@ -95,7 +94,10 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
 </div>
 
+<script src="../../js/auth.js"></script>
 <script>
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+
 const answers=[
 {id:1,prompt:"Why didn't you take the express train this morning?",sentence:"If I had known about the delay, I would have taken the express train on time.",grammar:"仮定法過去完了: If + S + had + Vpp, S + would have + Vpp。過去の事実に反する仮定を表す。「遅延を知っていたら急行に乗っていた」。"},
 {id:2,prompt:"How was the traffic on the highway?",sentence:"The traffic was so heavy that it took us three hours to get there.",grammar:"so + 形容詞 + that 構文: 「あまりに〜なので…」。it takes + 人 + 時間 + to V の構文と組み合わせ。"},

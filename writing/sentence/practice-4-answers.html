@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build a Sentence — 解答解説 | Practice 4</title>
-<link rel="stylesheet" href="../../css/common.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
@@ -95,7 +94,10 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
 </div>
 
+<script src="../../js/auth.js"></script>
 <script>
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+
 const answers=[
 {id:1,prompt:"How long have you been waiting in this checkout line?",sentence:"I have been waiting here for about twenty minutes.",grammar:"現在完了進行形: have been + Ving。「ずっと〜し続けている」。for + 期間で継続時間を表す。"},
 {id:2,prompt:"Should we try the new Italian restaurant downtown?",sentence:"We could go there this weekend if you are free.",grammar:"助動詞 could: 提案・可能性を表す。if節（条件節）で「もし〜なら」。"},

@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build a Sentence — 解答解説 | Practice 5</title>
-<link rel="stylesheet" href="../../css/common.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
@@ -96,7 +95,10 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
 </div>
 
+<script src="../../js/auth.js"></script>
 <script>
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+
 const answers=[
 {id:1,prompt:"Do you think it will snow this weekend?",sentence:"By Sunday, it will have snowed at least three times.",grammar:"未来完了: By + 時点, S + will have + Vpp。「日曜日までに3回は降っているだろう」。at least =「少なくとも」。"},
 {id:2,prompt:"Are you going to the beach tomorrow?",sentence:"I will go unless it rains in the morning.",grammar:"unless =「〜しない限り」: I will go unless + S + V。unless節内は現在形（未来のことでも）。"},

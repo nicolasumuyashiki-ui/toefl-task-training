@@ -3,119 +3,252 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Conversation Practice 6 — 解答・解説</title>
-<link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Listen to a Conversation — Practice 6 解答解説</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
-.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:10px}
-.header-logo{font-size:.72em;font-weight:800;color:#2563eb;letter-spacing:.1em;text-transform:uppercase}
-.header-title{font-size:.95em;font-weight:700;color:#2d3748}
-.breadcrumb{padding:12px 24px;font-size:.8em;color:#8898a8}
-.breadcrumb a{color:#b45309;text-decoration:none;font-weight:600}
-.breadcrumb a:hover{text-decoration:underline}
-.container{max-width:800px;margin:0 auto;padding:0 24px 60px}
-h1{font-size:1.3em;font-weight:800;margin-bottom:20px}
-.answer-card{background:#fff;border-radius:12px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px}
-.answer-card h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.75em;font-weight:800;flex-shrink:0}
-.prompt{font-size:.85em;color:#4a5568;padding:8px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;margin-bottom:12px;font-style:italic}
-.correct{font-size:.9em;font-weight:700;color:#16a34a;margin-bottom:8px}
-.explanation{font-size:.82em;color:#4a5568;line-height:1.65}
-.explanation .wrong{color:#dc2626;font-weight:600}
-.tip-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;margin-bottom:24px}
-.tip-box h2{font-size:1.05em;font-weight:800;color:#92400e;margin-bottom:14px}
-.tip-box ul{padding-left:20px;font-size:.85em;color:#92400e;line-height:1.8}
-.tip-box li{margin-bottom:6px}
-.tip-box strong{font-weight:800}
-.back-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-size:.9em;font-weight:700;color:#fff;background:#f59e0b;border:none;border-radius:10px;cursor:pointer;text-decoration:none;transition:all .2s;font-family:inherit}
-.back-btn:hover{background:#d97706}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px;transition:width .5s}
+.tips-banner{background:#fff;border-left:4px solid #4a90d9;margin:20px auto;max-width:880px;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tips-banner h2{font-size:1em;color:#4a90d9;margin-bottom:14px}
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.tips-grid{grid-template-columns:1fr}}
+.tip-card{background:#ebf4ff;border-radius:8px;padding:14px;text-align:center}
+.tip-icon{font-size:1.5em;margin-bottom:6px}
+.tip-card h3{font-size:.85em;margin-bottom:4px}
+.tip-card p{font-size:.75em;color:#4a5568}
+.conv-section{max-width:880px;margin:20px auto}
+.conv-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #4a90d9;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.conv-header h3{font-size:1em;color:#4a90d9}
+.conv-header p{font-size:.82em;color:#718096;margin-top:4px}
+.script-box{background:#fff;padding:16px 20px;margin-bottom:2px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.script-box details{cursor:pointer}
+.script-box summary{font-size:.88em;font-weight:600;color:#4a90d9;padding:8px 0}
+.script-line{font-size:.82em;color:#4a5568;margin:4px 0;padding-left:12px}
+.script-line strong{color:#2d3748}
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #edf2f7}
+.q-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}.q-num.wrong{background:#e53e3e}.q-num.skip{background:#a0aec0}
+.q-prompt{font-size:.92em;font-weight:600;flex:1}
+.q-badge{font-size:.72em;padding:3px 10px;border-radius:12px;font-weight:600}
+.q-badge.detail{background:#ebf8ff;color:#2b6cb0}
+.q-badge.inference{background:#fefcbf;color:#975a16}
+.q-body{padding:16px 20px}
+.q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.q-user.is-skip{background:#f7fafc;color:#718096}
+.options-list{margin:10px 0}
+.opt-row{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:6px;font-size:.85em;margin-bottom:4px}
+.opt-row.is-correct{background:#f0fff4;font-weight:600}
+.opt-row.is-wrong-selected{background:#fff5f5;text-decoration:line-through;color:#e53e3e}
+.opt-label{font-weight:700;min-width:24px}
+.q-explain{background:#f7fafc;border-left:3px solid #4a90d9;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
+.q-explain strong{color:#2b6cb0}
+.q-hint{margin-top:6px;font-size:.8em;color:#718096;font-style:italic}
+.nav-bottom{max-width:880px;margin:24px auto;text-align:center;padding-bottom:40px}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
+.btn-back:hover{background:#3a7cc0}
 </style>
 </head>
 <body>
+
 <div class="header">
-  <div class="header-left">
-    <span class="header-logo">TCK Workshop</span>
-    <span class="header-title">タスク別トレーニング</span>
-  </div>
-</div>
-<div class="breadcrumb">
-  <a href="../menu.html">&#8592; Listening メニュー</a> &gt; Conversation Practice 6 解答
+  <h1>🎧 Listen to a Conversation — Practice 6 解答解説</h1>
+  <p>Task Training — Listening</p>
 </div>
 
-<div class="container">
-<h1>Listen to a Conversation — Practice 6 解答・解説</h1>
-
-<div class="tip-box">
-  <h2>&#128161; Conversation 攻略コツ</h2>
-  <ul>
-    <li><strong>問題→解決策→結論パターンを意識：</strong>大学の会話では「困っている→スタッフが解決策を提示→合意」という流れが多い</li>
-    <li><strong>感情表現に注目：</strong>"That's really helpful" "I appreciate that" などの反応から話者の状況を把握する</li>
-    <li><strong>メモはキーワードだけ：</strong>全文を書き取ろうとせず、人物・場所・問題・解決策をメモする</li>
-    <li><strong>最後の発言に注意：</strong>結論・次のアクションは会話の終盤に出ることが多い</li>
-    <li><strong>2人の役割を区別：</strong>学生＝問題を持ち込む側、スタッフ＝解決策を提示する側</li>
-  </ul>
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 4</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">1</span> Question 1</h3>
-  <div class="prompt">Why does the student visit the dining hall office?</div>
-  <div class="correct">正解: D) To discuss food allergy accommodation</div>
-  <div class="explanation">
-    <strong>タイプ：目的問題（Why does the student...）</strong><br>
-    学生の最初の発言で「I have a severe peanut allergy」と述べ、食事の安全性について相談に来ている。会話全体がアレルギー対応の改善について。<br>
-    <span class="wrong">A)</span> 味についての苦情ではない。
-    <span class="wrong">B)</span> 営業時間の問い合わせではない。
-    <span class="wrong">C)</span> 就職の応募ではない。
+<div class="tips-banner">
+  <h2>💡 Conversation 攻略のコツ</h2>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">📝</div>
+      <h3>メモの取り方</h3>
+      <p>問題は何か？解決策は何か？をキーワードだけメモ。全文書き取ろうとしない！</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">😮</div>
+      <h3>感情表現に注目</h3>
+      <p>"That's really helpful" "I appreciate that" などの反応から話者の状況を把握する</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔄</div>
+      <h3>2人の役割を区別</h3>
+      <p>学生＝問題を持ち込む側、スタッフ＝解決策を提示する側。役割を意識してメモ</p>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">2</span> Question 2</h3>
-  <div class="prompt">What does the manager offer to do for the student?</div>
-  <div class="correct">正解: B) Add her to an allergy notification email list</div>
-  <div class="explanation">
-    <strong>タイプ：詳細問題（What does...offer to do）</strong><br>
-    マネージャーは「I can also add you to our allergy notification list, which sends an email alert whenever a dish contains one of the major allergens」と提案。<br>
-    <span class="wrong">A)</span> 専用の食事を準備するとは言っていない。
-    <span class="wrong">C)</span> 食事プランの返金は言及されていない。
-    <span class="wrong">D)</span> 別のダイニングホールへの移動は提案されていない。
+<!-- Conversation 1 -->
+<div class="conv-section">
+  <div class="conv-header">
+    <h3>🗣️ Conversation 1 — 食物アレルギー対応</h3>
+    <p>場面：Campus Dining Hall Office ｜ 学生（女性）＋ マネージャー（男性）</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <div class="script-line"><strong>[Student]</strong> Excuse me, I wanted to talk to someone about the meal options in the dining hall. I have a severe peanut allergy, and I've been finding it really difficult to know which dishes are safe for me.</div>
+      <div class="script-line"><strong>[Manager]</strong> I'm sorry to hear that. We do take food allergies very seriously. Have you noticed any specific dishes that were a concern?</div>
+      <div class="script-line"><strong>[Student]</strong> Well, last Tuesday the stir-fry was listed as vegetarian, but there was no mention of peanut oil, which was actually used in the sauce. I only found out when I asked the kitchen staff directly.</div>
+      <div class="script-line"><strong>[Manager]</strong> That shouldn't happen. All allergen information should be displayed on the menu cards. I'll look into why it was missing that day.</div>
+      <div class="script-line"><strong>[Student]</strong> I appreciate that. Is there a way I could get advance notice of the weekly menu so I can plan ahead?</div>
+      <div class="script-line"><strong>[Manager]</strong> Absolutely. We actually post the full weekly menu on our website every Sunday evening. I can also add you to our allergy notification list, which sends an email alert whenever a dish contains one of the major allergens.</div>
+      <div class="script-line"><strong>[Student]</strong> That would be perfect. Could I also suggest putting clearer labels directly on the serving stations?</div>
+      <div class="script-line"><strong>[Manager]</strong> That's a great idea. We've been considering color-coded labels for the top eight allergens. I'll bring your suggestion to our next staff meeting and fast-track the implementation.</div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q1icon">1</div>
+      <div class="q-prompt">Why does the student visit the dining hall office?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q1user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> To complain about the taste of the food.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> To ask about the dining hall's operating hours.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> To apply for a job in the kitchen.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(D)</span> To discuss food allergy accommodation.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 学生の最初の発言で「I have a severe peanut allergy」と述べ、食事の安全性について相談に来ている。会話全体がアレルギー対応の改善について。</div>
+      <div class="q-hint">🔑 目的問題は冒頭に答え：学生の最初の発話で「なぜ来たか」が明確に述べられるパターン。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q2icon">2</div>
+      <div class="q-prompt">What does the manager offer to do for the student?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q2user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Prepare special meals exclusively for her.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> Add her to an allergy notification email list.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Refund her meal plan fees.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Transfer her to a different dining hall.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> マネージャーは「I can also add you to our allergy notification list, which sends an email alert whenever a dish contains one of the major allergens」と提案。具体的な行動の提示。</div>
+      <div class="q-hint">🔑 「offer to do」は解決策パートに：スタッフが提示する具体的なアクションが正解。"I can..." "I'll..." の後に注目。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">3</span> Question 3</h3>
-  <div class="prompt">What is the student's main problem?</div>
-  <div class="correct">正解: C) His thesis statement is too broad</div>
-  <div class="explanation">
-    <strong>タイプ：問題特定</strong><br>
-    学生は冒頭で「My professor said my thesis is too broad」と明確に述べている。会話全体がテーマの絞り込みについて。<br>
-    <span class="wrong">A)</span> 資料不足は言及されていない。
-    <span class="wrong">B)</span> 締め切りに遅れたとは言っていない。
-    <span class="wrong">D)</span> 採点基準の理解については話題に出ていない。
+<!-- Conversation 2 -->
+<div class="conv-section">
+  <div class="conv-header">
+    <h3>🗣️ Conversation 2 — 研究論文のテーゼ絞り込み</h3>
+    <p>場面：Writing Center ｜ 学生（男性）＋ チューター（女性）</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <div class="script-line"><strong>[Student]</strong> Hi, I signed up for a tutoring session because I'm struggling with the structure of my research paper. My professor said my thesis is too broad.</div>
+      <div class="script-line"><strong>[Tutor]</strong> That's actually one of the most common issues we see here. Can you tell me what your paper is about?</div>
+      <div class="script-line"><strong>[Student]</strong> It's for my sociology class. I'm writing about how social media affects young people. But I'm not sure how to narrow it down.</div>
+      <div class="script-line"><strong>[Tutor]</strong> Okay, that's definitely a very broad topic. One approach is to focus on a specific aspect, like the impact of social media on academic performance among college students. That gives you a clear population and a measurable outcome.</div>
+      <div class="script-line"><strong>[Student]</strong> That makes sense. But how do I restructure my thesis statement once I narrow it down?</div>
+      <div class="script-line"><strong>[Tutor]</strong> A strong thesis should include your topic, your position, and a preview of your main supporting points.</div>
+      <div class="script-line"><strong>[Student]</strong> That's really helpful. Should I rewrite my introduction first, or adjust the body paragraphs?</div>
+      <div class="script-line"><strong>[Tutor]</strong> I'd recommend starting with the thesis, then revising the body paragraphs to align with your new focus. Once those are solid, rewrite the introduction last so it accurately previews your argument.</div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q3icon">3</div>
+      <div class="q-prompt">What is the student's main problem?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q3user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> He cannot find enough sources for his paper.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> He missed the deadline for his assignment.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> His thesis statement is too broad.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> He does not understand the grading rubric.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 学生は冒頭で「My professor said my thesis is too broad」と明確に述べている。会話全体がテーマの絞り込みについて。</div>
+      <div class="q-hint">🔑 問題は冒頭に：学生が最初の発話で「何に困っているか」を述べるのがキャンパス会話の典型パターン。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q4icon">4</div>
+      <div class="q-prompt">What does the tutor recommend the student do first?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q4user"></div>
+      <div class="options-list">
+        <div class="opt-row is-correct"><span class="opt-label">(A)</span> Start with revising the thesis statement.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Rewrite the introduction paragraph.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Add more references to the bibliography.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Change the topic entirely.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> チューターは「I'd recommend starting with the thesis, then revising the body paragraphs」と順番を明確に示している。まずテーゼから始めるべき。</div>
+      <div class="q-hint">🔑 順序問題は "first" "then" "last" に注目：チューターの最後の発話で明確な優先順位が示されている。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">4</span> Question 4</h3>
-  <div class="prompt">What does the tutor recommend the student do first?</div>
-  <div class="correct">正解: A) Start with revising the thesis statement</div>
-  <div class="explanation">
-    <strong>タイプ：詳細問題（What does...recommend）</strong><br>
-    チューターは「I'd recommend starting with the thesis, then revising the body paragraphs」と順番を明確に示している。まずテーゼから始めるべき。<br>
-    <span class="wrong">B)</span> 序論の書き直しは「最後に」行うべきと述べている。
-    <span class="wrong">C)</span> 参考文献の追加は言及されていない。
-    <span class="wrong">D)</span> テーマ全体の変更は提案されていない（絞り込みを提案）。
-  </div>
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-6.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
 </div>
 
-<div style="text-align:center;margin-top:30px">
-  <a class="back-btn" href="../menu.html">&#8592; Listening メニューに戻る</a>
-</div>
-</div>
+<script>
+const labels = ['A','B','C','D'];
+const correctAnswers = [3, 1, 2, 0]; // Q1=D, Q2=B, Q3=C, Q4=A
 
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('convAnswers')||'null');
+  let correct = 0, answered = 0;
+  if(stored && Array.isArray(stored)){
+    for(let i=0;i<4;i++){
+      const userAns = stored[i];
+      const isCorrect = userAns === correctAnswers[i];
+      const isSkip = userAns === null || userAns === undefined;
+      if(!isSkip) answered++;
+      if(isCorrect) correct++;
+      const icon = document.getElementById('q'+(i+1)+'icon');
+      const user = document.getElementById('q'+(i+1)+'user');
+      if(isSkip){ icon.className='q-num skip'; user.className='q-user is-skip'; user.textContent='⏱️ 未回答（タイムアウト）'; }
+      else if(isCorrect){ icon.className='q-num correct'; user.className='q-user is-correct'; user.textContent='✅ 正解！ あなたの回答: ('+labels[userAns]+')'; }
+      else { icon.className='q-num wrong'; user.className='q-user is-wrong'; user.textContent='❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')'; }
+    }
+    document.getElementById('scoreBig').textContent = correct + ' / 4';
+    document.getElementById('scoreBar').style.width = (correct/4*100)+'%';
+    const pct = Math.round(correct/4*100);
+    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+  } else {
+    document.getElementById('scoreBig').textContent = '— / 4';
+    document.getElementById('scoreMsg').textContent = '問題を先に解いてからこのページを見ると、スコアが表示されます';
+    for(let i=1;i<=4;i++) document.getElementById('q'+i+'user').style.display='none';
+  }
+}
+render();
+</script>
 <script src="../../js/auth.js"></script>
 <script>if(typeof Auth!=='undefined'){Auth.require();}</script>
 </body>

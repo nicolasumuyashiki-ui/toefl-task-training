@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build a Sentence — 解答解説 | Practice 3</title>
-<link rel="stylesheet" href="../../css/common.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
@@ -95,7 +94,10 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
 </div>
 
+<script src="../../js/auth.js"></script>
 <script>
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+
 const answers=[
 {id:1,prompt:"Did you manage to register for the biology course?",sentence:"No, by the time I tried to register, the class had already been filled.",grammar:"過去完了 + 受動態: had already been filled。by the time + 過去形で「〜した時にはもう」という時間関係を表す。"},
 {id:2,prompt:"How do you feel about working in groups for this project?",sentence:"I wish our professor would let us choose our own partners.",grammar:"wish + would: 現在の状況への不満・願望。wish + 仮定法過去で「〜だったらいいのに」。let + O + V原形。"},

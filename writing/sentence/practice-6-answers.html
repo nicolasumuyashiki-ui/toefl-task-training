@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build a Sentence — 解答解説 | Practice 6</title>
-<link rel="stylesheet" href="../../css/common.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
@@ -95,7 +94,10 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
 </div>
 
+<script src="../../js/auth.js"></script>
 <script>
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+
 const answers=[
 {id:1,prompt:"Did you eat a lot of fast food when you were younger?",sentence:"Yes, I used to eat fast food almost every day.",grammar:"used to + 動詞の原形: 過去の習慣「以前は〜していた」。現在はもうしていないニュアンス。"},
 {id:2,prompt:"How is your new diet going?",sentence:"It was hard at first, but I am used to eating healthy food now.",grammar:"be used to + -ing: 「〜に慣れている」。used to（過去の習慣）との違いに注意。nowが現在の状態を強調。"},

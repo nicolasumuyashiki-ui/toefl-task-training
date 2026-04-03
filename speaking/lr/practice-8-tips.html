@@ -3,139 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Listen and Repeat &#25915;&#30053;&#12467;&#12484; &#8212; Practice 8</title>
+<title>Listen and Repeat 攻略コツ — Practice 8</title>
 <link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--accent:#ec4899;--accent-bg:#fdf2f8;--accent-light:#f9a8d4;--accent-dark:#9d174d}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
-.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
-.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
-.top-nav-left strong{color:#2d3748}
-.main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}
-.content{width:100%;max-width:720px}
-h1.page-heading{font-size:1.3em;font-weight:800;color:#2d3748;margin-bottom:6px}
-.page-sub{font-size:.85em;color:#8898a8;margin-bottom:28px}
-.tip-card{background:#fff;border:1.5px solid #e8ecf0;border-radius:14px;padding:24px;margin-bottom:20px;transition:box-shadow .2s}
-.tip-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.05)}
-.tip-card h3{font-size:1em;font-weight:800;color:var(--accent-dark);margin-bottom:10px;display:flex;align-items:center;gap:10px}
-.tip-card h3 .icon{width:32px;height:32px;border-radius:8px;background:var(--accent-bg);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.95em;flex-shrink:0}
-.tip-card p,.tip-card li{font-size:.88em;color:#4a5568;margin-bottom:6px}
-.tip-card ul{padding-left:20px;margin-top:6px}
-.tip-card li{margin-bottom:8px}
-.tip-card .example{background:var(--accent-bg);border-radius:8px;padding:10px 14px;margin:8px 0;font-size:.84em;color:var(--accent-dark);font-weight:600}
-.tip-card .sub-label{font-size:.78em;font-weight:700;color:#8898a8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-.checkpoint-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
-.checkpoint-item{display:flex;align-items:flex-start;gap:10px;background:var(--accent-bg);border-radius:10px;padding:12px 14px}
-.checkpoint-num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:800;flex-shrink:0;margin-top:2px}
-.checkpoint-text{font-size:.85em;color:var(--accent-dark);font-weight:600}
-.checkpoint-text span{font-weight:400;color:#6b7280;display:block;font-size:.92em}
-.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
-.footer-left a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
-.footer-left a:hover{color:#2d3748}
-.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;color:#fff;background:var(--accent-dark)}
-.btn-nav:hover{background:#831843}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f9fafb;min-height:100vh;color:#2d3748;line-height:1.7}
+.answers-header{background:#2d3748;color:#fff;padding:20px 28px;text-align:center}
+.answers-header h1{font-size:1.2em;font-weight:600;margin-bottom:4px}
+.answers-header p{font-size:.9em;color:rgba(255,255,255,.7)}
+.answers-body{max-width:780px;margin:0 auto;padding:28px 20px 100px}
+.tips-section{margin-bottom:36px}
+.tips-title{font-size:1.1em;font-weight:700;color:#2d3748;padding:14px 0;border-bottom:2px solid #e2e8f0;margin-bottom:20px}
+.tip-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tip-card-title{font-weight:700;font-size:.95em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.tip-num{background:#e8912d;color:#fff;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75em;flex-shrink:0}
+.tip-card-body{font-size:.88em;line-height:1.65;color:#4a5568}
+.tip-card-body strong{color:#2d3748}
+.tip-card-body code{background:#ebf4ff;padding:2px 6px;border-radius:3px;font-size:.9em;color:#2b6cb0}
+.tip-example{background:#fffff0;border:1px solid #ecc94b;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#744210;line-height:1.5}
+.tip-warn{background:#fff5f5;border:1px solid #feb2b2;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#9b2c2c;line-height:1.5}
+.checkpoint-section{margin-bottom:36px}
+.checkpoint-title{font-size:1.05em;font-weight:700;color:#2d3748;padding:12px 0;border-bottom:2px solid #e2e8f0;margin-bottom:20px}
+.checkpoint-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);display:flex;align-items:flex-start;gap:12px}
+.checkpoint-num{background:#4a90d9;color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75em;font-weight:700;flex-shrink:0;margin-top:2px}
+.checkpoint-text{font-size:.9em;font-weight:600;color:#2d3748}
+.checkpoint-text span{font-weight:400;color:#4a5568;display:block;font-size:.92em;margin-top:2px}
+.nav-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:center;gap:12px;z-index:100}
+.btn-menu{display:inline-flex;align-items:center;gap:8px;padding:12px 32px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#2d3748;transition:all .2s;text-decoration:none}
+.btn-menu:hover{background:#4a5568}
 </style>
 </head>
 <body>
-<div class="top-nav">
-  <div class="top-nav-left">
-    <strong>Listen and Repeat</strong>
-    <span>Practice 8 &#8212; &#25915;&#30053;&#12467;&#12484;</span>
-  </div>
+
+<div class="answers-header">
+  <h1>Listen and Repeat — 攻略コツ</h1>
+  <p>Practice 8 — レストラン接客フレーズをチャンクとリズムでマスターする</p>
 </div>
 
-<div class="main">
-<div class="content">
+<div class="answers-body">
 
-<h1 class="page-heading">&#128161; Listen and Repeat &#25915;&#30053;&#12467;&#12484;</h1>
-<p class="page-sub">&#12524;&#12473;&#12488;&#12521;&#12531;&#25509;&#23458;&#12501;&#12524;&#12540;&#12474;&#12434;&#12481;&#12515;&#12531;&#12463;&#12392;&#12522;&#12474;&#12512;&#12391;&#12510;&#12473;&#12479;&#12540;&#12377;&#12427;</p>
+  <div class="tips-section">
+    <div class="tips-title">🎙️ Listen and Repeat 攻略ポイント</div>
 
-<!-- Strategy 1 -->
-<div class="tip-card">
-  <h3><span class="icon">&#129513;</span> &#12481;&#12515;&#12531;&#12463;&#12391;&#35352;&#25014;&#12377;&#12427;&#65306;&#25509;&#23458;&#12501;&#12524;&#12540;&#12474;&#32232;</h3>
-  <p>&#25509;&#23458;&#33521;&#35486;&#12399;&#12300;&#27770;&#12414;&#12426;&#25991;&#21477;&#12301;&#12364;&#22810;&#12356;&#12398;&#12391;&#12289;&#12481;&#12515;&#12531;&#12463;&#12372;&#12392;&#12395;&#35226;&#12360;&#12427;&#12392;&#21177;&#29575;&#30340;&#12290;</p>
-  <div class="example">
-    &#20363;: "Please let me know / if you have / any food allergies / or dietary restrictions."<br>
-    &#8594; &#25509;&#23458;&#23450;&#22411;&#34920;&#29694; + &#35443;&#32048;&#24773;&#22577;&#12398;2&#23652;&#27083;&#36896;&#12391;&#25417;&#12360;&#12427;
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">1</span> チャンクで記憶する：接客フレーズ編</div>
+      <div class="tip-card-body">
+        接客英語は「決まり文句」が多いので、<strong>チャンクごとに覚えると効率的</strong>。
+        <div class="tip-example">
+          <strong>例：</strong> "Please let me know / if you have / any food allergies / or dietary restrictions."<br>
+          → 接客定型表現 + 詳細情報の2層構造で捉える
+        </div>
+        <div class="tip-example">
+          <strong>例：</strong> "We sincerely apologize / for the delay / and would like to offer you / a complimentary dessert."<br>
+          → 謝罪 + 理由 + 提案の3パートに分解
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">2</span> リズムコピー：接客トーンを再現</div>
+      <div class="tip-card-body">
+        レストラン接客では、<strong>丁寧さと温かさを伝えるイントネーション</strong>が重要。
+        <div class="tip-example">
+          🔊 "May I take your order?" → やわらかく上昇する調子で丁寧に<br>
+          🔊 "We sincerely apologize" → ゆっくりと誠意を込めたトーンで
+        </div>
+        単語を正確に言うだけでなく、接客にふさわしい温かいトーンを意識する。
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">3</span> レストラン特有のリンキングポイント</div>
+      <div class="tip-card-body">
+        接客フレーズでは、<strong>単語のつながり（リンキング）が自然さを左右する。</strong>
+        <div class="tip-example">
+          "would like to offer" → would-like-to-offer（4語を1つの流れで）<br>
+          "grilled salmon with" → grilled-salmon-with（途切れずにつなげる）<br>
+          "enjoyed your dining" → enjoyed-your-dining（d→yのつながりを意識）
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">4</span> 長文は「役割」で分けて覚える</div>
+      <div class="tip-card-body">
+        18語の文も、<strong>役割ごとに分ければ覚えやすい。</strong>
+        <div class="tip-example">
+          <strong>Q7の例：</strong><br>
+          ① 条件: "If you enjoyed your dining experience today,"<br>
+          ② お願い: "we would greatly appreciate"<br>
+          ③ 内容: "a positive review on our website."<br>
+          → 条件→お願い→内容の流れで自然に再生
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="example">
-    &#20363;: "We sincerely apologize / for the delay / and would like to offer you / a complimentary dessert."<br>
-    &#8594; &#35613;&#32618; + &#29702;&#30001; + &#25552;&#26696;&#12398;3&#12497;&#12540;&#12488;&#12395;&#20998;&#35299;
-  </div>
-</div>
 
-<!-- Strategy 2 -->
-<div class="tip-card">
-  <h3><span class="icon">&#127925;</span> &#12522;&#12474;&#12512;&#12467;&#12500;&#12540;&#65306;&#25509;&#23458;&#12488;&#12540;&#12531;&#12434;&#20877;&#29694;</h3>
-  <p>&#12524;&#12473;&#12488;&#12521;&#12531;&#25509;&#23458;&#12391;&#12399;&#12289;&#19969;&#23527;&#12373;&#12392;&#28201;&#12363;&#12373;&#12434;&#20253;&#12360;&#12427;&#12452;&#12531;&#12488;&#12493;&#12540;&#12471;&#12519;&#12531;&#12364;&#37325;&#35201;&#12290;</p>
-  <div class="example">
-    &#128264; "May I take your order?" &#8594; &#12420;&#12431;&#12425;&#12363;&#12367;&#19978;&#26119;&#12377;&#12427;&#35519;&#23376;&#12391;&#19969;&#23527;&#12395;<br>
-    &#128264; "We sincerely apologize" &#8594; &#12422;&#12387;&#12367;&#12426;&#12392;&#35488;&#24847;&#12434;&#36796;&#12417;&#12383;&#12488;&#12540;&#12531;&#12391;
-  </div>
-  <p>&#21336;&#35486;&#12434;&#27491;&#30906;&#12395;&#35328;&#12358;&#12384;&#12369;&#12391;&#12394;&#12367;&#12289;&#25509;&#23458;&#12395;&#12405;&#12373;&#12431;&#12375;&#12356;&#28201;&#12363;&#12356;&#12488;&#12540;&#12531;&#12434;&#24847;&#35672;&#12377;&#12427;&#12290;</p>
-</div>
+  <div class="checkpoint-section">
+    <div class="checkpoint-title">🎧 発音5つのチェックポイント</div>
 
-<!-- Strategy 3 -->
-<div class="tip-card">
-  <h3><span class="icon">&#127860;</span> &#12524;&#12473;&#12488;&#12521;&#12531;&#29305;&#26377;&#12398;&#12522;&#12531;&#12461;&#12531;&#12464;&#12509;&#12452;&#12531;&#12488;</h3>
-  <p>&#25509;&#23458;&#12501;&#12524;&#12540;&#12474;&#12391;&#12399;&#12289;&#21336;&#35486;&#12398;&#12388;&#12394;&#12364;&#12426;&#65288;&#12522;&#12531;&#12461;&#12531;&#12464;&#65289;&#12364;&#33258;&#28982;&#12373;&#12434;&#24038;&#21491;&#12377;&#12427;&#12290;</p>
-  <div class="example">
-    "would like to offer" &#8594; would-like-to-offer&#65288;4&#35486;&#12434;1&#12388;&#12398;&#27969;&#12428;&#12391;&#65289;<br>
-    "grilled salmon with" &#8594; grilled-salmon-with&#65288;&#36884;&#20999;&#12428;&#12378;&#12395;&#12388;&#12394;&#12370;&#12427;&#65289;<br>
-    "enjoyed your dining" &#8594; enjoyed-your-dining&#65288;d&#8594;y&#12398;&#12388;&#12394;&#12364;&#12426;&#12434;&#24847;&#35672;&#65289;
-  </div>
-</div>
-
-<!-- Strategy 4 -->
-<div class="tip-card">
-  <h3><span class="icon">&#128170;</span> &#38263;&#25991;&#12399;&#12300;&#24441;&#21106;&#12301;&#12391;&#20998;&#12369;&#12390;&#35226;&#12360;&#12427;</h3>
-  <p>18&#35486;&#12398;&#25991;&#12418;&#12289;&#24441;&#21106;&#12372;&#12392;&#12395;&#20998;&#12369;&#12428;&#12400;&#35226;&#12360;&#12420;&#12377;&#12356;&#12290;</p>
-  <div class="example">
-    Q7&#12398;&#20363;:<br>
-    &#9312; &#26465;&#20214;: "If you enjoyed your dining experience today,"<br>
-    &#9313; &#12362;&#39000;&#12356;: "we would greatly appreciate"<br>
-    &#9314; &#20869;&#23481;: "a positive review on our website."<br>
-    &#8594; &#26465;&#20214;&#8594;&#12362;&#39000;&#12356;&#8594;&#20869;&#23481;&#12398;&#27969;&#12428;&#12391;&#33258;&#28982;&#12395;&#20877;&#29983;
-  </div>
-</div>
-
-<!-- Pronunciation Checkpoints -->
-<div class="tip-card">
-  <h3><span class="icon">&#127911;</span> &#30330;&#38899;5&#12388;&#12398;&#12481;&#12455;&#12483;&#12463;&#12509;&#12452;&#12531;&#12488;</h3>
-  <div class="checkpoint-grid">
-    <div class="checkpoint-item">
+    <div class="checkpoint-card">
       <span class="checkpoint-num">1</span>
-      <div class="checkpoint-text">&#12300;complimentary&#12301;&#12398;&#12473;&#12488;&#12524;&#12473;<span>com-pli-MEN-ta-ry&#12289;3&#30058;&#30446;&#12398;&#38899;&#31680;&#12395;&#24375;&#21218;</span></div>
+      <div class="checkpoint-text">「complimentary」のストレス<span>com-pli-MEN-ta-ry、3番目の音節に強勢</span></div>
     </div>
-    <div class="checkpoint-item">
+    <div class="checkpoint-card">
       <span class="checkpoint-num">2</span>
-      <div class="checkpoint-text">&#12300;vegetables&#12301;&#12399;2&#38899;&#31680;<span>VEJ-ta-blz&#12289;3&#38899;&#31680;&#12391;&#12399;&#12394;&#12356;&#12371;&#12392;&#12395;&#27880;&#24847;</span></div>
+      <div class="checkpoint-text">「vegetables」は2音節<span>VEJ-ta-blz、3音節ではないことに注意</span></div>
     </div>
-    <div class="checkpoint-item">
+    <div class="checkpoint-card">
       <span class="checkpoint-num">3</span>
-      <div class="checkpoint-text">&#12300;dietary restrictions&#12301;&#12398;&#12522;&#12531;&#12461;&#12531;&#12464;<span>dietary-restrictions &#12434;&#12388;&#12394;&#12370;&#12390;&#30330;&#38899;</span></div>
+      <div class="checkpoint-text">「dietary restrictions」のリンキング<span>dietary-restrictions をつなげて発音</span></div>
     </div>
-    <div class="checkpoint-item">
+    <div class="checkpoint-card">
       <span class="checkpoint-num">4</span>
-      <div class="checkpoint-text">&#30097;&#21839;&#25991;&#12398;&#12452;&#12531;&#12488;&#12493;&#12540;&#12471;&#12519;&#12531;<span>"May I take your order?" &#8594; &#25991;&#26411;&#12434;&#12420;&#12431;&#12425;&#12363;&#12367;&#19978;&#12370;&#12427;</span></div>
+      <div class="checkpoint-text">疑問文のイントネーション<span>"May I take your order?" → 文末をやわらかく上げる</span></div>
     </div>
-    <div class="checkpoint-item">
+    <div class="checkpoint-card">
       <span class="checkpoint-num">5</span>
-      <div class="checkpoint-text">&#35613;&#32618;&#34920;&#29694;&#12398;&#12488;&#12540;&#12531;<span>"sincerely apologize" &#8594; &#12422;&#12387;&#12367;&#12426;&#19969;&#23527;&#12395;&#12289;&#35488;&#24847;&#12434;&#36796;&#12417;&#12390;</span></div>
+      <div class="checkpoint-text">謝罪表現のトーン<span>"sincerely apologize" → ゆっくり丁寧に、誠意を込めて</span></div>
     </div>
   </div>
-</div>
 
-</div>
-</div>
-
-<div class="reading-footer">
-  <div class="footer-left">
-    <a href="../menu.html">&#8592; &#12513;&#12491;&#12517;&#12540;&#12395;&#25147;&#12427;</a>
+  <div class="tip-card" style="border:2px solid #e8912d;background:#fffaf0">
+    <div class="tip-card-title" style="color:#e8912d;font-size:1em">🏋️ 自主練習の方法</div>
+    <div class="tip-card-body">
+      <strong>Step 1:</strong> 各文を、チャンクごとに区切って音読する（ゆっくり）<br>
+      <strong>Step 2:</strong> チャンクを繋げて、文全体を通して音読する（自然なスピード）<br>
+      <strong>Step 3:</strong> スマホのタイマーを制限時間にセットし、音読する → 時間内に言い切れるか確認<br>
+      <strong>Step 4:</strong> スマホの録音機能で自分の声を録音し、聞き返す → イントネーションやリズムをチェック<br><br>
+      <strong>目標：</strong> 短い文がスムーズに言えるようになれば、本番でも十分対応できる。長い文は完璧でなくてもOK — 途中で止まらず最後まで言い切ることが最優先！
+    </div>
   </div>
-  <a class="btn-nav" href="practice-8.html">Practice 8 &#12395;&#25147;&#12427; &#8250;</a>
+
+</div>
+
+<div class="nav-footer">
+  <a class="btn-menu" href="practice-8.html">← Practice 8 に戻る</a>
+  <a class="btn-menu" href="../menu.html">メニューに戻る</a>
 </div>
 
 <script src="../../js/auth.js"></script>

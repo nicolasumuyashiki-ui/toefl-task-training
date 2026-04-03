@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build a Sentence — 解答解説 | Practice 7</title>
-<link rel="stylesheet" href="../../css/common.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
@@ -95,7 +94,10 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
 </div>
 
+<script src="../../js/auth.js"></script>
 <script>
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+
 const answers=[
 {id:1,prompt:"What does the student council suggest about the spring festival?",sentence:"They suggest that the festival be held outdoors this year.",grammar:"仮定法現在（subjunctive）: suggest that + S + 動詞原形。be held は受動態の原形。「〜することを提案する」。"},
 {id:2,prompt:"Why did the club president recommend changes to the meeting schedule?",sentence:"She recommended that every member attend at least two meetings a month.",grammar:"仮定法現在: recommended that + S + 動詞原形。attendにsが付かないのがポイント（× attends）。"},

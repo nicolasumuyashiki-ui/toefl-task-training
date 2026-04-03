@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Writing for an Academic Discussion — 解答解説・模範回答 | Practice 4</title>
-<link rel="stylesheet" href="../../css/common.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
@@ -173,13 +172,15 @@ A balanced approach that combines both formats would give students the benefits 
   <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">Back to Menu</a>
 </div>
 
+<script src="../../js/auth.js"></script>
 <script>
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+
 const stored = JSON.parse(sessionStorage.getItem('discussionResponse_p4')||'null');
 if(stored && stored.text){
   document.getElementById('userPreview').textContent = stored.text;
   document.getElementById('userStats').textContent = 'Words: ' + stored.words + ' | Time used: ' + stored.time;
 }
 </script>
-<script src="../../js/auth.js"></script>
 </body>
 </html>

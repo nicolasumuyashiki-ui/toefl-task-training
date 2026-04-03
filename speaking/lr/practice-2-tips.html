@@ -5,123 +5,127 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Listen and Repeat 攻略コツ — Practice 2</title>
 <link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--accent:#ec4899;--accent-bg:#fdf2f8;--accent-light:#f9a8d4;--accent-dark:#9d174d}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
-.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}
-.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}
-.top-nav-left strong{color:#2d3748}
-.main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}
-.content{width:100%;max-width:720px}
-h1.page-heading{font-size:1.3em;font-weight:800;color:#2d3748;margin-bottom:6px}
-.page-sub{font-size:.85em;color:#8898a8;margin-bottom:28px}
-.tip-card{background:#fff;border:1.5px solid #e8ecf0;border-radius:14px;padding:24px;margin-bottom:20px;transition:box-shadow .2s}
-.tip-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.05)}
-.tip-card h3{font-size:1em;font-weight:800;color:var(--accent-dark);margin-bottom:10px;display:flex;align-items:center;gap:10px}
-.tip-card h3 .icon{width:32px;height:32px;border-radius:8px;background:var(--accent-bg);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.95em;flex-shrink:0}
-.tip-card p,.tip-card li{font-size:.88em;color:#4a5568;margin-bottom:6px}
-.tip-card ul{padding-left:20px;margin-top:6px}
-.tip-card li{margin-bottom:8px}
-.tip-card .example{background:var(--accent-bg);border-radius:8px;padding:10px 14px;margin:8px 0;font-size:.84em;color:var(--accent-dark);font-weight:600}
-.tip-card .sub-label{font-size:.78em;font-weight:700;color:#8898a8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-.checkpoint-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
-.checkpoint-item{display:flex;align-items:flex-start;gap:10px;background:var(--accent-bg);border-radius:10px;padding:12px 14px}
-.checkpoint-num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:800;flex-shrink:0;margin-top:2px}
-.checkpoint-text{font-size:.85em;color:var(--accent-dark);font-weight:600}
-.checkpoint-text span{font-weight:400;color:#6b7280;display:block;font-size:.92em}
-.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
-.footer-left a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
-.footer-left a:hover{color:#2d3748}
-.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;color:#fff;background:var(--accent-dark)}
-.btn-nav:hover{background:#831843}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f9fafb;min-height:100vh;color:#2d3748;line-height:1.7}
+.answers-header{background:#2d3748;color:#fff;padding:20px 28px;text-align:center}
+.answers-header h1{font-size:1.2em;font-weight:600;margin-bottom:4px}
+.answers-header p{font-size:.9em;color:rgba(255,255,255,.7)}
+.answers-body{max-width:780px;margin:0 auto;padding:28px 20px 100px}
+.tips-section{margin-bottom:36px}
+.tips-title{font-size:1.1em;font-weight:700;color:#2d3748;padding:14px 0;border-bottom:2px solid #e2e8f0;margin-bottom:20px}
+.tip-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tip-card-title{font-weight:700;font-size:.95em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.tip-num{background:#e8912d;color:#fff;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75em;flex-shrink:0}
+.tip-card-body{font-size:.88em;line-height:1.65;color:#4a5568}
+.tip-card-body strong{color:#2d3748}
+.tip-card-body code{background:#ebf4ff;padding:2px 6px;border-radius:3px;font-size:.9em;color:#2b6cb0}
+.tip-example{background:#fffff0;border:1px solid #ecc94b;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#744210;line-height:1.5}
+.tip-warn{background:#fff5f5;border:1px solid #feb2b2;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#9b2c2c;line-height:1.5}
+.checkpoint-section{margin-bottom:36px}
+.checkpoint-title{font-size:1.05em;font-weight:700;color:#2d3748;padding:12px 0;border-bottom:2px solid #e2e8f0;margin-bottom:20px}
+.checkpoint-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);display:flex;align-items:flex-start;gap:12px}
+.checkpoint-num{background:#4a90d9;color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75em;font-weight:700;flex-shrink:0;margin-top:2px}
+.checkpoint-text{font-size:.9em;font-weight:600;color:#2d3748}
+.checkpoint-text span{font-weight:400;color:#4a5568;display:block;font-size:.92em;margin-top:2px}
+.nav-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:center;gap:12px;z-index:100}
+.btn-menu{display:inline-flex;align-items:center;gap:8px;padding:12px 32px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#2d3748;transition:all .2s;text-decoration:none}
+.btn-menu:hover{background:#4a5568}
 </style>
 </head>
 <body>
-<div class="top-nav">
-  <div class="top-nav-left">
-    <strong>Listen and Repeat</strong>
-    <span>Practice 2 — 攻略コツ</span>
-  </div>
+
+<div class="answers-header">
+  <h1>Listen and Repeat — 攻略コツ</h1>
+  <p>Practice 2 — 高得点を取るための5つの戦略と発音チェックポイント</p>
 </div>
 
-<div class="main">
-<div class="content">
+<div class="answers-body">
 
-<h1 class="page-heading">&#128161; Listen and Repeat 攻略コツ</h1>
-<p class="page-sub">高得点を取るための5つの戦略と発音チェックポイント</p>
+  <div class="tips-section">
+    <div class="tips-title">🎙️ Listen and Repeat 攻略ポイント</div>
 
-<!-- Strategy 1 -->
-<div class="tip-card">
-  <h3><span class="icon">&#129513;</span> チャンクで記憶する</h3>
-  <p>文全体を覚えようとせず、意味のかたまりで区切る。</p>
-  <div class="example">
-    例: "We strongly recommend / that new students attend / the orientation session / scheduled for next Monday morning."<br>
-    → 4つのチャンクとして覚える
-  </div>
-</div>
-
-<!-- Strategy 2 -->
-<div class="tip-card">
-  <h3><span class="icon">&#127925;</span> リズムとイントネーションをコピー</h3>
-  <p>強弱とメロディーを真似る。単語を正確に言うだけでなく、英語らしいリズムで話すことが重要。</p>
-  <div class="example">
-    &#128264; ネイティブの強弱パターンをそのままコピーする意識を持つ
-  </div>
-</div>
-
-<!-- Strategy 3 -->
-<div class="tip-card">
-  <h3><span class="icon">&#9202;&#65039;</span> 録音開始後、2～3秒待つ</h3>
-  <p>焦らず、最初の単語を噛みにくくなる。落ち着いて始めることで、全体の流れが良くなる。</p>
-</div>
-
-<!-- Strategy 4 -->
-<div class="tip-card">
-  <h3><span class="icon">&#128170;</span> 間違えても止まらない</h3>
-  <p>言い直して続ける方が高得点。止まると流暢性の評価が下がる。</p>
-  <div class="example">
-    &#10007; 5秒以上の沈黙 → 大幅減点<br>
-    &#10003; 言い直して続ける → 軽微な減点のみ
-  </div>
-</div>
-
-<!-- Pronunciation Checkpoints -->
-<div class="tip-card">
-  <h3><span class="icon">&#127911;</span> 発音5つのチェックポイント</h3>
-  <div class="checkpoint-grid">
-    <div class="checkpoint-item">
-      <span class="checkpoint-num">1</span>
-      <div class="checkpoint-text">語尾の子音をハッキリ発音<span>worked → /t/、played → /d/、wanted → /&#618;d/</span></div>
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">1</span> チャンクで記憶する</div>
+      <div class="tip-card-body">
+        文全体を覚えようとせず、<strong>意味のかたまりで区切る</strong>。
+        <div class="tip-example">
+          <strong>例：</strong> "We strongly recommend / that new students attend / the orientation session / scheduled for next Monday morning."<br>
+          → 4つのチャンクとして覚える
+        </div>
+      </div>
     </div>
-    <div class="checkpoint-item">
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">2</span> リズムとイントネーションをコピー</div>
+      <div class="tip-card-body">
+        <strong>強弱とメロディーを真似る</strong>。単語を正確に言うだけでなく、英語らしいリズムで話すことが重要。
+        <div class="tip-example">
+          🔊 ネイティブの強弱パターンをそのままコピーする意識を持つ
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">3</span> 録音開始後、2～3秒待つ</div>
+      <div class="tip-card-body">
+        焦らず、<strong>最初の単語を噛みにくくなる</strong>。落ち着いて始めることで、全体の流れが良くなる。
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">4</span> 間違えても止まらない</div>
+      <div class="tip-card-body">
+        <strong>言い直して続ける方が高得点。</strong>止まると流暢性の評価が下がる。
+        <div class="tip-warn">
+          <strong>✗</strong> 5秒以上の沈黙 → 大幅減点<br>
+          <strong>✓</strong> 言い直して続ける → 軽微な減点のみ
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkpoint-section">
+    <div class="checkpoint-title">🎧 発音5つのチェックポイント</div>
+
+    <div class="checkpoint-card">
+      <span class="checkpoint-num">1</span>
+      <div class="checkpoint-text">語尾の子音をハッキリ発音<span>worked → /t/、played → /d/、wanted → /ɪd/</span></div>
+    </div>
+    <div class="checkpoint-card">
       <span class="checkpoint-num">2</span>
       <div class="checkpoint-text">リンキング<span>pick it up → pi-ki-tup、単語をつなげて発音</span></div>
     </div>
-    <div class="checkpoint-item">
+    <div class="checkpoint-card">
       <span class="checkpoint-num">3</span>
       <div class="checkpoint-text">ストレス（強勢）<span>IMportant、deCIDE、強く読む音節を意識</span></div>
     </div>
-    <div class="checkpoint-item">
+    <div class="checkpoint-card">
       <span class="checkpoint-num">4</span>
       <div class="checkpoint-text">イントネーションの上下<span>文末の上げ下げ、質問は上がる、平叙文は下がる</span></div>
     </div>
-    <div class="checkpoint-item">
+    <div class="checkpoint-card">
       <span class="checkpoint-num">5</span>
       <div class="checkpoint-text">ポーズの位置<span>チャンクの境界でのみポーズを入れる。単語の途中で切らない</span></div>
     </div>
   </div>
-</div>
 
-</div>
-</div>
-
-<div class="reading-footer">
-  <div class="footer-left">
-    <a href="../menu.html">&#8592; メニューに戻る</a>
+  <div class="tip-card" style="border:2px solid #e8912d;background:#fffaf0">
+    <div class="tip-card-title" style="color:#e8912d;font-size:1em">🏋️ 自主練習の方法</div>
+    <div class="tip-card-body">
+      <strong>Step 1:</strong> 各文を、チャンクごとに区切って音読する（ゆっくり）<br>
+      <strong>Step 2:</strong> チャンクを繋げて、文全体を通して音読する（自然なスピード）<br>
+      <strong>Step 3:</strong> スマホのタイマーを制限時間にセットし、音読する → 時間内に言い切れるか確認<br>
+      <strong>Step 4:</strong> スマホの録音機能で自分の声を録音し、聞き返す → イントネーションやリズムをチェック<br><br>
+      <strong>目標：</strong> 短い文がスムーズに言えるようになれば、本番でも十分対応できる。長い文は完璧でなくてもOK — 途中で止まらず最後まで言い切ることが最優先！
+    </div>
   </div>
-  <a class="btn-nav" href="practice-2.html">Practice 2 に戻る &#8250;</a>
+
+</div>
+
+<div class="nav-footer">
+  <a class="btn-menu" href="practice-2.html">← Practice 2 に戻る</a>
+  <a class="btn-menu" href="../menu.html">メニューに戻る</a>
 </div>
 
 <script src="../../js/auth.js"></script>
