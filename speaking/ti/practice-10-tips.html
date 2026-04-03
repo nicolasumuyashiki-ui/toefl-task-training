@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Take an Interview 攻略コツ — Practice 10</title>
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f9fafb;min-height:100vh;color:#2d3748;line-height:1.7}
+.answers-header{background:#2d3748;color:#fff;padding:20px 28px;text-align:center}
+.answers-header h1{font-size:1.2em;font-weight:600;margin-bottom:4px}
+.answers-header p{font-size:.9em;color:rgba(255,255,255,.7)}
+.answers-body{max-width:780px;margin:0 auto;padding:28px 20px 100px}
+
+.tips-section{margin-bottom:36px}
+.tips-title{font-size:1.1em;font-weight:700;color:#2d3748;padding:14px 0;border-bottom:2px solid #e2e8f0;margin-bottom:20px}
+.tip-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tip-card-title{font-weight:700;font-size:.95em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.tip-num{background:#e8912d;color:#fff;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75em;flex-shrink:0}
+.tip-card-body{font-size:.88em;line-height:1.65;color:#4a5568}
+.tip-card-body strong{color:#2d3748}
+.tip-card-body code{background:#ebf4ff;padding:2px 6px;border-radius:3px;font-size:.9em;color:#2b6cb0;white-space:nowrap}
+.tip-example{background:#fffff0;border:1px solid #ecc94b;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#744210;line-height:1.5}
+.tip-warn{background:#fff5f5;border:1px solid #feb2b2;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#9b2c2c;line-height:1.5}
+.tip-good{background:#f0fff4;border:1px solid #9ae6b4;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#276749;line-height:1.5}
+
+/* TIME STRUCTURE */
+.time-bar{display:flex;border-radius:6px;overflow:hidden;margin:12px 0 8px;height:28px;font-size:.75em;font-weight:700;color:#fff}
+.time-seg{display:flex;align-items:center;justify-content:center;padding:0 6px}
+.seg-claim{background:#2b6cb0;flex:1}
+.seg-reason{background:#38a169;flex:2}
+.seg-example{background:#e8912d;flex:4}
+.seg-wrap{background:#805ad5;flex:2}
+
+/* FILLER BOX */
+.filler-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.filler-item{background:#f7fafc;border:1px solid #e2e8f0;border-radius:6px;padding:10px 14px}
+.filler-label{font-size:.78em;font-weight:700;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.filler-text{font-size:.88em;color:#2d3748}
+
+/* TEMPLATE STEPS */
+.template-section{margin-bottom:36px}
+.template-title{font-size:1.05em;font-weight:700;color:#2d3748;padding:12px 0;border-bottom:2px solid #e2e8f0;margin-bottom:20px}
+.template-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);display:flex;align-items:flex-start;gap:12px}
+.template-num{background:#4a90d9;color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75em;font-weight:700;flex-shrink:0;margin-top:2px}
+.template-text{font-size:.9em;color:#2d3748}
+.template-text strong{display:block;font-weight:700;margin-bottom:2px}
+.template-text span{color:#4a5568;font-weight:400;font-size:.92em}
+
+/* EXAMPLE TAGS */
+.example-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.example-tag{display:inline-block;background:#ebf4ff;border:1px solid #bee3f8;border-radius:8px;padding:6px 14px;font-size:.85em;font-weight:600;color:#2b6cb0}
+
+.nav-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:center;gap:12px;z-index:100}
+.btn-menu{display:inline-flex;align-items:center;gap:8px;padding:12px 32px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#2d3748;transition:all .2s;text-decoration:none}
+.btn-menu:hover{background:#4a5568}
+</style>
+</head>
+<body>
+
+<div class="answers-header">
+  <h1>Take an Interview — 攻略コツ</h1>
+  <p>Practice 10 — 旅行・バケーショントピックで45秒を使い切る戦略</p>
+</div>
+
+<div class="answers-body">
+
+  <!-- ========== TIPS ========== -->
+  <div class="tips-section">
+    <div class="tips-title">🎤 Take an Interview 攻略ポイント</div>
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">1</span> 45秒の使い方（旅行トピック向け）</div>
+      <div class="tip-card-body">
+        旅行トピックはエピソードが話しやすいので、<strong>具体例に時間を多めに取る。</strong>
+        <div class="time-bar">
+          <div class="time-seg seg-claim">主張 5秒</div>
+          <div class="time-seg seg-reason">理由 10秒</div>
+          <div class="time-seg seg-example">具体例 20秒</div>
+          <div class="time-seg seg-wrap">まとめ 10秒</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">2</span> 理由は「1つ深く」が鉄則</div>
+      <div class="tip-card-body">
+        理由を2つ挙げようとすると、どちらも中途半端になりがち。<strong>1つの理由を深く掘り下げて、具体例まで到達する</strong>のが高得点パターン。
+        <div class="tip-warn">
+          <strong>✗ NG：</strong> 訪問地を列挙するだけ
+        </div>
+        <div class="tip-good">
+          <strong>✓ OK：</strong> 1つの旅行に絞って深く説明する
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== TEMPLATE ========== -->
+  <div class="template-section">
+    <div class="template-title">📋 旅行トピック用テンプレート</div>
+
+    <div class="template-card">
+      <span class="template-num">1</span>
+      <div class="template-text"><strong>I would say that... / Personally, I prefer...</strong><span>主張を明確に述べる</span></div>
+    </div>
+
+    <div class="template-card">
+      <span class="template-num">2</span>
+      <div class="template-text"><strong>The reason I feel this way is...</strong><span>なぜそう思うか理由を説明</span></div>
+    </div>
+
+    <div class="template-card">
+      <span class="template-num">3</span>
+      <div class="template-text"><strong>For example, when I traveled to... / Last summer, I went to...</strong><span>旅行のエピソードを具体的に話す</span></div>
+    </div>
+
+    <div class="template-card">
+      <span class="template-num">4</span>
+      <div class="template-text"><strong>So that's why I believe... / Overall, traveling has taught me...</strong><span>主張を繰り返して締める</span></div>
+    </div>
+  </div>
+
+  <!-- ========== FILLER PHRASES ========== -->
+  <div class="tips-section">
+    <div class="tips-title">💬 旅行トピックで使えるフィラーフレーズ</div>
+
+    <div class="tip-card">
+      <div class="tip-card-body">
+        困ったときに時間を稼ぐフレーズを準備しておく。
+        <div class="filler-grid">
+          <div class="filler-item">
+            <div class="filler-label">考え中</div>
+            <div class="filler-text"><code>That's a great question...</code></div>
+          </div>
+          <div class="filler-item">
+            <div class="filler-label">体験を思い出す</div>
+            <div class="filler-text"><code>If I recall correctly...</code></div>
+          </div>
+          <div class="filler-item">
+            <div class="filler-label">例を出す</div>
+            <div class="filler-text"><code>A good example would be when I...</code></div>
+          </div>
+          <div class="filler-item">
+            <div class="filler-label">言い換え</div>
+            <div class="filler-text"><code>In other words...</code></div>
+          </div>
+          <div class="filler-item">
+            <div class="filler-label">追加情報</div>
+            <div class="filler-text"><code>On top of that...</code></div>
+          </div>
+          <div class="filler-item">
+            <div class="filler-label">まとめ</div>
+            <div class="filler-text"><code>All in all, I would say...</code></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== FAILURE PATTERNS ========== -->
+  <div class="tips-section">
+    <div class="tips-title">⚠️ 失敗パターンとリカバリー</div>
+
+    <div class="tip-card">
+      <div class="tip-card-body">
+        <div class="tip-warn">
+          <strong>✗ NG：</strong> "I went to Osaka." だけで終わる（短すぎる）<br>
+          <strong>✓ OK：</strong> → 場所・活動・感想を足して45秒埋める
+        </div>
+        <div class="tip-warn" style="margin-top:8px">
+          <strong>✗ NG：</strong> 訪問地を列挙するだけ<br>
+          <strong>✓ OK：</strong> → 1つの旅行に絞って深く説明する
+        </div>
+        <div class="tip-warn" style="margin-top:8px">
+          <strong>✗ NG：</strong> 「fun」「interesting」を繰り返す（語彙が乏しい）<br>
+          <strong>✓ OK：</strong> → memorable, eye-opening, breathtaking などバリエーションを使う
+        </div>
+        <div class="tip-warn" style="margin-top:8px">
+          <strong>✗ NG：</strong> 途中で話が逸れて沈黙する<br>
+          <strong>✓ OK：</strong> → "What made it special was..." で別の角度から続ける
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== EXAMPLE STOCK ========== -->
+  <div class="tip-card">
+    <div class="tip-card-title"><span class="tip-num">★</span> 旅行トピックで使える具体例ストック</div>
+    <div class="tip-card-body">
+      どんな質問にも応用できるエピソードを準備しておく。
+      <div class="example-tags">
+        <span class="example-tag">🚗 家族旅行</span>
+        <span class="example-tag">✈️ 海外旅行</span>
+        <span class="example-tag">🏔️ 自然体験</span>
+        <span class="example-tag">🏛️ 文化体験</span>
+        <span class="example-tag">✈ 空港でのトラブル</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PRACTICE ADVICE ========== -->
+  <div class="tip-card" style="border:2px solid #e8912d;background:#fffaf0">
+    <div class="tip-card-title" style="color:#e8912d;font-size:1em">🏋️ 自主練習の方法</div>
+    <div class="tip-card-body">
+      <strong>Step 1:</strong> スマホのタイマーを45秒にセットする<br>
+      <strong>Step 2:</strong> 質問を声に出して読む（本番では音声で流れる部分）<br>
+      <strong>Step 3:</strong> 読み終わったらすぐタイマースタート → 45秒以内に「主張→理由→具体例→まとめ」を言い切る<br>
+      <strong>Step 4:</strong> 録音して聞き返す → 沈黙がないか、まとめまで到達しているかチェック<br><br>
+      <strong>💡 本番では質問は音声のみ（画面にテキストは表示されません）。</strong>聞いた瞬間に回答を組み立てる練習が重要！<br><br>
+      <strong>目標：</strong> 1日2〜3回のルーティンを体に覚えさせる。完璧な英語でなくてOK — <strong>止まらず話し続けること</strong>が最優先！
+    </div>
+  </div>
+
+</div>
+
+<div class="nav-footer">
+  <a class="btn-menu" href="practice-10.html">← Practice 10 に戻る</a>
+  <a class="btn-menu" href="../menu.html">メニューに戻る</a>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();}
+</script>
+</body>
+</html>

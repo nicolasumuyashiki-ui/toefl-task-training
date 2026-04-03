@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Talk Practice 10 — 解答解説</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px;transition:width .5s}
+.tips-grid{max-width:880px;margin:20px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tip-card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center}
+.tip-card .icon{font-size:1.6em;margin-bottom:8px}
+.tip-card h3{font-size:.85em;color:#4a90d9;margin-bottom:6px}
+.tip-card p{font-size:.78em;color:#718096;line-height:1.6}
+.talk-section{max-width:880px;margin:20px auto}
+.talk-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #4a90d9;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.talk-header h3{font-size:1em;color:#4a90d9}
+.talk-header p{font-size:.82em;color:#718096;margin-top:4px}
+.script-box{background:#fff;padding:16px 20px;margin-bottom:2px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.script-box details{cursor:pointer}
+.script-box summary{font-size:.88em;font-weight:600;color:#4a90d9;padding:8px 0}
+.script-text{font-size:.82em;color:#4a5568;line-height:1.8;padding:8px 0}
+.script-text .highlight{background:#fefcbf;padding:1px 4px;border-radius:3px}
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #edf2f7}
+.q-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}
+.q-num.wrong{background:#e53e3e}
+.q-num.skip{background:#a0aec0}
+.q-prompt{font-size:.92em;font-weight:600;flex:1}
+.q-badge{font-size:.72em;padding:3px 10px;border-radius:12px;font-weight:600}
+.q-badge.main-topic{background:#ebf8ff;color:#2b6cb0}
+.q-badge.detail{background:#f0fff4;color:#276749}
+.q-badge.purpose{background:#fed7e2;color:#97266d}
+.q-badge.inference{background:#e9d8fd;color:#553c9a}
+.q-badge.not-except{background:#fefcbf;color:#975a16}
+.q-body{padding:16px 20px}
+.q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.q-user.is-skip{background:#f7fafc;color:#718096}
+.options-list{margin:10px 0}
+.opt-row{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:6px;font-size:.85em;margin-bottom:4px}
+.opt-row.is-correct{background:#f0fff4;font-weight:600}
+.opt-row.is-wrong-selected{background:#fff5f5;text-decoration:line-through;color:#e53e3e}
+.opt-label{font-weight:700;min-width:24px}
+.q-explain{background:#f7fafc;border-left:3px solid #4a90d9;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
+.q-explain strong{color:#2b6cb0}
+.q-hint{margin-top:6px;font-size:.8em;color:#718096;font-style:italic}
+.nav-bottom{max-width:880px;margin:24px auto;text-align:center;padding-bottom:40px}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
+.btn-back:hover{background:#3a7cc0;}
+@media(max-width:640px){.tips-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Listen to an Academic Talk — Practice 10 解答解説</h1>
+  <p>Task Training | Talk 1: Symbiosis in Marine Ecosystems | Talk 2: Plate Tectonics and Continental Drift</p>
+</div>
+
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 8</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
+</div>
+
+<div class="tips-grid">
+  <div class="tip-card">
+    <div class="icon">&#9733;</div>
+    <h3>シグナルワードに集中</h3>
+    <p>「Today I want to talk about...」「A classic example is...」「However...」が聞こえたら印をつけ、直後のキーワードだけメモ。</p>
+  </div>
+  <div class="tip-card">
+    <div class="icon">&#128221;</div>
+    <h3>ノートはキーワードだけ</h3>
+    <p>全文を書き取ろうとしない。トピック・キーポイント・例・結論を短い単語で記録する。聞くことが最優先。</p>
+  </div>
+  <div class="tip-card">
+    <div class="icon">&#128269;</div>
+    <h3>NOT問題は消去法</h3>
+    <p>「NOT mentioned」「EXCEPT」の問題は、本文に言及のある3つを消し、残った1つが正解。メモにチェックを入れると確実。</p>
+  </div>
+</div>
+
+<!-- ===== Talk 1: Symbiosis in Marine Ecosystems ===== -->
+<div class="talk-section">
+  <div class="talk-header">
+    <h3>Talk 1 — Symbiosis in Marine Ecosystems (Life Science)</h3>
+    <p>話者：教授 ｜ Standard</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <div class="script-text">
+        <span class="highlight">Today I want to talk about</span> symbiosis, which is a close and long-term biological interaction between two different species. Symbiosis is especially fascinating in marine ecosystems, where organisms have developed remarkable partnerships to survive.<br><br>
+        There are three main types of symbiotic relationships: mutualism, commensalism, and parasitism. <span class="highlight">Let's focus on</span> mutualism first, since it's probably the most well-known. In mutualism, both species benefit from the relationship. <span class="highlight">A classic marine example is</span> the partnership between clownfish and sea anemones. The sea anemone's tentacles are covered in stinging cells that are dangerous to most fish, but clownfish have a special mucus coating that protects them from the stings. The clownfish lives among the anemone's tentacles, gaining protection from predators. <span class="highlight">In return,</span> the clownfish drives away butterflyfish that would otherwise eat the anemone, and its waste provides nutrients that help the anemone grow.<br><br>
+        The second type, <span class="highlight">commensalism</span>, is when one species benefits while the other is neither helped nor harmed. An example of this is the relationship between remora fish and sharks. Remoras attach themselves to sharks using a modified fin on the top of their heads that acts like a suction cup. They get free transportation and access to food scraps from the shark's meals, while the shark is essentially unaffected.<br><br>
+        The third type, <span class="highlight">parasitism</span>, benefits one organism at the expense of the other. <span class="highlight">Sea lice, for instance,</span> are tiny crustaceans that attach to the skin and gills of salmon, feeding on their mucus and blood. This weakens the salmon and can even cause death in severe cases.
+      </div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q1icon">1</div>
+      <div class="q-prompt">What is the talk mainly about?</div>
+      <span class="q-badge main-topic">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q1user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> The migration patterns of marine species.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> Different types of symbiotic relationships in ocean life.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> How pollution affects marine biodiversity.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> The feeding habits of predatory fish.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 冒頭で「Today I want to talk about symbiosis」と主題を明示。全体を通して相利共生・片利共生・寄生の3つの類型を海洋生態系で説明。(A)(C)(D)は言及なし。</div>
+      <div class="q-hint">🔑 Main Idea問題：「Today I want to talk about...」の直後がトピック。3つの類型を包括する(B)が正解。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q2icon">2</div>
+      <div class="q-prompt">According to the speaker, how does the clownfish benefit the sea anemone?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q2user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> By cleaning parasites from the anemone's tentacles.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> By attracting prey for the anemone to capture.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> By driving away butterflyfish and providing nutrients through its waste.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> By spreading the anemone's eggs to new locations.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「the clownfish drives away butterflyfish that would otherwise eat the anemone, and its waste provides nutrients that help the anemone grow」と述べている。2つの利益（防御+栄養）を含む(C)が正解。(A)(B)(D)は言及なし。</div>
+      <div class="q-hint">🔑 Detail問題：「In return」（相互利益のシグナル）の後に具体的な利益が述べられる。2つの要素が両方含まれる選択肢を選ぶ。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q3icon">3</div>
+      <div class="q-prompt">What is commensalism?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q3user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> A relationship where both species are harmed.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> A relationship where one species benefits and the other is unaffected.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> A relationship where one species feeds on the other.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> A relationship where both species compete for resources.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「commensalism, is when one species benefits while the other is neither helped nor harmed」と明確に定義。(A)は言及なし、(C)は寄生に近い概念、(D)は共生とは別の競争の概念。</div>
+      <div class="q-hint">🔑 専門用語の定義問題：3つの類型が順番に定義される構造。「is when...」の後が定義。各類型の特徴（両方得 / 片方得 / 片方損）を整理してメモ。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q4icon">4</div>
+      <div class="q-prompt">Why does the speaker mention sea lice?</div>
+      <span class="q-badge purpose">Purpose</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q4user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> To give an example of mutualism.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> To explain how marine diseases spread.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> To illustrate a parasitic relationship in the ocean.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> To describe a threat to coral reef ecosystems.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は寄生の説明の直後に「Sea lice, for instance...」と具体例としてウミジラミを紹介。「for instance」は◆具体例シグナル。(A)は相利共生で別の類型、(B)(D)は言及なし。</div>
+      <div class="q-hint">🔑 Purpose問題：「for instance」「for example」は具体例のシグナル。その直前の一般論（ここでは parasitism の定義）を例示する目的で言及されている。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Talk 2: Plate Tectonics and Continental Drift ===== -->
+<div class="talk-section">
+  <div class="talk-header">
+    <h3>Talk 2 — Plate Tectonics and Continental Drift (Earth Science)</h3>
+    <p>話者：教授 ｜ Harder</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <div class="script-text">
+        <span class="highlight">Let's continue our discussion of</span> Earth's dynamic systems by examining plate tectonics, the theory that explains the large-scale movement of Earth's lithosphere. The basic idea is that the Earth's outer shell is divided into several large plates that float on top of the semi-fluid asthenosphere beneath them. These plates are constantly moving, though very slowly — typically only a few centimeters per year.<br><br>
+        The concept of moving continents was first proposed by Alfred Wegener in 1912. He noticed that the coastlines of South America and Africa <span class="highlight">fit together like pieces of a jigsaw puzzle</span>. He also found identical fossils of ancient plants and animals on continents that are now separated by vast oceans. <span class="highlight">For example,</span> fossils of the freshwater reptile <span class="highlight">Mesosaurus</span> have been found in both South America and Africa, but nowhere else. Since this creature could not have swum across the Atlantic Ocean, Wegener argued that the two continents must have once been connected. He called this ancient supercontinent Pangaea, meaning "all lands."<br><br>
+        <span class="highlight">However,</span> Wegener's theory was rejected by most scientists at the time because he could not explain the mechanism that drove the continents apart. <span class="highlight">It wasn't until the 1960s</span> that the discovery of seafloor spreading provided the missing piece. Scientists found that new oceanic crust is continuously being created at mid-ocean ridges, where magma rises from the mantle and solidifies. As new crust forms, it pushes the older crust outward, carrying the continents with it.<br><br>
+        This process is driven by convection currents in the mantle — hot material rises near the ridge, moves laterally, cools, and then sinks back down at <span class="highlight">subduction zones</span>, where one plate slides beneath another. At these subduction zones, the descending plate melts back into the mantle, completing the cycle. <span class="highlight">This also explains why</span> earthquakes and volcanic eruptions are concentrated along plate boundaries.
+      </div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q5icon">5</div>
+      <div class="q-prompt">What is the talk mainly about?</div>
+      <span class="q-badge main-topic">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q5user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> The formation of volcanic islands in the Pacific Ocean.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> The theory of plate tectonics and the evidence supporting it.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Methods scientists use to predict earthquakes.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> The geological history of South America.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 冒頭で「examining plate tectonics, the theory that explains the large-scale movement of Earth's lithosphere」と主題を提示。化石の証拠、海底拡大、沈み込み帯と体系的に証拠を紹介。(A)(C)は部分的、(D)は例の一つにすぎない。</div>
+      <div class="q-hint">🔑 Main Idea問題：「Let's continue our discussion of... by examining...」で主題が提示される。理論＋証拠の両方を含む選択肢を選ぶ。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q6icon">6</div>
+      <div class="q-prompt">Why does the speaker mention Mesosaurus fossils?</div>
+      <span class="q-badge purpose">Purpose</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q6user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> To show that ancient reptiles could swim across oceans.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> To provide evidence that South America and Africa were once connected.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> To explain how fossils are formed in sedimentary rock.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> To compare ancient and modern marine reptiles.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 「For example」（◆具体例シグナル）の後にメソサウルスの化石が南米とアフリカの両方で発見されたことを紹介。大陸がつながっていた証拠として提示。(A)はむしろ「could not have swum across」と否定されている。</div>
+      <div class="q-hint">🔑 Purpose問題：「For example」の前に述べられた一般論（大陸にまたがる同一化石の存在）を具体化する役割。化石の目的＝大陸接続の証拠提示。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q7icon">7</div>
+      <div class="q-prompt">According to the speaker, why was Wegener's theory initially rejected?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q7user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> His fossil evidence was later proven to be inaccurate.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Other scientists had already proposed a better theory.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> He could not explain what force caused the continents to move.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> The coastlines of the continents did not actually fit together.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「rejected ... because he could not explain the mechanism that drove the continents apart」と明確に述べている。メカニズム（力）の説明ができなかったことが理由。(A)は化石証拠の正確性を否定していない。(D)はむしろ「fit together like pieces of a jigsaw puzzle」と肯定。</div>
+      <div class="q-hint">🔑 Detail問題：「because」の後が理由。「However」（⇔対比シグナル）の後に否定的情報が来るパターン。「rejected because...」を聞き逃さない。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q8icon">8</div>
+      <div class="q-prompt">What happens at subduction zones?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q8user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> New oceanic crust is created from rising magma.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Two plates slide horizontally past each other.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> One plate slides beneath another and melts back into the mantle.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Continental plates break apart to form new ocean basins.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「at subduction zones, where one plate slides beneath another」「the descending plate melts back into the mantle, completing the cycle」と述べている。(A)は中央海嶺（mid-ocean ridges）の説明、(B)はトランスフォーム断層、(D)は沈み込み帯の説明ではない。</div>
+      <div class="q-hint">🔑 専門用語の定義問題：「subduction zones, where...」の「where」以下が定義。新しい用語が出たら直後の説明に集中。</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-10.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">メニューに戻る</a>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+<script>
+const labels = ['A','B','C','D'];
+const totalQ = 8;
+// Correct answers: Q1=B(1), Q2=C(2), Q3=B(1), Q4=C(2), Q5=B(1), Q6=B(1), Q7=C(2), Q8=C(2)
+const correctAnswers = [1, 2, 1, 2, 1, 1, 2, 2];
+
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('talkPractice10Answers')||'null');
+  let correct = 0, answered = 0;
+  if(stored && Array.isArray(stored)){
+    for(let i=0;i<totalQ;i++){
+      const userAns = stored[i];
+      const isCorrect = userAns === correctAnswers[i];
+      const isSkip = userAns === null || userAns === undefined;
+      if(!isSkip) answered++;
+      if(isCorrect) correct++;
+      const icon = document.getElementById('q'+(i+1)+'icon');
+      const user = document.getElementById('q'+(i+1)+'user');
+      if(isSkip){ icon.className='q-num skip'; user.className='q-user is-skip'; user.textContent='⏱️ 未回答（タイムアウト）'; }
+      else if(isCorrect){ icon.className='q-num correct'; user.className='q-user is-correct'; user.textContent='✅ 正解！ あなたの回答: ('+labels[userAns]+')'; }
+      else { icon.className='q-num wrong'; user.className='q-user is-wrong'; user.textContent='❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')'; }
+    }
+    document.getElementById('scoreBig').textContent = correct + ' / ' + totalQ;
+    document.getElementById('scoreBar').style.width = (correct/totalQ*100)+'%';
+    const pct = Math.round(correct/totalQ*100);
+    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+  } else {
+    document.getElementById('scoreBig').textContent = '— / ' + totalQ;
+    document.getElementById('scoreMsg').textContent = '問題を先に解いてからこのページを見ると、スコアが表示されます';
+    for(let i=1;i<=totalQ;i++) document.getElementById('q'+i+'user').style.display='none';
+  }
+}
+render();
+</script>
+</body>
+</html>

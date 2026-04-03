@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen to a Conversation — Practice 10 解答解説</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px;transition:width .5s}
+
+/* Tips */
+.tips-banner{background:#fff;border-left:4px solid #4a90d9;margin:20px auto;max-width:880px;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tips-banner h2{font-size:1em;color:#4a90d9;margin-bottom:14px}
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.tips-grid{grid-template-columns:1fr}}
+.tip-card{background:#ebf4ff;border-radius:8px;padding:14px;text-align:center}
+.tip-icon{font-size:1.5em;margin-bottom:6px}
+.tip-card h3{font-size:.85em;margin-bottom:4px}
+.tip-card p{font-size:.75em;color:#4a5568}
+
+/* Conversation context */
+.conv-section{max-width:880px;margin:20px auto}
+.conv-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #4a90d9;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.conv-header h3{font-size:1em;color:#4a90d9}
+.conv-header p{font-size:.82em;color:#718096;margin-top:4px}
+.script-box{background:#fff;padding:16px 20px;margin-bottom:2px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.script-box details{cursor:pointer}
+.script-box summary{font-size:.88em;font-weight:600;color:#4a90d9;padding:8px 0}
+.script-line{font-size:.82em;color:#4a5568;margin:4px 0;padding-left:12px}
+.script-line strong{color:#2d3748}
+
+/* Question cards */
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #edf2f7}
+.q-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}
+.q-num.wrong{background:#e53e3e}
+.q-num.skip{background:#a0aec0}
+.q-prompt{font-size:.92em;font-weight:600;flex:1}
+.q-badge{font-size:.72em;padding:3px 10px;border-radius:12px;font-weight:600}
+.q-badge.detail{background:#ebf8ff;color:#2b6cb0}
+.q-badge.inference{background:#fefcbf;color:#975a16}
+.q-body{padding:16px 20px}
+.q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.q-user.is-skip{background:#f7fafc;color:#718096}
+.options-list{margin:10px 0}
+.opt-row{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:6px;font-size:.85em;margin-bottom:4px}
+.opt-row.is-correct{background:#f0fff4;font-weight:600}
+.opt-row.is-wrong-selected{background:#fff5f5;text-decoration:line-through;color:#e53e3e}
+.opt-label{font-weight:700;min-width:24px}
+.q-explain{background:#f7fafc;border-left:3px solid #4a90d9;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
+.q-explain strong{color:#2b6cb0}
+.q-hint{margin-top:6px;font-size:.8em;color:#718096;font-style:italic}
+
+.nav-bottom{max-width:880px;margin:24px auto;text-align:center;padding-bottom:40px}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
+.btn-back:hover{background:#3a7cc0}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🎧 Listen to a Conversation — Practice 10 解答解説</h1>
+  <p>Task Training — Conversation Practice 10</p>
+</div>
+
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 4</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
+</div>
+
+<div class="tips-banner">
+  <h2>💡 Conversation 攻略のコツ</h2>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">📝</div>
+      <h3>メモの取り方</h3>
+      <p>問題は何か？解決策は何か？をキーワードだけメモ。全文書き取ろうとしない！</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔄</div>
+      <h3>問題解決パターン</h3>
+      <p>挨拶→問題提示→解決策提案→結論。キャンパス会話の多くはこのパターンに従う</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">😮</div>
+      <h3>感情表現に注目</h3>
+      <p>Oh, that's a relief! / That's frustrating. / Really? → 話者の感情は頻出の設問ポイント</p>
+    </div>
+  </div>
+</div>
+
+<!-- Conversation 1 -->
+<div class="conv-section">
+  <div class="conv-header">
+    <h3>🗣️ Conversation 1 — 寮の変更手続き</h3>
+    <p>場面：キャンパス住居課 — 学生（女性）と住居コーディネーター（男性）</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <div class="script-line"><strong>[NARRATOR]</strong> Listen to a conversation.</div>
+      <div class="script-line"><strong>[STUDENT]</strong> Hi, I was wondering if it's possible to switch to a different dormitory for the spring semester.</div>
+      <div class="script-line"><strong>[COORDINATOR]</strong> Sure, we do allow room transfers between semesters. Is there a particular reason you'd like to move?</div>
+      <div class="script-line"><strong>[STUDENT]</strong> My current dorm is really far from the science buildings where most of my classes are. I spend almost thirty minutes walking each way.</div>
+      <div class="script-line"><strong>[COORDINATOR]</strong> I understand. Well, Morrison Hall and Lakeside Residence are both much closer to the science complex. Morrison has single rooms available, and Lakeside has doubles.</div>
+      <div class="script-line"><strong>[STUDENT]</strong> I'd prefer a single if possible. What's the process for transferring?</div>
+      <div class="script-line"><strong>[COORDINATOR]</strong> You'll need to fill out a transfer request form, which I can give you now. The deadline to submit it is December 15th. After that, we'll process requests on a first-come, first-served basis.</div>
+      <div class="script-line"><strong>[STUDENT]</strong> Is there any difference in cost between my current dorm and Morrison?</div>
+      <div class="script-line"><strong>[COORDINATOR]</strong> Singles in Morrison are about three hundred dollars more per semester than your current double. The difference would be added to your spring housing bill.</div>
+      <div class="script-line"><strong>[STUDENT]</strong> That's reasonable. I'll take the form and submit it as soon as possible.</div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q1icon">1</div>
+      <div class="q-prompt">Why does the student want to change dormitories?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q1user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Her current roommate is too noisy</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> Her dorm is too far from her classes</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> She wants to live closer to the dining hall</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Her building is undergoing renovation</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 学生は「My current dorm is really far from the science buildings where most of my classes are」と明確に理由を述べている。ルームメイトの騒音(A)、食堂(C)、改装(D)は言及されていない。</div>
+      <div class="q-hint">🔑 ヒント位置：会話序盤（学生の2発話目）— コーディネーターに理由を聞かれて答える場面。目的問題は最初の数ターンに集中。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q2icon">2</div>
+      <div class="q-prompt">What does the coordinator say about the transfer process?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q2user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Students must get approval from their current RA</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Transfers are only available for second-year students</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> Requests are handled on a first-come, first-served basis</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> The student must attend a housing orientation session</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> コーディネーターは「we'll process requests on a first-come, first-served basis」と述べている。RAの承認(A)、2年生限定(B)、オリエンテーション参加(D)は言及されていない。</div>
+      <div class="q-hint">🔑 ヒント位置：会話の中盤（コーディネーターが手続きを説明する場面）— 解決策パートに手続きの詳細が集中する。</div>
+    </div>
+  </div>
+</div>
+
+<!-- Conversation 2 -->
+<div class="conv-section">
+  <div class="conv-header">
+    <h3>🗣️ Conversation 2 — 就職面接の準備</h3>
+    <p>場面：キャリアサービスセンター — 学生（男性）とキャリアアドバイザー（女性）</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <div class="script-line"><strong>[NARRATOR]</strong> Listen to a conversation.</div>
+      <div class="script-line"><strong>[STUDENT]</strong> Hi, I have a job interview next week and I've never done one before. I was hoping to get some advice.</div>
+      <div class="script-line"><strong>[ADVISOR]</strong> Of course! First of all, what kind of position is it?</div>
+      <div class="script-line"><strong>[STUDENT]</strong> It's a summer internship at a marketing firm downtown. The interview is in person.</div>
+      <div class="script-line"><strong>[ADVISOR]</strong> Great. The most important thing is preparation. Research the company beforehand so you can explain why you want to work there specifically. Also, prepare two or three examples of projects or experiences that show relevant skills.</div>
+      <div class="script-line"><strong>[STUDENT]</strong> What about the way I dress? I'm not sure how formal I should be.</div>
+      <div class="script-line"><strong>[ADVISOR]</strong> For a marketing firm, business casual is usually appropriate. A collared shirt and dress pants would be fine. Avoid jeans and sneakers.</div>
+      <div class="script-line"><strong>[STUDENT]</strong> Got it. Is there anything else I should know?</div>
+      <div class="script-line"><strong>[ADVISOR]</strong> Yes, we offer mock interviews here at the career center. I'd strongly recommend signing up for one. It's a great way to practice answering questions and get feedback before the real thing.</div>
+      <div class="script-line"><strong>[STUDENT]</strong> That sounds really helpful. Can I schedule one for this week?</div>
+      <div class="script-line"><strong>[ADVISOR]</strong> Absolutely. Let me check the calendar. We have openings on Wednesday and Friday afternoon.</div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q3icon">3</div>
+      <div class="q-prompt">What is the student's main concern?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q3user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> He is unsure whether to accept the internship offer</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> He needs help writing his resume</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> He wants advice on preparing for a job interview</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> He is looking for a part-time job on campus</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 学生は冒頭で「I have a job interview next week and I've never done one before. I was hoping to get some advice」と述べている。インターンのオファー(A)ではなく面接の準備、履歴書(B)やキャンパス内の仕事(D)は話題に出ていない。</div>
+      <div class="q-hint">🔑 ヒント位置：会話の冒頭（学生の1発話目）— 目的・関心は最初の発言に明示される。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q4icon">4</div>
+      <div class="q-prompt">What does the advisor recommend the student do before the interview?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q4user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Visit the company's office in advance</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> Sign up for a mock interview at the career center</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Send a thank-you email to the interviewer</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Complete an online interview training course</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> アドバイザーは「we offer mock interviews here at the career center. I'd strongly recommend signing up for one」と述べている。会社訪問(A)、お礼メール(C)、オンラインコース(D)は言及されていない。</div>
+      <div class="q-hint">🔑 ヒント位置：会話の終盤（アドバイザーの最後のアドバイス）— 「おすすめ」は会話の締めに出ることが多い。"I'd strongly recommend" が決定的なシグナル。</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-10.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+<script>
+const labels = ['A','B','C','D'];
+const correctAnswers = [1, 2, 2, 1]; // Q1=B, Q2=C, Q3=C, Q4=B
+
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('convAnswers')||'null');
+  let correct = 0, answered = 0;
+
+  if(stored && Array.isArray(stored)){
+    for(let i=0;i<4;i++){
+      const userAns = stored[i];
+      const isCorrect = userAns === correctAnswers[i];
+      const isSkip = userAns === null || userAns === undefined;
+      if(!isSkip) answered++;
+      if(isCorrect) correct++;
+
+      const icon = document.getElementById('q'+(i+1)+'icon');
+      const user = document.getElementById('q'+(i+1)+'user');
+
+      if(isSkip){
+        icon.className = 'q-num skip';
+        user.className = 'q-user is-skip';
+        user.textContent = '⏱️ 未回答（タイムアウト）';
+      } else if(isCorrect){
+        icon.className = 'q-num correct';
+        user.className = 'q-user is-correct';
+        user.textContent = '✅ 正解！ あなたの回答: ('+labels[userAns]+')';
+      } else {
+        icon.className = 'q-num wrong';
+        user.className = 'q-user is-wrong';
+        user.textContent = '❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')';
+      }
+    }
+    document.getElementById('scoreBig').textContent = correct + ' / 4';
+    document.getElementById('scoreBar').style.width = (correct/4*100)+'%';
+    const pct = Math.round(correct/4*100);
+    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+  } else {
+    document.getElementById('scoreBig').textContent = '— / 4';
+    document.getElementById('scoreMsg').textContent = '問題を先に解いてからこのページを見ると、スコアが表示されます';
+    for(let i=1;i<=4;i++){
+      document.getElementById('q'+i+'user').style.display='none';
+    }
+  }
+}
+render();
+</script>
+</body>
+</html>

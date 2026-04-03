@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LCR Practice 10 — 解答解説</title>
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.7}
+
+.answers-header{background:#2d3748;color:#fff;padding:20px 28px;text-align:center}
+.answers-header h1{font-size:1.2em;font-weight:600;margin-bottom:4px}
+.answers-header p{font-size:.9em;color:rgba(255,255,255,.7)}
+
+.score-banner{background:#ebf4ff;border-bottom:1px solid #bee3f8;padding:20px 28px;text-align:center}
+.score-big{font-size:2em;font-weight:800;color:#2d3748}
+.score-bar-wrap{width:200px;height:8px;background:#e2e8f0;border-radius:4px;margin:8px auto;overflow:hidden}
+.score-bar{height:100%;background:#48bb78;border-radius:4px;width:0%;transition:width .5s}
+.score-msg{font-size:.85em;color:#718096;margin-top:4px}
+
+.answers-body{max-width:800px;margin:0 auto;padding:24px 20px 120px}
+
+/* TIPS */
+.tips-section{background:#fffaf0;border:1.5px solid #fbd38d;border-radius:12px;padding:20px 24px;margin-bottom:28px}
+.tips-title{font-size:1em;font-weight:700;color:#e8912d;margin-bottom:12px}
+.tip-card{display:flex;gap:12px;margin-bottom:14px}
+.tip-num{background:#e8912d;color:#fff;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75em;flex-shrink:0;font-weight:700}
+.tip-body{font-size:.88em;color:#4a5568;line-height:1.6}
+.tip-body strong{color:#2d3748}
+
+/* Q CARD */
+.q-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:0;margin-bottom:20px;overflow:hidden}
+.q-card-header{background:#f7fafc;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e2e8f0}
+.q-num{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.8em;font-weight:700;color:#fff;background:#a0aec0}
+.q-num.correct{background:#48bb78}
+.q-num.wrong{background:#f56565}
+.q-num.skip{background:#e2e8f0;color:#a0aec0}
+.q-prompt{flex:1;margin-left:12px;font-size:.92em;font-weight:600;color:#2d3748}
+.q-badge{font-size:.7em;font-weight:700;padding:3px 10px;border-radius:12px;text-transform:uppercase;letter-spacing:.5px}
+.q-badge.detail{background:#ebf4ff;color:#3b82c8}
+.q-badge.inference{background:#f3f0fa;color:#7c5cbf}
+.q-card-body{padding:16px 20px}
+.q-user{font-size:.85em;padding:8px 12px;border-radius:8px;margin-bottom:12px}
+.q-user.is-correct{background:#f0fff4;color:#276749}
+.q-user.is-wrong{background:#fff5f5;color:#c53030}
+.q-user.is-skip{background:#f7fafc;color:#a0aec0}
+
+.options-list{margin-bottom:16px}
+.opt-row{padding:8px 12px;border-radius:6px;font-size:.88em;margin-bottom:4px;display:flex;gap:8px}
+.opt-row.is-correct{background:#f0fff4;border:1px solid #c6f6d5;font-weight:600;color:#276749}
+.opt-row.is-wrong-selected{background:#fff5f5;border:1px solid #fed7d7;color:#c53030;text-decoration:line-through}
+.opt-label{font-weight:700;flex-shrink:0}
+
+.q-transcript{background:#f0f4f8;border-radius:8px;padding:12px 16px;margin-bottom:12px;font-size:.85em}
+.q-transcript strong{color:#4a90d9}
+.q-explain{font-size:.85em;color:#4a5568;line-height:1.65;margin-bottom:8px}
+.q-explain strong{color:#2d3748}
+.q-hint{font-size:.82em;color:#718096;background:#f7fafc;padding:8px 12px;border-radius:6px;border-left:3px solid #e8912d}
+
+/* FOOTER */
+.nav-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:center;gap:12px;z-index:100}
+.btn-menu{display:inline-flex;align-items:center;gap:8px;padding:12px 32px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#2d3748;transition:all .2s}
+.btn-menu:hover{background:#4a5568}
+</style>
+</head>
+<body>
+
+<div class="answers-header">
+  <h1>&#127911; Listen and Choose a Response &#8212; Practice 10 &#35299;&#31572;&#35299;&#35500;</h1>
+  <p>Task Training &#8212; LCR Practice 10</p>
+</div>
+
+<div class="score-banner">
+  <div class="score-big" id="scoreBig">&#8212; / 8</div>
+  <div class="score-bar-wrap"><div class="score-bar" id="scoreBar"></div></div>
+  <div class="score-msg" id="scoreMsg">&#21839;&#38988;&#12434;&#20808;&#12395;&#35299;&#12356;&#12390;&#12363;&#12425;&#12371;&#12398;&#12506;&#12540;&#12472;&#12434;&#35211;&#12427;&#12392;&#12289;&#12473;&#12467;&#12450;&#12364;&#34920;&#31034;&#12373;&#12428;&#12414;&#12377;</div>
+</div>
+
+<div class="answers-body">
+
+  <div class="tips-section">
+    <div class="tips-title">&#128161; LCR &#25915;&#30053;&#12398;&#12467;&#12484;</div>
+    <div class="tip-card"><span class="tip-num">1</span><div class="tip-body"><strong>&#26368;&#21021;&#12398;2&#35486;&#12395;&#20840;&#38598;&#20013;</strong> &#8212; Where can &#8594; &#22580;&#25152;&#12398;&#24773;&#22577;&#12289;Do you know &#8594; &#20855;&#20307;&#30340;&#12394;&#24773;&#22577;&#25552;&#20379;&#12289;Is... &#8594; Yes/No+&#35036;&#36275;</div></div>
+    <div class="tip-card"><span class="tip-num">2</span><div class="tip-body"><strong>&#12300;&#20250;&#35441;&#12434;&#21069;&#12395;&#36914;&#12417;&#12427;&#24540;&#31572;&#12301;&#12364;&#27491;&#35299;</strong> &#8212; &#36074;&#21839;&#12398;&#21336;&#35486;&#12364;&#21547;&#12414;&#12428;&#12390;&#12356;&#12390;&#12418;&#12289;&#20250;&#35441;&#12364;&#27490;&#12414;&#12427;&#36984;&#25246;&#32930;&#12399;&#19981;&#27491;&#35299;</div></div>
+    <div class="tip-card"><span class="tip-num">3</span><div class="tip-body"><strong>&#19981;&#28288;&#12539;&#22256;&#12426;&#20107;&#12395;&#12399;&#35299;&#27770;&#31574;</strong> &#8212; &#21839;&#38988;&#12434;&#36848;&#12409;&#12390;&#12356;&#12427;&#30456;&#25163;&#12395;&#12399;&#12450;&#12489;&#12496;&#12452;&#12473;&#12420;&#25552;&#26696;&#12364;&#33258;&#28982;&#12394;&#24540;&#31572;</div></div>
+    <div class="tip-card"><span class="tip-num">4</span><div class="tip-body"><strong>&#19968;&#33324;&#35542;&#12399;&#19981;&#27491;&#35299;&#12398;&#12469;&#12452;&#12531;</strong> &#8212; &#20855;&#20307;&#30340;&#12394;&#29366;&#27841;&#12395;&#19968;&#33324;&#30340;&#12394;&#35500;&#26126;&#12391;&#36820;&#12377;&#36984;&#25246;&#32930;&#12399;&#36991;&#12369;&#12427;</div></div>
+  </div>
+
+  <div id="qSection"></div>
+
+</div>
+
+<div class="nav-footer">
+  <button class="btn-menu" onclick="location.href='practice-10.html'">&#8592; &#12418;&#12358;&#19968;&#24230;&#35299;&#12367;</button>
+  <button class="btn-menu" onclick="location.href='../menu.html'" style="background:#2d3748">&#128203; &#12513;&#12491;&#12517;&#12540;&#12395;&#25147;&#12427;</button>
+</div>
+
+<script>
+const QS = [
+  {
+    q: "Excuse me, where can I check my meal plan balance?",
+    type: "detail",
+    opts: [
+      "The cafeteria closes at eight o\u2019clock on weekdays.",
+      "You can check it on the student portal or at any dining hall register.",
+      "I usually eat lunch at the food court near the gym.",
+      "Meal plans come in three different sizes each semester."
+    ],
+    correct: 1,
+    explain: "\u300c\u3069\u3053\u3067\u78ba\u8a8d\u3067\u304d\u308b\uff1f\u300d\u306b\u5bfe\u3057\u3066(B)\u306f\u5177\u4f53\u7684\u306a\u65b9\u6cd5\u30922\u3064\uff08student portal\u307e\u305f\u306fdining hall register\uff09\u6559\u3048\u3066\u3044\u308b\u3002",
+    hint: "Where\u7591\u554f\u6587 \u2192 \u5834\u6240\u30fb\u65b9\u6cd5\u306e\u60c5\u5831\u63d0\u4f9b\u304c\u81ea\u7136\u3002(A)\u306f\u30ab\u30d5\u30a7\u30c6\u30ea\u30a2\u306e\u9589\u5e97\u6642\u9593\u3001(C)\u306f\u81ea\u5206\u306e\u663c\u98df\u5834\u6240\u306e\u8a71\u3001(D)\u306f\u30df\u30fc\u30eb\u30d7\u30e9\u30f3\u306e\u7a2e\u985e\u306e\u4e00\u822c\u8ad6\u3002"
+  },
+  {
+    q: "I locked myself out of my dorm room and I can\u2019t find my key card anywhere.",
+    type: "inference",
+    opts: [
+      "Go to the housing office in the lobby. They can issue you a temporary card right away.",
+      "My key card has my photo printed on the front.",
+      "The dorm doors are locked automatically after ten p.m.",
+      "I always keep a spare key in my backpack."
+    ],
+    correct: 0,
+    explain: "\u56f0\u308a\u4e8b\u306e\u8868\u660e\u306b\u5bfe\u3057\u3066\u3001(A)\u306f\u5177\u4f53\u7684\u306a\u5834\u6240\uff08housing office\uff09\u3068\u89e3\u6c7a\u7b56\uff08\u4eee\u30ab\u30fc\u30c9\u306e\u767a\u884c\uff09\u3092\u63d0\u6848\u3057\u3066\u3044\u308b\u3002",
+    hint: "\u56f0\u308a\u4e8b\u306e\u8868\u660e \u2192 \u89e3\u6c7a\u7b56\u306e\u63d0\u6848\u304c\u81ea\u7136\u3002(B)\u306f\u81ea\u5206\u306e\u30ab\u30fc\u30c9\u306e\u8aac\u660e\u3001(C)\u306f\u30c9\u30a2\u306e\u81ea\u52d5\u30ed\u30c3\u30af\u306e\u60c5\u5831\u3001(D)\u306f\u81ea\u5206\u306e\u30b9\u30da\u30a2\u30ad\u30fc\u306e\u8a71\u3067\u3001\u76f8\u624b\u306e\u554f\u984c\u306b\u5fdc\u3048\u3066\u3044\u306a\u3044\u3002"
+  },
+  {
+    q: "Do you know if I can return this textbook to the campus bookstore even though I already highlighted some pages?",
+    type: "detail",
+    opts: [
+      "That textbook is required for Professor Chen\u2019s course.",
+      "I bought all my textbooks online this semester.",
+      "The bookstore is located on the ground floor of the student center.",
+      "As long as you have the receipt and it\u2019s within two weeks, they should accept it even with highlights."
+    ],
+    correct: 3,
+    explain: "\u300c\u8fd4\u54c1\u3067\u304d\u308b\u304b\uff1f\u300d\u306b\u5bfe\u3057\u3066(D)\u306f\u6761\u4ef6\u4ed8\u304d\u3067\u53ef\u80fd\u3068\u7b54\u3048\u3001\u5177\u4f53\u7684\u306a\u6761\u4ef6\uff08\u30ec\u30b7\u30fc\u30c8\u30fb2\u9031\u9593\u4ee5\u5185\uff09\u3082\u6559\u3048\u3066\u3044\u308b\u3002",
+    hint: "Do you know if\u2026? \u2192 \u53ef\u5426\u3092\u660e\u78ba\u306b\u7b54\u3048\u308b\u5fdc\u7b54\u304c\u81ea\u7136\u3002(A)\u306f\u6559\u79d1\u66f8\u304c\u5fc5\u8981\u306a\u79d1\u76ee\u306e\u60c5\u5831\u3001(B)\u306f\u81ea\u5206\u306e\u8cfc\u5165\u65b9\u6cd5\u306e\u8a71\u3001(C)\u306f\u66f8\u5e97\u306e\u5834\u6240\u3067\u3001\u8cea\u554f\u306b\u76f4\u63a5\u7b54\u3048\u3066\u3044\u306a\u3044\u3002"
+  },
+  {
+    q: "I\u2019m really struggling with my calculus homework. Is there anywhere on campus I can get help?",
+    type: "detail",
+    opts: [
+      "Calculus is one of the most popular courses this semester.",
+      "I finished my math requirement last year.",
+      "The tutoring center in the learning commons offers free drop-in sessions every afternoon.",
+      "You should take statistics instead of calculus."
+    ],
+    correct: 2,
+    explain: "\u300c\u52a9\u3051\u3092\u6c42\u3081\u308b\u8cea\u554f\u300d\u306b\u5bfe\u3057\u3066(C)\u306f\u5834\u6240\uff08\u30e9\u30fc\u30cb\u30f3\u30b0\u30b3\u30e2\u30f3\u30ba\uff09\u3068\u5229\u7528\u65b9\u6cd5\uff08\u7121\u6599\u306e\u30c9\u30ed\u30c3\u30d7\u30a4\u30f3\u30bb\u30c3\u30b7\u30e7\u30f3\uff09\u3092\u5177\u4f53\u7684\u306b\u6559\u3048\u3066\u3044\u308b\u3002",
+    hint: "Is there anywhere\u2026? \u2192 \u5177\u4f53\u7684\u306a\u30ea\u30bd\u30fc\u30b9\u306e\u7d39\u4ecb\u304c\u81ea\u7136\u3002(A)\u306f\u5fae\u7a4d\u5206\u306e\u4eba\u6c17\u5ea6\u306e\u4e00\u822c\u8ad6\u3001(B)\u306f\u81ea\u5206\u306e\u6570\u5b66\u5c65\u4fee\u306e\u8a71\u3001(D)\u306f\u5225\u306e\u79d1\u76ee\u3092\u53d6\u308b\u3088\u3046\u3068\u3044\u3046\u52a9\u8a00\u3067\u3001\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3002"
+  },
+  {
+    q: "I just realized the financial aid application deadline is tomorrow. Can I still submit mine online?",
+    type: "detail",
+    opts: [
+      "Financial aid covers tuition, housing, and textbooks.",
+      "Yes, the online portal stays open until midnight. Just make sure you have all your documents ready.",
+      "I received my financial aid package last week.",
+      "The financial aid office is in the administration building."
+    ],
+    correct: 1,
+    explain: "\u300c\u307e\u3060\u63d0\u51fa\u3067\u304d\u308b\uff1f\u300d\u306b\u5bfe\u3057\u3066(B)\u306f\u300c\u306f\u3044\u300d\u3068\u7b54\u3048\u3001\u7de0\u5207\u6642\u9593\u3068\u6e96\u5099\u3059\u3079\u304d\u3053\u3068\u3082\u6559\u3048\u3066\u3044\u308b\u3002",
+    hint: "Can I still\u2026? \u2192 Yes/No\u3067\u660e\u78ba\u306b\u7b54\u3048\u308b\u5fdc\u7b54\u304c\u81ea\u7136\u3002(A)\u306f\u596a\u5b66\u91d1\u306e\u88dc\u511f\u7bc4\u56f2\u306e\u4e00\u822c\u8ad6\u3001(C)\u306f\u81ea\u5206\u306e\u596a\u5b66\u91d1\u306e\u8a71\u3001(D)\u306f\u30aa\u30d5\u30a3\u30b9\u306e\u5834\u6240\u3067\u3001\u30aa\u30f3\u30e9\u30a4\u30f3\u63d0\u51fa\u306b\u3064\u3044\u3066\u805e\u3044\u3066\u3044\u308b\u3002"
+  },
+  {
+    q: "I want to study abroad next fall, but I\u2019m not sure which credits will transfer back to my degree.",
+    type: "inference",
+    opts: [
+      "You should meet with the study abroad advisor in the international programs office. They\u2019ll review your degree plan and tell you exactly which courses count.",
+      "Studying abroad is a once-in-a-lifetime experience.",
+      "I studied in Barcelona last spring and loved it.",
+      "Most students choose to study abroad during their junior year."
+    ],
+    correct: 0,
+    explain: "\u4e0d\u78ba\u5b9f\u6027\u306e\u8868\u660e\u306b\u5bfe\u3057\u3066\u3001(A)\u306f\u76f8\u8ac7\u5148\uff08\u7559\u5b66\u30a2\u30c9\u30d0\u30a4\u30b6\u30fc\uff09\u3068\u5f97\u3089\u308c\u308b\u652f\u63f4\uff08\u5b66\u4f4d\u8a08\u753b\u306e\u78ba\u8a8d\uff09\u3092\u5177\u4f53\u7684\u306b\u63d0\u6848\u3057\u3066\u3044\u308b\u3002",
+    hint: "\u4e0d\u78ba\u5b9f\u6027\u306e\u8868\u660e \u2192 \u5177\u4f53\u7684\u306a\u30a2\u30c9\u30d0\u30a4\u30b9\u304c\u81ea\u7136\u3002(B)\u306f\u7559\u5b66\u306e\u4e00\u822c\u7684\u306a\u611f\u60f3\u3001(C)\u306f\u81ea\u5206\u306e\u7559\u5b66\u7d4c\u9a13\u306e\u8a71\u3001(D)\u306f\u7559\u5b66\u6642\u671f\u306e\u4e00\u822c\u8ad6\u3002"
+  },
+  {
+    q: "I saw a posting for a research assistant position in the biology department, but the application asks for a faculty reference. I haven\u2019t worked closely with any professors yet.",
+    type: "inference",
+    opts: [
+      "Research assistant positions usually pay twelve dollars an hour.",
+      "The biology department has six research labs on campus.",
+      "I applied for a teaching assistant position last semester.",
+      "Try asking a professor from a class where you did well. Even if you haven\u2019t done research with them, your academic performance can serve as a reference."
+    ],
+    correct: 3,
+    explain: "\u56f0\u308a\u4e8b\u306e\u8868\u660e\u306b\u5bfe\u3057\u3066\u3001(D)\u306f\u5177\u4f53\u7684\u306a\u4ee3\u66ff\u6848\uff08\u6210\u7e3e\u304c\u826f\u304b\u3063\u305f\u30af\u30e9\u30b9\u306e\u6559\u6388\u306b\u983c\u3080\uff09\u3092\u63d0\u6848\u3057\u3001\u4e0d\u5b89\u3092\u548c\u3089\u3052\u3066\u3044\u308b\u3002",
+    hint: "\u56f0\u308a\u4e8b\u306e\u8868\u660e \u2192 \u5b9f\u7528\u7684\u306a\u89e3\u6c7a\u7b56\u304c\u81ea\u7136\u3002(A)\u306f\u6642\u7d66\u306e\u60c5\u5831\u3001(B)\u306f\u7814\u7a76\u5ba4\u306e\u6570\u306e\u60c5\u5831\u3001(C)\u306f\u81ea\u5206\u306eTA\u5fdc\u52df\u306e\u8a71\u3067\u3001\u56f0\u3063\u3066\u3044\u308b\u5185\u5bb9\u306b\u95a2\u4fc2\u306a\u3044\u3002"
+  },
+  {
+    q: "I got a parking ticket on campus yesterday, but I\u2019m sure I was in a valid spot. Is there any way to dispute it?",
+    type: "detail",
+    opts: [
+      "Parking permits cost two hundred dollars per semester.",
+      "I always park in the garage behind the engineering building.",
+      "You can file an appeal online through the transportation services website within five business days. Attach a photo of where you parked if you have one.",
+      "Campus parking enforcement patrols every lot twice a day."
+    ],
+    correct: 2,
+    explain: "\u300c\u7570\u8b70\u7533\u3057\u7acb\u3066\u306e\u65b9\u6cd5\u3092\u5c0b\u306d\u308b\u8cea\u554f\u300d\u306b\u5bfe\u3057\u3066(C)\u306f\u5177\u4f53\u7684\u306a\u624b\u7d9a\u304d\uff08\u30aa\u30f3\u30e9\u30a4\u30f3\u7533\u8acb\u3001\u671f\u9650\u3001\u5199\u771f\u306e\u6dfb\u4ed8\uff09\u3092\u6559\u3048\u3066\u3001\u4f1a\u8a71\u3092\u524d\u306b\u9032\u3081\u3066\u3044\u308b\u3002",
+    hint: "Is there any way to\u2026? \u2192 \u5177\u4f53\u7684\u306a\u65b9\u6cd5\u306e\u60c5\u5831\u63d0\u4f9b\u304c\u81ea\u7136\u3002(A)\u306f\u99d0\u8eca\u8a31\u53ef\u8a3c\u306e\u6599\u91d1\u3001(B)\u306f\u81ea\u5206\u306e\u99d0\u8eca\u5834\u6240\u306e\u8a71\u3001(D)\u306f\u5de1\u56de\u983b\u5ea6\u306e\u60c5\u5831\u3067\u3001\u7570\u8b70\u7533\u3057\u7acb\u3066\u306e\u65b9\u6cd5\u306b\u7121\u95a2\u4fc2\u3002"
+  }
+];
+
+const labels = ['A','B','C','D'];
+
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('lcrAnswers')||'{}');
+  let correct = 0, answered = 0;
+  for(let i=1;i<=8;i++){
+    if(stored['q'+i]){
+      answered++;
+      if(stored['q'+i].isCorrect) correct++;
+    }
+  }
+  if(answered > 0){
+    document.getElementById('scoreBig').textContent = correct + ' / 8';
+    document.getElementById('scoreBar').style.width = (correct/8*100)+'%';
+    const pct = Math.round(correct/8*100);
+    let msg = pct >= 80 ? '\u7d20\u6674\u3089\u3057\u3044\uff01\ud83c\udf89' : pct >= 50 ? '\u3044\u3044\u8abf\u5b50\uff01\u3082\u3046\u5c11\u3057\uff01' : '\u5fa9\u7fd2\u3057\u3066\u6b21\u306b\u6d3b\u304b\u305d\u3046\ud83d\udcaa';
+    document.getElementById('scoreMsg').textContent = pct + '% \u6b63\u7b54\u7387 \u2014 ' + msg;
+  }
+
+  const section = document.getElementById('qSection');
+  let html = '';
+  QS.forEach((q, i) => {
+    const qNum = i + 1;
+    const userData = stored['q'+qNum];
+    const userSelected = userData ? userData.selected : null;
+    const userIdx = userSelected ? labels.indexOf(userSelected) : -1;
+    const isCorrect = userData ? userData.isCorrect : false;
+    const isSkip = !userData;
+
+    const numClass = isSkip ? 'skip' : (isCorrect ? 'correct' : 'wrong');
+    const typeBadge = q.type === 'inference' ? '<span class="q-badge inference">Inference</span>' : '<span class="q-badge detail">Detail</span>';
+
+    let userLine = '';
+    if(isSkip){
+      userLine = '<div class="q-user is-skip">\u23f1\ufe0f \u672a\u56de\u7b54\uff08\u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\uff09</div>';
+    } else if(isCorrect){
+      userLine = '<div class="q-user is-correct">\u2705 \u6b63\u89e3\uff01 \u3042\u306a\u305f\u306e\u56de\u7b54: ('+userSelected+')</div>';
+    } else {
+      userLine = '<div class="q-user is-wrong">\u274c \u3042\u306a\u305f\u306e\u56de\u7b54: ('+userSelected+') \u2192 \u6b63\u89e3: ('+labels[q.correct]+')</div>';
+    }
+
+    let optsHtml = '';
+    q.opts.forEach((opt, oi) => {
+      let cls = '';
+      if(oi === q.correct) cls = ' is-correct';
+      else if(oi === userIdx && !isCorrect) cls = ' is-wrong-selected';
+      optsHtml += '<div class="opt-row'+cls+'"><span class="opt-label">('+labels[oi]+')</span> '+opt+'</div>';
+    });
+
+    html += '<div class="q-card">' +
+      '<div class="q-card-header"><div class="q-num '+numClass+'">'+qNum+'</div>' +
+      '<div class="q-prompt">'+q.q+'</div>'+typeBadge+'</div>' +
+      '<div class="q-card-body">' +
+      userLine +
+      '<div class="options-list">'+optsHtml+'</div>' +
+      '<div class="q-explain"><strong>\u89e3\u8aac\uff1a</strong> '+q.explain+'</div>' +
+      '<div class="q-hint">\ud83d\udd11 '+q.hint+'</div>' +
+      '</div></div>';
+  });
+  section.innerHTML = html;
+}
+render();
+
+if(typeof Auth !== 'undefined'){ Auth.require(); }
+</script>
+<script src="../../js/auth.js"></script>
+</body>
+</html>
