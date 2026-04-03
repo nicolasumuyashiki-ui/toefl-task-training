@@ -3,119 +3,257 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Announcement Practice 9 — 解答・解説</title>
-<link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Announcement Practice 9 — 解答解説</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
-.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:10px}
-.header-logo{font-size:.72em;font-weight:800;color:#2563eb;letter-spacing:.1em;text-transform:uppercase}
-.header-title{font-size:.95em;font-weight:700;color:#2d3748}
-.breadcrumb{padding:12px 24px;font-size:.8em;color:#8898a8}
-.breadcrumb a{color:#b45309;text-decoration:none;font-weight:600}
-.breadcrumb a:hover{text-decoration:underline}
-.container{max-width:800px;margin:0 auto;padding:0 24px 60px}
-h1{font-size:1.3em;font-weight:800;margin-bottom:20px}
-.answer-card{background:#fff;border-radius:12px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px}
-.answer-card h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.75em;font-weight:800;flex-shrink:0}
-.prompt{font-size:.85em;color:#4a5568;padding:8px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;margin-bottom:12px;font-style:italic}
-.correct{font-size:.9em;font-weight:700;color:#16a34a;margin-bottom:8px}
-.explanation{font-size:.82em;color:#4a5568;line-height:1.65}
-.explanation .wrong{color:#dc2626;font-weight:600}
-.tip-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;margin-bottom:24px}
-.tip-box h2{font-size:1.05em;font-weight:800;color:#92400e;margin-bottom:14px}
-.tip-box ul{padding-left:20px;font-size:.85em;color:#92400e;line-height:1.8}
-.tip-box li{margin-bottom:6px}
-.tip-box strong{font-weight:800}
-.back-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-size:.9em;font-weight:700;color:#fff;background:#f59e0b;border:none;border-radius:10px;cursor:pointer;text-decoration:none;transition:all .2s;font-family:inherit}
-.back-btn:hover{background:#d97706}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px;transition:width .5s}
+.tips-banner{background:#fff;border-left:4px solid #4a90d9;margin:20px auto;max-width:880px;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tips-banner h2{font-size:1em;color:#4a90d9;margin-bottom:14px}
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.tips-grid{grid-template-columns:1fr}}
+.tip-card{background:#ebf4ff;border-radius:8px;padding:14px;text-align:center}
+.tip-icon{font-size:1.5em;margin-bottom:6px}
+.tip-card h3{font-size:.85em;margin-bottom:4px}
+.tip-card p{font-size:.75em;color:#4a5568}
+.ann-section{max-width:880px;margin:20px auto}
+.ann-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #4a90d9;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.ann-header h3{font-size:1em;color:#4a90d9}
+.ann-header p{font-size:.82em;color:#718096;margin-top:4px}
+.script-box{background:#fff;padding:16px 20px;margin-bottom:2px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.script-box details{cursor:pointer}
+.script-box summary{font-size:.88em;font-weight:600;color:#4a90d9;padding:8px 0}
+.script-line{font-size:.82em;color:#4a5568;margin:4px 0;padding-left:12px}
+.script-line strong{color:#2d3748}
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #edf2f7}
+.q-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}
+.q-num.wrong{background:#e53e3e}
+.q-num.skip{background:#a0aec0}
+.q-prompt{font-size:.92em;font-weight:600;flex:1}
+.q-badge{font-size:.72em;padding:3px 10px;border-radius:12px;font-weight:600}
+.q-badge.detail{background:#ebf8ff;color:#2b6cb0}
+.q-badge.main-idea{background:#f0fff4;color:#276749}
+.q-badge.inference{background:#fefcbf;color:#975a16}
+.q-body{padding:16px 20px}
+.q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.q-user.is-skip{background:#f7fafc;color:#718096}
+.options-list{margin:10px 0}
+.opt-row{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:6px;font-size:.85em;margin-bottom:4px}
+.opt-row.is-correct{background:#f0fff4;font-weight:600}
+.opt-row.is-wrong-selected{background:#fff5f5;text-decoration:line-through;color:#e53e3e}
+.opt-label{font-weight:700;min-width:24px}
+.q-explain{background:#f7fafc;border-left:3px solid #4a90d9;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
+.q-explain strong{color:#2b6cb0}
+.q-hint{margin-top:6px;font-size:.8em;color:#718096;font-style:italic}
+.nav-bottom{max-width:880px;margin:24px auto;text-align:center;padding-bottom:40px}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
+.btn-back:hover{background:#3a7cc0;}
 </style>
 </head>
 <body>
+
 <div class="header">
-  <div class="header-left">
-    <span class="header-logo">TCK Workshop</span>
-    <span class="header-title">タスク別トレーニング</span>
-  </div>
-</div>
-<div class="breadcrumb">
-  <a href="../menu.html">&#8592; Listening メニュー</a> &gt; Announcement Practice 9 解答
+  <h1>📢 Listen to an Announcement — Practice 9 解答解説</h1>
+  <p>タスク別トレーニング</p>
 </div>
 
-<div class="container">
-<h1>Listen to an Announcement — Practice 9 解答・解説</h1>
-
-<div class="tip-box">
-  <h2>&#128161; Announcement 攻略コツ</h2>
-  <ul>
-    <li><strong>WHO / WHAT / WHEN / WHERE を聞き取る：</strong>アナウンスは短いので、この4つを意識するだけで大半の問題に対応できる</li>
-    <li><strong>目的は冒頭に出る：</strong>「I'm pleased to announce...」「Attention all students...」の直後が主旨</li>
-    <li><strong>推奨・次のアクションは末尾に出る：</strong>「If you have any questions...」「For more information...」など最後の文が設問になりやすい</li>
-    <li><strong>短いぶん集中力が鍵：</strong>1回しか流れないので、最初の数秒で場面を把握し、メモの準備をする</li>
-  </ul>
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 4</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">1</span> Question 1</h3>
-  <div class="prompt">What is the announcement mainly about?</div>
-  <div class="correct">正解: B) A new self-checkout system in the library</div>
-  <div class="explanation">
-    <strong>タイプ：主旨問題（What is...mainly about）</strong><br>
-    司書は冒頭で「our library has just installed a new self-checkout system」と述べており、セルフチェックアウトシステムの導入がアナウンスの主旨。<br>
-    <span class="wrong">A)</span> 図書館の開館時間の変更は言及されていない。
-    <span class="wrong">C)</span> 図書館間貸出ポリシーの変更ではない。
-    <span class="wrong">D)</span> 入口の改装は話題に出ていない。
+<div class="tips-banner">
+  <h2>💡 Announcement 攻略のコツ</h2>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">🎯</div>
+      <h3>4つの焦点で聞く</h3>
+      <p>WHO（誰が）・WHAT（何を）・WHEN（いつ）・WHERE（どこで）を聞き逃さない</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📍</div>
+      <h3>目的問題は冒頭に答え</h3>
+      <p>「What is the announcement about?」の答えは最初の1〜2文にある。冒頭に全集中！</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔚</div>
+      <h3>推奨・次のアクションは末尾</h3>
+      <p>「What does the speaker recommend?」の答えは最後の文に隠れていることが多い</p>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">2</span> Question 2</h3>
-  <div class="prompt">What should students do if they need help with reserves or interlibrary loans?</div>
-  <div class="correct">正解: C) Go to the staffed circulation desk</div>
-  <div class="explanation">
-    <strong>タイプ：詳細問題</strong><br>
-    「the staffed circulation desk will remain open for students who need assistance with reserves, interlibrary loans, or any other special requests」と明確に述べられている。<br>
-    <span class="wrong">A)</span> セルフチェックアウトキオスクでは特別なリクエストは処理できない。
-    <span class="wrong">B)</span> 図書館長へのメールは言及されていない。
-    <span class="wrong">D)</span> ウェブサイトでのリクエスト提出は言及されていない。
+<!-- Announcement 1 -->
+<div class="ann-section">
+  <div class="ann-header">
+    <h3>📢 Announcement 1 — 図書館セルフチェックアウト導入</h3>
+    <p>場面：大学図書館 ｜ 話者：司書</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <div class="script-line"><strong>[NARRATOR]</strong> Listen to an announcement in a university library.</div>
+      <div class="script-line"><strong>[SPEAKER]</strong> Good afternoon, everyone. I'm pleased to announce that our library has just installed a new self-checkout system. Starting next Monday, you'll be able to borrow and return books using the kiosks located near the entrance on the first floor. To use the system, simply scan your student ID, then scan the barcode on each book you wish to borrow. The screen will confirm your transaction and print a receipt with the due date. For returns, just place your books on the designated shelf next to the kiosk, and the system will automatically process them. Please note that the staffed circulation desk will remain open for students who need assistance with reserves, interlibrary loans, or any other special requests. If you have any questions about the new system, feel free to ask any library staff member for a quick demonstration.</div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q1icon">1</div>
+      <div class="q-prompt">What is the announcement mainly about?</div>
+      <span class="q-badge main-idea">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q1user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> New library hours for the semester.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> A new self-checkout system in the library.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Changes to the interlibrary loan policy.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> A renovation of the library entrance.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 司書は冒頭で「our library has just installed a new self-checkout system」と述べており、セルフチェックアウトシステムの導入がアナウンスの主旨。(A)は図書館の開館時間の変更は言及なし。(C)は図書館間貸出ポリシーの変更ではない。(D)は入口の改装は話題に出ていない。</div>
+      <div class="q-hint">🔑 冒頭の「I'm pleased to announce that...」の直後に主旨が来る。「installed a new self-checkout system」= A new self-checkout system。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q2icon">2</div>
+      <div class="q-prompt">What should students do if they need help with reserves or interlibrary loans?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q2user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Use the self-checkout kiosk.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Send an email to the library director.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> Go to the staffed circulation desk.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Submit a request through the library website.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 「the staffed circulation desk will remain open for students who need assistance with reserves, interlibrary loans, or any other special requests」と明確に述べられている。(A)のキオスクでは特別なリクエストは処理できない。(B)(D)は言及されていない。</div>
+      <div class="q-hint">🔑 スクリプト後半の「Please note that the staffed circulation desk will remain open for...reserves, interlibrary loans」が根拠。reserves / interlibrary loans という設問のキーワードがそのまま出ている。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">3</span> Question 3</h3>
-  <div class="prompt">What is being announced?</div>
-  <div class="correct">正解: C) Registration for the intramural basketball season</div>
-  <div class="explanation">
-    <strong>タイプ：主旨問題</strong><br>
-    「registration for the intramural basketball season is now open」と冒頭で明確に述べられている。<br>
-    <span class="wrong">A)</span> バーシティチームのトライアウトではなく、学内リーグ。
-    <span class="wrong">B)</span> 新しいフィットネスセンターの開設は話題に出ていない。
-    <span class="wrong">D)</span> バスケットボールコーチングワークショップではない。
+<!-- Announcement 2 -->
+<div class="ann-section">
+  <div class="ann-header">
+    <h3>📢 Announcement 2 — 学内バスケットボールリーグ登録</h3>
+    <p>場面：キャンパス体育局 ｜ 話者：体育局長</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <div class="script-line"><strong>[NARRATOR]</strong> Listen to an announcement from the campus athletics office.</div>
+      <div class="script-line"><strong>[SPEAKER]</strong> Attention all students. The athletics department is excited to announce that registration for the intramural basketball season is now open. This year, we're offering both a competitive league and a recreational league, so there's something for everyone regardless of your skill level. Teams can register online through the campus recreation portal, and the deadline is Friday, April 18th. Each team must have a minimum of seven players and a maximum of twelve. Individual players who don't have a team can sign up as free agents, and we'll place you on a team. Games will be held every Tuesday and Thursday evening in the Fieldhouse gymnasium starting May 1st. There is a twenty-dollar registration fee per player, which covers referee costs and team jerseys. For more information, stop by the athletics office in the recreation center or visit our website.</div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q3icon">3</div>
+      <div class="q-prompt">What is being announced?</div>
+      <span class="q-badge main-idea">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q3user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Tryouts for the varsity basketball team.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> A new fitness center opening on campus.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> Registration for the intramural basketball season.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> A basketball coaching workshop.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 「registration for the intramural basketball season is now open」と冒頭で明確に述べられている。(A)はバーシティ（代表）チームのトライアウトではなく学内リーグ。(B)(D)は話題に出ていない。</div>
+      <div class="q-hint">🔑 冒頭の「excited to announce that...」の直後がポイント。「registration for the intramural basketball season」がそのまま正解選択肢(C)と一致。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q4icon">4</div>
+      <div class="q-prompt">What can individual players without a team do?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q4user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Form their own team at the first game.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> Sign up as free agents to be placed on a team.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Only participate in the recreational league.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Wait until next semester to register.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 「Individual players who don't have a team can sign up as free agents, and we'll place you on a team」と明確に述べられている。(A)は初回の試合でチームを作るとは言っていない。(C)(D)はそのような制限や条件は言及されていない。</div>
+      <div class="q-hint">🔑 スクリプト中盤の「Individual players who don't have a team can sign up as free agents」が根拠。設問の「individual players without a team」とほぼ同じ表現が使われている。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">4</span> Question 4</h3>
-  <div class="prompt">What can individual players without a team do?</div>
-  <div class="correct">正解: B) Sign up as free agents to be placed on a team</div>
-  <div class="explanation">
-    <strong>タイプ：詳細問題</strong><br>
-    「Individual players who don't have a team can sign up as free agents, and we'll place you on a team」と明確に述べられている。<br>
-    <span class="wrong">A)</span> 初回の試合で自分のチームを作ることは言及されていない。
-    <span class="wrong">C)</span> レクリエーションリーグのみという制限はない。
-    <span class="wrong">D)</span> 来学期まで待つ必要はない。
-  </div>
-</div>
-
-<div style="text-align:center;margin-top:30px">
-  <a class="back-btn" href="../menu.html">&#8592; Listening メニューに戻る</a>
-</div>
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-9.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
 </div>
 
 <script src="../../js/auth.js"></script>
 <script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+<script>
+const labels = ['A','B','C','D'];
+const correctAnswers = [1, 2, 2, 1];
+
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('announceAnswers')||'null');
+  let correct = 0, answered = 0;
+
+  if(stored && Array.isArray(stored)){
+    for(let i=0;i<4;i++){
+      const userAns = stored[i];
+      const isCorrect = userAns === correctAnswers[i];
+      const isSkip = userAns === null || userAns === undefined;
+      if(!isSkip) answered++;
+      if(isCorrect) correct++;
+
+      const icon = document.getElementById('q'+(i+1)+'icon');
+      const user = document.getElementById('q'+(i+1)+'user');
+
+      if(isSkip){
+        icon.className = 'q-num skip';
+        user.className = 'q-user is-skip';
+        user.textContent = '⏱️ 未回答（タイムアウト）';
+      } else if(isCorrect){
+        icon.className = 'q-num correct';
+        user.className = 'q-user is-correct';
+        user.textContent = '✅ 正解！ あなたの回答: ('+labels[userAns]+')';
+      } else {
+        icon.className = 'q-num wrong';
+        user.className = 'q-user is-wrong';
+        user.textContent = '❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')';
+      }
+    }
+    document.getElementById('scoreBig').textContent = correct + ' / 4';
+    document.getElementById('scoreBar').style.width = (correct/4*100)+'%';
+    const pct = Math.round(correct/4*100);
+    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+  } else {
+    document.getElementById('scoreBig').textContent = '— / 4';
+    document.getElementById('scoreMsg').textContent = '問題を先に解いてからこのページを見ると、スコアが表示されます';
+    for(let i=1;i<=4;i++) document.getElementById('q'+i+'user').style.display='none';
+  }
+}
+render();
+</script>
 </body>
 </html>

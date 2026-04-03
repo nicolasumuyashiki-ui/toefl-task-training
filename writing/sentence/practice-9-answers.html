@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build a Sentence — 解答解説 | Practice 9</title>
-<link rel="stylesheet" href="../../css/common.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
@@ -95,7 +94,10 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
 </div>
 
+<script src="../../js/auth.js"></script>
 <script>
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+
 const answers=[
 {id:1,prompt:"Are you happy with the new social media app?",sentence:"I wish people would stop sharing so much personal information.",grammar:"wish + would: 他者の習慣的行為への不満を表す。I wish + S + would + V。stop + V-ing（〜するのをやめる）。"},
 {id:2,prompt:"Who designed your company's website?",sentence:"We had the website designed by a professional agency.",grammar:"使役構文 have + O + 過去分詞:「〜してもらう」。by + 動作主で誰に依頼したかを示す。"},

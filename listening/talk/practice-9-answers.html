@@ -3,175 +3,329 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Academic Talk Practice 9 — 解答・解説</title>
-<link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Academic Talk Practice 9 — 解答解説</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
-.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:10px}
-.header-logo{font-size:.72em;font-weight:800;color:#2563eb;letter-spacing:.1em;text-transform:uppercase}
-.header-title{font-size:.95em;font-weight:700;color:#2d3748}
-.breadcrumb{padding:12px 24px;font-size:.8em;color:#8898a8}
-.breadcrumb a{color:#b45309;text-decoration:none;font-weight:600}
-.breadcrumb a:hover{text-decoration:underline}
-.container{max-width:800px;margin:0 auto;padding:0 24px 60px}
-h1{font-size:1.3em;font-weight:800;margin-bottom:20px}
-.answer-card{background:#fff;border-radius:12px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px}
-.answer-card h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.75em;font-weight:800;flex-shrink:0}
-.prompt{font-size:.85em;color:#4a5568;padding:8px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;margin-bottom:12px;font-style:italic}
-.correct{font-size:.9em;font-weight:700;color:#16a34a;margin-bottom:8px}
-.explanation{font-size:.82em;color:#4a5568;line-height:1.65}
-.explanation .wrong{color:#dc2626;font-weight:600}
-.section-divider{text-align:center;font-size:.85em;font-weight:800;color:#92400e;padding:16px 0;margin:8px 0}
-.tip-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;margin-bottom:24px}
-.tip-box h2{font-size:1.05em;font-weight:800;color:#92400e;margin-bottom:14px}
-.tip-box ul{padding-left:20px;font-size:.85em;color:#92400e;line-height:1.8}
-.tip-box li{margin-bottom:6px}
-.tip-box strong{font-weight:800}
-.back-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-size:.9em;font-weight:700;color:#fff;background:#f59e0b;border:none;border-radius:10px;cursor:pointer;text-decoration:none;transition:all .2s;font-family:inherit}
-.back-btn:hover{background:#d97706}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px;transition:width .5s}
+.tips-grid{max-width:880px;margin:20px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tip-card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center}
+.tip-card .icon{font-size:1.6em;margin-bottom:8px}
+.tip-card h3{font-size:.85em;color:#4a90d9;margin-bottom:6px}
+.tip-card p{font-size:.78em;color:#718096;line-height:1.6}
+.talk-section{max-width:880px;margin:20px auto}
+.talk-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #4a90d9;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.talk-header h3{font-size:1em;color:#4a90d9}
+.talk-header p{font-size:.82em;color:#718096;margin-top:4px}
+.script-box{background:#fff;padding:16px 20px;margin-bottom:2px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.script-box details{cursor:pointer}
+.script-box summary{font-size:.88em;font-weight:600;color:#4a90d9;padding:8px 0}
+.script-text{font-size:.82em;color:#4a5568;line-height:1.8;padding:8px 0}
+.script-text .highlight{background:#fefcbf;padding:1px 4px;border-radius:3px}
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #edf2f7}
+.q-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}
+.q-num.wrong{background:#e53e3e}
+.q-num.skip{background:#a0aec0}
+.q-prompt{font-size:.92em;font-weight:600;flex:1}
+.q-badge{font-size:.72em;padding:3px 10px;border-radius:12px;font-weight:600}
+.q-badge.main-topic{background:#ebf8ff;color:#2b6cb0}
+.q-badge.detail{background:#f0fff4;color:#276749}
+.q-badge.purpose{background:#fed7e2;color:#97266d}
+.q-badge.inference{background:#e9d8fd;color:#553c9a}
+.q-badge.not-except{background:#fefcbf;color:#975a16}
+.q-body{padding:16px 20px}
+.q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.q-user.is-skip{background:#f7fafc;color:#718096}
+.options-list{margin:10px 0}
+.opt-row{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:6px;font-size:.85em;margin-bottom:4px}
+.opt-row.is-correct{background:#f0fff4;font-weight:600}
+.opt-row.is-wrong-selected{background:#fff5f5;text-decoration:line-through;color:#e53e3e}
+.opt-label{font-weight:700;min-width:24px}
+.q-explain{background:#f7fafc;border-left:3px solid #4a90d9;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
+.q-explain strong{color:#2b6cb0}
+.q-hint{margin-top:6px;font-size:.8em;color:#718096;font-style:italic}
+.nav-bottom{max-width:880px;margin:24px auto;text-align:center;padding-bottom:40px}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
+.btn-back:hover{background:#3a7cc0;}
+@media(max-width:640px){.tips-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
 <div class="header">
-  <div class="header-left">
-    <span class="header-logo">TCK Workshop</span>
-    <span class="header-title">タスク別トレーニング</span>
+  <h1>Listen to an Academic Talk — Practice 9 解答解説</h1>
+  <p>Task Training | Talk 1: The Bystander Effect | Talk 2: The Water Cycle and Climate Change</p>
+</div>
+
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 8</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
+</div>
+
+<div class="tips-grid">
+  <div class="tip-card">
+    <div class="icon">&#9733;</div>
+    <h3>シグナルワードに集中</h3>
+    <p>「Today we're going to look at...」「In other words...」「However...」が聞こえたら印をつけ、直後のキーワードだけメモ。</p>
   </div>
-</div>
-<div class="breadcrumb">
-  <a href="../menu.html">&#8592; Listening メニュー</a> &gt; Academic Talk Practice 9 解答
-</div>
-
-<div class="container">
-<h1>Listen to an Academic Talk — Practice 9 解答・解説</h1>
-
-<div class="tip-box">
-  <h2>&#128161; Academic Talk 攻略コツ</h2>
-  <ul>
-    <li><strong>シグナルワードを聞き逃さない：</strong>&#9733;主旨「Today we're going to look at...」 &#9670;具体例「For example...」 &#8660;対比「However...」 &#65309;言い換え「In other words...」 &#931;まとめ「So, what this means is...」</li>
-    <li><strong>ノートテイキングはキーワードだけ：</strong>全文を書き取ろうとしない。トピック・キーポイント・例・結論を短く記録する</li>
-    <li><strong>NOT/EXCEPT問題に注意：</strong>「言及されていないもの」を選ぶ。消去法で3つの正しい情報を確認する</li>
-    <li><strong>推論問題は「直接言っていないが示唆していること」：</strong>話の論理的な帰結を考える</li>
-    <li><strong>目的問題（Why does the speaker mention...）：</strong>その情報が話全体でどんな役割を果たしているかを考える</li>
-  </ul>
-</div>
-
-<div class="section-divider">— Talk 1: The Bystander Effect —</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">1</span> Question 1</h3>
-  <div class="prompt">What is the talk mainly about?</div>
-  <div class="correct">正解: B) How people behave differently in group settings during emergencies</div>
-  <div class="explanation">
-    <strong>タイプ：主旨問題</strong><br>
-    講義全体が「傍観者効果」について説明しており、緊急時に他の人がいる場合、個人がどのように行動するかに焦点を当てている。<br>
-    <span class="wrong">A)</span> 心理学の歴史全般ではなく、特定の現象に焦点。
-    <span class="wrong">C)</span> 犯罪防止戦略は話題に出ていない。
-    <span class="wrong">D)</span> 性格と援助行動の関係は議論されていない。
+  <div class="tip-card">
+    <div class="icon">&#128221;</div>
+    <h3>ノートはキーワードだけ</h3>
+    <p>全文を書き取ろうとしない。トピック・キーポイント・例・結論を短い単語で記録する。聞くことが最優先。</p>
+  </div>
+  <div class="tip-card">
+    <div class="icon">&#128269;</div>
+    <h3>目的問題の攻略</h3>
+    <p>「Why does the speaker mention X?」はXそのものではなく、Xが話全体で果たす役割（例示・対比・根拠）を問う。前後の文脈を確認。</p>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">2</span> Question 2</h3>
-  <div class="prompt">Why does the speaker mention the Kitty Genovese case?</div>
-  <div class="correct">正解: C) To describe the event that inspired research on the bystander effect</div>
-  <div class="explanation">
-    <strong>タイプ：目的問題（Why does the speaker mention...）</strong><br>
-    Kitty Genovese事件は、DarleyとLataneが傍観者効果の研究を始めるきっかけとなった事件として紹介されている。<br>
-    <span class="wrong">A)</span> 近隣監視プログラムの効果については言及されていない。
-    <span class="wrong">B)</span> 1960年代の犯罪率の増加は話題に出ていない。
-    <span class="wrong">D)</span> 傍観者の法的責任については議論されていない。
+<!-- ===== Talk 1: The Bystander Effect ===== -->
+<div class="talk-section">
+  <div class="talk-header">
+    <h3>Talk 1 — The Bystander Effect (Social Science)</h3>
+    <p>話者：教授 ｜ Standard</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <div class="script-text">
+        <span class="highlight">Today we're going to look at</span> a fascinating phenomenon in social psychology called the bystander effect. The bystander effect refers to the tendency for people to be less likely to help someone in need when other people are present. <span class="highlight">In other words,</span> the more witnesses there are to an emergency, the less likely any single person is to step in and offer assistance.<br><br>
+        This concept was first studied by psychologists John Darley and Bibb Latane in the late 1960s, following the widely reported case of Kitty Genovese, a woman who was attacked in New York City while numerous neighbors allegedly watched without intervening.<br><br>
+        Darley and Latane proposed two main explanations for this behavior. The first is called <span class="highlight">diffusion of responsibility</span>, which means that when others are present, each individual feels less personal obligation to act because they assume someone else will help. The second is <span class="highlight">pluralistic ignorance</span>, where people look at the reactions of those around them to decide how to behave. If nobody else appears alarmed, each person concludes that the situation must not be serious.<br><br>
+        Later research has shown that the bystander effect can be reduced in certain conditions, such as when bystanders believe they are the only one who can help, or when the victim directly asks a specific person for assistance.
+      </div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q1icon">1</div>
+      <div class="q-prompt">What is the talk mainly about?</div>
+      <span class="q-badge main-topic">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q1user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> The history of psychology as an academic discipline.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> How people behave differently in group settings during emergencies.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Crime prevention strategies in urban areas.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> The relationship between personality and helping behavior.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 冒頭で「Today we're going to look at a fascinating phenomenon ... called the bystander effect」と主題を明示。全体を通して緊急時のグループ行動について議論されている。(A)は心理学全般で範囲が広すぎ、(C)(D)は言及なし。</div>
+      <div class="q-hint">🔑 Main Idea問題：冒頭の「Today we're going to look at...」がそのまま答え。★シグナルワード直後に注目。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q2icon">2</div>
+      <div class="q-prompt">Why does the speaker mention the Kitty Genovese case?</div>
+      <span class="q-badge purpose">Purpose</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q2user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> To illustrate the effectiveness of neighborhood watch programs.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> To explain why crime rates increased in the 1960s.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> To describe the event that inspired research on the bystander effect.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> To argue that bystanders should be held legally responsible.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> Kitty Genovese事件は「following the widely reported case of...」と、DarleyとLataneが傍観者効果の研究を始めるきっかけとして紹介されている。(A)の近隣監視プログラム、(B)の犯罪率、(D)の法的責任は言及なし。</div>
+      <div class="q-hint">🔑 Purpose問題のコツ：「Why does the speaker mention X?」→ Xの前後の文脈を見る。ここでは「first studied ... following the ... case」と研究のきっかけとして提示されている。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q3icon">3</div>
+      <div class="q-prompt">According to the speaker, what is diffusion of responsibility?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q3user"></div>
+      <div class="options-list">
+        <div class="opt-row is-correct"><span class="opt-label">(A)</span> The belief that helping is not one's duty when others are present.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> The tendency to help more when in a group.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> The fear of being judged for intervening.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> The confusion about what kind of help to offer.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「each individual feels less personal obligation to act because they assume someone else will help」と明確に定義。他者がいる場合に個人の義務感が薄れるという信念。(B)は正反対、(C)(D)は別の概念。</div>
+      <div class="q-hint">🔑 専門用語の定義問題：「called X」「known as X」と導入された直後に必ず説明が続く。「which means...」の後が定義そのもの。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q4icon">4</div>
+      <div class="q-prompt">What can reduce the bystander effect?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q4user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Having more people present at the scene.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Keeping the emergency quiet so fewer people notice.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> Asking a specific person for help directly.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Waiting for trained professionals to arrive.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「when the victim directly asks a specific person for assistance」と述べている。特定の人に直接助けを求めることで傍観者効果が減少する。(A)はむしろ効果を強める。(B)(D)は言及なし。</div>
+      <div class="q-hint">🔑 Detail問題：講義の最後に解決策が述べられることが多い。「can be reduced ... such as when...」のパターンに注目。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">3</span> Question 3</h3>
-  <div class="prompt">According to the speaker, what is diffusion of responsibility?</div>
-  <div class="correct">正解: A) The belief that helping is not one's duty when others are present</div>
-  <div class="explanation">
-    <strong>タイプ：詳細問題</strong><br>
-    講師は「each individual feels less personal obligation to act because they assume someone else will help」と説明している。他者がいる場合、自分が行動する義務が薄れるという信念。<br>
-    <span class="wrong">B)</span> グループ内でより助ける傾向は正反対。
-    <span class="wrong">C)</span> 介入することへの判断を恐れることは別の概念。
-    <span class="wrong">D)</span> どのような助けを提供するかの混乱は言及されていない。
+<!-- ===== Talk 2: The Water Cycle and Climate Change ===== -->
+<div class="talk-section">
+  <div class="talk-header">
+    <h3>Talk 2 — The Water Cycle and Climate Change (Physical Science)</h3>
+    <p>話者：教授 ｜ Harder</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <div class="script-text">
+        <span class="highlight">Let's talk about</span> the water cycle and how climate change is affecting this fundamental process. The water cycle, also known as the hydrological cycle, describes the continuous movement of water through the Earth's systems.<br><br>
+        It begins with evaporation, when heat from the sun causes water from oceans, lakes, and rivers to change from liquid to vapor and rise into the atmosphere. Plants also contribute through a process called <span class="highlight">transpiration</span>, where water is released from their leaves into the air. Once in the atmosphere, the water vapor cools and condenses to form clouds. This is called condensation.<br><br>
+        When the water droplets in clouds become heavy enough, they fall back to the Earth's surface as precipitation — rain, snow, sleet, or hail. Some of this precipitation flows across the land surface as runoff and eventually returns to rivers, lakes, and the ocean. Some soaks into the ground and becomes groundwater, which can remain underground for thousands of years before eventually reaching the surface again.<br><br>
+        <span class="highlight">Now, here's where</span> climate change enters the picture. As global temperatures rise, the rate of evaporation increases because warmer air can hold more moisture. This means more water vapor enters the atmosphere, which leads to more intense precipitation events in some regions. <span class="highlight">However,</span> the distribution is uneven. While some areas experience heavier rainfall and flooding, others face prolonged droughts because shifting weather patterns redirect moisture away from them.<br><br>
+        Additionally, rising temperatures are causing glaciers and polar ice caps to melt at accelerated rates. This meltwater adds to ocean volumes, contributing to sea level rise, but it also reduces the freshwater reserves that billions of people depend on for drinking water and agriculture.<br><br>
+        Scientists have found that the water cycle has intensified by roughly two percent per decade since the 1950s, and this trend is expected to continue as greenhouse gas concentrations increase.
+      </div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q5icon">5</div>
+      <div class="q-prompt">What is the talk mainly about?</div>
+      <span class="q-badge main-topic">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q5user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Methods of purifying drinking water.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> The water cycle and how climate change is disrupting it.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> The formation of different types of clouds.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Strategies for conserving water in agriculture.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 冒頭で「Let's talk about the water cycle and how climate change is affecting this fundamental process」と主題を明示。前半で水循環の仕組み、後半で気候変動の影響を説明。(A)(C)(D)は主題ではない。</div>
+      <div class="q-hint">🔑 Main Idea問題：「Let's talk about...」が冒頭に来たら、その直後がトピック。2つの要素（水循環＋気候変動）を含む選択肢を選ぶ。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q6icon">6</div>
+      <div class="q-prompt">According to the speaker, what is transpiration?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q6user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> The process of water vapor turning into clouds.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> The release of water from plant leaves into the atmosphere.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> The movement of water underground.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> The melting of glaciers due to rising temperatures.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「transpiration, where water is released from their leaves into the air」と明確に定義。(A)は凝結（condensation）、(C)は地下浸透、(D)は氷河融解で別の概念。</div>
+      <div class="q-hint">🔑 専門用語の定義問題：「called X, where...」のパターンで導入される。where以下が定義そのもの。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q7icon">7</div>
+      <div class="q-prompt">Why does the speaker say "the distribution is uneven"?</div>
+      <span class="q-badge purpose">Purpose</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q7user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> To explain why all regions receive the same amount of rain.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> To point out that some areas get more rain while others face droughts.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> To argue that climate change only affects coastal areas.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> To compare rainfall in the Northern and Southern Hemispheres.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 「However, the distribution is uneven」の直後に「some areas experience heavier rainfall and flooding, others face prolonged droughts」と説明。降水量の地域差を強調している。(A)は正反対。</div>
+      <div class="q-hint">🔑 Purpose問題：「However」（⇔対比シグナル）の後に出てきた発言。前の内容（降水量増加）に対して「でも均一ではない」と対比を示す役割。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q8icon">8</div>
+      <div class="q-prompt">Which of the following is NOT mentioned as a consequence of the intensified water cycle?</div>
+      <span class="q-badge not-except">NOT/EXCEPT</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q8user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> More intense precipitation events.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Melting of glaciers and polar ice caps.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> Increased earthquake activity.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Prolonged droughts in some regions.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師が挙げた影響は、より激しい降水現象(A)、氷河の融解(B)、長期的な干ばつ(D)。地震活動の増加(C)は言及されていない。NOT問題は消去法で3つの正しい情報を確認する。</div>
+      <div class="q-hint">🔑 NOT/EXCEPT問題の鉄則：消去法で解く。本文に言及のある3つを消し、残った1つが正解。メモで各ポイントにチェックを入れると確実。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">4</span> Question 4</h3>
-  <div class="prompt">What can reduce the bystander effect?</div>
-  <div class="correct">正解: C) Asking a specific person for help directly</div>
-  <div class="explanation">
-    <strong>タイプ：詳細問題</strong><br>
-    講師は「when the victim directly asks a specific person for assistance」と述べている。特定の人に直接助けを求めることで傍観者効果が減少する。<br>
-    <span class="wrong">A)</span> より多くの人がいることは傍観者効果を強める。
-    <span class="wrong">B)</span> 緊急事態を静かにすることは言及されていない。
-    <span class="wrong">D)</span> 専門家の到着を待つことは言及されていない。
-  </div>
-</div>
-
-<div class="section-divider">— Talk 2: The Water Cycle and Climate Change —</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">5</span> Question 5</h3>
-  <div class="prompt">What is the talk mainly about?</div>
-  <div class="correct">正解: B) The water cycle and how climate change is disrupting it</div>
-  <div class="explanation">
-    <strong>タイプ：主旨問題</strong><br>
-    講義は水循環の仕組みを説明した後、気候変動がこのプロセスにどのような影響を与えているかを詳しく説明している。<br>
-    <span class="wrong">A)</span> 飲料水の浄化方法は話題に出ていない。
-    <span class="wrong">C)</span> 異なるタイプの雲の形成は主要な話題ではない。
-    <span class="wrong">D)</span> 農業での節水戦略は議論されていない。
-  </div>
-</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">6</span> Question 6</h3>
-  <div class="prompt">According to the speaker, what is transpiration?</div>
-  <div class="correct">正解: B) The release of water from plant leaves into the atmosphere</div>
-  <div class="explanation">
-    <strong>タイプ：詳細問題</strong><br>
-    講師は「transpiration, where water is released from their leaves into the air」と明確に定義している。<br>
-    <span class="wrong">A)</span> 水蒸気が雲になるプロセスは「凝結（condensation）」。
-    <span class="wrong">C)</span> 地下水の移動は「地下浸透」。
-    <span class="wrong">D)</span> 氷河の融解は蒸散とは異なる。
-  </div>
-</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">7</span> Question 7</h3>
-  <div class="prompt">Why does the speaker say "the distribution is uneven"?</div>
-  <div class="correct">正解: B) To point out that some areas get more rain while others face droughts</div>
-  <div class="explanation">
-    <strong>タイプ：目的問題</strong><br>
-    講師はこの発言の直後に「some areas experience heavier rainfall and flooding, others face prolonged droughts」と説明しており、降水量の地域差を強調している。<br>
-    <span class="wrong">A)</span> 全地域が同量の雨を受けるというのは正反対の主張。
-    <span class="wrong">C)</span> 気候変動が沿岸地域のみに影響するとは述べていない。
-    <span class="wrong">D)</span> 南北半球の降水量の比較は行っていない。
-  </div>
-</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">8</span> Question 8</h3>
-  <div class="prompt">Which of the following is NOT mentioned as a consequence of the intensified water cycle?</div>
-  <div class="correct">正解: C) Increased earthquake activity</div>
-  <div class="explanation">
-    <strong>タイプ：NOT/EXCEPT問題</strong><br>
-    講師が挙げた影響は、より激しい降水現象、氷河の融解、長期的な干ばつなど。地震活動の増加は言及されていない。<br>
-    NOT問題は消去法で解く：A) 激しい降水 &#10003; 言及あり、B) 氷河融解 &#10003; 言及あり、D) 長期干ばつ &#10003; 言及あり → C) 地震活動が正解。
-  </div>
-</div>
-
-<div style="text-align:center;margin-top:30px">
-  <a class="back-btn" href="../menu.html">&#8592; Listening メニューに戻る</a>
-</div>
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-9.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">メニューに戻る</a>
 </div>
 
 <script src="../../js/auth.js"></script>
 <script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+<script>
+const labels = ['A','B','C','D'];
+const totalQ = 8;
+// Correct answers: Q1=B(1), Q2=C(2), Q3=A(0), Q4=C(2), Q5=B(1), Q6=B(1), Q7=B(1), Q8=C(2)
+const correctAnswers = [1, 2, 0, 2, 1, 1, 1, 2];
+
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('talkPractice9Answers')||'null');
+  let correct = 0, answered = 0;
+  if(stored && Array.isArray(stored)){
+    for(let i=0;i<totalQ;i++){
+      const userAns = stored[i];
+      const isCorrect = userAns === correctAnswers[i];
+      const isSkip = userAns === null || userAns === undefined;
+      if(!isSkip) answered++;
+      if(isCorrect) correct++;
+      const icon = document.getElementById('q'+(i+1)+'icon');
+      const user = document.getElementById('q'+(i+1)+'user');
+      if(isSkip){ icon.className='q-num skip'; user.className='q-user is-skip'; user.textContent='⏱️ 未回答（タイムアウト）'; }
+      else if(isCorrect){ icon.className='q-num correct'; user.className='q-user is-correct'; user.textContent='✅ 正解！ あなたの回答: ('+labels[userAns]+')'; }
+      else { icon.className='q-num wrong'; user.className='q-user is-wrong'; user.textContent='❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')'; }
+    }
+    document.getElementById('scoreBig').textContent = correct + ' / ' + totalQ;
+    document.getElementById('scoreBar').style.width = (correct/totalQ*100)+'%';
+    const pct = Math.round(correct/totalQ*100);
+    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+  } else {
+    document.getElementById('scoreBig').textContent = '— / ' + totalQ;
+    document.getElementById('scoreMsg').textContent = '問題を先に解いてからこのページを見ると、スコアが表示されます';
+    for(let i=1;i<=totalQ;i++) document.getElementById('q'+i+'user').style.display='none';
+  }
+}
+render();
+</script>
 </body>
 </html>
