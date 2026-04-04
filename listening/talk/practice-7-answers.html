@@ -3,185 +3,324 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Academic Talk Practice 7 &#8212; &#35299;&#31572;&#12539;&#35299;&#35500;</title>
-<link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Academic Talk Practice 7 — 解答解説</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
-.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:10px}
-.header-logo{font-size:.72em;font-weight:800;color:#2563eb;letter-spacing:.1em;text-transform:uppercase}
-.header-title{font-size:.95em;font-weight:700;color:#2d3748}
-.breadcrumb{padding:12px 24px;font-size:.8em;color:#8898a8}
-.breadcrumb a{color:#b45309;text-decoration:none;font-weight:600}
-.breadcrumb a:hover{text-decoration:underline}
-.container{max-width:800px;margin:0 auto;padding:0 24px 60px}
-h1{font-size:1.3em;font-weight:800;margin-bottom:20px}
-.answer-card{background:#fff;border-radius:12px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px}
-.answer-card h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.75em;font-weight:800;flex-shrink:0}
-.prompt{font-size:.85em;color:#4a5568;padding:8px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;margin-bottom:12px;font-style:italic}
-.correct{font-size:.9em;font-weight:700;color:#16a34a;margin-bottom:8px}
-.explanation{font-size:.82em;color:#4a5568;line-height:1.65}
-.explanation .wrong{color:#dc2626;font-weight:600}
-.section-divider{text-align:center;font-size:.85em;font-weight:800;color:#92400e;padding:16px 0;margin:8px 0}
-.tip-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;margin-bottom:24px}
-.tip-box h2{font-size:1.05em;font-weight:800;color:#92400e;margin-bottom:14px}
-.tip-box ul{padding-left:20px;font-size:.85em;color:#92400e;line-height:1.8}
-.tip-box li{margin-bottom:6px}
-.tip-box strong{font-weight:800}
-.back-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-size:.9em;font-weight:700;color:#fff;background:#f59e0b;border:none;border-radius:10px;cursor:pointer;text-decoration:none;transition:all .2s;font-family:inherit}
-.back-btn:hover{background:#d97706}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px;transition:width .5s}
+.tips-grid{max-width:880px;margin:20px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tip-card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center}
+.tip-card .icon{font-size:1.6em;margin-bottom:8px}
+.tip-card h3{font-size:.85em;color:#4a90d9;margin-bottom:6px}
+.tip-card p{font-size:.78em;color:#718096;line-height:1.6}
+.talk-section{max-width:880px;margin:20px auto}
+.talk-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #4a90d9;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.talk-header h3{font-size:1em;color:#4a90d9}
+.talk-header p{font-size:.82em;color:#718096;margin-top:4px}
+.script-box{background:#fff;padding:16px 20px;margin-bottom:2px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.script-box details{cursor:pointer}
+.script-box summary{font-size:.88em;font-weight:600;color:#4a90d9;padding:8px 0}
+.script-text{font-size:.82em;color:#4a5568;line-height:1.8;padding:8px 0}
+.script-text .highlight{background:#fefcbf;padding:1px 4px;border-radius:3px}
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #edf2f7}
+.q-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}.q-num.wrong{background:#e53e3e}.q-num.skip{background:#a0aec0}
+.q-prompt{font-size:.92em;font-weight:600;flex:1}
+.q-badge{font-size:.72em;padding:3px 10px;border-radius:12px;font-weight:600}
+.q-badge.main-topic{background:#ebf8ff;color:#2b6cb0}
+.q-badge.detail{background:#f0fff4;color:#276749}
+.q-badge.purpose{background:#fed7e2;color:#97266d}
+.q-badge.inference{background:#e9d8fd;color:#553c9a}
+.q-badge.not-except{background:#fefcbf;color:#975a16}
+.q-body{padding:16px 20px}
+.q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}.q-user.is-skip{background:#f7fafc;color:#718096}
+.options-list{margin:10px 0}
+.opt-row{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:6px;font-size:.85em;margin-bottom:4px}
+.opt-row.is-correct{background:#f0fff4;font-weight:600}
+.opt-row.is-wrong-selected{background:#fff5f5;text-decoration:line-through;color:#e53e3e}
+.opt-label{font-weight:700;min-width:24px}
+.q-explain{background:#f7fafc;border-left:3px solid #4a90d9;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
+.q-explain strong{color:#2b6cb0}
+.q-hint{margin-top:6px;font-size:.8em;color:#718096;font-style:italic}
+.nav-bottom{max-width:880px;margin:24px auto;text-align:center;padding-bottom:40px}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
+.btn-back:hover{background:#3a7cc0;}
+@media(max-width:640px){.tips-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
 <div class="header">
-  <div class="header-left">
-    <span class="header-logo">TCK Workshop</span>
-    <span class="header-title">&#12479;&#12473;&#12463;&#21029;&#12488;&#12524;&#12540;&#12491;&#12531;&#12464;</span>
+  <h1>Listen to an Academic Talk — Practice 7 解答解説</h1>
+  <p>Task Training | Talk 1: The Role of Sleep in Memory Consolidation | Talk 2: The Industrial Revolution and Its Social Impact</p>
+</div>
+
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 8</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
+</div>
+
+<div class="tips-grid">
+  <div class="tip-card">
+    <div class="icon">&#9733;</div>
+    <h3>シグナルワードに集中</h3>
+    <p>「Today we're going to look at...」「For example...」「However...」が聞こえたら印をつけ、直後のキーワードだけメモ。</p>
   </div>
-</div>
-<div class="breadcrumb">
-  <a href="../menu.html">&#8592; Listening &#12513;&#12491;&#12517;&#12540;</a> &gt; Academic Talk Practice 7 &#35299;&#31572;
-</div>
-
-<div class="container">
-<h1>Listen to an Academic Talk &#8212; Practice 7 &#35299;&#31572;&#12539;&#35299;&#35500;</h1>
-
-<div class="tip-box">
-  <h2>&#128161; Academic Talk &#25915;&#30053;&#12467;&#12484;</h2>
-  <ul>
-    <li><strong>&#12471;&#12464;&#12490;&#12523;&#12527;&#12540;&#12489;&#12434;&#32862;&#12365;&#36867;&#12373;&#12394;&#12356;&#65306;</strong>&#9733;&#20027;&#26088;&#12300;Today I want to talk about...&#12301; &#9670;&#20855;&#20307;&#20363;&#12300;For example...&#12301; &#8660;&#23550;&#27604;&#12300;However...&#12301; &#65309;&#35328;&#12356;&#25563;&#12360;&#12300;In other words...&#12301; &#931;&#12414;&#12392;&#12417;&#12300;So, what this means is...&#12301;</li>
-    <li><strong>&#12494;&#12540;&#12488;&#12486;&#12452;&#12461;&#12531;&#12464;&#12399;&#12461;&#12540;&#12527;&#12540;&#12489;&#12384;&#12369;&#65306;</strong>&#20840;&#25991;&#12434;&#26360;&#12365;&#21462;&#12429;&#12358;&#12392;&#12375;&#12394;&#12356;&#12290;&#12488;&#12500;&#12483;&#12463;&#12539;&#12461;&#12540;&#12509;&#12452;&#12531;&#12488;&#12539;&#20363;&#12539;&#32080;&#35542;&#12434;&#30701;&#12367;&#35352;&#37682;&#12377;&#12427;</li>
-    <li><strong>NOT/EXCEPT&#21839;&#38988;&#12395;&#27880;&#24847;&#65306;</strong>&#12300;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12418;&#12398;&#12301;&#12434;&#36984;&#12406;&#12290;&#28040;&#21435;&#27861;&#12391;3&#12388;&#12398;&#27491;&#12375;&#12356;&#24773;&#22577;&#12434;&#30906;&#35469;&#12377;&#12427;</li>
-    <li><strong>&#25512;&#35542;&#21839;&#38988;&#12399;&#12300;&#30452;&#25509;&#35328;&#12387;&#12390;&#12356;&#12394;&#12356;&#12364;&#31034;&#21766;&#12375;&#12390;&#12356;&#12427;&#12371;&#12392;&#12301;&#65306;</strong>&#35441;&#12398;&#35542;&#29702;&#30340;&#12394;&#24112;&#32080;&#12434;&#32771;&#12360;&#12427;</li>
-    <li><strong>&#30446;&#30340;&#21839;&#38988;&#65288;Why does the speaker mention...&#65289;&#65306;</strong>&#12381;&#12398;&#24773;&#22577;&#12364;&#35441;&#20840;&#20307;&#12391;&#12393;&#12435;&#12394;&#24441;&#21106;&#12434;&#26524;&#12383;&#12375;&#12390;&#12356;&#12427;&#12363;&#12434;&#32771;&#12360;&#12427;</li>
-  </ul>
-</div>
-
-<div class="section-divider">&#8212; Talk 1: The Role of Sleep in Memory Consolidation &#8212;</div>
-
-<!-- Q1 -->
-<div class="answer-card">
-  <h3><span class="q-num">1</span> Question 1</h3>
-  <div class="prompt">What is the talk mainly about?</div>
-  <div class="correct">&#27491;&#35299;: A) How sleep helps the brain store memories</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#20027;&#26088;&#21839;&#38988;</strong><br>
-    &#35611;&#32681;&#20840;&#20307;&#12364;&#30561;&#30496;&#20013;&#12395;&#35352;&#25014;&#12364;&#28023;&#39340;&#12363;&#12425;&#22823;&#33075;&#26032;&#30382;&#36074;&#12408;&#36578;&#36865;&#12373;&#12428;&#12427;&#12503;&#12525;&#12475;&#12473;&#12434;&#35500;&#26126;&#12375;&#12390;&#12356;&#12427;&#12290;<br>
-    <span class="wrong">B)</span> &#30561;&#30496;&#12398;&#27573;&#38542;&#12399;&#37096;&#20998;&#30340;&#12395;&#35302;&#12428;&#12427;&#12364;&#12289;&#20027;&#26088;&#12391;&#12399;&#12394;&#12356;&#12290;
-    <span class="wrong">C)</span> &#30561;&#30496;&#38556;&#23475;&#12395;&#12388;&#12356;&#12390;&#12399;&#35441;&#38988;&#12395;&#20986;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">D)</span> &#33075;&#12398;&#27083;&#36896;&#20840;&#33324;&#12399;&#35441;&#38988;&#12391;&#12399;&#12394;&#12356;&#12290;
+  <div class="tip-card">
+    <div class="icon">&#128221;</div>
+    <h3>ノートはキーワードだけ</h3>
+    <p>全文を書き取ろうとしない。トピック・キーポイント・例・結論を短い単語で記録する。聞くことが最優先。</p>
+  </div>
+  <div class="tip-card">
+    <div class="icon">&#128269;</div>
+    <h3>目的問題の攻略</h3>
+    <p>「Why does the speaker mention X?」はXそのものではなく、Xが話全体で果たす役割（例示・対比・根拠）を問う。前後の文脈を確認。</p>
   </div>
 </div>
 
-<!-- Q2 -->
-<div class="answer-card">
-  <h3><span class="q-num">2</span> Question 2</h3>
-  <div class="prompt">According to the speaker, where are new memories initially stored?</div>
-  <div class="correct">&#27491;&#35299;: C) In the hippocampus</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#35443;&#32048;&#21839;&#38988;</strong><br>
-    &#12300;information is initially stored in the hippocampus&#12301;&#12392;&#26126;&#30906;&#12395;&#36848;&#12409;&#12425;&#12428;&#12390;&#12356;&#12427;&#12290;<br>
-    <span class="wrong">A)</span> &#22823;&#33075;&#26032;&#30382;&#36074;&#12399;&#30561;&#30496;&#24460;&#12395;&#35352;&#25014;&#12364;&#36578;&#36865;&#12373;&#12428;&#12427;&#22580;&#25152;&#12290;&#26368;&#21021;&#12398;&#20445;&#23384;&#22580;&#25152;&#12391;&#12399;&#12394;&#12356;&#12290;
-    <span class="wrong">B)</span> &#23567;&#33075;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">D)</span> &#33075;&#24185;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
+<!-- ===== Talk 1: The Role of Sleep in Memory Consolidation ===== -->
+<div class="talk-section">
+  <div class="talk-header">
+    <h3>Talk 1 — The Role of Sleep in Memory Consolidation (Life Science)</h3>
+    <p>話者：教授 ｜ Standard</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <div class="script-text">
+        <span class="highlight">Today we're going to look at</span> something you all do every night but probably don't think much about — sleep, and specifically its role in memory consolidation.<br><br>
+        When you learn something new during the day, that information is initially stored in the <span class="highlight">hippocampus</span>, a region deep inside the brain. <span class="highlight">However,</span> this storage is temporary and fragile. During sleep, particularly during the deep sleep stages known as <span class="highlight">slow-wave sleep</span>, the brain replays the day's experiences. This process transfers memories from the hippocampus to the <span class="highlight">neocortex</span>, where they become more stable and long-lasting.<br><br>
+        Research by neuroscientist <span class="highlight">Matthew Walker</span> has shown that students who sleep well after studying retain significantly more information than those who stay up all night cramming. <span class="highlight">In fact,</span> even a short nap of twenty to thirty minutes can improve memory recall by up to twenty percent.<br><br>
+        So the next time you're tempted to pull an all-nighter before an exam, remember that <span class="highlight">sleep might actually be your best study tool</span>.
+      </div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q1icon">1</div>
+      <div class="q-prompt">What is the talk mainly about?</div>
+      <span class="q-badge main-topic">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q1user"></div>
+      <div class="options-list">
+        <div class="opt-row is-correct"><span class="opt-label">(A)</span> How sleep helps the brain store memories.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> The different stages of human sleep.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Common sleep disorders among college students.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> The structure of the human brain.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講義全体が睡眠中に記憶が海馬から大脳新皮質へ転送されるプロセスを説明。(B)睡眠の段階は部分的、(C)睡眠障害は言及なし、(D)脳の構造全般ではない。</div>
+      <div class="q-hint">🔑 Main Idea問題：「Today we're going to look at...sleep...its role in memory consolidation」が主題。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q2icon">2</div>
+      <div class="q-prompt">According to the speaker, where are new memories initially stored?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q2user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> In the neocortex.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> In the cerebellum.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> In the hippocampus.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> In the brain stem.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 「information is initially stored in the hippocampus」と明確に述べられている。(A)大脳新皮質は転送先、(B)(D)は言及なし。</div>
+      <div class="q-hint">🔑 Detail問題：「initially stored in...」の直後が答え。転送先（neocortex）と初期保存場所を区別する。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q3icon">3</div>
+      <div class="q-prompt">Why does the speaker mention Matthew Walker?</div>
+      <span class="q-badge purpose">Purpose</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q3user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> To describe a new treatment for insomnia.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> To provide evidence that sleep improves memory retention.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> To explain the discovery of the hippocampus.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> To compare different study methods.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> Matthew Walkerの研究は「students who sleep well after studying retain significantly more information」という証拠を提供するために言及。(A)不眠症、(C)海馬の発見、(D)学習方法の比較は言及なし。</div>
+      <div class="q-hint">🔑 Purpose問題：研究者の名前が出たら「その研究が何を証明するか」に注目。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q4icon">4</div>
+      <div class="q-prompt">What can be inferred from the talk?</div>
+      <span class="q-badge inference">Inference</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q4user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Staying up all night is the most effective way to study.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> The hippocampus is the permanent storage location for memories.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Only long periods of sleep benefit memory.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(D)</span> Getting adequate sleep is more beneficial for learning than cramming.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は最後に「sleep might actually be your best study tool」と述べ、徹夜より睡眠の方が学習に有益だと示唆。(A)は逆、(B)海馬は一時的な保存場所、(C)短い昼寝でも効果があると述べている。</div>
+      <div class="q-hint">🔑 Inference問題：最後の文「sleep might actually be your best study tool」が結論。</div>
+    </div>
   </div>
 </div>
 
-<!-- Q3 -->
-<div class="answer-card">
-  <h3><span class="q-num">3</span> Question 3</h3>
-  <div class="prompt">Why does the speaker mention Matthew Walker?</div>
-  <div class="correct">&#27491;&#35299;: B) To provide evidence that sleep improves memory retention</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#30446;&#30340;&#21839;&#38988;&#65288;Why does the speaker mention...&#65289;</strong><br>
-    Matthew Walker&#12398;&#30740;&#31350;&#12399;&#12300;students who sleep well after studying retain significantly more information&#12301;&#12392;&#12356;&#12358;&#35388;&#25312;&#12434;&#25552;&#20379;&#12377;&#12427;&#12383;&#12417;&#12395;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12427;&#12290;<br>
-    <span class="wrong">A)</span> &#19981;&#30496;&#30151;&#12398;&#27835;&#30274;&#12395;&#12388;&#12356;&#12390;&#12399;&#35441;&#38988;&#12395;&#20986;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">C)</span> &#28023;&#39340;&#12398;&#30330;&#35211;&#12392;&#12399;&#28961;&#38306;&#20418;&#12290;
-    <span class="wrong">D)</span> &#30064;&#12394;&#12427;&#23398;&#32722;&#26041;&#27861;&#12398;&#27604;&#36611;&#12364;&#30446;&#30340;&#12391;&#12399;&#12394;&#12356;&#12290;
+<!-- ===== Talk 2: The Industrial Revolution and Its Social Impact ===== -->
+<div class="talk-section">
+  <div class="talk-header">
+    <h3>Talk 2 — The Industrial Revolution and Its Social Impact (History)</h3>
+    <p>話者：教授 ｜ Harder</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <div class="script-text">
+        <span class="highlight">Let's turn our attention today to</span> one of the most transformative periods in human history — the Industrial Revolution. Beginning in Britain in the late eighteenth century, the Industrial Revolution marked a shift from agricultural economies to ones based on manufacturing and industry.<br><br>
+        The introduction of machines like the spinning jenny and the steam engine dramatically increased production capacity. Goods that once took weeks to produce by hand could now be manufactured in hours.<br><br>
+        <span class="highlight">But</span> the impact went far beyond economics. Socially, the revolution triggered one of the <span class="highlight">largest migrations in history</span>. Millions of people left their rural villages and moved to cities in search of factory jobs. This rapid urbanization created enormous challenges. Cities like Manchester and Birmingham grew so quickly that housing, sanitation, and public health systems couldn't keep up.<br><br>
+        Workers, including <span class="highlight">children as young as five</span>, often labored for fourteen to sixteen hours a day in dangerous conditions for very low wages. These harsh realities eventually led to significant social reforms. Labor unions began to form, demanding better working conditions and fair pay. The <span class="highlight">Factory Acts</span>, beginning in 1833, were among the first laws to limit child labor and regulate working hours. Education reform followed, as people recognized that an industrial economy required a more educated workforce.<br><br>
+        <span class="highlight">So while</span> the Industrial Revolution brought tremendous economic growth and technological progress, it also forced societies to confront serious questions about workers' rights, public welfare, and the responsibility of governments to protect their citizens.
+      </div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q5icon">5</div>
+      <div class="q-prompt">What is the talk mainly about?</div>
+      <span class="q-badge main-topic">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q5user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> The invention of the steam engine.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> The history of labor unions in Europe.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> A comparison of rural and urban life in Britain.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(D)</span> The Industrial Revolution and its effects on society.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講義全体が産業革命の経済的・社会的影響を説明。都市化、労働条件、社会改革など幅広い話題をカバー。(A)蒸気機関は部分的、(B)労働組合は部分的、(C)農村vs都市は部分的。</div>
+      <div class="q-hint">🔑 Main Idea問題：「Let's turn our attention to...the Industrial Revolution」で主題導入。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q6icon">6</div>
+      <div class="q-prompt">According to the speaker, what was a major social consequence of the Industrial Revolution?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q6user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> A decline in the population of Britain.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> The end of international trade.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> Massive migration from rural areas to cities.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> The elimination of all agricultural work.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 「the revolution triggered one of the largest migrations in history」「Millions of people left their rural villages and moved to cities」と明確に述べられている。(A)人口減少ではなく移動、(B)(D)は言及なし。</div>
+      <div class="q-hint">🔑 Detail問題：「one of the largest migrations in history」がキーフレーズ。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q7icon">7</div>
+      <div class="q-prompt">Why does the speaker mention the Factory Acts?</div>
+      <span class="q-badge purpose">Purpose</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q7user"></div>
+      <div class="options-list">
+        <div class="opt-row is-correct"><span class="opt-label">(A)</span> To show how governments responded to poor working conditions.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> To explain why factories became more profitable.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> To describe the invention of new machinery.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> To compare British and American industrial policies.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> Factory Actsは「first laws to limit child labor and regulate working hours」として言及。労働条件の問題に対する政府の対応を示すための具体例。(B)収益性、(C)機械の発明、(D)英米比較は言及なし。</div>
+      <div class="q-hint">🔑 Purpose問題：「These harsh realities eventually led to...」の文脈でFactory Actsが社会改革の例として登場。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q8icon">8</div>
+      <div class="q-prompt">What can be inferred from the talk?</div>
+      <span class="q-badge inference">Inference</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q8user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> The Industrial Revolution had only negative effects on society.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> Child labor was considered acceptable before the Factory Acts.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Cities were well prepared for the influx of factory workers.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Labor unions existed before the Industrial Revolution.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 「children as young as five...labored for fourteen to sixteen hours」とあり、Factory Actsが「first laws to limit child labor」であることから、それ以前は児童労働が容認されていたと推測できる。(A)経済成長もあった、(C)都市は対応できなかった、(D)労働組合は産業革命後に形成。</div>
+      <div class="q-hint">🔑 Inference問題：「first laws to limit child labor」→ それ以前は法規制がなかった＝容認されていた。</div>
+    </div>
   </div>
 </div>
 
-<!-- Q4 -->
-<div class="answer-card">
-  <h3><span class="q-num">4</span> Question 4</h3>
-  <div class="prompt">What can be inferred from the talk?</div>
-  <div class="correct">&#27491;&#35299;: D) Getting adequate sleep is more beneficial for learning than cramming</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#25512;&#35542;&#21839;&#38988;</strong><br>
-    &#35611;&#24107;&#12399;&#26368;&#24460;&#12395;&#12300;sleep might actually be your best study tool&#12301;&#12392;&#36848;&#12409;&#12289;&#24505;&#22812;&#12424;&#12426;&#30561;&#30496;&#12398;&#26041;&#12364;&#23398;&#32722;&#12395;&#26377;&#30410;&#12384;&#12392;&#31034;&#21766;&#12375;&#12390;&#12356;&#12427;&#12290;<br>
-    <span class="wrong">A)</span> &#35611;&#24107;&#12399;&#24505;&#22812;&#12434;&#25512;&#22888;&#12375;&#12390;&#12356;&#12394;&#12356;&#12290;&#12416;&#12375;&#12429;&#36870;&#12290;
-    <span class="wrong">B)</span> &#28023;&#39340;&#12399;&#19968;&#26178;&#30340;&#12394;&#20445;&#23384;&#22580;&#25152;&#12391;&#12354;&#12426;&#12289;&#27704;&#20037;&#20445;&#23384;&#22580;&#25152;&#12391;&#12399;&#12394;&#12356;&#12290;
-    <span class="wrong">C)</span> &#30701;&#12356;&#26172;&#23517;&#12391;&#12418;&#21177;&#26524;&#12364;&#12354;&#12427;&#12392;&#36848;&#12409;&#12425;&#12428;&#12390;&#12362;&#12426;&#12289;&#38263;&#26178;&#38291;&#12398;&#30561;&#30496;&#12384;&#12369;&#12364;&#26377;&#21177;&#12392;&#12399;&#35328;&#12387;&#12390;&#12356;&#12394;&#12356;&#12290;
-  </div>
-</div>
-
-<div class="section-divider">&#8212; Talk 2: The Industrial Revolution and Its Social Impact &#8212;</div>
-
-<!-- Q5 -->
-<div class="answer-card">
-  <h3><span class="q-num">5</span> Question 5</h3>
-  <div class="prompt">What is the talk mainly about?</div>
-  <div class="correct">&#27491;&#35299;: D) The Industrial Revolution and its effects on society</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#20027;&#26088;&#21839;&#38988;</strong><br>
-    &#35611;&#32681;&#20840;&#20307;&#12364;&#29987;&#26989;&#38761;&#21629;&#12398;&#32076;&#28168;&#30340;&#12539;&#31038;&#20250;&#30340;&#24433;&#38911;&#12434;&#35500;&#26126;&#12375;&#12390;&#12356;&#12427;&#12290;&#37117;&#24066;&#21270;&#12289;&#21172;&#20685;&#26465;&#20214;&#12289;&#31038;&#20250;&#25913;&#38761;&#12394;&#12393;&#24133;&#24195;&#12356;&#35441;&#38988;&#12434;&#12459;&#12496;&#12540;&#12290;<br>
-    <span class="wrong">A)</span> &#33976;&#27671;&#27231;&#38306;&#12398;&#30330;&#26126;&#12399;&#37096;&#20998;&#30340;&#12395;&#35302;&#12428;&#12427;&#12364;&#12289;&#20027;&#26088;&#12391;&#12399;&#12394;&#12356;&#12290;
-    <span class="wrong">B)</span> &#21172;&#20685;&#32068;&#21512;&#12398;&#27508;&#21490;&#12399;&#37096;&#20998;&#30340;&#12395;&#35302;&#12428;&#12427;&#12364;&#12289;&#20027;&#26088;&#12391;&#12399;&#12394;&#12356;&#12290;
-    <span class="wrong">C)</span> &#36786;&#26449;&#12392;&#37117;&#24066;&#12398;&#27604;&#36611;&#12399;&#37096;&#20998;&#30340;&#12395;&#35302;&#12428;&#12427;&#12364;&#12289;&#20027;&#26088;&#12391;&#12399;&#12394;&#12356;&#12290;
-  </div>
-</div>
-
-<!-- Q6 -->
-<div class="answer-card">
-  <h3><span class="q-num">6</span> Question 6</h3>
-  <div class="prompt">According to the speaker, what was a major social consequence of the Industrial Revolution?</div>
-  <div class="correct">&#27491;&#35299;: C) Massive migration from rural areas to cities</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#35443;&#32048;&#21839;&#38988;</strong><br>
-    &#12300;the revolution triggered one of the largest migrations in history&#12301;&#12300;Millions of people left their rural villages and moved to cities&#12301;&#12392;&#26126;&#30906;&#12395;&#36848;&#12409;&#12425;&#12428;&#12390;&#12356;&#12427;&#12290;<br>
-    <span class="wrong">A)</span> &#20154;&#21475;&#28187;&#23569;&#12391;&#12399;&#12394;&#12367;&#12289;&#37117;&#24066;&#12408;&#12398;&#31227;&#21205;&#12290;
-    <span class="wrong">B)</span> &#22269;&#38555;&#36031;&#26131;&#12398;&#32066;&#20102;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">D)</span> &#36786;&#26989;&#12398;&#23436;&#20840;&#12394;&#28040;&#28357;&#12399;&#36848;&#12409;&#12425;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-  </div>
-</div>
-
-<!-- Q7 -->
-<div class="answer-card">
-  <h3><span class="q-num">7</span> Question 7</h3>
-  <div class="prompt">Why does the speaker mention the Factory Acts?</div>
-  <div class="correct">&#27491;&#35299;: A) To show how governments responded to poor working conditions</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#30446;&#30340;&#21839;&#38988;</strong><br>
-    Factory Acts&#12399;&#12300;first laws to limit child labor and regulate working hours&#12301;&#12392;&#12375;&#12390;&#35328;&#21450;&#12373;&#12428;&#12390;&#12362;&#12426;&#12289;&#21172;&#20685;&#26465;&#20214;&#12398;&#21839;&#38988;&#12395;&#23550;&#12377;&#12427;&#25919;&#24220;&#12398;&#23550;&#24540;&#12434;&#31034;&#12377;&#12383;&#12417;&#12395;&#25369;&#12370;&#12425;&#12428;&#12390;&#12356;&#12427;&#12290;<br>
-    <span class="wrong">B)</span> &#24037;&#22580;&#12398;&#21454;&#30410;&#24615;&#12395;&#12388;&#12356;&#12390;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">C)</span> &#26032;&#12375;&#12356;&#27231;&#26800;&#12398;&#30330;&#26126;&#12392;&#12399;&#28961;&#38306;&#20418;&#12290;
-    <span class="wrong">D)</span> &#33521;&#31859;&#12398;&#25919;&#31574;&#27604;&#36611;&#12399;&#34892;&#12387;&#12390;&#12356;&#12394;&#12356;&#12290;
-  </div>
-</div>
-
-<!-- Q8 -->
-<div class="answer-card">
-  <h3><span class="q-num">8</span> Question 8</h3>
-  <div class="prompt">What can be inferred from the talk?</div>
-  <div class="correct">&#27491;&#35299;: B) Child labor was considered acceptable before the Factory Acts</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#25512;&#35542;&#21839;&#38988;</strong><br>
-    &#12300;children as young as five, often labored for fourteen to sixteen hours&#12301;&#12392;&#36848;&#12409;&#12425;&#12428;&#12289;Factory Acts&#12364;&#12300;first laws to limit child labor&#12301;&#12391;&#12354;&#12427;&#12371;&#12392;&#12363;&#12425;&#12289;&#12381;&#12428;&#20197;&#21069;&#12399;&#20816;&#31461;&#21172;&#20685;&#12364;&#23481;&#35469;&#12373;&#12428;&#12390;&#12356;&#12383;&#12392;&#25512;&#28204;&#12391;&#12365;&#12427;&#12290;<br>
-    <span class="wrong">A)</span> &#12300;tremendous economic growth and technological progress&#12301;&#12418;&#12354;&#12387;&#12383;&#12392;&#36848;&#12409;&#12390;&#12362;&#12426;&#12289;&#12510;&#12452;&#12490;&#12473;&#38754;&#12384;&#12369;&#12391;&#12399;&#12394;&#12356;&#12290;
-    <span class="wrong">C)</span> &#12300;housing, sanitation, and public health systems couldn't keep up&#12301;&#12392;&#36848;&#12409;&#12425;&#12428;&#12390;&#12362;&#12426;&#12289;&#28310;&#20633;&#12364;&#12391;&#12365;&#12390;&#12356;&#12394;&#12363;&#12387;&#12383;&#12290;
-    <span class="wrong">D)</span> &#21172;&#20685;&#32068;&#21512;&#12399;&#29987;&#26989;&#38761;&#21629;&#12398;&#21427;&#12375;&#12356;&#29694;&#23455;&#12434;&#21463;&#12369;&#12390;&#24418;&#25104;&#12373;&#12428;&#12383;&#12392;&#36848;&#12409;&#12425;&#12428;&#12390;&#12356;&#12427;&#12290;
-  </div>
-</div>
-
-<div style="text-align:center;margin-top:30px">
-  <a class="back-btn" href="../menu.html">&#8592; Listening &#12513;&#12491;&#12517;&#12540;&#12395;&#25147;&#12427;</a>
-</div>
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-7.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">メニューに戻る</a>
 </div>
 
 <script src="../../js/auth.js"></script>
 <script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+<script>
+const labels = ['A','B','C','D'];
+const totalQ = 8;
+// Correct answers: Q1=A(0), Q2=C(2), Q3=B(1), Q4=D(3), Q5=D(3), Q6=C(2), Q7=A(0), Q8=B(1)
+const correctAnswers = [0, 2, 1, 3, 3, 2, 0, 1];
+
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('talkPractice7Answers')||'null');
+  let correct = 0, answered = 0;
+  if(stored && Array.isArray(stored)){
+    for(let i=0;i<totalQ;i++){
+      const userAns = stored[i];
+      const isCorrect = userAns === correctAnswers[i];
+      const isSkip = userAns === null || userAns === undefined;
+      if(!isSkip) answered++;
+      if(isCorrect) correct++;
+      const icon = document.getElementById('q'+(i+1)+'icon');
+      const user = document.getElementById('q'+(i+1)+'user');
+      if(isSkip){ icon.className='q-num skip'; user.className='q-user is-skip'; user.textContent='⏱️ 未回答（タイムアウト）'; }
+      else if(isCorrect){ icon.className='q-num correct'; user.className='q-user is-correct'; user.textContent='✅ 正解！ あなたの回答: ('+labels[userAns]+')'; }
+      else { icon.className='q-num wrong'; user.className='q-user is-wrong'; user.textContent='❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')'; }
+    }
+    document.getElementById('scoreBig').textContent = correct + ' / ' + totalQ;
+    document.getElementById('scoreBar').style.width = (correct/totalQ*100)+'%';
+    const pct = Math.round(correct/totalQ*100);
+    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+  } else {
+    document.getElementById('scoreBig').textContent = '— / ' + totalQ;
+    document.getElementById('scoreMsg').textContent = '問題を先に解いてからこのページを見ると、スコアが表示されます';
+    for(let i=1;i<=totalQ;i++) document.getElementById('q'+i+'user').style.display='none';
+  }
+}
+render();
+</script>
 </body>
 </html>

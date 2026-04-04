@@ -3,172 +3,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LCR Practice 3 — 解答・解説</title>
+<title>LCR Practice 3 — 解答解説</title>
 <link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
-.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:10px}
-.header-logo{font-size:.72em;font-weight:800;color:#2563eb;letter-spacing:.1em;text-transform:uppercase}
-.header-title{font-size:.95em;font-weight:700;color:#2d3748}
-.breadcrumb{padding:12px 24px;font-size:.8em;color:#8898a8}
-.breadcrumb a{color:#b45309;text-decoration:none;font-weight:600}
-.breadcrumb a:hover{text-decoration:underline}
-.container{max-width:800px;margin:0 auto;padding:0 24px 60px}
-h1{font-size:1.3em;font-weight:800;margin-bottom:20px}
-.answer-card{background:#fff;border-radius:12px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px}
-.answer-card h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.75em;font-weight:800;flex-shrink:0}
-.prompt{font-size:.85em;color:#4a5568;padding:8px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;margin-bottom:12px;font-style:italic}
-.correct{font-size:.9em;font-weight:700;color:#16a34a;margin-bottom:8px}
-.explanation{font-size:.82em;color:#4a5568;line-height:1.65}
-.explanation .wrong{color:#dc2626;font-weight:600}
-.tip-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;margin-bottom:24px}
-.tip-box h2{font-size:1.05em;font-weight:800;color:#92400e;margin-bottom:14px}
-.tip-box ul{padding-left:20px;font-size:.85em;color:#92400e;line-height:1.8}
-.tip-box li{margin-bottom:6px}
-.tip-box strong{font-weight:800}
-.back-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-size:.9em;font-weight:700;color:#fff;background:#f59e0b;border:none;border-radius:10px;cursor:pointer;text-decoration:none;transition:all .2s;font-family:inherit}
-.back-btn:hover{background:#d97706}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.7}
+
+.answers-header{background:#2d3748;color:#fff;padding:20px 28px;text-align:center}
+.answers-header h1{font-size:1.2em;font-weight:600;margin-bottom:4px}
+.answers-header p{font-size:.9em;color:rgba(255,255,255,.7)}
+
+.score-banner{background:#ebf4ff;border-bottom:1px solid #bee3f8;padding:20px 28px;text-align:center}
+.score-big{font-size:2em;font-weight:800;color:#2d3748}
+.score-bar-wrap{width:200px;height:8px;background:#e2e8f0;border-radius:4px;margin:8px auto;overflow:hidden}
+.score-bar{height:100%;background:#48bb78;border-radius:4px;width:0%;transition:width .5s}
+.score-msg{font-size:.85em;color:#718096;margin-top:4px}
+
+.answers-body{max-width:800px;margin:0 auto;padding:24px 20px 120px}
+
+.tips-section{background:#fffaf0;border:1.5px solid #fbd38d;border-radius:12px;padding:20px 24px;margin-bottom:28px}
+.tips-title{font-size:1em;font-weight:700;color:#e8912d;margin-bottom:12px}
+.tip-card{display:flex;gap:12px;margin-bottom:14px}
+.tip-num{background:#e8912d;color:#fff;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75em;flex-shrink:0;font-weight:700}
+.tip-body{font-size:.88em;color:#4a5568;line-height:1.6}
+.tip-body strong{color:#2d3748}
+
+.q-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:0;margin-bottom:20px;overflow:hidden}
+.q-card-header{background:#f7fafc;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e2e8f0}
+.q-num{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.8em;font-weight:700;color:#fff;background:#a0aec0}
+.q-num.correct{background:#48bb78}
+.q-num.wrong{background:#f56565}
+.q-num.skip{background:#e2e8f0;color:#a0aec0}
+.q-prompt{flex:1;margin-left:12px;font-size:.92em;font-weight:600;color:#2d3748}
+.q-badge{font-size:.7em;font-weight:700;padding:3px 10px;border-radius:12px;text-transform:uppercase;letter-spacing:.5px}
+.q-badge.detail{background:#ebf4ff;color:#3b82c8}
+.q-badge.inference{background:#f3f0fa;color:#7c5cbf}
+.q-card-body{padding:16px 20px}
+.q-user{font-size:.85em;padding:8px 12px;border-radius:8px;margin-bottom:12px}
+.q-user.is-correct{background:#f0fff4;color:#276749}
+.q-user.is-wrong{background:#fff5f5;color:#c53030}
+.q-user.is-skip{background:#f7fafc;color:#a0aec0}
+
+.options-list{margin-bottom:16px}
+.opt-row{padding:8px 12px;border-radius:6px;font-size:.88em;margin-bottom:4px;display:flex;gap:8px}
+.opt-row.is-correct{background:#f0fff4;border:1px solid #c6f6d5;font-weight:600;color:#276749}
+.opt-row.is-wrong-selected{background:#fff5f5;border:1px solid #fed7d7;color:#c53030;text-decoration:line-through}
+.opt-label{font-weight:700;flex-shrink:0}
+
+.q-transcript{background:#f0f4f8;border-radius:8px;padding:12px 16px;margin-bottom:12px;font-size:.85em}
+.q-transcript strong{color:#4a90d9}
+.q-explain{font-size:.85em;color:#4a5568;line-height:1.65;margin-bottom:8px}
+.q-explain strong{color:#2d3748}
+.q-hint{font-size:.82em;color:#718096;background:#f7fafc;padding:8px 12px;border-radius:6px;border-left:3px solid #e8912d}
+
+.nav-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:center;gap:12px;z-index:100}
+.btn-menu{display:inline-flex;align-items:center;gap:8px;padding:12px 32px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#2d3748;transition:all .2s}
+.btn-menu:hover{background:#4a5568}
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="header-left">
-    <span class="header-logo">TCK Workshop</span>
-    <span class="header-title">タスク別トレーニング</span>
+
+<div class="answers-header">
+  <h1>&#127911; Listen and Choose a Response &#8212; Practice 3 &#35299;&#31572;&#35299;&#35500;</h1>
+  <p>Task Training &#8212; LCR Practice 3</p>
+</div>
+
+<div class="score-banner">
+  <div class="score-big" id="scoreBig">&#8212; / 8</div>
+  <div class="score-bar-wrap"><div class="score-bar" id="scoreBar"></div></div>
+  <div class="score-msg" id="scoreMsg">&#21839;&#38988;&#12434;&#20808;&#12395;&#35299;&#12356;&#12390;&#12363;&#12425;&#12371;&#12398;&#12506;&#12540;&#12472;&#12434;&#35211;&#12427;&#12392;&#12289;&#12473;&#12467;&#12450;&#12364;&#34920;&#31034;&#12373;&#12428;&#12414;&#12377;</div>
+</div>
+
+<div class="answers-body">
+
+  <div class="tips-section">
+    <div class="tips-title">&#128161; LCR &#25915;&#30053;&#12398;&#12467;&#12484;</div>
+    <div class="tip-card"><span class="tip-num">1</span><div class="tip-body"><strong>&#26368;&#21021;&#12398;2&#35486;&#12395;&#20840;&#38598;&#20013;</strong> &#8212; Do you&#8594;Yes/No&#12289;What&#8594;Wh&#30097;&#21839;&#25991;&#12289;Could you&#8594;&#20381;&#38972;&#12289;How about&#8594;&#25552;&#26696;</div></div>
+    <div class="tip-card"><span class="tip-num">2</span><div class="tip-body"><strong>&#36074;&#21839;&#12479;&#12452;&#12503;&#12434;&#21028;&#26029;</strong> &#8212; Yes/No&#12289;5W1H&#12289;&#20381;&#38972;&#12289;&#25552;&#26696;&#12289;&#30906;&#35469;&#12394;&#12393;&#12290;&#12479;&#12452;&#12503;&#12395;&#21512;&#12358;&#24540;&#31572;&#12497;&#12479;&#12540;&#12531;&#12434;&#20104;&#28204;</div></div>
+    <div class="tip-card"><span class="tip-num">3</span><div class="tip-body"><strong>&#33258;&#28982;&#12394;&#24540;&#31572;&#12434;&#36984;&#12406;</strong> &#8212; &#12300;&#30452;&#25509;&#30340;&#12377;&#12366;&#12427;&#31572;&#12360;&#12301;&#12399;&#30097;&#12358;&#12290;&#20250;&#35441;&#12434;&#21069;&#12395;&#36914;&#12417;&#12427;&#36984;&#25246;&#32930;&#65309;&#27491;&#35299;</div></div>
+    <div class="tip-card"><span class="tip-num">4</span><div class="tip-body"><strong>&#21542;&#23450;&#24418;&#12395;&#27880;&#24847;</strong> &#8212; Isn't...? / Don't you...? &#12399;&#30906;&#35469;&#12398;&#24847;&#21619;&#12290;&#24847;&#21619;&#12434;&#36870;&#12395;&#21462;&#12425;&#12394;&#12356;</div></div>
   </div>
-</div>
-<div class="breadcrumb">
-  <a href="../menu.html">&#8592; Listening メニュー</a> &gt; LCR Practice 3 解答
+
+  <div id="qSection"></div>
+
 </div>
 
-<div class="container">
-<h1>Listen and Choose a Response — Practice 3 解答・解説</h1>
-
-<div class="tip-box">
-  <h2>&#128161; LCR 攻略コツ</h2>
-  <ul>
-    <li><strong>最初の2語に全集中：</strong>Do you/Did you &#8594; Yes/No系、What/Where &#8594; Wh疑問文、Could you &#8594; 依頼、How about &#8594; 提案</li>
-    <li><strong>質問タイプを判断してから選ぶ：</strong>タイプに合う応答パターンを予測する</li>
-    <li><strong>「会話を前に進める応答」が正解：</strong>質問の単語が含まれていても、会話が止まる選択肢は不正解</li>
-    <li><strong>直接的すぎる答えは疑う：</strong>"Do you know where...?" に対して "Yes, I know." は不自然。情報を提供する応答が正解</li>
-    <li><strong>否定形に注意：</strong>Isn't...? / Don't you...? は確認の意味。意味を逆に取らない</li>
-  </ul>
+<div class="nav-footer">
+  <button class="btn-menu" onclick="location.href='practice-3.html'">&#8592; &#12418;&#12358;&#19968;&#24230;&#35299;&#12367;</button>
+  <button class="btn-menu" onclick="location.href='../menu.html'" style="background:#2d3748">&#128203; &#12513;&#12491;&#12517;&#12540;&#12395;&#25147;&#12427;</button>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">1</span> Question 1</h3>
-  <div class="prompt">"Excuse me, do you know if the campus shuttle runs on weekends?"</div>
-  <div class="correct">正解: A) I think it runs every thirty minutes on Saturdays, but not on Sundays.</div>
-  <div class="explanation">
-    <strong>タイプ：Yes/No疑問文（Do you know if...）</strong><br>
-    「知ってる？」と聞かれたら、具体的な情報を提供する応答が自然。Aは具体的な運行スケジュールを伝えている。<br>
-    <span class="wrong">B)</span> 平日の便利さの話で、週末について答えていない。
-    <span class="wrong">C)</span> 自分の通学方法で質問に答えていない。
-    <span class="wrong">D)</span> シャトル停留所の場所で、運行スケジュールを聞いているのにずれている。
-  </div>
-</div>
+<script>
+const QS = [
+  {
+    q: "Excuse me, do you know if the campus shuttle runs on weekends?",
+    type: "detail",
+    opts: [
+      "I think it runs every thirty minutes on Saturdays, but not on Sundays.",
+      "The shuttle is really convenient on weekdays.",
+      "I usually drive my own car to campus.",
+      "The shuttle stop is next to the library."
+    ],
+    correct: 0,
+    explain: "\u300cDo you know if\u2026?\u300d\u3068\u3044\u3046Yes/No\u7591\u554f\u6587\u306b\u5bfe\u3057\u3066\u3001(A)\u306f\u5177\u4f53\u7684\u306a\u904b\u884c\u30b9\u30b1\u30b8\u30e5\u30fc\u30eb\u3092\u4f1d\u3048\u3066\u3044\u308b\u3002",
+    hint: "\u300c\u77e5\u3063\u3066\u308b\uff1f\u300d\u3068\u805e\u304b\u308c\u305f\u3089\u3001\u5177\u4f53\u7684\u306a\u60c5\u5831\u3092\u63d0\u4f9b\u3059\u308b\u5fdc\u7b54\u304c\u81ea\u7136\u3002(B)\u306f\u5e73\u65e5\u306e\u4fbf\u5229\u3055\u306e\u8a71\u3067\u9031\u672b\u306b\u3064\u3044\u3066\u7b54\u3048\u3066\u3044\u306a\u3044\u3001(C)\u306f\u81ea\u5206\u306e\u901a\u5b66\u65b9\u6cd5\u3067\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3001(D)\u306f\u30b7\u30e3\u30c8\u30eb\u505c\u7559\u6240\u306e\u5834\u6240\u3067\u904b\u884c\u30b9\u30b1\u30b8\u30e5\u30fc\u30eb\u3092\u805e\u3044\u3066\u3044\u308b\u306e\u306b\u305a\u308c\u3066\u3044\u308b\u3002"
+  },
+  {
+    q: "I\u2019m worried I won\u2019t be able to pay my tuition next semester. Do you know anything about financial aid?",
+    type: "inference",
+    opts: [
+      "Tuition has gone up a lot this year.",
+      "You should visit the financial aid office. They helped me get a scholarship last year.",
+      "I already paid my tuition for next semester.",
+      "Financial aid is available at most universities."
+    ],
+    correct: 1,
+    explain: "\u4e0d\u5b89\u306e\u8868\u660e\uff0b\u60c5\u5831\u3092\u6c42\u3081\u308b\u8cea\u554f\u306b\u5bfe\u3057\u3066\u3001(B)\u306f\u5177\u4f53\u7684\u306a\u30a2\u30c9\u30d0\u30a4\u30b9\uff08\u5968\u5b66\u91d1\u4e8b\u52d9\u5ba4\u306b\u884c\u304f\uff09\u3068\u81ea\u5206\u306e\u7d4c\u9a13\u3092\u4ea4\u3048\u3066\u4f1a\u8a71\u3092\u524d\u306b\u9032\u3081\u3066\u3044\u308b\u3002",
+    hint: "\u4e0d\u5b89\u306e\u8868\u660e + \u60c5\u5831\u3092\u6c42\u3081\u308b\u8cea\u554f \u2192 \u30a2\u30c9\u30d0\u30a4\u30b9\u304c\u81ea\u7136\u3002(A)\u306f\u5b66\u8cbb\u306e\u5024\u4e0a\u304c\u308a\u306e\u4e00\u822c\u8ad6\u3067\u52a9\u3051\u306b\u306a\u3089\u306a\u3044\u3001(C)\u306f\u81ea\u5206\u306f\u6255\u3063\u305f\u3068\u3044\u3046\u8a71\u3067\u76f8\u624b\u306e\u60a9\u307f\u306b\u5fdc\u3048\u3066\u3044\u306a\u3044\u3001(D)\u306f\u4e00\u822c\u7684\u306a\u8aac\u660e\u3067\u5177\u4f53\u7684\u306a\u30a2\u30c9\u30d0\u30a4\u30b9\u3067\u306f\u306a\u3044\u3002"
+  },
+  {
+    q: "Are you planning to go to the internship fair this Thursday?",
+    type: "detail",
+    opts: [
+      "I already have an internship at a law firm.",
+      "The fair is being held in the student center.",
+      "Definitely! I heard several tech companies will be there. Want to go together?",
+      "Internships are a great way to gain experience."
+    ],
+    correct: 2,
+    explain: "\u300cAre you planning to go\u2026?\u300d\u3068\u3044\u3046\u8a08\u753b\u3092\u805e\u304f\u8cea\u554f\u306b\u5bfe\u3057\u3001(C)\u306f\u8cea\u554f\u306b\u7b54\u3048\uff08\u884c\u304f\u4e88\u5b9a\uff09\u3001\u8ffd\u52a0\u60c5\u5831\u3068\u63d0\u6848\u3092\u52a0\u3048\u3066\u4f1a\u8a71\u3092\u524d\u306b\u9032\u3081\u3066\u3044\u308b\u3002",
+    hint: "\u8a08\u753b\u3092\u805e\u304f\u8cea\u554f \u2192 \u81ea\u5206\u306e\u4e88\u5b9a\u3092\u7b54\u3048\u308b\u306e\u304c\u81ea\u7136\u3002(A)\u306f\u81ea\u5206\u306f\u3082\u3046\u30a4\u30f3\u30bf\u30fc\u30f3\u304c\u3042\u308b\u3068\u3044\u3046\u8a71\u3067\u8cea\u554f\u306e\u610f\u56f3\u306b\u305d\u3050\u308f\u306a\u3044\u3001(B)\u306f\u30d5\u30a7\u30a2\u306e\u958b\u50ac\u5834\u6240\u306e\u60c5\u5831\u3067\u81ea\u5206\u306e\u4e88\u5b9a\u3092\u7b54\u3048\u3066\u3044\u306a\u3044\u3001(D)\u306f\u30a4\u30f3\u30bf\u30fc\u30f3\u30b7\u30c3\u30d7\u306e\u4e00\u822c\u8ad6\u3067\u4f1a\u8a71\u304c\u6b62\u307e\u308b\u3002"
+  },
+  {
+    q: "I\u2019ve been struggling with organic chemistry. Would you like to form a study group?",
+    type: "detail",
+    opts: [
+      "Organic chemistry is one of the hardest pre-med courses.",
+      "I prefer studying alone in my room.",
+      "I got the highest score on the last exam.",
+      "That\u2019s a great idea. I know a couple of other students who might want to join too."
+    ],
+    correct: 3,
+    explain: "\u300cWould you like to\u2026?\u300d\u3068\u3044\u3046\u63d0\u6848\u306b\u5bfe\u3057\u3066\u3001(D)\u306f\u63d0\u6848\u3092\u53d7\u3051\u5165\u308c\uff08That's a great idea\uff09\u3001\u3055\u3089\u306b\u5177\u4f53\u7684\u306a\u5c55\u958b\u3092\u52a0\u3048\u3066\u3044\u308b\u3002",
+    hint: "\u63d0\u6848\u3078\u306e\u81ea\u7136\u306a\u8fd4\u7b54 = \u627f\u8afe\uff0b\u5177\u4f53\u7684\u306a\u5c55\u958b\u3002(A)\u306f\u79d1\u76ee\u306e\u96e3\u3057\u3055\u306e\u4e00\u822c\u8ad6\u3067\u63d0\u6848\u3078\u306e\u8fd4\u7b54\u3067\u306f\u306a\u3044\u3001(B)\u306f\u4e00\u4eba\u3067\u52c9\u5f37\u3059\u308b\u8a71\u3067\u63d0\u6848\u3092\u65ad\u3063\u3066\u3044\u308b\u3088\u3046\u306b\u805e\u3053\u3048\u308b\u304c\u7406\u7531\u3092\u8ff0\u3079\u305a\u4f1a\u8a71\u304c\u6b62\u307e\u308b\u3001(C)\u306f\u81ea\u5206\u306e\u6210\u7e3e\u81ea\u6162\u3067\u63d0\u6848\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3002"
+  },
+  {
+    q: "I need to talk to Professor Williams about my research proposal, but I keep missing her office hours.",
+    type: "inference",
+    opts: [
+      "Professor Williams is one of the most respected researchers in her field.",
+      "Why don\u2019t you send her an email and ask for an appointment at a different time?",
+      "I already submitted my research proposal last week.",
+      "Office hours are usually listed on the department website."
+    ],
+    correct: 1,
+    explain: "\u300c\u30aa\u30d5\u30a3\u30b9\u30a2\u30ef\u30fc\u306b\u884c\u3051\u306a\u3044\u300d\u3068\u3044\u3046\u554f\u984c\u306e\u8868\u660e\u306b\u5bfe\u3057\u3001(B)\u306f\u5177\u4f53\u7684\u306a\u4ee3\u66ff\u624b\u6bb5\uff08\u30e1\u30fc\u30eb\u3067\u5225\u306e\u6642\u9593\u306b\u30a2\u30dd\u3092\u53d6\u308b\uff09\u3092\u63d0\u6848\u3057\u3066\u554f\u984c\u89e3\u6c7a\u3092\u52a9\u3051\u3066\u3044\u308b\u3002",
+    hint: "\u554f\u984c\u306e\u8868\u660e \u2192 \u89e3\u6c7a\u7b56\u306e\u63d0\u6848\u304c\u81ea\u7136\u3002(A)\u306f\u6559\u6388\u306e\u540d\u58f0\u306f\u554f\u984c\u89e3\u6c7a\u306b\u95a2\u4fc2\u306a\u3044\u3001(C)\u306f\u81ea\u5206\u306e\u63d0\u51fa\u72b6\u6cc1\u306f\u76f8\u624b\u306e\u554f\u984c\u306b\u7121\u95a2\u4fc2\u3001(D)\u306f\u4e00\u822c\u7684\u306a\u60c5\u5831\u3067\u554f\u984c\u306e\u89e3\u6c7a\u306b\u306a\u3089\u306a\u3044\u3002"
+  },
+  {
+    q: "The heating in my dorm room hasn\u2019t been working for three days. I\u2019ve already submitted a maintenance request online.",
+    type: "inference",
+    opts: [
+      "The dorm was renovated two years ago.",
+      "Maintenance requests usually take about forty-eight hours to process.",
+      "My room is on the third floor of the building.",
+      "You should try going directly to the housing office and explaining the urgency."
+    ],
+    correct: 3,
+    explain: "\u30aa\u30f3\u30e9\u30a4\u30f3\u30ea\u30af\u30a8\u30b9\u30c8\u6e08\u307f\u306a\u306e\u3067\u3001(D)\u306f\u5225\u306e\u30a2\u30d7\u30ed\u30fc\u30c1\uff08\u76f4\u63a5\u51fa\u5411\u304f\uff09\u3092\u63d0\u6848\u3057\u3066\u4f1a\u8a71\u3092\u524d\u306b\u9032\u3081\u3066\u3044\u308b\u3002",
+    hint: "\u4e0d\u6e80\u306e\u8868\u660e\uff0b\u65e2\u306b\u884c\u52d5\u6e08\u307f \u2192 \u6b21\u306e\u30b9\u30c6\u30c3\u30d7\u306e\u63d0\u6848\u304c\u81ea\u7136\u3002(A)\u306f\u5bae\u306e\u30ea\u30ce\u30d9\u30fc\u30b7\u30e7\u30f3\u306e\u8a71\u3067\u554f\u984c\u89e3\u6c7a\u306b\u306a\u3089\u306a\u3044\u3001(B)\u306f\u4e00\u822c\u7684\u306a\u51e6\u7406\u671f\u9593\u306e\u60c5\u5831\u3060\u304c3\u65e5\u9593\u3082\u5f85\u3063\u3066\u3044\u308b\u72b6\u6cc1\u3078\u306e\u89e3\u6c7a\u7b56\u3067\u306f\u306a\u3044\u3001(C)\u306f\u81ea\u5206\u306e\u90e8\u5c4b\u306e\u968e\u6570\u306f\u7121\u95a2\u4fc2\u3002"
+  },
+  {
+    q: "Did you see the article in the campus newspaper about the new dining hall?",
+    type: "detail",
+    opts: [
+      "Yes, I read it this morning. It sounds like it will have a lot more healthy options.",
+      "The campus newspaper is published every Tuesday.",
+      "I was on the newspaper staff in high school.",
+      "The dining hall closes at eight PM on weekdays."
+    ],
+    correct: 0,
+    explain: "\u300cDid you see\u2026?\u300d\u3068\u3044\u3046\u78ba\u8a8d\u306e\u8cea\u554f\u306b\u5bfe\u3057\u3001(A)\u306f\u8cea\u554f\u306b\u7b54\u3048\uff08\u8aad\u3093\u3060\uff09\u3001\u5185\u5bb9\u306b\u3064\u3044\u3066\u611f\u60f3\u3092\u8ff0\u3079\u3066\u4f1a\u8a71\u3092\u767a\u5c55\u3055\u305b\u3066\u3044\u308b\u3002",
+    hint: "\u78ba\u8a8d\u306e\u8cea\u554f \u2192 \u78ba\u8a8d\uff0b\u611f\u60f3\u304c\u81ea\u7136\u3002(B)\u306f\u65b0\u805e\u306e\u767a\u884c\u65e5\u306f\u8cea\u554f\u306e\u610f\u56f3\u306b\u305d\u3050\u308f\u306a\u3044\u3001(C)\u306f\u9ad8\u6821\u6642\u4ee3\u306e\u65b0\u805e\u90e8\u306e\u8a71\u3067\u8131\u7dda\u3001(D)\u306f\u73fe\u5728\u306e\u30c0\u30a4\u30cb\u30f3\u30b0\u30db\u30fc\u30eb\u306e\u9589\u5e97\u6642\u9593\u3067\u8a18\u4e8b\u306e\u8a71\u984c\u3068\u305a\u308c\u3066\u3044\u308b\u3002"
+  },
+  {
+    q: "I can\u2019t decide whether to invite my extended family to the graduation ceremony. The venue only allows four guests per student.",
+    type: "inference",
+    opts: [
+      "Graduation ceremonies are always so exciting.",
+      "The auditorium can hold up to two thousand people.",
+      "That\u2019s tough. Maybe you could livestream it for the family members who can\u2019t attend in person?",
+      "I\u2019m not graduating until next year."
+    ],
+    correct: 2,
+    explain: "\u300c\u5bb6\u65cf\u3092\u62db\u5f85\u3059\u3079\u304d\u304b\u8ff7\u3063\u3066\u3044\u308b\u300d\u3068\u3044\u3046\u60a9\u307f\u306b\u5bfe\u3057\u3066\u3001(C)\u306f\u5171\u611f\uff08That's tough\uff09\u3057\u3064\u3064\u3001\u30e9\u30a4\u30d6\u914d\u4fe1\u3068\u3044\u3046\u5177\u4f53\u7684\u306a\u4ee3\u66ff\u6848\u3092\u63d0\u6848\u3002",
+    hint: "\u8ff7\u3044\u30fb\u60a9\u307f\u306e\u8868\u660e \u2192 \u5171\u611f\uff0b\u89e3\u6c7a\u7b56\u304c\u81ea\u7136\u3002(A)\u306f\u5352\u696d\u5f0f\u306e\u4e00\u822c\u7684\u611f\u60f3\u3067\u60a9\u307f\u306b\u5fdc\u3048\u3066\u3044\u306a\u3044\u3001(B)\u306f\u4f1a\u5834\u306e\u60c5\u5831\u3067\u554f\u984c\u89e3\u6c7a\u306b\u306a\u3089\u306a\u3044\u3001(D)\u306f\u81ea\u5206\u306e\u5352\u696d\u306e\u8a71\u3067\u76f8\u624b\u306e\u60a9\u307f\u306b\u7121\u95a2\u4fc2\u3002"
+  }
+];
 
-<div class="answer-card">
-  <h3><span class="q-num">2</span> Question 2</h3>
-  <div class="prompt">"I'm worried I won't be able to pay my tuition next semester. Do you know anything about financial aid?"</div>
-  <div class="correct">正解: B) You should visit the financial aid office. They helped me get a scholarship last year.</div>
-  <div class="explanation">
-    <strong>タイプ：不安の表明＋情報を求める質問 &#8594; アドバイスが自然</strong><br>
-    Bは具体的なアドバイス（奨学金事務室に行く）と自分の経験を交えて会話を前に進めている。<br>
-    <span class="wrong">A)</span> 学費の値上がりの一般論で、助けにならない。
-    <span class="wrong">C)</span> 自分は払ったという話。相手の悩みに応えていない。
-    <span class="wrong">D)</span> 一般的な説明で、具体的なアドバイスではない。
-  </div>
-</div>
+const labels = ['A','B','C','D'];
 
-<div class="answer-card">
-  <h3><span class="q-num">3</span> Question 3</h3>
-  <div class="prompt">"Are you planning to go to the internship fair this Thursday?"</div>
-  <div class="correct">正解: C) Definitely! I heard several tech companies will be there. Want to go together?</div>
-  <div class="explanation">
-    <strong>タイプ：Yes/No疑問文（計画を聞く）</strong><br>
-    Cは質問に答え（行く予定）、追加情報と提案を加えて会話を前に進めている。<br>
-    <span class="wrong">A)</span> 自分はもうインターンがある。質問の意図（一緒に行くか）にそぐわない。
-    <span class="wrong">B)</span> フェアの開催場所の情報で、自分の予定を答えていない。
-    <span class="wrong">D)</span> インターンシップの一般論で会話が止まる。
-  </div>
-</div>
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('lcrAnswers')||'{}');
+  let correct = 0, answered = 0;
+  for(let i=1;i<=8;i++){
+    if(stored['q'+i]){
+      answered++;
+      if(stored['q'+i].isCorrect) correct++;
+    }
+  }
+  if(answered > 0){
+    document.getElementById('scoreBig').textContent = correct + ' / 8';
+    document.getElementById('scoreBar').style.width = (correct/8*100)+'%';
+    const pct = Math.round(correct/8*100);
+    let msg = pct >= 80 ? '\u7d20\u6674\u3089\u3057\u3044\uff01\ud83c\udf89' : pct >= 50 ? '\u3044\u3044\u8abf\u5b50\uff01\u3082\u3046\u5c11\u3057\uff01' : '\u5fa9\u7fd2\u3057\u3066\u6b21\u306b\u6d3b\u304b\u305d\u3046\ud83d\udcaa';
+    document.getElementById('scoreMsg').textContent = pct + '% \u6b63\u7b54\u7387 \u2014 ' + msg;
+  }
 
-<div class="answer-card">
-  <h3><span class="q-num">4</span> Question 4</h3>
-  <div class="prompt">"I've been struggling with organic chemistry. Would you like to form a study group?"</div>
-  <div class="correct">正解: D) That's a great idea. I know a couple of other students who might want to join too.</div>
-  <div class="explanation">
-    <strong>タイプ：提案（Would you like to...）</strong><br>
-    Dは提案を受け入れ（That's a great idea）、さらに具体的な展開を加えている。<br>
-    <span class="wrong">A)</span> 科目の難しさの一般論。提案への返答ではない。
-    <span class="wrong">B)</span> 一人で勉強する話で、提案を断っているように聞こえるが、理由を述べず会話が止まる。
-    <span class="wrong">C)</span> 自分の成績自慢で提案に答えていない。
-  </div>
-</div>
+  const section = document.getElementById('qSection');
+  let html = '';
+  QS.forEach((q, i) => {
+    const qNum = i + 1;
+    const userData = stored['q'+qNum];
+    const userSelected = userData ? userData.selected : null;
+    const userIdx = userSelected ? labels.indexOf(userSelected) : -1;
+    const isCorrect = userData ? userData.isCorrect : false;
+    const isSkip = !userData;
 
-<div class="answer-card">
-  <h3><span class="q-num">5</span> Question 5</h3>
-  <div class="prompt">"I need to talk to Professor Williams about my research proposal, but I keep missing her office hours."</div>
-  <div class="correct">正解: B) Why don't you send her an email and ask for an appointment at a different time?</div>
-  <div class="explanation">
-    <strong>タイプ：問題の表明 &#8594; 解決策の提案が自然</strong><br>
-    Bは具体的な代替手段（メールで別の時間にアポを取る）を提案して問題解決を助けている。<br>
-    <span class="wrong">A)</span> 教授の名声は問題解決に関係ない。
-    <span class="wrong">C)</span> 自分の提出状況は相手の問題に無関係。
-    <span class="wrong">D)</span> 一般的な情報で、問題の解決にならない。
-  </div>
-</div>
+    const numClass = isSkip ? 'skip' : (isCorrect ? 'correct' : 'wrong');
+    const typeBadge = q.type === 'inference' ? '<span class="q-badge inference">Inference</span>' : '<span class="q-badge detail">Detail</span>';
 
-<div class="answer-card">
-  <h3><span class="q-num">6</span> Question 6</h3>
-  <div class="prompt">"The heating in my dorm room hasn't been working for three days. I've already submitted a maintenance request online."</div>
-  <div class="correct">正解: D) You should try going directly to the housing office and explaining the urgency.</div>
-  <div class="explanation">
-    <strong>タイプ：不満の表明＋既に行動済み &#8594; 次のステップの提案が自然</strong><br>
-    オンラインリクエスト済みなので、Dは別のアプローチ（直接出向く）を提案して会話を前に進めている。<br>
-    <span class="wrong">A)</span> 寮のリノベーションの話で問題解決にならない。
-    <span class="wrong">B)</span> 一般的な処理期間の情報だが、3日間も待っている状況への解決策ではない。
-    <span class="wrong">C)</span> 自分の部屋の階数は無関係。
-  </div>
-</div>
+    let userLine = '';
+    if(isSkip){
+      userLine = '<div class="q-user is-skip">\u23f1\ufe0f \u672a\u56de\u7b54\uff08\u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\uff09</div>';
+    } else if(isCorrect){
+      userLine = '<div class="q-user is-correct">\u2705 \u6b63\u89e3\uff01 \u3042\u306a\u305f\u306e\u56de\u7b54: ('+userSelected+')</div>';
+    } else {
+      userLine = '<div class="q-user is-wrong">\u274c \u3042\u306a\u305f\u306e\u56de\u7b54: ('+userSelected+') \u2192 \u6b63\u89e3: ('+labels[q.correct]+')</div>';
+    }
 
-<div class="answer-card">
-  <h3><span class="q-num">7</span> Question 7</h3>
-  <div class="prompt">"Did you see the article in the campus newspaper about the new dining hall?"</div>
-  <div class="correct">正解: A) Yes, I read it this morning. It sounds like it will have a lot more healthy options.</div>
-  <div class="explanation">
-    <strong>タイプ：確認の質問（Did you see...）</strong><br>
-    Aは質問に答え（読んだ）、内容について感想を述べて会話を発展させている。<br>
-    <span class="wrong">B)</span> 新聞の発行日は質問の意図にそぐわない。
-    <span class="wrong">C)</span> 高校時代の新聞部の話で脱線している。
-    <span class="wrong">D)</span> 現在のダイニングホールの閉店時間は記事の話題とずれている。
-  </div>
-</div>
+    let optsHtml = '';
+    q.opts.forEach((opt, oi) => {
+      let cls = '';
+      if(oi === q.correct) cls = ' is-correct';
+      else if(oi === userIdx && !isCorrect) cls = ' is-wrong-selected';
+      optsHtml += '<div class="opt-row'+cls+'"><span class="opt-label">('+labels[oi]+')</span> '+opt+'</div>';
+    });
 
-<div class="answer-card">
-  <h3><span class="q-num">8</span> Question 8</h3>
-  <div class="prompt">"I can't decide whether to invite my extended family to the graduation ceremony. The venue only allows four guests per student."</div>
-  <div class="correct">正解: C) That's tough. Maybe you could livestream it for the family members who can't attend in person?</div>
-  <div class="explanation">
-    <strong>タイプ：迷い・悩みの表明 &#8594; 共感＋解決策が自然</strong><br>
-    Cは共感（That's tough）しつつ、ライブ配信という具体的な代替案を提案している。<br>
-    <span class="wrong">A)</span> 卒業式の一般的感想で、悩みに応えていない。
-    <span class="wrong">B)</span> 会場の情報で問題解決にならない。
-    <span class="wrong">D)</span> 自分の卒業の話で相手の悩みに無関係。
-  </div>
-</div>
+    html += '<div class="q-card">' +
+      '<div class="q-card-header"><div class="q-num '+numClass+'">'+qNum+'</div>' +
+      '<div class="q-prompt">'+q.q+'</div>'+typeBadge+'</div>' +
+      '<div class="q-card-body">' +
+      userLine +
+      '<div class="options-list">'+optsHtml+'</div>' +
+      '<div class="q-explain"><strong>\u89e3\u8aac\uff1a</strong> '+q.explain+'</div>' +
+      '<div class="q-hint">\ud83d\udd11 '+q.hint+'</div>' +
+      '</div></div>';
+  });
+  section.innerHTML = html;
+}
+render();
 
-<div style="text-align:center;margin-top:30px">
-  <a class="back-btn" href="../menu.html">&#8592; Listening メニューに戻る</a>
-</div>
-</div>
-
+if(typeof Auth !== 'undefined'){ Auth.require(); }
+</script>
 <script src="../../js/auth.js"></script>
-<script>if(typeof Auth!=='undefined'){Auth.require();}</script>
 </body>
 </html>

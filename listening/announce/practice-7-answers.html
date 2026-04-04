@@ -3,123 +3,257 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Announcement Practice 7 &#8212; &#35299;&#31572;&#12539;&#35299;&#35500;</title>
-<link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Announcement Practice 7 — 解答解説</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
-.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:10px}
-.header-logo{font-size:.72em;font-weight:800;color:#2563eb;letter-spacing:.1em;text-transform:uppercase}
-.header-title{font-size:.95em;font-weight:700;color:#2d3748}
-.breadcrumb{padding:12px 24px;font-size:.8em;color:#8898a8}
-.breadcrumb a{color:#b45309;text-decoration:none;font-weight:600}
-.breadcrumb a:hover{text-decoration:underline}
-.container{max-width:800px;margin:0 auto;padding:0 24px 60px}
-h1{font-size:1.3em;font-weight:800;margin-bottom:20px}
-.answer-card{background:#fff;border-radius:12px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px}
-.answer-card h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.75em;font-weight:800;flex-shrink:0}
-.prompt{font-size:.85em;color:#4a5568;padding:8px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;margin-bottom:12px;font-style:italic}
-.correct{font-size:.9em;font-weight:700;color:#16a34a;margin-bottom:8px}
-.explanation{font-size:.82em;color:#4a5568;line-height:1.65}
-.explanation .wrong{color:#dc2626;font-weight:600}
-.tip-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;margin-bottom:24px}
-.tip-box h2{font-size:1.05em;font-weight:800;color:#92400e;margin-bottom:14px}
-.tip-box ul{padding-left:20px;font-size:.85em;color:#92400e;line-height:1.8}
-.tip-box li{margin-bottom:6px}
-.tip-box strong{font-weight:800}
-.back-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-size:.9em;font-weight:700;color:#fff;background:#f59e0b;border:none;border-radius:10px;cursor:pointer;text-decoration:none;transition:all .2s;font-family:inherit}
-.back-btn:hover{background:#d97706}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px;transition:width .5s}
+.tips-banner{background:#fff;border-left:4px solid #4a90d9;margin:20px auto;max-width:880px;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tips-banner h2{font-size:1em;color:#4a90d9;margin-bottom:14px}
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.tips-grid{grid-template-columns:1fr}}
+.tip-card{background:#ebf4ff;border-radius:8px;padding:14px;text-align:center}
+.tip-icon{font-size:1.5em;margin-bottom:6px}
+.tip-card h3{font-size:.85em;margin-bottom:4px}
+.tip-card p{font-size:.75em;color:#4a5568}
+.ann-section{max-width:880px;margin:20px auto}
+.ann-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #4a90d9;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.ann-header h3{font-size:1em;color:#4a90d9}
+.ann-header p{font-size:.82em;color:#718096;margin-top:4px}
+.script-box{background:#fff;padding:16px 20px;margin-bottom:2px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.script-box details{cursor:pointer}
+.script-box summary{font-size:.88em;font-weight:600;color:#4a90d9;padding:8px 0}
+.script-line{font-size:.82em;color:#4a5568;margin:4px 0;padding-left:12px}
+.script-line strong{color:#2d3748}
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #edf2f7}
+.q-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}
+.q-num.wrong{background:#e53e3e}
+.q-num.skip{background:#a0aec0}
+.q-prompt{font-size:.92em;font-weight:600;flex:1}
+.q-badge{font-size:.72em;padding:3px 10px;border-radius:12px;font-weight:600}
+.q-badge.detail{background:#ebf8ff;color:#2b6cb0}
+.q-badge.main-idea{background:#f0fff4;color:#276749}
+.q-badge.inference{background:#fefcbf;color:#975a16}
+.q-body{padding:16px 20px}
+.q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.q-user.is-skip{background:#f7fafc;color:#718096}
+.options-list{margin:10px 0}
+.opt-row{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:6px;font-size:.85em;margin-bottom:4px}
+.opt-row.is-correct{background:#f0fff4;font-weight:600}
+.opt-row.is-wrong-selected{background:#fff5f5;text-decoration:line-through;color:#e53e3e}
+.opt-label{font-weight:700;min-width:24px}
+.q-explain{background:#f7fafc;border-left:3px solid #4a90d9;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
+.q-explain strong{color:#2b6cb0}
+.q-hint{margin-top:6px;font-size:.8em;color:#718096;font-style:italic}
+.nav-bottom{max-width:880px;margin:24px auto;text-align:center;padding-bottom:40px}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
+.btn-back:hover{background:#3a7cc0;}
 </style>
 </head>
 <body>
+
 <div class="header">
-  <div class="header-left">
-    <span class="header-logo">TCK Workshop</span>
-    <span class="header-title">&#12479;&#12473;&#12463;&#21029;&#12488;&#12524;&#12540;&#12491;&#12531;&#12464;</span>
-  </div>
-</div>
-<div class="breadcrumb">
-  <a href="../menu.html">&#8592; Listening &#12513;&#12491;&#12517;&#12540;</a> &gt; Announcement Practice 7 &#35299;&#31572;
+  <h1>📢 Listen to an Announcement — Practice 7 解答解説</h1>
+  <p>タスク別トレーニング</p>
 </div>
 
-<div class="container">
-<h1>Listen to an Announcement &#8212; Practice 7 &#35299;&#31572;&#12539;&#35299;&#35500;</h1>
-
-<div class="tip-box">
-  <h2>&#128161; Announcement &#25915;&#30053;&#12467;&#12484;</h2>
-  <ul>
-    <li><strong>WHO / WHAT / WHEN / WHERE &#12434;&#32862;&#12365;&#21462;&#12427;&#65306;</strong>&#12450;&#12490;&#12454;&#12531;&#12473;&#12399;&#30701;&#12356;&#12398;&#12391;&#12289;&#12371;&#12398;4&#12388;&#12434;&#24847;&#35672;&#12377;&#12427;&#12384;&#12369;&#12391;&#22823;&#21322;&#12398;&#21839;&#38988;&#12395;&#23550;&#24540;&#12391;&#12365;&#12427;</li>
-    <li><strong>&#30446;&#30340;&#12399;&#20882;&#38957;&#12395;&#20986;&#12427;&#65306;</strong>&#12300;I wanted to let you know...&#12301;&#12300;Attention all students...&#12301;&#12398;&#30452;&#24460;&#12364;&#20027;&#26088;</li>
-    <li><strong>&#25512;&#22888;&#12539;&#27425;&#12398;&#12450;&#12463;&#12471;&#12519;&#12531;&#12399;&#26411;&#23614;&#12395;&#20986;&#12427;&#65306;</strong>&#12300;Please visit...&#12301;&#12300;If anyone needs...&#12301;&#12394;&#12393;&#26368;&#24460;&#12398;&#25991;&#12364;&#35373;&#21839;&#12395;&#12394;&#12426;&#12420;&#12377;&#12356;</li>
-    <li><strong>&#30701;&#12356;&#12406;&#12435;&#38598;&#20013;&#21147;&#12364;&#37749;&#65306;</strong>1&#22238;&#12375;&#12363;&#27969;&#12428;&#12394;&#12356;&#12398;&#12391;&#12289;&#26368;&#21021;&#12398;&#25968;&#31186;&#12391;&#22580;&#38754;&#12434;&#25226;&#25569;&#12375;&#12289;&#12513;&#12514;&#12398;&#28310;&#20633;&#12434;&#12377;&#12427;</li>
-  </ul>
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 4</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
 </div>
 
-<!-- Q1 -->
-<div class="answer-card">
-  <h3><span class="q-num">1</span> Question 1</h3>
-  <div class="prompt">What is the announcement mainly about?</div>
-  <div class="correct">&#27491;&#35299;: B) A research assistant position opening</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#20027;&#26088;&#21839;&#38988;&#65288;What is...mainly about&#65289;</strong><br>
-    &#25945;&#25480;&#12399;&#12300;the biology department is looking for two undergraduate research assistants&#12301;&#12392;&#26126;&#30906;&#12395;&#36848;&#12409;&#12390;&#12356;&#12427;&#12290;<br>
-    <span class="wrong">A)</span> &#35611;&#32681;&#12473;&#12465;&#12472;&#12517;&#12540;&#12523;&#12398;&#22793;&#26356;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">C)</span> &#26032;&#35215;&#12467;&#12540;&#12473;&#12398;&#25552;&#20379;&#12391;&#12399;&#12394;&#12367;&#12289;&#30740;&#31350;&#12450;&#12471;&#12473;&#12479;&#12531;&#12488;&#12398;&#21215;&#38598;&#12290;
-    <span class="wrong">D)</span> &#22888;&#23398;&#37329;&#12395;&#12388;&#12356;&#12390;&#12399;&#35441;&#38988;&#12395;&#20986;&#12390;&#12356;&#12394;&#12356;&#12290;
+<div class="tips-banner">
+  <h2>💡 Announcement 攻略のコツ</h2>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">🎯</div>
+      <h3>4つの焦点で聞く</h3>
+      <p>WHO（誰が）・WHAT（何を）・WHEN（いつ）・WHERE（どこで）を聞き逃さない</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📍</div>
+      <h3>目的問題は冒頭に答え</h3>
+      <p>「What is the announcement about?」の答えは最初の1〜2文にある。冒頭に全集中！</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔚</div>
+      <h3>推奨・次のアクションは末尾</h3>
+      <p>「What does the speaker recommend?」の答えは最後の文に隠れていることが多い</p>
+    </div>
   </div>
 </div>
 
-<!-- Q2 -->
-<div class="answer-card">
-  <h3><span class="q-num">2</span> Question 2</h3>
-  <div class="prompt">What do students need to submit to apply?</div>
-  <div class="correct">&#27491;&#35299;: C) A statement of interest and transcript</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#35443;&#32048;&#21839;&#38988;</strong><br>
-    &#12300;submit a short statement of interest and your transcript to the department office&#12301;&#12392;&#26126;&#30906;&#12395;&#36848;&#12409;&#12425;&#12428;&#12390;&#12356;&#12427;&#12290;<br>
-    <span class="wrong">A)</span> &#23653;&#27508;&#26360;&#12420;&#25512;&#34214;&#29366;&#12399;&#35201;&#27714;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">B)</span> &#30740;&#31350;&#25552;&#26696;&#26360;&#12420;&#12521;&#12508;&#12524;&#12509;&#12540;&#12488;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">D)</span> &#30003;&#35531;&#26360;&#12420;&#38754;&#25509;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
+<!-- Announcement 1 -->
+<div class="ann-section">
+  <div class="ann-header">
+    <h3>📢 Announcement 1 — 研究アシスタント募集</h3>
+    <p>場面：教室 ｜ 話者：教授</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <div class="script-line"><strong>[NARRATOR]</strong> Listen to an announcement in a classroom.</div>
+      <div class="script-line"><strong>[SPEAKER]</strong> Before we start today's lecture, I have an exciting announcement. The biology department is looking for two undergraduate research assistants to join Professor Chen's lab starting next month. The position involves helping with data collection for a study on freshwater ecosystems. You'll work about ten hours per week, and it counts as an independent study credit. To apply, you'll need to submit a short statement of interest and your transcript to the department office by next Friday. This is a great opportunity to gain hands-on research experience, especially for those of you considering graduate school.</div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q1icon">1</div>
+      <div class="q-prompt">What is the announcement mainly about?</div>
+      <span class="q-badge main-idea">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q1user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> A change in the lecture schedule.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> A research assistant position opening.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> A new course being offered next semester.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> A scholarship opportunity for biology students.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 教授は「the biology department is looking for two undergraduate research assistants」と明確に述べている。(A)講義スケジュールの変更は言及されていない。(C)新規コースの提供ではなく、研究アシスタントの募集。(D)奨学金については話題に出ていない。</div>
+      <div class="q-hint">🔑 冒頭の「I have an exciting announcement」の直後に主旨。「looking for...research assistants」= A research assistant position opening。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q2icon">2</div>
+      <div class="q-prompt">What do students need to submit to apply?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q2user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> A resume and two recommendation letters.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> A research proposal and lab report.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> A statement of interest and transcript.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> A completed application form and interview.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 「submit a short statement of interest and your transcript to the department office」と明確に述べられている。(A)履歴書や推薦状は要求されていない。(B)研究提案書やラボレポートは言及されていない。(D)申請書や面接は言及されていない。</div>
+      <div class="q-hint">🔑 「To apply, you'll need to submit...」の直後が応募要件。「statement of interest and transcript」の2点。</div>
+    </div>
   </div>
 </div>
 
-<!-- Q3 -->
-<div class="answer-card">
-  <h3><span class="q-num">3</span> Question 3</h3>
-  <div class="prompt">What is the main purpose of this announcement?</div>
-  <div class="correct">&#27491;&#35299;: D) To give tips on preventing bicycle theft</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#20027;&#26088;&#21839;&#38988;</strong><br>
-    &#12450;&#12490;&#12454;&#12531;&#12473;&#20840;&#20307;&#12364;&#33258;&#36578;&#36554;&#30423;&#38627;&#12398;&#22577;&#21578;&#12392;&#20104;&#38450;&#31574;&#12398;&#25552;&#31034;&#12395;&#12388;&#12356;&#12390;&#12290;U&#12525;&#12483;&#12463;&#12398;&#25512;&#22888;&#12289;&#30331;&#37682;&#12469;&#12540;&#12499;&#12473;&#12394;&#12393;&#20855;&#20307;&#30340;&#12394;&#20104;&#38450;&#31574;&#12434;&#36848;&#12409;&#12390;&#12356;&#12427;&#12290;<br>
-    <span class="wrong">A)</span> &#26032;&#12375;&#12356;&#39376;&#36650;&#22580;&#12398;&#30330;&#34920;&#12391;&#12399;&#12394;&#12356;&#12290;
-    <span class="wrong">B)</span> &#36910;&#25429;&#22577;&#21578;&#12391;&#12399;&#12394;&#12367;&#12289;&#20104;&#38450;&#31574;&#12398;&#25552;&#31034;&#12290;
-    <span class="wrong">C)</span> &#33258;&#36578;&#36554;&#12471;&#12455;&#12450;&#12503;&#12525;&#12464;&#12521;&#12512;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
+<!-- Announcement 2 -->
+<div class="ann-section">
+  <div class="ann-header">
+    <h3>📢 Announcement 2 — 自転車盗難防止の注意喚起</h3>
+    <p>場面：キャンパス安全情報 ｜ 話者：キャンパス警察</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <div class="script-line"><strong>[NARRATOR]</strong> Listen to a campus safety announcement.</div>
+      <div class="script-line"><strong>[SPEAKER]</strong> Good afternoon. This is a message from the campus police department regarding bicycle safety. Over the past month, we've received twelve reports of stolen bicycles on campus. Most of these thefts occurred near the east parking lot and the dormitory bike racks. To protect your bicycle, we strongly recommend using a U-lock rather than a cable lock, as cable locks can be easily cut. Always lock your bike to a designated rack, not to trees or handrails. We are also offering free bike registration at the campus police station. Registering your bike makes it much easier for us to recover it if it's stolen. Drop by our office Monday through Friday between nine and five to register yours.</div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q3icon">3</div>
+      <div class="q-prompt">What is the main purpose of this announcement?</div>
+      <span class="q-badge main-idea">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q3user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> To announce new bicycle parking areas.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> To report an arrest related to bike theft.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> To introduce a campus bike-sharing program.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(D)</span> To give tips on preventing bicycle theft.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> アナウンス全体が自転車盗難の報告と予防策の提示について。Uロックの推奨、登録サービスなど具体的な予防策を述べている。(A)新しい駐輪場の発表ではない。(B)逮捕報告ではなく、予防策の提示。(C)自転車シェアプログラムは言及されていない。</div>
+      <div class="q-hint">🔑 アナウンス全体の趣旨を把握する。盗難報告→予防策→登録サービスの流れ = giving tips on preventing bicycle theft。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q4icon">4</div>
+      <div class="q-prompt">What free service does the campus police offer?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q4user"></div>
+      <div class="options-list">
+        <div class="opt-row is-correct"><span class="opt-label">(A)</span> Bike registration.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Bike repair and maintenance.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Free U-locks for students.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Bicycle safety classes.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 「We are also offering free bike registration at the campus police station」と明確に述べられている。(B)自転車の修理サービスは言及されていない。(C)無料のUロック配布は言及されていない（推奨のみ）。(D)自転車安全講座は言及されていない。</div>
+      <div class="q-hint">🔑 「offering free bike registration」が根拠。「free」がキーワード — 無料サービスを問う問題。</div>
+    </div>
   </div>
 </div>
 
-<!-- Q4 -->
-<div class="answer-card">
-  <h3><span class="q-num">4</span> Question 4</h3>
-  <div class="prompt">What free service does the campus police offer?</div>
-  <div class="correct">&#27491;&#35299;: A) Bike registration</div>
-  <div class="explanation">
-    <strong>&#12479;&#12452;&#12503;&#65306;&#35443;&#32048;&#21839;&#38988;</strong><br>
-    &#12300;We are also offering free bike registration at the campus police station&#12301;&#12392;&#26126;&#30906;&#12395;&#36848;&#12409;&#12425;&#12428;&#12390;&#12356;&#12427;&#12290;<br>
-    <span class="wrong">B)</span> &#33258;&#36578;&#36554;&#12398;&#20462;&#29702;&#12469;&#12540;&#12499;&#12473;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-    <span class="wrong">C)</span> &#28961;&#26009;&#12398;U&#12525;&#12483;&#12463;&#37197;&#24067;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#65288;&#25512;&#22888;&#12398;&#12415;&#65289;&#12290;
-    <span class="wrong">D)</span> &#33258;&#36578;&#36554;&#23433;&#20840;&#35611;&#24231;&#12399;&#35328;&#21450;&#12373;&#12428;&#12390;&#12356;&#12394;&#12356;&#12290;
-  </div>
-</div>
-
-<div style="text-align:center;margin-top:30px">
-  <a class="back-btn" href="../menu.html">&#8592; Listening &#12513;&#12491;&#12517;&#12540;&#12395;&#25147;&#12427;</a>
-</div>
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-7.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
 </div>
 
 <script src="../../js/auth.js"></script>
 <script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+<script>
+const labels = ['A','B','C','D'];
+const correctAnswers = [1, 2, 3, 0];
+
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('announceAnswers')||'null');
+  let correct = 0, answered = 0;
+
+  if(stored && Array.isArray(stored)){
+    for(let i=0;i<4;i++){
+      const userAns = stored[i];
+      const isCorrect = userAns === correctAnswers[i];
+      const isSkip = userAns === null || userAns === undefined;
+      if(!isSkip) answered++;
+      if(isCorrect) correct++;
+
+      const icon = document.getElementById('q'+(i+1)+'icon');
+      const user = document.getElementById('q'+(i+1)+'user');
+
+      if(isSkip){
+        icon.className = 'q-num skip';
+        user.className = 'q-user is-skip';
+        user.textContent = '⏱️ 未回答（タイムアウト）';
+      } else if(isCorrect){
+        icon.className = 'q-num correct';
+        user.className = 'q-user is-correct';
+        user.textContent = '✅ 正解！ あなたの回答: ('+labels[userAns]+')';
+      } else {
+        icon.className = 'q-num wrong';
+        user.className = 'q-user is-wrong';
+        user.textContent = '❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')';
+      }
+    }
+    document.getElementById('scoreBig').textContent = correct + ' / 4';
+    document.getElementById('scoreBar').style.width = (correct/4*100)+'%';
+    const pct = Math.round(correct/4*100);
+    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+  } else {
+    document.getElementById('scoreBig').textContent = '— / 4';
+    document.getElementById('scoreMsg').textContent = '問題を先に解いてからこのページを見ると、スコアが表示されます';
+    for(let i=1;i<=4;i++) document.getElementById('q'+i+'user').style.display='none';
+  }
+}
+render();
+</script>
 </body>
 </html>

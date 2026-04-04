@@ -3,175 +3,328 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Academic Talk Practice 3 — 解答・解説</title>
-<link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Academic Talk Practice 3 — 解答解説</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
-.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:10px}
-.header-logo{font-size:.72em;font-weight:800;color:#2563eb;letter-spacing:.1em;text-transform:uppercase}
-.header-title{font-size:.95em;font-weight:700;color:#2d3748}
-.breadcrumb{padding:12px 24px;font-size:.8em;color:#8898a8}
-.breadcrumb a{color:#b45309;text-decoration:none;font-weight:600}
-.breadcrumb a:hover{text-decoration:underline}
-.container{max-width:800px;margin:0 auto;padding:0 24px 60px}
-h1{font-size:1.3em;font-weight:800;margin-bottom:20px}
-.answer-card{background:#fff;border-radius:12px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px}
-.answer-card h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.75em;font-weight:800;flex-shrink:0}
-.prompt{font-size:.85em;color:#4a5568;padding:8px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;margin-bottom:12px;font-style:italic}
-.correct{font-size:.9em;font-weight:700;color:#16a34a;margin-bottom:8px}
-.explanation{font-size:.82em;color:#4a5568;line-height:1.65}
-.explanation .wrong{color:#dc2626;font-weight:600}
-.section-divider{text-align:center;font-size:.85em;font-weight:800;color:#92400e;padding:16px 0;margin:8px 0}
-.tip-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;margin-bottom:24px}
-.tip-box h2{font-size:1.05em;font-weight:800;color:#92400e;margin-bottom:14px}
-.tip-box ul{padding-left:20px;font-size:.85em;color:#92400e;line-height:1.8}
-.tip-box li{margin-bottom:6px}
-.tip-box strong{font-weight:800}
-.back-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-size:.9em;font-weight:700;color:#fff;background:#f59e0b;border:none;border-radius:10px;cursor:pointer;text-decoration:none;transition:all .2s;font-family:inherit}
-.back-btn:hover{background:#d97706}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px;transition:width .5s}
+.tips-grid{max-width:880px;margin:20px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tip-card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center}
+.tip-card .icon{font-size:1.6em;margin-bottom:8px}
+.tip-card h3{font-size:.85em;color:#4a90d9;margin-bottom:6px}
+.tip-card p{font-size:.78em;color:#718096;line-height:1.6}
+.talk-section{max-width:880px;margin:20px auto}
+.talk-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #4a90d9;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.talk-header h3{font-size:1em;color:#4a90d9}
+.talk-header p{font-size:.82em;color:#718096;margin-top:4px}
+.script-box{background:#fff;padding:16px 20px;margin-bottom:2px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.script-box details{cursor:pointer}
+.script-box summary{font-size:.88em;font-weight:600;color:#4a90d9;padding:8px 0}
+.script-text{font-size:.82em;color:#4a5568;line-height:1.8;padding:8px 0}
+.script-text .highlight{background:#fefcbf;padding:1px 4px;border-radius:3px}
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #edf2f7}
+.q-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}
+.q-num.wrong{background:#e53e3e}
+.q-num.skip{background:#a0aec0}
+.q-prompt{font-size:.92em;font-weight:600;flex:1}
+.q-badge{font-size:.72em;padding:3px 10px;border-radius:12px;font-weight:600}
+.q-badge.main-topic{background:#ebf8ff;color:#2b6cb0}
+.q-badge.detail{background:#f0fff4;color:#276749}
+.q-badge.purpose{background:#fed7e2;color:#97266d}
+.q-badge.inference{background:#e9d8fd;color:#553c9a}
+.q-badge.not-except{background:#fefcbf;color:#975a16}
+.q-body{padding:16px 20px}
+.q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}
+.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
+.q-user.is-skip{background:#f7fafc;color:#718096}
+.options-list{margin:10px 0}
+.opt-row{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:6px;font-size:.85em;margin-bottom:4px}
+.opt-row.is-correct{background:#f0fff4;font-weight:600}
+.opt-row.is-wrong-selected{background:#fff5f5;text-decoration:line-through;color:#e53e3e}
+.opt-label{font-weight:700;min-width:24px}
+.q-explain{background:#f7fafc;border-left:3px solid #4a90d9;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
+.q-explain strong{color:#2b6cb0}
+.q-hint{margin-top:6px;font-size:.8em;color:#718096;font-style:italic}
+.nav-bottom{max-width:880px;margin:24px auto;text-align:center;padding-bottom:40px}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
+.btn-back:hover{background:#3a7cc0;}
+@media(max-width:640px){.tips-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
 <div class="header">
-  <div class="header-left">
-    <span class="header-logo">TCK Workshop</span>
-    <span class="header-title">タスク別トレーニング</span>
+  <h1>Listen to an Academic Talk — Practice 3 解答解説</h1>
+  <p>Task Training | Talk 1: The Influence of Jazz on American Culture | Talk 2: How Glaciers Shape Landscapes</p>
+</div>
+
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 8</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
+</div>
+
+<div class="tips-grid">
+  <div class="tip-card">
+    <div class="icon">&#9733;</div>
+    <h3>シグナルワードに集中</h3>
+    <p>「Today we're going to look at...」「For example...」「However...」が聞こえたら印をつけ、直後のキーワードだけメモ。</p>
   </div>
-</div>
-<div class="breadcrumb">
-  <a href="../menu.html">&#8592; Listening メニュー</a> &gt; Academic Talk Practice 3 解答
-</div>
-
-<div class="container">
-<h1>Listen to an Academic Talk — Practice 3 解答・解説</h1>
-
-<div class="tip-box">
-  <h2>&#128161; Academic Talk 攻略コツ</h2>
-  <ul>
-    <li><strong>シグナルワードを聞き逃さない：</strong>&#9733;主旨「Today I want to talk about...」 &#9670;具体例「For example...」 &#8660;対比「However...」 &#65309;言い換え「In other words...」 &#931;まとめ「So, what this means is...」</li>
-    <li><strong>ノートテイキングはキーワードだけ：</strong>全文を書き取ろうとしない。トピック・キーポイント・例・結論を短く記録する</li>
-    <li><strong>NOT/EXCEPT問題に注意：</strong>「言及されていないもの」を選ぶ。消去法で3つの正しい情報を確認する</li>
-    <li><strong>推論問題は「直接言っていないが示唆していること」：</strong>話の論理的な帰結を考える</li>
-    <li><strong>目的問題（Why does the speaker mention...）：</strong>その情報が話全体でどんな役割を果たしているかを考える</li>
-  </ul>
-</div>
-
-<div class="section-divider">— Talk 1: The Influence of Jazz on American Culture —</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">1</span> Question 1</h3>
-  <div class="prompt">What is the talk mainly about?</div>
-  <div class="correct">正解: A) How jazz influenced American culture beyond music</div>
-  <div class="explanation">
-    <strong>タイプ：主旨問題</strong><br>
-    講義全体がジャズ音楽がアメリカ文化（ファッション、言語、社会的態度、人種間の壁）にどのように影響を与えたかを説明している。<br>
-    <span class="wrong">B)</span> ジャズの技術的要素は部分的に触れるが、主旨ではない。
-    <span class="wrong">C)</span> Louis Armstrongは言及されるが、伝記ではない。
-    <span class="wrong">D)</span> ジャズの衰退は話題に出ていない。
+  <div class="tip-card">
+    <div class="icon">&#128221;</div>
+    <h3>ノートはキーワードだけ</h3>
+    <p>全文を書き取ろうとしない。トピック・キーポイント・例・結論を短い単語で記録する。聞くことが最優先。</p>
+  </div>
+  <div class="tip-card">
+    <div class="icon">&#128269;</div>
+    <h3>NOT/EXCEPT問題の攻略</h3>
+    <p>「言及されていないもの」を選ぶ。消去法で3つの正しい情報を確認し、残った1つが答え。メモでチェックを入れると確実。</p>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">2</span> Question 2</h3>
-  <div class="prompt">According to the speaker, what made jazz revolutionary?</div>
-  <div class="correct">正解: D) Its emphasis on improvisation</div>
-  <div class="explanation">
-    <strong>タイプ：詳細問題</strong><br>
-    講師は「What made jazz truly revolutionary was its emphasis on improvisation」と明確に述べている。<br>
-    <span class="wrong">A)</span> 電子楽器は言及されていない。ジャズは1800年代後半に起源。
-    <span class="wrong">B)</span> 富裕層の間での人気は言及されていない。
-    <span class="wrong">C)</span> ヨーロッパの和声は「要素の一つ」として触れられるが、革命的とされた点ではない。
+<!-- ===== Talk 1: The Influence of Jazz on American Culture ===== -->
+<div class="talk-section">
+  <div class="talk-header">
+    <h3>Talk 1 — The Influence of Jazz on American Culture (Art &amp; Music)</h3>
+    <p>話者：教授 ｜ Standard</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <div class="script-text">
+        <span class="highlight">Today we're going to look at</span> how jazz music shaped American culture in the twentieth century. Jazz originated in the African American communities of New Orleans in the late 1800s, blending elements of blues, ragtime, and European harmonies.<br><br>
+        <span class="highlight">What made jazz truly revolutionary</span> was its emphasis on <span class="highlight">improvisation</span> — musicians didn't just play written notes; they created new melodies on the spot, responding to each other in real time.<br><br>
+        By the 1920s, jazz had spread across the country and became the soundtrack of what we call the Jazz Age. It wasn't just music — it influenced fashion, language, and social attitudes. <span class="highlight">Jazz clubs</span> became spaces where racial barriers were, at least partially, broken down, as people of different backgrounds came together to enjoy the music.<br><br>
+        Artists like Louis Armstrong and Duke Ellington became cultural icons whose influence extended far beyond music. Jazz also <span class="highlight">laid the groundwork for later genres</span>, including rhythm and blues, rock and roll, and hip-hop. <span class="highlight">In many ways,</span> jazz represents the spirit of American creativity — the idea that something beautiful can emerge from collaboration, spontaneity, and the willingness to take risks.
+      </div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q1icon">1</div>
+      <div class="q-prompt">What is the talk mainly about?</div>
+      <span class="q-badge main-topic">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q1user"></div>
+      <div class="options-list">
+        <div class="opt-row is-correct"><span class="opt-label">(A)</span> How jazz influenced American culture beyond music.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> The technical elements of jazz composition.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> A biography of Louis Armstrong.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> The decline of jazz in modern America.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講義全体がジャズがアメリカ文化（ファッション、言語、社会的態度、人種間の壁）にどう影響を与えたかを説明。(B)技術的要素は部分的、(C)伝記ではない、(D)衰退は言及なし。</div>
+      <div class="q-hint">🔑 Main Idea問題：「Today we're going to look at how jazz music shaped American culture」がそのまま答え。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q2icon">2</div>
+      <div class="q-prompt">According to the speaker, what made jazz revolutionary?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q2user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Its use of electronic instruments.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Its popularity among wealthy audiences.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Its origins in European classical music.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(D)</span> Its emphasis on improvisation.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「What made jazz truly revolutionary was its emphasis on improvisation」と明確に述べている。(A)電子楽器は言及なし、(B)富裕層は言及なし、(C)ヨーロッパの和声は要素の一つだが革命的とされた点ではない。</div>
+      <div class="q-hint">🔑 Detail問題：「What made X truly revolutionary was...」の構文が答えを直接示す。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q3icon">3</div>
+      <div class="q-prompt">Why does the speaker mention jazz clubs?</div>
+      <span class="q-badge purpose">Purpose</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q3user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> To explain how musicians earned their income.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> To describe the architecture of the Jazz Age.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> To illustrate how jazz helped break down racial barriers.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> To compare jazz clubs with classical concert halls.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師はジャズクラブについて「racial barriers were, at least partially, broken down, as people of different backgrounds came together」と述べている。人種的障壁の緩和の例として言及。</div>
+      <div class="q-hint">🔑 Purpose問題：ジャズクラブは社会的影響（人種の壁を越える場所）の具体例として挙げられている。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q4icon">4</div>
+      <div class="q-prompt">What can be inferred from the talk?</div>
+      <span class="q-badge inference">Inference</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q4user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Jazz was only popular during the 1920s.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> Modern music genres owe something to jazz.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Jazz musicians always played from written scores.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Jazz originated in Europe and spread to America.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「Jazz also laid the groundwork for later genres, including rhythm and blues, rock and roll, and hip-hop」と述べている。現代の音楽ジャンルがジャズに負っていることが推論できる。(A)1920年代だけではない、(C)即興演奏が特徴、(D)ニューオーリンズで誕生。</div>
+      <div class="q-hint">🔑 Inference問題：「laid the groundwork for later genres」が現代音楽への影響を示唆。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">3</span> Question 3</h3>
-  <div class="prompt">Why does the speaker mention jazz clubs?</div>
-  <div class="correct">正解: C) To illustrate how jazz helped break down racial barriers</div>
-  <div class="explanation">
-    <strong>タイプ：目的問題（Why does the speaker mention...）</strong><br>
-    講師はジャズクラブについて「racial barriers were, at least partially, broken down, as people of different backgrounds came together」と述べ、人種的障壁が緩和された例として言及している。<br>
-    <span class="wrong">A)</span> ミュージシャンの収入については言及されていない。
-    <span class="wrong">B)</span> ジャズ・エイジの建築は話題に出ていない。
-    <span class="wrong">D)</span> クラシックコンサートホールとの比較は行っていない。
+<!-- ===== Talk 2: How Glaciers Shape Landscapes ===== -->
+<div class="talk-section">
+  <div class="talk-header">
+    <h3>Talk 2 — How Glaciers Shape Landscapes (Physical Science)</h3>
+    <p>話者：教授 ｜ Harder</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <div class="script-text">
+        <span class="highlight">Let's talk about</span> one of the most powerful forces in shaping the Earth's surface — glaciers. A glacier is essentially a massive body of ice that forms over centuries as layers of snow compact and recrystallize. <span class="highlight">But</span> glaciers are not just static ice formations; they move, and it is this movement that makes them such effective agents of landscape change.<br><br>
+        Glaciers move through a combination of two processes. The first is <span class="highlight">internal deformation</span>, where the weight of the ice causes it to slowly flow, almost like extremely thick liquid. The second process is <span class="highlight">basal sliding</span>, where a thin layer of meltwater at the base of the glacier allows it to slide over the bedrock beneath.<br><br>
+        As glaciers advance, they carry with them enormous amounts of rock and sediment, scraping and grinding the land beneath them. This process, called glacial erosion, creates distinctive landforms. <span class="highlight">For example,</span> U-shaped valleys are carved by glaciers moving through mountain regions, in contrast to the V-shaped valleys created by rivers. Glaciers also create features called <span class="highlight">moraines</span>, which are ridges of debris deposited along the edges and at the front of the glacier.<br><br>
+        When a glacier retreats, it often leaves behind deep depressions that fill with water, forming <span class="highlight">glacial lakes</span>. <span class="highlight">The Great Lakes</span> of North America are perhaps the most famous example of lakes formed by glacial activity.<br><br>
+        Scientists study glaciers not only to understand past geological events but also because glaciers serve as sensitive indicators of climate change. As global temperatures rise, glaciers around the world are retreating at an accelerating rate.
+      </div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q5icon">5</div>
+      <div class="q-prompt">What is the talk mainly about?</div>
+      <span class="q-badge main-topic">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q5user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> The formation of the Great Lakes.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> How glaciers move and shape the Earth's surface.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> The effects of climate change on polar ice caps.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> A comparison of different types of erosion.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講義全体が氷河の移動メカニズムと地形形成を説明。(A)五大湖は一例、(C)気候変動は末尾で触れるだけ、(D)浸食の比較は主旨ではない。</div>
+      <div class="q-hint">🔑 Main Idea問題：「Let's talk about...glaciers」で導入。移動と地形変化が二大テーマ。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q6icon">6</div>
+      <div class="q-prompt">According to the speaker, what are the two processes by which glaciers move?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q6user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Evaporation and condensation.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Tectonic shifting and volcanic activity.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> Internal deformation and basal sliding.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Wind erosion and water erosion.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「The first is internal deformation」「The second process is basal sliding」と2つのプロセスを明確に説明。(A)(B)(D)は氷河の移動メカニズムではない。</div>
+      <div class="q-hint">🔑 Detail問題：「The first is...The second process is...」のパターンで列挙される情報に注目。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q7icon">7</div>
+      <div class="q-prompt">Why does the speaker mention the Great Lakes?</div>
+      <span class="q-badge purpose">Purpose</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q7user"></div>
+      <div class="options-list">
+        <div class="opt-row is-correct"><span class="opt-label">(A)</span> To give an example of lakes formed by glacial activity.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> To explain why freshwater is becoming scarce.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> To compare lakes formed by rivers with those formed by glaciers.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> To describe the geography of North America.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「The Great Lakes of North America are perhaps the most famous example of lakes formed by glacial activity」と述べており、氷河湖の具体例として言及。(B)淡水不足、(C)河川湖との比較、(D)北米地理は目的ではない。</div>
+      <div class="q-hint">🔑 Purpose問題：「the most famous example of...」が具体例の導入フレーズ。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q8icon">8</div>
+      <div class="q-prompt">Which of the following is NOT mentioned as a landform created by glaciers?</div>
+      <span class="q-badge not-except">NOT/EXCEPT</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q8user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> U-shaped valleys.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Moraines.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Glacial lakes.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(D)</span> Sand dunes.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師が挙げた氷河による地形はU字谷(A)、モレーン(B)、氷河湖(C)の3つ。砂丘(D)は氷河ではなく風によって形成されるもので、言及なし。</div>
+      <div class="q-hint">🔑 NOT/EXCEPT問題の鉄則：消去法で解く。本文に言及のある3つを消し、残った1つが正解。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">4</span> Question 4</h3>
-  <div class="prompt">What can be inferred from the talk?</div>
-  <div class="correct">正解: B) Modern music genres owe something to jazz</div>
-  <div class="explanation">
-    <strong>タイプ：推論問題</strong><br>
-    講師は「Jazz also laid the groundwork for later genres, including rhythm and blues, rock and roll, and hip-hop」と述べており、現代の音楽ジャンルがジャズに負っていることが推論できる。<br>
-    <span class="wrong">A)</span> 1920年代だけでなく、その後のジャンルにも影響を与えたと述べている。
-    <span class="wrong">C)</span> 即興演奏が特徴であり、楽譜通りに演奏していたわけではない。
-    <span class="wrong">D)</span> ジャズはニューオーリンズのアフリカ系アメリカ人コミュニティで生まれた。
-  </div>
-</div>
-
-<div class="section-divider">— Talk 2: How Glaciers Shape Landscapes —</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">5</span> Question 5</h3>
-  <div class="prompt">What is the talk mainly about?</div>
-  <div class="correct">正解: B) How glaciers move and shape the Earth's surface</div>
-  <div class="explanation">
-    <strong>タイプ：主旨問題</strong><br>
-    講義全体が氷河の移動メカニズムと、それが地形をどのように形成するかを説明している。<br>
-    <span class="wrong">A)</span> 五大湖は一例として挙げられているが、主旨ではない。
-    <span class="wrong">C)</span> 気候変動の影響は末尾で触れるが、主旨ではない。
-    <span class="wrong">D)</span> 浸食の種類の比較は主旨ではない。
-  </div>
-</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">6</span> Question 6</h3>
-  <div class="prompt">According to the speaker, what are the two processes by which glaciers move?</div>
-  <div class="correct">正解: C) Internal deformation and basal sliding</div>
-  <div class="explanation">
-    <strong>タイプ：詳細問題</strong><br>
-    講師は「The first is internal deformation」と「The second process is basal sliding」と2つのプロセスを明確に説明している。<br>
-    <span class="wrong">A)</span> 蒸発と凝結は氷河の移動メカニズムではない。
-    <span class="wrong">B)</span> 地殻変動と火山活動は無関係。
-    <span class="wrong">D)</span> 風食と水食は氷河の移動プロセスではない。
-  </div>
-</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">7</span> Question 7</h3>
-  <div class="prompt">Why does the speaker mention the Great Lakes?</div>
-  <div class="correct">正解: A) To give an example of lakes formed by glacial activity</div>
-  <div class="explanation">
-    <strong>タイプ：目的問題（Why does the speaker mention...）</strong><br>
-    講師は「The Great Lakes of North America are perhaps the most famous example of lakes formed by glacial activity」と述べており、氷河湖の具体例として言及。<br>
-    <span class="wrong">B)</span> 淡水の不足については直接の文脈ではない。
-    <span class="wrong">C)</span> 河川湖と氷河湖の比較は行っていない。
-    <span class="wrong">D)</span> 北米の地理全般を説明しているわけではない。
-  </div>
-</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">8</span> Question 8</h3>
-  <div class="prompt">Which of the following is NOT mentioned as a landform created by glaciers?</div>
-  <div class="correct">正解: D) Sand dunes</div>
-  <div class="explanation">
-    <strong>タイプ：NOT/EXCEPT問題</strong><br>
-    講師が挙げた氷河による地形はU字谷、モレーン（堆石）、氷河湖の3つ。砂丘は氷河ではなく風によって形成されるもので、言及されていない。<br>
-    NOT問題は消去法で解く：A) U-shaped valleys &#10003; 言及あり、B) Moraines &#10003; 言及あり、C) Glacial lakes &#10003; 言及あり → D) Sand dunes が正解。
-  </div>
-</div>
-
-<div style="text-align:center;margin-top:30px">
-  <a class="back-btn" href="../menu.html">&#8592; Listening メニューに戻る</a>
-</div>
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-3.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">メニューに戻る</a>
 </div>
 
 <script src="../../js/auth.js"></script>
 <script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+<script>
+const labels = ['A','B','C','D'];
+const totalQ = 8;
+// Correct answers: Q1=A(0), Q2=D(3), Q3=C(2), Q4=B(1), Q5=B(1), Q6=C(2), Q7=A(0), Q8=D(3)
+const correctAnswers = [0, 3, 2, 1, 1, 2, 0, 3];
+
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('talkPractice3Answers')||'null');
+  let correct = 0, answered = 0;
+  if(stored && Array.isArray(stored)){
+    for(let i=0;i<totalQ;i++){
+      const userAns = stored[i];
+      const isCorrect = userAns === correctAnswers[i];
+      const isSkip = userAns === null || userAns === undefined;
+      if(!isSkip) answered++;
+      if(isCorrect) correct++;
+      const icon = document.getElementById('q'+(i+1)+'icon');
+      const user = document.getElementById('q'+(i+1)+'user');
+      if(isSkip){ icon.className='q-num skip'; user.className='q-user is-skip'; user.textContent='⏱️ 未回答（タイムアウト）'; }
+      else if(isCorrect){ icon.className='q-num correct'; user.className='q-user is-correct'; user.textContent='✅ 正解！ あなたの回答: ('+labels[userAns]+')'; }
+      else { icon.className='q-num wrong'; user.className='q-user is-wrong'; user.textContent='❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')'; }
+    }
+    document.getElementById('scoreBig').textContent = correct + ' / ' + totalQ;
+    document.getElementById('scoreBar').style.width = (correct/totalQ*100)+'%';
+    const pct = Math.round(correct/totalQ*100);
+    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+  } else {
+    document.getElementById('scoreBig').textContent = '— / ' + totalQ;
+    document.getElementById('scoreMsg').textContent = '問題を先に解いてからこのページを見ると、スコアが表示されます';
+    for(let i=1;i<=totalQ;i++) document.getElementById('q'+i+'user').style.display='none';
+  }
+}
+render();
+</script>
 </body>
 </html>

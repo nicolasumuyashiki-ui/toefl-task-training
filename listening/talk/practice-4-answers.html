@@ -3,177 +3,322 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Academic Talk Practice 4 — 解答・解説</title>
-<link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Academic Talk Practice 4 — 解答解説</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
-.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:10px}
-.header-logo{font-size:.72em;font-weight:800;color:#2563eb;letter-spacing:.1em;text-transform:uppercase}
-.header-title{font-size:.95em;font-weight:700;color:#2d3748}
-.breadcrumb{padding:12px 24px;font-size:.8em;color:#8898a8}
-.breadcrumb a{color:#b45309;text-decoration:none;font-weight:600}
-.breadcrumb a:hover{text-decoration:underline}
-.container{max-width:800px;margin:0 auto;padding:0 24px 60px}
-h1{font-size:1.3em;font-weight:800;margin-bottom:20px}
-.answer-card{background:#fff;border-radius:12px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px}
-.answer-card h3{font-size:.95em;font-weight:800;color:#2d3748;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.75em;font-weight:800;flex-shrink:0}
-.prompt{font-size:.85em;color:#4a5568;padding:8px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;margin-bottom:12px;font-style:italic}
-.correct{font-size:.9em;font-weight:700;color:#16a34a;margin-bottom:8px}
-.explanation{font-size:.82em;color:#4a5568;line-height:1.65}
-.explanation .wrong{color:#dc2626;font-weight:600}
-.section-divider{text-align:center;font-size:.85em;font-weight:800;color:#92400e;padding:16px 0;margin:8px 0}
-.tip-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px;margin-bottom:24px}
-.tip-box h2{font-size:1.05em;font-weight:800;color:#92400e;margin-bottom:14px}
-.tip-box ul{padding-left:20px;font-size:.85em;color:#92400e;line-height:1.8}
-.tip-box li{margin-bottom:6px}
-.tip-box strong{font-weight:800}
-.back-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-size:.9em;font-weight:700;color:#fff;background:#f59e0b;border:none;border-radius:10px;cursor:pointer;text-decoration:none;transition:all .2s;font-family:inherit}
-.back-btn:hover{background:#d97706}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+.header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:4px}
+.header p{font-size:.85em;opacity:.8}
+.score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
+.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
+.score-sub{font-size:.85em;color:#718096}
+.score-bar{height:8px;background:#e2e8f0;border-radius:4px;margin:16px auto;max-width:300px}
+.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px;transition:width .5s}
+.tips-grid{max-width:880px;margin:20px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tip-card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center}
+.tip-card .icon{font-size:1.6em;margin-bottom:8px}
+.tip-card h3{font-size:.85em;color:#4a90d9;margin-bottom:6px}
+.tip-card p{font-size:.78em;color:#718096;line-height:1.6}
+.talk-section{max-width:880px;margin:20px auto}
+.talk-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #4a90d9;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.talk-header h3{font-size:1em;color:#4a90d9}
+.talk-header p{font-size:.82em;color:#718096;margin-top:4px}
+.script-box{background:#fff;padding:16px 20px;margin-bottom:2px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.script-box details{cursor:pointer}
+.script-box summary{font-size:.88em;font-weight:600;color:#4a90d9;padding:8px 0}
+.script-text{font-size:.82em;color:#4a5568;line-height:1.8;padding:8px 0}
+.script-text .highlight{background:#fefcbf;padding:1px 4px;border-radius:3px}
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
+.q-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #edf2f7}
+.q-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#fff;flex-shrink:0}
+.q-num.correct{background:#38a169}.q-num.wrong{background:#e53e3e}.q-num.skip{background:#a0aec0}
+.q-prompt{font-size:.92em;font-weight:600;flex:1}
+.q-badge{font-size:.72em;padding:3px 10px;border-radius:12px;font-weight:600}
+.q-badge.main-topic{background:#ebf8ff;color:#2b6cb0}
+.q-badge.detail{background:#f0fff4;color:#276749}
+.q-badge.purpose{background:#fed7e2;color:#97266d}
+.q-badge.inference{background:#e9d8fd;color:#553c9a}
+.q-badge.not-except{background:#fefcbf;color:#975a16}
+.q-body{padding:16px 20px}
+.q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
+.q-user.is-correct{background:#f0fff4;color:#22543d}.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}.q-user.is-skip{background:#f7fafc;color:#718096}
+.options-list{margin:10px 0}
+.opt-row{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:6px;font-size:.85em;margin-bottom:4px}
+.opt-row.is-correct{background:#f0fff4;font-weight:600}
+.opt-row.is-wrong-selected{background:#fff5f5;text-decoration:line-through;color:#e53e3e}
+.opt-label{font-weight:700;min-width:24px}
+.q-explain{background:#f7fafc;border-left:3px solid #4a90d9;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
+.q-explain strong{color:#2b6cb0}
+.q-hint{margin-top:6px;font-size:.8em;color:#718096;font-style:italic}
+.nav-bottom{max-width:880px;margin:24px auto;text-align:center;padding-bottom:40px}
+.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
+.btn-back:hover{background:#3a7cc0;}
+@media(max-width:640px){.tips-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
 <div class="header">
-  <div class="header-left">
-    <span class="header-logo">TCK Workshop</span>
-    <span class="header-title">タスク別トレーニング</span>
+  <h1>Listen to an Academic Talk — Practice 4 解答解説</h1>
+  <p>Task Training | Talk 1: The Psychology of Color in Marketing | Talk 2: Ancient Egyptian Agriculture Along the Nile</p>
+</div>
+
+<div class="score-summary">
+  <p class="score-sub">あなたのスコア</p>
+  <div class="score-big" id="scoreBig">— / 8</div>
+  <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
+  <p class="score-sub" id="scoreMsg"></p>
+</div>
+
+<div class="tips-grid">
+  <div class="tip-card">
+    <div class="icon">&#9733;</div>
+    <h3>因果のシグナルに注目</h3>
+    <p>「That's the reason...」「which is why...」「because...」が聞こえたら、理由や結果の情報が続く。Detail問題の出題ポイント。</p>
   </div>
-</div>
-<div class="breadcrumb">
-  <a href="../menu.html">&#8592; Listening メニュー</a> &gt; Academic Talk Practice 4 解答
-</div>
-
-<div class="container">
-<h1>Listen to an Academic Talk — Practice 4 解答・解説</h1>
-
-<div class="tip-box">
-  <h2>&#128161; シグナルワードを聞き取るコツ</h2>
-  <ul>
-    <li><strong>主旨を示すシグナル：</strong>「Today we're going to look at...」「Let's turn our attention to...」 — 講義の冒頭で話題を明確にする表現</li>
-    <li><strong>例示のシグナル：</strong>「For example,...」「For instance,...」 — 具体例が続くことを予告する</li>
-    <li><strong>対比のシグナル：</strong>「on the other hand」「in contrast to」「However,...」 — 反対の情報が来ることを示す</li>
-    <li><strong>因果のシグナル：</strong>「That's the reason...」「which is why...」 — 理由や結果を示す重要な接続表現</li>
-    <li><strong>言い換えのシグナル：</strong>「In other words,...」「meaning...」 — 同じ内容を別の言葉で説明する</li>
-  </ul>
-</div>
-
-<div class="section-divider">— Talk 1: The Psychology of Color in Marketing —</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">1</span> Question 1</h3>
-  <div class="prompt">What is the talk mainly about?</div>
-  <div class="correct">正解: D) How colors affect consumer decisions in marketing</div>
-  <div class="explanation">
-    <strong>タイプ：主旨問題</strong><br>
-    講義の冒頭で「how color influences consumer behavior」と述べ、マーケティングにおける色の心理的効果を全体を通して説明している。シグナルワード「Today we're going to look at...」が主旨を示す。<br>
-    <span class="wrong">A)</span> 広告技術の歴史は話題に出ていない。
-    <span class="wrong">B)</span> 文化の違いは部分的に触れるが、主旨ではない。
-    <span class="wrong">C)</span> 企業の成功要因全般ではなく、色に焦点を当てている。
+  <div class="tip-card">
+    <div class="icon">&#128221;</div>
+    <h3>対比シグナルを聞き取る</h3>
+    <p>「on the other hand」「in contrast to」「However」は反対の情報が来るサイン。対比構造は問題に出やすい。</p>
+  </div>
+  <div class="tip-card">
+    <div class="icon">&#128269;</div>
+    <h3>言い換えシグナル</h3>
+    <p>「In other words,...」「meaning...」は同じ内容を別の言葉で説明する。専門用語の定義問題に直結。</p>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">2</span> Question 2</h3>
-  <div class="prompt">According to the speaker, why do many banks use the color blue?</div>
-  <div class="correct">正解: A) Because blue is associated with trust and reliability</div>
-  <div class="explanation">
-    <strong>タイプ：詳細問題</strong><br>
-    講師は「Blue, on the other hand, is associated with trust and reliability. That's the reason many banks and technology companies use blue」と明確に述べている。シグナルワード「That's the reason...」が因果関係を示す。<br>
-    <span class="wrong">B)</span> 色の生産コストは言及されていない。
-    <span class="wrong">C)</span> 政府の規制は話題に出ていない。
-    <span class="wrong">D)</span> 全ての色の中で最も好まれるとは述べていない。
+<!-- ===== Talk 1: The Psychology of Color in Marketing ===== -->
+<div class="talk-section">
+  <div class="talk-header">
+    <h3>Talk 1 — The Psychology of Color in Marketing (Social Science)</h3>
+    <p>話者：教授 ｜ Standard</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <div class="script-text">
+        <span class="highlight">Today we're going to look at</span> how color influences consumer behavior. This is a key concept in marketing psychology. Research shows that up to 90 percent of snap judgments about products can be based on color alone.<br><br>
+        <span class="highlight">For example,</span> red is often used to create a sense of urgency, which is why you frequently see it in clearance sales. Blue, <span class="highlight">on the other hand,</span> is associated with trust and reliability. <span class="highlight">That's the reason</span> many banks and technology companies use blue in their logos. Green tends to signal health and nature, making it a popular choice for organic food brands.<br><br>
+        <span class="highlight">However,</span> it's important to understand that color associations are not universal. They can vary significantly across cultures. In some <span class="highlight">Asian countries</span>, <span class="highlight">for instance,</span> white is linked to mourning rather than purity. So when companies expand internationally, they need to carefully reconsider their color choices to avoid sending the wrong message to potential customers.
+      </div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q1icon">1</div>
+      <div class="q-prompt">What is the talk mainly about?</div>
+      <span class="q-badge main-topic">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q1user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> The history of advertising techniques.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Cultural differences in business practices.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Why certain companies are more successful than others.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(D)</span> How colors affect consumer decisions in marketing.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 冒頭で「how color influences consumer behavior」と主題を明示。マーケティングにおける色の心理的効果を全体で説明。(A)広告技術の歴史、(B)文化の違いは部分的、(C)企業の成功要因全般ではない。</div>
+      <div class="q-hint">🔑 Main Idea問題：「Today we're going to look at...」が主旨のシグナル。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q2icon">2</div>
+      <div class="q-prompt">According to the speaker, why do many banks use the color blue?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q2user"></div>
+      <div class="options-list">
+        <div class="opt-row is-correct"><span class="opt-label">(A)</span> Because blue is associated with trust and reliability.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Because blue is the cheapest color to produce.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Because government regulations require it.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Because customers prefer blue over all other colors.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「Blue...is associated with trust and reliability. That's the reason many banks and technology companies use blue」と明確に述べている。シグナルワード「That's the reason...」が因果関係を示す。</div>
+      <div class="q-hint">🔑 Detail問題：「That's the reason...」のシグナルが因果関係の答えを直接示す。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q3icon">3</div>
+      <div class="q-prompt">Why does the speaker mention Asian countries?</div>
+      <span class="q-badge purpose">Purpose</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q3user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> To argue that Asian markets are the most important.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> To show that color meanings can differ across cultures.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> To explain why Asian companies are successful.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> To compare Asian and European advertising budgets.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「color associations are not universal. They can vary significantly across cultures」と述べた後、アジアの例を挙げている。「For instance,...」が具体例のシグナル。</div>
+      <div class="q-hint">🔑 Purpose問題：「for instance」が具体例の導入。前の一般論（色の意味は文化で異なる）を裏付ける例として使用。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q4icon">4</div>
+      <div class="q-prompt">What can be inferred from the talk?</div>
+      <span class="q-badge inference">Inference</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q4user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> A single color strategy works effectively in every country.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Red is the most effective color for all types of marketing.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> Companies should research local color preferences before entering new markets.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Color has no real impact on purchasing decisions.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「companies expand internationally, they need to carefully reconsider their color choices」と述べている。新市場参入前に色の好みを調査すべきだと推論できる。(A)単一戦略は不適、(B)赤は緊急性に効果的だが万能ではない、(D)色は影響があると述べている。</div>
+      <div class="q-hint">🔑 Inference問題：最後の文に結論がある。「need to carefully reconsider」が示唆の核心。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">3</span> Question 3</h3>
-  <div class="prompt">Why does the speaker mention Asian countries?</div>
-  <div class="correct">正解: B) To show that color meanings can differ across cultures</div>
-  <div class="explanation">
-    <strong>タイプ：目的問題（Why does the speaker mention...）</strong><br>
-    講師は「color associations are not universal. They can vary significantly across cultures」と述べた後、アジアの例を挙げている。「For instance,...」のシグナルワードが具体例であることを示す。<br>
-    <span class="wrong">A)</span> アジア市場が最も重要だとは述べていない。
-    <span class="wrong">C)</span> アジア企業の成功理由は話題に出ていない。
-    <span class="wrong">D)</span> 広告予算の比較は行っていない。
+<!-- ===== Talk 2: Ancient Egyptian Agriculture Along the Nile ===== -->
+<div class="talk-section">
+  <div class="talk-header">
+    <h3>Talk 2 — Ancient Egyptian Agriculture Along the Nile (History)</h3>
+    <p>話者：教授 ｜ Harder</p>
+  </div>
+  <div class="script-box">
+    <details>
+      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <div class="script-text">
+        <span class="highlight">Let's turn our attention to</span> one of the earliest and most successful agricultural systems in human history — farming along the Nile River in ancient Egypt. The Nile was absolutely central to Egyptian civilization, and the key to understanding why lies in its annual flooding cycle.<br><br>
+        Each year, typically between June and September, heavy rains in the Ethiopian highlands would cause the Nile to overflow its banks. When the floodwaters eventually receded, they left behind a layer of rich, dark silt that was incredibly fertile. The Egyptians called this fertile land <span class="highlight">"kemet," meaning "the black land,"</span> <span class="highlight">in contrast to</span> "deshret," the red, barren desert beyond the river valley.<br><br>
+        Now, the Egyptians didn't simply wait for the floods and hope for the best. They developed an elaborate system of irrigation canals and basins to control and distribute the floodwaters more effectively. The main crops grown were emmer wheat and barley, which were used to make <span class="highlight">bread and beer</span> — the staples of the Egyptian diet. Flax was also cultivated extensively for making linen cloth.<br><br>
+        <span class="highlight">What's particularly remarkable is</span> how this agricultural system supported one of the most advanced civilizations of the ancient world for over three thousand years. The surplus food production allowed the development of specialized crafts, monumental architecture, and a complex social hierarchy. <span class="highlight">In other words,</span> it was the Nile's predictable flooding and the Egyptian farmers' ingenuity that made possible everything from the pyramids to hieroglyphics.
+      </div>
+    </details>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q5icon">5</div>
+      <div class="q-prompt">What is the talk mainly about?</div>
+      <span class="q-badge main-topic">Main Idea</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q5user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> The construction of the Egyptian pyramids.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> Trade routes in the ancient world.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> The discovery of hieroglyphics.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(D)</span> How ancient Egyptian farming along the Nile sustained a civilization.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 冒頭で「farming along the Nile River」と述べ、ナイル川沿いの農業が文明をどう支えたかを全体で説明。(A)ピラミッドは末尾で軽く触れるだけ、(B)(C)は言及なし。</div>
+      <div class="q-hint">🔑 Main Idea問題：「Let's turn our attention to...」がトピック導入のシグナル。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q6icon">6</div>
+      <div class="q-prompt">According to the speaker, what did the term "kemet" refer to?</div>
+      <span class="q-badge detail">Detail</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q6user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> The barren desert surrounding the Nile.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> A type of crop grown by Egyptian farmers.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(C)</span> The fertile black land left by the Nile's floods.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> An ancient Egyptian irrigation tool.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「The Egyptians called this fertile land 'kemet,' meaning 'the black land'」と明確に定義。「meaning...」が言い換え・定義のシグナル。(A)砂漠は「deshret」、(B)(D)は不正確。</div>
+      <div class="q-hint">🔑 定義問題：「called X, meaning...」のパターンで導入される。meaningの後が定義そのもの。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q7icon">7</div>
+      <div class="q-prompt">Why does the speaker mention bread and beer?</div>
+      <span class="q-badge purpose">Purpose</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q7user"></div>
+      <div class="options-list">
+        <div class="opt-row is-correct"><span class="opt-label">(A)</span> To explain what the main crops were used for.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> To describe Egyptian religious ceremonies.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> To compare Egyptian and Greek diets.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> To argue that Egyptians had unhealthy eating habits.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「emmer wheat and barley, which were used to make bread and beer — the staples of the Egyptian diet」と述べている。主要作物の用途を説明するために言及。(B)(C)(D)は言及なし。</div>
+      <div class="q-hint">🔑 Purpose問題：パンとビールは小麦と大麦の「用途」の具体例として提示されている。</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <div class="q-num correct" id="q8icon">8</div>
+      <div class="q-prompt">What can be inferred about the relationship between agriculture and Egyptian civilization?</div>
+      <span class="q-badge inference">Inference</span>
+    </div>
+    <div class="q-body">
+      <div class="q-user is-correct" id="q8user"></div>
+      <div class="options-list">
+        <div class="opt-row"><span class="opt-label">(A)</span> Agriculture played only a minor role in Egyptian society.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> Food surpluses from farming enabled cultural and architectural achievements.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> The pyramids were built before farming began along the Nile.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Egyptian farmers refused to use irrigation technology.</div>
+      </div>
+      <div class="q-explain"><strong>解説：</strong> 講師は「surplus food production allowed the development of specialized crafts, monumental architecture, and a complex social hierarchy」と述べている。農業の余剰がピラミッドやヒエログリフを可能にした。(A)minor roleではない、(C)農業が先、(D)灌漑を開発した。</div>
+      <div class="q-hint">🔑 Inference問題：「In other words,...」のシグナルで要約。農業の余剰→文化的成果という因果を推論。</div>
+    </div>
   </div>
 </div>
 
-<div class="answer-card">
-  <h3><span class="q-num">4</span> Question 4</h3>
-  <div class="prompt">What can be inferred from the talk?</div>
-  <div class="correct">正解: C) Companies should research local color preferences before entering new markets</div>
-  <div class="explanation">
-    <strong>タイプ：推論問題</strong><br>
-    講師は最後に「companies expand internationally, they need to carefully reconsider their color choices」と述べており、新市場に入る前に現地の色の好みを調査すべきだと推論できる。<br>
-    <span class="wrong">A)</span> 色の意味は文化によって異なると述べており、単一戦略は効果的でない。
-    <span class="wrong">B)</span> 赤は緊急性には効果的だが、全てのマーケティングに最も効果的とは述べていない。
-    <span class="wrong">D)</span> 講義全体が色の影響力を論じており、影響がないとは正反対。
-  </div>
-</div>
-
-<div class="section-divider">— Talk 2: Ancient Egyptian Agriculture Along the Nile —</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">5</span> Question 5</h3>
-  <div class="prompt">What is the talk mainly about?</div>
-  <div class="correct">正解: D) How ancient Egyptian farming along the Nile sustained a civilization</div>
-  <div class="explanation">
-    <strong>タイプ：主旨問題</strong><br>
-    冒頭で「one of the earliest and most successful agricultural systems...farming along the Nile River」と述べ、ナイル川沿いの農業が文明をどう支えたかを全体で説明。シグナルワード「Let's turn our attention to...」が主旨を導入。<br>
-    <span class="wrong">A)</span> ピラミッドの建設は最後に軽く触れるが、主旨ではない。
-    <span class="wrong">B)</span> 古代の交易ルートは言及されていない。
-    <span class="wrong">C)</span> ヒエログリフの発見は話題に出ていない。
-  </div>
-</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">6</span> Question 6</h3>
-  <div class="prompt">According to the speaker, what did the term "kemet" refer to?</div>
-  <div class="correct">正解: C) The fertile black land left by the Nile's floods</div>
-  <div class="explanation">
-    <strong>タイプ：詳細問題</strong><br>
-    講師は「The Egyptians called this fertile land 'kemet,' meaning 'the black land'」と明確に定義している。シグナルワード「meaning...」が言い換え・定義を示す。<br>
-    <span class="wrong">A)</span> 砂漠は「deshret（赤い土地）」と呼ばれていた。「in contrast to」で対比されている。
-    <span class="wrong">B)</span> 作物の名前ではなく、土地の名称。
-    <span class="wrong">D)</span> 灌漑道具の名前ではない。
-  </div>
-</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">7</span> Question 7</h3>
-  <div class="prompt">Why does the speaker mention bread and beer?</div>
-  <div class="correct">正解: A) To explain what the main crops were used for</div>
-  <div class="explanation">
-    <strong>タイプ：目的問題</strong><br>
-    講師は「emmer wheat and barley, which were used to make bread and beer — the staples of the Egyptian diet」と述べている。主要作物の用途を説明するために言及。<br>
-    <span class="wrong">B)</span> 宗教儀式については言及されていない。
-    <span class="wrong">C)</span> エジプトとギリシャの食事の比較は行っていない。
-    <span class="wrong">D)</span> 不健康な食生活とは述べていない。むしろ「staples（主食）」として紹介。
-  </div>
-</div>
-
-<div class="answer-card">
-  <h3><span class="q-num">8</span> Question 8</h3>
-  <div class="prompt">What can be inferred about the relationship between agriculture and Egyptian civilization?</div>
-  <div class="correct">正解: B) Food surpluses from farming enabled cultural and architectural achievements</div>
-  <div class="explanation">
-    <strong>タイプ：推論問題</strong><br>
-    講師は「surplus food production allowed the development of specialized crafts, monumental architecture, and a complex social hierarchy」と述べている。シグナルワード「In other words,...」で最後に要約し、農業の余剰がピラミッドやヒエログリフを可能にしたと結論づけている。<br>
-    <span class="wrong">A)</span> 農業は文明の基盤であり、「minor role」ではない。
-    <span class="wrong">C)</span> ピラミッドは農業の余剰によって可能になったと述べており、農業が先。
-    <span class="wrong">D)</span> 灌漑システムを開発したと明確に述べている。
-  </div>
-</div>
-
-<div style="text-align:center;margin-top:30px">
-  <a class="back-btn" href="../menu.html">&#8592; Listening メニューに戻る</a>
-</div>
+<div class="nav-bottom">
+  <a class="btn-back" href="practice-4.html">← もう一度解く</a>
+  <a class="btn-back" href="../menu.html" style="background:#2d3748;color:#fff;border-color:#2d3748">メニューに戻る</a>
 </div>
 
 <script src="../../js/auth.js"></script>
 <script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+<script>
+const labels = ['A','B','C','D'];
+const totalQ = 8;
+// Correct answers: Q1=D(3), Q2=A(0), Q3=B(1), Q4=C(2), Q5=D(3), Q6=C(2), Q7=A(0), Q8=B(1)
+const correctAnswers = [3, 0, 1, 2, 3, 2, 0, 1];
+
+function render(){
+  const stored = JSON.parse(sessionStorage.getItem('talkPractice4Answers')||'null');
+  let correct = 0, answered = 0;
+  if(stored && Array.isArray(stored)){
+    for(let i=0;i<totalQ;i++){
+      const userAns = stored[i];
+      const isCorrect = userAns === correctAnswers[i];
+      const isSkip = userAns === null || userAns === undefined;
+      if(!isSkip) answered++;
+      if(isCorrect) correct++;
+      const icon = document.getElementById('q'+(i+1)+'icon');
+      const user = document.getElementById('q'+(i+1)+'user');
+      if(isSkip){ icon.className='q-num skip'; user.className='q-user is-skip'; user.textContent='⏱️ 未回答（タイムアウト）'; }
+      else if(isCorrect){ icon.className='q-num correct'; user.className='q-user is-correct'; user.textContent='✅ 正解！ あなたの回答: ('+labels[userAns]+')'; }
+      else { icon.className='q-num wrong'; user.className='q-user is-wrong'; user.textContent='❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')'; }
+    }
+    document.getElementById('scoreBig').textContent = correct + ' / ' + totalQ;
+    document.getElementById('scoreBar').style.width = (correct/totalQ*100)+'%';
+    const pct = Math.round(correct/totalQ*100);
+    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+  } else {
+    document.getElementById('scoreBig').textContent = '— / ' + totalQ;
+    document.getElementById('scoreMsg').textContent = '問題を先に解いてからこのページを見ると、スコアが表示されます';
+    for(let i=1;i<=totalQ;i++) document.getElementById('q'+i+'user').style.display='none';
+  }
+}
+render();
+</script>
 </body>
 </html>
