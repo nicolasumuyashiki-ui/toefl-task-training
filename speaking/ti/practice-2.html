@@ -42,6 +42,13 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
 .footer-left a:hover{color:#2d3748}
 .btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;color:#fff;background:var(--accent-dark)}
 .btn-nav:hover{background:#831843}
+.narrator-box{background:#f3f0fa;border:1.5px solid #d4c5f0;border-radius:12px;padding:20px;margin-bottom:24px}
+.narrator-label{font-size:.78em;font-weight:800;color:#7c5cbf;margin-bottom:8px}
+.narrator-box p{font-size:.95em;color:#4a5568;line-height:1.7;font-style:italic}
+.voice-meta{background:#f7fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:.82em;color:#718096;line-height:1.8}
+.voice-meta strong{color:#4a5568}
+.pause-indicator{display:inline-block;background:#edf2f7;color:#a0aec0;font-size:.8em;font-weight:700;padding:2px 10px;border-radius:6px;margin:6px 0}
+.reaction-text{font-size:.9em;color:#718096;font-style:italic;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -65,6 +72,16 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
   <p style="font-size:.78em;color:#9d174d">音声が完成次第、自動再生形式に切り替わります。</p>
 </div>
 
+<div class="voice-meta">
+  <strong>Interviewer:</strong> Man (British) &mdash; &#30007;&#24615;&#9313;.png<br>
+  <strong>Narrator:</strong> Woman (Australian)
+</div>
+
+<div class="narrator-box">
+  <div class="narrator-label">&#128203; Narrator</div>
+  <p>&ldquo;You have agreed to take part in a research study about education and learning styles. You will have a short online interview with a researcher. The researcher will ask you some questions.&rdquo;</p>
+</div>
+
 <div class="theme-badge">&#128218; Theme: Education and Learning Styles</div>
 
 <!-- Q1 -->
@@ -73,7 +90,11 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
     <span class="q-num">1</span>
     <div class="q-type">Factual <span>事実質問</span></div>
   </div>
-  <div class="q-text">What subjects are you currently studying, and which one do you find most interesting?</div>
+  <div class="q-text">
+    <div class="reaction-text">&ldquo;Thank you for participating in this study. I&rsquo;m going to ask you a few questions about education and learning.&rdquo;</div>
+    <div class="pause-indicator">&#9208; 2-second pause</div>
+    <div>&ldquo;What subjects are you currently studying, and which one do you find most interesting?&rdquo;</div>
+  </div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45秒</span>
     <span>Response time</span>
@@ -91,7 +112,9 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
     <span class="q-num">2</span>
     <div class="q-type">Behavioral <span>経験質問</span></div>
   </div>
-  <div class="q-text">Can you describe a study method that has worked well for you in the past?</div>
+  <div class="q-text">
+    <div class="reaction-text">&ldquo;That&rsquo;s interesting. Now, can you describe a study method that has worked well for you in the past?&rdquo;</div>
+  </div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45秒</span>
     <span>Response time</span>
@@ -109,7 +132,9 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
     <span class="q-num">3</span>
     <div class="q-type">Opinion <span>意見質問</span></div>
   </div>
-  <div class="q-text">Do you think online classes are as effective as in-person classes? Why or why not?</div>
+  <div class="q-text">
+    <div class="reaction-text">&ldquo;I see. Some people believe that online classes offer more flexibility and are just as effective as in-person classes. What do you think &mdash; are online classes as effective as in-person classes? Why or why not?&rdquo;</div>
+  </div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45秒</span>
     <span>Response time</span>
@@ -127,7 +152,9 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
     <span class="q-num">4</span>
     <div class="q-type">Broader <span>発展質問</span></div>
   </div>
-  <div class="q-text">Some educators believe that students should be allowed to choose what they study. Do you agree or disagree with this idea?</div>
+  <div class="q-text">
+    <div class="reaction-text">&ldquo;That&rsquo;s a great point. Some people argue that a structured curriculum ensures all students receive a well-rounded education. Do you agree or disagree that students should be allowed to choose what they study?&rdquo;</div>
+  </div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45秒</span>
     <span>Response time</span>

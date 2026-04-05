@@ -42,6 +42,14 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
 .footer-left a:hover{color:#2d3748}
 .btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;color:#fff;background:var(--accent-dark)}
 .btn-nav:hover{background:#831843}
+.narrator-box{background:#f3f0fa;border:1.5px solid #d4c5f0;border-radius:12px;padding:20px;margin-bottom:24px}
+.narrator-label{font-size:.78em;font-weight:800;color:#7c5cbf;margin-bottom:8px}
+.narrator-box p{font-size:.95em;color:#4a5568;line-height:1.7;font-style:italic}
+.voice-meta{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px;margin-bottom:24px;font-size:.8em;color:#718096}
+.voice-meta strong{color:#4a5568}
+.pause-indicator{display:inline-block;background:#fef3cd;color:#856404;padding:2px 10px;border-radius:6px;font-size:.78em;font-weight:700;margin:6px 0}
+.reaction-text{font-size:.9em;color:#6b7280;font-style:italic;margin-bottom:8px;padding:8px 14px;background:#f0fdf4;border-radius:8px;border-left:3px solid #86efac}
+.opposing-view{font-size:.9em;color:#6b7280;font-style:italic;margin-bottom:8px;padding:8px 14px;background:#fef9e7;border-radius:8px;border-left:3px solid #fcd34d}
 </style>
 </head>
 <body>
@@ -67,13 +75,26 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
 
 <div class="theme-badge">&#127793; Theme: Environment and Nature</div>
 
+<div class="voice-meta">
+  <strong>Narrator:</strong> WOMAN (American) &nbsp;|&nbsp; <strong>Interviewer:</strong> MAN (British) &nbsp;|&nbsp; <strong>Image:</strong> 男性②.png
+</div>
+
+<div class="narrator-box">
+  <div class="narrator-label">&#128203; Narrator</div>
+  <p>"You have agreed to take part in a research study about the environment and nature. You will have a short online interview with a researcher. The researcher will ask you some questions."</p>
+</div>
+
 <!-- Q1 -->
 <div class="question-card">
   <div class="q-header">
     <span class="q-num">1</span>
     <div class="q-type">Factual <span>事実質問</span></div>
   </div>
-  <div class="q-text">What is the biggest environmental problem in your country?</div>
+  <div class="q-text">
+    <p style="margin-bottom:6px;color:#6b7280;font-weight:400;font-size:.9em">"Thank you for joining this study. I'd like to ask you about the environment and the natural world."</p>
+    <span class="pause-indicator">&#9208; 2-second pause</span>
+    <p style="margin-top:8px">What is the biggest environmental problem in your country?</p>
+  </div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45秒</span>
     <span>Response time</span>
@@ -91,6 +112,7 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
     <span class="q-num">2</span>
     <div class="q-type">Behavioral <span>経験質問</span></div>
   </div>
+  <div class="reaction-text">"That's interesting. Thank you for sharing that."</div>
   <div class="q-text">Can you describe a time when you did something to help the environment?</div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45秒</span>
@@ -109,6 +131,8 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
     <span class="q-num">3</span>
     <div class="q-type">Opinion <span>意見質問</span></div>
   </div>
+  <div class="reaction-text">"Thank you for that example."</div>
+  <div class="opposing-view">"Some people believe that environmental protection is mainly the responsibility of governments and large corporations, not individuals."</div>
   <div class="q-text">Do you think individuals can make a real difference in protecting the environment, or is it mainly the responsibility of governments and companies?</div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45秒</span>
@@ -127,7 +151,9 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
     <span class="q-num">4</span>
     <div class="q-type">Broader <span>発展質問</span></div>
   </div>
-  <div class="q-text">Some people argue that economic growth and environmental protection cannot go hand in hand. What is your view on this?</div>
+  <div class="reaction-text">"I see. That's a thoughtful perspective."</div>
+  <div class="opposing-view">"Some people argue that economic growth and environmental protection cannot go hand in hand — that one must be sacrificed for the other."</div>
+  <div class="q-text">What is your view on this? Can a country pursue economic development while also protecting the environment?</div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45秒</span>
     <span>Response time</span>

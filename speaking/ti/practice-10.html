@@ -42,6 +42,14 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
 .footer-left a:hover{color:#2d3748}
 .btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;color:#fff;background:var(--accent-dark)}
 .btn-nav:hover{background:#831843}
+.narrator-box{background:#f3f0fa;border:1.5px solid #d4c5f0;border-radius:12px;padding:20px;margin-bottom:24px}
+.narrator-label{font-size:.78em;font-weight:800;color:#7c5cbf;margin-bottom:8px}
+.narrator-box p{font-size:.95em;color:#4a5568;line-height:1.7;font-style:italic}
+.voice-meta{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px;margin-bottom:24px;font-size:.8em;color:#718096}
+.voice-meta strong{color:#4a5568}
+.pause-indicator{display:inline-block;background:#fef3cd;color:#856404;padding:2px 10px;border-radius:6px;font-size:.78em;font-weight:700;margin:6px 0}
+.reaction-text{font-size:.9em;color:#6b7280;font-style:italic;margin-bottom:8px;padding:8px 14px;background:#f0fdf4;border-radius:8px;border-left:3px solid #86efac}
+.opposing-view{font-size:.9em;color:#6b7280;font-style:italic;margin-bottom:8px;padding:8px 14px;background:#fef9e7;border-radius:8px;border-left:3px solid #fcd34d}
 </style>
 </head>
 <body>
@@ -67,21 +75,34 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
 
 <div class="theme-badge">&#9992;&#65039; Theme: Travel and Vacation</div>
 
+<div class="voice-meta">
+  <strong>Narrator:</strong> WOMAN (American) &nbsp;|&nbsp; <strong>Interviewer:</strong> MAN (New Zealand) &nbsp;|&nbsp; <strong>Image:</strong> 男性③.png
+</div>
+
+<div class="narrator-box">
+  <div class="narrator-label">&#128203; Narrator</div>
+  <p>"You have agreed to take part in a research study about travel and vacation. You will have a short online interview with a researcher. The researcher will ask you some questions."</p>
+</div>
+
 <!-- Q1 -->
 <div class="question-card">
   <div class="q-header">
     <span class="q-num">1</span>
-    <div class="q-type">Factual <span>&#20107;&#23455;&#36074;&#21839;</span></div>
+    <div class="q-type">Factual <span>事実質問</span></div>
   </div>
-  <div class="q-text">Where did you go on your most recent trip, and what did you do there?</div>
+  <div class="q-text">
+    <p style="margin-bottom:6px;color:#6b7280;font-weight:400;font-size:.9em">"Thank you for joining this study. I'd like to ask you about travel and vacation."</p>
+    <span class="pause-indicator">&#9208; 2-second pause</span>
+    <p style="margin-top:8px">Where did you go on your most recent trip, and what did you do there?</p>
+  </div>
   <div class="q-meta">
-    <span class="time-badge">&#9201; 45&#31186;</span>
+    <span class="time-badge">&#9201; 45秒</span>
     <span>Response time</span>
   </div>
   <div class="record-area">
     <div class="mic-icon">&#127908;</div>
     <p>Record your answer</p>
-    <p class="sub">&#38899;&#22768;&#27231;&#33021;&#12399;&#28310;&#20633;&#20013;&#12391;&#12377;</p>
+    <p class="sub">音声機能は準備中です</p>
   </div>
 </div>
 
@@ -89,17 +110,18 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
 <div class="question-card">
   <div class="q-header">
     <span class="q-num">2</span>
-    <div class="q-type">Behavioral <span>&#32076;&#39443;&#36074;&#21839;</span></div>
+    <div class="q-type">Behavioral <span>経験質問</span></div>
   </div>
+  <div class="reaction-text">"That sounds like a wonderful trip. Thank you for sharing that."</div>
   <div class="q-text">Describe a time when something unexpected happened during a trip. How did you handle it?</div>
   <div class="q-meta">
-    <span class="time-badge">&#9201; 45&#31186;</span>
+    <span class="time-badge">&#9201; 45秒</span>
     <span>Response time</span>
   </div>
   <div class="record-area">
     <div class="mic-icon">&#127908;</div>
     <p>Record your answer</p>
-    <p class="sub">&#38899;&#22768;&#27231;&#33021;&#12399;&#28310;&#20633;&#20013;&#12391;&#12377;</p>
+    <p class="sub">音声機能は準備中です</p>
   </div>
 </div>
 
@@ -107,17 +129,19 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
 <div class="question-card">
   <div class="q-header">
     <span class="q-num">3</span>
-    <div class="q-type">Opinion <span>&#24847;&#35211;&#36074;&#21839;</span></div>
+    <div class="q-type">Opinion <span>意見質問</span></div>
   </div>
+  <div class="reaction-text">"I see. That must have been quite an experience."</div>
+  <div class="opposing-view">"Some people think that traveling with others is always better than traveling alone because it's safer and more enjoyable."</div>
   <div class="q-text">Do you prefer traveling alone or with other people? Why?</div>
   <div class="q-meta">
-    <span class="time-badge">&#9201; 45&#31186;</span>
+    <span class="time-badge">&#9201; 45秒</span>
     <span>Response time</span>
   </div>
   <div class="record-area">
     <div class="mic-icon">&#127908;</div>
     <p>Record your answer</p>
-    <p class="sub">&#38899;&#22768;&#27231;&#33021;&#12399;&#28310;&#20633;&#20013;&#12391;&#12377;</p>
+    <p class="sub">音声機能は準備中です</p>
   </div>
 </div>
 
@@ -125,17 +149,19 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
 <div class="question-card">
   <div class="q-header">
     <span class="q-num">4</span>
-    <div class="q-type">Broader <span>&#30330;&#23637;&#36074;&#21839;</span></div>
+    <div class="q-type">Broader <span>発展質問</span></div>
   </div>
-  <div class="q-text">Some people argue that international travel broadens your perspective more than reading books. Do you agree or disagree?</div>
+  <div class="reaction-text">"That's a really good point."</div>
+  <div class="opposing-view">"Some people argue that international travel broadens your perspective more than reading books or watching documentaries."</div>
+  <div class="q-text">Do you agree or disagree with this view? Why do you think so?</div>
   <div class="q-meta">
-    <span class="time-badge">&#9201; 45&#31186;</span>
+    <span class="time-badge">&#9201; 45秒</span>
     <span>Response time</span>
   </div>
   <div class="record-area">
     <div class="mic-icon">&#127908;</div>
     <p>Record your answer</p>
-    <p class="sub">&#38899;&#22768;&#27231;&#33021;&#12399;&#28310;&#20633;&#20013;&#12391;&#12377;</p>
+    <p class="sub">音声機能は準備中です</p>
   </div>
 </div>
 

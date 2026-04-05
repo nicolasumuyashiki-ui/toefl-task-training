@@ -42,6 +42,13 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
 .footer-left a:hover{color:#2d3748}
 .btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;color:#fff;background:var(--accent-dark)}
 .btn-nav:hover{background:#831843}
+.narrator-box{background:#f3f0fa;border:1.5px solid #d4c5f0;border-radius:12px;padding:20px;margin-bottom:24px}
+.narrator-label{font-size:.78em;font-weight:800;color:#7c5cbf;margin-bottom:8px}
+.narrator-box p{font-size:.95em;color:#4a5568;line-height:1.7;font-style:italic}
+.voice-meta{background:#f7fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:.82em;color:#718096;line-height:1.8}
+.voice-meta strong{color:#4a5568}
+.pause-indicator{display:inline-block;background:#edf2f7;color:#a0aec0;font-size:.8em;font-weight:700;padding:2px 10px;border-radius:6px;margin:6px 0}
+.reaction-text{font-size:.9em;color:#718096;font-style:italic;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -65,6 +72,16 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
   <p style="font-size:.78em;color:#9d174d">&#38899;&#22768;&#12364;&#23436;&#25104;&#27425;&#31532;&#12289;&#33258;&#21205;&#20877;&#29983;&#24418;&#24335;&#12395;&#20999;&#12426;&#26367;&#12431;&#12426;&#12414;&#12377;&#12290;</p>
 </div>
 
+<div class="voice-meta">
+  <strong>Interviewer:</strong> Woman (American) &mdash; &#22899;&#24615;&#9313;.png<br>
+  <strong>Narrator:</strong> Man (British)
+</div>
+
+<div class="narrator-box">
+  <div class="narrator-label">&#128203; Narrator</div>
+  <p>&ldquo;You have agreed to take part in a research study about technology and daily life. You will have a short online interview with a researcher. The researcher will ask you some questions.&rdquo;</p>
+</div>
+
 <div class="theme-badge">&#128187; Theme: Technology and Daily Life</div>
 
 <!-- Q1 -->
@@ -73,7 +90,11 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
     <span class="q-num">1</span>
     <div class="q-type">Factual <span>&#20107;&#23455;&#36074;&#21839;</span></div>
   </div>
-  <div class="q-text">How often do you use technology in your daily life?</div>
+  <div class="q-text">
+    <div class="reaction-text">&ldquo;Thank you for participating in this study. I&rsquo;m going to ask you a few questions about technology and daily life.&rdquo;</div>
+    <div class="pause-indicator">&#9208; 2-second pause</div>
+    <div>&ldquo;How often do you use technology in your daily life?&rdquo;</div>
+  </div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45&#31186;</span>
     <span>Response time</span>
@@ -91,7 +112,9 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
     <span class="q-num">2</span>
     <div class="q-type">Behavioral <span>&#32076;&#39443;&#36074;&#21839;</span></div>
   </div>
-  <div class="q-text">Can you describe a time when technology helped you solve a problem?</div>
+  <div class="q-text">
+    <div class="reaction-text">&ldquo;That&rsquo;s interesting. Now, can you describe a time when technology helped you solve a problem?&rdquo;</div>
+  </div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45&#31186;</span>
     <span>Response time</span>
@@ -109,7 +132,9 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
     <span class="q-num">3</span>
     <div class="q-type">Opinion <span>&#24847;&#35211;&#36074;&#21839;</span></div>
   </div>
-  <div class="q-text">Do you think people spend too much time on their smartphones? Why or why not?</div>
+  <div class="q-text">
+    <div class="reaction-text">&ldquo;I see. Some people believe that smartphones are essential tools that improve productivity. What do you think &mdash; do people spend too much time on their smartphones? Why or why not?&rdquo;</div>
+  </div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45&#31186;</span>
     <span>Response time</span>
@@ -127,7 +152,9 @@ body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:fl
     <span class="q-num">4</span>
     <div class="q-type">Broader <span>&#30330;&#23637;&#36074;&#21839;</span></div>
   </div>
-  <div class="q-text">Some people believe that technology is making us less social. Do you agree or disagree?</div>
+  <div class="q-text">
+    <div class="reaction-text">&ldquo;That&rsquo;s a great point. Some people argue that technology actually brings people closer together through social media and video calls. Do you agree or disagree that technology is making us less social?&rdquo;</div>
+  </div>
   <div class="q-meta">
     <span class="time-badge">&#9201; 45&#31186;</span>
     <span>Response time</span>
