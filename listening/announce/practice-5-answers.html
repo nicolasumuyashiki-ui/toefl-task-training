@@ -43,6 +43,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
 .q-badge.detail{background:#ebf8ff;color:#2b6cb0}
 .q-badge.main-idea{background:#f0fff4;color:#276749}
 .q-badge.inference{background:#fefcbf;color:#975a16}
+.q-badge.purpose{background:#faf5ff;color:#6b21a8}
 .q-body{padding:16px 20px}
 .q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
 .q-user.is-correct{background:#f0fff4;color:#22543d}
@@ -113,16 +114,16 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <div class="q-card">
     <div class="q-header">
       <div class="q-num correct" id="q1icon">1</div>
-      <div class="q-prompt">What is the purpose of the announcement?</div>
+      <div class="q-prompt">What is the announcement mainly about?</div>
       <span class="q-badge main-idea">Main Idea</span>
     </div>
     <div class="q-body">
       <div class="q-user is-correct" id="q1user"></div>
       <div class="options-list">
-        <div class="opt-row is-correct"><span class="opt-label">(A)</span> To inform residents about a water system test and temporary interruption.</div>
-        <div class="opt-row"><span class="opt-label">(B)</span> To announce a new water filtration system.</div>
-        <div class="opt-row"><span class="opt-label">(C)</span> To report a broken water pipe in the dormitory.</div>
-        <div class="opt-row"><span class="opt-label">(D)</span> To remind students to conserve water on campus.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(A)</span> A water system test and temporary service interruption.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> A new water filtration system for dormitories.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> A broken water pipe in the dormitory.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> A reminder to conserve water on campus.</div>
       </div>
       <div class="q-explain"><strong>解説：</strong> アナウンスは「conducting a scheduled test of the water system」と「water service will be temporarily interrupted」を伝えている。水道システムの検査と一時的な断水の告知。(B)新しい浄水システムの導入ではなく、既存システムの検査。(C)水道管の破損ではなく、予定された検査。(D)節水の呼びかけではない。</div>
       <div class="q-hint">🔑 冒頭の「Attention all residents」の直後に主旨。「scheduled test」と「temporarily interrupted」の2つがポイント。</div>
@@ -132,19 +133,19 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <div class="q-card">
     <div class="q-header">
       <div class="q-num correct" id="q2icon">2</div>
-      <div class="q-prompt">What are residents advised to do?</div>
-      <span class="q-badge detail">Detail</span>
+      <div class="q-prompt">Why does the maintenance department recommend storing water?</div>
+      <span class="q-badge purpose">Purpose</span>
     </div>
     <div class="q-body">
       <div class="q-user is-correct" id="q2user"></div>
       <div class="options-list">
-        <div class="opt-row"><span class="opt-label">(A)</span> Stay in their rooms during the testing period.</div>
-        <div class="opt-row is-correct"><span class="opt-label">(B)</span> Store drinking water the night before.</div>
-        <div class="opt-row"><span class="opt-label">(C)</span> Report any water problems to the front desk.</div>
-        <div class="opt-row"><span class="opt-label">(D)</span> Move to a different dormitory temporarily.</div>
+        <div class="opt-row"><span class="opt-label">(A)</span> Because the water quality will change after the test.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(B)</span> Because water service will be interrupted during testing.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> Because the dormitory water supply is being permanently shut off.</div>
+        <div class="opt-row"><span class="opt-label">(D)</span> Because new plumbing will be installed in the buildings.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 「We recommend that you store enough drinking water the night before」と明確に述べられている。(A)部屋にいるようにとは言われていない。(C)フロントデスクへの報告は言及されていない。(D)別の寮への一時移動は提案されていない。</div>
-      <div class="q-hint">🔑 「We recommend that you...」の直後が推奨事項。「store enough drinking water the night before」が根拠。</div>
+      <div class="q-explain"><strong>解説：</strong> 「water service will be temporarily interrupted in both buildings」と述べた後に「We recommend that you store enough drinking water the night before」と述べている。断水するため水を備蓄するよう推奨。(A)水質の変化は言及されていない。(C)永久に停止するのではなく一時的な中断。(D)新しい配管工事は言及されていない。</div>
+      <div class="q-hint">🔑 目的問題：「water service will be temporarily interrupted」が水の備蓄を推奨する理由。前後の因果関係を聞き取る。</div>
     </div>
   </div>
 </div>
@@ -167,7 +168,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
     <div class="q-header">
       <div class="q-num correct" id="q3icon">3</div>
       <div class="q-prompt">What is the professor announcing?</div>
-      <span class="q-badge main-idea">Main Idea</span>
+      <span class="q-badge detail">Detail</span>
     </div>
     <div class="q-body">
       <div class="q-user is-correct" id="q3user"></div>
@@ -185,19 +186,19 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <div class="q-card">
     <div class="q-header">
       <div class="q-num correct" id="q4icon">4</div>
-      <div class="q-prompt">What does the professor require students to do?</div>
-      <span class="q-badge detail">Detail</span>
+      <div class="q-prompt">What can be inferred about Dr. Chen's presentation?</div>
+      <span class="q-badge inference">Inference</span>
     </div>
     <div class="q-body">
       <div class="q-user is-correct" id="q4user"></div>
       <div class="options-list">
-        <div class="opt-row"><span class="opt-label">(A)</span> Write a summary of the guest lecture.</div>
-        <div class="opt-row"><span class="opt-label">(B)</span> Read Dr. Chen's research paper before the talk.</div>
-        <div class="opt-row"><span class="opt-label">(C)</span> Submit a report on ocean pollution.</div>
-        <div class="opt-row is-correct"><span class="opt-label">(D)</span> Attend the talk and prepare at least two questions.</div>
+        <div class="opt-row"><span class="opt-label">(A)</span> It is optional for students in the course.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> It will be recorded for students who cannot attend.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> It will focus on freshwater pollution.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(D)</span> It will replace the regular class session for that day.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 教授は「Attendance is required」と「I want you to prepare at least two questions」の2つを要求。両方含む(D)が正解。(A)要約の提出は求められていない。(B)事前に論文を読むようには言われていない。(C)海洋汚染のレポート提出は言及されていない。</div>
-      <div class="q-hint">🔑 要求事項が2つ：「Attendance is required」+「prepare at least two questions」。両方含む選択肢を選ぶ。</div>
+      <div class="q-explain"><strong>解説：</strong> 教授は通常の教室ではなくAuditorium Bで開催すると述べ、「Attendance is required for this class」と言っている。通常の授業時間に、通常の教室の代わりにゲスト講演が行われることから、通常授業の代替であると推論できる。(A)「Attendance is required」と述べているため任意ではない。(B)録画については言及されていない。(C)海洋プラスチック汚染（ocean plastic pollution）であり、淡水汚染ではない。</div>
+      <div class="q-hint">🔑 推論問題：「instead of our usual classroom」+「Attendance is required for this class」から、ゲスト講演が通常授業の代わりであると推論。</div>
     </div>
   </div>
 </div>

@@ -176,15 +176,15 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <div class="q-card">
     <div class="q-header">
       <div class="q-num correct" id="q3icon">3</div>
-      <div class="q-prompt">What is the likely cause of the discrepancy in results?</div>
+      <div class="q-prompt">What can be inferred about the cause of the different results?</div>
       <span class="q-badge inference">Inference</span>
     </div>
     <div class="q-body">
       <div class="q-user is-correct" id="q3user"></div>
       <div class="options-list">
-        <div class="opt-row"><span class="opt-label">(A)</span> They used different chemicals for the experiment.</div>
-        <div class="opt-row is-correct"><span class="opt-label">(B)</span> The solution may not have been fully dissolved during measurement.</div>
-        <div class="opt-row"><span class="opt-label">(C)</span> The spectrophotometer was broken.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(A)</span> The solution was not fully dissolved during measurement.</div>
+        <div class="opt-row"><span class="opt-label">(B)</span> They used different chemicals for the experiment.</div>
+        <div class="opt-row"><span class="opt-label">(C)</span> The spectrophotometer was broken during the test.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> They conducted the experiment on different days.</div>
       </div>
       <div class="q-explain"><strong>解説：</strong> Student Bが「the solution looked a bit cloudy」「some of the solid hadn't fully dissolved yet」と述べ、Student Aも「undissolved particles might have affected the spectrophotometer reading」と同意。溶液が完全に溶けていなかったことが原因。</div>
@@ -195,8 +195,8 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
   <div class="q-card">
     <div class="q-header">
       <div class="q-num correct" id="q4icon">4</div>
-      <div class="q-prompt">What do the students plan to do?</div>
-      <span class="q-badge detail">Detail</span>
+      <div class="q-prompt">What will the students most likely do before the deadline?</div>
+      <span class="q-badge inference">Inference</span>
     </div>
     <div class="q-body">
       <div class="q-user is-correct" id="q4user"></div>
@@ -204,10 +204,10 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
         <div class="opt-row"><span class="opt-label">(A)</span> Submit the report with both sets of data.</div>
         <div class="opt-row"><span class="opt-label">(B)</span> Ask the professor to extend the deadline.</div>
         <div class="opt-row"><span class="opt-label">(C)</span> Use the average of their two results.</div>
-        <div class="opt-row is-correct"><span class="opt-label">(D)</span> Request permission to redo the experiment before Friday.</div>
+        <div class="opt-row is-correct"><span class="opt-label">(D)</span> Redo the experiment after getting the professor's approval.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> Student Bが「I'll email the professor right now and ask if the lab is available this Friday afternoon」と述べている。実験のやり直しを金曜日までに行う計画。</div>
-      <div class="q-hint">🔑 計画問題は会話の最後に：「I'll...」「Should we...」「Let's...」が次のアクションを示す。最後の2〜3発話に全集中。</div>
+      <div class="q-explain"><strong>解説：</strong> Student Bは「I'll email the professor right now」と述べ、Student Aも「I think that's a good idea」と同意。教授の許可を得て実験をやり直す流れが推測できる。</div>
+      <div class="q-hint">🔑 推論問題：2人の合意から次の行動を推測。「Should we...」→「I think that's a good idea」→「I'll email...」の流れが答えのヒント。</div>
     </div>
   </div>
 </div>
@@ -219,7 +219,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
 
 <script>
 const labels = ['A','B','C','D'];
-const correctAnswers = [1, 2, 1, 3]; // Q1=B, Q2=C, Q3=B, Q4=D
+const correctAnswers = [1, 2, 0, 3]; // Q1=B, Q2=C, Q3=A, Q4=D
 
 function render(){
   const stored = JSON.parse(sessionStorage.getItem('convAnswers')||'null');

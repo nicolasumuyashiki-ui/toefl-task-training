@@ -44,18 +44,18 @@ CONVERSATION 1 SCRIPT (conv1.mp3)
 ========================================
 QUESTIONS — Conversation 1
 ========================================
-Q1. Why is the student's scholarship at risk?
-  A) He missed the application deadline
-  B) His GPA fell below the required minimum
-  C) He changed his major without notifying the office
-  D) The scholarship program was discontinued
+Q1. Why is the student's scholarship at risk? [Detail]
+  A) He missed the scholarship application deadline.
+  B) His GPA fell below the required minimum.
+  C) He changed his major without notifying the office.
+  D) The scholarship program was discontinued this year.
   Answer: B
 
-Q2. What must the student do to appeal the decision?
-  A) Retake the courses he failed
-  B) Meet with the university president
-  C) Write a letter and provide supporting documentation
-  D) Pay a processing fee to the financial aid office
+Q2. What must the student do to appeal the decision? [Detail]
+  A) Retake the courses he failed last semester.
+  B) Meet with the university president in person.
+  C) Write a letter and provide supporting documentation.
+  D) Pay a processing fee to the financial aid office.
   Answer: C
 
 
@@ -98,18 +98,18 @@ CONVERSATION 2 SCRIPT (conv2.mp3)
 ========================================
 QUESTIONS — Conversation 2
 ========================================
-Q3. What will happen if the solution exceeds seventy degrees?
-  A) The solution will change color
-  B) The equipment could be damaged
-  C) The compound will break down and results will be inaccurate
-  D) The experiment will need to be restarted from step one
-  Answer: C
+Q3. What does the TA imply about temperature control in the experiment? [Inference]
+  A) Even a small rise above the limit could ruin the results.
+  B) The equipment will be damaged if overheated.
+  C) The temperature does not need to be monitored closely.
+  D) The experiment can be restarted easily if it overheats.
+  Answer: A
 
-Q4. How should the student add the catalyst?
-  A) All at once after removing the heat source
-  B) Before heating the solution
-  C) Only when the solution reaches room temperature
-  D) Gradually, one milliliter at a time with stirring between additions
+Q4. What can be inferred about the catalyst from the TA's instructions? [Inference]
+  A) It must be added all at once for best results.
+  B) It should be added before heating the solution.
+  C) It only works when the solution is at room temperature.
+  D) Adding it too quickly could affect the experiment's outcome.
   Answer: D
 
 

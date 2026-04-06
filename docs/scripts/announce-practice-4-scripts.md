@@ -26,18 +26,18 @@ ANNOUNCEMENT 1 SCRIPT (ann1.mp3)
 ========================================
 QUESTIONS — Announcement 1
 ========================================
-Q1. What is the main purpose of this announcement?
-  A) To inform students about flu season precautions and free vaccinations
-  B) To announce new health center operating hours
-  C) To introduce a new health insurance policy
-  D) To recruit volunteers for a medical study
+Q1. What is the announcement mainly about? [Main Idea]
+  A) Flu season precautions and free vaccinations on campus.
+  B) New health center operating hours.
+  C) A new health insurance policy for students.
+  D) A volunteer recruitment for a medical study.
   Answer: A
 
-Q2. What should students do if they have flu-like symptoms?
-  A) Go directly to the emergency room
-  B) Call the health center before visiting
-  C) Email their professors to request sick leave
-  D) Visit the campus pharmacy for medication
+Q2. Why does the health center ask students to call before visiting if they have symptoms? [Purpose]
+  A) To verify the student's insurance coverage.
+  B) To allow staff to take proper precautions.
+  C) To schedule a mandatory appointment.
+  D) To confirm the student's identity.
   Answer: B
 
 
@@ -64,18 +64,18 @@ ANNOUNCEMENT 2 SCRIPT (ann2.mp3)
 ========================================
 QUESTIONS — Announcement 2
 ========================================
-Q3. Why is the professor canceling class?
-  A) The classroom is being renovated
-  B) The professor is sick
-  C) The professor is attending a conference
-  D) A university holiday is scheduled
+Q3. Why is the professor canceling class? [Detail]
+  A) The classroom is being renovated.
+  B) The professor is sick.
+  C) The professor is attending a conference.
+  D) A university holiday is scheduled.
   Answer: C
 
-Q4. What does the professor recommend students do before the reading?
-  A) Visit the professor's office for a pre-reading discussion
-  B) Form study groups with classmates
-  C) Complete a practice quiz on the course website
-  D) Watch a recorded lecture posted on the course website
+Q4. What can be inferred about the professor's availability during the trip? [Inference]
+  A) The professor will be completely unreachable.
+  B) The professor will hold virtual office hours.
+  C) The professor will check email regularly.
+  D) The professor may take longer than usual to reply to emails.
   Answer: D
 
 

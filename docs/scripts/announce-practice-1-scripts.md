@@ -26,19 +26,19 @@ ANNOUNCEMENT 1 SCRIPT (ann1.mp3)
 ========================================
 QUESTIONS — Announcement 1
 ========================================
-Q1. What is the announcement mainly about?
-  A) A new textbook requirement
-  B) A change in the midterm exam date
-  C) A guest speaker visiting the class
-  D) A field trip scheduled for next week
+Q1. What is the announcement mainly about? [Main Idea]
+  A) A new textbook requirement.
+  B) A change in the midterm exam date.
+  C) A guest speaker visiting the class.
+  D) A field trip scheduled for next week.
   Answer: B
 
-Q2. What does the professor offer to students?
-  A) An extension on the homework
-  B) A practice exam
-  C) A study guide for the exam
-  D) Extra office hours on Friday
-  Answer: D
+Q2. Why does the professor mention extra office hours? [Purpose]
+  A) To assign additional homework.
+  B) To introduce a new teaching assistant.
+  C) To help students prepare for the rescheduled exam.
+  D) To explain changes to the grading policy.
+  Answer: C
 
 
 ========================================
@@ -64,19 +64,19 @@ ANNOUNCEMENT 2 SCRIPT (ann2.mp3)
 ========================================
 QUESTIONS — Announcement 2
 ========================================
-Q3. What is happening to the library?
-  A) It is undergoing renovations
-  B) It is being permanently closed
-  C) It is moving to a new building
-  D) It is extending its hours
+Q3. What will remain open during the renovation? [Detail]
+  A) The ground floor reading room and computer lab.
+  B) The second and third floors only.
+  C) The entire library building.
+  D) The library cafe and bookstore.
   Answer: A
 
-Q4. Where can students find temporary study spaces?
-  A) In the campus gymnasium
-  B) At a nearby coffee shop
-  C) In the student union building
-  D) In the science building
-  Answer: C
+Q4. What can be inferred about the library during the renovation? [Inference]
+  A) The library will have no services available at all.
+  B) Students will need to pay for temporary study spaces.
+  C) The computer lab will move to the student union building.
+  D) Students can still study on campus despite the closures.
+  Answer: D
 
 
 ========================================

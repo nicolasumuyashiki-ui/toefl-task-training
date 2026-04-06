@@ -26,18 +26,18 @@ ANNOUNCEMENT 1 SCRIPT (ann1.mp3)
 ========================================
 QUESTIONS — Announcement 1
 ========================================
-Q1. What is the main purpose of this announcement?
-  A) To announce a new building on campus
-  B) To inform students about construction and alternate routes
-  C) To close the campus library for renovations
-  D) To introduce a new shuttle bus schedule
+Q1. What is the main purpose of this announcement? [Main Idea]
+  A) To announce a new building on campus.
+  B) To inform students about construction and alternate routes.
+  C) To close the campus library for renovations.
+  D) To introduce a new shuttle bus schedule.
   Answer: B
 
-Q2. Where should students go to catch the shuttle bus during the construction?
-  A) In front of the Science Building
-  B) At the Student Center entrance
-  C) Near the east parking lot
-  D) Behind the library on Maple Lane
+Q2. Why does the dean mention Maple Lane? [Purpose]
+  A) To announce a new building on Maple Lane.
+  B) To explain where the shuttle bus will stop.
+  C) To direct pedestrians to an alternative walking route.
+  D) To describe the location of the construction project.
   Answer: C
 
 
@@ -64,18 +64,18 @@ ANNOUNCEMENT 2 SCRIPT (ann2.mp3)
 ========================================
 QUESTIONS — Announcement 2
 ========================================
-Q3. What will Dr. Vasquez talk about?
-  A) Recent findings from the Mars Perseverance rover
-  B) The history of NASA's space shuttle program
-  C) Career opportunities at NASA
-  D) How to apply for the astronomy program
+Q3. What will Dr. Vasquez talk about? [Detail]
+  A) Recent findings from the Mars Perseverance rover.
+  B) The history of NASA's space shuttle program.
+  C) Career opportunities at NASA.
+  D) How to apply for the astronomy program.
   Answer: A
 
-Q4. Who is invited to attend the guest lecture?
-  A) Only astronomy students
-  B) Only graduate students
-  C) Only students in the professor's class
-  D) All students
+Q4. What can be inferred about the guest lecture? [Inference]
+  A) It is a required part of the astronomy course.
+  B) Only a limited number of seats are available.
+  C) Dr. Vasquez has visited the department before.
+  D) It is an unusual opportunity that the professor values highly.
   Answer: D
 
 

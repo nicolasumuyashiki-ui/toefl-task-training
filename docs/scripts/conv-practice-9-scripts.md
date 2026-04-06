@@ -44,18 +44,18 @@ CONVERSATION 1 SCRIPT (conv1.mp3)
 ========================================
 QUESTIONS — Conversation 1
 ========================================
-Q1. Why does the student visit the health center?
-  A) To pick up a prescription
-  B) To get a physical examination
-  C) To register for student health insurance
-  D) To schedule a vaccination appointment
+Q1. Why does the student visit the health center? [Detail]
+  A) To pick up a prescription from the pharmacy.
+  B) To get a physical examination on campus.
+  C) To register for the student health insurance plan.
+  D) To schedule a flu vaccination appointment.
   Answer: D
 
-Q2. What will happen after the student receives the vaccination?
-  A) He will need to pay a separate fee
-  B) He will need to submit paperwork to the registrar
-  C) His immunization record will be updated automatically
-  D) He will receive a follow-up phone call
+Q2. What will happen after the student receives the vaccination? [Detail]
+  A) He will need to pay a separate fee.
+  B) He will need to submit paperwork to the registrar.
+  C) His immunization record will be updated automatically.
+  D) He will receive a follow-up phone call.
   Answer: C
 
 
@@ -98,19 +98,19 @@ CONVERSATION 2 SCRIPT (conv2.mp3)
 ========================================
 QUESTIONS — Conversation 2
 ========================================
-Q3. What does the student want to do?
-  A) Appeal a grade she received
-  B) Transfer to a different economics class
-  C) Drop a course before the deadline
-  D) Request an incomplete for the semester
+Q3. What can be inferred about why the student visits the dean? [Inference]
+  A) She believes there may be an error in her grade.
+  B) She wants to transfer to a different economics class.
+  C) She needs to drop a course before the deadline.
+  D) She wants to request an incomplete for the semester.
   Answer: A
 
-Q4. What does the dean say about the appeal process?
-  A) The professor must approve it first
-  B) It requires a meeting with the department chair
-  C) The student must rewrite the final paper
-  D) A written request and graded assignments must be submitted for committee review
-  Answer: D
+Q4. What can be inferred about the likely outcome of the appeal? [Inference]
+  A) The committee will automatically change the grade.
+  B) The grade will likely stay if the syllabus was followed.
+  C) The student must rewrite the final paper first.
+  D) The professor will be required to meet with her.
+  Answer: B
 
 
 ========================================

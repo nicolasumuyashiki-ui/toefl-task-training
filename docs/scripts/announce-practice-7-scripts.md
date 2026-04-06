@@ -26,18 +26,18 @@ ANNOUNCEMENT 1 SCRIPT (ann1.mp3)
 ========================================
 QUESTIONS — Announcement 1
 ========================================
-Q1. What is the announcement mainly about?
-  A) A change in the lecture schedule
-  B) A research assistant position opening
-  C) A new course being offered next semester
-  D) A scholarship opportunity for biology students
+Q1. What is the announcement mainly about? [Main Idea]
+  A) A change in the lecture schedule.
+  B) A research assistant position opening.
+  C) A new course being offered next semester.
+  D) A scholarship opportunity for biology students.
   Answer: B
 
-Q2. What do students need to submit to apply?
-  A) A resume and two recommendation letters
-  B) A research proposal and lab report
-  C) A statement of interest and transcript
-  D) A completed application form and interview
+Q2. Why does the professor mention graduate school? [Purpose]
+  A) To announce a new graduate program in biology.
+  B) To require students to apply for graduate school.
+  C) To highlight the value of the research experience for future studies.
+  D) To explain the prerequisites for the position.
   Answer: C
 
 
@@ -64,18 +64,18 @@ ANNOUNCEMENT 2 SCRIPT (ann2.mp3)
 ========================================
 QUESTIONS — Announcement 2
 ========================================
-Q3. What is the main purpose of this announcement?
-  A) To announce new bicycle parking areas
-  B) To report an arrest related to bike theft
-  C) To introduce a campus bike-sharing program
-  D) To give tips on preventing bicycle theft
+Q3. What type of lock does the campus police recommend? [Detail]
+  A) A cable lock with a combination.
+  B) A chain lock with a padlock.
+  C) An electronic smart lock.
+  D) A U-lock.
   Answer: D
 
-Q4. What free service does the campus police offer?
-  A) Bike registration
-  B) Bike repair and maintenance
-  C) Free U-locks for students
-  D) Bicycle safety classes
+Q4. What can be inferred about the bicycle theft problem on campus? [Inference]
+  A) It is a growing concern that requires preventive action.
+  B) The thefts only occur during nighttime hours.
+  C) The campus police have identified the suspects.
+  D) Students are not interested in registering their bicycles.
   Answer: A
 
 

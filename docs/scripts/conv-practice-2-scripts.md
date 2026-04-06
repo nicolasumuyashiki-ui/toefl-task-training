@@ -42,18 +42,18 @@ CONVERSATION 1 SCRIPT (conv1.mp3)
 ========================================
 QUESTIONS — Conversation 1
 ========================================
-Q1. Why does the student visit the academic advisor?
-  A) To drop a course he is failing
-  B) To discuss changing his major
-  C) To ask about study abroad opportunities
-  D) To request a letter of recommendation
+Q1. Why does the student visit the academic advisor? [Detail]
+  A) To drop a course he is currently failing.
+  B) To discuss changing his major to another field.
+  C) To ask about study abroad opportunities.
+  D) To request a letter of recommendation.
   Answer: B
 
-Q2. What does the advisor suggest as an alternative?
-  A) Taking a gap year to explore interests
-  B) Transferring to a different university
-  C) Adding an environmental science minor while keeping economics
-  D) Completing both majors simultaneously
+Q2. What does the advisor suggest as an alternative? [Detail]
+  A) Taking a gap year to explore his interests.
+  B) Transferring to a different university program.
+  C) Adding an environmental science minor while keeping economics.
+  D) Completing both majors at the same time.
   Answer: C
 
 
@@ -96,18 +96,18 @@ CONVERSATION 2 SCRIPT (conv2.mp3)
 ========================================
 QUESTIONS — Conversation 2
 ========================================
-Q3. What is the student's problem?
-  A) She needs to return overdue books
-  B) She cannot find a group study room with the equipment she needs
-  C) The library is closed on weekends
-  D) Her library card has expired
-  Answer: B
+Q3. What can be inferred about why the student needs a projector? [Inference]
+  A) She wants to practice her group presentation with slides.
+  B) She needs to watch a recorded lecture for class.
+  C) The librarian requires one for all study rooms.
+  D) Her professor asked her to record the presentation.
+  Answer: A
 
-Q4. What does the librarian recommend?
-  A) Booking a room at a different library
-  B) Rescheduling the study session to a weekday
-  C) Using a room without a projector
-  D) Going to the media center on the third floor early on Saturday
+Q4. What will the student most likely do on Saturday morning? [Inference]
+  A) Reserve a room at a different campus library.
+  B) Reschedule the study session to a weekday instead.
+  C) Use the medium-sized room without a projector.
+  D) Arrive early at the media center to get a room.
   Answer: D
 
 

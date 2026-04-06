@@ -17,7 +17,7 @@ VOICE ASSIGNMENTS
 ========================================
 NARRATOR (talk1-narrator.mp3)
 ========================================
-Listen to part of a lecture in a biology class.
+Listen to part of a lecture in a life science class.
 
 ========================================
 TALK 1 SCRIPT (talk1.mp3)

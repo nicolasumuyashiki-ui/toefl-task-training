@@ -16,7 +16,7 @@ VOICE ASSIGNMENTS
 ========================================
 NARRATOR (ann1-narrator.mp3)
 ========================================
-Listen to a maintenance announcement for campus residents.
+Listen to an announcement from the campus facilities office.
 
 ========================================
 ANNOUNCEMENT 1 SCRIPT (ann1.mp3)
@@ -26,18 +26,18 @@ ANNOUNCEMENT 1 SCRIPT (ann1.mp3)
 ========================================
 QUESTIONS — Announcement 1
 ========================================
-Q1. What is the purpose of the announcement?
-  A) To inform residents about a water system test and temporary interruption
-  B) To announce a new water filtration system
-  C) To report a broken water pipe in the dormitory
-  D) To remind students to conserve water on campus
+Q1. What is the announcement mainly about? [Main Idea]
+  A) A water system test and temporary service interruption.
+  B) A new water filtration system for dormitories.
+  C) A broken water pipe in the dormitory.
+  D) A reminder to conserve water on campus.
   Answer: A
 
-Q2. What are residents advised to do?
-  A) Stay in their rooms during the testing period
-  B) Store drinking water the night before
-  C) Report any water problems to the front desk
-  D) Move to a different dormitory temporarily
+Q2. Why does the maintenance department recommend storing water? [Purpose]
+  A) Because the water quality will change after the test.
+  B) Because water service will be interrupted during testing.
+  C) Because the dormitory water supply is being permanently shut off.
+  D) Because new plumbing will be installed in the buildings.
   Answer: B
 
 
@@ -64,18 +64,18 @@ ANNOUNCEMENT 2 SCRIPT (ann2.mp3)
 ========================================
 QUESTIONS — Announcement 2
 ========================================
-Q3. What is the professor announcing?
-  A) A change in the course syllabus
-  B) A cancellation of next week's class
-  C) A guest speaker visiting the class
-  D) A new research project for students
+Q3. What is the professor announcing? [Detail]
+  A) A change in the course syllabus.
+  B) A cancellation of next week's class.
+  C) A guest speaker visiting the class.
+  D) A new research project for students.
   Answer: C
 
-Q4. What does the professor require students to do?
-  A) Write a summary of the guest lecture
-  B) Read Dr. Chen's research paper before the talk
-  C) Submit a report on ocean pollution
-  D) Attend the talk and prepare at least two questions
+Q4. What can be inferred about Dr. Chen's presentation? [Inference]
+  A) It is optional for students in the course.
+  B) It will be recorded for students who cannot attend.
+  C) It will focus on freshwater pollution.
+  D) It will replace the regular class session for that day.
   Answer: D
 
 

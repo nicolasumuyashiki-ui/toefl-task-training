@@ -42,18 +42,18 @@ CONVERSATION 1 SCRIPT (conv1.mp3)
 ========================================
 QUESTIONS — Conversation 1
 ========================================
-Q1. Why does the student visit the registrar's office?
-  A) To find out which credits from his community college will transfer
-  B) To register for classes for the upcoming semester
-  C) To request a copy of his transcript
-  D) To change his major to business administration
+Q1. Why does the student visit the registrar's office? [Detail]
+  A) To find out which community college credits will transfer.
+  B) To register for classes for the upcoming semester.
+  C) To request a copy of his official transcript.
+  D) To change his major to business administration.
   Answer: A
 
-Q2. What does the staff member ask the student to provide?
-  A) A letter of recommendation from his previous professor
-  B) The course syllabus for his accounting class
-  C) His official high school diploma
-  D) A completed application form for credit transfer
+Q2. What does the staff member ask the student to provide? [Detail]
+  A) A letter of recommendation from his previous professor.
+  B) The course syllabus for his accounting class.
+  C) His official high school diploma for verification.
+  D) A completed application form for credit transfer.
   Answer: B
 
 
@@ -96,18 +96,18 @@ CONVERSATION 2 SCRIPT (conv2.mp3)
 ========================================
 QUESTIONS — Conversation 2
 ========================================
-Q3. What concern does the professor raise about the student's original topic?
-  A) It has already been covered by too many students
-  B) It is not related to the course material
-  C) It is too broad for a fifteen-page paper
-  D) It lacks sufficient academic sources
+Q3. What does the professor imply about the student's original topic? [Inference]
+  A) It has already been covered by too many students.
+  B) It is not related to the course material at all.
+  C) It would be too broad to cover in a fifteen-page paper.
+  D) It lacks sufficient academic sources for research.
   Answer: C
 
-Q4. What must the student submit by next Friday?
-  A) The complete research paper
-  B) A one-page summary of the final project
-  C) A list of ten peer-reviewed sources
-  D) A topic proposal with a thesis statement and at least five sources
+Q4. What can be inferred about what the student will do next? [Inference]
+  A) She will submit the complete research paper immediately.
+  B) She will write a one-page summary of the project.
+  C) She will compile a list of ten peer-reviewed sources.
+  D) She will write a proposal with a thesis and five sources.
   Answer: D
 
 

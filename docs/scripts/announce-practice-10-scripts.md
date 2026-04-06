@@ -26,19 +26,19 @@ ANNOUNCEMENT 1 SCRIPT (ann1.mp3)
 ========================================
 QUESTIONS — Announcement 1
 ========================================
-Q1. What is the announcement mainly about?
-  A) Changes to the campus meal plan pricing
-  B) The opening of a new food court in the student center
-  C) A new campus dining app for delivery orders
-  D) Extended dining hall hours during finals week
+Q1. What is the announcement mainly about? [Main Idea]
+  A) Changes to the campus meal plan pricing.
+  B) The opening of a new food court in the student center.
+  C) A new campus dining app for delivery orders.
+  D) Extended dining hall hours during finals week.
   Answer: B
 
-Q2. What benefit does the mobile ordering system offer?
-  A) Free delivery to any building on campus
-  B) A twenty-percent discount on all orders
-  C) The ability to skip the line by picking up at the express window
-  D) Access to a special menu not available in the food court
-  Answer: C
+Q2. Why does the speaker mention the campus dining app? [Purpose]
+  A) To describe how students can order food in advance and skip the line.
+  B) To announce a new delivery service on campus.
+  C) To explain the new meal plan pricing structure.
+  D) To promote a partnership with a food delivery company.
+  Answer: A
 
 
 ========================================
@@ -64,18 +64,18 @@ ANNOUNCEMENT 2 SCRIPT (ann2.mp3)
 ========================================
 QUESTIONS — Announcement 2
 ========================================
-Q3. What is the main purpose of this announcement?
-  A) To report a recent security incident on campus
-  B) To inform the campus community about an upgraded emergency alert system
-  C) To announce new campus security patrol hours
-  D) To introduce the new director of campus safety
-  Answer: B
+Q3. When will the campus-wide test of the new system take place? [Detail]
+  A) This Thursday at noon.
+  B) Next Monday at nine AM.
+  C) This Wednesday at three PM.
+  D) This Friday at noon.
+  Answer: D
 
-Q4. What should students do before Friday?
-  A) Download a new emergency app from the app store
-  B) Attend a safety orientation session
-  C) Verify their contact information in the student portal
-  D) Register for a campus safety workshop
+Q4. What can be inferred about the university's previous alert system? [Inference]
+  A) It was completely unreliable and never worked properly.
+  B) It only sent alerts to faculty and staff members.
+  C) It had fewer notification channels than the upgraded system.
+  D) It was recently involved in a major security failure.
   Answer: C
 
 

@@ -17,7 +17,7 @@ VOICE ASSIGNMENTS
 ========================================
 NARRATOR (talk1-narrator.mp3)
 ========================================
-Listen to part of a lecture in a biology class.
+Listen to part of a lecture in a life science class.
 
 ========================================
 TALK 1 SCRIPT (talk1.mp3)
@@ -50,10 +50,10 @@ Q3. According to the speaker, what does the duration of the waggle dance indicat
 
 Q4. What can be inferred from the talk?
   A) Honeybees can only communicate through dancing
-  B) Karl von Frisch trained bees to perform the dance
+  B) Bee communication is more sophisticated than previously thought
   C) All insects use the waggle dance
-  D) Bee communication is more sophisticated than previously thought
-  Answer: D
+  D) Karl von Frisch trained bees to perform the dance
+  Answer: B
 
 
 ========================================

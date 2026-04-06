@@ -42,18 +42,18 @@ CONVERSATION 1 SCRIPT (conv1.mp3)
 ========================================
 QUESTIONS — Conversation 1
 ========================================
-Q1. Why does the student want to change rooms?
-  A) His current room is too small for his belongings
-  B) His roommate's schedule is disrupting his sleep
-  C) He wants to live closer to the science building
-  D) His room has a maintenance problem
+Q1. Why does the student want to change rooms? [Detail]
+  A) His current room is too small for his belongings.
+  B) His roommate's schedule is disrupting his sleep.
+  C) He wants to live closer to the science building.
+  D) His room has a maintenance problem.
   Answer: B
 
-Q2. What does the coordinator tell the student about Greenfield Residence?
-  A) It is fully occupied this semester
-  B) It requires a minimum GPA to apply
-  C) Single rooms are available but cost more
-  D) It is being renovated until next month
+Q2. What does the coordinator tell the student about Greenfield Residence? [Detail]
+  A) It is fully occupied this semester.
+  B) It requires a minimum GPA to apply.
+  C) Single rooms are available but cost more.
+  D) It is being renovated until next month.
   Answer: C
 
 
@@ -96,18 +96,18 @@ CONVERSATION 2 SCRIPT (conv2.mp3)
 ========================================
 QUESTIONS — Conversation 2
 ========================================
-Q3. Why does the student visit Professor Davis?
-  A) To ask about changing her major to sociology
-  B) To request a deadline extension for an assignment
-  C) To discuss her research paper topic
-  D) To ask about extra credit after a disappointing midterm
+Q3. What can be inferred about why the student is worried? [Inference]
+  A) She wants to change her major to sociology.
+  B) She needs a deadline extension for an assignment.
+  C) She is struggling to understand the course material.
+  D) Her midterm score was lower than she expected.
   Answer: D
 
-Q4. What does Professor Davis recommend the student do?
-  A) Attend a guest lecture and write a summary
-  B) Retake the midterm exam next week
-  C) Drop the course and take it again next semester
-  D) Form a study group with classmates
+Q4. What will the student most likely do next? [Inference]
+  A) Attend a guest lecture and write a summary.
+  B) Retake the midterm exam the following week.
+  C) Drop the course and register again next semester.
+  D) Form a study group with her classmates.
   Answer: A
 
 

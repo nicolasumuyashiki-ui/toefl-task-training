@@ -26,19 +26,19 @@ ANNOUNCEMENT 1 SCRIPT (ann1.mp3)
 ========================================
 QUESTIONS — Announcement 1
 ========================================
-Q1. What is the announcement mainly about?
-  A) A change in library opening hours
-  B) New database access and upcoming research workshops
-  C) A renovation of the library building
-  D) A new library card system for students
+Q1. What is the announcement mainly about? [Main Idea]
+  A) A change in library opening hours.
+  B) New database access and upcoming research workshops.
+  C) A renovation of the library building.
+  D) A new library card system for students.
   Answer: B
 
-Q2. What do students need to do to attend the workshops?
-  A) Register online at least one week in advance
-  B) Pay a small participation fee
-  C) Bring their own laptop computer
-  D) Simply show up — no registration is required
-  Answer: D
+Q2. Why does the librarian mention that no registration is required? [Purpose]
+  A) To encourage more students to attend the workshops.
+  B) To explain a change in the registration policy.
+  C) To apologize for a scheduling error.
+  D) To promote a new library membership program.
+  Answer: A
 
 
 ========================================
@@ -64,18 +64,18 @@ ANNOUNCEMENT 2 SCRIPT (ann2.mp3)
 ========================================
 QUESTIONS — Announcement 2
 ========================================
-Q3. Why are schedule changes being made?
-  A) Because of a severe winter storm warning
-  B) Because of a power outage on campus
-  C) Because of a scheduled building inspection
-  D) Because of a national holiday
-  Answer: A
+Q3. Why are schedule changes being made? [Detail]
+  A) Because of a power outage on campus.
+  B) Because of a scheduled building inspection.
+  C) Because of a national holiday.
+  D) Because of a severe winter storm warning.
+  Answer: D
 
-Q4. What will happen to afternoon classes?
-  A) They will be canceled entirely
-  B) They will be moved to the weekend
-  C) They will be held online as scheduled
-  D) They will be combined into longer sessions
+Q4. What can be inferred about the evening events? [Inference]
+  A) They have been permanently canceled.
+  B) They will be moved to an online format.
+  C) They will take place the following week.
+  D) They will be held in a different building.
   Answer: C
 
 

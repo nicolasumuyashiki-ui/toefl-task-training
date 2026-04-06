@@ -44,18 +44,18 @@ CONVERSATION 1 SCRIPT (conv1.mp3)
 ========================================
 QUESTIONS — Conversation 1
 ========================================
-Q1. Why hasn't the student's work-study application been processed?
-  A) He missed the application deadline
-  B) He is missing required tax documents
-  C) His GPA does not meet the minimum requirement
-  D) The program is already full for this semester
+Q1. Why hasn't the student's work-study application been processed? [Detail]
+  A) He missed the application deadline.
+  B) He is missing required tax documents.
+  C) His GPA does not meet the minimum requirement.
+  D) The program is already full for this semester.
   Answer: B
 
-Q2. What will the student do next?
-  A) Schedule another appointment with the advisor
-  B) Submit a new FAFSA application
-  C) Upload tax documents through the student portal
-  D) Apply directly to on-campus employers
+Q2. What will the student do next? [Detail]
+  A) Schedule another appointment with the advisor.
+  B) Submit a new FAFSA application.
+  C) Upload tax documents through the student portal.
+  D) Apply directly to on-campus employers.
   Answer: C
 
 
@@ -98,18 +98,18 @@ CONVERSATION 2 SCRIPT (conv2.mp3)
 ========================================
 QUESTIONS — Conversation 2
 ========================================
-Q3. What is the likely cause of the discrepancy in results?
-  A) They used different chemicals for the experiment
-  B) The solution may not have been fully dissolved during measurement
-  C) The spectrophotometer was broken
-  D) They conducted the experiment on different days
-  Answer: B
+Q3. What can be inferred about the cause of the different results? [Inference]
+  A) The solution was not fully dissolved during measurement.
+  B) They used different chemicals for the experiment.
+  C) The spectrophotometer was broken during the test.
+  D) They conducted the experiment on different days.
+  Answer: A
 
-Q4. What do the students plan to do?
-  A) Submit the report with both sets of data
-  B) Ask the professor to extend the deadline
-  C) Use the average of their two results
-  D) Request permission to redo the experiment before Friday
+Q4. What will the students most likely do before the deadline? [Inference]
+  A) Submit the report with both sets of data.
+  B) Ask the professor to extend the deadline.
+  C) Use the average of their two results.
+  D) Redo the experiment after getting the professor's approval.
   Answer: D
 
 

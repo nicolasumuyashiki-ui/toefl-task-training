@@ -42,18 +42,18 @@ CONVERSATION 1 SCRIPT (conv1.mp3)
 ========================================
 QUESTIONS — Conversation 1
 ========================================
-Q1. Why does the student visit the residence advisor?
-  A) To request a permanent room transfer to another building
-  B) To complain about a noisy neighbor
-  C) To report a broken lock on his door
-  D) To ask about extending quiet hours
+Q1. Why does the student visit the residence advisor? [Detail]
+  A) To request a permanent room transfer to another building.
+  B) To complain about a noisy neighbor in his building.
+  C) To report a broken lock on his door.
+  D) To ask about extending the quiet hours policy.
   Answer: B
 
-Q2. What does the advisor offer to do for the student?
-  A) Speak directly to the noisy neighbor on his behalf
-  B) Move him to a different building permanently
-  C) Help file a formal complaint and arrange a temporary room change
-  D) Provide him with noise-canceling headphones
+Q2. What does the advisor offer to do for the student? [Detail]
+  A) Speak directly to the noisy neighbor on his behalf.
+  B) Move him to a different building permanently.
+  C) Help file a complaint and arrange a temporary room change.
+  D) Provide him with noise-canceling headphones to use.
   Answer: C
 
 
@@ -96,18 +96,18 @@ CONVERSATION 2 SCRIPT (conv2.mp3)
 ========================================
 QUESTIONS — Conversation 2
 ========================================
-Q3. What is the student concerned about?
-  A) She does not have enough professional work experience for her resume
-  B) She missed the deadline for the internship application
-  C) She cannot decide between two different internship offers
-  D) She needs a recommendation letter from her professor
+Q3. What does the counselor imply about the student's experience? [Inference]
+  A) Her volunteer work and class projects are sufficient for an internship.
+  B) She should get a part-time job before applying.
+  C) She cannot qualify without professional work experience.
+  D) She needs a recommendation letter from her professor.
   Answer: A
 
-Q4. What does the counselor recommend?
-  A) Apply to a different company with fewer requirements
-  B) Get more work experience before applying
-  C) Remove the volunteer work from the resume
-  D) Highlight skills and describe accomplishments with specific details
+Q4. What can be inferred about how the student will revise her resume? [Inference]
+  A) She will apply to a different company with fewer requirements.
+  B) She will get more work experience before applying.
+  C) She will remove the volunteer work from the resume.
+  D) She will add specific details about her skills and accomplishments.
   Answer: D
 
 

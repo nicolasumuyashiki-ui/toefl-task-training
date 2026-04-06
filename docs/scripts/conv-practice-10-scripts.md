@@ -44,18 +44,18 @@ CONVERSATION 1 SCRIPT (conv1.mp3)
 ========================================
 QUESTIONS — Conversation 1
 ========================================
-Q1. Why does the student want to change dormitories?
-  A) Her current roommate is too noisy
-  B) Her dorm is too far from her classes
-  C) She wants to live closer to the dining hall
-  D) Her building is undergoing renovation
+Q1. Why does the student want to change dormitories? [Detail]
+  A) Her current roommate is too noisy.
+  B) Her dorm is too far from her classes.
+  C) She wants to live closer to the dining hall.
+  D) Her building is undergoing renovation.
   Answer: B
 
-Q2. What does the coordinator say about the transfer process?
-  A) Students must get approval from their current RA
-  B) Transfers are only available for second-year students
-  C) Requests are handled on a first-come, first-served basis
-  D) The student must attend a housing orientation session
+Q2. What does the coordinator say about the transfer process? [Detail]
+  A) Students must get approval from their current RA.
+  B) Transfers are only available for second-year students.
+  C) Requests are handled on a first-come, first-served basis.
+  D) The student must attend a housing orientation session.
   Answer: C
 
 
@@ -102,19 +102,19 @@ CONVERSATION 2 SCRIPT (conv2.mp3)
 ========================================
 QUESTIONS — Conversation 2
 ========================================
-Q3. What is the student's main concern?
-  A) He is unsure whether to accept the internship offer
-  B) He needs help writing his resume
-  C) He wants advice on preparing for a job interview
-  D) He is looking for a part-time job on campus
-  Answer: C
+Q3. What can be inferred about why the student visits the career center? [Inference]
+  A) He feels unprepared for his first job interview.
+  B) He needs help writing his resume for the firm.
+  C) He wants to find a part-time job on campus.
+  D) He is unsure whether to accept the internship offer.
+  Answer: A
 
-Q4. What does the advisor recommend the student do before the interview?
-  A) Visit the company's office in advance
-  B) Sign up for a mock interview at the career center
-  C) Send a thank-you email to the interviewer
-  D) Complete an online interview training course
-  Answer: B
+Q4. What will the student most likely do before the interview? [Inference]
+  A) Visit the company's office in advance.
+  B) Send a thank-you email to the interviewer.
+  C) Complete an online interview training course.
+  D) Schedule a mock interview at the career center.
+  Answer: D
 
 
 ========================================

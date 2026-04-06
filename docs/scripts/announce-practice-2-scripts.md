@@ -26,19 +26,19 @@ ANNOUNCEMENT 1 SCRIPT (ann1.mp3)
 ========================================
 QUESTIONS — Announcement 1
 ========================================
-Q1. What is the announcement mainly about?
-  A) A change in the classroom schedule
-  B) A field trip to a local museum
-  C) A new assignment for the class
-  D) A guest lecture on cultural artifacts
+Q1. What is the announcement mainly about? [Main Idea]
+  A) A change in the classroom schedule.
+  B) A field trip to a local museum.
+  C) A new assignment for the class.
+  D) A guest lecture on cultural artifacts.
   Answer: B
 
-Q2. What should students do if they cannot attend?
-  A) Submit a written report instead
-  B) Email the department secretary
-  C) Inform the professor by Friday
-  D) Arrange their own transportation
-  Answer: C
+Q2. Why does the professor ask students to bring a notebook? [Purpose]
+  A) To complete an observation worksheet during the visit.
+  B) To take notes on the bus ride schedule.
+  C) To write questions for the museum guide.
+  D) To record attendance at the museum.
+  Answer: A
 
 
 ========================================
@@ -64,19 +64,19 @@ ANNOUNCEMENT 2 SCRIPT (ann2.mp3)
 ========================================
 QUESTIONS — Announcement 2
 ========================================
-Q3. What is the purpose of the new policy?
-  A) To limit the number of bicycles on campus
-  B) To generate revenue for campus improvements
-  C) To promote environmental awareness
-  D) To reduce bicycle theft and aid recovery
+Q3. What is the purpose of the new bicycle registration policy? [Purpose]
+  A) To limit the number of bicycles on campus.
+  B) To generate revenue for campus improvements.
+  C) To promote environmental awareness.
+  D) To reduce bicycle theft and aid recovery.
   Answer: D
 
-Q4. Where can students register their bicycles?
-  A) At the security office in Building C
-  B) At the student union front desk
-  C) Online through the campus portal
-  D) At any campus parking lot
-  Answer: A
+Q4. What can be inferred about unregistered bicycles after December 15th? [Inference]
+  A) They will receive a warning sticker.
+  B) Their owners will be required to pay a fine.
+  C) They may be taken away from campus.
+  D) They will be locked by campus security.
+  Answer: C
 
 
 ========================================

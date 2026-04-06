@@ -25,6 +25,7 @@ body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#
 .q-block h4{font-size:.9em;font-weight:700;margin-bottom:10px}
 .q-block .opt{padding:6px 0;font-size:.85em}
 .q-block .opt-letter{font-weight:800;color:#f59e0b;margin-right:6px}
+.narrator-line{background:#fef3c7;border-left:3px solid #f59e0b;padding:10px 16px;margin-bottom:16px;font-size:.85em;font-style:italic;color:#92400e;border-radius:0 8px 8px 0}
 .footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
 .footer a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
 .footer a:hover{color:#2d3748}
@@ -44,6 +45,7 @@ body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#
 <!-- Conversation 1 -->
 <div class="conv-section">
   <h3>Conversation 1</h3>
+  <div class="narrator-line">Listen to a conversation.</div>
   <div class="setting">Setting: Campus Health Center — Student (male) + Receptionist (female)</div>
   <div class="turn"><span class="speaker">Student:</span> Hi, I'd like to schedule a vaccination appointment. I need to get my flu shot before the deadline.</div>
   <div class="turn"><span class="speaker">Receptionist:</span> Sure. The campus health center is offering flu vaccinations every weekday this month. Do you have a preference for a day?</div>
@@ -57,23 +59,24 @@ body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#
 
   <div class="q-block">
     <h4>Q1. Why does the student visit the health center?</h4>
-    <div class="opt"><span class="opt-letter">A)</span> To pick up a prescription</div>
-    <div class="opt"><span class="opt-letter">B)</span> To get a physical examination</div>
-    <div class="opt"><span class="opt-letter">C)</span> To register for student health insurance</div>
-    <div class="opt"><span class="opt-letter">D)</span> To schedule a vaccination appointment</div>
+    <div class="opt"><span class="opt-letter">A)</span> To pick up a prescription from the pharmacy.</div>
+    <div class="opt"><span class="opt-letter">B)</span> To get a physical examination on campus.</div>
+    <div class="opt"><span class="opt-letter">C)</span> To register for the student health insurance plan.</div>
+    <div class="opt"><span class="opt-letter">D)</span> To schedule a flu vaccination appointment.</div>
   </div>
   <div class="q-block">
     <h4>Q2. What will happen after the student receives the vaccination?</h4>
-    <div class="opt"><span class="opt-letter">A)</span> He will need to pay a separate fee</div>
-    <div class="opt"><span class="opt-letter">B)</span> He will need to submit paperwork to the registrar</div>
-    <div class="opt"><span class="opt-letter">C)</span> His immunization record will be updated automatically</div>
-    <div class="opt"><span class="opt-letter">D)</span> He will receive a follow-up phone call</div>
+    <div class="opt"><span class="opt-letter">A)</span> He will need to pay a separate fee.</div>
+    <div class="opt"><span class="opt-letter">B)</span> He will need to submit paperwork to the registrar.</div>
+    <div class="opt"><span class="opt-letter">C)</span> His immunization record will be updated automatically.</div>
+    <div class="opt"><span class="opt-letter">D)</span> He will receive a follow-up phone call.</div>
   </div>
 </div>
 
 <!-- Conversation 2 -->
 <div class="conv-section">
   <h3>Conversation 2</h3>
+  <div class="narrator-line">Listen to a conversation.</div>
   <div class="setting">Setting: Academic Dean's Office — Student (female) + Academic Dean (male)</div>
   <div class="turn"><span class="speaker">Student:</span> Thank you for seeing me, Dean Harris. I'd like to discuss the possibility of appealing my grade in Economics 201.</div>
   <div class="turn"><span class="speaker">Dean:</span> Of course. Can you explain why you believe the grade should be reconsidered?</div>
@@ -85,18 +88,18 @@ body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#
   <div class="turn"><span class="speaker">Dean:</span> It depends on the evidence. If the committee finds a grading error, they can recommend a change. But if the professor followed the syllabus correctly, the grade will likely remain the same.</div>
 
   <div class="q-block">
-    <h4>Q3. What does the student want to do?</h4>
-    <div class="opt"><span class="opt-letter">A)</span> Appeal a grade she received</div>
-    <div class="opt"><span class="opt-letter">B)</span> Transfer to a different economics class</div>
-    <div class="opt"><span class="opt-letter">C)</span> Drop a course before the deadline</div>
-    <div class="opt"><span class="opt-letter">D)</span> Request an incomplete for the semester</div>
+    <h4>Q3. What can be inferred about why the student visits the dean?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> She believes there may be an error in her grade.</div>
+    <div class="opt"><span class="opt-letter">B)</span> She wants to transfer to a different economics class.</div>
+    <div class="opt"><span class="opt-letter">C)</span> She needs to drop a course before the deadline.</div>
+    <div class="opt"><span class="opt-letter">D)</span> She wants to request an incomplete for the semester.</div>
   </div>
   <div class="q-block">
-    <h4>Q4. What does the dean say about the appeal process?</h4>
-    <div class="opt"><span class="opt-letter">A)</span> The professor must approve it first</div>
-    <div class="opt"><span class="opt-letter">B)</span> It requires a meeting with the department chair</div>
-    <div class="opt"><span class="opt-letter">C)</span> The student must rewrite the final paper</div>
-    <div class="opt"><span class="opt-letter">D)</span> A written request and graded assignments must be submitted for committee review</div>
+    <h4>Q4. What can be inferred about the likely outcome of the appeal?</h4>
+    <div class="opt"><span class="opt-letter">A)</span> The committee will automatically change the grade.</div>
+    <div class="opt"><span class="opt-letter">B)</span> The grade will likely stay if the syllabus was followed.</div>
+    <div class="opt"><span class="opt-letter">C)</span> The student must rewrite the final paper first.</div>
+    <div class="opt"><span class="opt-letter">D)</span> The professor will be required to meet with her.</div>
   </div>
 </div>
 </div>

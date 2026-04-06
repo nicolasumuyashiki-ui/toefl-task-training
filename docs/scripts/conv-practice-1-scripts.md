@@ -44,18 +44,18 @@ CONVERSATION 1 SCRIPT (conv1.mp3)
 ========================================
 QUESTIONS — Conversation 1
 ========================================
-Q1. Why does the student visit the IT help desk?
-  A) To report a stolen laptop
-  B) To install new software on her computer
-  C) To request a new student ID card
-  D) To get help connecting to the campus Wi-Fi
+Q1. Why does the student visit the IT help desk? [Detail]
+  A) To report a stolen laptop on campus.
+  B) To install new software on her computer.
+  C) To request a new student ID card.
+  D) To get help connecting to the campus Wi-Fi.
   Answer: D
 
-Q2. What will the staff member do for the student?
-  A) Reset her network password and send a monthly reminder
-  B) Replace her laptop battery
-  C) Give her a temporary Wi-Fi hotspot device
-  D) Schedule a follow-up appointment for tomorrow
+Q2. What will the staff member do for the student? [Detail]
+  A) Reset her network password and send a monthly reminder.
+  B) Replace her laptop battery right away.
+  C) Give her a temporary Wi-Fi hotspot device.
+  D) Schedule a follow-up appointment for tomorrow.
   Answer: A
 
 
@@ -98,18 +98,18 @@ CONVERSATION 2 SCRIPT (conv2.mp3)
 ========================================
 QUESTIONS — Conversation 2
 ========================================
-Q3. What is the student's problem?
-  A) He cannot afford the textbook
-  B) He received the wrong edition of a textbook
-  C) His textbook was damaged during shipping
-  D) The bookstore lost his order
+Q3. What can be inferred about why the student needs the third edition? [Inference]
+  A) The second edition contains too many errors.
+  B) His professor requires it because the chapters were reorganized.
+  C) The third edition is cheaper than the second.
+  D) The bookstore no longer carries the second edition.
   Answer: B
 
-Q4. What does the staff member suggest?
-  A) Return the book for a full refund
-  B) Use the second edition for the entire semester
-  C) Wait until Wednesday for the correct edition with a discount
-  D) Order the book from a different bookstore
+Q4. What will the student most likely do next? [Inference]
+  A) Return the book and wait for a full refund.
+  B) Buy the second edition for the whole semester.
+  C) Read the second edition until Wednesday and then exchange it.
+  D) Order the book from a different online bookstore.
   Answer: C
 
 

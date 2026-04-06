@@ -26,18 +26,18 @@ ANNOUNCEMENT 1 SCRIPT (ann1.mp3)
 ========================================
 QUESTIONS — Announcement 1
 ========================================
-Q1. What is the main purpose of the announcement?
-  A) To announce new library membership requirements
-  B) To inform students about extended library hours during finals
-  C) To introduce a new library catalog system
-  D) To announce the closure of the library for repairs
+Q1. What is the main purpose of the announcement? [Main Idea]
+  A) To announce new library membership requirements.
+  B) To inform students about extended library hours during finals.
+  C) To introduce a new library catalog system.
+  D) To announce the closure of the library for repairs.
   Answer: B
 
-Q2. What additional resource is being made available?
-  A) Two extra study rooms on the third floor
-  B) Free tutoring sessions in the library
-  C) A new computer lab on the second floor
-  D) Extended printing services after midnight
+Q2. Why does the librarian mention the online booking system? [Purpose]
+  A) To explain how students can reserve the new study rooms.
+  B) To encourage students to visit the library website.
+  C) To announce a change in the library's return policy.
+  D) To remind students about overdue book fees.
   Answer: A
 
 
@@ -64,18 +64,18 @@ ANNOUNCEMENT 2 SCRIPT (ann2.mp3)
 ========================================
 QUESTIONS — Announcement 2
 ========================================
-Q3. When is the deadline to sign up for intramural sports?
-  A) Next Monday at six PM
-  B) This Wednesday at noon
-  C) This Friday at five PM
-  D) Next Friday at five PM
+Q3. When is the deadline to sign up for intramural sports? [Detail]
+  A) Next Monday at six PM.
+  B) This Wednesday at noon.
+  C) This Friday at five PM.
+  D) Next Friday at five PM.
   Answer: C
 
-Q4. What happens if a team captain misses the orientation session?
-  A) The captain will be replaced by another team member
-  B) The team must pay an additional registration fee
-  C) The captain can attend a make-up session the following week
-  D) The team will not be eligible to compete
+Q4. What can be inferred about the orientation session for team captains? [Inference]
+  A) It will cover the rules and schedule for the season.
+  B) It is optional for experienced captains.
+  C) It will be recorded for those who cannot attend.
+  D) Missing it has serious consequences for the entire team.
   Answer: D
 
 

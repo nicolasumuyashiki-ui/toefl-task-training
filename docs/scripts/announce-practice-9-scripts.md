@@ -26,19 +26,19 @@ ANNOUNCEMENT 1 SCRIPT (ann1.mp3)
 ========================================
 QUESTIONS — Announcement 1
 ========================================
-Q1. What is the announcement mainly about?
-  A) New library hours for the semester
-  B) A new self-checkout system in the library
-  C) Changes to the interlibrary loan policy
-  D) A renovation of the library entrance
+Q1. What is the announcement mainly about? [Main Idea]
+  A) New library hours for the semester.
+  B) A new self-checkout system in the library.
+  C) Changes to the interlibrary loan policy.
+  D) A renovation of the library entrance.
   Answer: B
 
-Q2. What should students do if they need help with reserves or interlibrary loans?
-  A) Use the self-checkout kiosk
-  B) Send an email to the library director
-  C) Go to the staffed circulation desk
-  D) Submit a request through the library website
-  Answer: C
+Q2. Why does the librarian mention the staffed circulation desk? [Purpose]
+  A) To reassure students that human assistance is still available for special services.
+  B) To announce the closure of the circulation desk.
+  C) To explain how the self-checkout kiosks work.
+  D) To encourage students to volunteer at the desk.
+  Answer: A
 
 
 ========================================
@@ -64,19 +64,19 @@ ANNOUNCEMENT 2 SCRIPT (ann2.mp3)
 ========================================
 QUESTIONS — Announcement 2
 ========================================
-Q3. What is being announced?
-  A) Tryouts for the varsity basketball team
-  B) A new fitness center opening on campus
-  C) Registration for the intramural basketball season
-  D) A basketball coaching workshop
-  Answer: C
+Q3. What does the registration fee cover? [Detail]
+  A) Equipment rental and facility maintenance.
+  B) Coach salaries and training materials.
+  C) Trophies and end-of-season banquet.
+  D) Referee costs and team jerseys.
+  Answer: D
 
-Q4. What can individual players without a team do?
-  A) Form their own team at the first game
-  B) Sign up as free agents to be placed on a team
-  C) Only participate in the recreational league
-  D) Wait until next semester to register
-  Answer: B
+Q4. What can be inferred about the intramural basketball program? [Inference]
+  A) It is only available to experienced players.
+  B) Teams must provide their own uniforms.
+  C) The program is designed to be inclusive for players of all abilities.
+  D) Games will be held on weekends only.
+  Answer: C
 
 
 ========================================

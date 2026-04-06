@@ -42,18 +42,18 @@ CONVERSATION 1 SCRIPT (conv1.mp3)
 ========================================
 QUESTIONS — Conversation 1
 ========================================
-Q1. Why does the student visit the dining hall office?
-  A) To complain about the taste of the food
-  B) To ask about the dining hall's operating hours
-  C) To apply for a job in the kitchen
-  D) To discuss food allergy accommodation
+Q1. Why does the student visit the dining hall office? [Detail]
+  A) To complain about the taste of the food.
+  B) To ask about the dining hall's operating hours.
+  C) To apply for a job in the kitchen.
+  D) To discuss food allergy accommodation.
   Answer: D
 
-Q2. What does the manager offer to do for the student?
-  A) Prepare special meals exclusively for her
-  B) Add her to an allergy notification email list
-  C) Refund her meal plan fees
-  D) Transfer her to a different dining hall
+Q2. What does the manager offer to do for the student? [Detail]
+  A) Prepare special meals exclusively for her.
+  B) Add her to an allergy notification email list.
+  C) Refund her meal plan fees.
+  D) Transfer her to a different dining hall.
   Answer: B
 
 
@@ -96,18 +96,18 @@ CONVERSATION 2 SCRIPT (conv2.mp3)
 ========================================
 QUESTIONS — Conversation 2
 ========================================
-Q3. What is the student's main problem?
-  A) He cannot find enough sources for his paper
-  B) He missed the deadline for his assignment
-  C) His thesis statement is too broad
-  D) He does not understand the grading rubric
+Q3. What can be inferred about the student's approach to his paper? [Inference]
+  A) He could not find enough sources for the paper.
+  B) He missed the deadline for his assignment.
+  C) He chose a topic that was too broad.
+  D) He did not understand the grading rubric.
   Answer: C
 
-Q4. What does the tutor recommend the student do first?
-  A) Start with revising the thesis statement
-  B) Rewrite the introduction paragraph
-  C) Add more references to the bibliography
-  D) Change the topic entirely
+Q4. What will the student most likely do first after this meeting? [Inference]
+  A) Revise the thesis statement for his research paper.
+  B) Rewrite the introduction paragraph from scratch.
+  C) Add more references to the bibliography section.
+  D) Change the topic to something completely different.
   Answer: A
 
 
