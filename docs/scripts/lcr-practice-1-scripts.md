@@ -29,9 +29,9 @@ Script:
 Do you know if the library is open on Sundays?
 
 Choices:
-A) Yes, it opens at ten and closes at six.
-B) I usually study at home on weekends.
-C) The library has a great collection of books.
+A) Yes, from ten to six.
+B) I study at home on weekends.
+C) They have a great book collection.
 D) I returned my books last Friday.
 
 Answer: A
@@ -48,10 +48,10 @@ Script:
 Could you show me where the registration office is?
 
 Choices:
-A) Registration starts next Monday.
-B) Sure, it's just down the hall on your left.
-C) I already registered for all my classes.
-D) The office is quite modern and spacious.
+A) Registration opens next Monday morning.
+B) Sure, it's down the hall on your left.
+C) I already registered for my classes.
+D) The office has a nice waiting area.
 
 Answer: B
 
@@ -67,10 +67,10 @@ Script:
 How about we grab lunch before the afternoon lecture?
 
 Choices:
-A) The lecture was really interesting yesterday.
-B) I had a sandwich for breakfast.
-C) That sounds great. The cafeteria or somewhere off campus?
-D) Lunch is the most important meal of the day.
+A) Yesterday's lecture was really interesting.
+B) I had a big breakfast today.
+C) Sounds great. Cafeteria or off campus?
+D) Eating healthy is important for students.
 
 Answer: C
 
@@ -86,10 +86,10 @@ Script:
 I can't believe the bookstore is already sold out of the biology textbook.
 
 Choices:
-A) Biology is one of the most popular courses this semester.
-B) The bookstore also sells school supplies and snacks.
-C) I bought mine at the beginning of the semester.
-D) Have you tried checking the online store? They might still have copies.
+A) Biology is a very popular subject this year.
+B) The bookstore also sells notebooks and pens.
+C) I bought mine at the start of the semester.
+D) Try checking the online store for copies.
 
 Answer: D
 
@@ -105,10 +105,10 @@ Script:
 Didn't the professor say the deadline was moved to Friday?
 
 Choices:
-A) Actually, I think she said it was pushed back to next Monday.
-B) The professor is very strict about deadlines.
+A) Actually, I think she said next Monday.
+B) The professor is really strict about attendance.
 C) I already submitted my paper yesterday.
-D) Friday is my favorite day of the week.
+D) I love Fridays because we have no classes.
 
 Answer: A
 
@@ -124,10 +124,10 @@ Script:
 I'm thinking about switching my major to computer science, but I'm not sure it's the right move.
 
 Choices:
-A) Computer science is a very competitive field these days.
-B) The computer lab is open until midnight during finals week.
-C) I changed my schedule to include more electives this semester.
-D) Why don't you talk to an academic advisor before making a decision?
+A) Computer science is a fast-growing field.
+B) The computer lab is open until midnight.
+C) I added more electives to my schedule this semester.
+D) Why not talk to an academic advisor first?
 
 Answer: D
 
@@ -143,10 +143,10 @@ Script:
 Would you mind if I borrowed your notes from yesterday's history class?
 
 Choices:
-A) History is one of my strongest subjects.
-B) Not at all. I'll send you a photo of them after lunch.
-C) I didn't take very good notes in high school.
-D) The class was canceled due to the professor's illness.
+A) History is my favorite subject.
+B) Not at all. I'll send them after lunch.
+C) I took notes in high school too.
+D) The class was canceled yesterday.
 
 Answer: B
 
@@ -162,10 +162,10 @@ Script:
 I heard the campus shuttle service is being reduced next semester because of budget cuts.
 
 Choices:
-A) I usually drive my own car to campus anyway.
-B) The shuttle buses are always very clean and comfortable.
-C) That's unfortunate. I rely on it to get to my early morning classes.
-D) Budget cuts have affected many departments this year.
+A) I drive my car to campus anyway.
+B) The shuttle buses are very comfortable.
+C) That's unfortunate. I rely on it for morning classes.
+D) Budget management is important for any university.
 
 Answer: C
 

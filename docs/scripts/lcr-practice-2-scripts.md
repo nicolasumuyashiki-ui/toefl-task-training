@@ -29,10 +29,10 @@ Script:
 Excuse me, do you know where I can buy a lab coat on campus?
 
 Choices:
-A) Lab coats are required for all chemistry classes.
-B) I think they sell them at the campus bookstore near the entrance.
-C) My lab coat is white with two pockets.
-D) The campus is really big, isn't it?
+A) You need one for chemistry class.
+B) Try the campus bookstore near the entrance.
+C) My lab coat has two pockets.
+D) The campus is really big.
 
 Answer: B
 
@@ -48,10 +48,10 @@ Script:
 Are you planning to apply for the study abroad program this fall?
 
 Choices:
-A) The program was started five years ago.
-B) Fall is my favorite season of the year.
-C) I studied really hard for the final exam.
-D) Actually, I already submitted my application last week.
+A) The program started five years ago.
+B) Fall is my favorite season.
+C) I studied hard for the final exam.
+D) I already submitted my application.
 
 Answer: D
 
@@ -67,9 +67,9 @@ Script:
 My roommate keeps playing loud music late at night. I don't know what to do.
 
 Choices:
-A) Have you tried talking to your resident advisor about it?
-B) I love listening to music while I study.
-C) The dormitory has a nice common area on the first floor.
+A) Have you talked to your RA?
+B) I enjoy music while studying.
+C) The dorm has a nice common room.
 D) My roommate is from California.
 
 Answer: A
@@ -86,10 +86,10 @@ Script:
 Have you been to the career center yet? I heard they help with resume writing.
 
 Choices:
-A) I've been to the campus three times this week.
-B) Writing is one of the most useful skills for any job.
-C) Not yet, but I should go soon. I need to update my resume before the career fair.
-D) The center is located next to the administration building.
+A) I've been to campus three times this week.
+B) Writing skills are important in any field.
+C) Not yet, but I need to update my resume soon.
+D) The center is located near the main entrance.
 
 Answer: C
 
@@ -105,10 +105,10 @@ Script:
 I'm really struggling with calculus this semester. Do you know if there's any free tutoring available?
 
 Choices:
-A) Calculus is one of the hardest courses in the math department.
+A) Calculus is one of the hardest math courses.
 B) I got an A in calculus last semester.
-C) The math building was renovated over the summer.
-D) Yes, the learning center offers free tutoring sessions every Tuesday and Thursday.
+C) The math building is being renovated this summer.
+D) Yes, the learning center has free sessions on Tuesdays.
 
 Answer: D
 
@@ -124,9 +124,9 @@ Script:
 I can't believe I got a parking ticket even though I had a valid permit. The sign was completely blocked by a tree branch.
 
 Choices:
-A) Parking on campus has always been expensive.
-B) You should take a photo of the blocked sign and appeal the ticket at the campus parking office.
-C) I always take the bus to campus so I never have to worry about parking.
+A) Parking on campus is really expensive these days.
+B) Take a photo and appeal the ticket.
+C) I take the bus so parking isn't my problem.
 D) Tree branches can be dangerous during storms.
 
 Answer: B
@@ -143,9 +143,9 @@ Script:
 I was thinking about signing up for the campus gym, but I'm not sure if it's worth the extra fee when I could just run outside.
 
 Choices:
-A) Running is one of the best forms of cardiovascular exercise.
-B) The gym is open from six in the morning until ten at night.
-C) Well, the gym also has weight training equipment and group fitness classes, which you can't really do outdoors.
+A) Running is great exercise for cardiovascular health.
+B) The gym is open from six to ten daily.
+C) The gym has weights and group classes you'd miss.
 D) I signed up for the gym last year.
 
 Answer: C
@@ -162,10 +162,10 @@ Script:
 I'm on the basic meal plan, but I keep running out of meals before the end of the week. Should I upgrade or just cook more?
 
 Choices:
-A) It depends on your schedule. If you're too busy to cook, upgrading might save you time and stress in the long run.
-B) The dining hall food has really improved this year.
-C) I always eat breakfast at home before coming to campus.
-D) Cooking is an important life skill that everyone should learn.
+A) It depends on how busy your schedule is.
+B) The dining hall food is pretty good this semester.
+C) I usually skip breakfast to save meals.
+D) Cooking is an important skill everyone should learn.
 
 Answer: A
 

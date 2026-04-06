@@ -1,7 +1,7 @@
 ========================================
 TOEFL iBT - Listen and Choose a Response
 Audio Scripts for Recording
-Practice 5 — Campus Life
+Practice 9 — Campus Life
 
 ========================================
 VOICE ASSIGNMENTS
@@ -26,13 +26,13 @@ Voice: Charlotte (American)
 Response Type: Request / Direction
 
 Script:
-Excuse me, is there a campus mailroom where I can pick up packages?
+Where can I pick up my tickets for the homecoming concert this weekend?
 
 Choices:
-A) Yes, it's in the student center.
-B) I mostly order things online.
-C) The post office closes at five.
-D) Packages only come on weekdays.
+A) Get them at the student activities office.
+B) Last year's concert was great.
+C) I have tickets for the basketball game.
+D) Homecoming is always in fall.
 
 Answer: A
 
@@ -42,35 +42,35 @@ Question 2 (q2.mp3) — MAN
 CEFR: A2
 Speaker: MAN
 Voice: Daniel (American)
-Response Type: Suggestion / Proposal
+Response Type: Expressing Concern / Seeking Help
 
 Script:
-Would you be interested in joining the language exchange program this semester?
+My roommate keeps playing loud music late at night, and I can't sleep.
 
 Choices:
-A) I studied Spanish in high school.
-B) Sounds fun! How do I sign up?
-C) That program started five years ago.
-D) Learning languages takes real patience.
+A) I love music while studying.
+B) Talk to her or contact your RA.
+C) My roommate and I get along well.
+D) The dorms post quiet hours.
 
 Answer: B
 
 ========================================
 Question 3 (q3.mp3) — WOMAN
 ========================================
-CEFR: B1
+CEFR: A2
 Speaker: WOMAN
 Voice: Alice (British)
-Response Type: Sharing Information / Confirmation
+Response Type: Request / Direction
 
 Script:
-Did you hear that the student union election results will be announced tomorrow?
+Do you know how to renew my library card? It expired last week.
 
 Choices:
-A) The student union hosts many events.
-B) I ran for president in high school.
-C) Yeah, I'm curious who won it.
-D) Elections matter in any democracy.
+A) The library has a great digital collection.
+B) I lost my card during finals.
+C) Bring your student ID to the front desk.
+D) All first-year students get library cards.
 
 Answer: C
 
@@ -83,13 +83,13 @@ Voice: Liam (Australian)
 Response Type: Expressing Concern / Seeking Help
 
 Script:
-I'm worried that I might break some of the expensive lab equipment during the experiment.
+I need to ask Professor Kim for a recommendation letter, but I'm nervous about it.
 
 Choices:
-A) The lab was renovated last summer.
-B) That equipment costs thousands of dollars.
-C) I finished my experiment last week.
-D) The TA will guide you through each step.
+A) Professor Kim teaches organic chemistry now.
+B) Most graduate programs require recommendations.
+C) I submitted my application last month.
+D) Visit her office hours and just ask.
 
 Answer: D
 
@@ -99,16 +99,16 @@ Question 5 (q5.mp3) — WOMAN
 CEFR: A2
 Speaker: WOMAN
 Voice: Lily (Australian)
-Response Type: Wh-Question / Information
+Response Type: Yes/No Information
 
 Script:
-What events are planned for orientation week this year?
+Is the campus shuttle free for students, or do I need to buy a pass?
 
 Choices:
-A) There's a campus tour and a club fair.
-B) Last year's orientation was well organized.
-C) New students should bring their acceptance letters.
-D) The campus has beautiful green spaces everywhere.
+A) It's free with your student ID.
+B) The shuttle runs every thirty minutes.
+C) I usually ride my bicycle to campus.
+D) The bus stop is near the science building.
 
 Answer: A
 
@@ -118,16 +118,16 @@ Question 6 (q6.mp3) — MAN
 CEFR: B1
 Speaker: MAN
 Voice: George (British)
-Response Type: Expressing Interest / Seeking Encouragement
+Response Type: Expressing Concern / Seeking Help
 
 Script:
-I've been thinking about applying to be a DJ at the campus radio station.
+I need to print my research paper tonight, but I'm not sure if the computer lab is still open.
 
 Choices:
-A) The station plays music and news daily.
-B) Go for it! They need new hosts now.
-C) I prefer podcasts over the radio myself.
-D) Campus radio has a really long tradition.
+A) The lab has over fifty workstations.
+B) It stays open until midnight during finals.
+C) I finished my paper two days ago.
+D) Always save your documents to a drive.
 
 Answer: B
 
@@ -137,16 +137,16 @@ Question 7 (q7.mp3) — WOMAN
 CEFR: B1
 Speaker: WOMAN
 Voice: Charlotte (American)
-Response Type: Permission Request
+Response Type: Sharing Information / Seeking Clarification
 
 Script:
-Are students allowed to attend the alumni networking event next Saturday?
+I just received a bill for student health insurance, but I thought it was included in tuition.
 
 Choices:
-A) That alumni group was founded decades ago.
-B) I graduated from this university two years ago.
-C) Yes, students can register for it online.
-D) Networking helps a lot with career growth.
+A) The health center is near the main gate.
+B) Student insurance covers dental and vision.
+C) You can waive it with your parents' plan.
+D) Tuition increased five percent this year.
 
 Answer: C
 
@@ -156,16 +156,16 @@ Question 8 (q8.mp3) — MAN
 CEFR: B1
 Speaker: MAN
 Voice: Eric (American)
-Response Type: Expressing Difficulty / Seeking Help
+Response Type: Sharing Information / Confirmation
 
 Script:
-I've been struggling to stay focused while studying. Do you have any tips?
+Did you hear that the graduation rehearsal has been moved to a different building?
 
 Choices:
-A) Studying is really important for academic success.
-B) I usually study in my quiet dorm room.
-C) The library stays open late during finals.
-D) Try the Pomodoro method with short breaks.
+A) Graduation is the most exciting event.
+B) I need to order my cap and gown.
+C) The ceremony lasts about two hours.
+D) Yes, it moved to the gymnasium today.
 
 Answer: D
 
@@ -177,4 +177,4 @@ RECORDING NOTES
 - No background music or sound effects
 - 1-second silence before and after each line
 - Save as: q1.mp3 through q8.mp3
-- Directory: listening/lcr/audio/practice-5/
+- Directory: listening/lcr/audio/practice-9/

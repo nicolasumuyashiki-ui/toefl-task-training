@@ -102,23 +102,23 @@ const QS = [
     q: "Where can I pick up my tickets for the homecoming concert this weekend?",
     type: "detail",
     opts: [
-      "You can get them at the student activities office on the second floor.",
-      "The concert was really amazing last year.",
-      "I already have my tickets for the basketball game.",
-      "Homecoming is always held in the fall semester."
+      "Get them at the student activities office.",
+      "Last year\u2019s concert was great.",
+      "I have tickets for the basketball game.",
+      "Homecoming is always in fall."
     ],
     correct: 0,
-    explain: "\u300cWhere can I pick up\u2026?\u300d\u3068\u3044\u3046Where\u7591\u554f\u6587\u306b\u5bfe\u3057\u3066\u3001(A)\u306f\u5177\u4f53\u7684\u306a\u5834\u6240\uff08student activities office on the second floor\uff09\u3092\u6559\u3048\u3066\u3044\u308b\u3002",
+    explain: "\u300cWhere can I pick up\u2026?\u300d\u3068\u3044\u3046Where\u7591\u554f\u6587\u306b\u5bfe\u3057\u3066\u3001(A)\u306f\u5177\u4f53\u7684\u306a\u5834\u6240\uff08student activities office\uff09\u3092\u6559\u3048\u3066\u3044\u308b\u3002",
     hint: "Where\u7591\u554f\u6587 \u2192 \u5834\u6240\u306e\u60c5\u5831\u63d0\u4f9b\u304c\u81ea\u7136\u3002(B)\u306f\u53bb\u5e74\u306e\u30b3\u30f3\u30b5\u30fc\u30c8\u306e\u611f\u60f3\u3001(C)\u306f\u30d0\u30b9\u30b1\u306e\u8a71\u3001(D)\u306f\u30db\u30fc\u30e0\u30ab\u30df\u30f3\u30b0\u306e\u6642\u671f\u306e\u4e00\u822c\u8ad6\u3067\u3001\u3044\u305a\u308c\u3082\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3002"
   },
   {
     q: "My roommate keeps playing loud music late at night, and I can\u2019t sleep.",
     type: "inference",
     opts: [
-      "I love listening to music when I\u2019m studying.",
-      "Have you tried talking to her about it? You could also contact your RA for help.",
-      "My roommate and I get along really well.",
-      "The dorms have quiet hours posted in the hallway."
+      "I love music while studying.",
+      "Talk to her or contact your RA.",
+      "My roommate and I get along well.",
+      "The dorms post quiet hours."
     ],
     correct: 1,
     explain: "\u4e0d\u6e80\u306e\u8868\u660e\u306b\u5bfe\u3057\u3066\u3001(B)\u306f2\u3064\u306e\u89e3\u6c7a\u7b56\uff08\u76f4\u63a5\u8a71\u3059\uff0bRA\u306b\u76f8\u8ac7\uff09\u3092\u63d0\u6848\u3057\u3001\u4f1a\u8a71\u3092\u524d\u306b\u9032\u3081\u3066\u3044\u308b\u3002",
@@ -128,10 +128,10 @@ const QS = [
     q: "Do you know how to renew my library card? It expired last week.",
     type: "detail",
     opts: [
-      "The library has an excellent digital collection.",
-      "I lost my library card during finals week.",
-      "Just bring your student ID to the front desk and they\u2019ll renew it for free.",
-      "Library cards are issued to all first-year students."
+      "The library has a great digital collection.",
+      "I lost my card during finals.",
+      "Bring your student ID to the front desk.",
+      "All first-year students get library cards."
     ],
     correct: 2,
     explain: "\u300c\u3069\u3046\u3084\u3063\u3066\u66f4\u65b0\u3059\u308b\uff1f\u300d\u306b\u5bfe\u3057\u3066(C)\u306f\u5177\u4f53\u7684\u306a\u624b\u9806\uff08student ID\u3092\u6301\u3063\u3066front desk\u3078\uff09\u3092\u6559\u3048\u3066\u3044\u308b\u3002",
@@ -141,10 +141,10 @@ const QS = [
     q: "I need to ask Professor Kim for a recommendation letter, but I\u2019m nervous about it.",
     type: "inference",
     opts: [
-      "Professor Kim teaches organic chemistry this semester.",
-      "Recommendation letters are required for most graduate programs.",
+      "Professor Kim teaches organic chemistry now.",
+      "Most graduate programs require recommendations.",
       "I submitted my application last month.",
-      "Don\u2019t worry. Just go to her office hours and explain what you need. She\u2019s very approachable."
+      "Visit her office hours and just ask."
     ],
     correct: 3,
     explain: "\u4e0d\u5b89\u306e\u8868\u660e\u306b\u5bfe\u3057\u3066\u3001(D)\u306f\u5b89\u5fc3\u3055\u305b\u305f\u4e0a\u3067\u5177\u4f53\u7684\u306a\u884c\u52d5\uff08\u30aa\u30d5\u30a3\u30b9\u30a2\u30ef\u30fc\u306b\u884c\u304f\uff09\u3092\u63d0\u6848\u3002",
@@ -154,10 +154,10 @@ const QS = [
     q: "Is the campus shuttle free for students, or do I need to buy a pass?",
     type: "detail",
     opts: [
-      "It\u2019s free. Just show your student ID when you board.",
-      "The shuttle runs every thirty minutes on weekdays.",
+      "It\u2019s free with your student ID.",
+      "The shuttle runs every thirty minutes.",
       "I usually ride my bicycle to campus.",
-      "The bus stop is right next to the science building."
+      "The bus stop is near the science building."
     ],
     correct: 0,
     explain: "\u300c\u7121\u6599\u304b\u3001\u30d1\u30b9\u304c\u5fc5\u8981\u304b\uff1f\u300d\u3068\u3044\u3046\u4e8c\u629e\u306b\u5bfe\u3057\u3066\u3001(A)\u306f\u660e\u78ba\u306b\u300c\u7121\u6599\u300d\u3068\u7b54\u3048\u3001\u5fc5\u8981\u306a\u624b\u9806\u3082\u6559\u3048\u3066\u3044\u308b\u3002",
@@ -167,10 +167,10 @@ const QS = [
     q: "I need to print my research paper tonight, but I\u2019m not sure if the computer lab is still open.",
     type: "detail",
     opts: [
-      "The computer lab has over fifty workstations.",
-      "It should be. During finals week, it stays open until midnight.",
-      "I finished my research paper two days ago.",
-      "You should always save your documents to a flash drive."
+      "The lab has over fifty workstations.",
+      "It stays open until midnight during finals.",
+      "I finished my paper two days ago.",
+      "Always save your documents to a drive."
     ],
     correct: 1,
     explain: "\u300c\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30e9\u30dc\u306f\u307e\u3060\u958b\u3044\u3066\u3044\u308b\uff1f\u300d\u2192 (B)\u306f\u300c\u958b\u3044\u3066\u3044\u308b\u306f\u305a\u300d\u3068\u7b54\u3048\u3001\u9589\u9928\u6642\u9593\u306e\u5177\u4f53\u7684\u306a\u60c5\u5831\u3082\u63d0\u4f9b\u3002",
@@ -180,26 +180,26 @@ const QS = [
     q: "I just received a bill for student health insurance, but I thought it was included in tuition.",
     type: "inference",
     opts: [
-      "The health center is located near the main gate.",
-      "Student insurance covers dental and vision as well.",
-      "You can waive it if you already have coverage from your parents\u2019 plan. Check with the bursar\u2019s office.",
-      "Tuition has increased by five percent this year."
+      "The health center is near the main gate.",
+      "Student insurance covers dental and vision.",
+      "You can waive it with your parents\u2019 plan.",
+      "Tuition increased five percent this year."
     ],
     correct: 2,
-    explain: "\u300c\u4fdd\u967a\u6599\u306e\u8acb\u6c42\u66f8\u304c\u6765\u305f\u304c\u3001\u5b66\u8cbb\u306b\u542b\u307e\u308c\u3066\u3044\u308b\u3068\u601d\u3063\u3066\u3044\u305f\u300d\u2192 (C)\u306f\u514d\u9664\u306e\u65b9\u6cd5\u3068\u76f8\u8ac7\u5148\u3092\u63d0\u6848\u3057\u3001\u5b9f\u7528\u7684\u306a\u60c5\u5831\u3092\u63d0\u4f9b\u3057\u3066\u3044\u308b\u3002",
+    explain: "\u300c\u4fdd\u967a\u6599\u306e\u8acb\u6c42\u66f8\u304c\u6765\u305f\u304c\u3001\u5b66\u8cbb\u306b\u542b\u307e\u308c\u3066\u3044\u308b\u3068\u601d\u3063\u3066\u3044\u305f\u300d\u2192 (C)\u306f\u514d\u9664\u306e\u65b9\u6cd5\uff08\u89aa\u306e\u4fdd\u967a\u3067waive\uff09\u3092\u63d0\u6848\u3057\u3001\u5b9f\u7528\u7684\u306a\u60c5\u5831\u3092\u63d0\u4f9b\u3057\u3066\u3044\u308b\u3002",
     hint: "\u56f0\u60d1\u306e\u8868\u660e \u2192 \u89e3\u6c7a\u7b56\u306e\u63d0\u6848\u304c\u81ea\u7136\u3002(A)\u306f\u30d8\u30eb\u30b9\u30bb\u30f3\u30bf\u30fc\u306e\u5834\u6240\u3001(B)\u306f\u88dc\u511f\u7bc4\u56f2\u306e\u8aac\u660e\u3001(D)\u306f\u5b66\u8cbb\u5024\u4e0a\u3052\u306e\u4e00\u822c\u8ad6\u3067\u3001\u8acb\u6c42\u3078\u306e\u7591\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3002"
   },
   {
     q: "Did you hear that the graduation rehearsal has been moved to a different building?",
     type: "detail",
     opts: [
-      "Graduation is the most exciting event of the year.",
-      "I need to order my cap and gown soon.",
-      "The ceremony will last about two hours.",
-      "Yes, they sent an email this morning. It\u2019s now in the gymnasium instead of the auditorium."
+      "Graduation is the most exciting event.",
+      "I need to order my cap and gown.",
+      "The ceremony lasts about two hours.",
+      "Yes, it moved to the gymnasium today."
     ],
     correct: 3,
-    explain: "\u300c\u5352\u696d\u30ea\u30cf\u30fc\u30b5\u30eb\u306e\u5834\u6240\u304c\u5909\u308f\u3063\u305f\u3063\u3066\u805e\u3044\u305f\uff1f\u300d\u2192 (D)\u306f\u300c\u306f\u3044\u300d\u3068\u78ba\u8a8d\u3057\u3001\u5177\u4f53\u7684\u306a\u8a73\u7d30\uff08\u5834\u6240\u306e\u5909\u66f4\u5148\uff09\u3082\u4f1d\u3048\u3066\u3044\u308b\u3002",
+    explain: "\u300c\u5352\u696d\u30ea\u30cf\u30fc\u30b5\u30eb\u306e\u5834\u6240\u304c\u5909\u308f\u3063\u305f\u3063\u3066\u805e\u3044\u305f\uff1f\u300d\u2192 (D)\u306f\u300c\u306f\u3044\u300d\u3068\u78ba\u8a8d\u3057\u3001\u5177\u4f53\u7684\u306a\u8a73\u7d30\uff08gymnasium\u306b\u5909\u66f4\uff09\u3082\u4f1d\u3048\u3066\u3044\u308b\u3002",
     hint: "Did you hear\u2026? \u306f\u65b0\u60c5\u5831\u306e\u5171\u6709\u3002\u81ea\u7136\u306a\u5fdc\u7b54\u306f\u300c\u78ba\u8a8d\uff0b\u95a2\u9023\u60c5\u5831\u300d\u3002(A)\u306f\u5352\u696d\u5f0f\u306e\u611f\u60f3\u3001(B)\u306f\u30ac\u30a6\u30f3\u306e\u6ce8\u6587\u306e\u8a71\u3001(C)\u306f\u5f0f\u5178\u306e\u9577\u3055\u3067\u3001\u30ea\u30cf\u30fc\u30b5\u30eb\u306e\u5834\u6240\u5909\u66f4\u306b\u7121\u95a2\u4fc2\u3002"
   }
 ];

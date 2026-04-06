@@ -29,10 +29,10 @@ Script:
 Excuse me, do you know if the campus shuttle runs on weekends?
 
 Choices:
-A) I think it runs every thirty minutes on Saturdays, but not on Sundays.
-B) The shuttle is very convenient during the week.
-C) I usually walk to campus on weekends.
-D) The shuttle stop is right in front of the dormitory.
+A) It only runs on Saturdays.
+B) The shuttle is great on weekdays.
+C) I walk to campus on weekends.
+D) The stop is outside the dorm.
 
 Answer: A
 
@@ -48,10 +48,10 @@ Script:
 I'm worried I won't be able to pay my tuition next semester. Do you know anything about financial aid?
 
 Choices:
-A) Tuition has been increasing every year.
-B) You should visit the financial aid office. They helped me get a scholarship last year.
-C) I paid my tuition on time this semester.
-D) Financial aid is available to all students in the country.
+A) Tuition keeps going up every single year.
+B) Try the financial aid office for scholarship help.
+C) I already paid my tuition this semester.
+D) Most universities offer some form of aid.
 
 Answer: B
 
@@ -67,10 +67,10 @@ Script:
 Are you planning to go to the internship fair this Thursday?
 
 Choices:
-A) Internship fairs are usually held in the student center.
-B) The fair is held in the student center every year.
-C) Definitely! I heard several tech companies will be there. Want to go together?
-D) Internships are a great way to gain experience.
+A) They usually hold it in the student center.
+B) The fair is at the student center again.
+C) Yes! Several tech companies will be there together.
+D) Internships are a great way to learn.
 
 Answer: C
 
@@ -86,10 +86,10 @@ Script:
 I've been struggling with organic chemistry. Would you like to form a study group?
 
 Choices:
-A) Organic chemistry is the hardest course this semester.
-B) I usually study in the library during finals week.
-C) I got an A on the last chemistry test.
-D) That's a great idea. I know a couple of other students who might want to join too.
+A) That is the hardest course here.
+B) I always study alone at home.
+C) I scored well on that exam.
+D) Great idea! Some others might join.
 
 Answer: D
 
@@ -105,10 +105,10 @@ Script:
 I need to talk to Professor Williams about my research proposal, but I keep missing her office hours.
 
 Choices:
-A) Professor Williams is a very well-known researcher in her field.
-B) Why don't you send her an email and ask for an appointment at a different time?
-C) I submitted my research proposal last week.
-D) Office hours are a good way to get to know your professors.
+A) She is a very well-known researcher here.
+B) Just email her and request a different time.
+C) I submitted my own research proposal already.
+D) Office hours help you connect with professors.
 
 Answer: B
 
@@ -124,10 +124,10 @@ Script:
 The heating in my dorm room hasn't been working for three days. I've already submitted a maintenance request online.
 
 Choices:
-A) The dorms were renovated just two years ago.
-B) Maintenance staff are always very busy during the winter months.
-C) My dorm room is on the third floor.
-D) You should try going directly to the housing office and explaining the urgency.
+A) Those dorms were renovated recently.
+B) Maintenance gets very busy in winter.
+C) My room is on the third floor.
+D) Go to the housing office directly.
 
 Answer: D
 
@@ -143,10 +143,10 @@ Script:
 Did you see the article in the campus newspaper about the new dining hall?
 
 Choices:
-A) Yes, I read it this morning. It sounds like it will have a lot more healthy options.
-B) The campus newspaper is published every Monday.
-C) I used to write for the school newspaper in high school.
-D) The current dining hall closes at eight PM.
+A) Yes! It will have more healthy options.
+B) The newspaper comes out every Monday.
+C) I wrote for my high school paper.
+D) The dining hall closes at eight now.
 
 Answer: A
 
@@ -162,10 +162,10 @@ Script:
 I can't decide whether to invite my extended family to the graduation ceremony. The venue only allows four guests per student.
 
 Choices:
-A) Graduation ceremonies are always very emotional events.
-B) The ceremony will be held in the main auditorium this year.
-C) That's tough. Maybe you could livestream it for the family members who can't attend in person?
-D) I'm graduating with honors this spring.
+A) Graduation ceremonies are always so exciting and emotional.
+B) The auditorium can hold up to two thousand.
+C) That is tough. Maybe livestream it for others?
+D) I am not graduating until next year myself.
 
 Answer: C
 

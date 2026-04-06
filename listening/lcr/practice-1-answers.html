@@ -102,10 +102,10 @@ const QS = [
     q: "Do you know if the library is open on Sundays?",
     type: "detail",
     opts: [
-      "Yes, it opens at ten and closes at six.",
-      "I usually study at the coffee shop instead.",
-      "They have a great collection of science journals.",
-      "I need to return my books by Wednesday."
+      "Yes, from ten to six.",
+      "I study at home on weekends.",
+      "They have a great book collection.",
+      "I returned my books last Friday."
     ],
     correct: 0,
     explain: "\u300cDo you know if\u2026?\u300d\u3068\u3044\u3046Yes/No\u7591\u554f\u6587\u306b\u5bfe\u3057\u3066\u3001(A)\u306f\u5177\u4f53\u7684\u306a\u958b\u9928\u6642\u9593\u3092\u4f1d\u3048\u3066\u3044\u308b\u3002",
@@ -115,10 +115,10 @@ const QS = [
     q: "Could you show me where the registration office is?",
     type: "detail",
     opts: [
-      "Registration starts next Monday.",
-      "Sure, it\u2019s just down the hall on your left.",
-      "I already registered for all my classes.",
-      "The office has a really nice waiting area."
+      "Registration opens next Monday morning.",
+      "Sure, it\u2019s down the hall on your left.",
+      "I already registered for my classes.",
+      "The office has a nice waiting area."
     ],
     correct: 1,
     explain: "\u300cCould you show me where\u2026?\u300d\u3068\u3044\u3046\u4f9d\u983c\u306b\u5bfe\u3057\u3066\u3001(B)\u306f\u627f\u8afe\uff0b\u5177\u4f53\u7684\u306a\u5834\u6240\u3092\u6559\u3048\u3066\u3044\u308b\u3002",
@@ -128,9 +128,9 @@ const QS = [
     q: "How about we grab lunch before the afternoon lecture?",
     type: "detail",
     opts: [
-      "I thought yesterday\u2019s lecture was really interesting.",
-      "I had a big breakfast this morning.",
-      "That sounds great. The cafeteria or somewhere off campus?",
+      "Yesterday\u2019s lecture was really interesting.",
+      "I had a big breakfast today.",
+      "Sounds great. Cafeteria or off campus?",
       "Eating healthy is important for students."
     ],
     correct: 2,
@@ -143,8 +143,8 @@ const QS = [
     opts: [
       "Biology is a very popular subject this year.",
       "The bookstore also sells notebooks and pens.",
-      "I bought mine at the beginning of the semester.",
-      "Have you tried checking the online store? They might still have copies."
+      "I bought mine at the start of the semester.",
+      "Try checking the online store for copies."
     ],
     correct: 3,
     explain: "\u300c\u6559\u79d1\u66f8\u304c\u58f2\u308a\u5207\u308c\u305f\u300d\u3068\u3044\u3046\u9a5a\u304d\u30fb\u4e0d\u6e80\u306e\u8868\u660e\u306b\u5bfe\u3057\u3066\u3001(D)\u306f\u30aa\u30f3\u30e9\u30a4\u30f3\u30b9\u30c8\u30a2\u3068\u3044\u3046\u4ee3\u66ff\u6848\u3092\u63d0\u793a\u3057\u3066\u4f1a\u8a71\u3092\u524d\u306b\u9032\u3081\u3066\u3044\u308b\u3002",
@@ -154,10 +154,10 @@ const QS = [
     q: "Didn\u2019t the professor say the deadline was moved to Friday?",
     type: "detail",
     opts: [
-      "Actually, I think she said it was pushed back to next Monday.",
+      "Actually, I think she said next Monday.",
       "The professor is really strict about attendance.",
       "I already submitted my paper yesterday.",
-      "I love Fridays because we don\u2019t have classes."
+      "I love Fridays because we have no classes."
     ],
     correct: 0,
     explain: "\u300c\u301c\u3063\u3066\u8a00\u3063\u3066\u305f\u3088\u306d\uff1f\u300d\u3068\u3044\u3046\u5426\u5b9a\u7591\u554f\u6587\uff08\u78ba\u8a8d\uff09\u306b\u5bfe\u3057\u3001(A)\u306fActually\u3067\u59cb\u307e\u308b\u4e01\u5be7\u306a\u8a02\u6b63\u3002",
@@ -167,10 +167,10 @@ const QS = [
     q: "I\u2019m thinking about switching my major to computer science, but I\u2019m not sure it\u2019s the right move.",
     type: "inference",
     opts: [
-      "Computer science is one of the fastest-growing fields.",
+      "Computer science is a fast-growing field.",
       "The computer lab is open until midnight.",
-      "I changed my schedule to include more electives this semester.",
-      "Why don\u2019t you talk to an academic advisor before making a decision?"
+      "I added more electives to my schedule this semester.",
+      "Why not talk to an academic advisor first?"
     ],
     correct: 3,
     explain: "\u300c\u5c02\u653b\u3092\u5909\u3048\u3088\u3046\u304b\u8ff7\u3063\u3066\u3044\u308b\u300d\u3068\u3044\u3046\u8ff7\u3044\u30fb\u4e0d\u78ba\u5b9f\u6027\u306e\u8868\u660e\u306b\u5bfe\u3057\u3066\u3001(D)\u306f\u5177\u4f53\u7684\u306a\u30a2\u30c9\u30d0\u30a4\u30b9\uff08\u30a2\u30c9\u30d0\u30a4\u30b6\u30fc\u306b\u76f8\u8ac7\uff09\u3092\u63d0\u4f9b\u3002",
@@ -181,7 +181,7 @@ const QS = [
     type: "detail",
     opts: [
       "History is my favorite subject.",
-      "Not at all. I\u2019ll send you a photo of them after lunch.",
+      "Not at all. I\u2019ll send them after lunch.",
       "I took notes in high school too.",
       "The class was canceled yesterday."
     ],
@@ -195,7 +195,7 @@ const QS = [
     opts: [
       "I drive my car to campus anyway.",
       "The shuttle buses are very comfortable.",
-      "That\u2019s unfortunate. I rely on it to get to my early morning classes.",
+      "That\u2019s unfortunate. I rely on it for morning classes.",
       "Budget management is important for any university."
     ],
     correct: 2,

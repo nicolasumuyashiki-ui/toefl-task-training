@@ -102,23 +102,23 @@ const QS = [
     q: "Excuse me, where can I check my meal plan balance?",
     type: "detail",
     opts: [
-      "The cafeteria closes at eight on weekdays.",
-      "Check the student portal or any dining register.",
-      "I usually eat lunch near the gym.",
-      "Meal plans come in three sizes per semester."
+      "The cafeteria closes at eight.",
+      "Check the portal or dining register.",
+      "I eat lunch near the gym.",
+      "Plans come in three sizes."
     ],
     correct: 1,
-    explain: "\u300c\u3069\u3053\u3067\u78ba\u8a8d\u3067\u304d\u308b\uff1f\u300d\u306b\u5bfe\u3057\u3066(B)\u306f\u5177\u4f53\u7684\u306a\u65b9\u6cd5\u30922\u3064\uff08student portal\u307e\u305f\u306fdining register\uff09\u6559\u3048\u3066\u3044\u308b\u3002",
+    explain: "\u300c\u3069\u3053\u3067\u78ba\u8a8d\u3067\u304d\u308b\uff1f\u300d\u306b\u5bfe\u3057\u3066(B)\u306f\u5177\u4f53\u7684\u306a\u65b9\u6cd5\u30922\u3064\uff08portal\u307e\u305f\u306fdining register\uff09\u6559\u3048\u3066\u3044\u308b\u3002",
     hint: "Where\u7591\u554f\u6587 \u2192 \u5834\u6240\u30fb\u65b9\u6cd5\u306e\u60c5\u5831\u63d0\u4f9b\u304c\u81ea\u7136\u3002(A)\u306f\u30ab\u30d5\u30a7\u30c6\u30ea\u30a2\u306e\u9589\u5e97\u6642\u9593\u3001(C)\u306f\u81ea\u5206\u306e\u663c\u98df\u5834\u6240\u306e\u8a71\u3001(D)\u306f\u30df\u30fc\u30eb\u30d7\u30e9\u30f3\u306e\u7a2e\u985e\u306e\u4e00\u822c\u8ad6\u3002"
   },
   {
     q: "I locked myself out of my dorm room and I can\u2019t find my key card anywhere.",
     type: "inference",
     opts: [
-      "The housing office can issue a temporary card.",
-      "My key card has my photo on it.",
-      "Dorm doors lock automatically after ten at night.",
-      "I always keep a spare key with me."
+      "The housing office issues temporary cards.",
+      "My key card has my photo.",
+      "Dorm doors lock after ten at night.",
+      "I always keep a spare key."
     ],
     correct: 0,
     explain: "\u56f0\u308a\u4e8b\u306e\u8868\u660e\u306b\u5bfe\u3057\u3066\u3001(A)\u306f\u5177\u4f53\u7684\u306a\u5834\u6240\uff08housing office\uff09\u3068\u89e3\u6c7a\u7b56\uff08\u4eee\u30ab\u30fc\u30c9\u306e\u767a\u884c\uff09\u3092\u63d0\u6848\u3057\u3066\u3044\u308b\u3002",
@@ -128,36 +128,36 @@ const QS = [
     q: "Do you know if I can return this textbook to the campus bookstore even though I already highlighted some pages?",
     type: "detail",
     opts: [
-      "That textbook is required for Professor Chen\u2019s course.",
-      "I bought all my textbooks online this semester.",
-      "The bookstore is on the student center\u2019s ground floor.",
-      "Sure, they accept returns with highlights within two weeks."
+      "That textbook is for Professor Chen\u2019s course.",
+      "I bought all my textbooks online.",
+      "The bookstore is on the ground floor.",
+      "They accept highlighted returns within two weeks."
     ],
     correct: 3,
-    explain: "\u300c\u8fd4\u54c1\u3067\u304d\u308b\u304b\uff1f\u300d\u306b\u5bfe\u3057\u3066(D)\u306f\u300cSure\u300d\u3067\u80af\u5b9a\u3057\u3001\u5177\u4f53\u7684\u306a\u6761\u4ef6\uff08\u30cf\u30a4\u30e9\u30a4\u30c8\u4ed8\u304d\u3067\u3082\u53ef\u30fb2\u9031\u9593\u4ee5\u5185\uff09\u3092\u6559\u3048\u3066\u3044\u308b\u3002",
+    explain: "\u300c\u8fd4\u54c1\u3067\u304d\u308b\u304b\uff1f\u300d\u306b\u5bfe\u3057\u3066(D)\u306f\u80af\u5b9a\u3057\u3001\u5177\u4f53\u7684\u306a\u6761\u4ef6\uff08\u30cf\u30a4\u30e9\u30a4\u30c8\u4ed8\u304d\u3067\u3082\u53ef\u30fb2\u9031\u9593\u4ee5\u5185\uff09\u3092\u6559\u3048\u3066\u3044\u308b\u3002",
     hint: "Do you know if\u2026? \u2192 \u53ef\u5426\u3092\u660e\u78ba\u306b\u7b54\u3048\u308b\u5fdc\u7b54\u304c\u81ea\u7136\u3002(A)\u306f\u6559\u79d1\u66f8\u304c\u5fc5\u8981\u306a\u79d1\u76ee\u306e\u60c5\u5831\u3001(B)\u306f\u81ea\u5206\u306e\u8cfc\u5165\u65b9\u6cd5\u306e\u8a71\u3001(C)\u306f\u66f8\u5e97\u306e\u5834\u6240\u3067\u3001\u8cea\u554f\u306b\u76f4\u63a5\u7b54\u3048\u3066\u3044\u306a\u3044\u3002"
   },
   {
     q: "I\u2019m really struggling with my calculus homework. Is there anywhere on campus I can get help?",
     type: "detail",
     opts: [
-      "Calculus is really popular on campus this semester.",
-      "I finished my math requirement last year already.",
-      "The tutoring center offers free sessions every afternoon.",
-      "You should probably take statistics instead of calculus."
+      "Calculus is popular this semester.",
+      "I finished math last year.",
+      "The tutoring center offers free sessions.",
+      "Take statistics instead of calculus."
     ],
     correct: 2,
-    explain: "\u300c\u52a9\u3051\u3092\u6c42\u3081\u308b\u8cea\u554f\u300d\u306b\u5bfe\u3057\u3066(C)\u306f\u5834\u6240\uff08tutoring center\uff09\u3068\u5229\u7528\u65b9\u6cd5\uff08\u7121\u6599\u306e\u30bb\u30c3\u30b7\u30e7\u30f3\u30fb\u6bce\u65e5\u5348\u5f8c\uff09\u3092\u5177\u4f53\u7684\u306b\u6559\u3048\u3066\u3044\u308b\u3002",
+    explain: "\u300c\u52a9\u3051\u3092\u6c42\u3081\u308b\u8cea\u554f\u300d\u306b\u5bfe\u3057\u3066(C)\u306f\u5834\u6240\uff08tutoring center\uff09\u3068\u5229\u7528\u65b9\u6cd5\uff08\u7121\u6599\u306e\u30bb\u30c3\u30b7\u30e7\u30f3\uff09\u3092\u5177\u4f53\u7684\u306b\u6559\u3048\u3066\u3044\u308b\u3002",
     hint: "Is there anywhere\u2026? \u2192 \u5177\u4f53\u7684\u306a\u30ea\u30bd\u30fc\u30b9\u306e\u7d39\u4ecb\u304c\u81ea\u7136\u3002(A)\u306f\u5fae\u7a4d\u5206\u306e\u4eba\u6c17\u5ea6\u306e\u4e00\u822c\u8ad6\u3001(B)\u306f\u81ea\u5206\u306e\u6570\u5b66\u5c65\u4fee\u306e\u8a71\u3001(D)\u306f\u5225\u306e\u79d1\u76ee\u3092\u53d6\u308b\u3088\u3046\u3068\u3044\u3046\u52a9\u8a00\u3067\u3001\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3002"
   },
   {
     q: "I just realized the financial aid application deadline is tomorrow. Can I still submit mine online?",
     type: "detail",
     opts: [
-      "Financial aid covers tuition and housing and textbooks.",
-      "Yes, the online portal stays open until midnight.",
-      "I received my financial aid package last week.",
-      "The financial aid office is in administration building."
+      "Financial aid covers tuition and housing.",
+      "Yes, the portal is open until midnight.",
+      "I got my financial aid package already.",
+      "The aid office is in the administration building."
     ],
     correct: 1,
     explain: "\u300c\u307e\u3060\u63d0\u51fa\u3067\u304d\u308b\uff1f\u300d\u306b\u5bfe\u3057\u3066(B)\u306f\u300cYes\u300d\u3068\u660e\u78ba\u306b\u7b54\u3048\u3001\u7de0\u5207\u6642\u9593\uff08midnight\uff09\u3082\u6559\u3048\u3066\u3044\u308b\u3002",
@@ -167,23 +167,23 @@ const QS = [
     q: "I want to study abroad next fall, but I\u2019m not sure which credits will transfer back to my degree.",
     type: "inference",
     opts: [
-      "You should meet with the study abroad advisor in the international programs office. They\u2019ll review your degree plan and tell you exactly which courses count.",
-      "Studying abroad is a once-in-a-lifetime experience.",
-      "I studied in Barcelona last spring and loved it.",
-      "Most students choose to study abroad during their junior year."
+      "Talk to the study abroad advisor.",
+      "Studying abroad is a great experience.",
+      "I studied in Barcelona last spring.",
+      "Most students go abroad junior year."
     ],
     correct: 0,
-    explain: "\u4e0d\u78ba\u5b9f\u6027\u306e\u8868\u660e\u306b\u5bfe\u3057\u3066\u3001(A)\u306f\u76f8\u8ac7\u5148\uff08\u7559\u5b66\u30a2\u30c9\u30d0\u30a4\u30b6\u30fc\uff09\u3068\u5f97\u3089\u308c\u308b\u652f\u63f4\uff08\u5b66\u4f4d\u8a08\u753b\u306e\u78ba\u8a8d\uff09\u3092\u5177\u4f53\u7684\u306b\u63d0\u6848\u3057\u3066\u3044\u308b\u3002",
+    explain: "\u4e0d\u78ba\u5b9f\u6027\u306e\u8868\u660e\u306b\u5bfe\u3057\u3066\u3001(A)\u306f\u76f8\u8ac7\u5148\uff08\u7559\u5b66\u30a2\u30c9\u30d0\u30a4\u30b6\u30fc\uff09\u3092\u5177\u4f53\u7684\u306b\u63d0\u6848\u3057\u3066\u3044\u308b\u3002",
     hint: "\u4e0d\u78ba\u5b9f\u6027\u306e\u8868\u660e \u2192 \u5177\u4f53\u7684\u306a\u30a2\u30c9\u30d0\u30a4\u30b9\u304c\u81ea\u7136\u3002(B)\u306f\u7559\u5b66\u306e\u4e00\u822c\u7684\u306a\u611f\u60f3\u3001(C)\u306f\u81ea\u5206\u306e\u7559\u5b66\u7d4c\u9a13\u306e\u8a71\u3001(D)\u306f\u7559\u5b66\u6642\u671f\u306e\u4e00\u822c\u8ad6\u3002"
   },
   {
     q: "I saw a posting for a research assistant position in the biology department, but the application asks for a faculty reference. I haven\u2019t worked closely with any professors yet.",
     type: "inference",
     opts: [
-      "Research assistant positions usually pay twelve dollars an hour.",
-      "The biology department has six research labs on campus.",
-      "I applied for a teaching assistant position last semester.",
-      "Try asking a professor from a class where you did well. Even if you haven\u2019t done research with them, your academic performance can serve as a reference."
+      "Those positions pay twelve dollars hourly.",
+      "Biology has six labs on campus.",
+      "I applied for a teaching role before.",
+      "Ask a professor from a strong class."
     ],
     correct: 3,
     explain: "\u56f0\u308a\u4e8b\u306e\u8868\u660e\u306b\u5bfe\u3057\u3066\u3001(D)\u306f\u5177\u4f53\u7684\u306a\u4ee3\u66ff\u6848\uff08\u6210\u7e3e\u304c\u826f\u304b\u3063\u305f\u30af\u30e9\u30b9\u306e\u6559\u6388\u306b\u983c\u3080\uff09\u3092\u63d0\u6848\u3057\u3001\u4e0d\u5b89\u3092\u548c\u3089\u3052\u3066\u3044\u308b\u3002",
@@ -193,13 +193,13 @@ const QS = [
     q: "I got a parking ticket on campus yesterday, but I\u2019m sure I was in a valid spot. Is there any way to dispute it?",
     type: "detail",
     opts: [
-      "Parking permits cost two hundred dollars per semester.",
-      "I always park in the garage behind the engineering building.",
-      "You can file an appeal online through the transportation services website within five business days. Attach a photo of where you parked if you have one.",
-      "Campus parking enforcement patrols every lot twice a day."
+      "Parking permits cost two hundred per semester.",
+      "I always park behind the engineering building.",
+      "File an appeal online within five days.",
+      "Parking enforcement patrols lots twice daily."
     ],
     correct: 2,
-    explain: "\u300c\u7570\u8b70\u7533\u3057\u7acb\u3066\u306e\u65b9\u6cd5\u3092\u5c0b\u306d\u308b\u8cea\u554f\u300d\u306b\u5bfe\u3057\u3066(C)\u306f\u5177\u4f53\u7684\u306a\u624b\u7d9a\u304d\uff08\u30aa\u30f3\u30e9\u30a4\u30f3\u7533\u8acb\u3001\u671f\u9650\u3001\u5199\u771f\u306e\u6dfb\u4ed8\uff09\u3092\u6559\u3048\u3066\u3001\u4f1a\u8a71\u3092\u524d\u306b\u9032\u3081\u3066\u3044\u308b\u3002",
+    explain: "\u300c\u7570\u8b70\u7533\u3057\u7acb\u3066\u306e\u65b9\u6cd5\u3092\u5c0b\u306d\u308b\u8cea\u554f\u300d\u306b\u5bfe\u3057\u3066(C)\u306f\u5177\u4f53\u7684\u306a\u624b\u7d9a\u304d\uff08\u30aa\u30f3\u30e9\u30a4\u30f3\u7533\u8acb\u3001\u671f\u9650\uff09\u3092\u6559\u3048\u3066\u3001\u4f1a\u8a71\u3092\u524d\u306b\u9032\u3081\u3066\u3044\u308b\u3002",
     hint: "Is there any way to\u2026? \u2192 \u5177\u4f53\u7684\u306a\u65b9\u6cd5\u306e\u60c5\u5831\u63d0\u4f9b\u304c\u81ea\u7136\u3002(A)\u306f\u99d0\u8eca\u8a31\u53ef\u8a3c\u306e\u6599\u91d1\u3001(B)\u306f\u81ea\u5206\u306e\u99d0\u8eca\u5834\u6240\u306e\u8a71\u3001(D)\u306f\u5de1\u56de\u983b\u5ea6\u306e\u60c5\u5831\u3067\u3001\u7570\u8b70\u7533\u3057\u7acb\u3066\u306e\u65b9\u6cd5\u306b\u7121\u95a2\u4fc2\u3002"
   }
 ];

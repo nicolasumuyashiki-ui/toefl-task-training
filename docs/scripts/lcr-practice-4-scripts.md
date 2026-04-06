@@ -29,10 +29,10 @@ Script:
 Do you know what time the welcome festival starts this Saturday?
 
 Choices:
-A) I think it starts at noon in the main quad.
-B) The festival food was delicious last year.
-C) I usually spend my Saturdays at the library.
-D) We should invite more people to join.
+A) I think it starts at noon.
+B) Last year's food was great.
+C) I spend weekends at the library.
+D) We should invite more people.
 
 Answer: A
 
@@ -48,10 +48,10 @@ Script:
 I'm having trouble with the heating in my dorm room. It's been freezing all week.
 
 Choices:
-A) The dorm has a nice lounge on the first floor.
-B) You should submit a maintenance request online. They usually fix it within a day.
-C) I prefer living off campus because it's quieter.
-D) Winter is always the coldest season here.
+A) The dorm lounge on the first floor is warm.
+B) Submit a maintenance request and they will fix it.
+C) I prefer living off campus where it is quiet.
+D) Winter is always the coldest time of year.
 
 Answer: B
 
@@ -67,10 +67,10 @@ Script:
 Have you tried the new salad bar they added to the dining hall?
 
 Choices:
-A) The dining hall closes at eight on weekdays.
-B) I don't have a meal plan this semester.
-C) Yes, it's actually really good. The dressings are all homemade.
-D) Salads are healthier than most fast food options.
+A) The dining hall closes at nine.
+B) I have the unlimited meal plan.
+C) Yes! The dressings are really good.
+D) Salads are a healthy lunch choice.
 
 Answer: C
 
@@ -87,9 +87,9 @@ I'm thinking about applying for the exchange program in Spain, but I'm worried a
 
 Choices:
 A) Spain has beautiful architecture and rich history.
-B) The application deadline was last month.
-C) The application deadline is at the end of this month.
-D) Most of the classes are taught in English, so you should be fine.
+B) The application deadline already passed last month.
+C) The deadline is at the end of this month.
+D) Most classes there are taught in English anyway.
 
 Answer: D
 
@@ -105,10 +105,10 @@ Script:
 I have a job interview next week, but I don't know what to wear.
 
 Choices:
-A) The career center offers free mock interviews and dress code advice.
-B) Job interviews can be very stressful for everyone.
-C) I got my current job through an online listing.
-D) Job interviews can be really stressful for some people.
+A) The career center offers mock interviews and dress advice.
+B) Job interviews can be really stressful for anyone.
+C) I just got a job offer from a company.
+D) Many people feel nervous before job interviews.
 
 Answer: A
 
@@ -124,10 +124,10 @@ Script:
 I'm struggling with organic chemistry. The concepts just aren't clicking for me.
 
 Choices:
-A) Chemistry is one of the hardest subjects in the science department.
-B) Have you tried the free tutoring sessions at the learning center? They have chemistry specialists.
-C) I dropped that class last semester because I didn't like it.
-D) The textbook for that course is really expensive this year.
+A) Organic chemistry is one of the most challenging courses.
+B) Try the free tutoring at the learning center.
+C) I dropped organic chemistry after the first week.
+D) The textbook for that course is really expensive.
 
 Answer: B
 
@@ -143,10 +143,10 @@ Script:
 I heard they just renovated the swimming pool at the recreation center.
 
 Choices:
-A) Swimming is great exercise for building endurance.
-B) The recreation center is located near the science building.
-C) Yeah, they added new lanes and extended the hours until ten PM.
-D) I prefer playing basketball at the outdoor courts.
+A) Swimming is great exercise for your whole body.
+B) The recreation center is behind the science building.
+C) Yes! They added new lanes and extended the hours.
+D) I prefer jogging outside to swimming laps indoors.
 
 Answer: C
 
@@ -162,10 +162,10 @@ Script:
 Are you going to vote in the student government election tomorrow?
 
 Choices:
-A) Student government elections happen every spring.
-B) I was the class president in high school.
-C) The candidates gave their speeches at the assembly yesterday.
-D) Definitely. I really like the candidate who's pushing for longer library hours.
+A) Elections happen every spring here.
+B) I was class president in high school.
+C) I watched the speeches yesterday.
+D) Yes! I like one candidate's ideas.
 
 Answer: D
 
