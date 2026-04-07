@@ -68,9 +68,39 @@ Start → Scenario音声 → 2秒待機 → Q1音声 → 2秒 → カウント�
 - スクリプトの場所・物・人物を盛り込む
 - 教育目的にふさわしい明るい雰囲気
 
+### 成果物一覧（3段階ワークフロー）
+| ステップ | 成果物 | 説明 |
+|---------|--------|------|
+| ① Claude | practice-{N}.html | HTMLファイル（音声・画像未埋め込み） |
+| ① Claude | docs/scripts/lr-practice-{N}-scripts.md | 録音用スクリプト |
+| ①-B Ideogram | シナリオ画像（PNG） | シナリオに合ったイラスト |
+| ② ElevenLabs | scenario.mp3, q1-q7.mp3 | 音声ファイル（計8ファイル） |
+| ③ Claude | practice-{N}.html（完成版） | 音声・画像をBase64埋め込み済み |
+
+### ElevenLabs音声設定
+- 声: 全て同じTrainer役で統一
+- Stability: 0.5 - 0.7
+- Clarity + Similarity Enhancement: 0.7 - 0.8
+- Style: 0（ニュートラル）
+- NarratorとTrainerは同一の声でOK（LRの場合）
+
+### 検証チェックリスト
+- [ ] 説明ページが表示される
+- [ ] Startボタンでタスク開始
+- [ ] Scenarioボックスにテキストが表示される
+- [ ] Scenario → Q1 → Q2 → ... → Q7 → Complete と自動進行
+- [ ] 各Question音声が再生される
+- [ ] 「Playing audio...」インジケーターが表示される
+- [ ] 音声終了から2秒後にカウントダウン開始
+- [ ] RESPONSE TIMEラベル＋録音アイコン（🎙️）が表示される
+- [ ] カウントダウンが正しく動作する（Q1: 8秒 → Q7: 12秒）
+- [ ] シナリオ画像が中央に表示される（400×400px）
+- [ ] 画像にテキスト・数字が含まれていない
+- [ ] Q1-Q7の語数が仕様範囲内
+
 ### 作成後
-1. スクリプト＋ScenarioテキストをmdファイルHに出力
-2. HTML雛形を作成
+1. スクリプトを `docs/scripts/lr-practice-{N}-scripts.md` に保存
+2. HTML雛形を作成（音声・画像はプレースホルダー）
 3. Ideogram用画像プロンプトを出力
 4. `docs/topic-history.md` のListen and Repeatセクションに使用したトピックを追記
 5. 検証サマリー: 語数チェック（Q1-Q7が仕様範囲内か）
