@@ -53,6 +53,17 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 /* HIGHLIGHT WORD */
 .highlight-word{background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:600}
 
+/* SENTENCE INSERTION */
+.insert-square{display:inline-block;width:20px;height:20px;background-color:#3182ce;color:white;font-size:.7rem;font-weight:700;text-align:center;line-height:20px;border-radius:3px;cursor:pointer;vertical-align:middle;margin:0 3px;user-select:none;transition:all .2s}
+.insert-square:hover{background-color:#2c5282;transform:scale(1.15);box-shadow:0 2px 6px rgba(49,130,206,.4)}
+.insert-square.selected-square{background-color:#38a169;transform:scale(1.15);box-shadow:0 2px 6px rgba(56,161,105,.4)}
+.inserted-sentence{display:inline;font-weight:700;color:#2c5282;background-color:#ebf8ff;padding:2px 5px;border-radius:3px;border-left:3px solid #3182ce}
+.insertion-sentence-display{font-weight:700;font-size:1rem;line-height:1.6;color:#2d3748;margin-bottom:20px}
+.insertion-instruction{background-color:#fffff0;border:1px solid #ecc94b;border-radius:8px;padding:15px 20px;margin-bottom:20px;font-size:.9rem;color:#744210;line-height:1.5}
+.selection-status{padding:12px 16px;border-radius:6px;margin-bottom:15px;font-weight:500;text-align:center;font-size:.95rem}
+.selection-status.none{background-color:#f7fafc;border:1px dashed #cbd5e0;color:#718096}
+.selection-status.chosen{background-color:#ebf8ff;border:1px solid #3182ce;color:#2c5282}
+
 /* QUESTION STYLES */
 .question-page{display:none}
 .question-page.active{display:block}
@@ -209,7 +220,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
     <div class="passage-content">
       <p>Primates are among the most socially complex animals on Earth. From small family groups of marmosets to the large, hierarchical communities of baboons, the range of social structures found in primates is remarkably diverse. Scientists have long sought to understand why primates evolved such elaborate social systems, and current research suggests that both environmental pressures and cognitive abilities have played key roles.</p>
       <p>One leading theory, known as the social brain hypothesis, proposes that the demands of living in large groups drove the evolution of larger brains in primates. Maintaining relationships, recognizing allies and rivals, and navigating complex social hierarchies all require significant <span class="highlight-word">cognitive</span> resources. Studies have shown a strong correlation between the average group size of a primate species and the size of its neocortex, the part of the brain associated with higher-order thinking.</p>
-      <p>Environmental factors have also shaped primate social behavior. In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced.</p>
+      <p id="insertionParagraph">Environmental factors have also shaped primate social behavior. In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced.</p>
       <p>Grooming is another important aspect of primate social life. Rather than serving only a hygienic function, grooming acts as a form of social bonding that strengthens alliances and reduces tension within the group. Researchers have observed that primates spend a disproportionate amount of time grooming individuals who hold higher social rank, suggesting that grooming may also serve as a strategic tool for gaining social advantages.</p>
     </div>
   </div>
@@ -273,33 +284,14 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
       </div>
     </div>
 
-    <!-- Q6: Inference -->
+    <!-- Q6: Sentence Insertion -->
     <div class="question-page" id="page6">
       <div class="question-text">
-        <span class="question-number">6.</span>Based on the passage, what can be inferred about grooming behavior in primates?
+        <span class="question-number">6.</span>Look at the four squares [<span style="display:inline-block;width:16px;height:16px;background:#3182ce;color:white;font-size:.6rem;font-weight:700;text-align:center;line-height:16px;border-radius:3px;vertical-align:middle">&#9632;</span>] that indicate where the following sentence could be added to the passage.
       </div>
-      <div class="options">
-        <div class="option" data-q="6" data-v="A" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="A">
-          <span class="option-label">A</span>
-          <span class="option-text">It is performed equally among all members of a group regardless of rank.</span>
-        </div>
-        <div class="option" data-q="6" data-v="B" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="B">
-          <span class="option-label">B</span>
-          <span class="option-text">It serves social and strategic purposes beyond basic hygiene.</span>
-        </div>
-        <div class="option" data-q="6" data-v="C" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="C">
-          <span class="option-label">C</span>
-          <span class="option-text">It occurs only between primates that are closely related by blood.</span>
-        </div>
-        <div class="option" data-q="6" data-v="D" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="D">
-          <span class="option-label">D</span>
-          <span class="option-text">It has been replaced by vocal communication in most modern primates.</span>
-        </div>
-      </div>
+      <div class="insertion-sentence-display">As a result, these larger groups develop complex social hierarchies in which individuals must constantly compete for access to limited food supplies.</div>
+      <div class="insertion-instruction">Click on a square [<span style="display:inline-block;width:16px;height:16px;background:#3182ce;color:white;font-size:.6rem;font-weight:700;text-align:center;line-height:16px;border-radius:3px;vertical-align:middle">&#9632;</span>] to add the sentence to the passage. You can click a different square to change your selection.</div>
+      <div class="selection-status none" id="insertionStatus">Click a square in the passage to place the sentence.</div>
     </div>
   </div>
 </div>
@@ -354,6 +346,7 @@ function navigate(dir){
     var ca={'1':'A','2':'B','3':'C','4':'A','5':'C','6':'B'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
+    if(insertionPara) insertionPara.innerHTML = normalParagraphHTML;
     sessionStorage.setItem('training_score_academic_p2',JSON.stringify({correct:sc,total:6}));
     window.location.href = 'practice-2-answers.html';
     return;
@@ -382,6 +375,7 @@ function navigate(dir){
   } else {
     document.getElementById('btnNext').textContent = 'Next \u203A';
   }
+  updateParagraphVersion();
   updateProgress();
 }
 
@@ -433,6 +427,64 @@ function closeReview(){
   document.getElementById('reviewOverlay').classList.remove('active');
 }
 
+/* ===== SENTENCE INSERTION SETUP ===== */
+var normalParagraphHTML = 'Environmental factors have also shaped primate social behavior. In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced.';
+var insertionParagraphHTML = 'Environmental factors have also shaped primate social behavior. <span class="insert-square" data-insert="A">\u25A0</span> In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. <span class="insert-square" data-insert="B">\u25A0</span> In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced. <span class="insert-square" data-insert="C">\u25A0</span>';
+var insertSentenceText = "As a result, these larger groups develop complex social hierarchies in which individuals must constantly compete for access to limited food supplies.";
+var correctInsertion = "B";
+var insertionQuestionPage = 6;
+var selectedInsertionPoint = null;
+var insertionPara = document.getElementById('insertionParagraph');
+
+function updateParagraphVersion(){
+  if(!insertionPara) return;
+  if(currentQ === insertionQuestionPage){
+    if(!selectedInsertionPoint){
+      insertionPara.innerHTML = insertionParagraphHTML;
+      bindSquareClicks();
+    } else {
+      rebuildParagraphWithInsertion(selectedInsertionPoint);
+    }
+  } else {
+    insertionPara.innerHTML = normalParagraphHTML;
+  }
+}
+
+function bindSquareClicks(){
+  var squares = insertionPara.querySelectorAll('.insert-square');
+  squares.forEach(function(sq){
+    sq.addEventListener('click', function(){
+      selectedInsertionPoint = this.getAttribute('data-insert');
+      rebuildParagraphWithInsertion(selectedInsertionPoint);
+      document.getElementById('insertionStatus').className = 'selection-status chosen';
+      document.getElementById('insertionStatus').textContent = 'You selected position ' + selectedInsertionPoint + '.';
+      userAnswers['6'] = selectedInsertionPoint;
+      sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+    });
+  });
+}
+
+function rebuildParagraphWithInsertion(position){
+  var sentences = [
+    'Environmental factors have also shaped primate social behavior.',
+    'In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators.',
+    'In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced.'
+  ];
+  var labels = ['A','B','C'];
+  var html = '';
+  for(var i = 0; i < sentences.length; i++){
+    html += sentences[i] + ' ';
+    if(labels[i] === position){
+      html += '<span class="inserted-sentence">' + insertSentenceText + '</span> ';
+    }
+    var cls = 'insert-square';
+    if(labels[i] === position) cls += ' selected-square';
+    html += '<span class="' + cls + '" data-insert="' + labels[i] + '">\u25A0</span> ';
+  }
+  insertionPara.innerHTML = html;
+  bindSquareClicks();
+}
+
 // Restore answers
 (function(){
   var saved = sessionStorage.getItem(storageKey);
@@ -445,6 +497,9 @@ function closeReview(){
         opts[0].classList.add('selected');
         opts[0].querySelector('input').checked = true;
       }
+    }
+    if(parsed['6'] && insertionPara){
+      selectedInsertionPoint = parsed['6'];
     }
   }
 })();

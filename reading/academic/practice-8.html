@@ -52,6 +52,15 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 
 /* HIGHLIGHT WORD */
 .highlight-word{background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:600}
+.insert-square{display:inline-block;width:20px;height:20px;background-color:#3182ce;color:white;font-size:.7rem;font-weight:700;text-align:center;line-height:20px;border-radius:3px;cursor:pointer;vertical-align:middle;margin:0 3px;user-select:none;transition:all .2s}
+.insert-square:hover{background-color:#2c5282;transform:scale(1.15);box-shadow:0 2px 6px rgba(49,130,206,.4)}
+.insert-square.selected-square{background-color:#38a169;transform:scale(1.15);box-shadow:0 2px 6px rgba(56,161,105,.4)}
+.inserted-sentence{display:inline;font-weight:700;color:#2c5282;background-color:#ebf8ff;padding:2px 5px;border-radius:3px;border-left:3px solid #3182ce}
+.insertion-sentence-display{font-weight:700;font-size:1rem;line-height:1.6;color:#2d3748;margin-bottom:20px}
+.insertion-instruction{background-color:#fffff0;border:1px solid #ecc94b;border-radius:8px;padding:15px 20px;margin-bottom:20px;font-size:.9rem;color:#744210;line-height:1.5}
+.selection-status{padding:12px 16px;border-radius:6px;margin-bottom:15px;font-weight:500;text-align:center;font-size:.95rem}
+.selection-status.none{background-color:#f7fafc;border:1px dashed #cbd5e0;color:#718096}
+.selection-status.chosen{background-color:#ebf8ff;border:1px solid #3182ce;color:#2c5282}
 
 /* QUESTION STYLES */
 .question-page{display:none}
@@ -208,7 +217,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
     <h2 class="passage-title">Plate Tectonics and Mountain Formation</h2>
     <div class="passage-content">
       <p>The surface of the Earth may appear stable and unchanging, but it is actually composed of enormous slabs of rock called tectonic plates that are in constant, slow motion. These plates float on a layer of semi-molten rock in the upper mantle known as the asthenosphere. The movement of tectonic plates is driven primarily by convection currents within the mantle, where hotter material rises toward the surface and cooler material sinks back down.</p>
-      <p>When two tectonic plates collide, the immense pressure can cause the Earth's crust to buckle and fold upward, creating mountain ranges. This process, known as orogeny, is responsible for the formation of some of the world's most <span class="highlight-word">prominent</span> mountain chains. The Himalayas, for instance, were formed by the ongoing collision between the Indian Plate and the Eurasian Plate, a process that began approximately 50 million years ago and continues to this day. As a result, the Himalayas are still rising by about five millimeters per year.</p>
+      <p id="insertionParagraph">When two tectonic plates collide, the immense pressure can cause the Earth's crust to buckle and fold upward, creating mountain ranges. This process, known as orogeny, is responsible for the formation of some of the world's most <span class="highlight-word">prominent</span> mountain chains. The Himalayas, for instance, were formed by the ongoing collision between the Indian Plate and the Eurasian Plate, a process that began approximately 50 million years ago and continues to this day. As a result, the Himalayas are still rising by about five millimeters per year.</p>
       <p>Not all mountain formation occurs at convergent boundaries, however. Volcanic mountains, such as Mount Fuji in Japan, form when magma from deep within the Earth erupts through the surface at locations where plates are pulling apart or where one plate slides beneath another. Geologists refer to these zones of intense volcanic activity as subduction zones. The study of plate tectonics has fundamentally transformed our understanding of geological processes, providing a unified framework that explains not only mountain building but also earthquakes, volcanic eruptions, and the distribution of fossils across continents.</p>
     </div>
   </div>
@@ -272,32 +281,17 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
       </div>
     </div>
 
-    <!-- Q6: Inference -->
+    <!-- Q6: Sentence Insertion -->
     <div class="question-page" id="page6">
       <div class="question-text">
-        <span class="question-number">6.</span>Based on the passage, what can be inferred about the theory of plate tectonics?
+        <span class="question-number">6.</span>Look at the four squares [&#9632;] in the highlighted paragraph that indicate where the following sentence could be added to the passage.
       </div>
-      <div class="options">
-        <div class="option" data-q="6" data-v="A" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="A">
-          <span class="option-label">A</span>
-          <span class="option-text">It can only explain the formation of volcanic mountains, not fold mountains.</span>
-        </div>
-        <div class="option" data-q="6" data-v="B" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="B">
-          <span class="option-label">B</span>
-          <span class="option-text">It has been largely replaced by newer geological theories.</span>
-        </div>
-        <div class="option" data-q="6" data-v="C" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="C">
-          <span class="option-label">C</span>
-          <span class="option-text">It connects many different geological phenomena under one explanation.</span>
-        </div>
-        <div class="option" data-q="6" data-v="D" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="D">
-          <span class="option-label">D</span>
-          <span class="option-text">It applies only to the continents and not to the ocean floor.</span>
-        </div>
+      <p class="insertion-sentence-display">Precise satellite measurements of the range have confirmed that the two plates continue to move toward each other at a measurable rate.</p>
+      <div class="insertion-instruction">
+        <strong>Directions:</strong> Click on a square [&#9632;] in the passage on the left to add the sentence. The sentence will appear in <strong>bold</strong> at the position you choose. Click a different square to move it.
+      </div>
+      <div class="selection-status none" id="insertionStatus">
+        No position selected yet. Click a &#9632; in the passage.
       </div>
     </div>
   </div>
@@ -333,6 +327,65 @@ function getPassagePage(q){ return q <= 3 ? 1 : 2; }
 
 // Track which question is "active" within each passage page
 function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 4; }
+
+/* ===== SENTENCE INSERTION SETUP ===== */
+var normalParagraphHTML = 'When two tectonic plates collide, the immense pressure can cause the Earth\u2019s crust to buckle and fold upward, creating mountain ranges. This process, known as orogeny, is responsible for the formation of some of the world\u2019s most <span class="highlight-word">prominent</span> mountain chains. The Himalayas, for instance, were formed by the ongoing collision between the Indian Plate and the Eurasian Plate, a process that began approximately 50 million years ago and continues to this day. As a result, the Himalayas are still rising by about five millimeters per year.';
+var insertionParagraphHTML = 'When two tectonic plates collide, the immense pressure can cause the Earth\u2019s crust to buckle and fold upward, creating mountain ranges. <span class="insert-square" data-insert="A">\u25A0</span> This process, known as orogeny, is responsible for the formation of some of the world\u2019s most <span class="highlight-word">prominent</span> mountain chains. <span class="insert-square" data-insert="B">\u25A0</span> The Himalayas, for instance, were formed by the ongoing collision between the Indian Plate and the Eurasian Plate, a process that began approximately 50 million years ago and continues to this day. <span class="insert-square" data-insert="C">\u25A0</span> As a result, the Himalayas are still rising by about five millimeters per year. <span class="insert-square" data-insert="D">\u25A0</span>';
+var insertSentenceText = "Precise satellite measurements of the range have confirmed that the two plates continue to move toward each other at a measurable rate.";
+var correctInsertion = "C";
+var insertionQuestionPage = 6;
+var selectedInsertionPoint = null;
+var insertionPara = document.getElementById('insertionParagraph');
+
+function updateParagraphVersion(){
+  if(!insertionPara) return;
+  if(currentQ === insertionQuestionPage){
+    if(!selectedInsertionPoint){
+      insertionPara.innerHTML = insertionParagraphHTML;
+      bindSquareClicks();
+    } else {
+      rebuildParagraphWithInsertion(selectedInsertionPoint);
+    }
+  } else {
+    insertionPara.innerHTML = normalParagraphHTML;
+  }
+}
+
+function bindSquareClicks(){
+  var squares = insertionPara.querySelectorAll('.insert-square');
+  squares.forEach(function(sq){
+    sq.addEventListener('click', function(){
+      selectedInsertionPoint = this.getAttribute('data-insert');
+      rebuildParagraphWithInsertion(selectedInsertionPoint);
+      document.getElementById('insertionStatus').className = 'selection-status chosen';
+      document.getElementById('insertionStatus').textContent = 'You selected position ' + selectedInsertionPoint + '.';
+      userAnswers['6'] = selectedInsertionPoint;
+      sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+    });
+  });
+}
+
+function rebuildParagraphWithInsertion(position){
+  var sentences = [
+    'When two tectonic plates collide, the immense pressure can cause the Earth\u2019s crust to buckle and fold upward, creating mountain ranges.',
+    'This process, known as orogeny, is responsible for the formation of some of the world\u2019s most <span class="highlight-word">prominent</span> mountain chains.',
+    'The Himalayas, for instance, were formed by the ongoing collision between the Indian Plate and the Eurasian Plate, a process that began approximately 50 million years ago and continues to this day.',
+    'As a result, the Himalayas are still rising by about five millimeters per year.'
+  ];
+  var labels = ['A','B','C','D'];
+  var html = '';
+  for(var i = 0; i < sentences.length; i++){
+    html += sentences[i] + ' ';
+    if(labels[i] === position){
+      html += '<span class="inserted-sentence">' + insertSentenceText + '</span> ';
+    }
+    var cls = 'insert-square';
+    if(labels[i] === position) cls += ' selected-square';
+    html += '<span class="' + cls + '" data-insert="' + labels[i] + '">\u25A0</span> ';
+  }
+  insertionPara.innerHTML = html;
+  bindSquareClicks();
+}
 
 function selectOption(el){
   var q = el.getAttribute('data-q');
@@ -381,6 +434,7 @@ function navigate(dir){
   } else {
     document.getElementById('btnNext').textContent = 'Next \u203A';
   }
+  updateParagraphVersion();
   updateProgress();
 }
 
@@ -417,12 +471,13 @@ function openReview(){
   var list = document.getElementById('reviewList');
   list.innerHTML = '';
   for(var i = 1; i <= totalQ; i++){
-    var answered = userAnswers[i] ? true : false;
+    var answered = userAnswers[i] || (i === 6 && selectedInsertionPoint) ? true : false;
+    var ansVal = (i === 6) ? selectedInsertionPoint : userAnswers[i];
     var div = document.createElement('div');
     div.className = 'review-item';
-    div.innerHTML = '<div class="review-dot '+(answered?'answered':'unanswered')+'"></div>' +
+    div.innerHTML = '<div class="review-dot '+(ansVal?'answered':'unanswered')+'"></div>' +
       '<span>Question '+i+'</span>' +
-      (answered ? '<span style="color:#48bb78;font-size:.85em">Answered: '+userAnswers[i]+'</span>' : '<span style="color:#e53e3e;font-size:.85em">Not answered</span>');
+      (ansVal ? '<span style="color:#48bb78;font-size:.85em">Answered: '+ansVal+'</span>' : '<span style="color:#e53e3e;font-size:.85em">Not answered</span>');
     list.appendChild(div);
   }
   document.getElementById('reviewOverlay').classList.add('active');
@@ -444,6 +499,9 @@ function closeReview(){
         opts[0].classList.add('selected');
         opts[0].querySelector('input').checked = true;
       }
+    }
+    if(parsed['6'] && insertionPara){
+      selectedInsertionPoint = parsed['6'];
     }
   }
 })();

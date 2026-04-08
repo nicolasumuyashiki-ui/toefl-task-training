@@ -232,24 +232,20 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f9fafb;
 
     <!-- Q6 -->
     <div class="q-card" id="card6">
-      <div class="q-num">Question 6 — Inference</div>
-      <div class="q-text">Based on the passage, what can be inferred about future research on photosynthesis?</div>
+      <div class="q-num">Question 6 — Sentence Insertion</div>
+      <div class="q-text">Look at the four squares in paragraph 4 that indicate where the following sentence could be added:<br><br><em>"Furthermore, these improved crops would be especially valuable in tropical regions, where rising temperatures already threaten staple food production."</em></div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: A</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours6">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review is-correct" id="opt6A"><span class="label">A</span> It may lead to the development of crops that can better withstand environmental challenges. &#10003;</div>
-        <div class="option-review" id="opt6B"><span class="label">B</span> It is likely to focus only on desert plants because they are the most resilient.</div>
-        <div class="option-review" id="opt6C"><span class="label">C</span> It will probably prove that all plants use the same photosynthetic method.</div>
-        <div class="option-review" id="opt6D"><span class="label">D</span> It has already solved the problem of food insecurity worldwide.</div>
+        <div class="option-review" id="opt6A"><span class="label">A</span> After sentence 1 (after "...in the context of climate change.")</div>
+        <div class="option-review is-correct" id="opt6B"><span class="label">B</span> After sentence 2 (after "...more resilient to environmental stress.") &#10003;</div>
+        <div class="option-review" id="opt6C"><span class="label">C</span> After sentence 3 (after "...agriculture and food security.")</div>
       </div>
       <div class="explanation">
-        <strong>Text-based inference:</strong> Paragraph 4 states: "Understanding how plants adjust their photosynthetic processes... could help researchers develop crop varieties that are more resilient to environmental stress." From this, we can infer that future research may lead to hardier crops = A.<br><br>
-        B uses "only," which is too restrictive &mdash; the passage discusses multiple plant types, not just desert plants. C directly contradicts paragraph 3, which describes different photosynthetic methods. D uses "already solved," but the passage says the research "could help" &mdash; it has not yet solved anything.
-        <div class="paraphrase-box">
-          <strong>Paraphrase:</strong> Passage: "develop crop varieties that are more resilient to environmental stress" &rarr; A: "crops that can better withstand environmental challenges" &mdash; "resilient" is paraphrased as "withstand," "stress" as "challenges"
-        </div>
+        <strong>Discourse marker clue:</strong> The word "Furthermore" signals that the sentence adds information to a closely related preceding idea. Sentence 2 discusses developing "crop varieties that are more resilient to environmental stress," and the insertion sentence elaborates on where those crops would be most useful. "These improved crops" directly refers back to the resilient crop varieties mentioned in sentence 2 = B.<br><br>
+        A is incorrect because sentence 1 introduces general interest in climate change but does not mention crops, so "these improved crops" would have no clear referent. C is incorrect because sentence 3 is a concluding statement about the broader implications of photosynthesis research; inserting a specific detail about tropical regions after the conclusion would disrupt the paragraph's logical flow.
       </div>
     </div>
   </div>
@@ -272,7 +268,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f9fafb;
 </div>
 
 <script>
-var correctAnswers = {'1':'A','2':'C','3':'B','4':'D','5':'C','6':'A'};
+var correctAnswers = {'1':'A','2':'C','3':'B','4':'D','5':'C','6':'B'};
 (function(){
   var saved = sessionStorage.getItem('training_academic_p4_answers');
   var answers = saved ? JSON.parse(saved) : {};

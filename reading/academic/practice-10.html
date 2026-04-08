@@ -53,6 +53,16 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 /* HIGHLIGHT WORD */
 .highlight-word{background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:600}
 
+.insert-square{display:inline-block;width:20px;height:20px;background-color:#3182ce;color:white;font-size:.7rem;font-weight:700;text-align:center;line-height:20px;border-radius:3px;cursor:pointer;vertical-align:middle;margin:0 3px;user-select:none;transition:all .2s}
+.insert-square:hover{background-color:#2c5282;transform:scale(1.15);box-shadow:0 2px 6px rgba(49,130,206,.4)}
+.insert-square.selected-square{background-color:#38a169;transform:scale(1.15);box-shadow:0 2px 6px rgba(56,161,105,.4)}
+.inserted-sentence{display:inline;font-weight:700;color:#2c5282;background-color:#ebf8ff;padding:2px 5px;border-radius:3px;border-left:3px solid #3182ce}
+.insertion-sentence-display{font-weight:700;font-size:1rem;line-height:1.6;color:#2d3748;margin-bottom:20px}
+.insertion-instruction{background-color:#fffff0;border:1px solid #ecc94b;border-radius:8px;padding:15px 20px;margin-bottom:20px;font-size:.9rem;color:#744210;line-height:1.5}
+.selection-status{padding:12px 16px;border-radius:6px;margin-bottom:15px;font-weight:500;text-align:center;font-size:.95rem}
+.selection-status.none{background-color:#f7fafc;border:1px dashed #cbd5e0;color:#718096}
+.selection-status.chosen{background-color:#ebf8ff;border:1px solid #3182ce;color:#2c5282}
+
 /* QUESTION STYLES */
 .question-page{display:none}
 .question-page.active{display:block}
@@ -209,7 +219,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
     <div class="passage-content">
       <p>Enzymes are specialized proteins that act as biological catalysts, dramatically accelerating the chemical reactions necessary for life. Without enzymes, most biochemical reactions would occur far too slowly to sustain living organisms. Nearly every process in the body, from digestion to DNA replication, depends on the activity of specific enzymes.</p>
       <p>Each enzyme has a unique three-dimensional shape that determines which molecules, called substrates, it can interact with. The region where the substrate binds to the enzyme is known as the active site. When a substrate enters the active site, the enzyme temporarily changes shape to fit around it more tightly, a process scientists describe as <span class="highlight-word">induced</span> fit. This interaction lowers the energy required for the reaction to proceed, allowing cells to carry out thousands of chemical processes every second.</p>
-      <p>Environmental conditions strongly influence enzyme activity. Most human enzymes function optimally at body temperature, around thirty-seven degrees Celsius, and at a neutral pH level. When temperatures rise significantly above this range or the pH becomes too acidic or too alkaline, the enzyme's shape can become permanently distorted, a process known as denaturation. Once denatured, an enzyme can no longer bind to its substrate and loses its catalytic function entirely. This sensitivity to environmental conditions explains why fever and extreme changes in blood pH can be dangerous to human health, as they may disrupt the enzyme-driven reactions that cells depend on to survive.</p>
+      <p id="insertionParagraph">Environmental conditions strongly influence enzyme activity. Most human enzymes function optimally at body temperature, around thirty-seven degrees Celsius, and at a neutral pH level. When temperatures rise significantly above this range or the pH becomes too acidic or too alkaline, the enzyme's shape can become permanently distorted, a process known as denaturation. Once denatured, an enzyme can no longer bind to its substrate and loses its catalytic function entirely. This sensitivity to environmental conditions explains why fever and extreme changes in blood pH can be dangerous to human health, as they may disrupt the enzyme-driven reactions that cells depend on to survive.</p>
     </div>
   </div>
 
@@ -272,32 +282,17 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
       </div>
     </div>
 
-    <!-- Q6: Inference -->
+    <!-- Q6: Sentence Insertion -->
     <div class="question-page" id="page6">
       <div class="question-text">
-        <span class="question-number">6.</span>What can be inferred from the passage about why a high fever is dangerous to human health?
+        <span class="question-number">6.</span>Look at the four squares [&#9632;] in the highlighted paragraph that indicate where the following sentence could be added to the passage.
       </div>
-      <div class="options">
-        <div class="option" data-q="6" data-v="A" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="A">
-          <span class="option-label">A</span>
-          <span class="option-text">It causes the body to produce too many new enzymes at once.</span>
-        </div>
-        <div class="option" data-q="6" data-v="B" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="B">
-          <span class="option-label">B</span>
-          <span class="option-text">It can denature enzymes, preventing them from catalyzing essential reactions in cells.</span>
-        </div>
-        <div class="option" data-q="6" data-v="C" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="C">
-          <span class="option-label">C</span>
-          <span class="option-text">It forces enzymes to bind to the wrong substrates.</span>
-        </div>
-        <div class="option" data-q="6" data-v="D" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="D">
-          <span class="option-label">D</span>
-          <span class="option-text">It increases the pH level of the blood to an alkaline state.</span>
-        </div>
+      <p class="insertion-sentence-display">Maintaining this precise balance of temperature and pH is essential because the enzyme's three-dimensional shape depends on weak chemical bonds that are easily disrupted.</p>
+      <div class="insertion-instruction">
+        <strong>Directions:</strong> Click on a square [&#9632;] in the passage on the left to add the sentence. The sentence will appear in <strong>bold</strong> at the position you choose. Click a different square to move it.
+      </div>
+      <div class="selection-status none" id="insertionStatus">
+        No position selected yet. Click a &#9632; in the passage.
       </div>
     </div>
   </div>
@@ -332,6 +327,68 @@ var timerKey = 'training_academic_p10_timer';
 function getPassagePage(q){ return q <= 3 ? 1 : 2; }
 
 function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 4; }
+
+/* ===== SENTENCE INSERTION SETUP ===== */
+var normalParagraphHTML = 'Environmental conditions strongly influence enzyme activity. Most human enzymes function optimally at body temperature, around thirty-seven degrees Celsius, and at a neutral pH level. When temperatures rise significantly above this range or the pH becomes too acidic or too alkaline, the enzyme\u2019s shape can become permanently distorted, a process known as denaturation. Once denatured, an enzyme can no longer bind to its substrate and loses its catalytic function entirely. This sensitivity to environmental conditions explains why fever and extreme changes in blood pH can be dangerous to human health, as they may disrupt the enzyme-driven reactions that cells depend on to survive.';
+var insertionParagraphHTML = 'Environmental conditions strongly influence enzyme activity. <span class="insert-square" data-insert="A">\u25A0</span> Most human enzymes function optimally at body temperature, around thirty-seven degrees Celsius, and at a neutral pH level. <span class="insert-square" data-insert="B">\u25A0</span> When temperatures rise significantly above this range or the pH becomes too acidic or too alkaline, the enzyme\u2019s shape can become permanently distorted, a process known as denaturation. <span class="insert-square" data-insert="C">\u25A0</span> Once denatured, an enzyme can no longer bind to its substrate and loses its catalytic function entirely. <span class="insert-square" data-insert="D">\u25A0</span> This sensitivity to environmental conditions explains why fever and extreme changes in blood pH can be dangerous to human health, as they may disrupt the enzyme-driven reactions that cells depend on to survive.';
+var insertSentenceText = "Maintaining this precise balance of temperature and pH is essential because the enzyme\u2019s three-dimensional shape depends on weak chemical bonds that are easily disrupted.";
+var correctInsertion = "B";
+var insertionQuestionPage = 6;
+var selectedInsertionPoint = null;
+var insertionPara = document.getElementById('insertionParagraph');
+
+function updateParagraphVersion(){
+  if(!insertionPara) return;
+  if(currentQ === insertionQuestionPage){
+    if(!selectedInsertionPoint){
+      insertionPara.innerHTML = insertionParagraphHTML;
+      bindSquareClicks();
+    } else {
+      rebuildParagraphWithInsertion(selectedInsertionPoint);
+    }
+  } else {
+    insertionPara.innerHTML = normalParagraphHTML;
+  }
+}
+
+function bindSquareClicks(){
+  var squares = insertionPara.querySelectorAll('.insert-square');
+  squares.forEach(function(sq){
+    sq.addEventListener('click', function(){
+      selectedInsertionPoint = this.getAttribute('data-insert');
+      rebuildParagraphWithInsertion(selectedInsertionPoint);
+      document.getElementById('insertionStatus').className = 'selection-status chosen';
+      document.getElementById('insertionStatus').textContent = 'You selected position ' + selectedInsertionPoint + '.';
+      userAnswers['6'] = selectedInsertionPoint;
+      sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+    });
+  });
+}
+
+function rebuildParagraphWithInsertion(position){
+  var sentences = [
+    'Environmental conditions strongly influence enzyme activity.',
+    'Most human enzymes function optimally at body temperature, around thirty-seven degrees Celsius, and at a neutral pH level.',
+    'When temperatures rise significantly above this range or the pH becomes too acidic or too alkaline, the enzyme\u2019s shape can become permanently distorted, a process known as denaturation.',
+    'Once denatured, an enzyme can no longer bind to its substrate and loses its catalytic function entirely.',
+    'This sensitivity to environmental conditions explains why fever and extreme changes in blood pH can be dangerous to human health, as they may disrupt the enzyme-driven reactions that cells depend on to survive.'
+  ];
+  var labels = ['A','B','C','D'];
+  var html = '';
+  for(var i = 0; i < sentences.length; i++){
+    html += sentences[i] + ' ';
+    if(i < labels.length){
+      if(labels[i] === position){
+        html += '<span class="inserted-sentence">' + insertSentenceText + '</span> ';
+      }
+      var cls = 'insert-square';
+      if(labels[i] === position) cls += ' selected-square';
+      html += '<span class="' + cls + '" data-insert="' + labels[i] + '">\u25A0</span> ';
+    }
+  }
+  insertionPara.innerHTML = html;
+  bindSquareClicks();
+}
 
 function selectOption(el){
   var q = el.getAttribute('data-q');
@@ -379,6 +436,7 @@ function navigate(dir){
   } else {
     document.getElementById('btnNext').textContent = 'Next \u203A';
   }
+  updateParagraphVersion();
   updateProgress();
 }
 
@@ -443,6 +501,7 @@ function closeReview(){
         opts[0].querySelector('input').checked = true;
       }
     }
+    if(parsed['6'] && insertionPara){ selectedInsertionPoint = parsed['6']; }
   }
 })();
 

@@ -52,6 +52,15 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 
 /* HIGHLIGHT WORD */
 .highlight-word{background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:600}
+.insert-square{display:inline-block;width:20px;height:20px;background-color:#3182ce;color:white;font-size:.7rem;font-weight:700;text-align:center;line-height:20px;border-radius:3px;cursor:pointer;vertical-align:middle;margin:0 3px;user-select:none;transition:all .2s}
+.insert-square:hover{background-color:#2c5282;transform:scale(1.15);box-shadow:0 2px 6px rgba(49,130,206,.4)}
+.insert-square.selected-square{background-color:#38a169;transform:scale(1.15);box-shadow:0 2px 6px rgba(56,161,105,.4)}
+.inserted-sentence{display:inline;font-weight:700;color:#2c5282;background-color:#ebf8ff;padding:2px 5px;border-radius:3px;border-left:3px solid #3182ce}
+.insertion-sentence-display{font-weight:700;font-size:1rem;line-height:1.6;color:#2d3748;margin-bottom:20px}
+.insertion-instruction{background-color:#fffff0;border:1px solid #ecc94b;border-radius:8px;padding:15px 20px;margin-bottom:20px;font-size:.9rem;color:#744210;line-height:1.5}
+.selection-status{padding:12px 16px;border-radius:6px;margin-bottom:15px;font-weight:500;text-align:center;font-size:.95rem}
+.selection-status.none{background-color:#f7fafc;border:1px dashed #cbd5e0;color:#718096}
+.selection-status.chosen{background-color:#ebf8ff;border:1px solid #3182ce;color:#2c5282}
 
 /* QUESTION STYLES */
 .question-page{display:none}
@@ -208,7 +217,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
     <h2 class="passage-title">How Telescopes Changed Our Understanding of the Universe</h2>
     <div class="passage-content">
       <p>Before the invention of the telescope, humans understood the universe primarily through naked-eye observation. Ancient astronomers tracked the movements of planets and stars with impressive accuracy, but their view of the cosmos was fundamentally limited. The development of optical telescopes in the early seventeenth century transformed astronomy from a practice based on visible patterns into a science capable of revealing previously invisible details about celestial objects.</p>
-      <p>The Italian scientist Galileo Galilei was among the first to use a telescope for systematic astronomical observation. In 1610, he discovered four moons orbiting Jupiter, providing strong evidence that not everything in the sky revolved around the Earth. This observation directly challenged the geocentric model that had <span class="highlight-word">dominated</span> European thought for over a thousand years. Galileo also observed the phases of Venus and the rough, cratered surface of the Moon, further demonstrating that celestial bodies were physical objects subject to natural laws rather than perfect, unchanging spheres.</p>
+      <p id="insertionParagraph">The Italian scientist Galileo Galilei was among the first to use a telescope for systematic astronomical observation. In 1610, he discovered four moons orbiting Jupiter, providing strong evidence that not everything in the sky revolved around the Earth. This observation directly challenged the geocentric model that had <span class="highlight-word">dominated</span> European thought for over a thousand years. Galileo also observed the phases of Venus and the rough, cratered surface of the Moon, further demonstrating that celestial bodies were physical objects subject to natural laws rather than perfect, unchanging spheres.</p>
       <p>In the centuries that followed, telescopes grew dramatically in size and sophistication. Reflecting telescopes, which use mirrors instead of lenses, allowed astronomers to observe fainter and more distant objects. By the twentieth century, radio telescopes opened an entirely new window on the universe by detecting electromagnetic radiation invisible to the human eye. More recently, space-based observatories such as the Hubble Space Telescope have captured images of galaxies billions of light-years away, revealing the vast scale and age of the universe. Each technological advance has deepened our understanding of the cosmos and raised new questions about the nature of space and time.</p>
     </div>
   </div>
@@ -272,32 +281,17 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
       </div>
     </div>
 
-    <!-- Q6: Inference -->
+    <!-- Q6: Sentence Insertion -->
     <div class="question-page" id="page6">
       <div class="question-text">
-        <span class="question-number">6.</span>What can be inferred from the passage about the development of telescope technology?
+        <span class="question-number">6.</span>Look at the four squares [&#9632;] in the highlighted paragraph that indicate where the following sentence could be added to the passage.
       </div>
-      <div class="options">
-        <div class="option" data-q="6" data-v="A" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="A">
-          <span class="option-label">A</span>
-          <span class="option-text">Modern telescopes are no longer useful because satellites have replaced them.</span>
-        </div>
-        <div class="option" data-q="6" data-v="B" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="B">
-          <span class="option-label">B</span>
-          <span class="option-text">Radio telescopes were invented before reflecting telescopes.</span>
-        </div>
-        <div class="option" data-q="6" data-v="C" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="C">
-          <span class="option-label">C</span>
-          <span class="option-text">Each new type of telescope has allowed scientists to observe things that were previously undetectable.</span>
-        </div>
-        <div class="option" data-q="6" data-v="D" onclick="selectOption(this)">
-          <input type="radio" name="q6" value="D">
-          <span class="option-label">D</span>
-          <span class="option-text">Galileo's telescope was more powerful than the Hubble Space Telescope.</span>
-        </div>
+      <p class="insertion-sentence-display">Furthermore, his detailed drawings of these moons showed that they changed position from night to night, confirming that they were indeed in orbit.</p>
+      <div class="insertion-instruction">
+        <strong>Directions:</strong> Click on a square [&#9632;] in the passage on the left to add the sentence. The sentence will appear in <strong>bold</strong> at the position you choose. Click a different square to move it.
+      </div>
+      <div class="selection-status none" id="insertionStatus">
+        No position selected yet. Click a &#9632; in the passage.
       </div>
     </div>
   </div>
@@ -333,6 +327,65 @@ function getPassagePage(q){ return q <= 3 ? 1 : 2; }
 
 function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 4; }
 
+/* ===== SENTENCE INSERTION SETUP ===== */
+var normalParagraphHTML = 'The Italian scientist Galileo Galilei was among the first to use a telescope for systematic astronomical observation. In 1610, he discovered four moons orbiting Jupiter, providing strong evidence that not everything in the sky revolved around the Earth. This observation directly challenged the geocentric model that had <span class="highlight-word">dominated</span> European thought for over a thousand years. Galileo also observed the phases of Venus and the rough, cratered surface of the Moon, further demonstrating that celestial bodies were physical objects subject to natural laws rather than perfect, unchanging spheres.';
+var insertionParagraphHTML = 'The Italian scientist Galileo Galilei was among the first to use a telescope for systematic astronomical observation. <span class="insert-square" data-insert="A">\u25A0</span> In 1610, he discovered four moons orbiting Jupiter, providing strong evidence that not everything in the sky revolved around the Earth. <span class="insert-square" data-insert="B">\u25A0</span> This observation directly challenged the geocentric model that had <span class="highlight-word">dominated</span> European thought for over a thousand years. <span class="insert-square" data-insert="C">\u25A0</span> Galileo also observed the phases of Venus and the rough, cratered surface of the Moon, further demonstrating that celestial bodies were physical objects subject to natural laws rather than perfect, unchanging spheres. <span class="insert-square" data-insert="D">\u25A0</span>';
+var insertSentenceText = "Furthermore, his detailed drawings of these moons showed that they changed position from night to night, confirming that they were indeed in orbit.";
+var correctInsertion = "B";
+var insertionQuestionPage = 6;
+var selectedInsertionPoint = null;
+var insertionPara = document.getElementById('insertionParagraph');
+
+function updateParagraphVersion(){
+  if(!insertionPara) return;
+  if(currentQ === insertionQuestionPage){
+    if(!selectedInsertionPoint){
+      insertionPara.innerHTML = insertionParagraphHTML;
+      bindSquareClicks();
+    } else {
+      rebuildParagraphWithInsertion(selectedInsertionPoint);
+    }
+  } else {
+    insertionPara.innerHTML = normalParagraphHTML;
+  }
+}
+
+function bindSquareClicks(){
+  var squares = insertionPara.querySelectorAll('.insert-square');
+  squares.forEach(function(sq){
+    sq.addEventListener('click', function(){
+      selectedInsertionPoint = this.getAttribute('data-insert');
+      rebuildParagraphWithInsertion(selectedInsertionPoint);
+      document.getElementById('insertionStatus').className = 'selection-status chosen';
+      document.getElementById('insertionStatus').textContent = 'You selected position ' + selectedInsertionPoint + '.';
+      userAnswers['6'] = selectedInsertionPoint;
+      sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+    });
+  });
+}
+
+function rebuildParagraphWithInsertion(position){
+  var sentences = [
+    'The Italian scientist Galileo Galilei was among the first to use a telescope for systematic astronomical observation.',
+    'In 1610, he discovered four moons orbiting Jupiter, providing strong evidence that not everything in the sky revolved around the Earth.',
+    'This observation directly challenged the geocentric model that had <span class="highlight-word">dominated</span> European thought for over a thousand years.',
+    'Galileo also observed the phases of Venus and the rough, cratered surface of the Moon, further demonstrating that celestial bodies were physical objects subject to natural laws rather than perfect, unchanging spheres.'
+  ];
+  var labels = ['A','B','C','D'];
+  var html = '';
+  for(var i = 0; i < sentences.length; i++){
+    html += sentences[i] + ' ';
+    if(labels[i] === position){
+      html += '<span class="inserted-sentence">' + insertSentenceText + '</span> ';
+    }
+    var cls = 'insert-square';
+    if(labels[i] === position) cls += ' selected-square';
+    html += '<span class="' + cls + '" data-insert="' + labels[i] + '">\u25A0</span> ';
+  }
+  insertionPara.innerHTML = html;
+  bindSquareClicks();
+}
+
 function selectOption(el){
   var q = el.getAttribute('data-q');
   var v = el.getAttribute('data-v');
@@ -349,7 +402,7 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'A','2':'B','3':'C','4':'A','5':'B','6':'C'};
+    var ca={'1':'A','2':'B','3':'C','4':'A','5':'B','6':'B'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
     sessionStorage.setItem('training_score_academic_p6',JSON.stringify({correct:sc,total:6}));
@@ -380,6 +433,7 @@ function navigate(dir){
   } else {
     document.getElementById('btnNext').textContent = 'Next \u203A';
   }
+  updateParagraphVersion();
   updateProgress();
 }
 
@@ -416,12 +470,13 @@ function openReview(){
   var list = document.getElementById('reviewList');
   list.innerHTML = '';
   for(var i = 1; i <= totalQ; i++){
-    var answered = userAnswers[i] ? true : false;
+    var answered = userAnswers[i] || (i === 6 && selectedInsertionPoint) ? true : false;
+    var ansVal = (i === 6) ? selectedInsertionPoint : userAnswers[i];
     var div = document.createElement('div');
     div.className = 'review-item';
-    div.innerHTML = '<div class="review-dot '+(answered?'answered':'unanswered')+'"></div>' +
+    div.innerHTML = '<div class="review-dot '+(ansVal?'answered':'unanswered')+'"></div>' +
       '<span>Question '+i+'</span>' +
-      (answered ? '<span style="color:#48bb78;font-size:.85em">Answered: '+userAnswers[i]+'</span>' : '<span style="color:#e53e3e;font-size:.85em">Not answered</span>');
+      (ansVal ? '<span style="color:#48bb78;font-size:.85em">Answered: '+ansVal+'</span>' : '<span style="color:#e53e3e;font-size:.85em">Not answered</span>');
     list.appendChild(div);
   }
   document.getElementById('reviewOverlay').classList.add('active');
@@ -443,6 +498,9 @@ function closeReview(){
         opts[0].classList.add('selected');
         opts[0].querySelector('input').checked = true;
       }
+    }
+    if(parsed['6'] && insertionPara){
+      selectedInsertionPoint = parsed['6'];
     }
   }
 })();
