@@ -51,12 +51,14 @@ body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#
 .score-badge.perfect{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
 .score-badge.great{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
 .score-badge.good{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.score-badge.keep-trying{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
 .score-fraction{font-size:.65em;font-weight:700;color:#8898a8;margin-top:2px}
 .score-gauge{width:100%;height:3px;background:#e8ecf0;border-radius:2px;margin-top:3px;overflow:hidden}
 .score-gauge-fill{height:100%;border-radius:2px;transition:width .3s}
 .score-gauge-fill.perfect{background:#22c55e}
 .score-gauge-fill.great{background:#3b82f6}
 .score-gauge-fill.good{background:#f59e0b}
+.score-gauge-fill.keep-trying{background:#ef4444}
 </style>
 </head>
 <body>
@@ -202,9 +204,9 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='.
         var d=JSON.parse(raw);
         if(!d||!d.total) continue;
         var pct=Math.round(d.correct/d.total*100);
-        var grade=pct===100?'perfect':pct>=80?'great':'good';
-        var label=pct===100?'Perfect!':pct>=80?'Great':'Good';
-        var icon=pct===100?'\u25ce':pct>=80?'\u25ce':'\u25b3';
+        var grade=pct===100?'perfect':pct>=80?'great':pct>=50?'good':'keep-trying';
+        var label=pct===100?'Perfect!':pct>=80?'Great':pct>=50?'Good':'Keep It Up!';
+        var icon=pct===100?'\u25ce':pct>=80?'\u25ce':pct>=50?'\u25b3':'\u25b3';
         var section=document.querySelectorAll('.task-section')[tasks.indexOf(task)];
         if(!section) continue;
         var btns=section.querySelectorAll('.practice-btn');
