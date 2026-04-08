@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CTW Practice 1 — Set 1: The History of Chocolate</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Nunito',sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}
+.top-nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}.top-nav-left{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}.top-nav-left strong{color:#2d3748}.top-nav-right{display:flex;align-items:center;gap:12px}
+.timer-btn{background:none;border:1px solid #cbd5e0;border-radius:6px;padding:6px 14px;font-size:.85em;color:#4a5568;cursor:pointer;font-family:inherit}.timer-btn:hover{background:#f7fafc}.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#2d3748;font-weight:600;min-width:60px;text-align:center}
+.review-btn{background:#4a90d9;color:#fff;border:none;border-radius:14px;padding:6px 18px;font-size:.85em;cursor:pointer;font-family:inherit;font-weight:600}.review-btn:hover{background:#3a7bc8}
+.user-badge{font-size:.8em;color:#718096}.user-badge strong{color:#2d3748}
+.progress-bar{height:4px;background:#ebf4ff;width:100%}.progress-fill{height:100%;width:33%;background:#3182ce;border-radius:2px}
+.main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}.content{width:100%;max-width:660px}
+.direction{font-weight:700;font-size:1em;color:#2d3748;margin-bottom:24px}
+.set-label{display:inline-block;background:#ebf4ff;color:#4a90d9;font-size:.78em;font-weight:600;padding:3px 12px;border-radius:10px;margin-bottom:12px}
+.passage{font-size:.95em;line-height:2.2;color:#2d3748}.word-blank{display:inline-block;white-space:nowrap}.sh{font-size:.95em}
+.bx{display:inline-block;width:1.5em;height:1.9em;border:1px solid #bbb;border-radius:2px;background:#ececec;text-align:center;vertical-align:baseline;margin:0 .5px;position:relative}
+.bx input{width:100%;height:100%;border:none;background:transparent;text-align:center;font-size:1em;font-family:inherit;outline:none;padding:0;color:#2d3748}.bx:focus-within{background:#dce8f7;border-color:#4a90d9}
+.reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.footer-left{font-size:.82em;color:#718096}.footer-right{display:flex;gap:12px}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.btn-back{color:#4a5568;background:#fff;border:1px solid #e2e8f0}.btn-back:hover{background:#f7fafc}
+.btn-next{color:#fff;background:#2d3748}.btn-next:hover{opacity:.9}
+.btn-menu{color:#5a6878;background:none;border:1px solid #dfe3e8;font-size:.82em;padding:8px 14px;border-radius:8px;font-family:inherit;font-weight:600;cursor:pointer}.btn-menu:hover{background:#f5f7fa}
+.overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}.overlay.active{display:flex}
+.review-panel{background:#fff;border-radius:12px;width:90%;max-width:520px;max-height:80vh;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.review-header{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid #e2e8f0}.review-header h3{font-size:1em;color:#2d3748}
+.review-close{background:none;border:none;font-size:1.3em;cursor:pointer;color:#718096;padding:4px 8px;border-radius:4px}.review-close:hover{background:#f7fafc}
+.review-body{padding:20px;max-height:50vh;overflow-y:auto}
+.review-row{display:flex;padding:10px 0;border-bottom:1px solid #f0f0f0;align-items:center;font-size:.88em}
+.review-no{width:28px;color:#718096;font-weight:500}.review-word{flex:1;color:#2d3748}
+.review-status{font-size:.78em;padding:2px 10px;border-radius:10px}.review-status.filled{background:#c6f6d5;color:#22543d}.review-status.empty{background:#fed7d7;color:#9b2c2c}
+.set-progress{padding:16px 20px;border-top:1px solid #e2e8f0;background:#f9fafb;display:flex;justify-content:center}
+.set-progress-row{display:flex;gap:8px;align-items:center}
+.set-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72em;font-weight:700}
+.set-dot.done{background:#c6f6d5;color:#22543d}.set-dot.current{background:#4a90d9;color:#fff}.set-dot.upcoming{background:#e2e8f0;color:#718096}
+.set-dot-line{width:40px;height:2px;background:#e2e8f0}
+</style>
+</head>
+<body>
+<div class="top-nav"><div class="top-nav-left"><span>Set <strong>1</strong> of 3</span><span>Complete the Words</span></div><div class="top-nav-right"><button class="timer-btn" id="timerToggle">Hide Time</button><span class="timer-display" id="timerDisplay">36:00</span><button class="review-btn" id="reviewOpen">Review</button><span class="user-badge" id="userBadge"></span></div></div>
+<div class="progress-bar"><div class="progress-fill"></div></div>
+<div class="main"><div class="content"><span class="set-label">Set 1 / 3 — The History of Chocolate</span><p class="direction">In the paragraph below, some words are missing letters. Fill in the blanks to complete the words.</p><div class="passage" id="passage"></div></div></div>
+<div class="reading-footer"><div><button class="btn-menu" onclick="window.location.href='../menu.html'">← メニューに戻る</button></div><div class="footer-right"><button class="btn-nav btn-next" onclick="goNext()">Next Set ›</button></div></div>
+<div class="overlay" id="overlay"><div class="review-panel"><div class="review-header"><h3>Review — Set 1</h3><button class="review-close" id="reviewClose">&times;</button></div><div class="review-body" id="reviewBody"></div><div class="set-progress"><div class="set-progress-row"><div class="set-dot current">1</div><div class="set-dot-line"></div><div class="set-dot upcoming">2</div><div class="set-dot-line"></div><div class="set-dot upcoming">3</div></div></div></div></div>
+<script src="../../js/api.js"></script><script src="../../js/auth.js"></script>
+<script>
+var SET_NUM=1;var NEXT_PAGE="practice-1-set-2.html";var D={"intro": "Chocolate is one of the most popular treats in the world today. However, its history stretches back thousands of years. The ancient Maya and Aztec civilizations valued cacao beans highly and used them to prepare bitter drinks for special ceremonies.", "conclusion": "This simple change helped chocolate become the sweet treat that millions of people enjoy around the world.", "target": [{"w": "When", "a": "en", "s": "Wh", "p": ""}, {"w": "European", "a": null, "s": null, "p": ""}, {"w": "traders", "a": "ers", "s": "trad", "p": ""}, {"w": "discovered", "a": null, "s": null, "p": ""}, {"w": "this", "a": "is", "s": "th", "p": ""}, {"w": "product", "a": null, "s": null, "p": ""}, {"w": "they", "a": "ey", "s": "th", "p": ""}, {"w": "brought", "a": null, "s": null, "p": ""}, {"w": "the", "a": "he", "s": "t", "p": ""}, {"w": "beans", "a": null, "s": null, "p": ""}, {"w": "home", "a": "me", "s": "ho", "p": ""}, {"w": "and", "a": null, "s": null, "p": ""}, {"w": "began", "a": "gan", "s": "be", "p": ""}, {"w": "adding", "a": null, "s": null, "p": ""}, {"w": "sugar", "a": "gar", "s": "su", "p": ""}, {"w": "to", "a": null, "s": null, "p": ""}, {"w": "create", "a": "eate", "s": "cr", "p": ""}, {"w": "a", "a": null, "s": null, "p": ""}, {"w": "very", "a": "ry", "s": "ve", "p": ""}, {"w": "pleasant", "a": null, "s": null, "p": "."}]};
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+(function(){var h='<span>'+D.intro+'</span> ';D.target.forEach(function(t){if(t.a!==null){h+='<span class="word-blank"><span class="sh">'+t.s+'</span><span class="boxes">';for(var j=0;j<t.a.length;j++){h+='<span class="bx"><input type="text" maxlength="1" data-idx="'+j+'" autocomplete="off" autocorrect="off" autocapitalize="off" inputmode="latin" lang="en" spellcheck="false"></span>';}h+='</span>';if(t.p)h+=t.p;h+='</span> ';}else{h+=t.w+(t.p||'')+' ';}});h+='<span>'+D.conclusion+'</span>';document.getElementById('passage').innerHTML=h;
+var boxes=document.querySelectorAll('.bx input');boxes.forEach(function(inp,i){inp.addEventListener('input',function(){if(this.value.length===1&&i<boxes.length-1)boxes[i+1].focus();});inp.addEventListener('keydown',function(e){if(e.key==='Backspace'&&this.value===''&&i>0)boxes[i-1].focus();});});})();
+(function(){var s=36*60,el=document.getElementById('timerDisplay'),btn=document.getElementById('timerToggle'),v=true;setInterval(function(){if(s>0)s--;var m=Math.floor(s/60),ss=s%60;el.textContent=m+':'+(ss<10?'0':'')+ss;},1000);btn.addEventListener('click',function(){v=!v;el.style.display=v?'':'none';btn.textContent=v?'Hide Time':'Show Time';});})();
+(function(){var ov=document.getElementById('overlay');document.getElementById('reviewOpen').addEventListener('click',function(){ov.classList.add('active');renderReview();});document.getElementById('reviewClose').addEventListener('click',function(){ov.classList.remove('active');});ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('active');});
+window.renderReview=function(){var body=document.getElementById('reviewBody');var blanks=D.target.filter(function(t){return t.a!==null;});var ai=document.querySelectorAll('.bx input');var html='',idx=0;blanks.forEach(function(b,i){var ua='';for(var j=0;j<b.a.length;j++){ua+=(ai[idx]?ai[idx].value:'');idx++;}var f=ua.trim().length>0;html+='<div class="review-row"><span class="review-no">'+(i+1)+'</span><span class="review-word">'+b.s+(f?ua:'___')+'</span><span class="review-status '+(f?'filled':'empty')+'">'+(f?'Answered':'Empty')+'</span></div>';});body.innerHTML=html;};})();
+function goNext(){var blanks=D.target.filter(function(t){return t.a!==null;});var ai=document.querySelectorAll('.bx input');var idx=0,ua=[],sc=0;blanks.forEach(function(b){var ans='';for(var j=0;j<b.a.length;j++){ans+=(ai[idx]?ai[idx].value:'');idx++;}ua.push(ans);if(ans.toLowerCase()===b.a.toLowerCase())sc++;});sessionStorage.setItem('ctw_p1_answers_'+SET_NUM,JSON.stringify({answers:ua,score:sc,total:blanks.length,words:blanks.map(function(b){return b.w;})}));if(typeof Auth!=='undefined')Auth.completeSet(SET_NUM);if(typeof Api!=='undefined'&&Api.saveAnswers){try{Api.saveAnswers('CTW P1 Set '+SET_NUM,ua,sc);}catch(e){}}window.location.href=NEXT_PAGE;}
+</script></body></html>
