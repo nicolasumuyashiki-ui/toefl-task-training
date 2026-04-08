@@ -156,7 +156,7 @@ const questions=[
 {id:1,prompt:"What does the student council suggest about the spring festival?",gender:"female",fixedStart:"They",fixedEnd:"",blanks:["suggest","that","the festival","be held","outdoors","this year."],answer:["suggest","that","the festival","be held","outdoors","this year."]},
 {id:2,prompt:"Why did the club president recommend changes to the meeting schedule?",gender:"male",fixedStart:"She",fixedEnd:"",blanks:["recommended","that","every member","attend","at least","two meetings a month."],answer:["recommended","that","every member","attend","at least","two meetings a month."]},
 {id:3,prompt:"What should students do before the welcome party?",gender:"female",fixedStart:"It is",fixedEnd:"",blanks:["important","that","each student","sign up","before","the deadline."],answer:["important","that","each student","sign up","before","the deadline."]},
-{id:4,prompt:"How do you balance studying and campus activities?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["try to","plan ahead,","stay organized,","and","set clear","priorities."],answer:["try to","plan ahead,","stay organized,","and","set clear","priorities."]},
+{id:4,prompt:"How do you balance studying and campus activities?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["try to","plan ahead,","stay organized,","and","set clear","priorities."],answer:["try to","plan ahead,","stay organized,","and","set clear","priorities."],altAnswers:[["try to","stay organized,","plan ahead,","and","set clear","priorities."]]},
 {id:5,prompt:"What happened when you forgot to sign up for the event?",gender:"female",fixedStart:"Not only",fixedEnd:"",blanks:["did I","miss the event,","but I also","lost my","deposit."],answer:["did I","miss the event,","but I also","lost my","deposit."]},
 {id:6,prompt:"Have you ever been late to a campus event?",gender:"male",fixedStart:"Never",fixedEnd:"",blanks:["have I","been","so embarrassed","as when I","arrived","an hour late."],answer:["have I","been","so embarrassed","as when I","arrived","an hour late."]},
 {id:7,prompt:"What is it that makes the annual talent show so popular?",gender:"female",fixedStart:"It is",fixedEnd:"",blanks:["the variety","of performances","that","makes","the show","so exciting."],answer:["the variety","of performances","that","makes","the show","so exciting."]},
@@ -164,7 +164,7 @@ const questions=[
 {id:9,prompt:"What do the organizers recommend for the homecoming dance?",gender:"female",fixedStart:"They",fixedEnd:"",blanks:["recommend","that","students","dress up","in formal","attire."],answer:["recommend","that","students","dress up","in formal","attire."]},
 {id:10,prompt:"Did the dormitory advisor suggest anything about the noise policy?",gender:"male",fixedStart:"Yes, she",fixedEnd:"",blanks:["suggested","that","quiet hours","be extended","to ten o'clock."],answer:["suggested","that","quiet hours","be extended","to ten o'clock."]},
 {id:11,prompt:"Why is the cultural festival important to you?",gender:"female",fixedStart:"It is",fixedEnd:"",blanks:["the opportunity","to learn about","different cultures","that","I value","the most."],answer:["the opportunity","to learn about","different cultures","that","I value","the most."]},
-{id:12,prompt:"What did your roommate do about the party preparations?",gender:"male",fixedStart:"She",fixedEnd:"",blanks:["looked into","the decorations,","picked out","the music,","and","ordered the food."],answer:["looked into","the decorations,","picked out","the music,","and","ordered the food."]},
+{id:12,prompt:"What did your roommate do about the party preparations?",gender:"male",fixedStart:"She",fixedEnd:"",blanks:["looked into","the decorations,","picked out","the music,","and","ordered the food."],answer:["looked into","the decorations,","picked out","the music,","and","ordered the food."],altAnswers:[["picked out","the music,","looked into","the decorations,","and","ordered the food."]]},
 {id:13,prompt:"Have you ever regretted not joining a club?",gender:"female",fixedStart:"Rarely",fixedEnd:"",blanks:["have I","regretted","a decision","as much as","not joining","the drama club."],answer:["have I","regretted","a decision","as much as","not joining","the drama club."]},
 {id:14,prompt:"What does the committee propose about the graduation ceremony?",gender:"male",fixedStart:"The committee",fixedEnd:"",blanks:["proposes","that","the ceremony","be moved","to the","main auditorium."],answer:["proposes","that","the ceremony","be moved","to the","main auditorium."]},
 {id:15,prompt:"How did the event turn out after all the problems?",gender:"female",fixedStart:"Not only",fixedEnd:"",blanks:["was the event","a success,","but it also","brought","the campus","community together."],answer:["was the event","a success,","but it also","brought","the campus","community together."]},
@@ -271,7 +271,8 @@ function finishQuiz(){
   let html='';
   questions.forEach((q,i)=>{
     const ua=userAnswers[i];
-    const isCorrect=JSON.stringify(ua)===JSON.stringify(q.answer);
+    let isCorrect=JSON.stringify(ua)===JSON.stringify(q.answer);
+    if(!isCorrect && q.altAnswers){isCorrect = q.altAnswers.some(function(alt){return JSON.stringify(ua) === JSON.stringify(alt);});}
     if(isCorrect)correct++;
 
     const parts=[];

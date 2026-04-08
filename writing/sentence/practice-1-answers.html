@@ -112,7 +112,7 @@ const answers=[
 {id:11,prompt:"Why didn't you sign up for the workshop?",sentence:"I did not know about it until the deadline had passed.",grammar:"否定文 + until: 「〜するまで知らなかった」。過去完了 had passed で時制の前後関係を明示。"},
 {id:12,prompt:"What should we get the professor as a thank-you gift?",sentence:"How about a book that is related to her research?",grammar:"提案表現 How about ~? 関係代名詞 that（主格）+ be related to ~。"},
 {id:13,prompt:"Do you think online classes are better than in-person classes?",sentence:"It depends on the subject and how well the professor uses technology.",grammar:"It depends on ~: 「〜による」。間接疑問文 how well + S + V（平叙文語順）。"},
-{id:14,prompt:"Could you tell me what the homework is for tomorrow?",sentence:"We need to read and summarize chapter five.",grammar:"等位接続詞 and: read and summarize（2つの動詞を並列）。need to + V。"},
+{id:14,prompt:"Could you tell me what the homework is for tomorrow?",sentence:"We need to read and summarize chapter five.",grammar:"等位接続詞 and: read and summarize（2つの動詞を並列）。need to + V。",alt:"We need to summarize and read chapter five."},
 {id:15,prompt:"How do you manage your time between work and school?",sentence:"I make a schedule every week so that I do not fall behind.",grammar:"目的の接続詞 so that: 「〜するために」。fall behind =「遅れをとる」。"},
 {id:16,prompt:"What would you do if you failed the final exam?",sentence:"I would talk to the professor about what I could do to improve my grade.",grammar:"仮定法 would + V: 仮定の状況への回答。間接疑問文 what I could do。to不定詞で目的を表す。"}
 ];
@@ -132,7 +132,9 @@ let html='';
 answers.forEach((a,i)=>{
   html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"</div></div>'
     +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
-    +'<div class="q-grammar">📝 '+a.grammar+'</div></div></div>';
+    +'<div class="q-grammar">📝 '+a.grammar+'</div>'
+    +(a.alt?'<div class="q-hint" style="margin-top:8px;"><strong>別解:</strong> '+a.alt+' も正解です。並列構造の順序は入れ替え可能です。</div>':'')
+    +'</div></div>';
 });
 document.getElementById('qList').innerHTML=html;
 </script>

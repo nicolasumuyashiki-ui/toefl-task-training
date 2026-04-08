@@ -163,7 +163,7 @@ const questions=[
 {id:7,prompt:"Why didn't you attend the study session last night?",gender:"female",fixedStart:"If only",fixedEnd:"",blanks:["I had","known","about it","earlier,","I would have","attended."],answer:["I had","known","about it","earlier,","I would have","attended."]},
 {id:8,prompt:"Did the professor explain the grading criteria?",gender:"male",fixedStart:"Yes,",fixedEnd:"",blanks:["we were told","that","participation","would be","weighted","more heavily than exams."],answer:["we were told","that","participation","would be","weighted","more heavily than exams."]},
 {id:9,prompt:"How was the group presentation yesterday?",gender:"female",fixedStart:"It",fixedEnd:"expected.",blanks:["went","more smoothly","than","we had"],answer:["went","more smoothly","than","we had"]},
-{id:10,prompt:"Are you planning to take an elective next semester?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["have not","decided","whether","to take","art history","or linguistics."],answer:["have not","decided","whether","to take","art history","or linguistics."]},
+{id:10,prompt:"Are you planning to take an elective next semester?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["have not","decided","whether","to take","art history","or linguistics."],answer:["have not","decided","whether","to take","art history","or linguistics."],altAnswers:[["have not","decided","whether","to take","linguistics","or art history."]]},
 {id:11,prompt:"What happened with your course registration?",gender:"female",fixedStart:"The",fixedEnd:"",blanks:["course","I wanted","to take","had been","canceled","due to low enrollment."],answer:["course","I wanted","to take","had been","canceled","due to low enrollment."]},
 {id:12,prompt:"Do you prefer studying alone or in a group?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["prefer","studying","in a group","because","it helps me","stay motivated."],answer:["prefer","studying","in a group","because","it helps me","stay motivated."]},
 {id:13,prompt:"Why do you always sit in the front row?",gender:"female",fixedStart:"Sitting",fixedEnd:"",blanks:["in the front","makes it","easier","for me","to concentrate","on the lecture."],answer:["in the front","makes it","easier","for me","to concentrate","on the lecture."]},
@@ -282,7 +282,8 @@ function finishQuiz(){
   let html='';
   questions.forEach((q,i)=>{
     const ua=userAnswers[i];
-    const isCorrect=JSON.stringify(ua)===JSON.stringify(q.answer);
+    let isCorrect=JSON.stringify(ua)===JSON.stringify(q.answer);
+    if(!isCorrect && q.altAnswers){isCorrect = q.altAnswers.some(function(alt){return JSON.stringify(ua) === JSON.stringify(alt);});}
     if(isCorrect)correct++;
 
     // Build full sentence

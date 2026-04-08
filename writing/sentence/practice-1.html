@@ -167,7 +167,7 @@ const questions=[
 {id:11,prompt:"Why didn't you sign up for the workshop?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["did not","know","about it","until","the deadline","had passed."],answer:["did not","know","about it","until","the deadline","had passed."]},
 {id:12,prompt:"What should we get the professor as a thank-you gift?",gender:"male",fixedStart:"",fixedEnd:"",blanks:["How about","a book","that is","related to","her research?"],answer:["How about","a book","that is","related to","her research?"]},
 {id:13,prompt:"Do you think online classes are better than in-person classes?",gender:"female",fixedStart:"It",fixedEnd:"",blanks:["depends on","the subject","and","how well","the professor","uses technology."],answer:["depends on","the subject","and","how well","the professor","uses technology."]},
-{id:14,prompt:"Could you tell me what the homework is for tomorrow?",gender:"male",fixedStart:"We",fixedEnd:"chapter five.",blanks:["need to","read","and","summarize"],answer:["need to","read","and","summarize"]},
+{id:14,prompt:"Could you tell me what the homework is for tomorrow?",gender:"male",fixedStart:"We",fixedEnd:"chapter five.",blanks:["need to","read","and","summarize"],answer:["need to","read","and","summarize"],altAnswers:[["need to","summarize","and","read"]]},
 {id:15,prompt:"How do you manage your time between work and school?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["make","a schedule","every week","so that","I do not","fall behind."],answer:["make","a schedule","every week","so that","I do not","fall behind."]},
 {id:16,prompt:"What would you do if you failed the final exam?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["would talk","to the professor","about","what I could","do to","improve my grade."],answer:["would talk","to the professor","about","what I could","do to","improve my grade."]}
 ];
@@ -282,7 +282,8 @@ function finishQuiz(){
   let html='';
   questions.forEach((q,i)=>{
     const ua=userAnswers[i];
-    const isCorrect=JSON.stringify(ua)===JSON.stringify(q.answer);
+    let isCorrect=JSON.stringify(ua)===JSON.stringify(q.answer);
+    if(!isCorrect && q.altAnswers){isCorrect = q.altAnswers.some(function(alt){return JSON.stringify(ua) === JSON.stringify(alt);});}
     if(isCorrect)correct++;
 
     // Build full sentence

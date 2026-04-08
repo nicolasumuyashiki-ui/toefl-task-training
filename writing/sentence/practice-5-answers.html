@@ -102,7 +102,7 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 const answers=[
 {id:1,prompt:"Do you think it will snow this weekend?",sentence:"By Sunday, it will have snowed at least three times.",grammar:"未来完了: By + 時点, S + will have + Vpp。「日曜日までに3回は降っているだろう」。at least =「少なくとも」。"},
 {id:2,prompt:"Are you going to the beach tomorrow?",sentence:"I will go unless it rains in the morning.",grammar:"unless =「〜しない限り」: I will go unless + S + V。unless節内は現在形（未来のことでも）。"},
-{id:3,prompt:"What do you like about spring?",sentence:"I enjoy both the warm weather and the cherry blossoms.",grammar:"both A and B: 2つの名詞を並列。both と and の間に同じ品詞（名詞句）を入れる。"},
+{id:3,prompt:"What do you like about spring?",sentence:"I enjoy both the warm weather and the cherry blossoms.",grammar:"both A and B: 2つの名詞を並列。both と and の間に同じ品詞（名詞句）を入れる。",alt:"I enjoy both the cherry blossoms and the warm weather."},
 {id:4,prompt:"Did you fix the broken window yourself?",sentence:"No, I had it repaired by a professional.",grammar:"使役の have: have + O + Vpp =「〜を…してもらう」。by + 動作主で誰にしてもらったか明示。"},
 {id:5,prompt:"Which park is good for jogging?",sentence:"The park in which we played last summer is perfect for jogging.",grammar:"前置詞 + 関係代名詞: in which = where。「去年の夏に遊んだ公園」が主語。is perfect for ~ で補語。"},
 {id:6,prompt:"Will the project be done by next Friday?",sentence:"By next Friday, we will have completed the entire project.",grammar:"未来完了: By next Friday, S + will have + Vpp。「来週の金曜までに完了しているだろう」。"},
@@ -110,12 +110,12 @@ const answers=[
 {id:8,prompt:"Is your car ready for the road trip?",sentence:"Yes, I got the engine checked before the trip.",grammar:"使役の get: get + O + Vpp =「〜を…してもらう」。before + 名詞で時を表す。"},
 {id:9,prompt:"Can we go hiking as long as it stays dry?",sentence:"Yes, we can go hiking as long as the trail is not too muddy.",grammar:"as long as =「〜する限り」: 条件を表す接続詞。否定 is not を含む条件節。"},
 {id:10,prompt:"What will you have accomplished by the end of summer?",sentence:"By the end of summer, I will have visited five national parks.",grammar:"未来完了: By the end of ~, S + will have + Vpp。「夏の終わりまでに5つの国立公園を訪れているだろう」。"},
-{id:11,prompt:"How do you stay cool in the summer?",sentence:"I enjoy both swimming in the pool and eating ice cream.",grammar:"both A and B: 動名詞句を並列。both swimming ~ and eating ~ で2つの行動を対等に結ぶ。"},
+{id:11,prompt:"How do you stay cool in the summer?",sentence:"I enjoy both swimming in the pool and eating ice cream.",grammar:"both A and B: 動名詞句を並列。both swimming ~ and eating ~ で2つの行動を対等に結ぶ。",alt:"I enjoy both eating ice cream and swimming in the pool."},
 {id:12,prompt:"Did you paint the fence by yourself?",sentence:"No, I had my brother help me paint it.",grammar:"使役の have: have + 人 + V原形 =「人に〜してもらう」。目的語が人の場合は原形不定詞。"},
 {id:13,prompt:"Will you join us for the outdoor concert?",sentence:"I will join you unless I have to work overtime that evening.",grammar:"unless =「〜しない限り」: unless + S + V。have to =「〜しなければならない」。"},
 {id:14,prompt:"Where is the campsite you mentioned?",sentence:"The campsite at which we stayed last fall is near the lake.",grammar:"前置詞 + 関係代名詞: at which = where。stay at a campsite → the campsite at which we stayed。"},
 {id:15,prompt:"Did you wash your car before the trip?",sentence:"No, I got it washed at the shop.",grammar:"使役の get: get + O + Vpp。「洗車してもらった」。at the shop で場所を補足。"},
-{id:16,prompt:"What happens if it rains during the festival?",sentence:"The festival will continue as long as there is no lightning or strong wind.",grammar:"as long as =「〜する限り」: 条件を表す。there is no ~ =「〜がない限り」。or で2つの否定条件を並列。"}
+{id:16,prompt:"What happens if it rains during the festival?",sentence:"The festival will continue as long as there is no lightning or strong wind.",grammar:"as long as =「〜する限り」: 条件を表す。there is no ~ =「〜がない限り」。or で2つの否定条件を並列。",alt:"The festival will continue as long as there is no strong wind or lightning."}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p5')||'null');
@@ -133,7 +133,9 @@ let html='';
 answers.forEach((a,i)=>{
   html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"</div></div>'
     +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
-    +'<div class="q-grammar">📝 '+a.grammar+'</div></div></div>';
+    +'<div class="q-grammar">📝 '+a.grammar+'</div>'
+    +(a.alt?'<div class="q-hint" style="margin-top:8px;"><strong>別解:</strong> '+a.alt+' も正解です。並列構造の順序は入れ替え可能です。</div>':'')
+    +'</div></div>';
 });
 document.getElementById('qList').innerHTML=html;
 </script>

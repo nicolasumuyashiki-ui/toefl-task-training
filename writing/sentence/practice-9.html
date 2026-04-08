@@ -269,7 +269,8 @@ function finishQuiz(){
   let html='';
   questions.forEach((q,i)=>{
     const ua=userAnswers[i];
-    const isCorrect=JSON.stringify(ua)===JSON.stringify(q.answer);
+    let isCorrect=JSON.stringify(ua)===JSON.stringify(q.answer);
+    if(!isCorrect && q.altAnswers){isCorrect = q.altAnswers.some(function(alt){return JSON.stringify(ua) === JSON.stringify(alt);});}
     if(isCorrect)correct++;
 
     const parts=[];
