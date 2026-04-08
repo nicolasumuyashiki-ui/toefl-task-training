@@ -3,99 +3,303 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Listen to an Announcement — Practice 1</title>
-<link rel="stylesheet" href="../../css/common.css">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Listen to an Announcement \u2014 Practice 1</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Nunito',sans-serif;background:#f5f7fa;min-height:100vh;color:#2d3748;line-height:1.7}
-.header{background:#fff;border-bottom:1px solid #e8ecf0;padding:14px 24px}
-.header strong{font-size:.95em;color:#2d3748}
-.container{max-width:800px;margin:0 auto;padding:30px 24px 80px}
-.audio-pending-banner{background:#fffbeb;border:2px dashed #fde68a;border-radius:16px;padding:40px 30px;margin-bottom:30px;text-align:center}
-.audio-pending-banner h2{font-size:1.2em;font-weight:800;color:#92400e;margin-bottom:12px}
-.audio-pending-banner p{font-size:.9em;color:#b45309;line-height:1.6;margin-bottom:8px}
-.announce-section{background:#fff;border:1px solid #e8ecf0;border-radius:12px;padding:24px;margin-bottom:24px}
-.announce-section h3{font-size:1em;font-weight:800;color:#2d3748;margin-bottom:6px}
-.announce-section .setting{font-size:.82em;color:#8898a8;margin-bottom:16px}
-.script-text{padding:12px 16px;font-size:.88em;background:#f9fafb;border-radius:8px;border-left:3px solid #f59e0b;margin-bottom:16px;line-height:1.75;color:#4a5568}
-.q-block{background:#f9fafb;border:1px solid #e8ecf0;border-radius:10px;padding:16px;margin-top:16px}
-.q-block h4{font-size:.9em;font-weight:700;margin-bottom:10px}
-.q-block .opt{padding:6px 0;font-size:.85em}
-.q-block .opt-letter{font-weight:800;color:#f59e0b;margin-right:6px}
-.footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
-.footer a{color:#8898a8;text-decoration:none;font-size:.85em;font-weight:600}
-.footer a:hover{color:#2d3748}
-.btn-next{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#2d3748;text-decoration:none}
-.btn-next:hover{background:#1a202c}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;}
+.top-nav{background:#2d3748;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 24px;font-size:14px;flex-shrink:0;}
+.nav-left{display:flex;align-items:center;gap:12px;}
+.nav-left .section-label{font-weight:700;font-size:15px;}
+.nav-left .divider{color:#718096;}
+.nav-left .q-info{color:#a0aec0;}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.timer{font-family:'Courier New',monospace;font-size:15px;font-weight:700;min-width:40px;text-align:center;}
+.timer.warning{color:#fc8181;animation:blink .5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.user-badge{width:28px;height:28px;border-radius:50%;background:#4a90d9;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;}
+.progress-bar{height:4px;background:#e2e8f0;flex-shrink:0;}
+.progress-fill{height:100%;background:#4a90d9;transition:width .3s;}
+.start-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:100;}
+.start-overlay.hidden{display:none;}
+.start-card{background:#fff;border-radius:16px;padding:48px;text-align:center;max-width:500px;box-shadow:0 8px 32px rgba(0,0,0,.2);}
+.start-card h2{font-size:22px;color:#2d3748;margin-bottom:12px;}
+.start-card p{color:#718096;font-size:14px;margin-bottom:24px;line-height:1.6;}
+.btn-start{background:#4a90d9;color:#fff;border:none;padding:14px 40px;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;}
+.btn-start:hover{background:#3a7cc0;}
+.main-content{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.audio-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;background:#fff;margin:16px 24px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.audio-phase img{max-height:480px;width:auto;border-radius:10px;object-fit:contain;box-shadow:0 4px 12px rgba(0,0,0,.12);}
+.audio-status{margin-top:20px;display:flex;align-items:center;gap:10px;font-size:15px;color:#4a90d9;font-weight:600;}
+.pulse{width:10px;height:10px;border-radius:50%;background:#4a90d9;animation:pulse-a 1s infinite;}
+@keyframes pulse-a{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.3);}}
+.question-phase{flex:1;display:none;margin:16px 24px;min-height:0;}
+.q-split{display:flex;gap:0;flex:1;min-height:100%;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden;}
+.q-left{width:50%;display:flex;align-items:center;justify-content:center;padding:32px;background:#f7fafc;border-right:1px solid #e2e8f0;}
+.q-left img{max-height:500px;max-width:100%;border-radius:10px;object-fit:contain;box-shadow:0 4px 12px rgba(0,0,0,.12);}
+.q-right{width:50%;padding:32px 40px;display:flex;flex-direction:column;justify-content:center;}
+.q-label{font-size:12px;color:#4a90d9;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.q-text{font-size:17px;color:#2d3748;font-weight:600;margin-bottom:24px;line-height:1.5;}
+.options{display:flex;flex-direction:column;gap:10px;}
+.option{display:flex;align-items:center;gap:14px;padding:14px 18px;border:2px solid #e2e8f0;border-radius:10px;cursor:pointer;transition:all .15s;font-size:14px;color:#4a5568;background:#fff;}
+.option:hover{border-color:#4a90d9;background:#ebf4ff;}
+.option.selected{border-color:#4a90d9;background:#ebf4ff;}
+.option.selected .opt-letter{background:#4a90d9;color:#fff;}
+.opt-letter{width:28px;height:28px;border-radius:50%;border:2px solid #cbd5e0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#718096;flex-shrink:0;transition:all .15s;}
+.opt-text{flex:1;line-height:1.4;}
+.completion{flex:1;display:none;align-items:center;justify-content:center;padding:40px;}
+.completion-card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);max-width:600px;width:100%;padding:40px;text-align:center;}
+.completion-card h2{font-size:22px;color:#2d3748;margin:12px 0 8px;}
+.score-display{font-size:48px;font-weight:700;color:#4a90d9;margin:16px 0;}
+.result-grid{text-align:left;margin:20px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.result-item{padding:10px 14px;border-radius:8px;font-size:13px;display:flex;align-items:center;gap:8px;}
+.result-item.correct{background:#f0fff4;color:#276749;}
+.result-item.incorrect{background:#fff5f5;color:#9b2c2c;}
+.btn-answers{display:inline-block;margin-top:20px;padding:14px 36px;background:#4a90d9;color:#fff;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;}
+.btn-answers:hover{background:#3a7cc0;}
+.footer-nav{background:#fff;border-top:1px solid #e2e8f0;padding:12px 24px;display:flex;justify-content:flex-end;align-items:center;flex-shrink:0;}
+.btn-next{padding:10px 28px;background:#4a90d9;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;opacity:.5;pointer-events:none;transition:opacity .2s;}
+.btn-next.active{opacity:1;pointer-events:auto;}
+.btn-next:hover{background:#3a7cc0;}
 </style>
 </head>
 <body>
-<div class="header"><strong>Listen to an Announcement — Practice 1</strong></div>
 
-<div class="container">
-<div class="audio-pending-banner">
-  <h2>&#128266; 音声準備中</h2>
-  <p>音声ファイルは現在作成中です。以下にスクリプトと設問を掲載しています。</p>
+<div class="top-nav">
+<div class="nav-left">
+<span class="section-label">Listening</span>
+<span class="divider">|</span>
+<span class="q-info" id="qInfo">Listen to an Announcement</span>
 </div>
-
-<!-- Announcement 1 -->
-<div class="announce-section">
-  <h3>Announcement 1</h3>
-  <div class="setting">Setting: Classroom — Professor</div>
-  <div class="script-text">
-    <em>[Narrator] Listen to an announcement in a classroom.</em><br><br>
-    Good morning, everyone. I wanted to let you know that our midterm exam has been rescheduled. Instead of next Thursday, it will now take place on the following Monday, October 14th, in this same room. The exam will cover chapters one through six, so please make sure to review all the material. Also, I will be holding extra office hours this Friday from two to four PM if anyone needs help.
-  </div>
-
-  <div class="q-block">
-    <h4>Q1. What is the announcement mainly about?</h4>
-    <div class="opt"><span class="opt-letter">A)</span> A new textbook requirement.</div>
-    <div class="opt"><span class="opt-letter">B)</span> A change in the midterm exam date.</div>
-    <div class="opt"><span class="opt-letter">C)</span> A guest speaker visiting the class.</div>
-    <div class="opt"><span class="opt-letter">D)</span> A field trip scheduled for next week.</div>
-  </div>
-  <div class="q-block">
-    <h4>Q2. Why does the professor mention extra office hours?</h4>
-    <div class="opt"><span class="opt-letter">A)</span> To assign additional homework.</div>
-    <div class="opt"><span class="opt-letter">B)</span> To introduce a new teaching assistant.</div>
-    <div class="opt"><span class="opt-letter">C)</span> To help students prepare for the rescheduled exam.</div>
-    <div class="opt"><span class="opt-letter">D)</span> To explain changes to the grading policy.</div>
-  </div>
+<div class="nav-right">
+<span class="timer" id="timer">--:--</span>
+<div class="user-badge" id="userBadge">?</div>
 </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
 
-<!-- Announcement 2 -->
-<div class="announce-section">
-  <h3>Announcement 2</h3>
-  <div class="setting">Setting: Campus Radio / Library Notice</div>
-  <div class="script-text">
-    <em>[Narrator] Listen to an announcement on the campus radio.</em><br><br>
-    Attention all students. The main campus library will be undergoing renovations starting November 1st. During the renovation period, which is expected to last approximately three weeks, the second and third floors will be closed. However, the ground floor reading room and the computer lab will remain open as usual. Temporary study spaces have been set up in the student union building for those who need quiet areas. Please visit the library website for updated hours and available services.
-  </div>
-
-  <div class="q-block">
-    <h4>Q3. What will remain open during the renovation?</h4>
-    <div class="opt"><span class="opt-letter">A)</span> The ground floor reading room and computer lab.</div>
-    <div class="opt"><span class="opt-letter">B)</span> The second and third floors only.</div>
-    <div class="opt"><span class="opt-letter">C)</span> The entire library building.</div>
-    <div class="opt"><span class="opt-letter">D)</span> The library cafe and bookstore.</div>
-  </div>
-  <div class="q-block">
-    <h4>Q4. What can be inferred about the library during the renovation?</h4>
-    <div class="opt"><span class="opt-letter">A)</span> The library will have no services available at all.</div>
-    <div class="opt"><span class="opt-letter">B)</span> Students will need to pay for temporary study spaces.</div>
-    <div class="opt"><span class="opt-letter">C)</span> The computer lab will move to the student union building.</div>
-    <div class="opt"><span class="opt-letter">D)</span> Students can still study on campus despite the closures.</div>
-  </div>
+<div class="start-overlay" id="startOverlay">
+<div class="start-card">
+<h2>\ud83d\udce2 Listen to an Announcement</h2>
+<p>You will hear 2 short announcements.<br>After each announcement, you will answer 2 questions.<br><br>You have <strong>15 seconds</strong> per question.</p>
+<button class="btn-start" onclick="startListening()">Start Listening</button>
 </div>
 </div>
 
-<div class="footer">
-  <a href="../menu.html">&#8592; メニューに戻る</a>
-  <a class="btn-next" href="practice-1-answers.html">解答・解説 &#8250;</a>
+<div class="main-content">
+<div class="audio-phase" id="audioPhase">
+<img id="audioImg" src="" alt="Speaker">
+<div class="audio-status" id="audioStatus"><span class="pulse"></span> Listen to the announcement...</div>
+</div>
+<div class="question-phase" id="questionPhase">
+<div class="q-split">
+<div class="q-left"><img id="qImg" src="" alt="Speaker"></div>
+<div class="q-right">
+<div class="q-label" id="qLabel">Question 1 of 4</div>
+<div class="q-text" id="qText"></div>
+<div class="options" id="optionsContainer"></div>
+</div>
+</div>
+</div>
+<div class="completion" id="completionPage">
+<div class="completion-card">
+<div style="font-size:48px">\u2705</div>
+<h2>Announcement Section Complete!</h2>
+<div class="score-display" id="scoreDisplay">0 / 4</div>
+<div class="result-grid" id="resultGrid"></div>
+<a class="btn-answers" href="practice-1-answers.html" id="answersBtn" style="display:none">\u89e3\u7b54\u89e3\u8aac\u3092\u898b\u308b \u2192</a>
+</div>
+</div>
+</div>
+
+<div class="footer-nav">
+<button class="btn-next" id="btnNext" onclick="nextStep()">Next \u2192</button>
 </div>
 
 <script src="../../js/auth.js"></script>
-<script>if(typeof Auth!=='undefined'){Auth.require();}</script>
+<script>
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+
+/* ===== SPEAKER IMAGES (placeholder) ===== */
+const speakerImages = ["" /* ann1 image placeholder */,"" /* ann2 image placeholder */];
+
+/* ===== AUDIO FILES (placeholder) ===== */
+const audioFiles = {instruction:"" /* instruction audio placeholder */,ann1:"" /* ann1 audio placeholder */,ann2:"" /* ann2 audio placeholder */};
+
+/* ===== QUESTIONS ===== */
+const questions = [
+  {ann:0, text:"What is the announcement mainly about?",
+   options:["A new textbook requirement.","A change in the midterm exam date.","A guest speaker visiting the class.","A field trip scheduled for next week."],
+   correct:1},
+  {ann:0, text:"Why does the professor mention extra office hours?",
+   options:["To assign additional homework.","To introduce a new teaching assistant.","To help students prepare for the rescheduled exam.","To explain changes to the grading policy."],
+   correct:2},
+  {ann:1, text:"What will remain open during the renovation?",
+   options:["The ground floor reading room and computer lab.","The second and third floors only.","The entire library building.","The library cafe and bookstore."],
+   correct:0},
+  {ann:1, text:"What can be inferred about the library during the renovation?",
+   options:["The library will have no services available at all.","Students will need to pay for temporary study spaces.","The computer lab will move to the student union building.","Students can still study on campus despite the closures."],
+   correct:3}
+];
+
+/* ===== STATE ===== */
+const labels = ['A','B','C','D'];
+let currentQ = -1;
+let currentAnn = -1;
+let userAnswers = [null,null,null,null];
+let timerInterval = null;
+let secondsLeft = 0;
+let audio = null;
+let instrPlayed = false;
+
+function startListening(){
+  document.getElementById('startOverlay').classList.add('hidden');
+  // Play instruction first
+  audio = new Audio(audioFiles.instruction);
+  document.getElementById('audioPhase').style.display = 'flex';
+  document.getElementById('audioImg').style.display = 'none';
+  document.getElementById('audioStatus').innerHTML = '<span class="pulse"></span> Listen to the instructions...';
+  document.getElementById('qInfo').textContent = 'Instructions';
+
+  audio.addEventListener('ended', () => {
+    instrPlayed = true;
+    playAnnouncement(0);
+  });
+  audio.play().catch(e => {
+    console.log('Autoplay blocked:', e);
+    document.getElementById('audioStatus').innerHTML = '<button onclick="retryInstr()" style="padding:10px 24px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">\u25b6 Play Instructions</button>';
+  });
+}
+
+function retryInstr(){
+  document.getElementById('audioStatus').innerHTML = '<span class="pulse"></span> Listen to the instructions...';
+  if(audio) audio.play();
+}
+
+function playAnnouncement(idx){
+  currentAnn = idx;
+  document.getElementById('audioPhase').style.display = 'flex';
+  document.getElementById('questionPhase').style.display = 'none';
+  document.getElementById('completionPage').style.display = 'none';
+  document.getElementById('audioImg').style.display = 'block';
+  document.getElementById('audioImg').src = speakerImages[idx];
+  document.getElementById('audioStatus').innerHTML = '<span class="pulse"></span> Listen to the announcement...';
+  document.getElementById('btnNext').classList.remove('active');
+  document.getElementById('qInfo').textContent = 'Listen to an Announcement';
+  document.getElementById('timer').textContent = '--:--';
+  document.getElementById('timer').classList.remove('warning');
+
+  const key = 'ann' + (idx+1);
+  audio = new Audio(audioFiles[key]);
+  audio.addEventListener('ended', () => {
+    showQuestion(idx * 2);
+  });
+  audio.play().catch(e => {
+    document.getElementById('audioStatus').innerHTML = '<button onclick="retryAnn()" style="padding:10px 24px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">\u25b6 Play Announcement</button>';
+  });
+}
+
+function retryAnn(){
+  document.getElementById('audioStatus').innerHTML = '<span class="pulse"></span> Listen to the announcement...';
+  if(audio) audio.play();
+}
+
+function showQuestion(qIdx){
+  currentQ = qIdx;
+  const q = questions[qIdx];
+
+  document.getElementById('audioPhase').style.display = 'none';
+  document.getElementById('questionPhase').style.display = 'flex';
+  document.getElementById('completionPage').style.display = 'none';
+
+  document.getElementById('qImg').src = speakerImages[q.ann];
+  document.getElementById('qLabel').textContent = 'Question ' + (qIdx+1) + ' of 4';
+  document.getElementById('qText').textContent = q.text;
+  document.getElementById('qInfo').innerHTML = 'Question <strong>' + (qIdx+1) + '</strong> of 4 | Listening';
+  document.getElementById('progressFill').style.width = (25*(qIdx+1)) + '%';
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = '<span class="opt-letter">' + labels[i] + '</span><span class="opt-text">' + opt + '</span>';
+    div.onclick = () => {
+      container.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+      div.classList.add('selected');
+      userAnswers[qIdx] = i;
+      document.getElementById('btnNext').classList.add('active');
+    };
+    container.appendChild(div);
+  });
+
+  document.getElementById('btnNext').classList.remove('active');
+  startTimer(15);
+}
+
+function startTimer(secs){
+  clearInterval(timerInterval);
+  secondsLeft = secs;
+  updateTimer();
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateTimer();
+    if(secondsLeft <= 5) document.getElementById('timer').classList.add('warning');
+    if(secondsLeft <= 0){
+      clearInterval(timerInterval);
+      nextStep();
+    }
+  }, 1000);
+}
+
+function updateTimer(){
+  const t = document.getElementById('timer');
+  t.textContent = '0:' + String(secondsLeft).padStart(2,'0');
+  if(secondsLeft > 5) t.classList.remove('warning');
+}
+
+function nextStep(){
+  clearInterval(timerInterval);
+  document.getElementById('timer').classList.remove('warning');
+
+  const nextQ = currentQ + 1;
+  if(nextQ >= questions.length){
+    showCompletion();
+    return;
+  }
+  if(questions[nextQ].ann !== questions[currentQ].ann){
+    playAnnouncement(questions[nextQ].ann);
+  } else {
+    showQuestion(nextQ);
+  }
+}
+
+function showCompletion(){
+  document.getElementById('audioPhase').style.display = 'none';
+  document.getElementById('questionPhase').style.display = 'none';
+  document.getElementById('completionPage').style.display = 'flex';
+  document.getElementById('btnNext').style.display = 'none';
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('timer').textContent = '';
+  document.getElementById('qInfo').textContent = 'Results';
+
+  let correct = 0;
+  const grid = document.getElementById('resultGrid');
+  grid.innerHTML = '';
+
+  questions.forEach((q, i) => {
+    const isCorrect = userAnswers[i] === q.correct;
+    if(isCorrect) correct++;
+    const div = document.createElement('div');
+    div.className = 'result-item ' + (isCorrect ? 'correct' : 'incorrect');
+    const userAns = userAnswers[i] !== null ? labels[userAnswers[i]] : '\u2014';
+    div.innerHTML = (isCorrect ? '\u2705' : '\u274c') + ' Q' + (i+1) + ': ' + userAns + (isCorrect ? '' : ' \u2192 ' + labels[q.correct]);
+    grid.appendChild(div);
+  });
+
+  document.getElementById('scoreDisplay').textContent = correct + ' / 4';
+  sessionStorage.setItem('announceAnswers', JSON.stringify(userAnswers));
+  document.getElementById('answersBtn').style.display = 'inline-block';
+}
+</script>
 </body>
 </html>

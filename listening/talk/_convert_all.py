@@ -1,0 +1,406 @@
+"""
+Convert all talk (academic listening) practice files from static format to kickstart interactive format.
+Extracts content from current HTML, rebuilds with kickstart listening-academic structure.
+2 talks per file, 4 questions each = 8 questions total.
+"""
+import re
+from html import unescape
+
+CORRECT_ANSWERS = {
+    1: [2, 3, 0, 1, 0, 2, 1, 3],
+    2: [1, 0, 2, 3, 3, 1, 0, 2],
+    3: [0, 3, 2, 1, 1, 2, 0, 3],
+    4: [3, 0, 1, 2, 3, 2, 0, 1],
+    5: [1, 2, 0, 1, 3, 0, 3, 2],
+    6: [1, 0, 3, 2, 1, 0, 3, 2],
+    7: [0, 2, 1, 3, 3, 2, 0, 1],
+    8: [0, 1, 3, 2, 2, 3, 0, 1],
+    9: [1, 3, 0, 3, 0, 1, 2, 2],
+    10: [1, 0, 3, 2, 1, 0, 2, 3],
+}
+
+
+def extract_talk_data(html, practice_num):
+    """Extract talks and questions from the static HTML."""
+    talks = []
+
+    # Split by talk-section divs
+    parts = html.split('<div class="talk-section">')
+    sections = parts[1:]  # skip first part (before any talk-section)
+
+    for idx, section in enumerate(sections):
+        talk = {'questions': []}
+
+        # Extract setting
+        setting_match = re.search(r'<div class="setting">(.*?)</div>', section)
+        talk['setting'] = unescape(setting_match.group(1).strip()) if setting_match else f'Talk {idx+1}'
+
+        # Split by q-block divs
+        q_parts = section.split('<div class="q-block">')
+        q_blocks = q_parts[1:]  # skip first part (talk text)
+
+        for qb in q_blocks:
+            q = {}
+            # Extract question text
+            h4_match = re.search(r'<h4>(.*?)</h4>', qb)
+            if h4_match:
+                qtext = unescape(h4_match.group(1).strip())
+                # Remove Q number prefix like "Q1. " or "Q5. "
+                qtext = re.sub(r'^Q\d+\.\s*', '', qtext)
+                q['text'] = qtext
+
+            # Extract options
+            opts = re.findall(r'<span class="opt-letter">[A-D]\)</span>\s*(.*?)(?:</div>)', qb)
+            q['options'] = [unescape(o.strip()) for o in opts]
+
+            if q.get('text') and len(q['options']) == 4:
+                talk['questions'].append(q)
+
+        talks.append(talk)
+
+    # Map correct answers
+    answers = CORRECT_ANSWERS[practice_num]
+    q_idx = 0
+    for talk in talks:
+        for q in talk['questions']:
+            if q_idx < len(answers):
+                q['correct'] = answers[q_idx]
+            q_idx += 1
+
+    return talks
+
+
+def build_kickstart_html(practice_num, talks):
+    """Build the kickstart-format HTML for academic talks."""
+
+    total_questions = sum(len(t['questions']) for t in talks)
+
+    # Build questions JS array
+    q_lines = []
+    for talk_idx, talk in enumerate(talks):
+        for q in talk['questions']:
+            opts_js = ',\n'.join([
+                '            "' + opt.replace('"', '\\"').replace("'", "\\'") + '"'
+                for opt in q['options']
+            ])
+            q_lines.append(f"""    {{talk:{talk_idx}, text:"{q['text'].replace('"', '\\"')}",
+     options:[
+{opts_js}],
+     correct:{q['correct']}}}""")
+
+    questions_js = ',\n'.join(q_lines)
+    pct_per_q = round(100 / total_questions, 1)
+
+    html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen to an Academic Talk \\u2014 Practice {practice_num}</title>
+<style>
+*{{margin:0;padding:0;box-sizing:border-box;}}
+body{{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;}}
+.top-nav{{background:#2d3748;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 24px;font-size:14px;flex-shrink:0;}}
+.nav-left{{display:flex;align-items:center;gap:12px;}}
+.nav-left .section-label{{font-weight:700;font-size:15px;}}
+.nav-left .divider{{color:#718096;}}
+.nav-left .q-info{{color:#a0aec0;}}
+.nav-right{{display:flex;align-items:center;gap:14px;}}
+.timer{{font-family:'Courier New',monospace;font-size:15px;font-weight:700;min-width:40px;text-align:center;}}
+.timer.warning{{color:#fc8181;animation:blink .5s infinite;}}
+@keyframes blink{{0%,100%{{opacity:1;}}50%{{opacity:.3;}}}}
+.user-badge{{width:28px;height:28px;border-radius:50%;background:#4a90d9;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;}}
+.progress-bar{{height:4px;background:#e2e8f0;flex-shrink:0;}}
+.progress-fill{{height:100%;background:#4a90d9;transition:width .3s;}}
+.start-overlay{{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:100;}}
+.start-overlay.hidden{{display:none;}}
+.start-card{{background:#fff;border-radius:16px;padding:48px;text-align:center;max-width:500px;box-shadow:0 8px 32px rgba(0,0,0,.2);}}
+.start-card h2{{font-size:22px;color:#2d3748;margin-bottom:12px;}}
+.start-card p{{color:#718096;font-size:14px;margin-bottom:24px;line-height:1.6;}}
+.btn-start{{background:#4a90d9;color:#fff;border:none;padding:14px 40px;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;}}
+.btn-start:hover{{background:#3a7cc0;}}
+.main-content{{flex:1;display:flex;flex-direction:column;overflow:hidden;}}
+.audio-phase{{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;background:#fff;margin:16px 24px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);}}
+.audio-phase img{{max-height:480px;max-width:100%;border-radius:10px;object-fit:contain;box-shadow:0 4px 12px rgba(0,0,0,.12);}}
+.audio-status{{margin-top:20px;display:flex;align-items:center;gap:10px;font-size:15px;color:#4a90d9;font-weight:600;}}
+.pulse{{width:10px;height:10px;border-radius:50%;background:#4a90d9;animation:pulse-a 1s infinite;}}
+@keyframes pulse-a{{0%,100%{{opacity:1;transform:scale(1);}}50%{{opacity:.4;transform:scale(1.3);}}}}
+.question-phase{{flex:1;display:none;margin:16px 24px;min-height:0;}}
+.q-split{{display:flex;gap:0;flex:1;min-height:100%;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden;}}
+.q-left{{width:50%;display:flex;align-items:center;justify-content:center;padding:32px;background:#f7fafc;border-right:1px solid #e2e8f0;}}
+.q-left img{{max-height:500px;max-width:100%;border-radius:10px;object-fit:contain;box-shadow:0 4px 12px rgba(0,0,0,.12);}}
+.q-right{{width:50%;padding:32px 40px;display:flex;flex-direction:column;justify-content:center;}}
+.q-label{{font-size:12px;color:#4a90d9;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}}
+.q-text{{font-size:17px;color:#2d3748;font-weight:600;margin-bottom:24px;line-height:1.5;}}
+.options{{display:flex;flex-direction:column;gap:10px;}}
+.option{{display:flex;align-items:center;gap:14px;padding:14px 18px;border:2px solid #e2e8f0;border-radius:10px;cursor:pointer;transition:all .15s;font-size:14px;color:#4a5568;background:#fff;}}
+.option:hover{{border-color:#4a90d9;background:#ebf4ff;}}
+.option.selected{{border-color:#4a90d9;background:#ebf4ff;}}
+.option.selected .opt-letter{{background:#4a90d9;color:#fff;}}
+.opt-letter{{width:28px;height:28px;border-radius:50%;border:2px solid #cbd5e0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#718096;flex-shrink:0;transition:all .15s;}}
+.opt-text{{flex:1;line-height:1.4;}}
+.completion{{flex:1;display:none;align-items:center;justify-content:center;padding:40px;}}
+.completion-card{{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);max-width:600px;width:100%;padding:40px;text-align:center;}}
+.completion-card h2{{font-size:22px;color:#2d3748;margin:12px 0 8px;}}
+.score-display{{font-size:48px;font-weight:700;color:#4a90d9;margin:16px 0;}}
+.result-grid{{text-align:left;margin:20px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px;}}
+.result-item{{padding:10px 14px;border-radius:8px;font-size:13px;display:flex;align-items:center;gap:8px;}}
+.result-item.correct{{background:#f0fff4;color:#276749;}}
+.result-item.incorrect{{background:#fff5f5;color:#9b2c2c;}}
+.btn-answers{{display:inline-block;margin-top:20px;padding:14px 36px;background:#4a90d9;color:#fff;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;}}
+.btn-answers:hover{{background:#3a7cc0;}}
+.footer-nav{{background:#fff;border-top:1px solid #e2e8f0;padding:12px 24px;display:flex;justify-content:flex-end;align-items:center;flex-shrink:0;}}
+.btn-next{{padding:10px 28px;background:#4a90d9;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;opacity:.5;pointer-events:none;transition:opacity .2s;}}
+.btn-next.active{{opacity:1;pointer-events:auto;}}
+.btn-next:hover{{background:#3a7cc0;}}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+<div class="nav-left">
+<span class="section-label">Listening</span>
+<span class="divider">|</span>
+<span class="q-info" id="qInfo">Listen to an Academic Talk</span>
+</div>
+<div class="nav-right">
+<span class="timer" id="timer">--:--</span>
+<div class="user-badge" id="userBadge">?</div>
+</div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<!-- START OVERLAY -->
+<div class="start-overlay" id="startOverlay">
+<div class="start-card">
+<h2>\\ud83c\\udf93 Listen to an Academic Talk</h2>
+<p>You will hear {len(talks)} short academic lectures.<br>After each talk, you will answer {len(talks[0]['questions'])} questions.<br><br>You have <strong>20 seconds</strong> per question.<br>You will only hear each talk <strong>once</strong>.</p>
+<button class="btn-start" onclick="startListening()">Start Listening</button>
+</div>
+</div>
+
+<!-- MAIN -->
+<div class="main-content">
+<div class="audio-phase" id="audioPhase">
+<img id="audioImg" src="" alt="Professor">
+<div class="audio-status" id="audioStatus"><span class="pulse"></span> Now listening...</div>
+</div>
+<div class="question-phase" id="questionPhase">
+<div class="q-split">
+<div class="q-left"><img id="qImg" src="" alt="Professor"></div>
+<div class="q-right">
+<div class="q-label" id="qLabel">Question 1 of {total_questions}</div>
+<div class="q-text" id="qText"></div>
+<div class="options" id="optionsContainer"></div>
+</div>
+</div>
+</div>
+<div class="completion" id="completionPage">
+<div class="completion-card">
+<div style="font-size:48px">\\u2705</div>
+<h2>Academic Talk Section Complete!</h2>
+<div class="score-display" id="scoreDisplay">0 / {total_questions}</div>
+<div class="result-grid" id="resultGrid"></div>
+<a class="btn-answers" href="practice-{practice_num}-answers.html" id="answersBtn" style="display:none">\\u89e3\\u7b54\\u89e3\\u8aac\\u3092\\u898b\\u308b \\u2192</a>
+</div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-nav">
+<button class="btn-next" id="btnNext" onclick="nextStep()">Next \\u2192</button>
+</div>
+
+<script src="../../js/auth.js"></script>
+<script>
+if(typeof Auth!=='undefined'){{Auth.require();Auth.showBadge('userBadge');}}
+
+/* ===== TALK IMAGES (placeholder) ===== */
+const talkImages = [{','.join(['"" /* talk' + str(i+1) + ' image placeholder */' for i in range(len(talks))])}];
+
+/* ===== TALK AUDIO (placeholder) ===== */
+const talkAudio = [{','.join(['"" /* talk' + str(i+1) + ' audio placeholder */' for i in range(len(talks))])}];
+
+/* ===== QUESTIONS ===== */
+const questions = [
+{questions_js}
+];
+
+/* ===== STATE ===== */
+const labels = ['A','B','C','D'];
+let currentQ = -1;
+let currentTalk = -1;
+let userAnswers = [{','.join(['null'] * total_questions)}];
+let timerInterval = null;
+let secondsLeft = 0;
+let audio = null;
+
+function startListening(){{
+    document.getElementById('startOverlay').classList.add('hidden');
+    playTalk(0);
+}}
+
+function playTalk(idx){{
+    currentTalk = idx;
+    document.getElementById('audioPhase').style.display = 'flex';
+    document.getElementById('questionPhase').style.display = 'none';
+    document.getElementById('completionPage').style.display = 'none';
+    document.getElementById('audioImg').src = talkImages[idx];
+    document.getElementById('audioStatus').innerHTML = '<span class="pulse"></span> Now listening...';
+    document.getElementById('audioStatus').style.display = 'flex';
+    document.getElementById('btnNext').classList.remove('active');
+    document.getElementById('qInfo').textContent = 'Listen to an Academic Talk';
+    document.getElementById('timer').textContent = '--:--';
+    document.getElementById('timer').classList.remove('warning');
+
+    if(!talkAudio[idx]){{
+        /* No audio yet -- skip to first question after brief delay */
+        setTimeout(function(){{
+            var firstQ = 0;
+            for(var i=0;i<questions.length;i++){{ if(questions[i].talk===idx){{ firstQ=i; break; }} }}
+            showQuestion(firstQ);
+        }}, 2000);
+        return;
+    }}
+    audio = new Audio(talkAudio[idx]);
+    audio.addEventListener('ended', function(){{
+        document.getElementById('audioStatus').innerHTML = '\\u2705 Audio complete.';
+        var firstQ = 0;
+        for(var i=0;i<questions.length;i++){{ if(questions[i].talk===idx){{ firstQ=i; break; }} }}
+        showQuestion(firstQ);
+    }});
+    audio.play().catch(function(e){{
+        document.getElementById('audioStatus').innerHTML =
+            '<button onclick="retryAudio()" style="padding:10px 24px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">\\u25b6 Play Lecture</button>';
+    }});
+}}
+
+function retryAudio(){{
+    document.getElementById('audioStatus').innerHTML = '<span class="pulse"></span> Now listening...';
+    if(audio) audio.play();
+}}
+
+function showQuestion(qIdx){{
+    currentQ = qIdx;
+    var q = questions[qIdx];
+    document.getElementById('audioPhase').style.display = 'none';
+    document.getElementById('questionPhase').style.display = 'flex';
+    document.getElementById('completionPage').style.display = 'none';
+    document.getElementById('qImg').src = talkImages[q.talk];
+    document.getElementById('qLabel').textContent = 'Question '+(qIdx+1)+' of {total_questions}';
+    document.getElementById('qText').textContent = q.text;
+    document.getElementById('qInfo').innerHTML = 'Question <strong>'+(qIdx+1)+'</strong> of {total_questions} | Listening';
+    document.getElementById('progressFill').style.width = ({pct_per_q}*(qIdx+1))+'%';
+
+    var container = document.getElementById('optionsContainer');
+    container.innerHTML = '';
+    q.options.forEach(function(opt, i){{
+        var div = document.createElement('div');
+        div.className = 'option';
+        div.innerHTML = '<span class="opt-letter">'+labels[i]+'</span><span class="opt-text">'+opt+'</span>';
+        div.onclick = function(){{
+            container.querySelectorAll('.option').forEach(function(o){{ o.classList.remove('selected'); }});
+            div.classList.add('selected');
+            userAnswers[qIdx] = i;
+            document.getElementById('btnNext').classList.add('active');
+        }};
+        container.appendChild(div);
+    }});
+
+    if(userAnswers[qIdx] !== null){{
+        document.getElementById('btnNext').classList.add('active');
+    }} else {{
+        document.getElementById('btnNext').classList.remove('active');
+    }}
+    startTimer(20);
+}}
+
+function startTimer(secs){{
+    clearInterval(timerInterval);
+    secondsLeft = secs;
+    updateTimer();
+    timerInterval = setInterval(function(){{
+        secondsLeft--;
+        updateTimer();
+        if(secondsLeft <= 5) document.getElementById('timer').classList.add('warning');
+        if(secondsLeft <= 0){{ clearInterval(timerInterval); nextStep(); }}
+    }}, 1000);
+}}
+
+function updateTimer(){{
+    var t = document.getElementById('timer');
+    t.textContent = '0:'+String(secondsLeft).padStart(2,'0');
+    if(secondsLeft > 5) t.classList.remove('warning');
+}}
+
+function nextStep(){{
+    clearInterval(timerInterval);
+    document.getElementById('timer').classList.remove('warning');
+    var nextQ = currentQ + 1;
+    if(nextQ >= questions.length){{ showCompletion(); return; }}
+    if(questions[nextQ].talk !== questions[currentQ].talk){{
+        playTalk(questions[nextQ].talk);
+    }} else {{
+        showQuestion(nextQ);
+    }}
+}}
+
+function showCompletion(){{
+    document.getElementById('audioPhase').style.display = 'none';
+    document.getElementById('questionPhase').style.display = 'none';
+    document.getElementById('completionPage').style.display = 'flex';
+    document.getElementById('btnNext').style.display = 'none';
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('timer').textContent = '';
+    document.getElementById('qInfo').textContent = 'Results';
+
+    var correct = 0;
+    var grid = document.getElementById('resultGrid');
+    grid.innerHTML = '';
+    questions.forEach(function(q, i){{
+        var isCorrect = userAnswers[i] === q.correct;
+        if(isCorrect) correct++;
+        var div = document.createElement('div');
+        div.className = 'result-item '+(isCorrect ? 'correct' : 'incorrect');
+        var userAns = userAnswers[i] !== null ? labels[userAnswers[i]] : '\\u2014';
+        div.innerHTML = (isCorrect ? '\\u2705' : '\\u274c')+' Q'+(i+1)+': '+userAns+(isCorrect ? '' : ' \\u2192 '+labels[q.correct]);
+        grid.appendChild(div);
+    }});
+    document.getElementById('scoreDisplay').textContent = correct+' / {total_questions}';
+    sessionStorage.setItem('talkAnswers', JSON.stringify(userAnswers));
+    document.getElementById('answersBtn').style.display = 'inline-block';
+}}
+</script>
+</body>
+</html>'''
+
+    return html
+
+
+def process_practice(num):
+    filepath = rf'C:\Users\umuyashikin\toefl-task-training\listening\talk\practice-{num}.html'
+    with open(filepath, 'r', encoding='utf-8') as f:
+        html = f.read()
+
+    talks = extract_talk_data(html, num)
+
+    print(f"Practice {num}: {len(talks)} talks")
+    for i, talk in enumerate(talks):
+        print(f"  Talk {i+1}: {len(talk['questions'])} questions")
+        for j, q in enumerate(talk['questions']):
+            print(f"    Q{j+1}: {q['text'][:60]}... ({len(q['options'])} opts, correct={q.get('correct','?')})")
+
+    new_html = build_kickstart_html(num, talks)
+
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(new_html)
+
+    print(f"  -> Written {len(new_html):,} chars to {filepath}")
+    print()
+
+
+if __name__ == '__main__':
+    for i in range(1, 11):
+        process_practice(i)
+    print("All talk practice files converted!")
