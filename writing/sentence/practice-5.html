@@ -155,7 +155,7 @@ const speakerAvatars=['👩','👨','👩‍🦰','👨‍🦱','👩‍🦳','�
 const questions=[
 {id:1,prompt:"Do you think it will snow this weekend?",gender:"female",fixedStart:"By",fixedEnd:"",blanks:["Sunday,","it","will have","snowed","at least","three times."],answer:["Sunday,","it","will have","snowed","at least","three times."]},
 {id:2,prompt:"Are you going to the beach tomorrow?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["will go","unless","it","rains","in the morning."],answer:["will go","unless","it","rains","in the morning."]},
-{id:3,prompt:"What do you like about spring?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["enjoy","both","the warm weather","and","the cherry blossoms."],answer:["enjoy","both","the warm weather","and","the cherry blossoms."]},
+{id:3,prompt:"What do you like about spring?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["enjoy","both","the warm weather","and","the cherry blossoms."],answer:["enjoy","both","the warm weather","and","the cherry blossoms."],altAnswers:[["enjoy","both","the cherry blossoms","and","the warm weather."]]},
 {id:4,prompt:"Did you fix the broken window yourself?",gender:"male",fixedStart:"No,",fixedEnd:"",blanks:["I","had","it","repaired","by a professional."],answer:["I","had","it","repaired","by a professional."]},
 {id:5,prompt:"Which park is good for jogging?",gender:"female",fixedStart:"The",fixedEnd:"",blanks:["park","in which","we played","last summer","is perfect","for jogging."],answer:["park","in which","we played","last summer","is perfect","for jogging."]},
 {id:6,prompt:"Will the project be done by next Friday?",gender:"male",fixedStart:"By",fixedEnd:"the entire project.",blanks:["next Friday,","we","will have","completed"],answer:["next Friday,","we","will have","completed"]},
@@ -163,12 +163,12 @@ const questions=[
 {id:8,prompt:"Is your car ready for the road trip?",gender:"male",fixedStart:"Yes,",fixedEnd:"",blanks:["I","got","the engine","checked","before the trip."],answer:["I","got","the engine","checked","before the trip."]},
 {id:9,prompt:"Can we go hiking as long as it stays dry?",gender:"female",fixedStart:"Yes,",fixedEnd:"",blanks:["we can","go hiking","as long as","the trail","is not","too muddy."],answer:["we can","go hiking","as long as","the trail","is not","too muddy."]},
 {id:10,prompt:"What will you have accomplished by the end of summer?",gender:"male",fixedStart:"By",fixedEnd:"",blanks:["the end","of summer,","I","will have","visited","five national parks."],answer:["the end","of summer,","I","will have","visited","five national parks."]},
-{id:11,prompt:"How do you stay cool in the summer?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["enjoy","both","swimming in the pool","and","eating ice cream."],answer:["enjoy","both","swimming in the pool","and","eating ice cream."]},
+{id:11,prompt:"How do you stay cool in the summer?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["enjoy","both","swimming in the pool","and","eating ice cream."],answer:["enjoy","both","swimming in the pool","and","eating ice cream."],altAnswers:[["enjoy","both","eating ice cream","and","swimming in the pool."]]},
 {id:12,prompt:"Did you paint the fence by yourself?",gender:"male",fixedStart:"No,",fixedEnd:"",blanks:["I","had","my brother","help me","paint it."],answer:["I","had","my brother","help me","paint it."]},
 {id:13,prompt:"Will you join us for the outdoor concert?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["will join you","unless","I have to","work overtime","that evening."],answer:["will join you","unless","I have to","work overtime","that evening."]},
 {id:14,prompt:"Where is the campsite you mentioned?",gender:"male",fixedStart:"The",fixedEnd:"",blanks:["campsite","at which","we stayed","last fall","is near","the lake."],answer:["campsite","at which","we stayed","last fall","is near","the lake."]},
 {id:15,prompt:"Did you wash your car before the trip?",gender:"female",fixedStart:"No,",fixedEnd:"at the shop.",blanks:["I","got","it","washed"],answer:["I","got","it","washed"]},
-{id:16,prompt:"What happens if it rains during the festival?",gender:"male",fixedStart:"The",fixedEnd:"",blanks:["festival","will continue","as long as","there is","no lightning","or strong wind."],answer:["festival","will continue","as long as","there is","no lightning","or strong wind."]}
+{id:16,prompt:"What happens if it rains during the festival?",gender:"male",fixedStart:"The",fixedEnd:"",blanks:["festival","will continue","as long as","there is","no lightning","or strong wind."],answer:["festival","will continue","as long as","there is","no lightning","or strong wind."],altAnswers:[["festival","will continue","as long as","there is","no strong wind","or lightning."]]}
 ];
 
 // Shuffle word banks
@@ -281,7 +281,8 @@ function finishQuiz(){
   let html='';
   questions.forEach((q,i)=>{
     const ua=userAnswers[i];
-    const isCorrect=JSON.stringify(ua)===JSON.stringify(q.answer);
+    let isCorrect=JSON.stringify(ua)===JSON.stringify(q.answer);
+    if(!isCorrect && q.altAnswers){isCorrect = q.altAnswers.some(function(alt){return JSON.stringify(ua) === JSON.stringify(alt);});}
     if(isCorrect)correct++;
 
     // Build full sentence

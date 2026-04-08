@@ -108,7 +108,7 @@ const answers=[
 {id:7,prompt:"Why didn't you attend the study session last night?",sentence:"If only I had known about it earlier, I would have attended.",grammar:"if only + 過去完了: 過去の後悔を表す仮定法過去完了。would have + Vpp で「〜しただろうに」。"},
 {id:8,prompt:"Did the professor explain the grading criteria?",sentence:"Yes, we were told that participation would be weighted more heavily than exams.",grammar:"受動態 + that節: were told that ~。比較級 more heavily than で「〜よりも重く」。受動態 would be weighted。"},
 {id:9,prompt:"How was the group presentation yesterday?",sentence:"It went more smoothly than we had expected.",grammar:"比較級 more smoothly than ~。過去完了 had expected で「期待していたよりも」。smoothly は副詞の比較級。"},
-{id:10,prompt:"Are you planning to take an elective next semester?",sentence:"I have not decided whether to take art history or linguistics.",grammar:"whether to V: 「〜するかどうか」。A or B で選択肢を示す。現在完了の否定 have not decided。"},
+{id:10,prompt:"Are you planning to take an elective next semester?",sentence:"I have not decided whether to take art history or linguistics.",grammar:"whether to V: 「〜するかどうか」。A or B で選択肢を示す。現在完了の否定 have not decided。",alt:"I have not decided whether to take linguistics or art history."},
 {id:11,prompt:"What happened with your course registration?",sentence:"The course I wanted to take had been canceled due to low enrollment.",grammar:"過去完了 + 受動態: had been canceled。関係代名詞の省略（the course (that) I wanted）。due to + 名詞で理由。"},
 {id:12,prompt:"Do you prefer studying alone or in a group?",sentence:"I prefer studying in a group because it helps me stay motivated.",grammar:"prefer + 動名詞: prefer studying。because節で理由。help + O + V原形（使役動詞的用法）。"},
 {id:13,prompt:"Why do you always sit in the front row?",sentence:"Sitting in the front makes it easier for me to concentrate on the lecture.",grammar:"動名詞主語: Sitting ... makes it easier。make it + 形容詞 + for + 人 + to V（形式目的語構文）。"},
@@ -132,7 +132,9 @@ let html='';
 answers.forEach((a,i)=>{
   html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"</div></div>'
     +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
-    +'<div class="q-grammar">📝 '+a.grammar+'</div></div></div>';
+    +'<div class="q-grammar">📝 '+a.grammar+'</div>'
+    +(a.alt?'<div class="q-hint" style="margin-top:8px;"><strong>別解:</strong> '+a.alt+' も正解です。並列構造の順序は入れ替え可能です。</div>':'')
+    +'</div></div>';
 });
 document.getElementById('qList').innerHTML=html;
 </script>

@@ -1,0 +1,354 @@
+"""
+Convert all 10 LR (Listen and Repeat) practice files from static format
+to kickstart interactive format.
+
+Reads each practice-{N}.html, extracts theme/scenario and 7 sentences,
+then writes a new kickstart-format HTML file in place.
+"""
+
+import re
+import os
+import html
+
+DIR = os.path.dirname(os.path.abspath(__file__))
+
+RESPONSE_TIMES = {1: 8, 2: 8, 3: 9, 4: 10, 5: 10, 6: 11, 7: 12}
+
+
+def extract_data(filepath):
+    """Extract theme text and 7 sentences from a static practice file."""
+    with open(filepath, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    # Extract theme from theme-badge div
+    theme_match = re.search(r'class="theme-badge"[^>]*>(.*?)</div>', content, re.DOTALL)
+    if not theme_match:
+        raise ValueError(f"Could not find theme-badge in {filepath}")
+    raw_theme = theme_match.group(1).strip()
+    # Decode HTML entities and strip emoji prefix like "🏫 Theme: "
+    decoded_theme = html.unescape(raw_theme)
+    # Remove leading emoji and "Theme: " prefix
+    theme_text = re.sub(r'^[^\w]*Theme:\s*', '', decoded_theme).strip()
+
+    # Extract sentences from sentence-text divs
+    sentences = re.findall(r'class="sentence-text">(.*?)</div>', content)
+    if len(sentences) != 7:
+        raise ValueError(f"Expected 7 sentences in {filepath}, found {len(sentences)}")
+
+    # Clean up sentences (decode entities)
+    sentences = [html.unescape(s.strip()) for s in sentences]
+
+    return theme_text, sentences
+
+
+def build_scenario_text(theme):
+    """Build a scenario description from the theme."""
+    return (
+        f"You are practicing for a speaking task about: {theme}. "
+        f"Listen to each sentence and repeat it. Repeat only once."
+    )
+
+
+def build_kickstart_html(n, theme, sentences):
+    """Build the kickstart-format HTML string."""
+    scenario_text = build_scenario_text(theme)
+    # Use a book/school emoji for the placeholder
+    placeholder_emoji = "&#x1F3EB;"
+    tips_link = f"practice-{n}-tips.html"
+
+    # Build response times JS object
+    rt_js = ", ".join(f"{k}: {v}" for k, v in RESPONSE_TIMES.items())
+
+    return f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listen and Repeat &mdash; Practice {n}</title>
+<link rel="stylesheet" href="../../css/common.css">
+<style>
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;color:#2d3748;line-height:1.7}}
+
+.top-nav{{background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;justify-content:space-between}}
+.top-nav-left{{display:flex;align-items:center;gap:16px;font-size:.9em;color:#4a5568}}
+.top-nav-left strong{{color:#2d3748}}
+.top-nav-right{{display:flex;align-items:center;gap:12px}}
+.user-badge{{font-size:.8em;color:#718096}}
+
+.main-area{{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;text-align:center}}
+.hidden{{display:none!important}}
+
+/* INSTRUCTION */
+.instruction-page{{max-width:640px}}
+.instruction-page h2{{font-size:1.3em;font-weight:700;margin-bottom:16px;color:#2d3748;font-style:italic;text-decoration:underline}}
+.instruction-page p{{font-size:.95em;color:#4a5568;margin-bottom:12px;line-height:1.7}}
+.warning-text{{color:#e53e3e;font-weight:700}}
+.task-table{{width:100%;border-collapse:collapse;margin:20px 0;text-align:left}}
+.task-table th,.task-table td{{border:1px solid #e2e8f0;padding:12px 16px;font-size:.9em}}
+.task-table th{{background:#f7fafc;font-weight:600;color:#2d3748}}
+.btn-start{{background:#2d3748;color:#fff;border:none;border-radius:8px;padding:14px 40px;font-size:1em;font-weight:600;cursor:pointer;font-family:inherit;margin-top:20px;transition:all .2s}}
+.btn-start:hover{{background:#4a5568}}
+
+/* TASK PAGE */
+.task-page{{display:none;width:100%;max-width:700px}}
+.task-instruction{{font-size:.95em;font-style:italic;font-weight:500;color:#4a5568;margin-bottom:16px}}
+
+/* SCENARIO BOX */
+.scenario-box{{background:#f7fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin-bottom:20px;text-align:left}}
+.scenario-label{{font-size:.78em;font-weight:700;color:#4a90d9;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}}
+.scenario-text{{font-size:.9em;color:#2d3748;line-height:1.6}}
+
+/* AUDIO STATUS */
+.audio-status{{display:none;align-items:center;justify-content:center;gap:10px;margin:16px auto;padding:10px 20px;background:rgba(0,0,0,.75);color:#fff;border-radius:25px;width:fit-content;font-size:.9em}}
+.audio-status.playing{{display:flex}}
+.audio-wave{{display:flex;align-items:center;gap:3px;height:16px}}
+.audio-wave span{{display:block;width:3px;background:#4ecdc4;border-radius:2px;animation:wave 1s ease-in-out infinite}}
+.audio-wave span:nth-child(1){{height:6px;animation-delay:0s}}
+.audio-wave span:nth-child(2){{height:12px;animation-delay:.1s}}
+.audio-wave span:nth-child(3){{height:16px;animation-delay:.2s}}
+.audio-wave span:nth-child(4){{height:12px;animation-delay:.3s}}
+.audio-wave span:nth-child(5){{height:6px;animation-delay:.4s}}
+@keyframes wave{{0%,100%{{transform:scaleY(1)}}50%{{transform:scaleY(.4)}}}}
+
+/* IMAGE */
+.image-container{{text-align:center;margin:20px 0}}
+.scenario-image{{max-width:400px;max-height:400px;border-radius:8px}}
+.image-placeholder{{width:300px;height:200px;background:#f0f4f8;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:3em;border:1px solid #e2e8f0}}
+
+/* Q DOTS */
+.q-dots{{display:flex;gap:8px;justify-content:center;margin-bottom:12px}}
+.q-dot{{width:10px;height:10px;border-radius:50%;background:#e2e8f0}}
+.q-dot.active{{background:#4a90d9}}
+.q-dot.done{{background:#48bb78}}
+
+/* RESPONSE TIMER */
+.response-timer{{display:none;background:#1a202c;border-radius:12px;padding:20px 40px;margin:20px auto;text-align:center}}
+.response-timer.active{{display:block}}
+.timer-label{{font-size:.7em;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:3px;margin-bottom:10px}}
+.timer-display{{display:flex;align-items:center;justify-content:center;gap:12px}}
+.timer-icon{{font-size:1.3em}}
+.countdown{{font-family:'Courier New',monospace;font-size:2em;font-weight:700;color:#4ecdc4}}
+
+/* COMPLETE */
+.complete-page{{display:none;max-width:500px}}
+.complete-page h2{{font-size:1.3em;font-weight:700;margin-bottom:12px;color:#2d3748}}
+.complete-page p{{font-size:.95em;color:#4a5568;margin-bottom:20px}}
+.btn-next-section{{background:#2d3748;color:#fff;border:none;border-radius:8px;padding:14px 40px;font-size:1em;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}}
+.btn-next-section:hover{{background:#4a5568}}
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <div class="top-nav-left">
+    <span><strong>Speaking</strong></span>
+    <span>|</span>
+    <span id="qIndicator">Listen and Repeat</span>
+  </div>
+  <div class="top-nav-right">
+    <span class="user-badge" id="userBadge"></span>
+  </div>
+</div>
+
+<!-- INSTRUCTION PAGE -->
+<div class="main-area" id="instructionPage">
+  <div class="instruction-page">
+    <h2>Listen and Repeat</h2>
+    <p>Listen carefully and then repeat what you have heard. The clock will indicate how much time you have to speak.</p>
+    <p class="warning-text">No time for preparation will be provided.</p>
+    <table class="task-table">
+      <tr><th>Task</th><th>Number of Sentences</th><th>Response Time</th></tr>
+      <tr><td>Listen and Repeat</td><td>7 sentences</td><td>8-12 seconds each</td></tr>
+    </table>
+    <button class="btn-start" onclick="startTask()">Start</button>
+  </div>
+</div>
+
+<!-- TASK PAGE -->
+<div class="main-area" id="taskPage" style="display:none">
+  <div class="task-page" style="display:block">
+    <div class="task-instruction">Listen and repeat only once.</div>
+    <div class="scenario-box">
+      <div class="scenario-label">Scenario</div>
+      <div class="scenario-text">{html.escape(scenario_text)}</div>
+    </div>
+    <div class="q-dots" id="qDots"></div>
+    <div class="audio-status" id="audioStatus">
+      <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <span id="audioLabel">Playing audio...</span>
+    </div>
+    <div class="image-container">
+      <img class="scenario-image hidden" id="scenarioImage" src="" alt="Scenario">
+      <div class="image-placeholder" id="imagePlaceholder">{placeholder_emoji}</div>
+    </div>
+    <div class="response-timer" id="responseTimer">
+      <div class="timer-label">Response Time</div>
+      <div class="timer-display">
+        <span class="timer-icon">&#x1F399;&#xFE0F;</span>
+        <span class="countdown" id="countdown">00:00:08</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPLETE PAGE -->
+<div class="main-area" id="completePage" style="display:none">
+  <div class="complete-page" style="display:block">
+    <h2>Section Complete!</h2>
+    <p>You have completed the Listen and Repeat section.</p>
+    <button class="btn-next-section" onclick="location.href='{tips_link}'">View Tips &amp; Review &#8594;</button>
+  </div>
+</div>
+
+<script>
+var audioFiles = {{
+  scenario: "",
+  1: "", 2: "", 3: "", 4: "", 5: "", 6: "", 7: ""
+}};
+
+var responseTimes = {{
+  {rt_js}
+}};
+
+var scenarioImage = "";
+var totalQuestions = 7;
+var currentQuestion = 0;
+var currentAudio = null;
+var countdownInterval = null;
+
+function startTask() {{
+  document.getElementById('instructionPage').style.display = 'none';
+  document.getElementById('taskPage').style.display = '';
+  buildDots();
+  playScenario();
+}}
+
+function buildDots() {{
+  var dots = document.getElementById('qDots');
+  dots.innerHTML = '';
+  for (var i = 0; i < totalQuestions; i++) {{
+    var d = document.createElement('div');
+    d.className = 'q-dot';
+    d.id = 'dot' + i;
+    dots.appendChild(d);
+  }}
+}}
+
+function playScenario() {{
+  document.getElementById('qIndicator').textContent = 'Scenario';
+  document.getElementById('audioLabel').textContent = 'Playing scenario...';
+  showAudio(true);
+  document.getElementById('responseTimer').classList.remove('active');
+
+  playAudioFile(audioFiles.scenario, function() {{
+    showAudio(false);
+    setTimeout(function() {{ playQuestion(1); }}, 2000);
+  }});
+}}
+
+function playQuestion(qNum) {{
+  if (qNum > totalQuestions) {{ showComplete(); return; }}
+  currentQuestion = qNum;
+  document.getElementById('qIndicator').textContent = 'Question ' + qNum + ' of ' + totalQuestions;
+  document.getElementById('audioLabel').textContent = 'Playing audio...';
+
+  for (var i = 0; i < totalQuestions; i++) {{
+    var dot = document.getElementById('dot' + i);
+    if (i < qNum - 1) dot.className = 'q-dot done';
+    else if (i === qNum - 1) dot.className = 'q-dot active';
+    else dot.className = 'q-dot';
+  }}
+
+  showAudio(true);
+  document.getElementById('responseTimer').classList.remove('active');
+
+  playAudioFile(audioFiles[qNum], function() {{
+    showAudio(false);
+    setTimeout(function() {{ startCountdown(qNum); }}, 2000);
+  }});
+}}
+
+function playAudioFile(src, onEnd) {{
+  if (currentAudio) {{ currentAudio.pause(); currentAudio = null; }}
+  try {{
+    currentAudio = new Audio(src);
+    currentAudio.onended = onEnd;
+    currentAudio.onerror = function() {{
+      setTimeout(onEnd, 3000);
+    }};
+    currentAudio.play().catch(function() {{
+      setTimeout(onEnd, 3000);
+    }});
+  }} catch(e) {{
+    setTimeout(onEnd, 3000);
+  }}
+}}
+
+function startCountdown(qNum) {{
+  var timer = document.getElementById('responseTimer');
+  timer.classList.add('active');
+  var remaining = responseTimes[qNum];
+  updateCountdown(remaining);
+
+  countdownInterval = setInterval(function() {{
+    remaining--;
+    if (remaining <= 0) {{
+      clearInterval(countdownInterval);
+      updateCountdown(0);
+      timer.classList.remove('active');
+      setTimeout(function() {{ playQuestion(qNum + 1); }}, 1500);
+      return;
+    }}
+    updateCountdown(remaining);
+  }}, 1000);
+}}
+
+function updateCountdown(sec) {{
+  document.getElementById('countdown').textContent =
+    '00:00:' + (sec < 10 ? '0' : '') + sec;
+}}
+
+function showAudio(show) {{
+  var el = document.getElementById('audioStatus');
+  if (show) el.classList.add('playing'); else el.classList.remove('playing');
+}}
+
+function showComplete() {{
+  document.getElementById('taskPage').style.display = 'none';
+  document.getElementById('completePage').style.display = '';
+  document.getElementById('qIndicator').textContent = 'Complete';
+}}
+
+if (typeof Auth !== 'undefined') {{ Auth.require(); Auth.showBadge('userBadge'); }}
+</script>
+<script src="../../js/auth.js"></script>
+</body>
+</html>'''
+
+
+def main():
+    for n in range(1, 11):
+        src = os.path.join(DIR, f"practice-{n}.html")
+        if not os.path.exists(src):
+            print(f"SKIP: {src} not found")
+            continue
+
+        theme, sentences = extract_data(src)
+        print(f"Practice {n}: theme='{theme}', sentences={len(sentences)}")
+        for i, s in enumerate(sentences, 1):
+            print(f"  Q{i}: {s}")
+
+        new_html = build_kickstart_html(n, theme, sentences)
+
+        with open(src, "w", encoding="utf-8") as f:
+            f.write(new_html)
+
+        print(f"  -> Written: {src}")
+        print()
+
+    print("Done! All 10 files converted.")
+
+
+if __name__ == "__main__":
+    main()
