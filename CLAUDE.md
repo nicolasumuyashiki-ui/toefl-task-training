@@ -8,18 +8,18 @@ GitHub Pages でデプロイ: nicolasumuyashiki-ui/toefl-task-training
 
 ## ファイル構造
 ```
-reading/ctw/practice-{N}.html          — Complete the Words
-reading/rdl/practice-{N}.html          — Read in Daily Life
-reading/academic/practice-{N}.html     — Read an Academic Passage
-listening/lcr/practice-{N}.html        — Listen and Choose a Response
-listening/conv/practice-{N}.html       — Listen to a Conversation
-listening/announce/practice-{N}.html   — Listen to an Announcement
-listening/talk/practice-{N}.html       — Listen to an Academic Talk
-writing/sentence/practice-{N}.html     — Build a Sentence
-writing/email/practice-{N}.html        — Write an Email
-writing/discussion/practice-{N}.html   — Academic Discussion
-speaking/lr/practice-{N}.html          — Listen and Repeat
-speaking/ti/practice-{N}.html          — Take an Interview
+reading/ctw/practice-{N}-set-{1,2,3}.html  — Complete the Words（1セット1ファイル）
+reading/rdl/practice-{N}.html              — Read in Daily Life
+reading/academic/practice-{N}.html         — Read an Academic Passage
+listening/lcr/practice-{N}.html            — Listen and Choose a Response
+listening/conv/practice-{N}.html           — Listen to a Conversation
+listening/announce/practice-{N}.html       — Listen to an Announcement
+listening/talk/practice-{N}.html           — Listen to an Academic Talk
+writing/sentence/practice-{N}.html         — Build a Sentence
+writing/email/practice-{N}.html            — Write an Email
+writing/discussion/practice-{N}.html       — Academic Discussion
+speaking/lr/practice-{N}.html              — Listen and Repeat
+speaking/ti/practice-{N}.html              — Take an Interview
 ```
 - 解答ページ: `practice-{N}-answers.html`（同ディレクトリ）
 - Speakingの攻略コツ: `practice-{N}-tips.html`
@@ -61,6 +61,26 @@ speaking/ti/practice-{N}.html          — Take an Interview
 - **スクリプトファイルの保存**: 音声生成に使用したスクリプトは `docs/scripts/` に `{tasktype}-practice-{N}-scripts.md` として保存すること。音声と解答ページの照合に使う。
 - **生成フロー**: ① スクリプトを確定 → ② スクリプトファイルを保存 → ③ ElevenLabsで音声生成 → ④ 同じスクリプトを解答ページにコピー → ⑤ base64化してHTMLに埋め込み
 - **検証**: 音声埋め込み後、解答ページの問題文とスクリプトファイルの内容が完全一致するか必ず確認すること
+
+## kickstart HW形式への準拠（重要）
+すべてのタスクはTOEFL kickstart HWの形式を踏襲する。参照先: `toefl-kickstart-hw` リポジトリ。
+- **Listening (LCR/Conv/Announce/Talk)**: スタートオーバーレイ→音声再生→1問ずつ表示→タイマー→自動進行→結果画面
+- **Speaking (LR/TI)**: Instructionページ→音声再生→カウントダウンの逐次進行
+- **Writing (Discussion/Email/Sentence)**: Instructionページ→タイマー付きライティング→完了画面
+- **Reading (CTW)**: 1セット1ファイル（`practice-{N}-set-{1,2,3}.html`）、セット間はNext→ファイル遷移
+- **Reading (Academic/RDL)**: Split layout、1問ずつ表示
+
+## Build a Sentence 複数正解対応
+- `altAnswers` フィールドで別解を定義（配列の配列）
+- 採点ロジック: `answer` OR `altAnswers` のいずれかに一致すれば正解
+- 解答解説ページ: 別解がある場合は `alt` フィールドで表記
+- 並列構造（both...and, X or Y, リスト順序）の入れ替えが主なケース
+- 新規問題作成時も別解の有無を必ず確認すること
+
+## Sentence Insertion問題の注意事項
+- Academic Passageの挿入問題は正解が1箇所のみでなければならない
+- 複数箇所にinsertできてしまう問題は修正が必要
+- 新規作成時: 挿入文にdiscourse markers（However, In addition等）や代名詞参照を入れ、正解位置を一意にすること
 
 ## 問題作成時の参照先
 - `.claude/commands/` にあるスラッシュコマンドの仕様書を必ず読むこと
