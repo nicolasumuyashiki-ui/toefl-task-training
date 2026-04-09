@@ -229,24 +229,21 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f9fafb;
 
     <!-- Q6 -->
     <div class="q-card" id="card6">
-      <div class="q-num">Question 6 — Inference</div>
-      <div class="q-text">What can be inferred from the passage about the development of telescope technology?</div>
+      <div class="q-num">Question 6 — Sentence Insertion</div>
+      <div class="q-text">Look at the four squares in paragraph 2 that indicate where the following sentence could be added:<br><br><em>"Furthermore, his detailed drawings of these moons showed that they changed position from night to night, confirming that they were indeed in orbit."</em></div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours6">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt6A"><span class="label">A</span> Modern telescopes are no longer useful because satellites have replaced them.</div>
-        <div class="option-review" id="opt6B"><span class="label">B</span> Radio telescopes were invented before reflecting telescopes.</div>
-        <div class="option-review is-correct" id="opt6C"><span class="label">C</span> Each new type of telescope has allowed scientists to observe things that were previously undetectable. &#10003;</div>
-        <div class="option-review" id="opt6D"><span class="label">D</span> Galileo's telescope was more powerful than the Hubble Space Telescope.</div>
+        <div class="option-review" id="opt6A"><span class="label">A</span> After sentence 1 (after "...systematic astronomical observation.")</div>
+        <div class="option-review is-correct" id="opt6B"><span class="label">B</span> After sentence 2 (after "...not everything in the sky revolved around the Earth.") &#10003;</div>
+        <div class="option-review" id="opt6C"><span class="label">C</span> After sentence 3 (after "...European thought for over a thousand years.")</div>
+        <div class="option-review" id="opt6D"><span class="label">D</span> After sentence 4 (after "...rather than perfect, unchanging spheres.")</div>
       </div>
       <div class="explanation">
-        <strong>Text-based inference:</strong> Paragraph 3 traces the development: reflecting telescopes "allowed astronomers to observe fainter and more distant objects," radio telescopes "opened an entirely new window" by detecting invisible radiation, and space telescopes "captured images of galaxies billions of light-years away." The pattern clearly shows each advance revealed something new = C.<br><br>
-        A contradicts the passage (space telescopes are still in use and described positively). B contradicts the chronological order in the passage (reflecting telescopes are mentioned first, then radio telescopes came "by the twentieth century"). D is absurd and unsupported.
-        <div class="paraphrase-box">
-          <strong>Paraphrase:</strong> Passage describes multiple advances each revealing new phenomena &rarr; C: "each new type has allowed scientists to observe things that were previously undetectable"
-        </div>
+        <strong>Discourse marker clue:</strong> "Furthermore" signals additional supporting evidence for the preceding idea. Sentence 2 states that Galileo discovered four moons orbiting Jupiter. The insertion sentence adds further detail about those same moons &mdash; "his detailed drawings of <strong>these moons</strong>" directly refers to the moons introduced in sentence 2 = B.<br><br>
+        A is incorrect because sentence 1 is a general introduction about Galileo using a telescope; no moons have been mentioned yet, so "these moons" has no referent. C is incorrect because sentence 3 discusses the impact on the geocentric model, shifting topic away from the moons. D is incorrect because sentence 4 moves on to Venus and the Moon's surface, making a return to Jupiter's moons disruptive to the flow.
       </div>
     </div>
   </div>
@@ -258,7 +255,8 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f9fafb;
       <strong>1. Correct answers are always paraphrases of the passage.</strong> Options using the same words as the passage are often traps.<br>
       <strong>2. For rhetorical purpose questions, connect the detail to the paragraph's main claim.</strong> The detail serves as evidence or illustration.<br>
       <strong>3. Vocabulary in Context: substitute and re-read.</strong> The correct answer must fit the specific sentence naturally.<br>
-      <strong>4. For inference questions, look for patterns across the passage.</strong> If the passage describes a series of advances, the inference is about the overall trend.
+      <strong>4. For inference questions, look for patterns across the passage.</strong> If the passage describes a series of advances, the inference is about the overall trend.<br>
+      <strong>5. For Sentence Insertion, use discourse markers as clues.</strong> Words like "Furthermore" and "As a result" signal how the sentence connects to its neighbors. Also check pronoun references like "these moons" — they must have a clear referent before the insertion point.
     </div>
   </div>
 
@@ -269,7 +267,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f9fafb;
 </div>
 
 <script>
-var correctAnswers = {'1':'A','2':'B','3':'C','4':'A','5':'B','6':'C'};
+var correctAnswers = {'1':'A','2':'B','3':'C','4':'A','5':'B','6':'B'};
 (function(){
   var saved = sessionStorage.getItem('training_academic_p6_answers');
   var answers = saved ? JSON.parse(saved) : {};
