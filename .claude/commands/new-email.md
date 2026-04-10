@@ -2,7 +2,7 @@ Write an Email の新しい問題を作成してください。
 
 ## 事前準備（自動実行）
 1. `docs/history-writing.md` を読み、Write an Emailセクションの使用済みトピックを確認する
-2. `day3/` フォルダ内の既存write-emailファイルを確認する
+2. `writing/email/` フォルダ内の既存ファイルを確認する
 3. 既存ファイルのHTML構造・CSS・JSを踏襲する
 
 ## 指定
@@ -11,8 +11,8 @@ $ARGUMENTS
 - 例: `random` or 空 → シナリオをランダム生成
 
 ## 出力ファイル
-1. `day3/write-email-{N}.html` — インタラクティブHTML
-2. `day3/write-email-{N}.md` — 問題文MD
+1. `writing/email/practice-{N}.html` — インタラクティブHTML
+2. `writing/email/practice-{N}.md` — 問題文MD
 
 ## Write an Email 問題仕様
 

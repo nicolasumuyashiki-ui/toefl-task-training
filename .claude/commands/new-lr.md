@@ -2,7 +2,7 @@ Listen and Repeat の新しい問題セットを作成してください。
 
 ## 事前準備（自動実行）
 1. `docs/topic-history.md` を読み、Listen and Repeatセクションの使用済みトピックを確認する
-2. `day4/` フォルダ内の既存listen-repeatファイルを確認する
+2. `speaking/lr/` フォルダ内の既存ファイルを確認する
 3. 使用済みトピックと重複しないシナリオを選定する
 
 ## 指定
@@ -11,8 +11,8 @@ $ARGUMENTS
 - 例: `random` or 空 → 全てランダム生成
 
 ## 出力ファイル（Phase 1）
-1. `day4/lr-scripts-{N}.md` — 録音用スクリプト＋Scenario＋全7文
-2. `day4/lr-{N}.html` — HTML（音声・画像はプレースホルダー）
+1. `docs/scripts/lr-practice-{N}-scripts.md` — 録音用スクリプト＋Scenario＋全7文
+2. `speaking/lr/practice-{N}.html` — HTML（音声・画像はプレースホルダー）
 3. Ideogram用画像プロンプト（サマリーに出力）
 
 ## Listen and Repeat 問題仕様

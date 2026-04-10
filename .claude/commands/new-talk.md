@@ -2,7 +2,7 @@ Listen to an Academic Talk の新しい問題セットを作成してくださ�
 
 ## 事前準備（自動実行）
 1. `docs/topic-history.md` を読み、Academic Talkセクションの使用済みトピックを確認する
-2. `day2/` フォルダ内の既存academic talkファイルを確認する
+2. `listening/talk/` フォルダ内の既存ファイルを確認する
 3. 使用済みトピックと重複しない学術トピックを選定する
 
 ## 指定
@@ -12,8 +12,8 @@ $ARGUMENTS
 - 例: `random` or 空 → 全てランダム生成
 
 ## 出力ファイル（Phase 1）
-1. `day2/talk-scripts-{N}.md` — 録音用スクリプト＋問題＋Answer Key
-2. `day2/listening-academic-{N}.html` — HTML（音声は外部参照）
+1. `docs/scripts/talk-practice-{N}-scripts.md` — 録音用スクリプト＋問題＋Answer Key
+2. `listening/talk/practice-{N}.html` — HTML（音声はプレースホルダー）
 
 ## Academic Talk 問題仕様
 

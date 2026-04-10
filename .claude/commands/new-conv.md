@@ -2,7 +2,7 @@ Listen to a Conversation の新しい問題セットを作成してください�
 
 ## 事前準備（自動実行）
 1. `docs/topic-history.md` を読み、Conversationセクションの使用済みトピックを確認する
-2. `day2/` フォルダ内の既存conversationファイルを確認する
+2. `listening/conv/` フォルダ内の既存ファイルを確認する
 3. 使用済みトピックと重複しない設定を2つ選定する
 
 ## 指定
@@ -11,8 +11,8 @@ $ARGUMENTS
 - 例: `random` or 空 → 全てランダム生成
 
 ## 出力ファイル（Phase 1）
-1. `day2/conv-scripts-{N}.md` — 録音用スクリプト＋問題＋Answer Key
-2. `day2/listening-conv-{N}.html` — HTML（音声は外部参照 `conv1.wav`, `conv2.wav`）
+1. `docs/scripts/conv-practice-{N}-scripts.md` — 録音用スクリプト＋問題＋Answer Key
+2. `listening/conv/practice-{N}.html` — HTML（音声はプレースホルダー）
 
 ## Conversation 問題仕様 (v1.0)
 

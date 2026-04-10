@@ -2,7 +2,7 @@ Listen to an Announcement の新しい問題セットを作成してください
 
 ## 事前準備（自動実行）
 1. `docs/topic-history.md` を読み、Announcementセクションの使用済みトピックを確認する
-2. `day2/` フォルダ内の既存announcementファイルを確認する
+2. `listening/announce/` フォルダ内の既存ファイルを確認する
 3. 使用済みトピックと重複しない設定を2つ選定する
 
 ## 指定
@@ -11,8 +11,8 @@ $ARGUMENTS
 - 例: `random` or 空 → 全てランダム生成
 
 ## 出力ファイル（Phase 1）
-1. `day2/announce-scripts-{N}.md` — 録音用スクリプト＋問題＋Answer Key
-2. `day2/listening-announce-{N}.html` — HTML（音声は外部参照）
+1. `docs/scripts/announce-practice-{N}-scripts.md` — 録音用スクリプト＋問題＋Answer Key
+2. `listening/announce/practice-{N}.html` — HTML（音声はプレースホルダー）
 
 ## Announcement 問題仕様
 

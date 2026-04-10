@@ -2,7 +2,7 @@ Writing for an Academic Discussion の新しい問題を作成してください
 
 ## 事前準備（自動実行）
 1. `docs/history-writing.md` を読み、Academic Discussionセクションの使用済みトピックを確認する
-2. `day3/` フォルダ内の既存academic-discussionファイルを確認する
+2. `writing/discussion/` フォルダ内の既存ファイルを確認する
 3. 既存ファイルのHTML構造・CSS・JSを踏襲する
 
 ## 指定
@@ -13,8 +13,8 @@ $ARGUMENTS
 - 例: 空 → 全てランダム（Alternative 75%, Free-response 25%）
 
 ## 出力ファイル
-1. `day3/academic-discussion-{N}.html` — インタラクティブHTML
-2. `day3/academic-discussion-{N}.md` — 問題文MD
+1. `writing/discussion/practice-{N}.html` — インタラクティブHTML
+2. `writing/discussion/practice-{N}.md` — 問題文MD
 
 ## Academic Discussion 問題仕様
 

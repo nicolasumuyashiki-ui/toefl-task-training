@@ -2,7 +2,7 @@ Build a Sentence の新しい問題セットを作成してください。
 
 ## 事前準備（自動実行）
 1. `docs/history-writing.md` を読み、Build a Sentenceセクションの使用済みトピックを確認する
-2. `day3/` フォルダ内の既存build-sentenceファイルを確認する
+2. `writing/sentence/` フォルダ内の既存ファイルを確認する
 3. 既存ファイルのHTML構造・CSS・JSを踏襲する
 
 ## 指定
@@ -12,8 +12,8 @@ $ARGUMENTS
 - 例: 空 → 18問（デフォルト）、トピックランダム
 
 ## 出力ファイル
-1. `day3/build-sentence-{N}.html` — ドラッグ＆ドロップ形式HTML
-2. `day3/build-sentence-{N}.md` — 問題文＋Answer Key
+1. `writing/sentence/practice-{N}.html` — ドラッグ＆ドロップ形式HTML
+2. `writing/sentence/practice-{N}.md` — 問題文＋Answer Key
 
 ## Build a Sentence 問題仕様
 
