@@ -26,12 +26,16 @@ $ARGUMENTS
 ### トピック分野（以下から選択）
 History / Art and Music / Life Science / Physical Science / Business and Economics / Social Science
 
-### トークの構造
-1. Hook（導入）: 身近な例、質問、興味を引く事実
-2. Main Concept（主概念）: 学術用語の導入と定義
-3. Development（展開）: 対比、比較、詳細な説明
-4. Examples（具体例）: 研究結果、実験、日常の例
-5. Conclusion（結論）: 実生活への応用、次のトピックへの橋渡し
+### トークの構造（5段階 — 各段階を必ず含めること）
+1. **Hook（導入 — 1-2文）**: 身近な例、修辞的質問、または興味を引く事実でリスナーの注意を引く
+   - 例: "So today I want to discuss something called the 'bystander effect.' Has anyone here ever seen someone who needed help, but you didn't do anything because other people were around?"
+2. **Main Concept（主概念 — 2-3文）**: 学術用語・概念を導入し、明確に定義する。専門用語は必ず平易な言葉で説明
+   - 例: "The bystander effect is a theory that says individuals are less likely to offer help when other people are present."
+3. **Development（展開 — 2-4文）**: 概念のメカニズム、原因、対比、分類などを掘り下げる。Detail問題の根拠となる情報をここに含める
+   - 例: "Researchers found two main reasons: diffusion of responsibility and social influence."
+4. **Examples（具体例 — 2-3文）**: 研究結果、実験データ、または日常の具体例を挙げる。Purpose問題の根拠となる
+   - 例: "A 2019 study looked at real security footage and found that in nine out of ten incidents, at least one bystander did help."
+5. **Conclusion（結論 — 1-2文）**: 実生活への応用・示唆を述べるか、"Next, we'll look at..." で次のトピックへ橋渡しする。Prediction問題の根拠となる
 
 ### 言語スタイル
 - 口語的で自然な講義スタイル
