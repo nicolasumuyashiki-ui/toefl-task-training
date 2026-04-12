@@ -65,16 +65,23 @@ Start → Scenario音声 → 2秒待機 → Q1音声 → 2秒 → カウント�
 1. **全7文のスクリプトを読み取る** — 各文の内容を忠実に反映した画像にすること
 2. **位置関係を正確に再現** — "On the right" なら画像の右側にその物を配置
 3. **スタイル: children's book** — 必ず "children's book illustration style" を指定
-4. **テキスト禁止** — 末尾に "No text, no words, no letters, no numbers, no labels."
+4. **テキスト禁止** — プロンプトの**冒頭と末尾の両方**に "Absolutely no text, no writing, no labels, no signs" を含める
 5. **アスペクト比: 1:1**
+6. **各文に対応する視覚要素を具体的に列挙** — 曖昧な表現は使わず、人物・物・動作を明示
 
 プロンプトのテンプレート:
 ```
-Children's book illustration style. A warm, colorful scene of [場所].
-[Q1内容]. [Q2内容]. [Q3内容]. [Q4内容]. [Q5内容]. [Q6内容]. [Q7内容].
-Soft pastel colors, friendly atmosphere, educational material.
-No text, no words, no letters, no numbers, no labels.
+Children's book illustration style. Absolutely no text, no writing, no labels, no signs anywhere.
+A warm, colorful scene of [場所の具体的な説明].
+[Q1: 具体的な人物・物・動作]. [Q2: 同]. [Q3: 同]. [Q4: 同]. [Q5: 同]. [Q6: 同]. [Q7: 同].
+Soft warm pastel colors, friendly educational atmosphere.
+Absolutely no text, no words, no letters, no numbers, no labels, no signs, no writing of any kind.
 ```
+
+### 画像検証ルール
+生成後、7文すべてに対応する視覚要素が含まれているかチェックする。
+欠落があればプロンプトを修正し再生成（最大3回）。
+3回でもNGなら最も要素が多い画像を採用。
 
 ### 成果物一覧（3段階ワークフロー）
 | ステップ | 成果物 | 説明 |
