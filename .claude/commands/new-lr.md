@@ -60,13 +60,21 @@ Start → Scenario音声 → 2秒待機 → Q1音声 → 2秒 → カウント�
 - 画像: scenarioImage（プレースホルダー）
 - auth.js連携
 
-### Ideogram画像プロンプト
-作成後、以下の条件でIdeogram用プロンプトも生成:
-- アスペクト比: 1:1
-- スタイル: Design（フラットデザイン）
-- 「No text, no words, no letters, no numbers.」を末尾に含める
-- スクリプトの場所・物・人物を盛り込む
-- 教育目的にふさわしい明るい雰囲気
+### Ideogram画像プロンプト生成ルール（厳守）
+作成後、以下のルールで Ideogram 用プロンプトを生成すること:
+1. **全7文のスクリプトを読み取る** — 各文の内容を忠実に反映した画像にすること
+2. **位置関係を正確に再現** — "On the right" なら画像の右側にその物を配置
+3. **スタイル: children's book** — 必ず "children's book illustration style" を指定
+4. **テキスト禁止** — 末尾に "No text, no words, no letters, no numbers, no labels."
+5. **アスペクト比: 1:1**
+
+プロンプトのテンプレート:
+```
+Children's book illustration style. A warm, colorful scene of [場所].
+[Q1内容]. [Q2内容]. [Q3内容]. [Q4内容]. [Q5内容]. [Q6内容]. [Q7内容].
+Soft pastel colors, friendly atmosphere, educational material.
+No text, no words, no letters, no numbers, no labels.
+```
 
 ### 成果物一覧（3段階ワークフロー）
 | ステップ | 成果物 | 説明 |
