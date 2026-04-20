@@ -55,6 +55,15 @@ body[data-lang="jp"] .en{display:none}body[data-lang="en"] .jp{display:none}
 .practice-btn.locked .practice-num{color:var(--ink-200)}
 .footer{max-width:900px;margin:40px auto 0;padding:24px 28px 40px;border-top:1px solid var(--paper);color:var(--ink-500);font-size:.78em;display:flex;justify-content:space-between;font-family:var(--font-en)}
 .footer a{color:var(--ink-500);text-decoration:none}
+
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:var(--white);border:1.5px solid var(--green);border-radius:999px;font-family:var(--font-en);font-size:.82em;font-weight:600;color:var(--green-dark);text-decoration:none;transition:all .18s ease;cursor:pointer}
+.back-btn:hover{background:var(--green);color:var(--white);transform:translateX(-2px)}
+.back-btn .arrow{font-size:1em;line-height:1}
+.back-row{max-width:900px;margin:0 auto;padding:22px 28px 0}
+.next-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--green);border:1.5px solid var(--green);border-radius:999px;font-family:var(--font-en);font-size:.85em;font-weight:600;color:var(--white);text-decoration:none;transition:all .18s ease}
+.next-cta:hover{background:var(--green-dark);border-color:var(--green-dark);transform:translateX(2px)}
+.next-cta .arrow{font-size:1em;line-height:1}
+
 </style>
 </head>
 <body data-lang="jp">
@@ -75,10 +84,7 @@ body[data-lang="jp"] .en{display:none}body[data-lang="en"] .jp{display:none}
   </div>
 </div>
 
-<div class="breadcrumb">
-  <a href="../menu.html"><span class="jp">← ホーム</span><span class="en">← Home</span></a>
-  <span class="sep">/</span><span>Speaking</span>
-</div>
+<div class="back-row"><a class="back-btn" href="../menu.html"><span class="arrow">←</span><span class="jp">ホームに戻る</span><span class="en">Back to Home</span></a></div>
 
 <div class="page-title">
   <div class="page-kicker">Section 4 · Speaking</div>
@@ -139,7 +145,7 @@ body[data-lang="jp"] .en{display:none}body[data-lang="en"] .jp{display:none}
 
 <div class="footer">
   <span>© TCK Workshop</span>
-  <a href="../menu.html"><span class="jp">他の技能を見る</span><span class="en">Other skills</span> →</a>
+  <a class="next-cta" href="../menu.html"><span class="jp">他の技能を見る</span><span class="en">Other skills</span><span class="arrow">→</span></a>
 </div>
 
 <script src="../js/auth.js"></script>
