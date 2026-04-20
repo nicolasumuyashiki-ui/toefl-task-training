@@ -65,8 +65,9 @@ body[data-lang="en"] .jp{display:none}
 .skill-count{font-family:var(--font-en);font-size:.72em;color:var(--ink-500);font-weight:500}
 .skill-count strong{color:var(--ink-900);font-weight:700}
 .skill-title{font-family:var(--font-en);font-size:2.2em;font-weight:800;color:var(--green-deep);line-height:1.1;letter-spacing:-0.02em;margin-top:4px}
-.skill-jp-sub{font-family:var(--font-jp);font-size:.95em;font-weight:500;color:var(--ink-500);margin-top:6px}
-body[data-lang="en"] .skill-jp-sub{display:none}
+.skill-tasks{font-size:1.05em;font-weight:500;color:var(--ink-900);line-height:1.55;margin-top:10px}
+.skill-tasks .task-item{display:block;padding:3px 0}
+.skill-tasks .task-item::before{content:"·";color:var(--green);font-weight:700;margin-right:8px}
 .skill-desc{font-size:.88em;color:var(--ink-500);line-height:1.65;flex:1}
 .skill-foot{display:flex;justify-content:flex-end;padding-top:4px}
 .skill-arrow{font-family:var(--font-en);font-size:1.2em;color:var(--green);transition:transform .2s}
@@ -117,7 +118,11 @@ body[data-lang="en"] .skill-jp-sub{display:none}
     <div class="skill-head">      <span class="skill-count"><strong>3</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
     </div>
     <div class="skill-title">Reading</div>
-    <div class="skill-jp-sub">読むちから</div>
+    <div class="skill-tasks">
+      <span class="task-item"><span class="jp">単語を完成させる</span><span class="en">Complete the Words</span></span>
+      <span class="task-item"><span class="jp">日常文を読む</span><span class="en">Read in Daily Life</span></span>
+      <span class="task-item"><span class="jp">アカデミック長文を読む</span><span class="en">Read an Academic Passage</span></span>
+    </div>
     <div class="skill-foot"><span class="skill-arrow">→</span></div>
   </a>
 
@@ -125,7 +130,12 @@ body[data-lang="en"] .skill-jp-sub{display:none}
     <div class="skill-head">      <span class="skill-count"><strong>4</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
     </div>
     <div class="skill-title">Listening</div>
-    <div class="skill-jp-sub">聴くちから</div>
+    <div class="skill-tasks">
+      <span class="task-item"><span class="jp">短い音声に応答する</span><span class="en">Listen and Choose a Response</span></span>
+      <span class="task-item"><span class="jp">会話を聞く</span><span class="en">Listen to a Conversation</span></span>
+      <span class="task-item"><span class="jp">アナウンスを聞く</span><span class="en">Listen to an Announcement</span></span>
+      <span class="task-item"><span class="jp">アカデミック講義を聞く</span><span class="en">Listen to an Academic Talk</span></span>
+    </div>
     <div class="skill-foot"><span class="skill-arrow">→</span></div>
   </a>
 
@@ -133,7 +143,11 @@ body[data-lang="en"] .skill-jp-sub{display:none}
     <div class="skill-head">      <span class="skill-count"><strong>3</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
     </div>
     <div class="skill-title">Writing</div>
-    <div class="skill-jp-sub">書くちから</div>
+    <div class="skill-tasks">
+      <span class="task-item"><span class="jp">語順を組み立てる</span><span class="en">Build a Sentence</span></span>
+      <span class="task-item"><span class="jp">メールを書く</span><span class="en">Write an Email</span></span>
+      <span class="task-item"><span class="jp">学術的投稿を書く</span><span class="en">Academic Discussion</span></span>
+    </div>
     <div class="skill-foot"><span class="skill-arrow">→</span></div>
   </a>
 
@@ -141,7 +155,10 @@ body[data-lang="en"] .skill-jp-sub{display:none}
     <div class="skill-head">      <span class="skill-count"><strong>2</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
     </div>
     <div class="skill-title">Speaking</div>
-    <div class="skill-jp-sub">話すちから</div>
+    <div class="skill-tasks">
+      <span class="task-item"><span class="jp">聞いて繰り返す</span><span class="en">Listen and Repeat</span></span>
+      <span class="task-item"><span class="jp">インタビューに答える</span><span class="en">Take an Interview</span></span>
+    </div>
     <div class="skill-foot"><span class="skill-arrow">→</span></div>
   </a>
 
