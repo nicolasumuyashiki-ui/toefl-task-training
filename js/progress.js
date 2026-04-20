@@ -5,6 +5,17 @@
   function key(task, practice){ return 'tck_progress_' + task + '_p' + practice; }
   var lang = (localStorage.getItem('tck_lang') || 'jp');
 
+  /* Apply body[data-lang] so .jp/.en spans work on every page that
+     loads this script, not just those that explicitly add the toggle. */
+  function applyLangToBody(){
+    if (document.body) {
+      document.body.setAttribute('data-lang', lang);
+      document.documentElement.setAttribute('lang', lang === 'jp' ? 'ja' : 'en');
+    }
+  }
+  if (document.body) applyLangToBody();
+  else document.addEventListener('DOMContentLoaded', applyLangToBody);
+
   var strings = {
     jp: {
       title: '中断から再開しますか？',
