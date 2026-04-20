@@ -56,6 +56,7 @@ body[data-lang="jp"] .en{display:none}body[data-lang="en"] .jp{display:none}
 .score-badge.great{background:var(--sky);color:var(--white)}
 .score-badge.good{background:var(--gold);color:var(--white)}
 .score-badge.keep-trying{background:#B85C3C;color:var(--white)}
+.score-badge.in-progress{background:var(--gold);color:var(--green-deep)}
 .score-fraction{font-family:var(--font-en);font-size:.62em;font-weight:600;color:var(--ink-500);margin-top:2px}
 .score-gauge{width:72%;height:2px;background:var(--ink-200);border-radius:2px;margin-top:6px;overflow:hidden}
 .score-gauge-fill{height:100%;transition:width .3s}
@@ -209,25 +210,33 @@ if(u.userName){document.getElementById('userName').textContent=u.userName;docume
 function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='../index.html';}
 (function(){
   var tasks=['lcr','conv','announce','talk'];
+  var lang=localStorage.getItem('tck_lang')||'jp';
+  var inProgressLabel=lang==='en'?'In Progress':'中断中';
   tasks.forEach(function(task){
     for(var i=1;i<=10;i++){
-      var key='training_score_'+task+'_p'+i;
-      var raw=sessionStorage.getItem(key);
-      if(!raw) continue;
-      try{
-        var d=JSON.parse(raw);if(!d||!d.total) continue;
-        var pct=Math.round(d.correct/d.total*100);
-        var grade=pct===100?'perfect':pct>=80?'great':pct>=50?'good':'keep-trying';
-        var label=pct===100?'Perfect':pct>=80?'Great':pct>=50?'Good':'Keep Going';
-        var section=document.querySelectorAll('.task-section')[tasks.indexOf(task)];
-        if(!section) continue;
-        var btns=section.querySelectorAll('.practice-btn');var btn=btns[i-1];
-        if(!btn||btn.classList.contains('locked')) continue;
-        var badge=document.createElement('span');badge.className='score-badge '+grade;badge.textContent=label;btn.appendChild(badge);
-        var frac=document.createElement('span');frac.className='score-fraction';frac.textContent=d.correct+'/'+d.total;btn.appendChild(frac);
-        var gauge=document.createElement('div');gauge.className='score-gauge';
-        var fill=document.createElement('div');fill.className='score-gauge-fill '+grade;fill.style.width=pct+'%';gauge.appendChild(fill);btn.appendChild(gauge);
-      }catch(e){}
+      var section=document.querySelectorAll('.task-section')[tasks.indexOf(task)];
+      if(!section) continue;
+      var btns=section.querySelectorAll('.practice-btn');var btn=btns[i-1];
+      if(!btn||btn.classList.contains('locked')) continue;
+      var raw=sessionStorage.getItem('training_score_'+task+'_p'+i);
+      var progressRaw=localStorage.getItem('tck_progress_'+task+'_p'+i);
+      if(raw){
+        try{
+          var d=JSON.parse(raw);if(!d||!d.total) continue;
+          var pct=Math.round(d.correct/d.total*100);
+          var grade=pct===100?'perfect':pct>=80?'great':pct>=50?'good':'keep-trying';
+          var label=pct===100?'Perfect':pct>=80?'Great':pct>=50?'Good':'Keep Going';
+          var badge=document.createElement('span');badge.className='score-badge '+grade;badge.textContent=label;btn.appendChild(badge);
+          var frac=document.createElement('span');frac.className='score-fraction';frac.textContent=d.correct+'/'+d.total;btn.appendChild(frac);
+          var gauge=document.createElement('div');gauge.className='score-gauge';
+          var fill=document.createElement('div');fill.className='score-gauge-fill '+grade;fill.style.width=pct+'%';gauge.appendChild(fill);btn.appendChild(gauge);
+        }catch(e){}
+      } else if(progressRaw){
+        var b2=document.createElement('span');
+        b2.className='score-badge in-progress';
+        b2.textContent=inProgressLabel;
+        btn.appendChild(b2);
+      }
     }
   });
 })();
