@@ -72,9 +72,8 @@ body[data-lang="en"] .jp{display:none}
 .skill-jp-sub{font-family:var(--font-jp);font-size:.82em;font-weight:500;color:var(--ink-500);margin-top:2px}
 body[data-lang="en"] .skill-jp-sub{display:none}
 .skill-desc{font-size:.88em;color:var(--ink-500);line-height:1.65;flex:1}
-.skill-foot{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px dashed var(--paper)}
-.skill-action{font-family:var(--font-en);font-size:.8em;font-weight:600;color:var(--green-dark)}
-.skill-arrow{font-family:var(--font-en);font-size:1.1em;color:var(--green);transition:transform .2s}
+.skill-foot{display:flex;justify-content:flex-end;padding-top:4px}
+.skill-arrow{font-family:var(--font-en);font-size:1.2em;color:var(--green);transition:transform .2s}
 .skill-card:hover .skill-arrow{transform:translateX(4px)}
 
 .footer{max-width:980px;margin:0 auto;padding:28px 28px 48px;display:flex;justify-content:space-between;align-items:center;color:var(--ink-500);font-size:.78em;border-top:1px solid var(--paper)}
@@ -114,10 +113,6 @@ body[data-lang="en"] .skill-jp-sub{display:none}
     <span class="jp">4つの技能を、<br>一歩ずつ鍛える。</span>
     <span class="en">Four skills,<br>one step at a time.</span>
   </h1>
-  <p class="hero-sub">
-    <span class="jp">各技能のタスク別に Practice 1〜10。短い時間でも、毎日少しずつ進める設計です。</span>
-    <span class="en">Ten practices per task, designed for short daily sessions.</span>
-  </p>
 </div>
 
 <div class="skill-grid">
@@ -129,14 +124,7 @@ body[data-lang="en"] .skill-jp-sub{display:none}
     </div>
     <div class="skill-title">Reading</div>
     <div class="skill-jp-sub">読むちから</div>
-    <div class="skill-desc">
-      <span class="jp">Complete the Words / Read in Daily Life / Read an Academic Passage の3タスク。</span>
-      <span class="en">Complete the Words, Read in Daily Life, and Read an Academic Passage.</span>
-    </div>
-    <div class="skill-foot">
-      <span class="skill-action"><span class="jp">はじめる</span><span class="en">Start</span></span>
-      <span class="skill-arrow">→</span>
-    </div>
+    <div class="skill-foot"><span class="skill-arrow">→</span></div>
   </a>
 
   <a class="skill-card" data-skill="listening" href="listening/menu.html">
@@ -146,14 +134,7 @@ body[data-lang="en"] .skill-jp-sub{display:none}
     </div>
     <div class="skill-title">Listening</div>
     <div class="skill-jp-sub">聴くちから</div>
-    <div class="skill-desc">
-      <span class="jp">Listen and Choose a Response / Conversation / Announcement / Academic Talk の4タスク。</span>
-      <span class="en">Listen and Choose a Response, Conversation, Announcement, and Academic Talk.</span>
-    </div>
-    <div class="skill-foot">
-      <span class="skill-action"><span class="jp">はじめる</span><span class="en">Start</span></span>
-      <span class="skill-arrow">→</span>
-    </div>
+    <div class="skill-foot"><span class="skill-arrow">→</span></div>
   </a>
 
   <a class="skill-card" data-skill="writing" href="writing/menu.html">
@@ -163,14 +144,7 @@ body[data-lang="en"] .skill-jp-sub{display:none}
     </div>
     <div class="skill-title">Writing</div>
     <div class="skill-jp-sub">書くちから</div>
-    <div class="skill-desc">
-      <span class="jp">Build a Sentence / Write an Email / Academic Discussion の3タスク。</span>
-      <span class="en">Build a Sentence, Write an Email, and Academic Discussion.</span>
-    </div>
-    <div class="skill-foot">
-      <span class="skill-action"><span class="jp">はじめる</span><span class="en">Start</span></span>
-      <span class="skill-arrow">→</span>
-    </div>
+    <div class="skill-foot"><span class="skill-arrow">→</span></div>
   </a>
 
   <a class="skill-card" data-skill="speaking" href="speaking/menu.html">
@@ -180,22 +154,13 @@ body[data-lang="en"] .skill-jp-sub{display:none}
     </div>
     <div class="skill-title">Speaking</div>
     <div class="skill-jp-sub">話すちから</div>
-    <div class="skill-desc">
-      <span class="jp">Listen and Repeat / Take an Interview の2タスク。</span>
-      <span class="en">Listen and Repeat, and Take an Interview.</span>
-    </div>
-    <div class="skill-foot">
-      <span class="skill-action"><span class="jp">はじめる</span><span class="en">Start</span></span>
-      <span class="skill-arrow">→</span>
-    </div>
+    <div class="skill-foot"><span class="skill-arrow">→</span></div>
   </a>
 
 </div>
 
 <div class="footer">
   <span class="footer-left">© TCK Workshop</span>
-  <span class="jp">毎日ひとつずつ。</span>
-  <span class="en">One task at a time.</span>
 </div>
 
 <script src="js/auth.js"></script>
