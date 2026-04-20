@@ -113,6 +113,7 @@ Next <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18
 </div>
 
 <script src="../../js/auth.js"></script>
+<script src="../../js/progress.js"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -138,19 +139,48 @@ let timerHidden = false;
 let answers = {};
 let started = false;
 
-/* ===== CHECK URL PARAM ===== */
+/* ===== PROGRESS (TCK exit/resume) ===== */
+const TCK_TASK = 'lcr';
+const TCK_PRACTICE = 6;
+const MENU_URL = '../menu.html';
+function snapshotState(){ return { currentQ: currentQ, answers: answers, lcrAnswers: sessionStorage.getItem('lcrAnswers') || '{}' }; }
+function restoreState(saved){
+    try {
+        if(saved.lcrAnswers) sessionStorage.setItem('lcrAnswers', saved.lcrAnswers);
+        answers = saved.answers || {};
+        document.getElementById('startOverlay').style.display='none';
+        started = true;
+        loadQuestion(Math.min(saved.currentQ || 0, questions.length - 1));
+    } catch(e){ loadQuestion(0); }
+}
+window.addEventListener('DOMContentLoaded', function(){
+    if(window.TCKProgress){
+        TCKProgress.mountExitButton(TCK_TASK, TCK_PRACTICE, snapshotState, MENU_URL);
+    }
+});
+
+/* ===== CHECK URL PARAM / RESUME ===== */
 (function(){
     const params = new URLSearchParams(window.location.search);
-    if(params.get('play') === '1'){
+    const autoPlay = params.get('play') === '1';
+    function doStart(){
         document.getElementById('startOverlay').style.display='none';
         started = true;
         const instAudio = new Audio(instructionAudio);
-        instAudio.addEventListener('ended', () => {
-            setTimeout(() => { loadQuestion(0); }, 1500);
-        });
+        instAudio.addEventListener('ended', () => { setTimeout(() => { loadQuestion(0); }, 1500); });
         instAudio.addEventListener('error', () => { loadQuestion(0); });
         instAudio.play().catch(() => { loadQuestion(0); });
     }
+    window.addEventListener('DOMContentLoaded', function(){
+        if(window.TCKProgress && TCKProgress.hasSaved(TCK_TASK, TCK_PRACTICE)){
+            TCKProgress.promptResume(TCK_TASK, TCK_PRACTICE, {
+                onResume: restoreState,
+                onRestart: function(){ if(autoPlay) doStart(); }
+            });
+        } else if(autoPlay){
+            doStart();
+        }
+    });
 })();
 
 /* ===== START ===== */
@@ -253,6 +283,7 @@ function selectOption(el, letter){
     el.classList.add('selected');
     answers[currentQ] = letter;
     document.getElementById('btnNext').classList.remove('disabled');
+    if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
 }
 
 /* ===== NEXT ===== */
@@ -269,9 +300,12 @@ function goNext(){
     };
     sessionStorage.setItem('lcrAnswers', JSON.stringify(stored));
 
+    if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
+
     if(currentQ < questions.length - 1){
         loadQuestion(currentQ + 1);
     } else {
+        if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
         document.querySelector('.main-content').innerHTML =
             '<div style="text-align:center;padding:60px 20px;max-width:600px;">' +
             '<div style="font-size:48px;margin-bottom:16px;">✅</div>' +
