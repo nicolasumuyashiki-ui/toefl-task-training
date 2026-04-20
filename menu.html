@@ -61,15 +61,11 @@ body[data-lang="en"] .jp{display:none}
 .skill-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,118,70,.08)}
 .skill-card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--green);opacity:0;transition:opacity .2s}
 .skill-card:hover::before{opacity:1}
-.skill-head{display:flex;align-items:center;justify-content:space-between}
-.skill-tag{font-family:var(--font-en);font-size:.68em;font-weight:700;color:var(--green);letter-spacing:.16em;text-transform:uppercase}
-.skill-card[data-skill="listening"] .skill-tag{color:#9A7A2E}
-.skill-card[data-skill="writing"] .skill-tag{color:var(--green-dark)}
-.skill-card[data-skill="speaking"] .skill-tag{color:#2E6B8C}
+.skill-head{display:flex;justify-content:flex-end}
 .skill-count{font-family:var(--font-en);font-size:.72em;color:var(--ink-500);font-weight:500}
 .skill-count strong{color:var(--ink-900);font-weight:700}
-.skill-title{font-family:var(--font-en);font-size:1.5em;font-weight:700;color:var(--green-deep);line-height:1.25;letter-spacing:-0.015em}
-.skill-jp-sub{font-family:var(--font-jp);font-size:.82em;font-weight:500;color:var(--ink-500);margin-top:2px}
+.skill-title{font-family:var(--font-en);font-size:2.2em;font-weight:800;color:var(--green-deep);line-height:1.1;letter-spacing:-0.02em;margin-top:4px}
+.skill-jp-sub{font-family:var(--font-jp);font-size:.95em;font-weight:500;color:var(--ink-500);margin-top:6px}
 body[data-lang="en"] .skill-jp-sub{display:none}
 .skill-desc{font-size:.88em;color:var(--ink-500);line-height:1.65;flex:1}
 .skill-foot{display:flex;justify-content:flex-end;padding-top:4px}
@@ -118,9 +114,7 @@ body[data-lang="en"] .skill-jp-sub{display:none}
 <div class="skill-grid">
 
   <a class="skill-card" data-skill="reading" href="reading/menu.html">
-    <div class="skill-head">
-      <span class="skill-tag">Reading</span>
-      <span class="skill-count"><strong>3</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
+    <div class="skill-head">      <span class="skill-count"><strong>3</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
     </div>
     <div class="skill-title">Reading</div>
     <div class="skill-jp-sub">読むちから</div>
@@ -128,9 +122,7 @@ body[data-lang="en"] .skill-jp-sub{display:none}
   </a>
 
   <a class="skill-card" data-skill="listening" href="listening/menu.html">
-    <div class="skill-head">
-      <span class="skill-tag">Listening</span>
-      <span class="skill-count"><strong>4</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
+    <div class="skill-head">      <span class="skill-count"><strong>4</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
     </div>
     <div class="skill-title">Listening</div>
     <div class="skill-jp-sub">聴くちから</div>
@@ -138,9 +130,7 @@ body[data-lang="en"] .skill-jp-sub{display:none}
   </a>
 
   <a class="skill-card" data-skill="writing" href="writing/menu.html">
-    <div class="skill-head">
-      <span class="skill-tag">Writing</span>
-      <span class="skill-count"><strong>3</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
+    <div class="skill-head">      <span class="skill-count"><strong>3</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
     </div>
     <div class="skill-title">Writing</div>
     <div class="skill-jp-sub">書くちから</div>
@@ -148,9 +138,7 @@ body[data-lang="en"] .skill-jp-sub{display:none}
   </a>
 
   <a class="skill-card" data-skill="speaking" href="speaking/menu.html">
-    <div class="skill-head">
-      <span class="skill-tag">Speaking</span>
-      <span class="skill-count"><strong>2</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
+    <div class="skill-head">      <span class="skill-count"><strong>2</strong> <span class="jp">タスク</span><span class="en">tasks</span></span>
     </div>
     <div class="skill-title">Speaking</div>
     <div class="skill-jp-sub">話すちから</div>
