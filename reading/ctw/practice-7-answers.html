@@ -78,11 +78,11 @@
 <div class="set-nav" id="setNav">
   <button class="active" onclick="showSet(0)">Set 1: Bees</button>
   <button onclick="showSet(1)">Set 2: Maps</button>
-  <button onclick="showSet(2)">Set 3: Sound Waves</button>
+  <button onclick="showSet(2)">Set 3: Dark Matter</button>
 </div>
 <div class="set-panel active" id="set0"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 1: The Role of Bees in Agriculture</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage0"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag0"></div></div></div></div>
 <div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 2: How Maps Changed Exploration</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
-<div class="set-panel" id="set2"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 3: The Physics of Sound Waves</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage2"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag2"></div></div></div></div>
+<div class="set-panel" id="set2"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 3: Dark Matter in Modern Cosmology</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage2"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag2"></div></div></div></div>
 <div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
 
 <script src="../../js/auth.js"></script>
@@ -151,37 +151,38 @@ var SD=[
 {pos:"動詞",d:"HARD",e:"「to＋空欄＋future」→動詞。\"imp\"→improve。不定詞パターン。"},
 {pos:"名詞",d:"HARD",e:"「future＋空欄」→名詞。\"voy\"→voyages（航海）。文脈推測が重要。"}
 ]},
-{intro:"Sound is a form of energy that travels through matter as a wave. Unlike light, sound cannot travel through a vacuum because it requires a medium such as air, water, or solid material to propagate. The study of sound waves has led to important advances in fields ranging from medicine to engineering.",conclusion:"By understanding how sound behaves in different environments, scientists have developed technologies such as sonar and ultrasound imaging that benefit society in numerous ways.",target:[
-{w:"When",a:"en",s:"Wh",p:""},
-{w:"an",a:null,s:null,p:""},
-{w:"object",a:null,s:null,p:""},
-{w:"vibrates",a:"ates",s:"vibr",p:""},
-{w:"it",a:null,s:null,p:""},
-{w:"produces",a:"uces",s:"prod",p:""},
-{w:"disturbances",a:null,s:null,p:""},
+{intro:"Dark matter is one of the most puzzling phenomena in modern cosmology. Although it cannot be seen directly, scientists infer its existence from the way galaxies rotate and from gravitational effects that visible matter alone cannot explain. Understanding this mysterious substance has become a central goal of contemporary astrophysics.",conclusion:"By analyzing data from powerful telescopes and particle detectors, physicists hope to uncover the true nature of this invisible material and transform our understanding of the cosmos.",target:[
+{w:"Researchers",a:"chers",s:"Resear",p:""},
+{w:"hypothesize",a:"thesize",s:"hypo",p:""},
 {w:"that",a:null,s:null,p:""},
-{w:"spread",a:"ead",s:"spr",p:""},
-{w:"outward",a:null,s:null,p:""},
-{w:"through",a:"ough",s:"thr",p:""},
+{w:"invisible",a:"sible",s:"invi",p:""},
+{w:"particles",a:"icles",s:"part",p:""},
+{w:"permeate",a:"eate",s:"perm",p:""},
 {w:"the",a:null,s:null,p:""},
-{w:"surrounding",a:"ounding",s:"surr",p:""},
-{w:"medium",a:null,s:null,p:""},
-{w:"and",a:null,s:null,p:""},
-{w:"these",a:"ese",s:"th",p:""},
-{w:"waves",a:null,s:null,p:""},
-{w:"eventually",a:"ually",s:"event",p:""},
-{w:"reach",a:null,s:null,p:""},
-{w:"our",a:null,s:null,p:""},
-{w:"ears",a:null,s:null,p:"."}
+{w:"universe",a:"erse",s:"univ",p:""},
+{w:"because",a:null,s:null,p:""},
+{w:"stars",a:null,s:null,p:""},
+{w:"orbit",a:null,s:null,p:""},
+{w:"galaxies",a:"axies",s:"gal",p:""},
+{w:"at",a:null,s:null,p:""},
+{w:"speeds",a:null,s:null,p:""},
+{w:"which",a:null,s:null,p:""},
+{w:"ordinary",a:"nary",s:"ordi",p:""},
+{w:"physics",a:null,s:null,p:""},
+{w:"cannot",a:null,s:null,p:""},
+{w:"properly",a:"erly",s:"prop",p:""},
+{w:"explain",a:"lain",s:"exp",p:"."}
 ],exp:[
-{pos:"接続詞",d:"MOD",e:"「空欄＋an object」→文頭の接続詞。\"Wh\"→When。時を表す副詞節。"},
-{pos:"動詞",d:"HARD",e:"「object＋空欄」→動詞。\"vibr\"→vibrates。科学的語彙。三人称単数現在。"},
-{pos:"動詞",d:"HARD",e:"「it＋空欄＋disturbances」→動詞。\"prod\"→produces。主語itに対する動詞。"},
-{pos:"動詞",d:"HARD",e:"「disturbances that＋空欄」→動詞。\"spr\"→spread。関係代名詞節の動詞。"},
-{pos:"前置詞",d:"MOD",e:"「spread outward＋空欄＋the」→前置詞。\"thr\"→through。"},
-{pos:"形容詞",d:"HARD",e:"「the＋空欄＋medium」→形容詞。\"surr\"→surrounding。7文字の答えで難。"},
-{pos:"指示形容詞",d:"MOD",e:"「and＋空欄＋waves」→限定詞。\"th\"→these。"},
-{pos:"副詞",d:"HARD",e:"「waves＋空欄＋reach」→副詞。\"event\"→eventually（最終的に）。5文字の答え。"}
+{pos:"名詞（主語）",d:"HARD",e:"「空欄＋hypothesize」→文頭の主語。\"Resear\"→Researchers。学術論文で頻出の主語。"},
+{pos:"動詞",d:"HARD",e:"「Researchers＋空欄＋that」→動詞。\"hypo\"→hypothesize。高度な学術語彙。三人称複数現在。"},
+{pos:"形容詞",d:"HARD",e:"「that＋空欄＋particles」→形容詞。\"invi\"→invisible。名詞particlesを修飾。"},
+{pos:"名詞",d:"MOD",e:"「invisible＋空欄＋permeate」→主語の名詞。\"part\"→particles。科学的語彙。"},
+{pos:"動詞",d:"HARD",e:"「particles＋空欄＋the universe」→動詞。\"perm\"→permeate（浸透する）。上級語彙。"},
+{pos:"名詞",d:"MOD",e:"「the＋空欄＋because」→名詞。\"univ\"→universe。cosmologyの文脈で必須語。"},
+{pos:"名詞",d:"MOD",e:"「orbit＋空欄＋at」→動詞orbitの目的語。\"gal\"→galaxies。複数形。"},
+{pos:"形容詞",d:"HARD",e:"「which＋空欄＋physics」→形容詞。\"ordi\"→ordinary。通常の／標準的な。名詞を修飾。"},
+{pos:"副詞",d:"HARD",e:"「cannot＋空欄＋explain」→副詞。\"prop\"→properly。動詞explainを修飾。"},
+{pos:"動詞",d:"MOD",e:"「cannot properly＋空欄」→動詞（原形）。\"exp\"→explain。助動詞cannotの後。"}
 ]}
 ];
 

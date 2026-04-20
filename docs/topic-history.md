@@ -10,6 +10,9 @@
 | 1 | 1 | M1 | The History of Chocolate |
 | 1 | 2 | M1 | Urban Gardens and Community Health |
 | 1 | 3 | M2H | The Role of Microorganisms in Soil Ecology |
+| 6 | 2 | M1 | How Mountains Form |
+| 5 | 3 | M2H | Bioluminescence in Marine Life |
+| 7 | 3 | M2H | Dark Matter in Modern Cosmology |
 
 ### Read in Daily Life (RDL)
 | Practice | # | Topic |
@@ -22,6 +25,7 @@
 |----------|---|--------|-------|
 | 1 | 1 | Standard | The Development of Writing Systems |
 | 1 | 2 | Harder | Symbiotic Relationships in Marine Ecosystems |
+| 6 | 1 | Standard | The Discovery of Penicillin |
 
 ## Listening
 
