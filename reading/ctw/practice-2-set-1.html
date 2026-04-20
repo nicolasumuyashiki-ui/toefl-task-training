@@ -11,25 +11,25 @@
 .timer-btn{background:none;border:1px solid #D6DAD7;border-radius:6px;padding:6px 14px;font-size:.85em;color:#5A6861;cursor:pointer;font-family:inherit}.timer-btn:hover{background:#FBF6EC}.timer-display{font-family:'Courier New',monospace;font-size:.9em;color:#0F1511;font-weight:600;min-width:60px;text-align:center}
 .review-btn{background:#007646;color:#fff;border:none;border-radius:14px;padding:6px 18px;font-size:.85em;cursor:pointer;font-family:inherit;font-weight:600}.review-btn:hover{background:#004D2E}
 .user-badge{font-size:.8em;color:#5A6861}.user-badge strong{color:#0F1511}
-.progress-bar{height:4px;background:#ebf4ff;width:100%}.progress-fill{height:100%;width:33%;background:#3182ce;border-radius:2px}
+.progress-bar{height:4px;background:#F5E9D3;width:100%}.progress-fill{height:100%;width:33%;background:#007646;border-radius:2px}
 .main{flex:1;display:flex;justify-content:center;padding:40px 24px 120px}.content{width:100%;max-width:660px}
 .direction{font-weight:700;font-size:1em;color:#0F1511;margin-bottom:24px}
-.set-label{display:inline-block;background:#ebf4ff;color:#007646;font-size:.78em;font-weight:600;padding:3px 12px;border-radius:10px;margin-bottom:12px}
+.set-label{display:inline-block;background:#F5E9D3;color:#007646;font-size:.78em;font-weight:600;padding:3px 12px;border-radius:10px;margin-bottom:12px}
 .passage{font-size:.95em;line-height:2.2;color:#0F1511}.word-blank{display:inline-block;white-space:nowrap}.sh{font-size:.95em}
-.bx{display:inline-block;width:1.5em;height:1.9em;border:1px solid #bbb;border-radius:2px;background:#ececec;text-align:center;vertical-align:baseline;margin:0 .5px;position:relative}
-.bx input{width:100%;height:100%;border:none;background:transparent;text-align:center;font-size:1em;font-family:inherit;outline:none;padding:0;color:#0F1511}.bx:focus-within{background:#dce8f7;border-color:#007646}
+.bx{display:inline-block;width:1.5em;height:1.9em;border:1px solid #bbb;border-radius:2px;background:#F5E9D3;text-align:center;vertical-align:baseline;margin:0 .5px;position:relative}
+.bx input{width:100%;height:100%;border:none;background:transparent;text-align:center;font-size:1em;font-family:inherit;outline:none;padding:0;color:#0F1511}.bx:focus-within{background:#F5E9D3;border-color:#007646}
 .reading-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #F5E9D3;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:100}
 .footer-left{font-size:.82em;color:#5A6861}.footer-right{display:flex;gap:12px}
 .btn-nav{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
 .btn-back{color:#5A6861;background:#fff;border:1px solid #F5E9D3}.btn-back:hover{background:#FBF6EC}
-.btn-next{color:#fff;background:#2d3748}.btn-next:hover{opacity:.9}
+.btn-next{color:#fff;background:#002817}.btn-next:hover{opacity:.9}
 .btn-menu{color:#5A6861;background:none;border:1px solid #F5E9D3;font-size:.82em;padding:8px 14px;border-radius:8px;font-family:inherit;font-weight:600;cursor:pointer}.btn-menu:hover{background:#FBF6EC}
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}.overlay.active{display:flex}
 .review-panel{background:#fff;border-radius:12px;width:90%;max-width:520px;max-height:80vh;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2)}
 .review-header{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid #F5E9D3}.review-header h3{font-size:1em;color:#0F1511}
 .review-close{background:none;border:none;font-size:1.3em;cursor:pointer;color:#5A6861;padding:4px 8px;border-radius:4px}.review-close:hover{background:#FBF6EC}
 .review-body{padding:20px;max-height:50vh;overflow-y:auto}
-.review-row{display:flex;padding:10px 0;border-bottom:1px solid #f0f0f0;align-items:center;font-size:.88em}
+.review-row{display:flex;padding:10px 0;border-bottom:1px solid #F5E9D3;align-items:center;font-size:.88em}
 .review-no{width:28px;color:#5A6861;font-weight:500}.review-word{flex:1;color:#0F1511}
 .review-status{font-size:.78em;padding:2px 10px;border-radius:10px}.review-status.filled{background:#A8C9B8;color:#004D2E}.review-status.empty{background:#F3DDD4;color:#8A3E24}
 .set-progress{padding:16px 20px;border-top:1px solid #F5E9D3;background:#FBF6EC;display:flex;justify-content:center}
@@ -43,7 +43,7 @@
 <div class="top-nav"><div class="top-nav-left"><span>Set <strong>1</strong> of 3</span><span>Complete the Words</span></div><div class="top-nav-right"><button class="timer-btn" id="timerToggle">Hide Time</button><span class="timer-display" id="timerDisplay">36:00</span><button class="review-btn" id="reviewOpen">Review</button><span class="user-badge" id="userBadge"></span></div></div>
 <div class="progress-bar"><div class="progress-fill"></div></div>
 <div class="main"><div class="content"><span class="set-label">Set 1 / 3 — The Development of Modern Zoos</span><p class="direction">In the paragraph below, some words are missing letters. Fill in the blanks to complete the words.</p><div class="passage" id="passage"></div></div></div>
-<div class="reading-footer"><div><button class="btn-menu" onclick="window.location.href='../menu.html'">← メニューに戻る</button></div><div class="footer-right"><button class="btn-nav btn-next" onclick="goNext()">Next Set ›</button></div></div>
+<div class="reading-footer"><div></div><div class="footer-right"><button class="btn-nav btn-next" onclick="goNext()">Next Set ›</button></div></div>
 <div class="overlay" id="overlay"><div class="review-panel"><div class="review-header"><h3>Review — Set 1</h3><button class="review-close" id="reviewClose">&times;</button></div><div class="review-body" id="reviewBody"></div><div class="set-progress"><div class="set-progress-row"><div class="set-dot current">1</div><div class="set-dot-line"></div><div class="set-dot upcoming">2</div><div class="set-dot-line"></div><div class="set-dot upcoming">3</div></div></div></div></div>
 <script src="../../js/api.js"></script><script src="../../js/auth.js"></script><script src="../../js/progress.js"></script>
 <script>
