@@ -112,7 +112,7 @@
     var s = document.createElement('style');
     s.id = 'tck-progress-css';
     s.textContent =
-      '.tck-resume-overlay{position:fixed;inset:0;background:rgba(0,40,23,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;font-family:"Manrope","Zen Kaku Gothic New","Noto Sans JP",system-ui,sans-serif}'
+      '.tck-resume-overlay{position:fixed;inset:0;background:rgba(15,21,17,.32);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;font-family:"Manrope","Zen Kaku Gothic New","Noto Sans JP",system-ui,sans-serif}'
       + '.tck-resume-panel{background:#FBF6EC;border-radius:16px;max-width:440px;width:100%;padding:28px 28px 24px;box-shadow:0 20px 60px rgba(0,0,0,.25)}'
       + '.tck-resume-title{font-size:1.35em;font-weight:800;color:#002817;letter-spacing:-0.01em;margin-bottom:8px}'
       + '.tck-resume-body{font-size:.92em;color:#5A6861;line-height:1.7;margin-bottom:22px}'
