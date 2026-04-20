@@ -61,8 +61,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/4</div>
-  <div class="score-label">Your Score (Q1&ndash;Q4)</div>
+  <div class="score-big" id="scoreDisplay">&ndash;/5</div>
+  <div class="score-label">Your Score (Q1&ndash;Q5)</div>
 </div>
 
 <div class="answers-body">
@@ -72,31 +72,31 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     <div class="tips-title">Read in Daily Life Strategy Tips</div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">1</span> Identify the main purpose quickly</div>
+      <div class="tip-card-title"><span class="tip-num">1</span> Text messages: track who says what</div>
       <div class="tip-card-body">
-        Read the subject line (email) or title (notice) first &mdash; it often reveals the main purpose immediately. Then scan the opening sentence of the body for confirmation.
+        In SMS threads, causes, conditions, and promises are spread across speakers. Before answering, identify which bubble contains the specific fact &mdash; do not confuse your own message with the other person's.
         <div class="tip-example">
-          <strong>Q1:</strong> The subject line says "New Meal Plan Options &mdash; Spring Semester" and the first sentence announces "two new meal plan options." This is clearly informing students about new choices = C.
+          <strong>Q1:</strong> Maya writes "Final inspection is Saturday at 10am." The cleaning date is set by the inspection, not by the shampooer or work schedules = B.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">2</span> Detail questions: find the exact sentence</div>
+      <div class="tip-card-title"><span class="tip-num">2</span> EXCEPT questions: eliminate what IS stated</div>
       <div class="tip-card-body">
-        For factual detail questions, locate the specific sentence in the passage that addresses the question. The correct answer will paraphrase that sentence. Do not rely on memory &mdash; always go back to the text.
+        For <code>EXCEPT</code> or <code>NOT</code> questions, find each option in the passage and cross it off if it appears. The one you cannot find is the answer.
         <div class="tip-example">
-          <strong>Q2:</strong> The email says "Changes made after this date will not take effect until the following month." This directly matches answer B.
+          <strong>Q4:</strong> 3D printers (paragraph 3), soundproof rooms (paragraph 3), and the student cafe (paragraph 3) are all listed. Sleeping pods are never mentioned = D.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">3</span> Inference: choose what the text supports, not what you assume</div>
+      <div class="tip-card-title"><span class="tip-num">3</span> Quoted speech signals inference clues</div>
       <div class="tip-card-body">
-        Inference answers must be <strong>logically supported</strong> by specific information in the passage. Avoid options that sound reasonable but have no textual basis.
+        When a news article quotes someone directly, the quote usually carries the implied argument. Paraphrase the speaker's point in your own words before scanning options.
         <div class="tip-warn">
-          <strong>Common trap:</strong> An option may sound like common sense, but if the passage does not mention it, it cannot be the answer. Stick to what is stated or directly implied.
+          <strong>Common trap:</strong> Options that exaggerate ("will replace all," "charge less") go beyond what the quote supports. Choose the answer that restates the speaker's idea without adding new claims.
         </div>
       </div>
     </div>
@@ -104,86 +104,105 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 
   <!-- Passage 1 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 1 <span class="passage-type-badge">Email</span></div>
+    <div class="passage-title">Passage 1 <span class="passage-type-badge">Text Messages</span></div>
 
     <div class="q-card" id="card1">
-      <div class="q-num">Question 1 — Main Purpose</div>
-      <div class="q-text">What is the main purpose of this email?</div>
+      <div class="q-num">Question 1 — Factual Information</div>
+      <div class="q-text">According to the messages, why is the cleaning being done on Saturday?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours1">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt1A"><span class="label">A</span> To require all students to purchase a new meal plan</div>
-        <div class="option-review" id="opt1B"><span class="label">B</span> To explain the hours of operation for campus dining halls</div>
-        <div class="option-review is-correct" id="opt1C"><span class="label">C</span> To inform students about new meal plan choices and how to switch plans &#10003;</div>
-        <div class="option-review" id="opt1D"><span class="label">D</span> To announce that the campus cafeteria will be closed for renovations</div>
+        <div class="option-review" id="opt1A"><span class="label">A</span> The carpet shampooer is only available that day</div>
+        <div class="option-review is-correct" id="opt1B"><span class="label">B</span> The landlord scheduled the final inspection for that morning &#10003;</div>
+        <div class="option-review" id="opt1C"><span class="label">C</span> Both roommates are off work for the entire day</div>
+        <div class="option-review" id="opt1D"><span class="label">D</span> The hardware store offers a weekend discount on spackle</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email announces two new meal plan options (Flex Plan and Light Plan) and tells students how to switch plans through the student portal by January 20. The purpose is to inform students about new choices and the switching process = C.<br><br>
-        A is wrong because the email says students "may now choose" &mdash; it is optional, not required. B is not mentioned anywhere in the email. D is completely unrelated to the email content.
+        <strong>Explanation:</strong> Maya's first message says, "Final inspection is Saturday at 10am." All the cleaning plans follow from that inspection deadline = B.<br><br>
+        A twists the shampooer rental (24-hour rental, not Saturday-only). C contradicts the sent message "I have a shift till 2pm." D is never mentioned in the thread.
       </div>
     </div>
 
     <div class="q-card" id="card2">
-      <div class="q-num">Question 2 — Factual Detail</div>
-      <div class="q-text">According to the email, what will happen if a student submits a meal plan change request after January 20?</div>
+      <div class="q-num">Question 2 — Inference</div>
+      <div class="q-text">What can be inferred from Maya's warning about the deposit?</div>
       <div class="answer-row">
         <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours2">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt2A"><span class="label">A</span> The request will be rejected and the student must wait until next semester.</div>
-        <div class="option-review is-correct" id="opt2B"><span class="label">B</span> The change will not take effect until the following month. &#10003;</div>
-        <div class="option-review" id="opt2C"><span class="label">C</span> The student will be automatically placed on the Flex Plan.</div>
-        <div class="option-review" id="opt2D"><span class="label">D</span> The student will need to pay an additional processing fee.</div>
+        <div class="option-review" id="opt2A"><span class="label">A</span> The landlord has threatened them with extra charges before</div>
+        <div class="option-review is-correct" id="opt2B"><span class="label">B</span> Any overlooked task could cost them their refundable money &#10003;</div>
+        <div class="option-review" id="opt2C"><span class="label">C</span> Maya is planning to move out before the final inspection</div>
+        <div class="option-review" id="opt2D"><span class="label">D</span> The apartment is in unusually poor condition overall</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email states: "Changes made after this date will not take effect until the following month." This directly supports B.<br><br>
-        A is too extreme &mdash; the email does not say the request will be "rejected," only that it will be delayed. C has no basis in the email; no automatic assignment is mentioned. D mentions a fee that is not discussed anywhere in the email.
+        <strong>Explanation:</strong> "We lose the deposit if anything is missed" implies the deposit (refundable money) is at risk for any overlooked task = B.<br><br>
+        A adds a past threat that the thread does not mention. C contradicts the plans for the deep clean marathon. D over-reads "anything is missed" &mdash; Maya is describing a rule, not judging the apartment's overall condition.
       </div>
     </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 2 <span class="passage-type-badge">Notice</span></div>
+    <div class="passage-title">Passage 2 <span class="passage-type-badge">News Article</span></div>
 
     <div class="q-card" id="card3">
-      <div class="q-num">Question 3 — Factual Detail</div>
-      <div class="q-text">According to the notice, which of the following is a change being introduced for the 2026-2027 year?</div>
+      <div class="q-num">Question 3 — Factual Information</div>
+      <div class="q-text">According to the article, who primarily paid for the construction of the Innovation Hub?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: A</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review is-correct" id="opt3A"><span class="label">A</span> A new discount for students who carpool with three or more people &#10003;</div>
-        <div class="option-review" id="opt3B"><span class="label">B</span> Free parking for all students who live on campus</div>
-        <div class="option-review" id="opt3C"><span class="label">C</span> A reduction in the price of all parking permits</div>
-        <div class="option-review" id="opt3D"><span class="label">D</span> Extended business hours at the Transportation Services office</div>
+        <div class="option-review" id="opt3A"><span class="label">A</span> Local startup companies based near the campus</div>
+        <div class="option-review is-correct" id="opt3B"><span class="label">B</span> A private foundation associated with the university &#10003;</div>
+        <div class="option-review" id="opt3C"><span class="label">C</span> Tuition fees collected from engineering students</div>
+        <div class="option-review" id="opt3D"><span class="label">D</span> Federal grants awarded by the national government</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The notice lists "A new carpool discount of 20 percent will be offered to groups of three or more students who register a shared vehicle." This matches A.<br><br>
-        B is the opposite of what the notice says &mdash; freshman students will actually <strong>lose</strong> individual parking eligibility. C is wrong because permit fees are <strong>increasing</strong> by 10 percent, not decreasing. D is not mentioned; the business hours are stated as existing hours, not new ones.
+        <strong>Explanation:</strong> The article states the project "was funded primarily by a grant from the Hartwell Foundation" &mdash; a private foundation linked to the university = B.<br><br>
+        A confuses startups (users of the Hub) with funders. C and D introduce funding sources (tuition, federal grants) that the article never mentions.
       </div>
     </div>
 
     <div class="q-card" id="card4">
-      <div class="q-num">Question 4 — Inference</div>
-      <div class="q-text">What can be inferred about freshman students living on campus starting in 2026-2027?</div>
+      <div class="q-num">Question 4 — Negative Factual Information</div>
+      <div class="q-text">According to the article, all of the following are features of the Innovation Hub EXCEPT</div>
       <div class="answer-row">
         <span class="answer-tag tag-correct">Correct: D</span>
         <span class="answer-tag" id="yours4">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> They will be required to use public transportation exclusively.</div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> They will not be able to park their own cars on campus individually.</div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> They will receive free bus passes as part of their housing fees.</div>
-        <div class="option-review is-correct" id="opt4D"><span class="label">D</span> They will be exempt from the 10 percent fee increase. &#10003;</div>
+        <div class="option-review" id="opt4A"><span class="label">A</span> a prototyping lab equipped with 3D printers</div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> several soundproof meeting rooms for team use</div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> a cafe managed by a student-run cooperative</div>
+        <div class="option-review is-correct" id="opt4D"><span class="label">D</span> overnight sleeping pods for visiting researchers &#10003;</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The notice says freshman students in campus housing "will no longer be eligible for individual parking permits." Since they cannot purchase individual permits, the 10 percent fee increase on permits does not apply to them &mdash; they are effectively exempt = D.<br><br>
-        A is too extreme &mdash; the notice does not say they must use public transportation "exclusively." B is close, but the notice mentions that "shared-vehicle permits will be available," meaning freshmen <strong>can</strong> still park on campus through a shared arrangement; they simply cannot get their own individual permit. C mentions free bus passes, which are never discussed in the notice.
+        <strong>Explanation:</strong> The facility list mentions 3D printers (A), four soundproof meeting rooms (B), and a cafe run by a student cooperative (C). Sleeping pods are never described = D.<br><br>
+        Remember: visiting researchers are mentioned only as users of the Hub, not as residents. The article gives no information about overnight accommodation.
+      </div>
+    </div>
+
+    <div class="q-card" id="card5">
+      <div class="q-num">Question 5 — Inference</div>
+      <div class="q-text">What does Dean Ortiz suggest about the mentorship program?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: A</span>
+        <span class="answer-tag" id="yours5">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt5A"><span class="label">A</span> Students prefer guidance from those with real-world experience &#10003;</div>
+        <div class="option-review" id="opt5B"><span class="label">B</span> The program will eventually replace all traditional classes</div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> Current faculty members lacked interest in advising teams</div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> Retired professionals charge less than university lecturers</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> Ortiz quotes graduates as wanting "feedback from people who have actually built businesses" &mdash; in other words, mentors with real-world experience = A.<br><br>
+        B is too extreme: she says lectures cannot provide this feedback, not that lectures will be eliminated. C adds a motive (faculty disinterest) that the article does not support. D introduces a cost comparison that is never discussed.
       </div>
     </div>
   </div>
@@ -195,7 +214,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <script>
-var correctAnswers = {'1':'C','2':'B','3':'A','4':'D'};
+var correctAnswers = {'1':'B','2':'B','3':'B','4':'D','5':'A'};
 (function(){
   var saved = sessionStorage.getItem('training_rdl_p4_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -216,7 +235,7 @@ var correctAnswers = {'1':'C','2':'B','3':'A','4':'D'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/4';
+  document.getElementById('scoreDisplay').textContent = score+'/5';
 })();
 </script>
 <script src="../../js/auth.js"></script>

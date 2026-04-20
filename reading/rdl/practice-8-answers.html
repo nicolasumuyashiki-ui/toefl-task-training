@@ -61,8 +61,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/4</div>
-  <div class="score-label">Your Score (Q1&ndash;Q4)</div>
+  <div class="score-big" id="scoreDisplay">&ndash;/5</div>
+  <div class="score-label">Your Score (Q1&ndash;Q5)</div>
 </div>
 
 <div class="answers-body">
@@ -72,38 +72,31 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     <div class="tips-title">Read in Daily Life Strategy Tips</div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">1</span> Identify the purpose from opening keywords</div>
+      <div class="tip-card-title"><span class="tip-num">1</span> News articles: separate facts from background</div>
       <div class="tip-card-body">
-        The first 1-2 sentences reveal the purpose of the text. Learn the patterns:<br><br>
-        <strong>Announcement:</strong> <code>We are pleased to announce...</code> / <code>We are hosting...</code><br>
-        <strong>Notification:</strong> <code>We would like to inform you...</code><br>
-        <strong>Invitation:</strong> <code>You are invited to...</code> / <code>Registration is now open...</code><br>
-        <strong>Instructions:</strong> <code>To participate, you must...</code> / <code>Please follow these steps...</code>
+        News articles open with the core event ("who did what, when, where"). Later paragraphs add reasons, quotes, and future plans. For factual questions, locate the specific paragraph that deals with that sub-topic rather than re-reading the whole article.
         <div class="tip-example">
-          <strong>Q1:</strong> The email opens with "The campus bookstore will be hosting its end-of-semester textbook buyback program." The word "hosting" and the details about dates and procedures indicate this is an announcement about a program = A.
+          <strong>Q2:</strong> The funding question is answered only in paragraph 3: "Funding for the saplings came from a grant... tools and refreshments were donated by local businesses." = C.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">2</span> Detail questions: match each option to the passage</div>
+      <div class="tip-card-title"><span class="tip-num">2</span> Inference: check the future-tense sentences</div>
       <div class="tip-card-body">
-        <strong>Steps:</strong><br>
-        1. Read the question carefully and identify what specific detail is being asked about<br>
-        2. Locate the relevant sentence in the passage<br>
-        3. Match the passage wording to the correct option (look for paraphrases)
+        When an article ends with a sentence about "plans to," "will hold," or "goal of," that line is often the basis for inference questions. The writer is telling you what comes next &mdash; use that to draw conclusions about the organization or the event.
         <div class="tip-example">
-          <strong>Q2:</strong> The passage states "Payment will be issued as campus bookstore credit." This directly matches option C: "As bookstore credit for future purchases."
+          <strong>Q3:</strong> "Green Roots plans to hold a second planting session in October, with a goal of reaching 1,500 trees." This directly supports "The group intends to continue its planting work" = B.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">3</span> Inference questions: stick to the text</div>
+      <div class="tip-card-title"><span class="tip-num">3</span> Social media posts: read the informal tone carefully</div>
       <div class="tip-card-body">
-        For inference questions, the answer must be <strong>logically supported by information in the passage</strong>. Do not mix in your own knowledge or assumptions.
+        Social posts are short and casual, but every phrase carries information. "Honestly, my Portuguese is still rough, but the staff keep switching to English to help me out" shows both a difficulty and a positive response. For inference, ask: "What attitude or situation does the writer's word choice reveal?"
         <div class="tip-example">
-          <strong>Q4:</strong> The notice says registration is "open to all currently enrolled students, regardless of major or year of study." This directly supports D: any currently enrolled student can attend.
+          <strong>Q5:</strong> The coworkers "switching to English to help me out" signals they are being flexible and supportive about the language gap = A.
         </div>
       </div>
     </div>
@@ -111,86 +104,105 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 
   <!-- Passage 1 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 1 <span class="passage-type-badge">Email</span></div>
+    <div class="passage-title">Passage 1 <span class="passage-type-badge">News Article</span></div>
 
     <div class="q-card" id="card1">
-      <div class="q-num">Question 1 — Main Purpose</div>
-      <div class="q-text">What is the main purpose of this email?</div>
+      <div class="q-num">Question 1 — Factual Detail</div>
+      <div class="q-text">According to the article, why were red maple, river birch, and swamp oak chosen for the planting?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: A</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours1">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review is-correct" id="opt1A"><span class="label">A</span> To announce a program where students can sell back their used textbooks &#10003;</div>
-        <div class="option-review" id="opt1B"><span class="label">B</span> To inform students about new textbook prices for next semester</div>
-        <div class="option-review" id="opt1C"><span class="label">C</span> To warn students that the bookstore will be closing temporarily</div>
-        <div class="option-review" id="opt1D"><span class="label">D</span> To encourage students to donate their textbooks to the library</div>
+        <div class="option-review" id="opt1A"><span class="label">A</span> They grow faster than most other native tree species.</div>
+        <div class="option-review is-correct" id="opt1B"><span class="label">B</span> They do well in damp ground and bring in pollinating insects. &#10003;</div>
+        <div class="option-review" id="opt1C"><span class="label">C</span> They produce wood that can be sold to local businesses later.</div>
+        <div class="option-review" id="opt1D"><span class="label">D</span> They were the only saplings that the state grant covered.</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email announces the "end-of-semester textbook buyback program," explains the dates (May 5&ndash;16), location (second floor of the Student Center), and conditions for selling back books. This is clearly an announcement about a buyback program = A.<br><br>
-        B is wrong because the email is about selling back used books, not new textbook prices. C is wrong because the bookstore is not closing; it is hosting a special program. D is wrong because students are selling books for credit, not donating them.
+        <strong>Explanation:</strong> The article says the species were chosen because "they thrive in wet soil and attract pollinators." "Wet soil" paraphrases to "damp ground," and "attract pollinators" paraphrases to "bring in pollinating insects" = B.<br><br>
+        A (grow faster) and C (wood sales) are not mentioned. D misreads the grant &mdash; the grant funded the saplings, but the article gives no suggestion that only these three species were eligible.
       </div>
     </div>
 
     <div class="q-card" id="card2">
       <div class="q-num">Question 2 — Factual Detail</div>
-      <div class="q-text">According to the email, how will students receive payment for their textbooks?</div>
+      <div class="q-text">How was the event paid for?</div>
       <div class="answer-row">
         <span class="answer-tag tag-correct">Correct: C</span>
         <span class="answer-tag" id="yours2">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt2A"><span class="label">A</span> By direct deposit into their bank accounts</div>
-        <div class="option-review" id="opt2B"><span class="label">B</span> As a cash refund at the checkout counter</div>
-        <div class="option-review is-correct" id="opt2C"><span class="label">C</span> As bookstore credit for future purchases &#10003;</div>
-        <div class="option-review" id="opt2D"><span class="label">D</span> Through a check mailed to their home address</div>
+        <div class="option-review" id="opt2A"><span class="label">A</span> Volunteers paid small fees to participate in the planting.</div>
+        <div class="option-review" id="opt2B"><span class="label">B</span> Maplewood town council covered the full cost of supplies.</div>
+        <div class="option-review is-correct" id="opt2C"><span class="label">C</span> A state grant bought the saplings while local shops gave tools and food. &#10003;</div>
+        <div class="option-review" id="opt2D"><span class="label">D</span> Green Roots Maplewood sold T-shirts to raise the money needed.</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email clearly states: "Payment will be issued as campus bookstore credit, which can be applied toward future textbook purchases" = C.<br><br>
-        A (direct deposit), B (cash refund), and D (check by mail) are all payment methods that are <strong>not mentioned</strong> anywhere in the email. This is a straightforward detail question where the answer directly matches the passage.
+        <strong>Explanation:</strong> Paragraph 3 explains: "Funding for the saplings came from a grant awarded by the state environment office... tools and refreshments were donated by local businesses." This gives two funding sources that exactly match C.<br><br>
+        A (volunteer fees), B (town council), and D (T-shirt sales) are all plausible but have no basis in the text.
+      </div>
+    </div>
+
+    <div class="q-card" id="card3">
+      <div class="q-num">Question 3 — Inference</div>
+      <div class="q-text">What can be inferred about Green Roots Maplewood?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt3A"><span class="label">A</span> The group was founded shortly before this particular event.</div>
+        <div class="option-review is-correct" id="opt3B"><span class="label">B</span> The group intends to continue its planting work beyond this event. &#10003;</div>
+        <div class="option-review" id="opt3C"><span class="label">C</span> The group mainly focuses on bird-watching rather than planting trees.</div>
+        <div class="option-review" id="opt3D"><span class="label">D</span> The group will shift its attention to cleaning up the river next year.</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> The final sentence reads: "Green Roots plans to hold a second planting session in October, with a goal of reaching 1,500 trees by next spring." This clearly implies ongoing, future planting activity = B.<br><br>
+        A is contradicted by the phrase "largest community tree-planting event to date," which implies a track record. C misreads the birds/insects line &mdash; those are beneficiaries, not the group's focus. D invents a river-cleanup project that is never mentioned.
       </div>
     </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 2 <span class="passage-type-badge">Notice</span></div>
-
-    <div class="q-card" id="card3">
-      <div class="q-num">Question 3 — Factual Detail</div>
-      <div class="q-text">According to the notice, which of the following is a recommended preparation step for the career fair?</div>
-      <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: B</span>
-        <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
-      </div>
-      <div style="margin:10px 0">
-        <div class="option-review" id="opt3A"><span class="label">A</span> Submitting a cover letter to each employer before the event</div>
-        <div class="option-review is-correct" id="opt3B"><span class="label">B</span> Researching the companies that will be attending the fair &#10003;</div>
-        <div class="option-review" id="opt3C"><span class="label">C</span> Paying a registration fee at the Career Services office</div>
-        <div class="option-review" id="opt3D"><span class="label">D</span> Scheduling an interview with employers before the fair begins</div>
-      </div>
-      <div class="explanation">
-        <strong>Explanation:</strong> The notice lists three recommended preparation steps. One of them is: "Research the list of attending companies, which will be posted on the portal by May 1." This matches B.<br><br>
-        A is wrong &mdash; submitting cover letters is not mentioned. C is wrong &mdash; the notice explicitly states "Registration is <strong>free</strong>," so there is no fee. D is wrong &mdash; scheduling interviews is not mentioned as a preparation step.
-      </div>
-    </div>
+    <div class="passage-title">Passage 2 <span class="passage-type-badge">Social Media Post</span></div>
 
     <div class="q-card" id="card4">
-      <div class="q-num">Question 4 — Inference</div>
-      <div class="q-text">What can be inferred about who is eligible to attend the career fair?</div>
+      <div class="q-num">Question 4 — Factual Detail</div>
+      <div class="q-text">According to the post, what does Mia do in the afternoons?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: D</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours4">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> Only students in their final year of study may attend.</div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> Students must have previous work experience to register.</div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> Only business and engineering majors are invited to the fair.</div>
-        <div class="option-review is-correct" id="opt4D"><span class="label">D</span> Any currently enrolled student can attend, no matter what they are studying. &#10003;</div>
+        <div class="option-review" id="opt4A"><span class="label">A</span> She attends Portuguese language classes at her university.</div>
+        <div class="option-review is-correct" id="opt4B"><span class="label">B</span> She works as an intern at a design studio in the city center. &#10003;</div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> She travels by train to other cities around Portugal.</div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> She teaches English lessons to local high school students.</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The notice states: "Registration is free and open to all currently enrolled students, regardless of major or year of study." From this we can infer that any enrolled student is eligible, regardless of what they study = D.<br><br>
-        A directly contradicts the passage &mdash; the notice says "regardless of... year of study." B has no basis in the text &mdash; work experience is not mentioned. C directly contradicts "regardless of major."
+        <strong>Explanation:</strong> The post says: "Classes finish at noon, so afternoons are free for the internship at a small design studio downtown." "Downtown" paraphrases to "city center" = B.<br><br>
+        A reverses the timing &mdash; classes are in the morning, not afternoon. C refers to the upcoming weekend trip to Porto, not her weekday afternoons. D (teaching English) is not mentioned anywhere in the post.
+      </div>
+    </div>
+
+    <div class="q-card" id="card5">
+      <div class="q-num">Question 5 — Inference</div>
+      <div class="q-text">What can be inferred about Mia's experience at the design studio?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: A</span>
+        <span class="answer-tag" id="yours5">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt5A"><span class="label">A</span> Her coworkers are being accommodating about the language barrier. &#10003;</div>
+        <div class="option-review" id="opt5B"><span class="label">B</span> She has decided to stop using Portuguese in the office completely.</div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> She is being paid a higher salary than other summer interns.</div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> She has been asked to lead a major project on her own soon.</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> Mia writes, "my Portuguese is still rough, but the staff keep switching to English to help me out." The coworkers changing languages on her behalf shows they are being flexible and supportive = A.<br><br>
+        B overstates the situation &mdash; the staff switch for her, but she never says she has stopped using Portuguese. C (salary) and D (leading a project) are not supported anywhere in the post.
       </div>
     </div>
   </div>
@@ -202,7 +214,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <script>
-var correctAnswers = {'1':'A','2':'C','3':'B','4':'D'};
+var correctAnswers = {'1':'B','2':'C','3':'B','4':'B','5':'A'};
 (function(){
   var saved = sessionStorage.getItem('training_rdl_p8_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -223,7 +235,7 @@ var correctAnswers = {'1':'A','2':'C','3':'B','4':'D'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/4';
+  document.getElementById('scoreDisplay').textContent = score+'/5';
 })();
 </script>
 <script src="../../js/auth.js"></script>

@@ -57,25 +57,35 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 .option-label{font-weight:600;color:#007646;min-width:28px}
 .option-text{flex:1;color:#0F1511}
 
-/* EMAIL STYLES */
-.email-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.email-subject{background:#FBF6EC;padding:14px 20px;font-weight:700;font-size:.95em;color:#0F1511;border-bottom:1px solid #F5E9D3}
-.email-meta{padding:10px 20px;font-size:.85em;color:#5A6861;border-bottom:1px solid #F5E9D3;display:flex;flex-direction:column;gap:2px}
-.email-meta span{display:block}
-.email-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.email-body p{margin-bottom:10px}
-.email-body p:last-child{margin-bottom:0}
+/* FORM STYLES */
+.form-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.form-header{background:#002817;color:#fff;padding:14px 20px}
+.form-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
+.form-header p{font-size:.8em;color:rgba(255,255,255,.7)}
+.form-body{padding:16px 20px;font-size:.9em;color:#0F1511}
+.form-row{display:flex;padding:8px 0;border-bottom:1px dashed #F5E9D3;gap:12px}
+.form-row:last-child{border-bottom:none}
+.form-label{flex:0 0 42%;font-weight:600;color:#5A6861;font-size:.85em}
+.form-value{flex:1;color:#0F1511;font-family:'Courier New',monospace;font-size:.88em}
+.form-note{background:#FBF6EC;padding:10px 14px;margin-top:10px;border-radius:6px;font-size:.82em;color:#5A6861;line-height:1.5}
+.form-note strong{color:#0F1511}
+.form-check{display:inline-block;width:14px;height:14px;border:1px solid #0F1511;background:#fff;margin-right:4px;vertical-align:middle;text-align:center;line-height:12px;font-size:.7em;color:#0F1511}
+.form-check.on{background:#007646;border-color:#007646;color:#fff}
 
-/* NOTICE STYLES */
-.notice-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.notice-header{background:#002817;color:#fff;padding:16px 20px;text-align:center}
-.notice-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
-.notice-header p{font-size:.8em;color:rgba(255,255,255,.7)}
-.notice-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.notice-body p{margin-bottom:10px}
-.notice-body p:last-child{margin-bottom:0}
-.notice-body ul{margin:8px 0 10px 20px}
-.notice-body li{margin-bottom:4px}
+/* RECEIPT STYLES */
+.receipt-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);font-family:'Courier New',monospace}
+.receipt-header{text-align:center;padding:16px 20px;border-bottom:2px dashed #F5E9D3;background:#FBF6EC}
+.receipt-header h3{font-size:1em;font-weight:700;color:#0F1511;margin-bottom:2px;font-family:'Segoe UI',sans-serif}
+.receipt-header p{font-size:.8em;color:#5A6861;line-height:1.4}
+.receipt-meta{padding:10px 20px;font-size:.82em;color:#5A6861;border-bottom:1px dashed #F5E9D3;display:flex;justify-content:space-between}
+.receipt-body{padding:12px 20px;font-size:.85em;color:#0F1511}
+.receipt-item{display:flex;justify-content:space-between;padding:4px 0;gap:10px}
+.receipt-item .desc{flex:1}
+.receipt-item .price{font-weight:600;white-space:nowrap}
+.receipt-divider{border:none;border-top:1px dashed #F5E9D3;margin:8px 0}
+.receipt-total{display:flex;justify-content:space-between;padding:6px 0;font-weight:700;font-size:.95em;color:#0F1511}
+.receipt-total.grand{border-top:2px solid #0F1511;padding-top:8px;margin-top:4px;color:#002817}
+.receipt-footer{padding:10px 20px;border-top:2px dashed #F5E9D3;text-align:center;font-size:.78em;color:#5A6861;background:#FBF6EC;line-height:1.5}
 
 /* REVIEW OVERLAY */
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}
@@ -95,7 +105,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- TOP NAV -->
 <div class="top-nav">
   <div class="top-nav-left">
-    <span>Question <span id="qLabel"><strong>1</strong></span> of 4</span>
+    <span>Question <span id="qLabel"><strong>1</strong></span> of 5</span>
     <span>|</span>
     <span>Reading in Daily Life</span>
   </div>
@@ -110,175 +120,214 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- PROGRESS BAR -->
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
 
-<!-- ========== PAGE 1: Passage 1 — Email (Short) ========== -->
+<!-- ========== PAGE 1: Passage 1 — Form (Short) ========== -->
 <div class="split-main" id="passagePage1">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 1 of 2</div>
-    <div class="instruction">Read an email.</div>
-    <div class="email-container">
-      <div class="email-subject">Subject: Pool Maintenance Schedule — Temporary Closures</div>
-      <div class="email-meta">
-        <span><strong>From:</strong> Greenfield University Campus Recreation Center &lt;recreation@greenfield.edu&gt;</span>
-        <span><strong>To:</strong> All Students, Faculty &amp; Staff</span>
-        <span><strong>Date:</strong> October 2, 2025</span>
+    <div class="instruction">Read a form.</div>
+    <div class="form-container">
+      <div class="form-header">
+        <h3>Student Parking Permit Application — Fall 2025</h3>
+        <p>Pinebrook University — Office of Transportation Services</p>
       </div>
-      <div class="email-body">
-        <p>Dear Campus Community,</p>
-        <p>The Campus Recreation Center would like to inform you that the indoor swimming pool will be temporarily closed for scheduled maintenance from October 10 through October 17. During this period, the pool filtration system will be inspected, tiles along the pool deck will be repaired, and the water heating unit will be serviced.</p>
-        <p>Lap swimmers who wish to continue training during the closure may use the outdoor pool at the West Athletic Complex, which will extend its hours to 6:00 AM &ndash; 9:00 PM for the duration of the maintenance period. Please note that the outdoor pool is unheated, so appropriate gear is recommended.</p>
-        <p>Regular pool hours will resume on October 18. We apologize for any inconvenience and appreciate your understanding.</p>
-        <p>Best regards,<br>Campus Recreation Center<br>Greenfield University</p>
+      <div class="form-body">
+        <div class="form-row"><div class="form-label">Applicant Name</div><div class="form-value">Daniel R. Hoffman</div></div>
+        <div class="form-row"><div class="form-label">Student ID</div><div class="form-value">PBU-2024-08831</div></div>
+        <div class="form-row"><div class="form-label">Class Standing</div><div class="form-value">Junior (Third Year)</div></div>
+        <div class="form-row"><div class="form-label">Residence Status</div><div class="form-value">Off-campus commuter</div></div>
+        <div class="form-row"><div class="form-label">Vehicle Make / Model</div><div class="form-value">2019 Honda Civic</div></div>
+        <div class="form-row"><div class="form-label">License Plate</div><div class="form-value">KRM-4782 (Ohio)</div></div>
+        <div class="form-row"><div class="form-label">Permit Zone Requested</div><div class="form-value">Zone C — West Commuter Lot</div></div>
+        <div class="form-row"><div class="form-label">Permit Type</div><div class="form-value"><span class="form-check on">&#10003;</span>Full Semester &nbsp; <span class="form-check">&nbsp;</span>Monthly</div></div>
+        <div class="form-row"><div class="form-label">Fee Enclosed</div><div class="form-value">$180.00 (check #2214)</div></div>
+        <div class="form-note"><strong>Note:</strong> Zone C permits are valid only Monday through Friday, 7:00 AM to 8:00 PM. Overnight parking requires a separate residential permit.</div>
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q1: Main Purpose -->
+    <!-- Q1: Factual -->
     <div class="question-page active" id="page1">
       <div class="question-text">
-        <span class="question-number">1.</span>What is the main purpose of this email?
+        <span class="question-number">1.</span>According to the form, which permit zone did the applicant request?
       </div>
       <div class="options">
         <div class="option" data-q="1" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q1" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">To notify the campus community about a temporary pool closure and alternative arrangements</span>
+          <span class="option-text">Zone A, reserved for first-year resident students</span>
         </div>
         <div class="option" data-q="1" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q1" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">To encourage students to join the university swim team</span>
+          <span class="option-text">Zone B, the east lot reserved for faculty parking</span>
         </div>
         <div class="option" data-q="1" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q1" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">To announce a permanent change to pool operating hours</span>
+          <span class="option-text">Zone C, the west commuter lot near campus</span>
         </div>
         <div class="option" data-q="1" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q1" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">To request feedback on the recreation center's facilities</span>
+          <span class="option-text">Zone D, the overnight lot for residential students</span>
         </div>
       </div>
     </div>
 
-    <!-- Q2: Detail -->
+    <!-- Q2: Inference -->
     <div class="question-page" id="page2">
       <div class="question-text">
-        <span class="question-number">2.</span>According to the email, what option is available for lap swimmers during the closure?
+        <span class="question-number">2.</span>What can be inferred about the applicant's parking situation?
       </div>
       <div class="options">
         <div class="option" data-q="2" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q2" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">They can use a heated pool at a nearby community center.</span>
+          <span class="option-text">He cannot leave his car in the lot on Sunday afternoons.</span>
         </div>
         <div class="option" data-q="2" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q2" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">They can use the outdoor pool at the West Athletic Complex with extended hours.</span>
+          <span class="option-text">He will receive a full refund if the permit is unused.</span>
         </div>
         <div class="option" data-q="2" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q2" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">They will receive a temporary membership at an off-campus gym.</span>
+          <span class="option-text">He must renew the permit each month throughout the semester.</span>
         </div>
         <div class="option" data-q="2" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q2" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">They can schedule private sessions in the pool before 6:00 AM.</span>
+          <span class="option-text">He plans to move into a campus residence hall soon.</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== PAGE 2: Passage 2 — Notice (Longer) ========== -->
+<!-- ========== PAGE 2: Passage 2 — Receipt (Longer) ========== -->
 <div class="split-main" id="passagePage2" style="display:none">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 2 of 2</div>
-    <div class="instruction">Read a notice.</div>
-    <div class="notice-container">
-      <div class="notice-header">
-        <h3>IMPORTANT: Course Withdrawal Policy and Deadlines</h3>
-        <p>Office of Academic Affairs &mdash; Greenfield University</p>
+    <div class="instruction">Read a receipt.</div>
+    <div class="receipt-container">
+      <div class="receipt-header">
+        <h3>Pinebrook Campus Bookstore</h3>
+        <p>120 University Plaza &middot; Pinebrook, OH<br>(555) 412-0098 &middot; bookstore@pbu.edu</p>
       </div>
-      <div class="notice-body">
-        <p>Dear Students,</p>
-        <p>The Office of Academic Affairs would like to remind all currently enrolled students of the university's course withdrawal policy for the Fall 2025 semester. Understanding these deadlines is essential, as missing them may have significant academic and financial consequences.</p>
-        <p>Students who wish to drop a course without any record on their transcript must do so by October 15. After this date and until November 14, students may still withdraw from a course, but a "W" (Withdrawn) notation will appear on their academic record. Please note that a "W" does not affect your GPA, but it is visible to graduate schools and future employers who review your transcript.</p>
-        <p>After November 14, withdrawal is not permitted except in cases of documented medical emergency or other extraordinary circumstances, which must be approved by the Dean of Students. In such cases, students should submit a formal petition along with supporting documentation to the Academic Affairs office in Room 210 of the Administration Building.</p>
-        <p>Important financial information:</p>
-        <ul>
-          <li>Full tuition refund is available only for courses dropped before October 15.</li>
-          <li>A 50% tuition refund applies to withdrawals made between October 15 and October 31.</li>
-          <li>No refund is available for withdrawals after October 31.</li>
-        </ul>
-        <p>If you have questions about how a withdrawal might affect your academic plan, we strongly encourage you to meet with your academic advisor before making a decision. The Academic Advising Center is open Monday through Friday, 9:00 AM to 4:30 PM.</p>
-        <p>Office of Academic Affairs<br>Greenfield University</p>
+      <div class="receipt-meta">
+        <span>Receipt #: 48271</span>
+        <span>Sep 04, 2025  14:22</span>
+      </div>
+      <div class="receipt-body">
+        <div class="receipt-item"><span class="desc">Introduction to Macroeconomics (used)</span><span class="price">$62.50</span></div>
+        <div class="receipt-item"><span class="desc">General Chemistry, 11th ed. (new)</span><span class="price">$148.00</span></div>
+        <div class="receipt-item"><span class="desc">Statistics Workbook (new)</span><span class="price">$34.95</span></div>
+        <div class="receipt-item"><span class="desc">Scientific calculator — TX-36</span><span class="price">$29.99</span></div>
+        <div class="receipt-item"><span class="desc">Spiral notebooks (pack of 3)</span><span class="price">$8.50</span></div>
+        <hr class="receipt-divider">
+        <div class="receipt-total"><span>Subtotal</span><span>$283.94</span></div>
+        <div class="receipt-total"><span>Student discount (10%, books only)</span><span>-$24.55</span></div>
+        <div class="receipt-total"><span>Sales tax (6.5%, non-book items)</span><span>$2.50</span></div>
+        <div class="receipt-total grand"><span>TOTAL</span><span>$261.89</span></div>
+        <hr class="receipt-divider">
+        <div class="receipt-item"><span class="desc">Paid: Visa ****3217</span><span class="price">$261.89</span></div>
+      </div>
+      <div class="receipt-footer">
+        Returns accepted within 14 days with receipt. Opened textbooks and digital access codes are non-refundable. Electronics may be exchanged within 7 days for defects only. Thank you for shopping at Pinebrook!
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q3: Factual Detail -->
+    <!-- Q3: Factual -->
     <div class="question-page active" id="page3">
       <div class="question-text">
-        <span class="question-number">3.</span>According to the notice, which of the following is true about withdrawing from a course between October 15 and November 14?
+        <span class="question-number">3.</span>According to the receipt, how was the student discount applied?
       </div>
       <div class="options">
         <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q3" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">The course will be completely removed from the student's transcript.</span>
+          <span class="option-text">As a flat ten-dollar reduction on the total price</span>
         </div>
         <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q3" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">The student will receive a failing grade for the course.</span>
+          <span class="option-text">As a ten percent reduction, applied only to books</span>
         </div>
         <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q3" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">The student must obtain approval from the Dean of Students.</span>
+          <span class="option-text">As a full refund of the six-point-five percent tax</span>
         </div>
         <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q3" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">A "W" notation will appear on the transcript but will not affect the GPA.</span>
+          <span class="option-text">As store credit that can be used on future visits</span>
         </div>
       </div>
     </div>
 
-    <!-- Q4: Inference -->
+    <!-- Q4: NOT/EXCEPT -->
     <div class="question-page" id="page4">
       <div class="question-text">
-        <span class="question-number">4.</span>What can be inferred about a student who withdraws from a course on October 20?
+        <span class="question-number">4.</span>According to the return policy, all of the following are true EXCEPT
       </div>
       <div class="options">
         <div class="option" data-q="4" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q4" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">The student will receive a full tuition refund and no transcript notation.</span>
+          <span class="option-text">Returns are accepted within fourteen days with the receipt.</span>
         </div>
         <div class="option" data-q="4" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q4" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">The student will need to submit a formal petition to the Dean.</span>
+          <span class="option-text">Opened textbooks can be returned for a full cash refund.</span>
         </div>
         <div class="option" data-q="4" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q4" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">The student will have a "W" on the transcript and receive a 50% tuition refund.</span>
+          <span class="option-text">Digital access codes cannot be refunded at any time.</span>
         </div>
         <div class="option" data-q="4" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q4" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">The student will not receive any refund but will have no transcript notation.</span>
+          <span class="option-text">Defective electronics may be exchanged within seven days.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Inference -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>What can be inferred about the sales tax on this purchase?
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">Tax was charged on every item listed on the receipt.</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">Textbooks in this state are exempt from sales tax.</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">Tax was applied only after the student discount ended.</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">The tax was refunded at the checkout counter.</span>
         </div>
       </div>
     </div>
@@ -303,7 +352,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <script src="../../js/progress.js"></script>
 <script>
 var currentQ = 1;
-var totalQ = 4;
+var totalQ = 5;
 var userAnswers = {};
 var timerVisible = true;
 var timeLeft = 600; // 10 minutes
@@ -351,7 +400,7 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-// Passage page mapping: questions 1-2 = passage 1, questions 3-4 = passage 2
+// Passage page mapping: questions 1-2 = passage 1, questions 3-5 = passage 2
 function getPassagePage(q){ return q <= 2 ? 1 : 2; }
 
 function selectOption(el){
@@ -371,10 +420,10 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'A','2':'B','3':'D','4':'C'};
+    var ca={'1':'C','2':'A','3':'B','4':'B','5':'B'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    sessionStorage.setItem('training_score_rdl_p5',JSON.stringify({correct:sc,total:4}));
+    sessionStorage.setItem('training_score_rdl_p5',JSON.stringify({correct:sc,total:5}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-5-answers.html';
     return;

@@ -57,15 +57,6 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 .option-label{font-weight:600;color:#007646;min-width:28px}
 .option-text{flex:1;color:#0F1511}
 
-/* EMAIL STYLES */
-.email-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.email-subject{background:#FBF6EC;padding:14px 20px;font-weight:700;font-size:.95em;color:#0F1511;border-bottom:1px solid #F5E9D3}
-.email-meta{padding:10px 20px;font-size:.85em;color:#5A6861;border-bottom:1px solid #F5E9D3;display:flex;flex-direction:column;gap:2px}
-.email-meta span{display:block}
-.email-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.email-body p{margin-bottom:10px}
-.email-body p:last-child{margin-bottom:0}
-
 /* NOTICE STYLES */
 .notice-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .notice-header{background:#002817;color:#fff;padding:16px 20px;text-align:center}
@@ -76,6 +67,24 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 .notice-body p:last-child{margin-bottom:0}
 .notice-body ul{margin:8px 0 10px 20px}
 .notice-body li{margin-bottom:4px}
+.notice-footer{border-top:1px solid #F5E9D3;padding:12px 20px;font-size:.82em;color:#5A6861;background:#FBF6EC}
+
+/* SMS / PHONE FRAME STYLES */
+.phone-frame{max-width:360px;margin:0 auto;background:#0F1511;border-radius:28px;padding:14px 10px;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.phone-screen{background:#ECE5D8;border-radius:20px;overflow:hidden;min-height:420px;display:flex;flex-direction:column}
+.phone-header{background:#F5E9D3;padding:12px 14px;text-align:center;border-bottom:1px solid #D6DAD7}
+.phone-header .contact-name{font-size:.95em;font-weight:700;color:#0F1511}
+.phone-header .contact-sub{font-size:.75em;color:#5A6861;margin-top:1px}
+.message-thread{flex:1;padding:14px 12px;display:flex;flex-direction:column;gap:6px;overflow-y:auto}
+.message-timestamp{text-align:center;font-size:.7em;color:#5A6861;margin:6px 0 2px;font-weight:500}
+.message-row{display:flex;width:100%}
+.message-row.sent{justify-content:flex-end}
+.message-row.received{justify-content:flex-start}
+.message-bubble{max-width:78%;padding:8px 12px;border-radius:16px;font-size:.88em;line-height:1.45;word-wrap:break-word}
+.message-row.sent .message-bubble{background:#007646;color:#fff;border-bottom-right-radius:4px}
+.message-row.received .message-bubble{background:#fff;color:#0F1511;border-bottom-left-radius:4px;border:1px solid #D6DAD7}
+.message-meta{font-size:.68em;color:#5A6861;margin-top:2px;padding:0 4px}
+.message-row.sent .message-meta{text-align:right}
 
 /* REVIEW OVERLAY */
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}
@@ -95,7 +104,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- TOP NAV -->
 <div class="top-nav">
   <div class="top-nav-left">
-    <span>Question <span id="qLabel"><strong>1</strong></span> of 4</span>
+    <span>Question <span id="qLabel"><strong>1</strong></span> of 5</span>
     <span>|</span>
     <span>Reading in Daily Life</span>
   </div>
@@ -110,176 +119,235 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- PROGRESS BAR -->
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
 
-<!-- ========== PAGE 1: Passage 1 — Email ========== -->
+<!-- ========== PAGE 1: Passage 1 — Notice (Longer, 3 questions) ========== -->
 <div class="split-main" id="passagePage1">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 1 of 2</div>
-    <div class="instruction">Read an email.</div>
-    <div class="email-container">
-      <div class="email-subject">Subject: Study Abroad Program — Application Deadline Approaching</div>
-      <div class="email-meta">
-        <span><strong>From:</strong> Office of International Programs &lt;abroad@westfield.edu&gt;</span>
-        <span><strong>To:</strong> All Undergraduate Students</span>
-        <span><strong>Date:</strong> November 12, 2025</span>
+    <div class="instruction">Read a notice.</div>
+    <div class="notice-container">
+      <div class="notice-header">
+        <h3>TEMPORARY CLOSURE: Campus Recreation Center</h3>
+        <p>Department of Athletics — Bellmont University</p>
       </div>
-      <div class="email-body">
-        <p>Dear Students,</p>
-        <p>The Office of International Programs is pleased to remind you that the application deadline for the Spring 2026 Study Abroad Program is Friday, December 6. We currently offer exchange partnerships with universities in twelve countries, including the United Kingdom, Japan, Australia, and Brazil.</p>
-        <p>To apply, you must have completed at least 30 credit hours and have a cumulative GPA of 2.75 or higher. Applications must be submitted through the student portal and must include a personal statement, two letters of recommendation, and an unofficial transcript. Students who are selected will be notified by email no later than January 10.</p>
-        <p>An information session will be held on Thursday, November 20, at 4:00 PM in the Global Learning Center, Room 105. Advisors from the International Programs office will be available to answer questions and help you choose a program that fits your academic goals.</p>
-        <p>We encourage all eligible students to apply. Studying abroad is a valuable opportunity to develop language skills, gain international experience, and broaden your perspective.</p>
-        <p>Best regards,<br>Office of International Programs<br>Westfield University</p>
+      <div class="notice-body">
+        <p>Dear Students and Staff,</p>
+        <p>Please be advised that the Campus Recreation Center will be closed to all users from Monday, February 9 through Sunday, February 15. During this week, contractors will replace the wooden flooring in the main gymnasium and repair the roof above the swimming pool, which has developed a minor leak during recent storms.</p>
+        <p>While the building is closed, the following alternatives are available:</p>
+        <ul>
+          <li>The outdoor track and tennis courts will remain open during regular hours.</li>
+          <li>Students may use the fitness room at Hartley Residence Hall free of charge by showing a student ID at the front desk.</li>
+          <li>All group fitness classes scheduled for this week have been moved online; a Zoom link will be sent to registered participants.</li>
+        </ul>
+        <p>Locker rentals will be extended by one week at no extra cost, and any personal items left inside the locker rooms should be removed before Friday, February 6. The Recreation Center will reopen at 6:00 AM on Monday, February 16.</p>
+        <p>We apologize for any inconvenience this may cause.</p>
       </div>
+      <div class="notice-footer">Department of Athletics &middot; athletics@bellmont.edu</div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q1: Main Purpose -->
+    <!-- Q1: Factual -->
     <div class="question-page active" id="page1">
       <div class="question-text">
-        <span class="question-number">1.</span>What is the main purpose of this email?
+        <span class="question-number">1.</span>According to the notice, why will the Recreation Center be closed?
       </div>
       <div class="options">
         <div class="option" data-q="1" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q1" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">To announce that the Study Abroad Program has been canceled for next semester</span>
+          <span class="option-text">To install new exercise equipment in the main gymnasium</span>
         </div>
         <div class="option" data-q="1" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q1" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">To remind students about the upcoming application deadline and provide program details</span>
+          <span class="option-text">To replace the gym floor and fix a leak above the pool</span>
         </div>
         <div class="option" data-q="1" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q1" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">To notify students that they have been accepted into the exchange program</span>
+          <span class="option-text">To host a series of athletic tournaments for visiting schools</span>
         </div>
         <div class="option" data-q="1" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q1" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">To request that faculty members write recommendation letters for students</span>
+          <span class="option-text">To clean the building after damage caused by a recent storm</span>
         </div>
       </div>
     </div>
 
-    <!-- Q2: Detail -->
+    <!-- Q2: NOT/EXCEPT -->
     <div class="question-page" id="page2">
       <div class="question-text">
-        <span class="question-number">2.</span>According to the email, what is one requirement for applying to the Study Abroad Program?
+        <span class="question-number">2.</span>All of the following are mentioned as alternatives during the closure EXCEPT
       </div>
       <div class="options">
         <div class="option" data-q="2" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q2" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">Students must have studied a foreign language for at least two years</span>
+          <span class="option-text">using the outdoor track during normal hours</span>
         </div>
         <div class="option" data-q="2" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q2" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">Students must attend the information session before submitting their application</span>
+          <span class="option-text">joining group fitness classes through an online platform</span>
         </div>
         <div class="option" data-q="2" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q2" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">Students must have completed at least 30 credit hours with a GPA of 2.75 or above</span>
+          <span class="option-text">swimming at a nearby public community pool</span>
         </div>
         <div class="option" data-q="2" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q2" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">Students must have previously traveled to the country they wish to study in</span>
+          <span class="option-text">exercising at the Hartley Residence Hall fitness room</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3: Inference -->
+    <div class="question-page" id="page3">
+      <div class="question-text">
+        <span class="question-number">3.</span>What can be inferred about items kept in the locker rooms?
+      </div>
+      <div class="options">
+        <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">Belongings not collected by February 6 may be inaccessible during repairs.</span>
+        </div>
+        <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">Users will be charged an additional fee for extending their locker rental.</span>
+        </div>
+        <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">All personal items will automatically be moved to Hartley Residence Hall.</span>
+        </div>
+        <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">Staff will photograph the contents before the contractors begin work.</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== PAGE 2: Passage 2 — Notice ========== -->
+<!-- ========== PAGE 2: Passage 2 — Text Messages (Shorter, 2 questions) ========== -->
 <div class="split-main" id="passagePage2" style="display:none">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 2 of 2</div>
-    <div class="instruction">Read a notice.</div>
-    <div class="notice-container">
-      <div class="notice-header">
-        <h3>NOTICE: New Campus Recycling Program — Effective January 6</h3>
-        <p>Facilities Management Office — Westfield University</p>
-      </div>
-      <div class="notice-body">
-        <p>Dear Campus Community,</p>
-        <p>Beginning January 6, 2026, Westfield University will implement an updated recycling program across all campus buildings. The new system replaces the current single-bin collection with a three-bin sorting system designed to increase recycling rates and reduce waste sent to landfills.</p>
-        <p>Under the new program, each common area and hallway will be equipped with three clearly labeled bins:</p>
-        <ul>
-          <li><strong>Blue bin:</strong> Paper and cardboard only</li>
-          <li><strong>Green bin:</strong> Plastic bottles, glass, and aluminum cans</li>
-          <li><strong>Black bin:</strong> Non-recyclable waste</li>
-        </ul>
-        <p>Please note that food waste and liquids should not be placed in any recycling bin. Items contaminated with food residue must go in the black bin. The Facilities Management Office will conduct training sessions during the first week of January to help staff and students learn the new sorting guidelines.</p>
-        <p>Students and staff who notice incorrectly sorted bins may report the issue through the campus facilities app or by emailing facilities@westfield.edu. The university's goal is to increase its recycling rate from 35 percent to 60 percent by the end of 2026.</p>
-        <p>Thank you for your cooperation in making our campus more sustainable.</p>
-        <p>Facilities Management Office<br>Westfield University</p>
+    <div class="instruction">Read a chain of text messages.</div>
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="phone-header">
+          <div class="contact-name">Priya</div>
+          <div class="contact-sub">Mobile</div>
+        </div>
+        <div class="message-thread">
+          <div class="message-timestamp">Today 2:48 PM</div>
+
+          <div class="message-row received">
+            <div>
+              <div class="message-bubble">Hey, it's pouring out here. I don't think I can bike to Cafe Luna by 3.</div>
+            </div>
+          </div>
+
+          <div class="message-row sent">
+            <div>
+              <div class="message-bubble">Yeah, the forecast just turned red. Want to push it back an hour?</div>
+            </div>
+          </div>
+
+          <div class="message-row received">
+            <div>
+              <div class="message-bubble">Honestly, I'd rather skip the cafe today. My laptop can't get wet — the bag isn't waterproof.</div>
+            </div>
+          </div>
+
+          <div class="message-row sent">
+            <div>
+              <div class="message-bubble">Totally fair. Should we just do a video call from our rooms instead?</div>
+            </div>
+          </div>
+
+          <div class="message-row received">
+            <div>
+              <div class="message-bubble">Perfect. I'll send a Zoom link at 4. Bring the draft of the essay so we can go over it together.</div>
+            </div>
+          </div>
+
+          <div class="message-row sent">
+            <div>
+              <div class="message-bubble">Got it. See you at 4.</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q3: Detail -->
-    <div class="question-page active" id="page3">
+    <!-- Q4: Factual -->
+    <div class="question-page active" id="page4">
       <div class="question-text">
-        <span class="question-number">3.</span>According to the notice, what should be placed in the green bin?
-      </div>
-      <div class="options">
-        <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="A">
-          <span class="option-label">A</span>
-          <span class="option-text">Paper and cardboard materials</span>
-        </div>
-        <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="B">
-          <span class="option-label">B</span>
-          <span class="option-text">Plastic bottles, glass, and aluminum cans</span>
-        </div>
-        <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="C">
-          <span class="option-label">C</span>
-          <span class="option-text">Food waste and leftover liquids</span>
-        </div>
-        <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="D">
-          <span class="option-label">D</span>
-          <span class="option-text">Non-recyclable waste and contaminated items</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q4: Inference -->
-    <div class="question-page" id="page4">
-      <div class="question-text">
-        <span class="question-number">4.</span>What can be inferred about the university's current recycling system?
+        <span class="question-number">4.</span>According to the messages, why does Priya want to cancel the cafe meeting?
       </div>
       <div class="options">
         <div class="option" data-q="4" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q4" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">It already achieves a recycling rate above 60 percent.</span>
+          <span class="option-text">She is worried about protecting her laptop from the rain.</span>
         </div>
         <div class="option" data-q="4" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q4" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">It uses a single-bin system that does not effectively separate recyclable materials.</span>
+          <span class="option-text">She has not finished writing the draft of her essay yet.</span>
         </div>
         <div class="option" data-q="4" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q4" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">It was implemented less than one year ago and is still being tested.</span>
+          <span class="option-text">She thinks Cafe Luna will be too crowded this afternoon.</span>
         </div>
         <div class="option" data-q="4" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q4" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">It requires students to transport their recyclables to an off-campus facility.</span>
+          <span class="option-text">She needs to finish another class assignment before 3:00.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Inference / Purpose -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>What will the two students most likely do at 4:00 PM?
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">Meet at Cafe Luna once the rain has stopped</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">Review the essay draft together during a video call</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">Submit their finished essays to their professor online</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">Walk to the library to study together in person</span>
         </div>
       </div>
     </div>
@@ -304,7 +372,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <script src="../../js/progress.js"></script>
 <script>
 var currentQ = 1;
-var totalQ = 4;
+var totalQ = 5;
 var userAnswers = {};
 var timerVisible = true;
 var timeLeft = 600; // 10 minutes
@@ -329,7 +397,7 @@ function restoreState(saved){
     var target = Math.min(Math.max(saved.currentQ || 1, 1), totalQ);
     if(target !== 1){
       document.getElementById('page1').classList.remove('active');
-      var oldPassage = 1, newPassage = (target <= 2 ? 1 : 2);
+      var oldPassage = 1, newPassage = getPassagePage(target);
       if(oldPassage !== newPassage){
         document.getElementById('passagePage1').style.display = 'none';
         document.getElementById('passagePage2').style.display = 'flex';
@@ -352,8 +420,8 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-// Passage page mapping: questions 1-2 = passage 1, questions 3-4 = passage 2
-function getPassagePage(q){ return q <= 2 ? 1 : 2; }
+// Passage page mapping: questions 1-3 = passage 1 (Notice), questions 4-5 = passage 2 (SMS)
+function getPassagePage(q){ return q <= 3 ? 1 : 2; }
 
 function selectOption(el){
   var q = el.getAttribute('data-q');
@@ -372,17 +440,15 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'B','2':'C','3':'B','4':'B'};
+    var ca={'1':'B','2':'C','3':'A','4':'A','5':'B'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    sessionStorage.setItem('training_score_rdl_p10',JSON.stringify({correct:sc,total:4}));
+    sessionStorage.setItem('training_score_rdl_p10',JSON.stringify({correct:sc,total:5}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-10-answers.html';
     return;
   }
-  // Hide current question page
   document.getElementById('page'+currentQ).classList.remove('active');
-  // Switch passage panel if needed
   var oldPassage = getPassagePage(currentQ);
   var newPassage = getPassagePage(next);
   if(oldPassage !== newPassage){

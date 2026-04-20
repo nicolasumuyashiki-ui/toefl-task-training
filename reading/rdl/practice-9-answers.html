@@ -61,8 +61,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/4</div>
-  <div class="score-label">Your Score (Q1&ndash;Q4)</div>
+  <div class="score-big" id="scoreDisplay">&ndash;/5</div>
+  <div class="score-label">Your Score (Q1&ndash;Q5)</div>
 </div>
 
 <div class="answers-body">
@@ -72,38 +72,46 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     <div class="tips-title">Read in Daily Life Strategy Tips</div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">1</span> Identify the purpose from opening keywords</div>
+      <div class="tip-card-title"><span class="tip-num">1</span> Student-to-professor emails: find the single "ask"</div>
       <div class="tip-card-body">
-        The first 1-2 sentences reveal the purpose of the text. Learn the patterns:<br><br>
-        <strong>Notification:</strong> <code>We are pleased to inform...</code> / <code>We would like to inform you...</code><br>
-        <strong>Request:</strong> <code>Could you...</code> / <code>I would appreciate if...</code><br>
-        <strong>Reminder:</strong> <code>This is a reminder that...</code> / <code>Please be advised...</code>
+        Polite request emails often open with pleasantries and background before getting to the point. Look for phrases like:<br><br>
+        <strong>The ask:</strong> <code>I was hoping you might...</code> / <code>Would you be willing to...</code> / <code>I would appreciate it if you could...</code><br>
+        <strong>Background (skip for purpose Qs):</strong> <code>Since I completed...</code> / <code>As you may recall...</code>
         <div class="tip-example">
-          <strong>Q1:</strong> The email opens with "The Campus Safety Office will conduct mandatory fire drills" and then describes when, where, and how to evacuate. This is a notification about upcoming fire drills and procedures = C.
+          <strong>Q1:</strong> The sentence "I was hoping you might be willing to write one on my behalf" (referring to a letter of recommendation) is the true purpose = A. The rest is context.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">2</span> For detail questions, locate the key phrase first</div>
+      <div class="tip-card-title"><span class="tip-num">2</span> Reading forms: scan by section headers</div>
       <div class="tip-card-body">
-        <strong>Steps:</strong><br>
-        1. Identify the key phrase in the question (e.g., "specific drill date")<br>
-        2. Scan the passage for that exact phrase or a synonym<br>
-        3. Read the sentence containing it carefully<br>
-        4. Match it to an answer choice
+        Forms are organized into labeled sections (Applicant Info, Preferences, etc.). Don't read top-to-bottom — <strong>jump to the section named in the question</strong>.
         <div class="tip-example">
-          <strong>Q2:</strong> The question asks how occupants will learn the specific date. Scanning for "specific date" leads to: "Building coordinators will post the specific date and assembly location on the bulletin board near each main entrance" = B.
+          <strong>Q3:</strong> The question asks about "first-choice placement" → go directly to the <em>Placement Preference</em> section → read the "1st Choice" field = B (Harwick Marine Institute — Field Research Assistant).
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">3</span> Inference questions: stick to the text</div>
+      <div class="tip-card-title"><span class="tip-num">3</span> NOT / EXCEPT questions: check every option against the text</div>
       <div class="tip-card-body">
-        For inference questions, the answer must be <strong>logically supported by information in the passage</strong>. Do not mix in your own knowledge or assumptions.
+        For negative factual questions, three of the four options ARE mentioned in the passage. Your job is to find the one that <strong>is NOT there</strong>.
         <div class="tip-warn">
-          <strong>Common trap:</strong> An option that sounds reasonable based on real-world knowledge but is NOT supported by the passage text.
+          <strong>Strategy:</strong> Check off each option as you locate it in the form. The remaining unchecked option is your answer.
+        </div>
+        <div class="tip-example">
+          <strong>Q4:</strong> Year ✓ (Junior), Major ✓ (Environmental Science), Submission date ✓ (03/06/2026). GPA is never listed anywhere = C.
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">4</span> Inference from checkboxes: combine the label with the check</div>
+      <div class="tip-card-body">
+        A checkbox carries two pieces of info: <strong>the statement</strong> and <strong>whether it's selected</strong>. The inference usually comes from pairing them with nearby qualifying text (e.g., "housing stipend required").
+        <div class="tip-example">
+          <strong>Q5:</strong> "Willing to relocate ✓ (housing stipend required)" + "Available for unpaid placements ✗" → he can move, but he needs housing support = C.
         </div>
       </div>
     </div>
@@ -117,80 +125,99 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
       <div class="q-num">Question 1 — Main Purpose</div>
       <div class="q-text">What is the main purpose of this email?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag tag-correct">Correct: A</span>
         <span class="answer-tag" id="yours1">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt1A"><span class="label">A</span> To report the results of a recent fire safety inspection</div>
-        <div class="option-review" id="opt1B"><span class="label">B</span> To request volunteers for the campus fire department</div>
-        <div class="option-review is-correct" id="opt1C"><span class="label">C</span> To inform building occupants about scheduled fire drills and evacuation procedures &#10003;</div>
-        <div class="option-review" id="opt1D"><span class="label">D</span> To announce the installation of new fire alarm systems across campus</div>
+        <div class="option-review is-correct" id="opt1A"><span class="label">A</span> To ask the professor to write a letter of recommendation &#10003;</div>
+        <div class="option-review" id="opt1B"><span class="label">B</span> To request feedback on a draft personal statement</div>
+        <div class="option-review" id="opt1C"><span class="label">C</span> To apply directly for the Coastal Marine Biology program</div>
+        <div class="option-review" id="opt1D"><span class="label">D</span> To schedule a meeting about summer research opportunities</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email announces upcoming fire drills (October 13-17), provides evacuation instructions (use emergency exits, gather at assembly points), and tells occupants how to find their building's specific schedule. This is clearly an informational message about fire drill procedures = C.<br><br>
-        A is wrong because the email discusses upcoming drills, not past inspection results. B is unrelated to the content. D is wrong because the email never mentions installing new alarm systems.
+        <strong>Explanation:</strong> Daniel writes that the Harwick program "requires two letters of recommendation" and asks if the professor "might be willing to write one on my behalf." That is the core request = A.<br><br>
+        B is a trap — Daniel offers to <em>send</em> his personal statement as a reference document, but does not ask for feedback on it. C is wrong because Daniel is applying himself; he isn't asking the professor to apply. D is never mentioned.
       </div>
     </div>
 
     <div class="q-card" id="card2">
       <div class="q-num">Question 2 — Factual Detail</div>
-      <div class="q-text">According to the email, how will occupants learn the specific drill date for their building?</div>
+      <div class="q-text">According to the email, how must the recommendation letter be submitted?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag tag-correct">Correct: C</span>
         <span class="answer-tag" id="yours2">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt2A"><span class="label">A</span> By checking the campus website for a master schedule</div>
-        <div class="option-review is-correct" id="opt2B"><span class="label">B</span> By reading a notice posted on the bulletin board near the main entrance &#10003;</div>
-        <div class="option-review" id="opt2C"><span class="label">C</span> By attending a mandatory safety meeting the week before</div>
-        <div class="option-review" id="opt2D"><span class="label">D</span> By receiving a personal email from the building coordinator</div>
+        <div class="option-review" id="opt2A"><span class="label">A</span> By mailing a signed paper copy to the Harwick Institute</div>
+        <div class="option-review" id="opt2B"><span class="label">B</span> By sending it as an email attachment to the applicant</div>
+        <div class="option-review is-correct" id="opt2C"><span class="label">C</span> By uploading it directly through the applicant portal &#10003;</div>
+        <div class="option-review" id="opt2D"><span class="label">D</span> By delivering it in person to the program office</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email states: "Building coordinators will post the specific date and assembly location on the bulletin board near each main entrance by October 8." This directly matches B.<br><br>
-        A mentions a campus website, which is never referenced. C and D describe methods not mentioned in the email. This is a straightforward detail-matching question.
+        <strong>Explanation:</strong> The email states: "letters must be uploaded directly through the applicant portal." This matches C word-for-word on the key phrase.<br><br>
+        A, B, and D describe submission methods that the email does not mention. This is a direct detail-matching question — the correct answer is the one that appears in the text.
       </div>
     </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 2 <span class="passage-type-badge">Notice</span></div>
+    <div class="passage-title">Passage 2 <span class="passage-type-badge">Form</span></div>
 
     <div class="q-card" id="card3">
       <div class="q-num">Question 3 — Factual Detail</div>
-      <div class="q-text">What happens if a student withdraws from a course after November 7?</div>
+      <div class="q-text">According to the form, what is the applicant's first-choice placement?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: D</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt3A"><span class="label">A</span> The course is removed from the transcript entirely.</div>
-        <div class="option-review" id="opt3B"><span class="label">B</span> The student receives a "W" that does not affect the GPA.</div>
-        <div class="option-review" id="opt3C"><span class="label">C</span> The student must wait until the following semester to re-enroll.</div>
-        <div class="option-review is-correct" id="opt3D"><span class="label">D</span> The student receives a "WF" grade that counts as a failing grade in the GPA. &#10003;</div>
+        <div class="option-review" id="opt3A"><span class="label">A</span> A water quality technician role with the City Parks Department</div>
+        <div class="option-review is-correct" id="opt3B"><span class="label">B</span> A field research assistant position at the Harwick Marine Institute &#10003;</div>
+        <div class="option-review" id="opt3C"><span class="label">C</span> A laboratory technician position at Bayford University</div>
+        <div class="option-review" id="opt3D"><span class="label">D</span> A summer teaching assistant post in Environmental Science</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The notice states: "Students who withdraw after November 7 will receive a 'WF' (Withdrawal with Failure), which is calculated as a failing grade in your GPA" = D.<br><br>
-        A describes what happens before September 19 (add/drop period), not after November 7. B describes what happens before November 7. C is not mentioned anywhere in the notice. Be careful to match the correct deadline to the correct consequence.
+        <strong>Explanation:</strong> Under Placement Preference, the "1st Choice" field reads: "Harwick Marine Institute — Field Research Assistant" = B.<br><br>
+        A describes the 2nd-choice placement, not the first. C and D are not listed anywhere on the form. Always check the field label ("1st Choice" vs. "2nd Choice") before selecting.
       </div>
     </div>
 
     <div class="q-card" id="card4">
-      <div class="q-num">Question 4 — Inference</div>
-      <div class="q-text">Why does the notice advise students receiving financial aid to consult the Financial Aid Office before withdrawing?</div>
+      <div class="q-num">Question 4 — Negative Factual</div>
+      <div class="q-text">Which of the following is NOT indicated on the form?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: A</span>
+        <span class="answer-tag tag-correct">Correct: C</span>
         <span class="answer-tag" id="yours4">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review is-correct" id="opt4A"><span class="label">A</span> Because withdrawing from a course could reduce their course load and put their financial aid at risk &#10003;</div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> Because the Financial Aid Office must approve all withdrawal requests</div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> Because financial aid students are not allowed to withdraw from any courses</div>
-        <div class="option-review" id="opt4D"><span class="label">D</span> Because the Financial Aid Office offers free tutoring to struggling students</div>
+        <div class="option-review" id="opt4A"><span class="label">A</span> The applicant's current year of study at the university</div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> The applicant's academic major</div>
+        <div class="option-review is-correct" id="opt4C"><span class="label">C</span> The applicant's grade point average &#10003;</div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> The date the application was submitted</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The notice states: "dropping below full-time status may affect your aid eligibility." From this, we can infer that withdrawing from a course could reduce a student's course load below full-time, which may put their financial aid at risk = A.<br><br>
-        B is wrong because the notice says withdrawal requires advisor approval, not Financial Aid Office approval. C uses extreme language ("not allowed") which is not supported. D introduces tutoring, which is never mentioned.
+        <strong>Explanation:</strong> The form lists Year ("Junior — 3rd year"), Major ("Environmental Science"), and Submission date ("03/06/2026"). No GPA field appears anywhere on the form = C is NOT indicated.<br><br>
+        With NOT questions, confirm each option that IS present before eliminating it, then the remaining one is your answer.
+      </div>
+    </div>
+
+    <div class="q-card" id="card5">
+      <div class="q-num">Question 5 — Inference</div>
+      <div class="q-text">What can be inferred about the applicant from the checkbox selections?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag" id="yours5">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt5A"><span class="label">A</span> He will accept an internship in any location only if it pays</div>
+        <div class="option-review" id="opt5B"><span class="label">B</span> He prefers local placements and cannot travel for the summer</div>
+        <div class="option-review is-correct" id="opt5C"><span class="label">C</span> He is open to relocating but needs financial support for housing &#10003;</div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> He has already secured housing near both placement sites</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> The first checkbox is selected: "Willing to relocate for the duration of the internship (housing stipend required)." The parenthetical ties his willingness to the need for financial housing support = C.<br><br>
+        A is too strong ("only if it pays"); the "Available for unpaid placements" box is unchecked but that doesn't constrain location. B contradicts the checked relocation box. D introduces information not stated anywhere on the form.
       </div>
     </div>
   </div>
@@ -202,7 +229,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <script>
-var correctAnswers = {'1':'C','2':'B','3':'D','4':'A'};
+var correctAnswers = {'1':'A','2':'C','3':'B','4':'C','5':'C'};
 (function(){
   var saved = sessionStorage.getItem('training_rdl_p9_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -223,7 +250,7 @@ var correctAnswers = {'1':'C','2':'B','3':'D','4':'A'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/4';
+  document.getElementById('scoreDisplay').textContent = score+'/5';
 })();
 </script>
 <script src="../../js/auth.js"></script>

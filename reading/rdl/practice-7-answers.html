@@ -61,8 +61,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/4</div>
-  <div class="score-label">Your Score (Q1&ndash;Q4)</div>
+  <div class="score-big" id="scoreDisplay">&ndash;/5</div>
+  <div class="score-label">Your Score (Q1&ndash;Q5)</div>
 </div>
 
 <div class="answers-body">
@@ -72,41 +72,33 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     <div class="tips-title">Read in Daily Life Strategy Tips</div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">1</span> Identify the purpose from opening keywords</div>
+      <div class="tip-card-title"><span class="tip-num">1</span> Schedules: read the headers and the footnotes</div>
       <div class="tip-card-body">
-        The first 1-2 sentences reveal the purpose of the text. Learn the patterns:<br><br>
-        <strong>Notification:</strong> <code>We are pleased to inform...</code> / <code>We would like to inform you...</code><br>
-        <strong>Request:</strong> <code>Could you...</code> / <code>I would appreciate if...</code><br>
-        <strong>Confirmation:</strong> <code>I'm writing to confirm...</code><br>
-        <strong>Reminder:</strong> <code>We would like to remind...</code>
+        A schedule has two layers of information: the <strong>table itself</strong> (days, hours, names) and the <strong>notes above or below</strong> (rules and exceptions). Questions often target the notes.
         <div class="tip-example">
-          <strong>Q1:</strong> The email describes election dates, voting method, and login requirements. This is an informational notification about voting procedures = B.
+          <strong>Q2:</strong> The schedule's intro says sessions are "limited to 25 minutes per student when others are waiting." A busy day therefore means a shorter session = B.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">2</span> NOT/EXCEPT: Use elimination</div>
+      <div class="tip-card-title"><span class="tip-num">2</span> Menus: scan the descriptions for optional phrases</div>
       <div class="tip-card-body">
-        <strong>Steps:</strong><br>
-        1. Circle NOT/EXCEPT in the question<br>
-        2. Check each option against the passage one by one<br>
-        3. Cross out the 3 options that ARE mentioned in the passage. The remaining one is the answer.
+        Common option signals on a menu:<br>
+        <code>Add X for $Y</code> / <code>available on request</code> / <code>choose from ...</code><br><br>
+        If an EXCEPT question asks which option is <strong>not</strong> offered, an answer that sounds reasonable but is never written on the menu is the trap you are looking for.
         <div class="tip-warn">
-          <strong>Common traps:</strong><br>
-          - A word from the passage appears in the option, but the meaning is different<br>
-          - Partially correct but inaccurate as a whole<br>
-          - States the opposite of what the passage says
+          <strong>Trap:</strong> common real-world substitutions (e.g. almond milk for buttermilk) that the menu simply does not mention.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">3</span> Inference questions: stick to the text</div>
+      <div class="tip-card-title"><span class="tip-num">3</span> Inference = what must be true, not what might be true</div>
       <div class="tip-card-body">
-        For inference questions, the answer must be <strong>logically supported by information in the passage</strong>. Do not mix in your own knowledge or assumptions.
+        A correct inference is directly <strong>supported</strong> by the text. If you have to add outside knowledge or make a new assumption, it is probably a distractor.
         <div class="tip-example">
-          <strong>Q4:</strong> The notice says students who fail to renew on time "may face serious consequences, including the loss of their student status." This directly supports D — they could risk losing their ability to study.
+          <strong>Q5:</strong> The menu says "students save 15% with a valid campus ID." A 15% discount must mean the student pays less than the printed price = B.
         </div>
       </div>
     </div>
@@ -114,89 +106,108 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 
   <!-- Passage 1 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 1 <span class="passage-type-badge">Email</span></div>
+    <div class="passage-title">Passage 1 <span class="passage-type-badge">Schedule</span></div>
 
     <div class="q-card" id="card1">
-      <div class="q-num">Question 1 — Main Purpose</div>
-      <div class="q-text">What is the main purpose of this email?</div>
+      <div class="q-num">Question 1 — Factual Information</div>
+      <div class="q-text">According to the schedule, who staffs the Writing Center on Wednesdays?</div>
       <div class="answer-row">
         <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours1">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt1A"><span class="label">A</span> To announce the results of the spring election</div>
-        <div class="option-review is-correct" id="opt1B"><span class="label">B</span> To provide students with information about how and when to vote &#10003;</div>
-        <div class="option-review" id="opt1C"><span class="label">C</span> To recruit candidates for the student government positions</div>
-        <div class="option-review" id="opt1D"><span class="label">D</span> To explain why the election date has been changed</div>
+        <div class="option-review" id="opt1A"><span class="label">A</span> An undergraduate peer tutor from the English department</div>
+        <div class="option-review is-correct" id="opt1B"><span class="label">B</span> A faculty mentor assigned to that weekday shift &#10003;</div>
+        <div class="option-review" id="opt1C"><span class="label">C</span> A graduate student tutor from the writing program</div>
+        <div class="option-review" id="opt1D"><span class="label">D</span> A library staff member trained in academic writing</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email tells students when the election is (March 24-25), how to vote (online through the student portal), and what they need to log in. This is clearly an informational message about voting procedures = B.<br><br>
-        A is wrong because results have not been announced yet (they will be on March 28). C is about recruiting candidates, but the email is addressed to voters. D mentions a date change that is never discussed in the email.
+        <strong>Explanation:</strong> Read the "Tutor on Duty" column of the table. The Wednesday row says <strong>"Faculty mentor,"</strong> which matches B.<br><br>
+        A is never listed — no undergraduate tutors appear in the table. C describes the Monday and Friday shifts, not Wednesday. D introduces a "library staff" role that the schedule does not mention at all.
       </div>
     </div>
 
     <div class="q-card" id="card2">
-      <div class="q-num">Question 2 — Factual Detail</div>
-      <div class="q-text">According to the email, what do students need to log in to the voting system?</div>
+      <div class="q-num">Question 2 — Inference</div>
+      <div class="q-text">What can be inferred about a student who arrives when several others are already waiting?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours2">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt2A"><span class="label">A</span> A physical student ID card and a password</div>
-        <div class="option-review" id="opt2B"><span class="label">B</span> A campus email address and a phone number</div>
-        <div class="option-review is-correct" id="opt2C"><span class="label">C</span> A student ID number and a campus email address &#10003;</div>
-        <div class="option-review" id="opt2D"><span class="label">D</span> A registration form and an invitation code</div>
+        <div class="option-review" id="opt2A"><span class="label">A</span> The student will be asked to reserve a later appointment.</div>
+        <div class="option-review is-correct" id="opt2B"><span class="label">B</span> The student may receive a shorter tutoring session than usual. &#10003;</div>
+        <div class="option-review" id="opt2C"><span class="label">C</span> The student will be sent to a different campus library.</div>
+        <div class="option-review" id="opt2D"><span class="label">D</span> The student must pay a small fee to keep their place.</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email states: "You will need your student ID number and campus email address to log in" = C.<br><br>
-        A says "physical student ID card" but the passage says "student ID <strong>number</strong>" — this is a classic detail trap. B includes a phone number that is never mentioned. D has no basis in the text.
+        <strong>Explanation:</strong> The intro note says sessions are "limited to 25 minutes per student when others are waiting." This means the standard session could be longer, but gets capped on busy days — so the student receives a shorter-than-usual session = B.<br><br>
+        A contradicts the "no appointment needed, first come, first served" policy. C and D introduce ideas (different library, fees) that the schedule never mentions.
       </div>
     </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 2 <span class="passage-type-badge">Notice</span></div>
+    <div class="passage-title">Passage 2 <span class="passage-type-badge">Menu</span></div>
 
     <div class="q-card" id="card3">
-      <div class="q-num">Question 3 — NOT/EXCEPT</div>
-      <div class="q-text">According to the notice, which of the following is NOT listed as a required document for the renewal appointment?</div>
+      <div class="q-num">Question 3 — Factual Information</div>
+      <div class="q-text">According to the menu, what is served with the Classic Buttermilk Pancakes?</div>
       <div class="answer-row">
         <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt3A"><span class="label">A</span> A valid passport</div>
-        <div class="option-review is-correct" id="opt3B"><span class="label">B</span> A letter of recommendation from a professor &#10003;</div>
-        <div class="option-review" id="opt3C"><span class="label">C</span> Proof of enrollment for the upcoming semester</div>
-        <div class="option-review" id="opt3D"><span class="label">D</span> Evidence of financial support</div>
+        <div class="option-review" id="opt3A"><span class="label">A</span> Whipped cream and a side of bacon strips</div>
+        <div class="option-review is-correct" id="opt3B"><span class="label">B</span> Maple syrup along with fruit of the season &#10003;</div>
+        <div class="option-review" id="opt3C"><span class="label">C</span> Powdered sugar and a small glass of juice</div>
+        <div class="option-review" id="opt3D"><span class="label">D</span> Honey butter and locally sourced berries</div>
       </div>
       <div class="explanation">
-        <strong>Elimination method:</strong><br>
-        A — "A valid passport with at least six months of remaining validity" &#10003; mentioned<br>
-        C — "Proof of enrollment for the upcoming semester" &#10003; mentioned<br>
-        D — "Evidence of financial support, such as a bank statement or scholarship letter" &#10003; mentioned<br>
-        B — A letter of recommendation from a professor is <strong>never mentioned</strong> in the notice. This is the correct answer.
+        <strong>Explanation:</strong> The pancake description says "a stack of three pancakes with <strong>maple syrup and seasonal fruit</strong>." Answer B paraphrases this as "maple syrup along with fruit of the season" = B.<br><br>
+        A, C, and D all mention toppings (whipped cream, powdered sugar, honey butter, berries) that sound like breakfast items but are never listed in the menu.
       </div>
     </div>
 
     <div class="q-card" id="card4">
-      <div class="q-num">Question 4 — Inference</div>
-      <div class="q-text">What can be inferred about students who do not renew their I-20 before it expires?</div>
+      <div class="q-num">Question 4 — NOT/EXCEPT</div>
+      <div class="q-text">All of the following are mentioned as optional additions or choices EXCEPT</div>
       <div class="answer-row">
         <span class="answer-tag tag-correct">Correct: D</span>
         <span class="answer-tag" id="yours4">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> They will automatically receive an extension from the university.</div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> They may need to pay a small late fee to the registrar's office.</div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> They will be transferred to a different visa category.</div>
-        <div class="option-review is-correct" id="opt4D"><span class="label">D</span> They could risk losing their ability to study at the university. &#10003;</div>
+        <div class="option-review" id="opt4A"><span class="label">A</span> adding a poached egg to the avocado toast</div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> requesting a vegan version of the pancake batter</div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> choosing between decaf and regular house coffee</div>
+        <div class="option-review is-correct" id="opt4D"><span class="label">D</span> substituting almond milk in place of buttermilk &#10003;</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The notice states: "Students who fail to renew on time may face serious consequences, including the loss of their student status." Loss of student status means they could lose their ability to study = D.<br><br>
-        A directly contradicts the urgency of the notice — there is no mention of automatic extensions. B mentions a late fee that is never discussed. C has no basis in the text — no mention of visa category transfers.
+        <strong>Elimination method:</strong><br>
+        A — "Add a poached egg for $1.50" &#10003; mentioned<br>
+        B — "Vegan batter available on request" &#10003; mentioned<br>
+        C — "Choose from house blend, decaf, or loose-leaf tea" &#10003; mentioned<br>
+        D — Almond milk substitution is <strong>never mentioned</strong> anywhere on the menu. This is the correct answer.
+      </div>
+    </div>
+
+    <div class="q-card" id="card5">
+      <div class="q-num">Question 5 — Inference</div>
+      <div class="q-text">What can be inferred about a student who presents a valid campus ID at brunch?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag" id="yours5">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt5A"><span class="label">A</span> The student can stack the campus discount with other promotions.</div>
+        <div class="option-review is-correct" id="opt5B"><span class="label">B</span> The student will pay less than the listed price on the menu. &#10003;</div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> The student is served brunch items outside normal weekend hours.</div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> The student receives complimentary refills of fresh orange juice.</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> The note says "students save 15% with a valid campus ID." A 15% saving directly implies the student pays less than the listed price = B.<br><br>
+        A directly contradicts "not combinable with other discounts." C contradicts the fixed brunch hours (9:00 AM to 1:00 PM on weekends only). D confuses the "bottomless coffee or tea" offer with orange juice, which is a separately priced item.
       </div>
     </div>
   </div>
@@ -208,7 +219,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <script>
-var correctAnswers = {'1':'B','2':'C','3':'B','4':'D'};
+var correctAnswers = {'1':'B','2':'B','3':'B','4':'D','5':'B'};
 (function(){
   var saved = sessionStorage.getItem('training_rdl_p7_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -229,7 +240,7 @@ var correctAnswers = {'1':'B','2':'C','3':'B','4':'D'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/4';
+  document.getElementById('scoreDisplay').textContent = score+'/5';
 })();
 </script>
 <script src="../../js/auth.js"></script>

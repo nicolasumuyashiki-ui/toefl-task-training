@@ -1,97 +1,103 @@
-Read in Daily Life (RDL) の新しい問題セットを作成してください。
+Read in Daily Life (RDL) の新しい問題セットを作成してください。v2.2 仕様準拠。
 
 ## 事前準備（自動実行）
-1. `docs/topic-history.md` を読み、RDLセクションの使用済みトピックを確認する
-2. `reading/rdl/` フォルダ内の既存ファイルを確認し、次のPractice番号を特定する
-3. 使用済みトピックと重複しない題材を2つ選定する
-4. 既存の `reading/rdl/practice-1.html` を読み、HTML/CSS/JS構造を踏襲する
+1. `docs/topic-history.md` を読み、RDL セクションの使用済みトピック・文書タイプを確認
+2. `reading/rdl/` 内の既存 P1〜P(N-1) を読み、各 Practice が使った文書タイプ 2 種を把握
+3. 使用済みトピックと重複しない題材を 2 つ選定
+4. 既存の `reading/rdl/practice-1.html` を読み、HTML/CSS/JS 構造を踏襲
 
 ## 指定
 $ARGUMENTS
-- 例: `library notice, parking permit email` → 指定された題材
-- 例: `random` or 空 → 全てランダム生成
+- 例: `menu, advertisement` → 指定された文書タイプで生成
+- 例: `random` or 空 → タイプ・題材ともにランダム生成
 
 ## 出力ファイル
-1. `reading/rdl/practice-{N}.html` — 問題ページHTML
-2. `reading/rdl/practice-{N}-answers.html` — 解答解説ページ
+1. `reading/rdl/practice-{N}.html` — 問題ページ
+2. `reading/rdl/practice-{N}-answers.html` — 解答解説
 
 ## RDL 問題仕様
 
 ### 概要
-- 1 Practice = 2つの日常的文書 × 各1問 = 計2問
+- 1 Practice = 2 つの日常的文書 × 各 2〜3 問
+- 問題数ルール: 15–50 words → 2 問、51–150 words → 3 問
 - Split layout: 左パネル（文書）+ 右パネル（問題）
-- 制限時間: 25分（全問共有タイマー、sessionStorageで永続化）
-- CEFR B1-B2レベル
+- 制限時間: 25 分
+- CEFR B1–B2
 
-### 文書タイプ（以下から2つ選択、同じタイプは避ける）
-- **メール/通知**: 大学からの公式通知、教授からのメール
-- **掲示/ポスター**: キャンパス内の掲示、イベント告知
-- **テキストメッセージ**: 学生同士のチャット
-- **ウェブページ**: 大学サイトのFAQ、サービス案内
-- **手紙/メモ**: 部署からの連絡文
+### 文書タイプ（11 種、毎 Practice 異なる 2 種を選択）
+必ず以下の 11 種から **2 種を選択**。**同じ 2 種の組み合わせを過去に使用している場合は必ず別の組み合わせを選ぶ**。
 
-### 文書のHTML表現（既存踏襲）
-- **メール**: `.email-container` > `.email-subject` + `.email-meta` + `.email-body`
-- **掲示**: `.notice-container` > `.notice-header` + `.notice-body`
-- **テキスト**: `.phone-frame` > `.phone-screen` > `.message-thread`（リアルなスマホUI）
+| # | タイプ | Instruction | HTML ラッパー |
+|---|---|---|---|
+| 1 | Poster / Sign / Notice | Read a notice / sign / poster. | `.notice-container` |
+| 2 | Menu（レストラン・カフェ） | Read a menu. | `.menu-container` |
+| 3 | Social Media Post / Web Page | Read a social media post / web page. | `.phone-frame .social-header` |
+| 4 | Schedule | Read a schedule. | `.schedule-container` |
+| 5 | Email（個人／機関） | Read an email. | `.email-container` |
+| 6 | Text Messages（1 対 1 SMS） | Read a chain of text messages. | `.phone-frame .message-thread` |
+| 7 | Advertisement | Read an advertisement. | `.ad-container` |
+| 8 | News Article | Read a news article. | `.article-container` |
+| 9 | Form | Read a form. | `.form-container` |
+| 10 | Invoice / Receipt | Read a receipt / invoice. | `.receipt-container` |
+| 11 | Text Chain / Live Chat（グループチャット） | Read a text chain. | `.chat-container` |
 
-### 問題タイプ
-- Detail（事実確認）: 文書中の具体的情報を問う
-- Inference（推論）: 文書から推測できることを問う
-- Purpose（目的）: 文書の意図や目的を問う
-- Main Idea（主旨）: 文書全体の要点を問う
-- 2問で少なくとも2つの異なるタイプを使う
+### 🚨 CRITICAL: タイプの多様性ルール
+1. **2 つのパッセージは異なるタイプ**（例: Menu + Advertisement ✓ / Email + Email ✗）
+2. **直近 3 Practice が使ったタイプは避ける**（`reading/rdl/practice-{N-1,N-2,N-3}.html` をスキャンし、使われた類型の和集合を取り、そこに含まれないタイプを優先）
+3. Type 5（Email）と Type 1（Notice）は Practice 1 で既使用のため、同じ組合せは厳禁
+4. Type 6 と Type 11 は両方テキスト会話だが形式が違う（1 対 1 SMS vs グループチャット）— これらを同一 Practice で併用しない
+
+### 問題数ルール
+- 15–50 語 → 2 問
+- 51–150 語 → 3 問
+- ランダム化パターン：
+  - A: 2問(短) + 3問(長) = 計5問
+  - B: 3問(長) + 2問(短) = 計5問
+  - C: 2問(短) + 2問(短) = 計4問
+  - D: 3問(長) + 3問(長) = 計6問
+
+### 問題タイプ（各パッセージ 2-3 問、最低 1 つは Factual Information）
+- ① FACTUAL INFORMATION（必須、最低 1 問/パッセージ）
+- ② NEGATIVE FACTUAL INFORMATION（EXCEPT / NOT）
+- ③ INFERENCE
+- ④ TEXT PURPOSE / MAIN IDEA
+- ⑤ VOCABULARY IN CONTEXT（イディオム・口語）
+
+### HTML テンプレート
+各パッセージタイプの HTML ラッパー構造および専用 CSS は、既存の `reading/rdl/practice-1.html` および v2.2 Guide（チャットログ参照）の仕様に完全準拠。共通 CSS（top-nav, footer, review overlay 等）は CTW と同一。
 
 ### 選択肢ルール
-- 各問題4択（A-D）
-- 各選択肢 5-12語、均一長
+- 4 択（A–D）
+- 各選択肢 5–12 語、均一長
 - ダッシュ/セミコロンで文をつなげない
 - 正解分布: できるだけ均等に
 
-### HTML構造（既存踏襲 — 必ず practice-1.html を参照）
-- トップナビ: `Question X of 20` / タイマー / Review / ユーザーバッジ
-- プログレスバー
-- Split layout: `.passage-panel`（左）+ `.question-panel`（右）
-- 問題は1問ずつ `.question-page.active` で表示
-- 選択肢: `.option` div（radio hidden、クリックで選択）
-- フッター: Back / Next ボタン
-- Reviewオーバーレイ: 全問の回答状況
-
-### JS機能（既存踏襲）
-- `selectOption(el)`: 選択肢の選択・保存
-- `changePage(dir)`: ページ遷移
-- `goNext()`: 次のファイルへ（解答ページ or 次のタスク）
-- sessionStorage: `kickstart_rdl_p{N}_answers` にJSON保存
-- タイマー: `kickstart_reading_timer` で全Reading問題共有
-
-### 解答ページ（practice-{N}-answers.html）
-- ヘッダー: ダーク背景にタイトル
-- スコアバナー: X/2
-- Tips セクション（キーワード、消去法、イディオム）
-- 各問題カード: `.q-card.correct` or `.q-card.incorrect`
-  - 問題文、正解タグ、ユーザー回答タグ
-  - 4択すべて表示（正解✓、誤選択は取り消し線）
-  - 詳細解説（日本語）
-
 ### 検証チェックリスト
-- [ ] 2つの文書が異なるタイプ
-- [ ] 各文書が自然で読みやすい
-- [ ] 2問が異なる問題タイプ
-- [ ] 選択肢が5-12語で均一長
-- [ ] 正解が明確に1つだけ（他の選択肢は明確に不正解）
-- [ ] 過去セットとトピック重複なし
+- [ ] 2 つの文書が異なるタイプ（11 種の中から選択）
+- [ ] 直近 3 Practice と使用タイプが重複していない
+- [ ] 各パッセージ 15–150 語
+- [ ] 問題数が語数ルールに一致
+- [ ] 各パッセージに最低 1 つ Factual Information
+- [ ] 全選択肢が 4 つ (A-D)、正解が 1 つだけ
+- [ ] ディストラクターがもっともらしい
+- [ ] CEFR B1-B2
 
-### パラフレーズ度チェック（Detail/Inference問題に適用）
-- [ ] 正解選択肢と本文の連続一致が**4語以下**か
-- [ ] 本文のキーワードが同義語に置き換えられているか
-- [ ] 「本文を指でなぞるだけで即答」にならない設計か
+### パラフレーズ度チェック（Detail/Inference 問題に適用）
+- [ ] 正解選択肢と本文の連続一致が **4 語以下**
+- [ ] 本文のキーワードが同義語に置換
+- [ ] 「本文を指でなぞるだけで即答」にならない設計
 
 ## 作成後
-1. HTML問題ページ + 解答ページを作成
-2. `docs/topic-history.md` のRDLセクションにトピック追記
-3. 検証サマリーを表示:
-   - 文書タイプ
-   - 問題タイプ
-   - 選択肢語数チェック
-   - 正解の一意性確認
-   - 過去セットとの重複なし確認
+1. HTML 問題ページ + 解答ページを作成
+2. `docs/topic-history.md` の RDL セクションに以下形式で追記：
+   ```
+   | N | 1 | [Type1] | [Topic1] |
+   | N | 2 | [Type2] | [Topic2] |
+   ```
+3. 検証サマリーを表示：
+   - 選択した 2 つのタイプ（11 種のどれか）
+   - 各パッセージ語数
+   - 問題数パターン（A/B/C/D）
+   - 直近 3 Practice のタイプとの重複なし確認
+   - 選択肢語数チェック、正解一意性
+   - トピック重複なし

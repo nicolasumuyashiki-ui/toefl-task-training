@@ -61,8 +61,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/4</div>
-  <div class="score-label">Your Score (Q1&ndash;Q4)</div>
+  <div class="score-big" id="scoreDisplay">&ndash;/5</div>
+  <div class="score-label">Your Score (Q1&ndash;Q5)</div>
 </div>
 
 <div class="answers-body">
@@ -72,37 +72,46 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     <div class="tips-title">Read in Daily Life Strategy Tips</div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">1</span> Distinguish temporary vs. permanent changes</div>
+      <div class="tip-card-title"><span class="tip-num">1</span> Track who says what in a group chat</div>
       <div class="tip-card-body">
-        Pay close attention to time-limiting phrases like <code>for that day only</code>, <code>from... through...</code>, or <code>during this period</code>. These signal that a change is temporary, not permanent. Answer choices that say "permanent" or omit the time limit are traps.
+        In a group conversation, each message is tied to a specific sender. Questions often ask what a <strong>particular person</strong> will do. Read the sender's name first, then locate their statement — don't mix up tasks between members.
         <div class="tip-example">
-          <strong>Q1:</strong> The email says office hours are canceled "for that day only" and offers "make-up office hours" on Thursday. This is clearly a temporary change = C, not a permanent schedule change (A).
+          <strong>Q2:</strong> Daniel says "I'll draft the survey and send it out to classmates tomorrow." That is his task, not Raj's (literature review) or Sofia's (video) = A.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">2</span> NOT/EXCEPT: Check each option against the passage</div>
+      <div class="tip-card-title"><span class="tip-num">2</span> Inference: stay close to what is actually said</div>
+      <div class="tip-card-body">
+        An inference must be <strong>logically supported</strong> by the text. Sofia says "I'm swamped with my chem lab this week." This directly supports the idea that she is busy with another subject. Don't jump to bigger conclusions (like "she doesn't want to help") that go beyond what the text warrants.
+        <div class="tip-warn">
+          <strong>Common traps:</strong><br>
+          - Options that exaggerate (e.g., "doesn't want to help" vs. "is busy this week")<br>
+          - Options that introduce new facts not in the passage
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">3</span> Advertisements: watch conditions on discounts</div>
+      <div class="tip-card-body">
+        Ad passages usually include <strong>multiple offers with different conditions</strong> (early bird, student discount, membership, etc.). Questions often test whether you can match the offer to its exact condition. Underline the deadline or requirement for each discount on your first read.
+        <div class="tip-example">
+          <strong>Q4:</strong> The Early Bird Special requires registering "before April 25." The 10% discount for having a student ID is a <em>different</em> offer. = C.
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">4</span> NOT/EXCEPT: eliminate what is mentioned</div>
       <div class="tip-card-body">
         <strong>Steps:</strong><br>
         1. Circle NOT/EXCEPT in the question<br>
         2. Check each option against the passage one by one<br>
         3. Cross out the 3 options that ARE mentioned. The remaining one is the answer.
         <div class="tip-warn">
-          <strong>Common traps:</strong><br>
-          - A word from the passage appears in the option, but the meaning is different<br>
-          - Partially correct but inaccurate as a whole<br>
-          - States the opposite of what the passage says
-        </div>
-      </div>
-    </div>
-
-    <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">3</span> Inference: look for what is logically supported</div>
-      <div class="tip-card-body">
-        For inference questions, the answer must be <strong>logically supported by information in the passage</strong>. If the passage says classes are "moved to" a new location with an "updated schedule," you can infer they will continue at a different place and possibly different times.
-        <div class="tip-example">
-          <strong>Q4:</strong> The notice says aqua fitness classes "will be moved to the multipurpose studio" and students should "check the updated schedule." This supports B: they continue but in a different location and possibly at different times.
+          <strong>Note:</strong> The answer often introduces a plausible-sounding detail (like "online version") that was never actually stated in the passage.
         </div>
       </div>
     </div>
@@ -110,90 +119,108 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 
   <!-- Passage 1 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 1 <span class="passage-type-badge">Email</span></div>
+    <div class="passage-title">Passage 1 <span class="passage-type-badge">Live Chat</span></div>
 
     <div class="q-card" id="card1">
       <div class="q-num">Question 1 — Main Purpose</div>
-      <div class="q-text">What is the main purpose of this email?</div>
+      <div class="q-text">What is the main purpose of this text chain?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours1">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt1A"><span class="label">A</span> To announce a permanent change to the professor's office hours schedule</div>
-        <div class="option-review" id="opt1B"><span class="label">B</span> To ask students to attend a faculty meeting on Wednesday</div>
-        <div class="option-review is-correct" id="opt1C"><span class="label">C</span> To inform students about a temporary office hours change and alternative contact options &#10003;</div>
-        <div class="option-review" id="opt1D"><span class="label">D</span> To require all students to schedule video calls for the upcoming week</div>
+        <div class="option-review" id="opt1A"><span class="label">A</span> To complain about the workload of a final presentation</div>
+        <div class="option-review is-correct" id="opt1B"><span class="label">B</span> To divide responsibilities for a group project among members &#10003;</div>
+        <div class="option-review" id="opt1C"><span class="label">C</span> To request an extension from their sociology professor</div>
+        <div class="option-review" id="opt1D"><span class="label">D</span> To choose a topic for their upcoming class presentation</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email explains that Wednesday office hours are canceled "for that day only," provides a make-up time on Thursday, and offers email and video call as alternatives. This is a temporary change notification with alternative options = C.<br><br>
-        A is wrong because the change is explicitly temporary ("for that day only"), not permanent. B confuses the reason for the cancellation with the purpose of the email. D overstates the email; video calls are offered as an option, not required.
+        <strong>Explanation:</strong> Emma opens by saying the team needs to "divide the work before Friday," and each subsequent message assigns someone a specific task. The purpose is task division = B.<br><br>
+        A is wrong because no one complains — they simply coordinate. C is never discussed; no extension is requested. D is wrong because the topic is already set; only the work split is at issue.
       </div>
     </div>
 
     <div class="q-card" id="card2">
       <div class="q-num">Question 2 — Factual Detail</div>
-      <div class="q-text">According to the email, what should a student do if they cannot attend the Thursday make-up office hours?</div>
+      <div class="q-text">According to the text chain, what task will Daniel take on?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag tag-correct">Correct: A</span>
         <span class="answer-tag" id="yours2">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt2A"><span class="label">A</span> Wait until the following Wednesday to visit office hours</div>
-        <div class="option-review is-correct" id="opt2B"><span class="label">B</span> Email questions or book a video call through the course website &#10003;</div>
-        <div class="option-review" id="opt2C"><span class="label">C</span> Go directly to the professor's office without an appointment</div>
-        <div class="option-review" id="opt2D"><span class="label">D</span> Ask a teaching assistant for help instead</div>
+        <div class="option-review is-correct" id="opt2A"><span class="label">A</span> Writing and distributing the survey questions &#10003;</div>
+        <div class="option-review" id="opt2B"><span class="label">B</span> Editing the final video using special software</div>
+        <div class="option-review" id="opt2C"><span class="label">C</span> Reviewing six articles from the library database</div>
+        <div class="option-review" id="opt2D"><span class="label">D</span> Assembling all materials into the final slides</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email states: "please feel free to email me your questions or schedule a brief video call through the appointment link on the course website" = B.<br><br>
-        A is not mentioned as advice. C contradicts the email's tone of scheduling alternatives. D is not mentioned anywhere in the email.
+        <strong>Explanation:</strong> Daniel writes: "I'll draft the survey and send it out to classmates tomorrow." = A.<br><br>
+        B describes Sofia's task. C describes Raj's task. D describes what Daniel asks Emma to do, not what Daniel himself is doing.
+      </div>
+    </div>
+
+    <div class="q-card" id="card3">
+      <div class="q-num">Question 3 — Inference</div>
+      <div class="q-text">What can be inferred about Sofia from her message?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt3A"><span class="label">A</span> She does not want to contribute to the group project.</div>
+        <div class="option-review is-correct" id="opt3B"><span class="label">B</span> She is currently busy with coursework in another subject. &#10003;</div>
+        <div class="option-review" id="opt3C"><span class="label">C</span> She plans to drop the sociology class before Friday.</div>
+        <div class="option-review" id="opt3D"><span class="label">D</span> She has more editing experience than her roommate does.</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> Sofia says she is "swamped with my chem lab this week," which strongly supports that she has heavy coursework in another class = B.<br><br>
+        A is too extreme — Sofia is actively taking on the video. C is never suggested and contradicts her willingness to contribute. D reverses the relationship; the text says her roommate has the editing software.
       </div>
     </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 2 <span class="passage-type-badge">Notice</span></div>
-
-    <div class="q-card" id="card3">
-      <div class="q-num">Question 3 — NOT/EXCEPT</div>
-      <div class="q-text">According to the notice, all of the following are part of the pool maintenance work EXCEPT</div>
-      <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: D</span>
-        <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
-      </div>
-      <div style="margin:10px 0">
-        <div class="option-review" id="opt3A"><span class="label">A</span> replacing the filtration system</div>
-        <div class="option-review" id="opt3B"><span class="label">B</span> resurfacing the pool deck</div>
-        <div class="option-review" id="opt3C"><span class="label">C</span> repairing damaged tiles</div>
-        <div class="option-review is-correct" id="opt3D"><span class="label">D</span> installing new diving boards &#10003;</div>
-      </div>
-      <div class="explanation">
-        <strong>Elimination method:</strong><br>
-        A &mdash; "replace the filtration system" &#10003; mentioned<br>
-        B &mdash; "resurface the pool deck" &#10003; mentioned<br>
-        C &mdash; "repair damaged tiles along the edges" &#10003; mentioned<br>
-        D &mdash; Diving boards are <strong>never mentioned</strong> in the notice. This is the correct answer.<br><br>
-        This is a straightforward EXCEPT question. All three distractors use exact or near-exact wording from the passage.
-      </div>
-    </div>
+    <div class="passage-title">Passage 2 <span class="passage-type-badge">Advertisement</span></div>
 
     <div class="q-card" id="card4">
-      <div class="q-num">Question 4 — Inference</div>
-      <div class="q-text">What can be inferred about the aqua fitness classes during the maintenance period?</div>
+      <div class="q-num">Question 4 — Factual Detail</div>
+      <div class="q-text">According to the advertisement, what does a student need to do to receive the Early Bird discount?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag tag-correct">Correct: C</span>
         <span class="answer-tag" id="yours4">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> They will be canceled entirely until the pool reopens.</div>
-        <div class="option-review is-correct" id="opt4B"><span class="label">B</span> They will continue but in a different location and possibly at different times. &#10003;</div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> They will be held at Riverside Community Center along with swim team practices.</div>
-        <div class="option-review" id="opt4D"><span class="label">D</span> They will only be available to swim team members during the closure.</div>
+        <div class="option-review" id="opt4A"><span class="label">A</span> Attend a free conversation cafe on a Friday</div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> Show a valid university student ID card</div>
+        <div class="option-review is-correct" id="opt4C"><span class="label">C</span> Sign up for the course before April 25 &#10003;</div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> Complete a short placement test in advance</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The notice states that aqua fitness classes "will be moved to the multipurpose studio on the second floor" and asks students to "check the updated schedule." From this we can infer the classes continue in a new location and possibly at different times = B.<br><br>
-        A directly contradicts the passage (they are moved, not canceled). C confuses aqua fitness with swim team practice; only the swim team goes to Riverside. D has no basis in the text.
+        <strong>Explanation:</strong> The ad states: "Register before April 25 and save 20% off the regular tuition." This is the Early Bird condition = C.<br><br>
+        A is a separate benefit for current students, unrelated to the discount. B is the condition for the <em>additional</em> 10% student discount, not the Early Bird. D is never mentioned.
+      </div>
+    </div>
+
+    <div class="q-card" id="card5">
+      <div class="q-num">Question 5 — NOT/EXCEPT</div>
+      <div class="q-text">According to the advertisement, all of the following are features of the program EXCEPT</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: D</span>
+        <span class="answer-tag" id="yours5">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt5A"><span class="label">A</span> a class size limited to eight students</div>
+        <div class="option-review" id="opt5B"><span class="label">B</span> instructors who are native Spanish speakers</div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> a weekly optional conversation gathering</div>
+        <div class="option-review is-correct" id="opt5D"><span class="label">D</span> an online version for remote learners &#10003;</div>
+      </div>
+      <div class="explanation">
+        <strong>Elimination method:</strong><br>
+        A &mdash; "no more than eight students per instructor" &#10003; mentioned<br>
+        B &mdash; "all teachers are native speakers" &#10003; mentioned<br>
+        C &mdash; "free weekly conversation cafe on Fridays" &#10003; mentioned<br>
+        D &mdash; An online or remote option is <strong>never mentioned</strong>. The ad refers only to the downtown campus. This is the correct answer.
       </div>
     </div>
   </div>
@@ -205,7 +232,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <script>
-var correctAnswers = {'1':'C','2':'B','3':'D','4':'B'};
+var correctAnswers = {'1':'B','2':'A','3':'B','4':'C','5':'D'};
 (function(){
   var saved = sessionStorage.getItem('training_rdl_p6_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -226,7 +253,7 @@ var correctAnswers = {'1':'C','2':'B','3':'D','4':'B'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/4';
+  document.getElementById('scoreDisplay').textContent = score+'/5';
 })();
 </script>
 <script src="../../js/auth.js"></script>

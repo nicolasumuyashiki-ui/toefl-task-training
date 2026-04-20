@@ -57,25 +57,34 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 .option-label{font-weight:600;color:#007646;min-width:28px}
 .option-text{flex:1;color:#0F1511}
 
-/* EMAIL STYLES */
-.email-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.email-subject{background:#FBF6EC;padding:14px 20px;font-weight:700;font-size:.95em;color:#0F1511;border-bottom:1px solid #F5E9D3}
-.email-meta{padding:10px 20px;font-size:.85em;color:#5A6861;border-bottom:1px solid #F5E9D3;display:flex;flex-direction:column;gap:2px}
-.email-meta span{display:block}
-.email-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.email-body p{margin-bottom:10px}
-.email-body p:last-child{margin-bottom:0}
+/* SCHEDULE STYLES */
+.schedule-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.schedule-header{background:#002817;color:#fff;padding:16px 20px;text-align:center}
+.schedule-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
+.schedule-header p{font-size:.8em;color:rgba(255,255,255,.7)}
+.schedule-intro{padding:14px 20px;font-size:.9em;line-height:1.6;color:#0F1511;border-bottom:1px solid #F5E9D3;background:#FBF6EC}
+.schedule-table{width:100%;border-collapse:collapse;font-size:.9em}
+.schedule-table th{background:#F5E9D3;color:#0F1511;padding:10px 14px;text-align:left;font-weight:700;border-bottom:1px solid #D6DAD7}
+.schedule-table td{padding:10px 14px;border-bottom:1px solid #F5E9D3;color:#0F1511}
+.schedule-table tr:last-child td{border-bottom:none}
+.schedule-footer{padding:12px 20px;font-size:.85em;color:#5A6861;background:#FBF6EC;border-top:1px solid #F5E9D3;font-style:italic}
 
-/* NOTICE STYLES */
-.notice-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.notice-header{background:#002817;color:#fff;padding:16px 20px;text-align:center}
-.notice-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
-.notice-header p{font-size:.8em;color:rgba(255,255,255,.7)}
-.notice-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.notice-body p{margin-bottom:10px}
-.notice-body p:last-child{margin-bottom:0}
-.notice-body ul{margin:8px 0 10px 20px}
-.notice-body li{margin-bottom:4px}
+/* MENU STYLES */
+.menu-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.menu-header{background:#8A3E24;color:#fff;padding:18px 20px;text-align:center}
+.menu-header h3{font-size:1.05em;font-weight:700;margin-bottom:2px;letter-spacing:.5px}
+.menu-header p{font-size:.8em;color:rgba(255,255,255,.8);font-style:italic}
+.menu-body{padding:18px 20px;font-size:.92em;line-height:1.65;color:#0F1511}
+.menu-section{margin-bottom:14px}
+.menu-section:last-child{margin-bottom:0}
+.menu-section-title{font-size:.85em;font-weight:700;color:#8A3E24;text-transform:uppercase;letter-spacing:1px;border-bottom:1px dashed #F5E9D3;padding-bottom:4px;margin-bottom:8px}
+.menu-item{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px}
+.menu-item:last-child{margin-bottom:0}
+.menu-item-info{flex:1}
+.menu-item-name{font-weight:600;color:#0F1511;font-size:.93em}
+.menu-item-desc{font-size:.85em;color:#5A6861;margin-top:2px;line-height:1.5}
+.menu-item-price{font-weight:600;color:#8A3E24;font-size:.9em;white-space:nowrap}
+.menu-note{margin-top:14px;padding-top:10px;border-top:1px dashed #F5E9D3;font-size:.85em;color:#5A6861;font-style:italic}
 
 /* REVIEW OVERLAY */
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}
@@ -95,13 +104,13 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- TOP NAV -->
 <div class="top-nav">
   <div class="top-nav-left">
-    <span>Question <span id="qLabel"><strong>1</strong></span> of 4</span>
+    <span>Question <span id="qLabel"><strong>1</strong></span> of 5</span>
     <span>|</span>
     <span>Reading in Daily Life</span>
   </div>
   <div class="top-nav-right">
     <button class="timer-btn" onclick="toggleTimer()">Hide Time</button>
-    <span class="timer-display" id="timerDisplay">10:00</span>
+    <span class="timer-display" id="timerDisplay">12:00</span>
     <button class="review-btn" onclick="openReview()">Review</button>
     <span class="user-badge" id="userBadge"></span>
   </div>
@@ -110,174 +119,236 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- PROGRESS BAR -->
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
 
-<!-- ========== PAGE 1: Passage 1 — Email (Short ~100w) ========== -->
+<!-- ========== PAGE 1: Passage 1 — Schedule (Short ~45w) ========== -->
 <div class="split-main" id="passagePage1">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 1 of 2</div>
-    <div class="instruction">Read an email.</div>
-    <div class="email-container">
-      <div class="email-subject">Subject: Spring Election — Voting Information</div>
-      <div class="email-meta">
-        <span><strong>From:</strong> Greenfield University Student Government &lt;studentgov@greenfield.edu&gt;</span>
-        <span><strong>To:</strong> All Registered Students</span>
-        <span><strong>Date:</strong> March 10, 2026</span>
+    <div class="instruction">Read a schedule.</div>
+    <div class="schedule-container">
+      <div class="schedule-header">
+        <h3>Writing Center — Drop-in Hours</h3>
+        <p>Spring Semester 2026 &middot; Hadley Library, Room 204</p>
       </div>
-      <div class="email-body">
-        <p>Dear Students,</p>
-        <p>The Student Government spring election will be held on March 24 and 25. All currently enrolled students are eligible to vote. Voting will take place online through the student portal from 8:00 AM to 10:00 PM on both days. You will need your student ID number and campus email address to log in.</p>
-        <p>Candidate profiles and campaign statements are now available on the Student Government website. We encourage everyone to review the candidates before casting your vote. Each student may vote only once, and results will be announced on March 28.</p>
-        <p>Thank you for participating in student governance.</p>
-        <p>Best regards,<br>Greenfield University Student Government</p>
+      <div class="schedule-intro">
+        No appointment needed. First come, first served. Sessions are limited to 25 minutes per student when others are waiting.
+      </div>
+      <table class="schedule-table">
+        <thead>
+          <tr><th>Day</th><th>Hours</th><th>Tutor on Duty</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Monday</td><td>1:00 PM &ndash; 5:00 PM</td><td>Graduate tutor</td></tr>
+          <tr><td>Wednesday</td><td>10:00 AM &ndash; 2:00 PM</td><td>Faculty mentor</td></tr>
+          <tr><td>Friday</td><td>3:00 PM &ndash; 7:00 PM</td><td>Graduate tutor</td></tr>
+        </tbody>
+      </table>
+      <div class="schedule-footer">
+        Closed on university holidays. Bring a printed draft or a laptop.
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q1: Main Purpose -->
+    <!-- Q1: Factual Information -->
     <div class="question-page active" id="page1">
       <div class="question-text">
-        <span class="question-number">1.</span>What is the main purpose of this email?
+        <span class="question-number">1.</span>According to the schedule, who staffs the Writing Center on Wednesdays?
       </div>
       <div class="options">
         <div class="option" data-q="1" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q1" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">To announce the results of the spring election</span>
+          <span class="option-text">An undergraduate peer tutor from the English department</span>
         </div>
         <div class="option" data-q="1" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q1" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">To provide students with information about how and when to vote</span>
+          <span class="option-text">A faculty mentor assigned to that weekday shift</span>
         </div>
         <div class="option" data-q="1" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q1" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">To recruit candidates for the student government positions</span>
+          <span class="option-text">A graduate student tutor from the writing program</span>
         </div>
         <div class="option" data-q="1" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q1" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">To explain why the election date has been changed</span>
+          <span class="option-text">A library staff member trained in academic writing</span>
         </div>
       </div>
     </div>
 
-    <!-- Q2: Detail -->
+    <!-- Q2: Inference -->
     <div class="question-page" id="page2">
       <div class="question-text">
-        <span class="question-number">2.</span>According to the email, what do students need to log in to the voting system?
+        <span class="question-number">2.</span>What can be inferred about a student who arrives when several others are already waiting?
       </div>
       <div class="options">
         <div class="option" data-q="2" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q2" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">A physical student ID card and a password</span>
+          <span class="option-text">The student will be asked to reserve a later appointment.</span>
         </div>
         <div class="option" data-q="2" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q2" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">A campus email address and a phone number</span>
+          <span class="option-text">The student may receive a shorter tutoring session than usual.</span>
         </div>
         <div class="option" data-q="2" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q2" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">A student ID number and a campus email address</span>
+          <span class="option-text">The student will be sent to a different campus library.</span>
         </div>
         <div class="option" data-q="2" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q2" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">A registration form and an invitation code</span>
+          <span class="option-text">The student must pay a small fee to keep their place.</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== PAGE 2: Passage 2 — Notice (Longer ~180w) ========== -->
+<!-- ========== PAGE 2: Passage 2 — Menu (Longer ~125w) ========== -->
 <div class="split-main" id="passagePage2" style="display:none">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 2 of 2</div>
-    <div class="instruction">Read a notice.</div>
-    <div class="notice-container">
-      <div class="notice-header">
-        <h3>IMPORTANT: Visa Renewal Requirements</h3>
-        <p>International Student Office — Lakewood University</p>
+    <div class="instruction">Read a menu.</div>
+    <div class="menu-container">
+      <div class="menu-header">
+        <h3>The Maple Room &mdash; Weekend Brunch</h3>
+        <p>Served Saturday &amp; Sunday, 9:00 AM to 1:00 PM</p>
       </div>
-      <div class="notice-body">
-        <p>Dear International Students,</p>
-        <p>The International Student Office would like to remind all students on F-1 visas that maintaining valid immigration status requires timely action. If your current I-20 document is set to expire within the next 60 days, you must schedule an appointment with an international student advisor to begin the renewal process.</p>
-        <p>To complete the renewal, you will need to bring the following documents to your appointment:</p>
-        <ul>
-          <li>A valid passport with at least six months of remaining validity</li>
-          <li>Your current I-20 form</li>
-          <li>Proof of enrollment for the upcoming semester (available through the registrar's office)</li>
-          <li>Evidence of financial support, such as a bank statement or scholarship letter</li>
-        </ul>
-        <p>Please note that processing times may vary, and we strongly recommend submitting your renewal application at least 30 days before your I-20 expires. Students who fail to renew on time may face serious consequences, including the loss of their student status.</p>
-        <p>For questions or to book an appointment, please contact us at iso@lakewood.edu or visit our office in Wilson Hall, Room 215.</p>
+      <div class="menu-body">
+        <div class="menu-section">
+          <div class="menu-section-title">Plates</div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Garden Avocado Toast</div>
+              <div class="menu-item-desc">Multigrain sourdough, smashed avocado, cherry tomatoes, and chili flakes. Add a poached egg for $1.50.</div>
+            </div>
+            <div class="menu-item-price">$7.25</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Classic Buttermilk Pancakes</div>
+              <div class="menu-item-desc">A stack of three pancakes with maple syrup and seasonal fruit. Vegan batter available on request.</div>
+            </div>
+            <div class="menu-item-price">$8.00</div>
+          </div>
+        </div>
+        <div class="menu-section">
+          <div class="menu-section-title">Drinks</div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Bottomless Coffee or Tea</div>
+              <div class="menu-item-desc">Unlimited refills within your visit. Choose from house blend, decaf, or loose-leaf tea.</div>
+            </div>
+            <div class="menu-item-price">$2.50</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Fresh Orange Juice</div>
+              <div class="menu-item-desc">Squeezed in-house every morning from local oranges.</div>
+            </div>
+            <div class="menu-item-price">$3.75</div>
+          </div>
+        </div>
+        <div class="menu-note">
+          Students save 15% with a valid campus ID. Not combinable with other discounts.
+        </div>
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q3: NOT/EXCEPT -->
+    <!-- Q3: Factual Information -->
     <div class="question-page active" id="page3">
       <div class="question-text">
-        <span class="question-number">3.</span>According to the notice, which of the following is NOT listed as a required document for the renewal appointment?
+        <span class="question-number">3.</span>According to the menu, what is served with the Classic Buttermilk Pancakes?
       </div>
       <div class="options">
         <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q3" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">A valid passport</span>
+          <span class="option-text">Whipped cream and a side of bacon strips</span>
         </div>
         <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q3" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">A letter of recommendation from a professor</span>
+          <span class="option-text">Maple syrup along with fruit of the season</span>
         </div>
         <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q3" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">Proof of enrollment for the upcoming semester</span>
+          <span class="option-text">Powdered sugar and a small glass of juice</span>
         </div>
         <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q3" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">Evidence of financial support</span>
+          <span class="option-text">Honey butter and locally sourced berries</span>
         </div>
       </div>
     </div>
 
-    <!-- Q4: Inference -->
+    <!-- Q4: NOT/EXCEPT -->
     <div class="question-page" id="page4">
       <div class="question-text">
-        <span class="question-number">4.</span>What can be inferred about students who do not renew their I-20 before it expires?
+        <span class="question-number">4.</span>All of the following are mentioned as optional additions or choices EXCEPT
       </div>
       <div class="options">
         <div class="option" data-q="4" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q4" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">They will automatically receive an extension from the university.</span>
+          <span class="option-text">adding a poached egg to the avocado toast</span>
         </div>
         <div class="option" data-q="4" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q4" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">They may need to pay a small late fee to the registrar's office.</span>
+          <span class="option-text">requesting a vegan version of the pancake batter</span>
         </div>
         <div class="option" data-q="4" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q4" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">They will be transferred to a different visa category.</span>
+          <span class="option-text">choosing between decaf and regular house coffee</span>
         </div>
         <div class="option" data-q="4" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q4" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">They could risk losing their ability to study at the university.</span>
+          <span class="option-text">substituting almond milk in place of buttermilk</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Inference -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>What can be inferred about a student who presents a valid campus ID at brunch?
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">The student can stack the campus discount with other promotions.</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">The student will pay less than the listed price on the menu.</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">The student is served brunch items outside normal weekend hours.</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">The student receives complimentary refills of fresh orange juice.</span>
         </div>
       </div>
     </div>
@@ -302,10 +373,10 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <script src="../../js/progress.js"></script>
 <script>
 var currentQ = 1;
-var totalQ = 4;
+var totalQ = 5;
 var userAnswers = {};
 var timerVisible = true;
-var timeLeft = 600; // 10 minutes
+var timeLeft = 720; // 12 minutes
 var timerInterval;
 var storageKey = 'training_rdl_p7_answers';
 var timerKey = 'training_rdl_p7_timer';
@@ -350,7 +421,7 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-// Passage page mapping: questions 1-2 = passage 1, questions 3-4 = passage 2
+// Passage page mapping: questions 1-2 = passage 1, questions 3-5 = passage 2
 function getPassagePage(q){ return q <= 2 ? 1 : 2; }
 
 function selectOption(el){
@@ -370,10 +441,10 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'B','2':'C','3':'B','4':'D'};
+    var ca={'1':'B','2':'B','3':'B','4':'D','5':'B'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    sessionStorage.setItem('training_score_rdl_p7',JSON.stringify({correct:sc,total:4}));
+    sessionStorage.setItem('training_score_rdl_p7',JSON.stringify({correct:sc,total:5}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-7-answers.html';
     return;

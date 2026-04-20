@@ -57,25 +57,35 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 .option-label{font-weight:600;color:#007646;min-width:28px}
 .option-text{flex:1;color:#0F1511}
 
-/* EMAIL STYLES */
-.email-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.email-subject{background:#FBF6EC;padding:14px 20px;font-weight:700;font-size:.95em;color:#0F1511;border-bottom:1px solid #F5E9D3}
-.email-meta{padding:10px 20px;font-size:.85em;color:#5A6861;border-bottom:1px solid #F5E9D3;display:flex;flex-direction:column;gap:2px}
-.email-meta span{display:block}
-.email-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.email-body p{margin-bottom:10px}
-.email-body p:last-child{margin-bottom:0}
+/* SOCIAL MEDIA POST STYLES */
+.phone-frame{max-width:380px;margin:0 auto;background:#fff;border:1px solid #F5E9D3;border-radius:18px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.social-header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #F5E9D3}
+.social-avatar{width:40px;height:40px;border-radius:50%;background:#007646;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95em;flex-shrink:0}
+.social-user{flex:1;display:flex;flex-direction:column;line-height:1.3}
+.social-user .name{font-weight:700;font-size:.92em;color:#0F1511}
+.social-user .handle{font-size:.78em;color:#5A6861}
+.social-menu{color:#5A6861;font-size:1.1em;font-weight:700;padding:0 4px}
+.social-image{background:linear-gradient(135deg,#007646,#004D2E);color:#fff;padding:36px 18px;text-align:center;font-weight:700;font-size:1.05em;letter-spacing:.5px}
+.social-body{padding:14px 16px;font-size:.9em;line-height:1.65;color:#0F1511}
+.social-body p{margin-bottom:8px}
+.social-body p:last-child{margin-bottom:0}
+.social-tags{color:#2b6cb0;font-size:.88em;font-weight:500}
+.social-actions{display:flex;gap:18px;padding:10px 16px;border-top:1px solid #F5E9D3;font-size:.82em;color:#5A6861}
+.social-actions span{display:inline-flex;align-items:center;gap:4px}
 
-/* NOTICE STYLES */
-.notice-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.notice-header{background:#002817;color:#fff;padding:16px 20px;text-align:center}
-.notice-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
-.notice-header p{font-size:.8em;color:rgba(255,255,255,.7)}
-.notice-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.notice-body p{margin-bottom:10px}
-.notice-body p:last-child{margin-bottom:0}
-.notice-body ul{margin:8px 0 10px 20px}
-.notice-body li{margin-bottom:4px}
+/* SCHEDULE STYLES */
+.schedule-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.schedule-header{background:#002817;color:#fff;padding:16px 20px;text-align:center}
+.schedule-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
+.schedule-header p{font-size:.8em;color:rgba(255,255,255,.7)}
+.schedule-intro{padding:12px 20px;font-size:.88em;color:#5A6861;border-bottom:1px solid #F5E9D3;line-height:1.6}
+.schedule-table{width:100%;border-collapse:collapse;font-size:.88em}
+.schedule-table th{background:#F5E9D3;color:#0F1511;font-weight:700;text-align:left;padding:10px 14px;font-size:.82em;text-transform:uppercase;letter-spacing:.3px}
+.schedule-table td{padding:10px 14px;border-bottom:1px solid #F5E9D3;vertical-align:top;color:#0F1511}
+.schedule-table td:first-child{font-weight:600;color:#007646;white-space:nowrap;width:110px}
+.schedule-table tr:last-child td{border-bottom:none}
+.schedule-note{padding:12px 20px;background:#FBF6EC;font-size:.85em;color:#5A6861;line-height:1.6;border-top:1px solid #F5E9D3}
+.schedule-note strong{color:#0F1511}
 
 /* REVIEW OVERLAY */
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}
@@ -95,7 +105,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- TOP NAV -->
 <div class="top-nav">
   <div class="top-nav-left">
-    <span>Question <span id="qLabel"><strong>1</strong></span> of 4</span>
+    <span>Question <span id="qLabel"><strong>1</strong></span> of 6</span>
     <span>|</span>
     <span>Reading in Daily Life</span>
   </div>
@@ -110,24 +120,32 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- PROGRESS BAR -->
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
 
-<!-- ========== PAGE 1: Passage 1 — Email (Short ~100w) ========== -->
+<!-- ========== PAGE 1: Passage 1 — Social Media Post (~110w) ========== -->
 <div class="split-main" id="passagePage1">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 1 of 2</div>
-    <div class="instruction">Read an email.</div>
-    <div class="email-container">
-      <div class="email-subject">Subject: Mandatory Password Reset — Action Required by October 15</div>
-      <div class="email-meta">
-        <span><strong>From:</strong> Greenfield University IT Department &lt;itsecurity@greenfield.edu&gt;</span>
-        <span><strong>To:</strong> All Students and Staff</span>
-        <span><strong>Date:</strong> October 1, 2025</span>
+    <div class="instruction">Read a social media post.</div>
+    <div class="phone-frame">
+      <div class="social-header">
+        <div class="social-avatar">SW</div>
+        <div class="social-user">
+          <span class="name">StudyWithMe @ Harper Hall</span>
+          <span class="handle">@harperstudygroup &middot; 2h</span>
+        </div>
+        <div class="social-menu">&hellip;</div>
       </div>
-      <div class="email-body">
-        <p>Dear Members of the Greenfield University Community,</p>
-        <p>As part of our annual security update, all university accounts must undergo a mandatory password reset by October 15. To reset your password, log in to the university portal at myaccount.greenfield.edu and follow the instructions under "Security Settings." Your new password must be at least 12 characters long and include a combination of uppercase letters, lowercase letters, and numbers.</p>
-        <p>Accounts that have not been updated by the deadline will be temporarily locked until the password is reset. If you experience any difficulties, please contact the IT Help Desk at ext. 4200 or visit Room 108 in the Technology Building during business hours.</p>
-        <p>Thank you for your cooperation.<br>IT Security Team<br>Greenfield University</p>
+      <div class="social-image">WEEKLY BIOLOGY STUDY CIRCLE</div>
+      <div class="social-body">
+        <p>Midterms are around the corner, and our free Biology 201 study circle is back this week! We meet every Thursday from 6:00 to 8:00 PM in Harper Hall, Room 304.</p>
+        <p>This week, Maya (who aced the last exam) will walk us through cell respiration diagrams. Bring your textbook, a notebook, and any questions you've been saving up. Snacks are provided, but please let us know in the comments if you have allergies so we can plan ahead.</p>
+        <p>No sign-up needed &mdash; just show up. First-timers always welcome!</p>
+        <p class="social-tags">#BIO201 #StudyGroup #HarperHall</p>
+      </div>
+      <div class="social-actions">
+        <span>&#10084; 87</span>
+        <span>&#128172; 14</span>
+        <span>&#128257; 9</span>
       </div>
     </div>
   </div>
@@ -137,144 +155,210 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
     <!-- Q1: Main Purpose -->
     <div class="question-page active" id="page1">
       <div class="question-text">
-        <span class="question-number">1.</span>What is the primary purpose of this email?
+        <span class="question-number">1.</span>What is the main purpose of this post?
       </div>
       <div class="options">
         <div class="option" data-q="1" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q1" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">To notify users that their accounts have been compromised</span>
+          <span class="option-text">To recruit new members for a new biology club</span>
         </div>
         <div class="option" data-q="1" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q1" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">To announce the launch of a new university portal</span>
+          <span class="option-text">To invite students to a weekly biology study meeting</span>
         </div>
         <div class="option" data-q="1" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q1" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">To instruct users to reset their passwords before a deadline</span>
+          <span class="option-text">To announce the date of the upcoming biology midterm</span>
         </div>
         <div class="option" data-q="1" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q1" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">To explain how to create a new university account</span>
+          <span class="option-text">To request volunteers to tutor first-year biology students</span>
         </div>
       </div>
     </div>
 
-    <!-- Q2: Detail -->
+    <!-- Q2: Factual Information -->
     <div class="question-page" id="page2">
       <div class="question-text">
-        <span class="question-number">2.</span>According to the email, what will happen to accounts that are not updated by October 15?
+        <span class="question-number">2.</span>According to the post, what should participants do if they have food allergies?
       </div>
       <div class="options">
         <div class="option" data-q="2" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q2" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">They will be permanently deleted from the system.</span>
+          <span class="option-text">Mention it in the comments section of the post</span>
         </div>
         <div class="option" data-q="2" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q2" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">They will be temporarily locked until the password is reset.</span>
+          <span class="option-text">Send a direct message to the organizer beforehand</span>
         </div>
         <div class="option" data-q="2" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q2" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">They will be automatically assigned a new password.</span>
+          <span class="option-text">Bring their own snacks to share with other members</span>
         </div>
         <div class="option" data-q="2" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q2" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">They will lose access to email but retain portal access.</span>
+          <span class="option-text">Skip the snack portion and arrive after the break</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3: Inference -->
+    <div class="question-page" id="page3">
+      <div class="question-text">
+        <span class="question-number">3.</span>What can be inferred about students who have never attended before?
+      </div>
+      <div class="options">
+        <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">They must register in advance through a website</span>
+        </div>
+        <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">They are encouraged to join without prior registration</span>
+        </div>
+        <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">They are charged a small fee for their first session</span>
+        </div>
+        <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">They should attend only after finishing the textbook</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== PAGE 2: Passage 2 — Notice (Longer ~180w) ========== -->
+<!-- ========== PAGE 2: Passage 2 — Schedule (~130w) ========== -->
 <div class="split-main" id="passagePage2" style="display:none">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 2 of 2</div>
-    <div class="instruction">Read a notice.</div>
-    <div class="notice-container">
-      <div class="notice-header">
-        <h3>Student Club Funding Applications — Spring 2026</h3>
-        <p>Office of Student Activities</p>
+    <div class="instruction">Read a schedule.</div>
+    <div class="schedule-container">
+      <div class="schedule-header">
+        <h3>Spring Campus Festival &mdash; Saturday Schedule</h3>
+        <p>Northgate University &middot; April 25, 2026</p>
       </div>
-      <div class="notice-body">
-        <p>The Office of Student Activities is now accepting funding applications for registered student clubs for the Spring 2026 semester. All recognized clubs are eligible to apply for up to $500 in activity funding to support events, guest speakers, supplies, or travel related to club purposes.</p>
-        <p>To apply, club presidents must submit a completed funding request form along with a proposed budget and a brief description of the planned activity. Applications must be submitted online through the Student Activities Portal by November 30, 2025. Late submissions will not be accepted.</p>
-        <p>Please note the following important guidelines:</p>
-        <ul>
-          <li>Funding cannot be used for food, personal items, or gifts.</li>
-          <li>Clubs that received funding in the previous semester must submit a spending report before applying again.</li>
-          <li>Approved funds will be deposited into the club's official university account within two weeks of approval.</li>
-        </ul>
-        <p>For questions or assistance with the application process, please visit the Student Activities Office in the Campus Center, Room 215, or email activities@greenfield.edu.</p>
+      <div class="schedule-intro">
+        All events are held on the Main Quad unless otherwise noted. Students must show their ID at the entrance. Free for all current students; guests pay $5 at the gate.
+      </div>
+      <table class="schedule-table">
+        <thead>
+          <tr><th>Time</th><th>Event</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>10:00 AM</td><td>Opening ceremony and welcome remarks by the Dean (Main Stage)</td></tr>
+          <tr><td>11:00 AM</td><td>Student club fair &mdash; visit over 30 booths from campus clubs</td></tr>
+          <tr><td>12:30 PM</td><td>Food truck lunch hour (meal tickets sold separately at Booth 14)</td></tr>
+          <tr><td>2:00 PM</td><td>Live band performance by The Echo Hall (Main Stage)</td></tr>
+          <tr><td>3:30 PM</td><td>Art exhibition opening &mdash; Student Gallery, Building C</td></tr>
+          <tr><td>5:00 PM</td><td>Outdoor movie screening (rain location: Davis Auditorium)</td></tr>
+        </tbody>
+      </table>
+      <div class="schedule-note">
+        <strong>Note:</strong> The food truck lunch requires a separate meal ticket. All other events are included with your ID. In case of heavy rain, the Main Stage events will be moved to the Student Union Ballroom; updates will be posted on the festival website.
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q3: NOT/EXCEPT -->
-    <div class="question-page active" id="page3">
+    <!-- Q4: Factual Information -->
+    <div class="question-page active" id="page4">
       <div class="question-text">
-        <span class="question-number">3.</span>According to the notice, funding may be used for all of the following EXCEPT
-      </div>
-      <div class="options">
-        <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="A">
-          <span class="option-label">A</span>
-          <span class="option-text">purchasing food for club members</span>
-        </div>
-        <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="B">
-          <span class="option-label">B</span>
-          <span class="option-text">inviting guest speakers to campus</span>
-        </div>
-        <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="C">
-          <span class="option-label">C</span>
-          <span class="option-text">buying supplies for club activities</span>
-        </div>
-        <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="D">
-          <span class="option-label">D</span>
-          <span class="option-text">covering travel expenses for club events</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q4: Inference -->
-    <div class="question-page" id="page4">
-      <div class="question-text">
-        <span class="question-number">4.</span>What can be inferred about clubs that received funding in the previous semester?
+        <span class="question-number">4.</span>At what time does the art exhibition open?
       </div>
       <div class="options">
         <div class="option" data-q="4" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q4" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">They are automatically approved for funding in the next semester.</span>
+          <span class="option-text">At 2:00 PM on the Main Stage</span>
         </div>
         <div class="option" data-q="4" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q4" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">They are no longer eligible to apply for additional funding.</span>
+          <span class="option-text">At 3:30 PM in the Student Gallery</span>
         </div>
         <div class="option" data-q="4" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q4" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">They will receive a larger amount of funding than new applicants.</span>
+          <span class="option-text">At 5:00 PM in Davis Auditorium</span>
         </div>
         <div class="option" data-q="4" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q4" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">They must account for how they spent their previous funds before reapplying.</span>
+          <span class="option-text">At 11:00 AM at the club fair booths</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: NOT/EXCEPT -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>According to the schedule, all of the following are included with a student ID EXCEPT
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">the food truck lunch at Booth 14</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">the opening ceremony on the Main Stage</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">the live band performance in the afternoon</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">the outdoor movie screening in the evening</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6: Inference -->
+    <div class="question-page" id="page6">
+      <div class="question-text">
+        <span class="question-number">6.</span>What can be inferred about the festival if heavy rain occurs?
+      </div>
+      <div class="options">
+        <div class="option" data-q="6" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">All scheduled events will be canceled for the day</span>
+        </div>
+        <div class="option" data-q="6" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">Only the art exhibition will continue as planned</span>
+        </div>
+        <div class="option" data-q="6" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">Main Stage events will be moved to an indoor space</span>
+        </div>
+        <div class="option" data-q="6" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">The festival will be postponed to the following Saturday</span>
         </div>
       </div>
     </div>
@@ -299,7 +383,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <script src="../../js/progress.js"></script>
 <script>
 var currentQ = 1;
-var totalQ = 4;
+var totalQ = 6;
 var userAnswers = {};
 var timerVisible = true;
 var timeLeft = 600; // 10 minutes
@@ -324,7 +408,7 @@ function restoreState(saved){
     var target = Math.min(Math.max(saved.currentQ || 1, 1), totalQ);
     if(target !== 1){
       document.getElementById('page1').classList.remove('active');
-      var oldPassage = 1, newPassage = (target <= 2 ? 1 : 2);
+      var oldPassage = 1, newPassage = (target <= 3 ? 1 : 2);
       if(oldPassage !== newPassage){
         document.getElementById('passagePage1').style.display = 'none';
         document.getElementById('passagePage2').style.display = 'flex';
@@ -347,8 +431,8 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-// Passage page mapping: questions 1-2 = passage 1, questions 3-4 = passage 2
-function getPassagePage(q){ return q <= 2 ? 1 : 2; }
+// Passage page mapping: questions 1-3 = passage 1, questions 4-6 = passage 2
+function getPassagePage(q){ return q <= 3 ? 1 : 2; }
 
 function selectOption(el){
   var q = el.getAttribute('data-q');
@@ -367,10 +451,10 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'C','2':'B','3':'A','4':'D'};
+    var ca={'1':'B','2':'A','3':'B','4':'B','5':'A','6':'C'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    sessionStorage.setItem('training_score_rdl_p3',JSON.stringify({correct:sc,total:4}));
+    sessionStorage.setItem('training_score_rdl_p3',JSON.stringify({correct:sc,total:6}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-3-answers.html';
     return;

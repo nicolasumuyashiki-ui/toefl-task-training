@@ -66,16 +66,25 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 .email-body p{margin-bottom:10px}
 .email-body p:last-child{margin-bottom:0}
 
-/* NOTICE STYLES */
-.notice-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.notice-header{background:#002817;color:#fff;padding:16px 20px;text-align:center}
-.notice-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
-.notice-header p{font-size:.8em;color:rgba(255,255,255,.7)}
-.notice-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.notice-body p{margin-bottom:10px}
-.notice-body p:last-child{margin-bottom:0}
-.notice-body ul{margin:8px 0 10px 20px}
-.notice-body li{margin-bottom:4px}
+/* FORM STYLES */
+.form-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.form-header{background:#002817;color:#fff;padding:16px 20px;text-align:center}
+.form-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
+.form-header p{font-size:.8em;color:rgba(255,255,255,.7)}
+.form-body{padding:18px 20px;font-size:.9em;color:#0F1511}
+.form-intro{font-size:.85em;color:#5A6861;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed #D6DAD7;line-height:1.55}
+.form-section{margin-bottom:16px}
+.form-section-title{font-weight:700;font-size:.85em;color:#007646;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding-bottom:4px;border-bottom:1px solid #F5E9D3}
+.form-row{display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap}
+.form-field{flex:1;min-width:160px}
+.form-label{font-size:.75em;color:#5A6861;font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px;display:block}
+.form-value{font-size:.92em;color:#0F1511;padding:6px 10px;background:#FBF6EC;border:1px solid #F5E9D3;border-radius:4px;min-height:28px;line-height:1.5}
+.form-value.long{min-height:auto;padding:8px 10px;line-height:1.6}
+.form-checkbox-row{display:flex;align-items:center;gap:8px;font-size:.88em;margin:4px 0}
+.form-check{width:14px;height:14px;border:1.5px solid #007646;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.75em;color:#007646;font-weight:700}
+.form-check.checked{background:#007646;color:#fff}
+.form-signature{margin-top:14px;padding-top:12px;border-top:1px dashed #D6DAD7;display:flex;justify-content:space-between;font-size:.85em;color:#5A6861}
+.form-signature strong{color:#0F1511;font-style:italic;font-family:'Segoe Script','Brush Script MT',cursive}
 
 /* REVIEW OVERLAY */
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}
@@ -95,7 +104,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- TOP NAV -->
 <div class="top-nav">
   <div class="top-nav-left">
-    <span>Question <span id="qLabel"><strong>1</strong></span> of 4</span>
+    <span>Question <span id="qLabel"><strong>1</strong></span> of 5</span>
     <span>|</span>
     <span>Reading in Daily Life</span>
   </div>
@@ -110,24 +119,24 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- PROGRESS BAR -->
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
 
-<!-- ========== PAGE 1: Passage 1 — Email (Short ~100w) ========== -->
+<!-- ========== PAGE 1: Passage 1 — Email (Student → Professor, ~100w) ========== -->
 <div class="split-main" id="passagePage1">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 1 of 2</div>
     <div class="instruction">Read an email.</div>
     <div class="email-container">
-      <div class="email-subject">Subject: Upcoming Fire Drill Schedule — Action Required</div>
+      <div class="email-subject">Subject: Recommendation Letter Request — Summer Research Program</div>
       <div class="email-meta">
-        <span><strong>From:</strong> Campus Safety Office &lt;safety@grandview.edu&gt;</span>
-        <span><strong>To:</strong> All Building Occupants</span>
-        <span><strong>Date:</strong> October 3, 2025</span>
+        <span><strong>From:</strong> Daniel Cho &lt;d.cho@students.bayford.edu&gt;</span>
+        <span><strong>To:</strong> Prof. Marina Reyes &lt;m.reyes@bayford.edu&gt;</span>
+        <span><strong>Date:</strong> March 4, 2026</span>
       </div>
       <div class="email-body">
-        <p>Dear Students and Staff,</p>
-        <p>The Campus Safety Office will conduct mandatory fire drills in all academic buildings during the week of October 13&ndash;17. Each building will have one drill, scheduled between 10:00 AM and 2:00 PM. When the alarm sounds, please exit through the nearest marked emergency exit and gather at the designated assembly point for your building. Do not use elevators during the drill.</p>
-        <p>Building coordinators will post the specific date and assembly location on the bulletin board near each main entrance by October 8. If you require assistance during evacuation, please contact the Safety Office in advance at safety@grandview.edu.</p>
-        <p>Thank you for your cooperation,<br>Campus Safety Office</p>
+        <p>Dear Professor Reyes,</p>
+        <p>I hope you are well. I am applying to the Coastal Marine Biology Summer Program at Harwick Institute, and the application requires two letters of recommendation. Since I completed your Ecology seminar last spring and worked on the tide-pool field study, I was hoping you might be willing to write one on my behalf.</p>
+        <p>The deadline is April 15, and letters must be uploaded directly through the applicant portal. If you agree, I can send you my draft personal statement and resume this week. Please let me know whichever works best for you.</p>
+        <p>Thank you for considering my request.<br>Daniel Cho</p>
       </div>
     </div>
   </div>
@@ -143,139 +152,188 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
         <div class="option" data-q="1" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q1" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">To report the results of a recent fire safety inspection</span>
+          <span class="option-text">To ask the professor to write a letter of recommendation</span>
         </div>
         <div class="option" data-q="1" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q1" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">To request volunteers for the campus fire department</span>
+          <span class="option-text">To request feedback on a draft personal statement</span>
         </div>
         <div class="option" data-q="1" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q1" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">To inform building occupants about scheduled fire drills and evacuation procedures</span>
+          <span class="option-text">To apply directly for the Coastal Marine Biology program</span>
         </div>
         <div class="option" data-q="1" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q1" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">To announce the installation of new fire alarm systems across campus</span>
+          <span class="option-text">To schedule a meeting about summer research opportunities</span>
         </div>
       </div>
     </div>
 
-    <!-- Q2: Detail -->
+    <!-- Q2: Factual Detail -->
     <div class="question-page" id="page2">
       <div class="question-text">
-        <span class="question-number">2.</span>According to the email, how will occupants learn the specific drill date for their building?
+        <span class="question-number">2.</span>According to the email, how must the recommendation letter be submitted?
       </div>
       <div class="options">
         <div class="option" data-q="2" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q2" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">By checking the campus website for a master schedule</span>
+          <span class="option-text">By mailing a signed paper copy to the Harwick Institute</span>
         </div>
         <div class="option" data-q="2" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q2" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">By reading a notice posted on the bulletin board near the main entrance</span>
+          <span class="option-text">By sending it as an email attachment to the applicant</span>
         </div>
         <div class="option" data-q="2" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q2" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">By attending a mandatory safety meeting the week before</span>
+          <span class="option-text">By uploading it directly through the applicant portal</span>
         </div>
         <div class="option" data-q="2" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q2" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">By receiving a personal email from the building coordinator</span>
+          <span class="option-text">By delivering it in person to the program office</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== PAGE 2: Passage 2 — Notice (Longer ~180w) ========== -->
+<!-- ========== PAGE 2: Passage 2 — Form (Internship Application, ~130w) ========== -->
 <div class="split-main" id="passagePage2" style="display:none">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 2 of 2</div>
-    <div class="instruction">Read a notice.</div>
-    <div class="notice-container">
-      <div class="notice-header">
-        <h3>IMPORTANT: Course Withdrawal Deadline and Grade Impact</h3>
-        <p>Office of the Registrar — Lakewood University</p>
+    <div class="instruction">Read a form.</div>
+    <div class="form-container">
+      <div class="form-header">
+        <h3>Summer Internship Application Form</h3>
+        <p>Bayford University — Career Services Office</p>
       </div>
-      <div class="notice-body">
-        <p>Dear Students,</p>
-        <p>The Office of the Registrar reminds all currently enrolled students that the deadline to withdraw from Fall 2025 courses without academic penalty is Friday, November 7. Withdrawals submitted on or before this date will appear as a "W" on your transcript, which does not affect your grade point average (GPA).</p>
-        <p>Students who withdraw after November 7 will receive a "WF" (Withdrawal with Failure), which is calculated as a failing grade in your GPA. Please note the following additional policies:</p>
-        <ul>
-          <li>Withdrawal requests must be submitted through the student portal and approved by your academic advisor.</li>
-          <li>Students receiving financial aid should consult the Financial Aid Office before withdrawing, as dropping below full-time status may affect your aid eligibility.</li>
-          <li>Courses dropped before September 19 (the add/drop period) do not appear on your transcript at all.</li>
-        </ul>
-        <p>If you have questions about how withdrawal may affect your academic plan, please schedule an appointment with your advisor or visit the Registrar's Office in Harris Hall, Room 210.</p>
-        <p>Office of the Registrar<br>Lakewood University</p>
+      <div class="form-body">
+        <div class="form-intro">Submitted by applicant on March 6, 2026. All fields have been reviewed by Career Services.</div>
+
+        <div class="form-section">
+          <div class="form-section-title">Applicant Information</div>
+          <div class="form-row">
+            <div class="form-field"><span class="form-label">Full Name</span><div class="form-value">Daniel Cho</div></div>
+            <div class="form-field"><span class="form-label">Student ID</span><div class="form-value">B-48219</div></div>
+          </div>
+          <div class="form-row">
+            <div class="form-field"><span class="form-label">Major</span><div class="form-value">Environmental Science</div></div>
+            <div class="form-field"><span class="form-label">Year</span><div class="form-value">Junior (3rd year)</div></div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">Placement Preference</div>
+          <div class="form-row">
+            <div class="form-field"><span class="form-label">1st Choice</span><div class="form-value">Harwick Marine Institute — Field Research Assistant</div></div>
+          </div>
+          <div class="form-row">
+            <div class="form-field"><span class="form-label">2nd Choice</span><div class="form-value">City Parks Dept. — Water Quality Technician</div></div>
+          </div>
+          <div class="form-checkbox-row"><span class="form-check checked">&#10003;</span> Willing to relocate for the duration of the internship (housing stipend required)</div>
+          <div class="form-checkbox-row"><span class="form-check">&nbsp;</span> Available for unpaid placements</div>
+        </div>
+
+        <div class="form-signature">
+          <span>Applicant signature: <strong>Daniel Cho</strong></span>
+          <span>Submitted: 03/06/2026</span>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q3: Detail -->
+    <!-- Q3: Factual Detail -->
     <div class="question-page active" id="page3">
       <div class="question-text">
-        <span class="question-number">3.</span>What happens if a student withdraws from a course after November 7?
+        <span class="question-number">3.</span>According to the form, what is the applicant's first-choice placement?
       </div>
       <div class="options">
         <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q3" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">The course is removed from the transcript entirely.</span>
+          <span class="option-text">A water quality technician role with the City Parks Department</span>
         </div>
         <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q3" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">The student receives a "W" that does not affect the GPA.</span>
+          <span class="option-text">A field research assistant position at the Harwick Marine Institute</span>
         </div>
         <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q3" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">The student must wait until the following semester to re-enroll.</span>
+          <span class="option-text">A laboratory technician position at Bayford University</span>
         </div>
         <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q3" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">The student receives a "WF" grade that counts as a failing grade in the GPA.</span>
+          <span class="option-text">A summer teaching assistant post in Environmental Science</span>
         </div>
       </div>
     </div>
 
-    <!-- Q4: Inference -->
+    <!-- Q4: Negative Factual -->
     <div class="question-page" id="page4">
       <div class="question-text">
-        <span class="question-number">4.</span>Why does the notice advise students receiving financial aid to consult the Financial Aid Office before withdrawing?
+        <span class="question-number">4.</span>Which of the following is NOT indicated on the form?
       </div>
       <div class="options">
         <div class="option" data-q="4" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q4" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">Because withdrawing from a course could reduce their course load and put their financial aid at risk</span>
+          <span class="option-text">The applicant's current year of study at the university</span>
         </div>
         <div class="option" data-q="4" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q4" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">Because the Financial Aid Office must approve all withdrawal requests</span>
+          <span class="option-text">The applicant's academic major</span>
         </div>
         <div class="option" data-q="4" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q4" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">Because financial aid students are not allowed to withdraw from any courses</span>
+          <span class="option-text">The applicant's grade point average</span>
         </div>
         <div class="option" data-q="4" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q4" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">Because the Financial Aid Office offers free tutoring to struggling students</span>
+          <span class="option-text">The date the application was submitted</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Inference -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>What can be inferred about the applicant from the checkbox selections?
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">He will accept an internship in any location only if it pays</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">He prefers local placements and cannot travel for the summer</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">He is open to relocating but needs financial support for housing</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">He has already secured housing near both placement sites</span>
         </div>
       </div>
     </div>
@@ -300,7 +358,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <script src="../../js/progress.js"></script>
 <script>
 var currentQ = 1;
-var totalQ = 4;
+var totalQ = 5;
 var userAnswers = {};
 var timerVisible = true;
 var timeLeft = 600; // 10 minutes
@@ -348,7 +406,7 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-// Passage page mapping: questions 1-2 = passage 1, questions 3-4 = passage 2
+// Passage page mapping: questions 1-2 = passage 1, questions 3-5 = passage 2
 function getPassagePage(q){ return q <= 2 ? 1 : 2; }
 
 function selectOption(el){
@@ -368,10 +426,10 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'C','2':'B','3':'D','4':'A'};
+    var ca={'1':'A','2':'C','3':'B','4':'C','5':'C'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    sessionStorage.setItem('training_score_rdl_p9',JSON.stringify({correct:sc,total:4}));
+    sessionStorage.setItem('training_score_rdl_p9',JSON.stringify({correct:sc,total:5}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-9-answers.html';
     return;

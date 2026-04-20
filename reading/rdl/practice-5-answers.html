@@ -61,8 +61,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/4</div>
-  <div class="score-label">Your Score (Q1&ndash;Q4)</div>
+  <div class="score-big" id="scoreDisplay">&ndash;/5</div>
+  <div class="score-label">Your Score (Q1&ndash;Q5)</div>
 </div>
 
 <div class="answers-body">
@@ -72,34 +72,34 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     <div class="tips-title">Read in Daily Life Strategy Tips</div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">1</span> Identify the purpose from opening keywords</div>
+      <div class="tip-card-title"><span class="tip-num">1</span> Read forms like a table of facts</div>
       <div class="tip-card-body">
-        The first 1-2 sentences reveal the purpose of the text. Learn the patterns:<br><br>
-        <strong>Notification:</strong> <code>We would like to inform you...</code> / <code>We are writing to let you know...</code><br>
-        <strong>Reminder:</strong> <code>We would like to remind...</code> / <code>Please be aware that...</code><br>
-        <strong>Policy update:</strong> <code>The following policy applies to...</code>
+        Forms store one fact per row. <strong>Match the question's key phrase to the left-hand label</strong> and read only that row's value. Most form questions are directly factual.
         <div class="tip-example">
-          <strong>Q1:</strong> The email opens with "would like to inform you that the indoor swimming pool will be temporarily closed" and then provides maintenance details and an alternative. This is a notification about a closure = A.
+          <strong>Q1:</strong> The question asks about "permit zone requested." Find that row: "Zone C — West Commuter Lot" = C.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">2</span> Combine multiple details for inference</div>
+      <div class="tip-card-title"><span class="tip-num">2</span> Use small notes for what they imply</div>
       <div class="tip-card-body">
-        Inference questions often require you to <strong>combine two or more pieces of information</strong> from different parts of the passage.
+        Forms often include a small <code>Note</code> or footnote. These are the source of inference questions &mdash; the note tells you what is and is not permitted.
         <div class="tip-example">
-          <strong>Q4:</strong> October 20 falls after October 15 (so a "W" appears on the transcript) AND between October 15 and October 31 (so a 50% refund applies). Combining these two facts gives C.
+          <strong>Q2:</strong> The note says Zone C is valid only Mon&ndash;Fri, 7 AM&ndash;8 PM. Therefore, leaving the car on Sunday is not permitted = A.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">3</span> Watch for date-based traps</div>
+      <div class="tip-card-title"><span class="tip-num">3</span> Receipts: read the totals block carefully</div>
       <div class="tip-card-body">
-        Notices with multiple deadlines are common in TOEFL. <strong>Draw a quick timeline</strong> to keep track of which rules apply when.
+        A receipt question is usually about <strong>how a discount, tax, or fee was applied</strong>. Look at the label next to the amount, not just the number.
+        <div class="tip-example">
+          <strong>Q3:</strong> The line reads "Student discount (10%, books only)." That tells you both the rate and the scope = B.
+        </div>
         <div class="tip-warn">
-          <strong>Common mistake:</strong> Confusing which deadline applies. In Q4, a student might pick A (full refund, no notation) because they confuse the October 15 and October 31 deadlines.
+          <strong>Common trap:</strong> Q5 asks what can be inferred about sales tax. Tax is "6.5%, non-book items" &mdash; books were not taxed, which means textbooks are exempt = B.
         </div>
       </div>
     </div>
@@ -107,89 +107,105 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 
   <!-- Passage 1 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 1 <span class="passage-type-badge">Email</span></div>
+    <div class="passage-title">Passage 1 <span class="passage-type-badge">Form</span></div>
 
     <div class="q-card" id="card1">
-      <div class="q-num">Question 1 — Main Purpose</div>
-      <div class="q-text">What is the main purpose of this email?</div>
+      <div class="q-num">Question 1 — Factual Information</div>
+      <div class="q-text">According to the form, which permit zone did the applicant request?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: A</span>
+        <span class="answer-tag tag-correct">Correct: C</span>
         <span class="answer-tag" id="yours1">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review is-correct" id="opt1A"><span class="label">A</span> To notify the campus community about a temporary pool closure and alternative arrangements &#10003;</div>
-        <div class="option-review" id="opt1B"><span class="label">B</span> To encourage students to join the university swim team</div>
-        <div class="option-review" id="opt1C"><span class="label">C</span> To announce a permanent change to pool operating hours</div>
-        <div class="option-review" id="opt1D"><span class="label">D</span> To request feedback on the recreation center's facilities</div>
+        <div class="option-review" id="opt1A"><span class="label">A</span> Zone A, reserved for first-year resident students</div>
+        <div class="option-review" id="opt1B"><span class="label">B</span> Zone B, the east lot reserved for faculty parking</div>
+        <div class="option-review is-correct" id="opt1C"><span class="label">C</span> Zone C, the west commuter lot near campus &#10003;</div>
+        <div class="option-review" id="opt1D"><span class="label">D</span> Zone D, the overnight lot for residential students</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email informs students that the pool will be closed from October 10&ndash;17, explains what maintenance will occur, and offers the outdoor pool as an alternative. This is clearly a notification about a temporary closure with alternatives = A.<br><br>
-        B is unrelated to the email content. C is wrong because the change is temporary, not permanent. D is not mentioned anywhere in the email.
+        <strong>Explanation:</strong> The "Permit Zone Requested" row reads "Zone C — West Commuter Lot" = C.<br><br>
+        A, B, and D invent other zones not listed on the form. Zones A, B, and D are plausible distractors but none of them appears in the application.
       </div>
     </div>
 
     <div class="q-card" id="card2">
-      <div class="q-num">Question 2 — Factual Detail</div>
-      <div class="q-text">According to the email, what option is available for lap swimmers during the closure?</div>
+      <div class="q-num">Question 2 — Inference</div>
+      <div class="q-text">What can be inferred about the applicant's parking situation?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag tag-correct">Correct: A</span>
         <span class="answer-tag" id="yours2">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt2A"><span class="label">A</span> They can use a heated pool at a nearby community center.</div>
-        <div class="option-review is-correct" id="opt2B"><span class="label">B</span> They can use the outdoor pool at the West Athletic Complex with extended hours. &#10003;</div>
-        <div class="option-review" id="opt2C"><span class="label">C</span> They will receive a temporary membership at an off-campus gym.</div>
-        <div class="option-review" id="opt2D"><span class="label">D</span> They can schedule private sessions in the pool before 6:00 AM.</div>
+        <div class="option-review is-correct" id="opt2A"><span class="label">A</span> He cannot leave his car in the lot on Sunday afternoons. &#10003;</div>
+        <div class="option-review" id="opt2B"><span class="label">B</span> He will receive a full refund if the permit is unused.</div>
+        <div class="option-review" id="opt2C"><span class="label">C</span> He must renew the permit each month throughout the semester.</div>
+        <div class="option-review" id="opt2D"><span class="label">D</span> He plans to move into a campus residence hall soon.</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email states that lap swimmers "may use the outdoor pool at the West Athletic Complex, which will extend its hours" = B.<br><br>
-        A is a trap &mdash; the email specifically says the outdoor pool is <strong>unheated</strong>, not heated. C is not mentioned. D inverts the information &mdash; 6:00 AM is the opening time of the alternative pool, not a time for private sessions.
+        <strong>Explanation:</strong> The note states Zone C permits are valid "only Monday through Friday." Sunday is not covered, so the applicant cannot use the lot on Sunday = A.<br><br>
+        B is not mentioned. C is wrong because he selected the Full Semester option, not Monthly. D contradicts "Off-campus commuter" in the residence status field.
       </div>
     </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 2 <span class="passage-type-badge">Notice</span></div>
+    <div class="passage-title">Passage 2 <span class="passage-type-badge">Receipt</span></div>
 
     <div class="q-card" id="card3">
-      <div class="q-num">Question 3 — Factual Detail</div>
-      <div class="q-text">According to the notice, which of the following is true about withdrawing from a course between October 15 and November 14?</div>
+      <div class="q-num">Question 3 — Factual Information</div>
+      <div class="q-text">According to the receipt, how was the student discount applied?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: D</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt3A"><span class="label">A</span> The course will be completely removed from the student's transcript.</div>
-        <div class="option-review" id="opt3B"><span class="label">B</span> The student will receive a failing grade for the course.</div>
-        <div class="option-review" id="opt3C"><span class="label">C</span> The student must obtain approval from the Dean of Students.</div>
-        <div class="option-review is-correct" id="opt3D"><span class="label">D</span> A "W" notation will appear on the transcript but will not affect the GPA. &#10003;</div>
+        <div class="option-review" id="opt3A"><span class="label">A</span> As a flat ten-dollar reduction on the total price</div>
+        <div class="option-review is-correct" id="opt3B"><span class="label">B</span> As a ten percent reduction, applied only to books &#10003;</div>
+        <div class="option-review" id="opt3C"><span class="label">C</span> As a full refund of the six-point-five percent tax</div>
+        <div class="option-review" id="opt3D"><span class="label">D</span> As store credit that can be used on future visits</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The notice states that after October 15 and until November 14, "a 'W' (Withdrawn) notation will appear on their academic record" and "a 'W' does not affect your GPA" = D.<br><br>
-        A applies to withdrawals <strong>before</strong> October 15 (no record on transcript). B is not mentioned &mdash; a "W" is not a failing grade. C applies only <strong>after</strong> November 14, not during the October 15&ndash;November 14 window.
+        <strong>Explanation:</strong> The receipt line reads "Student discount (10%, books only)" with a deduction of $24.55 = B.<br><br>
+        A confuses a flat dollar amount with a percentage. C mixes up the tax line with the discount line. D is not mentioned &mdash; the discount was applied to this transaction, not saved as credit.
       </div>
     </div>
 
     <div class="q-card" id="card4">
-      <div class="q-num">Question 4 — Inference</div>
-      <div class="q-text">What can be inferred about a student who withdraws from a course on October 20?</div>
+      <div class="q-num">Question 4 — Negative Factual (EXCEPT)</div>
+      <div class="q-text">According to the return policy, all of the following are true EXCEPT</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours4">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> The student will receive a full tuition refund and no transcript notation.</div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> The student will need to submit a formal petition to the Dean.</div>
-        <div class="option-review is-correct" id="opt4C"><span class="label">C</span> The student will have a "W" on the transcript and receive a 50% tuition refund. &#10003;</div>
-        <div class="option-review" id="opt4D"><span class="label">D</span> The student will not receive any refund but will have no transcript notation.</div>
+        <div class="option-review" id="opt4A"><span class="label">A</span> Returns are accepted within fourteen days with the receipt.</div>
+        <div class="option-review is-correct" id="opt4B"><span class="label">B</span> Opened textbooks can be returned for a full cash refund. &#10003;</div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> Digital access codes cannot be refunded at any time.</div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> Defective electronics may be exchanged within seven days.</div>
       </div>
       <div class="explanation">
-        <strong>Inference from two details:</strong><br>
-        1. October 20 is after October 15 &rarr; a "W" appears on the transcript.<br>
-        2. October 20 is between October 15 and October 31 &rarr; a 50% tuition refund applies.<br>
-        Combining these two facts = C.<br><br>
-        A is wrong because the full refund and no-notation window ends on October 15. B applies only after November 14. D incorrectly states no refund (50% still applies) and no notation (a "W" does appear).
+        <strong>Explanation:</strong> The footer states "Opened textbooks and digital access codes are non-refundable." Therefore B is false and is the correct EXCEPT answer.<br><br>
+        A, C, and D all match the footer text exactly: 14-day returns with receipt, non-refundable access codes, and 7-day defect exchange for electronics.
+      </div>
+    </div>
+
+    <div class="q-card" id="card5">
+      <div class="q-num">Question 5 — Inference</div>
+      <div class="q-text">What can be inferred about the sales tax on this purchase?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag" id="yours5">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt5A"><span class="label">A</span> Tax was charged on every item listed on the receipt.</div>
+        <div class="option-review is-correct" id="opt5B"><span class="label">B</span> Textbooks in this state are exempt from sales tax. &#10003;</div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> Tax was applied only after the student discount ended.</div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> The tax was refunded at the checkout counter.</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> The tax line specifies "6.5%, non-book items." Because tax applies only to non-book items, textbooks must be tax-exempt in this state = B.<br><br>
+        A contradicts the parenthetical scope. C invents a sequencing rule not stated. D is the opposite of what happened &mdash; tax was charged, not refunded.
       </div>
     </div>
   </div>
@@ -201,7 +217,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <script>
-var correctAnswers = {'1':'A','2':'B','3':'D','4':'C'};
+var correctAnswers = {'1':'C','2':'A','3':'B','4':'B','5':'B'};
 (function(){
   var saved = sessionStorage.getItem('training_rdl_p5_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -222,7 +238,7 @@ var correctAnswers = {'1':'A','2':'B','3':'D','4':'C'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/4';
+  document.getElementById('scoreDisplay').textContent = score+'/5';
 })();
 </script>
 <script src="../../js/auth.js"></script>

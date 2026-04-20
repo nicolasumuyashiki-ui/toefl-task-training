@@ -19,6 +19,24 @@
 |----------|---|-------|
 | 1 | 1 | University Bookstore — Textbook Pickup and Exchange |
 | 1 | 2 | Student Housing — Maintenance Schedule and Facility Closures |
+| 2 | 1 | Menu — Oakwood Cafe Weekly Specials (sandwiches, coffee, pastries) |
+| 2 | 2 | Advertisement — Harmony Music Studio Spring Promotion |
+| 3 | 1 | Social Media Post — Weekly Biology Study Circle at Harper Hall |
+| 3 | 2 | Schedule — Spring Campus Festival Saturday Program |
+| 4 | 1 | Text Messages — Roommates coordinating apartment move-out cleaning |
+| 4 | 2 | News Article — New university innovation hub opens to students and local startups |
+| 5 | 1 | Form — Student Parking Permit Application (Pinebrook University) |
+| 5 | 2 | Receipt — Campus Bookstore Purchase (textbooks + supplies) |
+| 6 | 1 | Live Chat — Sociology group project task division |
+| 6 | 2 | Advertisement — Spanish evening course at language school |
+| 7 | 1 | Schedule — Writing Center Drop-in Hours (Spring Semester) |
+| 7 | 2 | Menu — The Maple Room Weekend Brunch (student cafe) |
+| 8 | 1 | News Article — Community Tree-Planting Event Along Maplewood River |
+| 8 | 2 | Social Media Post — Student's Summer Study-Abroad Report from Lisbon |
+| 9 | 1 | Email — Student → Professor: Recommendation Letter Request (Summer Marine Biology Program) |
+| 9 | 2 | Form — Summer Internship Application (filled), Career Services |
+| 10 | 1 | Notice — Campus Recreation Center Temporary Closure (floor & roof repair) |
+| 10 | 2 | Text Messages — Students canceling cafe meetup in rain, switching to Zoom |
 
 ### Read an Academic Passage
 | Practice | # | Module | Topic |

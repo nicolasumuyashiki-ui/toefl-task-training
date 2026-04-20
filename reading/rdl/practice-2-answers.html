@@ -61,8 +61,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/4</div>
-  <div class="score-label">Your Score (Q1&ndash;Q4)</div>
+  <div class="score-big" id="scoreDisplay">&ndash;/6</div>
+  <div class="score-label">Your Score (Q1&ndash;Q6)</div>
 </div>
 
 <div class="answers-body">
@@ -77,10 +77,10 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
         The first 1-2 sentences reveal the purpose of the text. Learn the patterns:<br><br>
         <strong>Notification:</strong> <code>We are pleased to inform...</code> / <code>We would like to inform you...</code><br>
         <strong>Reminder:</strong> <code>This is a reminder that...</code> / <code>Please be advised...</code><br>
-        <strong>Instruction:</strong> <code>Please bring...</code> / <code>You must submit...</code><br>
+        <strong>Promotion:</strong> <code>Sign up before...</code> / <code>Limited time offer...</code><br>
         <strong>Invitation:</strong> <code>You are invited to...</code> / <code>We are hosting...</code>
         <div class="tip-example">
-          <strong>Q1:</strong> The email opens with "The Campus Health Center will be hosting free flu vaccination clinics" and then describes what to bring and who should consult a doctor. This is an informational notification about a clinic = A.
+          <strong>Q4:</strong> The ad opens with a question to the reader and then introduces a "spring deal" with a discounted rate for students. The whole text is built around promoting this offer = A.
         </div>
       </div>
     </div>
@@ -106,7 +106,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
       <div class="tip-card-body">
         For inference questions, the answer must be <strong>logically supported by information in the passage</strong>. Do not mix in your own knowledge or assumptions.
         <div class="tip-example">
-          <strong>Q4:</strong> The notice says "Students who received the scholarship in a previous year must reapply; renewal is not automatic." This directly supports C &mdash; they must go through the same process as new applicants.
+          <strong>Q6:</strong> The ad says "All instruments except drums are available to borrow during your lesson." From the word "except," we can infer that drum students must bring or buy their own instrument = C.
         </div>
       </div>
     </div>
@@ -114,90 +114,127 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 
   <!-- Passage 1 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 1 <span class="passage-type-badge">Email</span></div>
+    <div class="passage-title">Passage 1 <span class="passage-type-badge">Menu</span></div>
 
     <div class="q-card" id="card1">
-      <div class="q-num">Question 1 — Main Purpose</div>
-      <div class="q-text">What is the main purpose of this email?</div>
+      <div class="q-num">Question 1 — Factual Information</div>
+      <div class="q-text">According to the menu, what is included with the price of a sandwich?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: A</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours1">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review is-correct" id="opt1A"><span class="label">A</span> To inform students about an upcoming flu vaccination clinic and how to prepare &#10003;</div>
-        <div class="option-review" id="opt1B"><span class="label">B</span> To warn students about a flu outbreak on campus</div>
-        <div class="option-review" id="opt1C"><span class="label">C</span> To explain the side effects of the flu vaccine in detail</div>
-        <div class="option-review" id="opt1D"><span class="label">D</span> To require all students to get vaccinated before the semester ends</div>
+        <div class="option-review" id="opt1A"><span class="label">A</span> A specialty drink of the customer's choice</div>
+        <div class="option-review is-correct" id="opt1B"><span class="label">B</span> A small side salad at no additional charge &#10003;</div>
+        <div class="option-review" id="opt1C"><span class="label">C</span> A freshly baked almond croissant from the oven</div>
+        <div class="option-review" id="opt1D"><span class="label">D</span> A bottle of water and a piece of fruit</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email announces the dates and location of the flu clinic, explains what students need to bring, and provides guidance for students with certain medical conditions. This is clearly an informational message about an upcoming clinic = A.<br><br>
-        B is wrong because no outbreak is mentioned. C is wrong because side effects are not discussed at all. D is wrong because the vaccine is described as optional (walk-ins are "welcome," not required).
+        <strong>Explanation:</strong> The menu intro states: "All sandwiches are served with a small side salad" = B.<br><br>
+        A is a <strong>classic trap</strong> &mdash; a specialty drink is available, but only as a $2 paid add-on, not included. C and D are not mentioned with the sandwiches at all.
       </div>
     </div>
 
     <div class="q-card" id="card2">
-      <div class="q-num">Question 2 — Factual Detail</div>
-      <div class="q-text">According to the email, what advantage do students gain by scheduling an appointment in advance?</div>
+      <div class="q-num">Question 2 — Inference</div>
+      <div class="q-text">What can be inferred about a student who arrives at the cafe at 11:30 AM on a Tuesday?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: D</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours2">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt2A"><span class="label">A</span> They will receive a free health checkup along with the vaccination.</div>
-        <div class="option-review" id="opt2B"><span class="label">B</span> They will be given a discount on future health services.</div>
-        <div class="option-review" id="opt2C"><span class="label">C</span> They can choose a specific type of vaccine.</div>
-        <div class="option-review is-correct" id="opt2D"><span class="label">D</span> They will be served before walk-in students and wait less. &#10003;</div>
+        <div class="option-review" id="opt2A"><span class="label">A</span> The student can still receive the 10% student discount.</div>
+        <div class="option-review is-correct" id="opt2B"><span class="label">B</span> The student will not qualify for the morning discount. &#10003;</div>
+        <div class="option-review" id="opt2C"><span class="label">C</span> The student must order a full meal to get any discount.</div>
+        <div class="option-review" id="opt2D"><span class="label">D</span> The student can only buy pastries at that time of day.</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email states: "students who schedule an appointment through the student health portal will receive priority service and shorter wait times" = D.<br><br>
-        A, B, and C are not mentioned anywhere in the email. This is a straightforward detail question &mdash; the key phrase "priority service and shorter wait times" maps directly to D.
+        <strong>Explanation:</strong> The note states the 10% student discount is only valid "before 10:00 AM, Monday through Friday." 11:30 AM is after the cutoff, so the student cannot receive the discount = B.<br><br>
+        A directly contradicts the time cutoff. C and D are never stated in the menu.
+      </div>
+    </div>
+
+    <div class="q-card" id="card3">
+      <div class="q-num">Question 3 — NOT/EXCEPT (Negative Factual)</div>
+      <div class="q-text">According to the menu, all of the following are mentioned as ingredients EXCEPT</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt3A"><span class="label">A</span> feta cheese in the roasted vegetable wrap</div>
+        <div class="option-review" id="opt3B"><span class="label">B</span> real maple syrup in one of the coffee drinks</div>
+        <div class="option-review is-correct" id="opt3C"><span class="label">C</span> dark chocolate chips used in the almond croissant &#10003;</div>
+        <div class="option-review" id="opt3D"><span class="label">D</span> bacon included in the smoked turkey sandwich</div>
+      </div>
+      <div class="explanation">
+        <strong>Elimination method:</strong><br>
+        A &mdash; "Zucchini, red peppers, feta cheese on a spinach tortilla" &#10003; mentioned<br>
+        B &mdash; "Espresso, steamed milk, real maple syrup" &#10003; mentioned<br>
+        D &mdash; "House-smoked turkey, bacon, tomato on sourdough" &#10003; mentioned<br>
+        C &mdash; Chocolate chips are <strong>never mentioned</strong>. The almond croissant description only says "Baked fresh daily before 8:00 AM." C is the answer.
       </div>
     </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 2 <span class="passage-type-badge">Notice</span></div>
-
-    <div class="q-card" id="card3">
-      <div class="q-num">Question 3 — NOT/EXCEPT</div>
-      <div class="q-text">According to the notice, all of the following are required application documents EXCEPT</div>
-      <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: B</span>
-        <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
-      </div>
-      <div style="margin:10px 0">
-        <div class="option-review" id="opt3A"><span class="label">A</span> an unofficial academic transcript</div>
-        <div class="option-review is-correct" id="opt3B"><span class="label">B</span> a proof of financial need from the student's family &#10003;</div>
-        <div class="option-review" id="opt3C"><span class="label">C</span> a personal statement about academic goals</div>
-        <div class="option-review" id="opt3D"><span class="label">D</span> a letter of recommendation from a faculty member</div>
-      </div>
-      <div class="explanation">
-        <strong>Elimination method:</strong><br>
-        A &mdash; "An unofficial academic transcript" &#10003; mentioned<br>
-        C &mdash; "A personal statement of no more than 500 words describing your academic goals" &#10003; mentioned<br>
-        D &mdash; "One letter of recommendation from a current faculty member" &#10003; mentioned<br>
-        B &mdash; Financial need is <strong>never mentioned</strong> in the notice. This is an Academic <strong>Merit</strong> Scholarship based on GPA, not financial need. B is the correct answer.<br><br>
-        <strong>Trap alert:</strong> Because it is a "Financial Aid Office" notice, you might assume financial need is relevant. But the passage only mentions GPA and credit hours as eligibility criteria.
-      </div>
-    </div>
+    <div class="passage-title">Passage 2 <span class="passage-type-badge">Advertisement</span></div>
 
     <div class="q-card" id="card4">
-      <div class="q-num">Question 4 — Inference</div>
-      <div class="q-text">What can be inferred about students who received the scholarship last year?</div>
+      <div class="q-num">Question 4 — Text Purpose</div>
+      <div class="q-text">What is the main purpose of this advertisement?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag tag-correct">Correct: A</span>
         <span class="answer-tag" id="yours4">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> They are guaranteed to receive the scholarship again.</div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> They are no longer eligible to apply for the scholarship.</div>
-        <div class="option-review is-correct" id="opt4C"><span class="label">C</span> They must go through the same application process as new applicants. &#10003;</div>
-        <div class="option-review" id="opt4D"><span class="label">D</span> They will receive a larger award amount than first-time applicants.</div>
+        <div class="option-review is-correct" id="opt4A"><span class="label">A</span> To promote a special student rate for music lessons &#10003;</div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> To announce the grand opening of a new music studio</div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> To recruit instructors for a university music program</div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> To advertise used instruments being sold to students</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The notice states: "Students who received the scholarship in a previous year must reapply; renewal is not automatic." This means past recipients have no special guarantee and must submit a full application just like everyone else = C.<br><br>
-        A directly contradicts the passage ("renewal is not automatic"). B is wrong because the notice says they "must reapply," meaning they ARE eligible. D has no basis in the text &mdash; no different award amounts are mentioned.
+        <strong>Explanation:</strong> The ad's central message is the "Spring Semester Promotion" offering the first month of lessons at half price for university students. Everything else supports this offer = A.<br><br>
+        B is wrong because the ad never calls this a grand opening &mdash; it is an existing studio running a promotion. C is wrong because the ad targets students as customers, not instructors. D has no basis in the text.
+      </div>
+    </div>
+
+    <div class="q-card" id="card5">
+      <div class="q-num">Question 5 — Factual Information</div>
+      <div class="q-text">According to the advertisement, what will students receive if they sign up for a three-month package?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag" id="yours5">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt5A"><span class="label">A</span> A free instrument to keep after the course ends</div>
+        <div class="option-review is-correct" id="opt5B"><span class="label">B</span> A complimentary half-hour recording session at the studio &#10003;</div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> A discounted rate for additional group theory workshops</div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> A certificate of completion signed by the instructor</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> The ad states: "Students who commit to a three-month package will also receive a free 30-minute recording session in our home studio at the end of the term." "Complimentary half-hour" paraphrases "free 30-minute" = B.<br><br>
+        A confuses the "borrow" policy with a giveaway &mdash; students can borrow instruments during lessons, not keep them. C and D are not mentioned.
+      </div>
+    </div>
+
+    <div class="q-card" id="card6">
+      <div class="q-num">Question 6 — Inference</div>
+      <div class="q-text">What can be inferred about students who want to learn the drums?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag" id="yours6">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt6A"><span class="label">A</span> They are not allowed to take lessons at the studio.</div>
+        <div class="option-review" id="opt6B"><span class="label">B</span> They must attend only group lessons, not private ones.</div>
+        <div class="option-review is-correct" id="opt6C"><span class="label">C</span> They will need to provide their own instrument for lessons. &#10003;</div>
+        <div class="option-review" id="opt6D"><span class="label">D</span> They must pay a higher rate than other instrument students.</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> The ad says: "All instruments except drums are available to borrow during your lesson." The word "except" implies that drums are not lendable, so drum students must bring or buy their own = C.<br><br>
+        A contradicts the list of offered lessons, which includes drums. B is wrong because drums are offered as one-on-one. D has no basis in the text &mdash; no pricing differences by instrument are mentioned.
       </div>
     </div>
   </div>
@@ -209,7 +246,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <script>
-var correctAnswers = {'1':'A','2':'D','3':'B','4':'C'};
+var correctAnswers = {'1':'B','2':'B','3':'C','4':'A','5':'B','6':'C'};
 (function(){
   var saved = sessionStorage.getItem('training_rdl_p2_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -230,7 +267,7 @@ var correctAnswers = {'1':'A','2':'D','3':'B','4':'C'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/4';
+  document.getElementById('scoreDisplay').textContent = score+'/6';
 })();
 </script>
 <script src="../../js/auth.js"></script>

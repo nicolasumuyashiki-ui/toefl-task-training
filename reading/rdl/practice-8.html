@@ -57,25 +57,33 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 .option-label{font-weight:600;color:#007646;min-width:28px}
 .option-text{flex:1;color:#0F1511}
 
-/* EMAIL STYLES */
-.email-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.email-subject{background:#FBF6EC;padding:14px 20px;font-weight:700;font-size:.95em;color:#0F1511;border-bottom:1px solid #F5E9D3}
-.email-meta{padding:10px 20px;font-size:.85em;color:#5A6861;border-bottom:1px solid #F5E9D3;display:flex;flex-direction:column;gap:2px}
-.email-meta span{display:block}
-.email-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.email-body p{margin-bottom:10px}
-.email-body p:last-child{margin-bottom:0}
+/* NEWS ARTICLE STYLES */
+.article-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.article-source{background:#002817;color:#fff;padding:8px 20px;font-size:.78em;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.article-headline{padding:16px 20px 6px;font-family:Georgia,'Times New Roman',serif;font-size:1.2em;font-weight:700;color:#0F1511;line-height:1.3}
+.article-byline{padding:0 20px 12px;font-size:.8em;color:#5A6861;border-bottom:1px solid #F5E9D3}
+.article-byline .by-author{color:#0F1511;font-weight:600}
+.article-body{padding:16px 20px;font-size:.92em;line-height:1.75;color:#0F1511;font-family:Georgia,'Times New Roman',serif}
+.article-body p{margin-bottom:10px}
+.article-body p:last-child{margin-bottom:0}
+.article-body p:first-child::first-letter{font-size:1.8em;font-weight:700;float:left;line-height:1;padding:4px 6px 0 0;color:#007646}
 
-/* NOTICE STYLES */
-.notice-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.notice-header{background:#002817;color:#fff;padding:16px 20px;text-align:center}
-.notice-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
-.notice-header p{font-size:.8em;color:rgba(255,255,255,.7)}
-.notice-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.notice-body p{margin-bottom:10px}
-.notice-body p:last-child{margin-bottom:0}
-.notice-body ul{margin:8px 0 10px 20px}
-.notice-body li{margin-bottom:4px}
+/* SOCIAL MEDIA POST / PHONE FRAME */
+.phone-frame{max-width:360px;margin:0 auto;background:#fff;border:8px solid #0F1511;border-radius:28px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.phone-frame .social-header{background:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #F5E9D3}
+.avatar{width:42px;height:42px;border-radius:50%;background:#007646;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95em;flex-shrink:0}
+.social-user{flex:1;min-width:0}
+.social-name{font-weight:700;font-size:.9em;color:#0F1511;line-height:1.2}
+.social-handle{font-size:.78em;color:#5A6861;line-height:1.3}
+.social-more{color:#5A6861;font-weight:700;font-size:1.1em;padding:0 4px}
+.social-body{padding:12px 14px;font-size:.88em;line-height:1.6;color:#0F1511}
+.social-body p{margin-bottom:8px}
+.social-body p:last-of-type{margin-bottom:10px}
+.social-tags{color:#2b6cb0;font-weight:600;font-size:.85em;margin-top:4px}
+.social-image{background:linear-gradient(135deg,#A8C9B8,#007646);height:150px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:.85em;letter-spacing:.05em}
+.social-meta{padding:8px 14px;border-top:1px solid #F5E9D3;font-size:.75em;color:#5A6861;display:flex;justify-content:space-between;align-items:center}
+.social-actions{padding:6px 14px 12px;display:flex;gap:18px;font-size:.82em;color:#5A6861;border-top:1px solid #F5E9D3}
+.social-actions span{display:inline-flex;align-items:center;gap:5px}
 
 /* REVIEW OVERLAY */
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}
@@ -95,7 +103,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- TOP NAV -->
 <div class="top-nav">
   <div class="top-nav-left">
-    <span>Question <span id="qLabel"><strong>1</strong></span> of 4</span>
+    <span>Question <span id="qLabel"><strong>1</strong></span> of 5</span>
     <span>|</span>
     <span>Reading in Daily Life</span>
   </div>
@@ -110,172 +118,204 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- PROGRESS BAR -->
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
 
-<!-- ========== PAGE 1: Passage 1 — Email (Short ~100w) ========== -->
+<!-- ========== PAGE 1: Passage 1 — News Article (Longer ~140w) ========== -->
 <div class="split-main" id="passagePage1">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 1 of 2</div>
-    <div class="instruction">Read an email.</div>
-    <div class="email-container">
-      <div class="email-subject">Subject: End-of-Semester Textbook Buyback Program</div>
-      <div class="email-meta">
-        <span><strong>From:</strong> Oakridge University Bookstore &lt;bookstore@oakridge.edu&gt;</span>
-        <span><strong>To:</strong> All Students — Spring 2026</span>
-        <span><strong>Date:</strong> April 28, 2026</span>
-      </div>
-      <div class="email-body">
-        <p>Dear Students,</p>
-        <p>The campus bookstore will be hosting its end-of-semester textbook buyback program from May 5 through May 16. You may bring your used textbooks to the buyback counter on the second floor of the Student Center during regular store hours (9:00 AM to 5:00 PM, Monday through Friday).</p>
-        <p>Books must be in acceptable condition with no missing pages or excessive highlighting. The buyback price for each title will be determined at the time of evaluation and is typically between 25% and 50% of the original purchase price. Payment will be issued as campus bookstore credit, which can be applied toward future textbook purchases.</p>
-        <p>Thank you,<br>Oakridge University Bookstore</p>
+    <div class="instruction">Read a news article.</div>
+    <div class="article-container">
+      <div class="article-source">Maplewood Daily Herald &mdash; Local</div>
+      <h2 class="article-headline">Volunteers Plant 500 Trees Along Maplewood River in Weekend Event</h2>
+      <div class="article-byline"><span class="by-author">By Clara Jennings</span> &middot; April 14, 2026</div>
+      <div class="article-body">
+        <p>More than 300 residents gathered along the Maplewood River last Saturday to take part in the town&rsquo;s largest community tree-planting event to date. Organized by the nonprofit group Green Roots Maplewood, the event successfully placed 500 native saplings along a two-kilometer stretch of riverbank.</p>
+        <p>The planting is part of a wider plan to reduce soil erosion and restore habitats for local birds and insects. Organizer Daniel Ortega explained that the chosen species&mdash;red maple, river birch, and swamp oak&mdash;were selected because they thrive in wet soil and attract pollinators.</p>
+        <p>Funding for the saplings came from a grant awarded by the state environment office in January, though tools and refreshments were donated by local businesses. Green Roots plans to hold a second planting session in October, with a goal of reaching 1,500 trees by next spring.</p>
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q1: Main Purpose -->
+    <!-- Q1: Factual -->
     <div class="question-page active" id="page1">
       <div class="question-text">
-        <span class="question-number">1.</span>What is the main purpose of this email?
+        <span class="question-number">1.</span>According to the article, why were red maple, river birch, and swamp oak chosen for the planting?
       </div>
       <div class="options">
         <div class="option" data-q="1" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q1" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">To announce a program where students can sell back their used textbooks</span>
+          <span class="option-text">They grow faster than most other native tree species.</span>
         </div>
         <div class="option" data-q="1" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q1" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">To inform students about new textbook prices for next semester</span>
+          <span class="option-text">They do well in damp ground and bring in pollinating insects.</span>
         </div>
         <div class="option" data-q="1" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q1" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">To warn students that the bookstore will be closing temporarily</span>
+          <span class="option-text">They produce wood that can be sold to local businesses later.</span>
         </div>
         <div class="option" data-q="1" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q1" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">To encourage students to donate their textbooks to the library</span>
+          <span class="option-text">They were the only saplings that the state grant covered.</span>
         </div>
       </div>
     </div>
 
-    <!-- Q2: Detail -->
+    <!-- Q2: Factual (Funding) -->
     <div class="question-page" id="page2">
       <div class="question-text">
-        <span class="question-number">2.</span>According to the email, how will students receive payment for their textbooks?
+        <span class="question-number">2.</span>How was the event paid for?
       </div>
       <div class="options">
         <div class="option" data-q="2" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q2" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">By direct deposit into their bank accounts</span>
+          <span class="option-text">Volunteers paid small fees to participate in the planting.</span>
         </div>
         <div class="option" data-q="2" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q2" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">As a cash refund at the checkout counter</span>
+          <span class="option-text">Maplewood town council covered the full cost of supplies.</span>
         </div>
         <div class="option" data-q="2" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q2" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">As bookstore credit for future purchases</span>
+          <span class="option-text">A state grant bought the saplings while local shops gave tools and food.</span>
         </div>
         <div class="option" data-q="2" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q2" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">Through a check mailed to their home address</span>
+          <span class="option-text">Green Roots Maplewood sold T-shirts to raise the money needed.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3: Inference -->
+    <div class="question-page" id="page3">
+      <div class="question-text">
+        <span class="question-number">3.</span>What can be inferred about Green Roots Maplewood?
+      </div>
+      <div class="options">
+        <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">The group was founded shortly before this particular event.</span>
+        </div>
+        <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">The group intends to continue its planting work beyond this event.</span>
+        </div>
+        <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">The group mainly focuses on bird-watching rather than planting trees.</span>
+        </div>
+        <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">The group will shift its attention to cleaning up the river next year.</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== PAGE 2: Passage 2 — Notice (Longer ~180w) ========== -->
+<!-- ========== PAGE 2: Passage 2 — Social Media Post (Short ~80w) ========== -->
 <div class="split-main" id="passagePage2" style="display:none">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 2 of 2</div>
-    <div class="instruction">Read a notice.</div>
-    <div class="notice-container">
-      <div class="notice-header">
-        <h3>Spring Career Fair — Registration Now Open</h3>
-        <p>Oakridge University Career Services</p>
+    <div class="instruction">Read a social media post.</div>
+    <div class="phone-frame">
+      <div class="social-header">
+        <div class="avatar">MK</div>
+        <div class="social-user">
+          <div class="social-name">Mia Kato</div>
+          <div class="social-handle">@mia_abroad &middot; 2h</div>
+        </div>
+        <div class="social-more">&middot;&middot;&middot;</div>
       </div>
-      <div class="notice-body">
-        <p>Dear Students,</p>
-        <p>Career Services is pleased to announce that the annual Spring Career Fair will take place on Friday, May 9, from 10:00 AM to 4:00 PM in the Grand Ballroom of the University Conference Center. Over 60 employers from a wide range of industries will be attending to recruit for full-time positions, summer internships, and co-op programs.</p>
-        <p>To participate, you must register online through the Career Services portal by Wednesday, May 7. Registration is free and open to all currently enrolled students, regardless of major or year of study.</p>
-        <p>To make the most of the event, we recommend the following preparation steps:</p>
-        <ul>
-          <li>Update your resume and have it reviewed at the Career Services office (Room 210, Student Center) before the fair.</li>
-          <li>Research the list of attending companies, which will be posted on the portal by May 1.</li>
-          <li>Dress in professional business attire and bring at least 10 printed copies of your resume.</li>
-        </ul>
-        <p>For questions, contact Career Services at careers@oakridge.edu or call (555) 234-5678.</p>
+      <div class="social-image">Lisbon rooftops at sunset</div>
+      <div class="social-body">
+        <p>Week 3 of my summer program in Lisbon done! Classes finish at noon, so afternoons are free for the internship at a small design studio downtown.</p>
+        <p>Honestly, my Portuguese is still rough, but the staff keep switching to English to help me out. Weekend trip to Porto next &mdash; send café recommendations!</p>
+        <p class="social-tags">#StudyAbroad #Lisbon2026 #DesignIntern</p>
+      </div>
+      <div class="social-actions">
+        <span>&hearts; 128</span>
+        <span>&#9993; 24</span>
+        <span>&#8631; 6</span>
+      </div>
+      <div class="social-meta">
+        <span>3:42 PM &middot; Apr 18, 2026</span>
+        <span>View 24 comments</span>
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q3: NOT/EXCEPT -->
-    <div class="question-page active" id="page3">
+    <!-- Q4: Factual -->
+    <div class="question-page active" id="page4">
       <div class="question-text">
-        <span class="question-number">3.</span>According to the notice, which of the following is a recommended preparation step for the career fair?
-      </div>
-      <div class="options">
-        <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="A">
-          <span class="option-label">A</span>
-          <span class="option-text">Submitting a cover letter to each employer before the event</span>
-        </div>
-        <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="B">
-          <span class="option-label">B</span>
-          <span class="option-text">Researching the companies that will be attending the fair</span>
-        </div>
-        <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="C">
-          <span class="option-label">C</span>
-          <span class="option-text">Paying a registration fee at the Career Services office</span>
-        </div>
-        <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="D">
-          <span class="option-label">D</span>
-          <span class="option-text">Scheduling an interview with employers before the fair begins</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q4: Inference -->
-    <div class="question-page" id="page4">
-      <div class="question-text">
-        <span class="question-number">4.</span>What can be inferred about who is eligible to attend the career fair?
+        <span class="question-number">4.</span>According to the post, what does Mia do in the afternoons?
       </div>
       <div class="options">
         <div class="option" data-q="4" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q4" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">Only students in their final year of study may attend.</span>
+          <span class="option-text">She attends Portuguese language classes at her university.</span>
         </div>
         <div class="option" data-q="4" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q4" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">Students must have previous work experience to register.</span>
+          <span class="option-text">She works as an intern at a design studio in the city center.</span>
         </div>
         <div class="option" data-q="4" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q4" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">Only business and engineering majors are invited to the fair.</span>
+          <span class="option-text">She travels by train to other cities around Portugal.</span>
         </div>
         <div class="option" data-q="4" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q4" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">Any currently enrolled student can attend, no matter what they are studying.</span>
+          <span class="option-text">She teaches English lessons to local high school students.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Inference -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>What can be inferred about Mia's experience at the design studio?
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">Her coworkers are being accommodating about the language barrier.</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">She has decided to stop using Portuguese in the office completely.</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">She is being paid a higher salary than other summer interns.</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">She has been asked to lead a major project on her own soon.</span>
         </div>
       </div>
     </div>
@@ -300,7 +340,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <script src="../../js/progress.js"></script>
 <script>
 var currentQ = 1;
-var totalQ = 4;
+var totalQ = 5;
 var userAnswers = {};
 var timerVisible = true;
 var timeLeft = 600; // 10 minutes
@@ -325,7 +365,7 @@ function restoreState(saved){
     var target = Math.min(Math.max(saved.currentQ || 1, 1), totalQ);
     if(target !== 1){
       document.getElementById('page1').classList.remove('active');
-      var oldPassage = 1, newPassage = (target <= 2 ? 1 : 2);
+      var oldPassage = 1, newPassage = (target <= 3 ? 1 : 2);
       if(oldPassage !== newPassage){
         document.getElementById('passagePage1').style.display = 'none';
         document.getElementById('passagePage2').style.display = 'flex';
@@ -348,8 +388,8 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-// Passage page mapping: questions 1-2 = passage 1, questions 3-4 = passage 2
-function getPassagePage(q){ return q <= 2 ? 1 : 2; }
+// Passage page mapping: questions 1-3 = passage 1, questions 4-5 = passage 2
+function getPassagePage(q){ return q <= 3 ? 1 : 2; }
 
 function selectOption(el){
   var q = el.getAttribute('data-q');
@@ -368,10 +408,10 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'A','2':'C','3':'B','4':'D'};
+    var ca={'1':'B','2':'C','3':'B','4':'B','5':'A'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    sessionStorage.setItem('training_score_rdl_p8',JSON.stringify({correct:sc,total:4}));
+    sessionStorage.setItem('training_score_rdl_p8',JSON.stringify({correct:sc,total:5}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-8-answers.html';
     return;

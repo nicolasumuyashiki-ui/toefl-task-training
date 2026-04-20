@@ -57,25 +57,34 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 .option-label{font-weight:600;color:#007646;min-width:28px}
 .option-text{flex:1;color:#0F1511}
 
-/* EMAIL STYLES */
-.email-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.email-subject{background:#FBF6EC;padding:14px 20px;font-weight:700;font-size:.95em;color:#0F1511;border-bottom:1px solid #F5E9D3}
-.email-meta{padding:10px 20px;font-size:.85em;color:#5A6861;border-bottom:1px solid #F5E9D3;display:flex;flex-direction:column;gap:2px}
-.email-meta span{display:block}
-.email-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.email-body p{margin-bottom:10px}
-.email-body p:last-child{margin-bottom:0}
+/* MENU STYLES */
+.menu-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.menu-header{background:#002817;color:#fff;padding:18px 20px;text-align:center;border-bottom:3px double #F5E9D3}
+.menu-header h3{font-size:1.1em;font-weight:700;margin-bottom:4px;letter-spacing:1px}
+.menu-header p{font-size:.8em;color:rgba(255,255,255,.75);font-style:italic}
+.menu-body{padding:18px 22px;font-size:.92em;line-height:1.65;color:#0F1511}
+.menu-intro{font-size:.9em;color:#5A6861;font-style:italic;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed #F5E9D3}
+.menu-section{margin-bottom:16px}
+.menu-section:last-child{margin-bottom:0}
+.menu-section-title{font-weight:700;font-size:.95em;color:#007646;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #F5E9D3}
+.menu-item{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:6px 0}
+.menu-item-name{font-weight:600;color:#0F1511}
+.menu-item-desc{font-size:.85em;color:#5A6861;margin-top:2px}
+.menu-item-price{font-weight:700;color:#007646;white-space:nowrap}
+.menu-note{margin-top:14px;padding-top:12px;border-top:1px dashed #F5E9D3;font-size:.85em;color:#5A6861;font-style:italic}
 
-/* NOTICE STYLES */
-.notice-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.notice-header{background:#002817;color:#fff;padding:16px 20px;text-align:center}
-.notice-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
-.notice-header p{font-size:.8em;color:rgba(255,255,255,.7)}
-.notice-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.notice-body p{margin-bottom:10px}
-.notice-body p:last-child{margin-bottom:0}
-.notice-body ul{margin:8px 0 10px 20px}
-.notice-body li{margin-bottom:4px}
+/* ADVERTISEMENT STYLES */
+.ad-container{background:#fff;border:2px solid #007646;border-radius:10px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.ad-banner{background:linear-gradient(135deg,#007646,#004D2E);color:#fff;padding:20px 22px;text-align:center}
+.ad-banner h3{font-size:1.2em;font-weight:800;margin-bottom:4px;letter-spacing:.5px}
+.ad-banner p{font-size:.85em;color:rgba(255,255,255,.85)}
+.ad-body{padding:18px 22px;font-size:.92em;line-height:1.7;color:#0F1511}
+.ad-body p{margin-bottom:10px}
+.ad-body p:last-child{margin-bottom:0}
+.ad-highlight{background:#F5E9D3;border-left:3px solid #007646;padding:10px 14px;margin:12px 0;font-weight:600;font-size:.9em;color:#0F1511}
+.ad-body ul{margin:8px 0 10px 20px}
+.ad-body li{margin-bottom:4px}
+.ad-footer{background:#FBF6EC;padding:12px 22px;font-size:.82em;color:#5A6861;border-top:1px solid #F5E9D3;text-align:center}
 
 /* REVIEW OVERLAY */
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}
@@ -95,7 +104,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- TOP NAV -->
 <div class="top-nav">
   <div class="top-nav-left">
-    <span>Question <span id="qLabel"><strong>1</strong></span> of 4</span>
+    <span>Question <span id="qLabel"><strong>1</strong></span> of 6</span>
     <span>|</span>
     <span>Reading in Daily Life</span>
   </div>
@@ -110,174 +119,271 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- PROGRESS BAR -->
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
 
-<!-- ========== PAGE 1: Passage 1 — Email (Short) ========== -->
+<!-- ========== PAGE 1: Passage 1 — Menu ========== -->
 <div class="split-main" id="passagePage1">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 1 of 2</div>
-    <div class="instruction">Read an email.</div>
-    <div class="email-container">
-      <div class="email-subject">Subject: Campus Flu Vaccination Clinic — Schedule &amp; Requirements</div>
-      <div class="email-meta">
-        <span><strong>From:</strong> Greenfield University Health Center &lt;health@greenfield.edu&gt;</span>
-        <span><strong>To:</strong> All Students — Spring 2026</span>
-        <span><strong>Date:</strong> March 10, 2026</span>
+    <div class="instruction">Read a menu.</div>
+    <div class="menu-container">
+      <div class="menu-header">
+        <h3>THE OAKWOOD CAFE</h3>
+        <p>Weekly Specials &mdash; Valid March 16 to March 22</p>
       </div>
-      <div class="email-body">
-        <p>Dear Students,</p>
-        <p>The Campus Health Center will be hosting free flu vaccination clinics during the week of March 23&ndash;27 in Room 105 of the Wellness Building. Walk-ins are welcome, but students who schedule an appointment through the student health portal will receive priority service and shorter wait times.</p>
-        <p>Please bring your student ID and completed immunization consent form, which can be downloaded from the health portal. Students with egg allergies or those currently taking blood-thinning medication should consult a physician before receiving the vaccine. For questions, contact the Health Center at (555) 312-7400.</p>
-        <p>Stay healthy,<br>Greenfield University Health Center</p>
+      <div class="menu-body">
+        <div class="menu-intro">All sandwiches are served with a small side salad. Add any specialty drink for only $2 extra when ordered with a sandwich.</div>
+        <div class="menu-section">
+          <div class="menu-section-title">Sandwiches</div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Roasted Veggie &amp; Feta Wrap</div>
+              <div class="menu-item-desc">Zucchini, red peppers, feta cheese on a spinach tortilla</div>
+            </div>
+            <div class="menu-item-price">$7.50</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Smoked Turkey Club</div>
+              <div class="menu-item-desc">House-smoked turkey, bacon, tomato on sourdough</div>
+            </div>
+            <div class="menu-item-price">$8.95</div>
+          </div>
+        </div>
+        <div class="menu-section">
+          <div class="menu-section-title">Specialty Coffee</div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Maple Cinnamon Latte</div>
+              <div class="menu-item-desc">Espresso, steamed milk, real maple syrup</div>
+            </div>
+            <div class="menu-item-price">$4.25</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Cold Brew Float</div>
+              <div class="menu-item-desc">House cold brew with a scoop of vanilla ice cream</div>
+            </div>
+            <div class="menu-item-price">$5.00</div>
+          </div>
+        </div>
+        <div class="menu-section">
+          <div class="menu-section-title">Pastries</div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Almond Croissant</div>
+              <div class="menu-item-desc">Baked fresh daily before 8:00 AM</div>
+            </div>
+            <div class="menu-item-price">$3.75</div>
+          </div>
+        </div>
+        <div class="menu-note">Students with a valid campus ID receive 10% off any order before 10:00 AM, Monday through Friday.</div>
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q1: Main Purpose -->
+    <!-- Q1: Factual Information -->
     <div class="question-page active" id="page1">
       <div class="question-text">
-        <span class="question-number">1.</span>What is the main purpose of this email?
+        <span class="question-number">1.</span>According to the menu, what is included with the price of a sandwich?
       </div>
       <div class="options">
         <div class="option" data-q="1" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q1" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">To inform students about an upcoming flu vaccination clinic and how to prepare</span>
+          <span class="option-text">A specialty drink of the customer's choice</span>
         </div>
         <div class="option" data-q="1" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q1" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">To warn students about a flu outbreak on campus</span>
+          <span class="option-text">A small side salad at no additional charge</span>
         </div>
         <div class="option" data-q="1" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q1" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">To explain the side effects of the flu vaccine in detail</span>
+          <span class="option-text">A freshly baked almond croissant from the oven</span>
         </div>
         <div class="option" data-q="1" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q1" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">To require all students to get vaccinated before the semester ends</span>
+          <span class="option-text">A bottle of water and a piece of fruit</span>
         </div>
       </div>
     </div>
 
-    <!-- Q2: Detail -->
+    <!-- Q2: Inference -->
     <div class="question-page" id="page2">
       <div class="question-text">
-        <span class="question-number">2.</span>According to the email, what advantage do students gain by scheduling an appointment in advance?
+        <span class="question-number">2.</span>What can be inferred about a student who arrives at the cafe at 11:30 AM on a Tuesday?
       </div>
       <div class="options">
         <div class="option" data-q="2" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q2" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">They will receive a free health checkup along with the vaccination.</span>
+          <span class="option-text">The student can still receive the 10% student discount.</span>
         </div>
         <div class="option" data-q="2" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q2" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">They will be given a discount on future health services.</span>
+          <span class="option-text">The student will not qualify for the morning discount.</span>
         </div>
         <div class="option" data-q="2" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q2" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">They can choose a specific type of vaccine.</span>
+          <span class="option-text">The student must order a full meal to get any discount.</span>
         </div>
         <div class="option" data-q="2" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q2" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">They will be served before walk-in students and wait less.</span>
+          <span class="option-text">The student can only buy pastries at that time of day.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3: Negative Factual -->
+    <div class="question-page" id="page3">
+      <div class="question-text">
+        <span class="question-number">3.</span>According to the menu, all of the following are mentioned as ingredients EXCEPT
+      </div>
+      <div class="options">
+        <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">feta cheese in the roasted vegetable wrap</span>
+        </div>
+        <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">real maple syrup in one of the coffee drinks</span>
+        </div>
+        <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">dark chocolate chips used in the almond croissant</span>
+        </div>
+        <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q3" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">bacon included in the smoked turkey sandwich</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== PAGE 2: Passage 2 — Notice (Longer) ========== -->
+<!-- ========== PAGE 2: Passage 2 — Advertisement ========== -->
 <div class="split-main" id="passagePage2" style="display:none">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 2 of 2</div>
-    <div class="instruction">Read a notice.</div>
-    <div class="notice-container">
-      <div class="notice-header">
-        <h3>IMPORTANT: Scholarship Application Deadline Approaching</h3>
-        <p>Office of Financial Aid &mdash; Greenfield University</p>
+    <div class="instruction">Read an advertisement.</div>
+    <div class="ad-container">
+      <div class="ad-banner">
+        <h3>HARMONY MUSIC STUDIO</h3>
+        <p>Spring Semester Promotion &mdash; Limited Time Offer</p>
       </div>
-      <div class="notice-body">
-        <p>Dear Students,</p>
-        <p>The Office of Financial Aid reminds all eligible students that the deadline to submit applications for the 2026&ndash;2027 Academic Merit Scholarship is April 15, 2026. This scholarship is awarded to full-time undergraduate students who have maintained a cumulative GPA of 3.5 or above and have completed at least 30 credit hours at Greenfield University.</p>
-        <p>To complete your application, you must submit the following documents through the Financial Aid Portal:</p>
+      <div class="ad-body">
+        <p>Ever wished you could play an instrument between classes? Harmony Music Studio, located just two blocks from the east campus gate, is opening its doors to university students with an exclusive spring deal.</p>
+        <div class="ad-highlight">Sign up before April 10 and get your first month of lessons for just $25 &mdash; that's half the regular rate!</div>
+        <p>We offer one-on-one lessons in:</p>
         <ul>
-          <li>A completed scholarship application form</li>
-          <li>An unofficial academic transcript</li>
-          <li>A personal statement of no more than 500 words describing your academic goals</li>
-          <li>One letter of recommendation from a current faculty member</li>
+          <li>Piano, guitar, violin, and drums</li>
+          <li>Vocal coaching for any style</li>
+          <li>Beginner music theory workshops (group format)</li>
         </ul>
-        <p>Please note that incomplete applications will not be reviewed. Late submissions will only be accepted if accompanied by a documented reason approved by the Dean of Students. Award decisions will be announced by May 20, 2026.</p>
-        <p>Students who received the scholarship in a previous year must reapply; renewal is not automatic. If you have questions about eligibility or the application process, visit the Financial Aid Office in Hamilton Hall, Room 210, or email finaid@greenfield.edu.</p>
-        <p>Office of Financial Aid<br>Greenfield University</p>
+        <p>All instruments except drums are available to borrow during your lesson, so you can start right away without buying your own. Students who commit to a three-month package will also receive a free 30-minute recording session in our home studio at the end of the term.</p>
+        <p>No prior experience is necessary, and lessons are scheduled to fit around your class timetable.</p>
       </div>
+      <div class="ad-footer">Harmony Music Studio &middot; 48 Linden Ave &middot; harmonystudio@music.com</div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q3: NOT/EXCEPT -->
-    <div class="question-page active" id="page3">
+    <!-- Q4: Text Purpose -->
+    <div class="question-page active" id="page4">
       <div class="question-text">
-        <span class="question-number">3.</span>According to the notice, all of the following are required application documents EXCEPT
-      </div>
-      <div class="options">
-        <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="A">
-          <span class="option-label">A</span>
-          <span class="option-text">an unofficial academic transcript</span>
-        </div>
-        <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="B">
-          <span class="option-label">B</span>
-          <span class="option-text">a proof of financial need from the student's family</span>
-        </div>
-        <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="C">
-          <span class="option-label">C</span>
-          <span class="option-text">a personal statement about academic goals</span>
-        </div>
-        <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
-          <input type="radio" name="q3" value="D">
-          <span class="option-label">D</span>
-          <span class="option-text">a letter of recommendation from a faculty member</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q4: Inference -->
-    <div class="question-page" id="page4">
-      <div class="question-text">
-        <span class="question-number">4.</span>What can be inferred about students who received the scholarship last year?
+        <span class="question-number">4.</span>What is the main purpose of this advertisement?
       </div>
       <div class="options">
         <div class="option" data-q="4" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q4" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">They are guaranteed to receive the scholarship again.</span>
+          <span class="option-text">To promote a special student rate for music lessons</span>
         </div>
         <div class="option" data-q="4" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q4" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">They are no longer eligible to apply for the scholarship.</span>
+          <span class="option-text">To announce the grand opening of a new music studio</span>
         </div>
         <div class="option" data-q="4" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q4" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">They must go through the same application process as new applicants.</span>
+          <span class="option-text">To recruit instructors for a university music program</span>
         </div>
         <div class="option" data-q="4" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q4" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">They will receive a larger award amount than first-time applicants.</span>
+          <span class="option-text">To advertise used instruments being sold to students</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Factual Information -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>According to the advertisement, what will students receive if they sign up for a three-month package?
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">A free instrument to keep after the course ends</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">A complimentary half-hour recording session at the studio</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">A discounted rate for additional group theory workshops</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">A certificate of completion signed by the instructor</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6: Inference -->
+    <div class="question-page" id="page6">
+      <div class="question-text">
+        <span class="question-number">6.</span>What can be inferred about students who want to learn the drums?
+      </div>
+      <div class="options">
+        <div class="option" data-q="6" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">They are not allowed to take lessons at the studio.</span>
+        </div>
+        <div class="option" data-q="6" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">They must attend only group lessons, not private ones.</span>
+        </div>
+        <div class="option" data-q="6" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">They will need to provide their own instrument for lessons.</span>
+        </div>
+        <div class="option" data-q="6" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q6" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">They must pay a higher rate than other instrument students.</span>
         </div>
       </div>
     </div>
@@ -302,7 +408,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <script src="../../js/progress.js"></script>
 <script>
 var currentQ = 1;
-var totalQ = 4;
+var totalQ = 6;
 var userAnswers = {};
 var timerVisible = true;
 var timeLeft = 600; // 10 minutes
@@ -327,7 +433,7 @@ function restoreState(saved){
     var target = Math.min(Math.max(saved.currentQ || 1, 1), totalQ);
     if(target !== 1){
       document.getElementById('page1').classList.remove('active');
-      var oldPassage = 1, newPassage = (target <= 2 ? 1 : 2);
+      var oldPassage = 1, newPassage = getPassagePage(target);
       if(oldPassage !== newPassage){
         document.getElementById('passagePage1').style.display = 'none';
         document.getElementById('passagePage2').style.display = 'flex';
@@ -350,8 +456,8 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-// Passage page mapping: questions 1-2 = passage 1, questions 3-4 = passage 2
-function getPassagePage(q){ return q <= 2 ? 1 : 2; }
+// Passage page mapping: questions 1-3 = passage 1, questions 4-6 = passage 2
+function getPassagePage(q){ return q <= 3 ? 1 : 2; }
 
 function selectOption(el){
   var q = el.getAttribute('data-q');
@@ -370,10 +476,10 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'A','2':'D','3':'B','4':'C'};
+    var ca={'1':'B','2':'B','3':'C','4':'A','5':'B','6':'C'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    sessionStorage.setItem('training_score_rdl_p2',JSON.stringify({correct:sc,total:4}));
+    sessionStorage.setItem('training_score_rdl_p2',JSON.stringify({correct:sc,total:6}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-2-answers.html';
     return;

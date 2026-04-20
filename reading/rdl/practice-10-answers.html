@@ -61,8 +61,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/4</div>
-  <div class="score-label">Your Score (Q1&ndash;Q4)</div>
+  <div class="score-big" id="scoreDisplay">&ndash;/5</div>
+  <div class="score-label">Your Score (Q1&ndash;Q5)</div>
 </div>
 
 <div class="answers-body">
@@ -72,38 +72,31 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     <div class="tips-title">Read in Daily Life Strategy Tips</div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">1</span> Identify the purpose from opening keywords</div>
+      <div class="tip-card-title"><span class="tip-num">1</span> For NOT/EXCEPT, verify each option</div>
       <div class="tip-card-body">
-        The first 1-2 sentences reveal the purpose of the text. Learn the patterns:<br><br>
-        <strong>Notification:</strong> <code>We are pleased to inform...</code> / <code>We would like to inform you...</code><br>
-        <strong>Reminder:</strong> <code>This is a reminder that...</code> / <code>...is pleased to remind you...</code><br>
-        <strong>Announcement:</strong> <code>Beginning [date]...</code> / <code>Effective [date]...</code>
+        In "all of the following EXCEPT" questions, three options are in the passage and one is not. Check each option against the text — the odd one out is your answer.
         <div class="tip-example">
-          <strong>Q1:</strong> The email opens with "is pleased to remind you that the application deadline...is Friday, December 6" and then provides program details, requirements, and an information session. This is a reminder about an upcoming deadline = B.
+          <strong>Q2:</strong> The notice mentions the outdoor track (A), online fitness classes (B), and Hartley Hall fitness room (D). A public community pool (C) is never discussed, so C is the answer.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">2</span> For detail questions, locate the key phrase first</div>
+      <div class="tip-card-title"><span class="tip-num">2</span> Inference from consequences</div>
       <div class="tip-card-body">
-        <strong>Steps:</strong><br>
-        1. Identify the key phrase in the question (e.g., "requirement for applying")<br>
-        2. Scan the passage for that exact phrase or a synonym<br>
-        3. Read the sentence containing it carefully<br>
-        4. Match it to an answer choice
-        <div class="tip-example">
-          <strong>Q2:</strong> The question asks about requirements. Scanning for "must" leads to: "you must have completed at least 30 credit hours and have a cumulative GPA of 2.75 or higher" = C.
-        </div>
-      </div>
-    </div>
-
-    <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">3</span> Inference questions: stick to the text</div>
-      <div class="tip-card-body">
-        For inference questions, the answer must be <strong>logically supported by information in the passage</strong>. Do not mix in your own knowledge or assumptions.
+        Notices often include deadlines. If a deadline is stated, think about what happens <strong>after</strong> it passes — that is usually what an inference question targets.
         <div class="tip-warn">
-          <strong>Common trap:</strong> An option that sounds reasonable based on real-world knowledge but is NOT supported by the passage text.
+          <strong>Trap:</strong> Do not invent extra consequences (fees, penalties) that the notice never mentions.
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-title"><span class="tip-num">3</span> SMS: follow the conversation flow</div>
+      <div class="tip-card-body">
+        Text messages move fast. Read each bubble in order and note who agrees, who disagrees, and what plan is made at the end. The final bubbles usually settle the plan.
+        <div class="tip-example">
+          <strong>Q5:</strong> The last messages settle on a Zoom video call at 4:00 PM to review the essay draft, not an in-person meeting.
         </div>
       </div>
     </div>
@@ -111,86 +104,104 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 
   <!-- Passage 1 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 1 <span class="passage-type-badge">Email</span></div>
+    <div class="passage-title">Passage 1 <span class="passage-type-badge">Notice</span></div>
 
     <div class="q-card" id="card1">
-      <div class="q-num">Question 1 — Main Purpose</div>
-      <div class="q-text">What is the main purpose of this email?</div>
+      <div class="q-num">Question 1 — Factual Detail</div>
+      <div class="q-text">According to the notice, why will the Recreation Center be closed?</div>
       <div class="answer-row">
         <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours1">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt1A"><span class="label">A</span> To announce that the Study Abroad Program has been canceled for next semester</div>
-        <div class="option-review is-correct" id="opt1B"><span class="label">B</span> To remind students about the upcoming application deadline and provide program details &#10003;</div>
-        <div class="option-review" id="opt1C"><span class="label">C</span> To notify students that they have been accepted into the exchange program</div>
-        <div class="option-review" id="opt1D"><span class="label">D</span> To request that faculty members write recommendation letters for students</div>
+        <div class="option-review" id="opt1A"><span class="label">A</span> To install new exercise equipment in the main gymnasium</div>
+        <div class="option-review is-correct" id="opt1B"><span class="label">B</span> To replace the gym floor and fix a leak above the pool &#10003;</div>
+        <div class="option-review" id="opt1C"><span class="label">C</span> To host a series of athletic tournaments for visiting schools</div>
+        <div class="option-review" id="opt1D"><span class="label">D</span> To clean the building after damage caused by a recent storm</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email reminds students that the application deadline is December 6, explains the eligibility requirements, lists the application materials, and mentions an information session. The overall purpose is to remind students about the deadline and provide details = B.<br><br>
-        A is wrong because the program is not canceled. C is wrong because this is about applying, not acceptance. D is directed at students, not faculty.
+        <strong>Explanation:</strong> The notice says contractors will "replace the wooden flooring in the main gymnasium and repair the roof above the swimming pool" = B.<br><br>
+        A is wrong because no new equipment is mentioned. C is never stated. D is a trap: storms caused the leak, but the closure is for repairs, not cleaning.
       </div>
     </div>
 
     <div class="q-card" id="card2">
-      <div class="q-num">Question 2 — Factual Detail</div>
-      <div class="q-text">According to the email, what is one requirement for applying to the Study Abroad Program?</div>
+      <div class="q-num">Question 2 — Negative Factual (EXCEPT)</div>
+      <div class="q-text">All of the following are mentioned as alternatives during the closure EXCEPT</div>
       <div class="answer-row">
         <span class="answer-tag tag-correct">Correct: C</span>
         <span class="answer-tag" id="yours2">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt2A"><span class="label">A</span> Students must have studied a foreign language for at least two years</div>
-        <div class="option-review" id="opt2B"><span class="label">B</span> Students must attend the information session before submitting their application</div>
-        <div class="option-review is-correct" id="opt2C"><span class="label">C</span> Students must have completed at least 30 credit hours with a GPA of 2.75 or above &#10003;</div>
-        <div class="option-review" id="opt2D"><span class="label">D</span> Students must have previously traveled to the country they wish to study in</div>
+        <div class="option-review" id="opt2A"><span class="label">A</span> using the outdoor track during normal hours</div>
+        <div class="option-review" id="opt2B"><span class="label">B</span> joining group fitness classes through an online platform</div>
+        <div class="option-review is-correct" id="opt2C"><span class="label">C</span> swimming at a nearby public community pool &#10003;</div>
+        <div class="option-review" id="opt2D"><span class="label">D</span> exercising at the Hartley Residence Hall fitness room</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email states: "you must have completed at least 30 credit hours and have a cumulative GPA of 2.75 or higher." This directly matches C.<br><br>
-        A mentions foreign language study, which is never referenced. B is wrong because the information session is described as an opportunity, not a requirement. D describes prior travel experience, which is not mentioned anywhere.
+        <strong>Explanation:</strong> The notice lists the outdoor track (A), online group fitness classes via Zoom (B), and the Hartley Residence Hall fitness room (D). A public community pool is never mentioned, so C is the EXCEPT answer.
+      </div>
+    </div>
+
+    <div class="q-card" id="card3">
+      <div class="q-num">Question 3 — Inference</div>
+      <div class="q-text">What can be inferred about items kept in the locker rooms?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: A</span>
+        <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt3A"><span class="label">A</span> Belongings not collected by February 6 may be inaccessible during repairs. &#10003;</div>
+        <div class="option-review" id="opt3B"><span class="label">B</span> Users will be charged an additional fee for extending their locker rental.</div>
+        <div class="option-review" id="opt3C"><span class="label">C</span> All personal items will automatically be moved to Hartley Residence Hall.</div>
+        <div class="option-review" id="opt3D"><span class="label">D</span> Staff will photograph the contents before the contractors begin work.</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> The notice says items should be removed before February 6 and the building is closed from February 9-15. From this we can infer that anything left behind will be locked inside the closed building = A.<br><br>
+        B is contradicted by "at no extra cost." C and D are never mentioned.
       </div>
     </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 2 <span class="passage-type-badge">Notice</span></div>
-
-    <div class="q-card" id="card3">
-      <div class="q-num">Question 3 — Factual Detail</div>
-      <div class="q-text">According to the notice, what should be placed in the green bin?</div>
-      <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: B</span>
-        <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
-      </div>
-      <div style="margin:10px 0">
-        <div class="option-review" id="opt3A"><span class="label">A</span> Paper and cardboard materials</div>
-        <div class="option-review is-correct" id="opt3B"><span class="label">B</span> Plastic bottles, glass, and aluminum cans &#10003;</div>
-        <div class="option-review" id="opt3C"><span class="label">C</span> Food waste and leftover liquids</div>
-        <div class="option-review" id="opt3D"><span class="label">D</span> Non-recyclable waste and contaminated items</div>
-      </div>
-      <div class="explanation">
-        <strong>Explanation:</strong> The notice clearly states: "Green bin: Plastic bottles, glass, and aluminum cans" = B.<br><br>
-        A describes the blue bin contents. C is explicitly excluded from all recycling bins. D describes the black bin contents. This is a straightforward detail-matching question.
-      </div>
-    </div>
+    <div class="passage-title">Passage 2 <span class="passage-type-badge">Text Messages</span></div>
 
     <div class="q-card" id="card4">
-      <div class="q-num">Question 4 — Inference</div>
-      <div class="q-text">What can be inferred about the university's current recycling system?</div>
+      <div class="q-num">Question 4 — Factual Detail</div>
+      <div class="q-text">According to the messages, why does Priya want to cancel the cafe meeting?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag tag-correct">Correct: A</span>
         <span class="answer-tag" id="yours4">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> It already achieves a recycling rate above 60 percent.</div>
-        <div class="option-review is-correct" id="opt4B"><span class="label">B</span> It uses a single-bin system that does not effectively separate recyclable materials. &#10003;</div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> It was implemented less than one year ago and is still being tested.</div>
-        <div class="option-review" id="opt4D"><span class="label">D</span> It requires students to transport their recyclables to an off-campus facility.</div>
+        <div class="option-review is-correct" id="opt4A"><span class="label">A</span> She is worried about protecting her laptop from the rain. &#10003;</div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> She has not finished writing the draft of her essay yet.</div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> She thinks Cafe Luna will be too crowded this afternoon.</div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> She needs to finish another class assignment before 3:00.</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The notice states that "the new system replaces the current single-bin collection" and the goal is to "increase its recycling rate from 35 percent to 60 percent." From this, we can infer that the current single-bin system is not effective at separating materials, which is why the rate is only 35% = B.<br><br>
-        A is contradicted by the stated 35% rate. C has no support in the text. D mentions off-campus transport, which is never discussed.
+        <strong>Explanation:</strong> Priya writes: "My laptop can't get wet — the bag isn't waterproof." That is the reason she would rather skip the cafe = A.<br><br>
+        B is wrong because she still wants to review the draft later. C and D are never mentioned.
+      </div>
+    </div>
+
+    <div class="q-card" id="card5">
+      <div class="q-num">Question 5 — Inference</div>
+      <div class="q-text">What will the two students most likely do at 4:00 PM?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag" id="yours5">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt5A"><span class="label">A</span> Meet at Cafe Luna once the rain has stopped</div>
+        <div class="option-review is-correct" id="opt5B"><span class="label">B</span> Review the essay draft together during a video call &#10003;</div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> Submit their finished essays to their professor online</div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> Walk to the library to study together in person</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> Priya agrees to a video call and says she will send a Zoom link at 4, adding "Bring the draft of the essay so we can go over it together." So they will review the essay on a video call = B.<br><br>
+        A contradicts the plan to skip the cafe. C and D are not discussed.
       </div>
     </div>
   </div>
@@ -202,7 +213,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <script>
-var correctAnswers = {'1':'B','2':'C','3':'B','4':'B'};
+var correctAnswers = {'1':'B','2':'C','3':'A','4':'A','5':'B'};
 (function(){
   var saved = sessionStorage.getItem('training_rdl_p10_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -223,7 +234,7 @@ var correctAnswers = {'1':'B','2':'C','3':'B','4':'B'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/4';
+  document.getElementById('scoreDisplay').textContent = score+'/5';
 })();
 </script>
 <script src="../../js/auth.js"></script>

@@ -57,25 +57,28 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 .option-label{font-weight:600;color:#007646;min-width:28px}
 .option-text{flex:1;color:#0F1511}
 
-/* EMAIL STYLES */
-.email-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.email-subject{background:#FBF6EC;padding:14px 20px;font-weight:700;font-size:.95em;color:#0F1511;border-bottom:1px solid #F5E9D3}
-.email-meta{padding:10px 20px;font-size:.85em;color:#5A6861;border-bottom:1px solid #F5E9D3;display:flex;flex-direction:column;gap:2px}
-.email-meta span{display:block}
-.email-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.email-body p{margin-bottom:10px}
-.email-body p:last-child{margin-bottom:0}
+/* PHONE / SMS STYLES */
+.phone-frame{background:#fff;border:1px solid #F5E9D3;border-radius:18px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);max-width:420px;margin:0 auto}
+.phone-header{background:#002817;color:#fff;padding:12px 16px;text-align:center;font-size:.85em}
+.phone-header .contact-name{font-weight:700;font-size:1em}
+.phone-header .contact-sub{font-size:.78em;color:rgba(255,255,255,.7);margin-top:2px}
+.message-thread{padding:16px 14px;display:flex;flex-direction:column;gap:8px;background:#FBF6EC}
+.message-row{display:flex;flex-direction:column;max-width:78%}
+.message-row.sent{align-self:flex-end;align-items:flex-end}
+.message-row.received{align-self:flex-start;align-items:flex-start}
+.message-bubble{padding:9px 13px;border-radius:16px;font-size:.9em;line-height:1.5;word-wrap:break-word}
+.message-row.sent .message-bubble{background:#007646;color:#fff;border-bottom-right-radius:4px}
+.message-row.received .message-bubble{background:#fff;color:#0F1511;border:1px solid #F5E9D3;border-bottom-left-radius:4px}
+.message-time{font-size:.7em;color:#5A6861;margin-top:2px;padding:0 6px}
 
-/* NOTICE STYLES */
-.notice-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.notice-header{background:#002817;color:#fff;padding:16px 20px;text-align:center}
-.notice-header h3{font-size:1em;font-weight:700;margin-bottom:2px}
-.notice-header p{font-size:.8em;color:rgba(255,255,255,.7)}
-.notice-body{padding:18px 20px;font-size:.92em;line-height:1.7;color:#0F1511}
-.notice-body p{margin-bottom:10px}
-.notice-body p:last-child{margin-bottom:0}
-.notice-body ul{margin:8px 0 10px 20px}
-.notice-body li{margin-bottom:4px}
+/* NEWS ARTICLE STYLES */
+.article-container{background:#fff;border:1px solid #F5E9D3;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.article-masthead{background:#002817;color:#fff;padding:10px 20px;text-align:center;letter-spacing:2px;font-size:.75em;font-weight:700;text-transform:uppercase}
+.article-headline{padding:18px 22px 6px;font-size:1.15em;font-weight:700;color:#0F1511;line-height:1.35;border-bottom:1px solid #F5E9D3}
+.article-byline{padding:8px 22px;font-size:.78em;color:#5A6861;border-bottom:1px solid #F5E9D3;display:flex;justify-content:space-between}
+.article-body{padding:18px 22px;font-size:.92em;line-height:1.7;color:#0F1511}
+.article-body p{margin-bottom:10px}
+.article-body p:last-child{margin-bottom:0}
 
 /* REVIEW OVERLAY */
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;justify-content:center;align-items:center}
@@ -95,7 +98,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- TOP NAV -->
 <div class="top-nav">
   <div class="top-nav-left">
-    <span>Question <span id="qLabel"><strong>1</strong></span> of 4</span>
+    <span>Question <span id="qLabel"><strong>1</strong></span> of 5</span>
     <span>|</span>
     <span>Reading in Daily Life</span>
   </div>
@@ -110,175 +113,207 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <!-- PROGRESS BAR -->
 <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
 
-<!-- ========== PAGE 1: Passage 1 — Email (Short) ========== -->
+<!-- ========== PAGE 1: Passage 1 — Text Messages (Short) ========== -->
 <div class="split-main" id="passagePage1">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 1 of 2</div>
-    <div class="instruction">Read an email.</div>
-    <div class="email-container">
-      <div class="email-subject">Subject: New Meal Plan Options — Spring Semester</div>
-      <div class="email-meta">
-        <span><strong>From:</strong> Greenfield University Dining Services &lt;dining@greenfield.edu&gt;</span>
-        <span><strong>To:</strong> All Students — Spring 2026</span>
-        <span><strong>Date:</strong> January 8, 2026</span>
+    <div class="instruction">Read a chain of text messages.</div>
+    <div class="phone-frame">
+      <div class="phone-header">
+        <div class="contact-name">Maya</div>
+        <div class="contact-sub">Roommate &middot; Apartment 3B</div>
       </div>
-      <div class="email-body">
-        <p>Dear Students,</p>
-        <p>Dining Services is pleased to announce two new meal plan options for the spring semester. In addition to the existing Standard Plan (14 meals per week), students may now choose the Flex Plan (10 meals per week plus $150 in dining dollars) or the Light Plan (7 meals per week plus $250 in dining dollars). Dining dollars can be used at any campus cafe or food truck.</p>
-        <p>To switch your meal plan, please log in to the student portal and submit a change request by January 20. Changes made after this date will not take effect until the following month. Students who do not submit a request will remain on their current plan.</p>
-        <p>If you have questions about which plan is right for you, please visit the Dining Services office in Baker Hall, Room 105, or email us at dining@greenfield.edu.</p>
-        <p>Best regards,<br>Greenfield University Dining Services</p>
+      <div class="message-thread">
+        <div class="message-row received">
+          <div class="message-bubble">Hey, the landlord just emailed. Final inspection is Saturday at 10am. We still need to clean the oven and patch the nail holes.</div>
+          <div class="message-time">Maya &middot; 6:42 PM</div>
+        </div>
+        <div class="message-row sent">
+          <div class="message-bubble">Ugh, Saturday? I have a shift till 2pm. Can you start the oven while I grab spackle from the hardware store after work?</div>
+          <div class="message-time">You &middot; 6:45 PM</div>
+        </div>
+        <div class="message-row received">
+          <div class="message-bubble">That works. But we lose the deposit if anything is missed &mdash; let's split the carpet shampooer rental too. It's $35 for 24 hours.</div>
+          <div class="message-time">Maya &middot; 6:47 PM</div>
+        </div>
+        <div class="message-row sent">
+          <div class="message-bubble">Deal. I'll Venmo you my half tonight. See you Friday for the deep clean marathon.</div>
+          <div class="message-time">You &middot; 6:49 PM</div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q1: Main Purpose -->
+    <!-- Q1: Factual -->
     <div class="question-page active" id="page1">
       <div class="question-text">
-        <span class="question-number">1.</span>What is the main purpose of this email?
+        <span class="question-number">1.</span>According to the messages, why is the cleaning being done on Saturday?
       </div>
       <div class="options">
         <div class="option" data-q="1" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q1" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">To require all students to purchase a new meal plan</span>
+          <span class="option-text">The carpet shampooer is only available that day</span>
         </div>
         <div class="option" data-q="1" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q1" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">To explain the hours of operation for campus dining halls</span>
+          <span class="option-text">The landlord scheduled the final inspection for that morning</span>
         </div>
         <div class="option" data-q="1" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q1" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">To inform students about new meal plan choices and how to switch plans</span>
+          <span class="option-text">Both roommates are off work for the entire day</span>
         </div>
         <div class="option" data-q="1" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q1" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">To announce that the campus cafeteria will be closed for renovations</span>
+          <span class="option-text">The hardware store offers a weekend discount on spackle</span>
         </div>
       </div>
     </div>
 
-    <!-- Q2: Detail -->
+    <!-- Q2: Inference -->
     <div class="question-page" id="page2">
       <div class="question-text">
-        <span class="question-number">2.</span>According to the email, what will happen if a student submits a meal plan change request after January 20?
+        <span class="question-number">2.</span>What can be inferred from Maya's warning about the deposit?
       </div>
       <div class="options">
         <div class="option" data-q="2" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q2" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">The request will be rejected and the student must wait until next semester.</span>
+          <span class="option-text">The landlord has threatened them with extra charges before</span>
         </div>
         <div class="option" data-q="2" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q2" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">The change will not take effect until the following month.</span>
+          <span class="option-text">Any overlooked task could cost them their refundable money</span>
         </div>
         <div class="option" data-q="2" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q2" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">The student will be automatically placed on the Flex Plan.</span>
+          <span class="option-text">Maya is planning to move out before the final inspection</span>
         </div>
         <div class="option" data-q="2" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q2" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">The student will need to pay an additional processing fee.</span>
+          <span class="option-text">The apartment is in unusually poor condition overall</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== PAGE 2: Passage 2 — Notice (Longer) ========== -->
+<!-- ========== PAGE 2: Passage 2 — News Article (Longer) ========== -->
 <div class="split-main" id="passagePage2" style="display:none">
   <!-- LEFT: PASSAGE -->
   <div class="passage-panel">
     <div class="page-indicator">Page 2 of 2</div>
-    <div class="instruction">Read a notice.</div>
-    <div class="notice-container">
-      <div class="notice-header">
-        <h3>NOTICE: Campus Parking Permit Changes — 2026-2027</h3>
-        <p>Office of Transportation Services</p>
+    <div class="instruction">Read a news article.</div>
+    <div class="article-container">
+      <div class="article-masthead">The Hartwell Gazette</div>
+      <div class="article-headline">New Riverside Innovation Hub Opens Doors to Students and Local Startups</div>
+      <div class="article-byline">
+        <span>By Daniel Park, Staff Reporter</span>
+        <span>April 18, 2026</span>
       </div>
-      <div class="notice-body">
-        <p>Dear Students and Staff,</p>
-        <p>The Office of Transportation Services would like to inform all campus community members that significant changes to the parking permit system will take effect beginning August 1, 2026. These changes are intended to reduce traffic congestion on campus and encourage the use of public transportation and carpooling.</p>
-        <p>The key changes are as follows:</p>
-        <ul>
-          <li>Freshman students living in campus housing will no longer be eligible for individual parking permits. A limited number of shared-vehicle permits will be available through the Housing Office.</li>
-          <li>All other students must apply for permits online through the new Transportation Portal by July 15. Paper applications will no longer be accepted.</li>
-          <li>Permit fees will increase by 10 percent for the 2026-2027 academic year. A monthly payment option is now available for students who prefer not to pay the full amount at once.</li>
-          <li>A new carpool discount of 20 percent will be offered to groups of three or more students who register a shared vehicle.</li>
-        </ul>
-        <p>Students who currently hold a valid permit for the 2025-2026 year do not need to take any action until the renewal period opens on June 1. Detailed instructions will be sent by email at that time.</p>
-        <p>For questions, please contact Transportation Services at transport@campus.edu or visit Room 210 in the Administration Building during business hours (Monday-Friday, 8:00 AM - 5:00 PM).</p>
-        <p>Office of Transportation Services</p>
+      <div class="article-body">
+        <p>Hartwell University officially opened the Riverside Innovation Hub on Monday, a 4,200-square-meter facility designed to bring together engineering students, local entrepreneurs, and visiting researchers under one roof. The project, which was funded primarily by a grant from the Hartwell Foundation, took nearly three years to complete.</p>
+        <p>Unlike traditional campus buildings, the Hub is open to members of the public who apply for a community workspace pass. University officials say this decision was made to strengthen ties between the campus and nearby businesses, which have sometimes complained that university resources remain out of reach for small firms.</p>
+        <p>The facility houses a prototyping lab with 3D printers and laser cutters, four soundproof meeting rooms, and a small cafe operated by a student cooperative. However, access to the prototyping lab will initially be limited to certified users who have completed a two-hour safety course. A full schedule of courses will be released next month.</p>
+        <p>Dean of Engineering Helena Ortiz said the Hub's most unusual feature is its mentorship program, which pairs student teams with retired professionals from the area rather than with current faculty. "Our graduates tell us they want feedback from people who have actually built businesses," Ortiz said. "This is not something a lecture can provide."</p>
       </div>
     </div>
   </div>
 
   <!-- RIGHT: QUESTIONS -->
   <div class="question-panel">
-    <!-- Q3: NOT/EXCEPT -->
+    <!-- Q3: Factual -->
     <div class="question-page active" id="page3">
       <div class="question-text">
-        <span class="question-number">3.</span>According to the notice, which of the following is a change being introduced for the 2026-2027 year?
+        <span class="question-number">3.</span>According to the article, who primarily paid for the construction of the Innovation Hub?
       </div>
       <div class="options">
         <div class="option" data-q="3" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q3" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">A new discount for students who carpool with three or more people</span>
+          <span class="option-text">Local startup companies based near the campus</span>
         </div>
         <div class="option" data-q="3" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q3" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">Free parking for all students who live on campus</span>
+          <span class="option-text">A private foundation associated with the university</span>
         </div>
         <div class="option" data-q="3" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q3" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">A reduction in the price of all parking permits</span>
+          <span class="option-text">Tuition fees collected from engineering students</span>
         </div>
         <div class="option" data-q="3" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q3" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">Extended business hours at the Transportation Services office</span>
+          <span class="option-text">Federal grants awarded by the national government</span>
         </div>
       </div>
     </div>
 
-    <!-- Q4: Inference -->
+    <!-- Q4: Negative Factual -->
     <div class="question-page" id="page4">
       <div class="question-text">
-        <span class="question-number">4.</span>What can be inferred about freshman students living on campus starting in 2026-2027?
+        <span class="question-number">4.</span>According to the article, all of the following are features of the Innovation Hub EXCEPT
       </div>
       <div class="options">
         <div class="option" data-q="4" data-v="A" onclick="selectOption(this)">
           <input type="radio" name="q4" value="A">
           <span class="option-label">A</span>
-          <span class="option-text">They will be required to use public transportation exclusively.</span>
+          <span class="option-text">a prototyping lab equipped with 3D printers</span>
         </div>
         <div class="option" data-q="4" data-v="B" onclick="selectOption(this)">
           <input type="radio" name="q4" value="B">
           <span class="option-label">B</span>
-          <span class="option-text">They will not be able to park their own cars on campus individually.</span>
+          <span class="option-text">several soundproof meeting rooms for team use</span>
         </div>
         <div class="option" data-q="4" data-v="C" onclick="selectOption(this)">
           <input type="radio" name="q4" value="C">
           <span class="option-label">C</span>
-          <span class="option-text">They will receive free bus passes as part of their housing fees.</span>
+          <span class="option-text">a cafe managed by a student-run cooperative</span>
         </div>
         <div class="option" data-q="4" data-v="D" onclick="selectOption(this)">
           <input type="radio" name="q4" value="D">
           <span class="option-label">D</span>
-          <span class="option-text">They will be exempt from the 10 percent fee increase.</span>
+          <span class="option-text">overnight sleeping pods for visiting researchers</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Inference -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>What does Dean Ortiz suggest about the mentorship program?
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">Students prefer guidance from those with real-world experience</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">The program will eventually replace all traditional classes</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">Current faculty members lacked interest in advising teams</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" onclick="selectOption(this)">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">Retired professionals charge less than university lecturers</span>
         </div>
       </div>
     </div>
@@ -303,7 +338,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
 <script src="../../js/progress.js"></script>
 <script>
 var currentQ = 1;
-var totalQ = 4;
+var totalQ = 5;
 var userAnswers = {};
 var timerVisible = true;
 var timeLeft = 600; // 10 minutes
@@ -351,7 +386,7 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-// Passage page mapping: questions 1-2 = passage 1, questions 3-4 = passage 2
+// Passage page mapping: questions 1-2 = passage 1, questions 3-5 = passage 2
 function getPassagePage(q){ return q <= 2 ? 1 : 2; }
 
 function selectOption(el){
@@ -371,10 +406,10 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'C','2':'B','3':'A','4':'D'};
+    var ca={'1':'B','2':'B','3':'B','4':'D','5':'A'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    sessionStorage.setItem('training_score_rdl_p4',JSON.stringify({correct:sc,total:4}));
+    sessionStorage.setItem('training_score_rdl_p4',JSON.stringify({correct:sc,total:5}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-4-answers.html';
     return;

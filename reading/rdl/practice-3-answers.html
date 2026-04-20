@@ -61,8 +61,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/4</div>
-  <div class="score-label">Your Score (Q1&ndash;Q4)</div>
+  <div class="score-big" id="scoreDisplay">&ndash;/6</div>
+  <div class="score-label">Your Score (Q1&ndash;Q6)</div>
 </div>
 
 <div class="answers-body">
@@ -72,41 +72,31 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     <div class="tips-title">Read in Daily Life Strategy Tips</div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">1</span> Identify the purpose from opening keywords</div>
+      <div class="tip-card-title"><span class="tip-num">1</span> Social media posts: read the caption, not just the image</div>
       <div class="tip-card-body">
-        The first 1-2 sentences reveal the purpose of the text. Learn the patterns:<br><br>
-        <strong>Notification:</strong> <code>We are pleased to inform...</code> / <code>We would like to inform you...</code><br>
-        <strong>Request:</strong> <code>Could you...</code> / <code>I would appreciate if...</code><br>
-        <strong>Instruction:</strong> <code>All accounts must...</code> / <code>You are required to...</code><br>
-        <strong>Announcement:</strong> <code>We are now accepting...</code> / <code>Applications are open...</code>
+        Social media posts pack a lot of information into a short text. The main purpose is usually in the first 1-2 sentences, while specific instructions (what to bring, who to contact) appear later. Hashtags and emoji are decorative &mdash; focus on the body paragraphs.
         <div class="tip-example">
-          <strong>Q1:</strong> The email states that "all university accounts must undergo a mandatory password reset by October 15." The word "mandatory" and the deadline indicate this is an instruction to take action = C.
+          <strong>Q1:</strong> "Our free Biology 201 study circle is back this week!" plus the meeting time signals an invitation to a recurring meeting = B.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">2</span> NOT/EXCEPT: Use elimination</div>
+      <div class="tip-card-title"><span class="tip-num">2</span> Schedules: match the event to the time column</div>
       <div class="tip-card-body">
-        <strong>Steps:</strong><br>
-        1. Circle NOT/EXCEPT in the question<br>
-        2. Check each option against the passage one by one<br>
-        3. Cross out the 3 options that ARE mentioned in the passage. The remaining one is the answer.
+        For schedule passages, your finger should move horizontally: find the row, check the time, then read the event. For EXCEPT questions, use the intro or footnotes to catch items that cost extra or require separate tickets.
         <div class="tip-warn">
-          <strong>Common traps:</strong><br>
-          - A word from the passage appears in the option, but the meaning is different<br>
-          - Partially correct but inaccurate as a whole<br>
-          - States the opposite of what the passage says
+          <strong>Trap:</strong> "Included with ID" options often hide one paid event (e.g., meal tickets sold separately). Always re-read intro and notes.
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">3</span> Inference questions: stick to the text</div>
+      <div class="tip-card-title"><span class="tip-num">3</span> Inference: find the single supporting sentence</div>
       <div class="tip-card-body">
-        For inference questions, the answer must be <strong>logically supported by information in the passage</strong>. Do not mix in your own knowledge or assumptions.
+        The correct inference answer is <strong>logically supported by one specific sentence</strong>. If you can't point to a sentence that supports it, it's probably a distractor.
         <div class="tip-example">
-          <strong>Q4:</strong> The passage says clubs that received funding previously "must submit a spending report before applying again." This directly supports that they must account for how they spent their previous funds = D.
+          <strong>Q6:</strong> The schedule note says "the Main Stage events will be moved to the Student Union Ballroom" in case of heavy rain. That directly supports "moved to an indoor space" = C.
         </div>
       </div>
     </div>
@@ -114,90 +104,127 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 
   <!-- Passage 1 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 1 <span class="passage-type-badge">Email</span></div>
+    <div class="passage-title">Passage 1 <span class="passage-type-badge">Social Media Post</span></div>
 
     <div class="q-card" id="card1">
       <div class="q-num">Question 1 — Main Purpose</div>
-      <div class="q-text">What is the primary purpose of this email?</div>
+      <div class="q-text">What is the main purpose of this post?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours1">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt1A"><span class="label">A</span> To notify users that their accounts have been compromised</div>
-        <div class="option-review" id="opt1B"><span class="label">B</span> To announce the launch of a new university portal</div>
-        <div class="option-review is-correct" id="opt1C"><span class="label">C</span> To instruct users to reset their passwords before a deadline &#10003;</div>
-        <div class="option-review" id="opt1D"><span class="label">D</span> To explain how to create a new university account</div>
+        <div class="option-review" id="opt1A"><span class="label">A</span> To recruit new members for a new biology club</div>
+        <div class="option-review is-correct" id="opt1B"><span class="label">B</span> To invite students to a weekly biology study meeting &#10003;</div>
+        <div class="option-review" id="opt1C"><span class="label">C</span> To announce the date of the upcoming biology midterm</div>
+        <div class="option-review" id="opt1D"><span class="label">D</span> To request volunteers to tutor first-year biology students</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email clearly states that "all university accounts must undergo a mandatory password reset by October 15" and provides step-by-step instructions for doing so. The main purpose is to instruct users to reset their passwords = C.<br><br>
-        A is wrong because the email mentions a routine "annual security update," not a security breach. B is wrong because the portal already exists; the email simply tells users to log in to it. D is wrong because the email is about resetting an existing password, not creating a new account.
+        <strong>Explanation:</strong> The post says "our free Biology 201 study circle is back this week" and gives the meeting time and room. The main purpose is to invite students to the weekly study meeting = B.<br><br>
+        A is wrong because this is an existing, recurring study circle, not a new club. C is wrong because the post only mentions that midterms are "around the corner" without announcing a date. D is wrong because it asks for attendees, not volunteer tutors.
       </div>
     </div>
 
     <div class="q-card" id="card2">
-      <div class="q-num">Question 2 — Factual Detail</div>
-      <div class="q-text">According to the email, what will happen to accounts that are not updated by October 15?</div>
+      <div class="q-num">Question 2 — Factual Information</div>
+      <div class="q-text">According to the post, what should participants do if they have food allergies?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag tag-correct">Correct: A</span>
         <span class="answer-tag" id="yours2">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt2A"><span class="label">A</span> They will be permanently deleted from the system.</div>
-        <div class="option-review is-correct" id="opt2B"><span class="label">B</span> They will be temporarily locked until the password is reset. &#10003;</div>
-        <div class="option-review" id="opt2C"><span class="label">C</span> They will be automatically assigned a new password.</div>
-        <div class="option-review" id="opt2D"><span class="label">D</span> They will lose access to email but retain portal access.</div>
+        <div class="option-review is-correct" id="opt2A"><span class="label">A</span> Mention it in the comments section of the post &#10003;</div>
+        <div class="option-review" id="opt2B"><span class="label">B</span> Send a direct message to the organizer beforehand</div>
+        <div class="option-review" id="opt2C"><span class="label">C</span> Bring their own snacks to share with other members</div>
+        <div class="option-review" id="opt2D"><span class="label">D</span> Skip the snack portion and arrive after the break</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The email explicitly states: "Accounts that have not been updated by the deadline will be temporarily locked until the password is reset" = B.<br><br>
-        A uses extreme language ("permanently deleted") that contradicts "temporarily locked." C is not mentioned anywhere in the email. D invents a partial restriction that has no basis in the text.
+        <strong>Explanation:</strong> The post says: "please let us know in the comments if you have allergies so we can plan ahead" = A.<br><br>
+        B is wrong because the post asks for comments, not DMs. C is wrong because snacks are provided by the organizers. D is not supported &mdash; there is no mention of skipping any portion.
+      </div>
+    </div>
+
+    <div class="q-card" id="card3">
+      <div class="q-num">Question 3 — Inference</div>
+      <div class="q-text">What can be inferred about students who have never attended before?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: B</span>
+        <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt3A"><span class="label">A</span> They must register in advance through a website</div>
+        <div class="option-review is-correct" id="opt3B"><span class="label">B</span> They are encouraged to join without prior registration &#10003;</div>
+        <div class="option-review" id="opt3C"><span class="label">C</span> They are charged a small fee for their first session</div>
+        <div class="option-review" id="opt3D"><span class="label">D</span> They should attend only after finishing the textbook</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> The post says "No sign-up needed &mdash; just show up. First-timers always welcome!" This supports that newcomers can join freely without registration = B.<br><br>
+        A directly contradicts "no sign-up needed." C contradicts the post calling the circle "free." D has no basis in the text.
       </div>
     </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
-    <div class="passage-title">Passage 2 <span class="passage-type-badge">Notice</span></div>
-
-    <div class="q-card" id="card3">
-      <div class="q-num">Question 3 — NOT/EXCEPT</div>
-      <div class="q-text">According to the notice, funding may be used for all of the following EXCEPT</div>
-      <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: A</span>
-        <span class="answer-tag" id="yours3">Your answer: &mdash;</span>
-      </div>
-      <div style="margin:10px 0">
-        <div class="option-review is-correct" id="opt3A"><span class="label">A</span> purchasing food for club members &#10003;</div>
-        <div class="option-review" id="opt3B"><span class="label">B</span> inviting guest speakers to campus</div>
-        <div class="option-review" id="opt3C"><span class="label">C</span> buying supplies for club activities</div>
-        <div class="option-review" id="opt3D"><span class="label">D</span> covering travel expenses for club events</div>
-      </div>
-      <div class="explanation">
-        <strong>Elimination method:</strong><br>
-        B &mdash; "guest speakers" &#10003; mentioned as an approved use<br>
-        C &mdash; "supplies" &#10003; mentioned as an approved use<br>
-        D &mdash; "travel related to club purposes" &#10003; mentioned as an approved use<br>
-        A &mdash; The notice explicitly states "Funding cannot be used for food." This is the correct answer because food is <strong>excluded</strong> from approved uses.<br><br>
-        This is a straightforward EXCEPT question. The key is to check the restrictions list carefully.
-      </div>
-    </div>
+    <div class="passage-title">Passage 2 <span class="passage-type-badge">Schedule</span></div>
 
     <div class="q-card" id="card4">
-      <div class="q-num">Question 4 — Inference</div>
-      <div class="q-text">What can be inferred about clubs that received funding in the previous semester?</div>
+      <div class="q-num">Question 4 — Factual Information</div>
+      <div class="q-text">At what time does the art exhibition open?</div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct">Correct: D</span>
+        <span class="answer-tag tag-correct">Correct: B</span>
         <span class="answer-tag" id="yours4">Your answer: &mdash;</span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> They are automatically approved for funding in the next semester.</div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> They are no longer eligible to apply for additional funding.</div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> They will receive a larger amount of funding than new applicants.</div>
-        <div class="option-review is-correct" id="opt4D"><span class="label">D</span> They must account for how they spent their previous funds before reapplying. &#10003;</div>
+        <div class="option-review" id="opt4A"><span class="label">A</span> At 2:00 PM on the Main Stage</div>
+        <div class="option-review is-correct" id="opt4B"><span class="label">B</span> At 3:30 PM in the Student Gallery &#10003;</div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> At 5:00 PM in Davis Auditorium</div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> At 11:00 AM at the club fair booths</div>
       </div>
       <div class="explanation">
-        <strong>Explanation:</strong> The notice states: "Clubs that received funding in the previous semester must submit a spending report before applying again." A spending report is a way to account for how money was spent. Therefore, we can infer that these clubs must demonstrate how they used their previous funds = D.<br><br>
-        A directly contradicts the passage &mdash; they must still apply and submit a spending report. B is wrong because they CAN apply again, they just need to submit a report first. C has no support in the text &mdash; no preferential amounts are mentioned.
+        <strong>Explanation:</strong> The schedule row reads: "3:30 PM &mdash; Art exhibition opening &mdash; Student Gallery, Building C" = B.<br><br>
+        A mixes the live band's time with the wrong event. C uses the rain-location for a different event (the movie). D swaps in the club fair, which is a different 11:00 AM event.
+      </div>
+    </div>
+
+    <div class="q-card" id="card5">
+      <div class="q-num">Question 5 — NOT/EXCEPT</div>
+      <div class="q-text">According to the schedule, all of the following are included with a student ID EXCEPT</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: A</span>
+        <span class="answer-tag" id="yours5">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt5A"><span class="label">A</span> the food truck lunch at Booth 14 &#10003;</div>
+        <div class="option-review" id="opt5B"><span class="label">B</span> the opening ceremony on the Main Stage</div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> the live band performance in the afternoon</div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> the outdoor movie screening in the evening</div>
+      </div>
+      <div class="explanation">
+        <strong>Elimination method:</strong><br>
+        B &mdash; opening ceremony &#10003; included (no extra ticket mentioned)<br>
+        C &mdash; live band &#10003; included on the Main Stage<br>
+        D &mdash; movie screening &#10003; included<br>
+        A &mdash; The intro and note state "meal tickets sold separately at Booth 14" and "the food truck lunch requires a separate meal ticket." This is the one event that costs extra.
+      </div>
+    </div>
+
+    <div class="q-card" id="card6">
+      <div class="q-num">Question 6 — Inference</div>
+      <div class="q-text">What can be inferred about the festival if heavy rain occurs?</div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct">Correct: C</span>
+        <span class="answer-tag" id="yours6">Your answer: &mdash;</span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt6A"><span class="label">A</span> All scheduled events will be canceled for the day</div>
+        <div class="option-review" id="opt6B"><span class="label">B</span> Only the art exhibition will continue as planned</div>
+        <div class="option-review is-correct" id="opt6C"><span class="label">C</span> Main Stage events will be moved to an indoor space &#10003;</div>
+        <div class="option-review" id="opt6D"><span class="label">D</span> The festival will be postponed to the following Saturday</div>
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> The schedule note says: "In case of heavy rain, the Main Stage events will be moved to the Student Union Ballroom." The Student Union Ballroom is an indoor venue, so we can infer Main Stage events will be held indoors = C.<br><br>
+        A is too extreme &mdash; events are relocated, not canceled. B is unsupported; the note focuses on the Main Stage. D has no textual basis.
       </div>
     </div>
   </div>
@@ -209,7 +236,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 
 <script>
-var correctAnswers = {'1':'C','2':'B','3':'A','4':'D'};
+var correctAnswers = {'1':'B','2':'A','3':'B','4':'B','5':'A','6':'C'};
 (function(){
   var saved = sessionStorage.getItem('training_rdl_p3_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -230,7 +257,7 @@ var correctAnswers = {'1':'C','2':'B','3':'A','4':'D'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/4';
+  document.getElementById('scoreDisplay').textContent = score+'/6';
 })();
 </script>
 <script src="../../js/auth.js"></script>
