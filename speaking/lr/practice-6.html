@@ -153,7 +153,18 @@ var currentQuestion = 0;
 var currentAudio = null;
 var countdownInterval = null;
 
+function applyScenarioImage(){
+  try {
+    if (typeof scenarioImage === 'string' && scenarioImage.length > 0) {
+      var img = document.getElementById('scenarioImage');
+      var ph = document.getElementById('imagePlaceholder');
+      if (img) { img.src = scenarioImage; img.classList.remove('hidden'); }
+      if (ph) { ph.style.display = 'none'; }
+    }
+  } catch(e){}
+}
 function startTask() {
+  applyScenarioImage();
   document.getElementById('instructionPage').style.display = 'none';
   document.getElementById('taskPage').style.display = '';
   buildDots();
@@ -267,7 +278,7 @@ function snapshotState(){
   return { currentQ: currentQuestion, started: tckStarted };
 }
 function restoreState(saved){
-  try {
+  try { applyScenarioImage();
     document.getElementById('instructionPage').style.display = 'none';
     document.getElementById('taskPage').style.display = '';
     buildDots();
