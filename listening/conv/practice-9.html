@@ -120,6 +120,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5;
 </div>
 
 <script src="../../js/auth.js"></script>
+<script src="../../js/progress.js"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -169,6 +170,32 @@ let userAnswers = [null,null,null,null];
 let timerInterval = null;
 let secondsLeft = 0;
 let audio = null;
+
+/* ===== PROGRESS (TCK exit/resume) ===== */
+const TCK_TASK = 'conv';
+const TCK_PRACTICE = 9;
+const MENU_URL = '../menu.html';
+function snapshotState(){ return { currentConv: currentConv, currentQ: currentQ, userAnswers: userAnswers }; }
+function restoreState(saved){
+    try {
+        userAnswers = saved.userAnswers || [null,null,null,null];
+        document.getElementById('startOverlay').classList.add('hidden');
+        var qIdx = (typeof saved.currentQ === 'number' && saved.currentQ >= 0) ? saved.currentQ : 0;
+        if(qIdx >= questions.length) qIdx = questions.length - 1;
+        showQuestion(qIdx);
+    } catch(e){ startListening(); }
+}
+window.addEventListener('DOMContentLoaded', function(){
+    if(window.TCKProgress){
+        TCKProgress.mountExitButton(TCK_TASK, TCK_PRACTICE, snapshotState, MENU_URL);
+        if(TCKProgress.hasSaved(TCK_TASK, TCK_PRACTICE)){
+            TCKProgress.promptResume(TCK_TASK, TCK_PRACTICE, {
+                onResume: restoreState,
+                onRestart: function(){}
+            });
+        }
+    }
+});
 
 function startListening(){
     document.getElementById('startOverlay').classList.add('hidden');
@@ -237,6 +264,7 @@ function showQuestion(qIdx){
             div.classList.add('selected');
             userAnswers[qIdx] = i;
             document.getElementById('btnNext').classList.add('active');
+            if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
         };
         container.appendChild(div);
     });
@@ -270,6 +298,7 @@ function updateTimer(){
 function nextStep(){
     clearInterval(timerInterval);
     document.getElementById('timer').classList.remove('warning');
+    if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
     var nextQ = currentQ + 1;
     if(nextQ >= questions.length){ showCompletion(); return; }
     if(questions[nextQ].conv !== questions[currentQ].conv){
@@ -280,6 +309,7 @@ function nextStep(){
 }
 
 function showCompletion(){
+    if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     document.getElementById('audioPhase').style.display = 'none';
     document.getElementById('questionPhase').style.display = 'none';
     document.getElementById('completionPage').style.display = 'flex';

@@ -215,8 +215,16 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5;
 </div>
 
 <script src="../../js/auth.js"></script>
+<script src="../../js/progress.js"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+const TCK_TASK='discussion', TCK_PRACTICE=2, MENU_URL='../menu.html';
+let _saveDebounce=null;
+function snapshotState(){return {text:document.getElementById('writingArea').value, timeLeft:secondsLeft, started:isWriting};}
+function saveProgress(){if(typeof TCKProgress!=='undefined'&&isWriting)TCKProgress.save(TCK_TASK,TCK_PRACTICE,snapshotState());}
+function debouncedSave(){clearTimeout(_saveDebounce);_saveDebounce=setTimeout(saveProgress,2000);}
+function restoreState(st){if(!st)return;document.getElementById('instructionPage').style.display='none';document.getElementById('writingPage').style.display='flex';document.getElementById('btnFinish').style.display='inline-block';document.getElementById('btnReset').style.display='inline-block';document.getElementById('writingArea').value=st.text||'';secondsLeft=(typeof st.timeLeft==='number')?st.timeLeft:600;isWriting=!!st.started;updateWordCount();startTimer();document.getElementById('writingArea').focus();}
+
 
 let timerInterval=null, totalSeconds=600, secondsLeft=600, isWriting=false, wordCountVisible=true;
 
@@ -236,6 +244,7 @@ function startTimer(){
     updateTimerDisplay();
     document.getElementById('progressFill').style.width=((totalSeconds-secondsLeft)/totalSeconds*100)+'%';
     if(secondsLeft<=60) document.getElementById('timer').classList.add('warning');
+    saveProgress();
     if(secondsLeft<=0){clearInterval(timerInterval);finishWriting('timeout');}
   },1000);
 }
@@ -245,7 +254,7 @@ function updateTimerDisplay(){
   document.getElementById('timer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
 }
 
-document.addEventListener('DOMContentLoaded',()=>{document.getElementById('writingArea').addEventListener('input',updateWordCount);});
+document.addEventListener('DOMContentLoaded',()=>{document.getElementById('writingArea').addEventListener('input',function(){updateWordCount();debouncedSave();});if(typeof TCKProgress!=='undefined'){TCKProgress.mountExitButton(TCK_TASK,TCK_PRACTICE,snapshotState,MENU_URL);TCKProgress.promptResume(TCK_TASK,TCK_PRACTICE,{onResume:restoreState,onRestart:function(){TCKProgress.clear(TCK_TASK,TCK_PRACTICE);}});}});
 
 function updateWordCount(){
   const t=document.getElementById('writingArea').value.trim();
@@ -301,6 +310,7 @@ function finishWriting(method){
 function resetAll(){
   if(!confirm('Are you sure you want to reset?')) return;
   clearInterval(timerInterval); secondsLeft=totalSeconds;
+  if(typeof TCKProgress!=='undefined')TCKProgress.clear(TCK_TASK,TCK_PRACTICE);
   document.getElementById('writingArea').value='';
   document.getElementById('timer').classList.remove('warning');
   document.getElementById('progressFill').style.width='0%';

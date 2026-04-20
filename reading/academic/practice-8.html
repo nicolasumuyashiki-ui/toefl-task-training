@@ -322,6 +322,38 @@ var timerInterval;
 var storageKey = 'training_academic_p8_answers';
 var timerKey = 'training_academic_p8_timer';
 
+// === TCK Progress integration ===
+const TCK_TASK = 'academic';
+const TCK_PRACTICE = 8;
+const MENU_URL = '../menu.html';
+function snapshotState(){
+  return { currentQ: currentQ, userAnswers: userAnswers, timeLeft: timeLeft, selectedInsertionPoint: selectedInsertionPoint };
+}
+function restoreState(saved){
+  if(!saved) return;
+  if(saved.userAnswers){
+    userAnswers = saved.userAnswers;
+    sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+    for(var q in userAnswers){
+      var opts = document.querySelectorAll('[data-q="'+q+'"][data-v="'+userAnswers[q]+'"]');
+      if(opts.length){ opts[0].classList.add('selected'); opts[0].querySelector('input').checked = true; }
+    }
+  }
+  if(saved.selectedInsertionPoint){
+    selectedInsertionPoint = saved.selectedInsertionPoint;
+    userAnswers['6'] = selectedInsertionPoint;
+    sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+  }
+
+  if(typeof saved.timeLeft === 'number'){
+    timeLeft = saved.timeLeft;
+    sessionStorage.setItem(timerKey, timeLeft);
+  }
+  var target = saved.currentQ || 1;
+  while(currentQ < target && currentQ < totalQ){ navigate(1); }
+}
+function tckSave(){ if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState()); }
+
 // Passage page mapping: questions 1-3 = passage 1, questions 4-6 = passage 2
 function getPassagePage(q){ return q <= 3 ? 1 : 2; }
 
@@ -361,6 +393,8 @@ function bindSquareClicks(){
       document.getElementById('insertionStatus').textContent = 'You selected position ' + selectedInsertionPoint + '.';
       userAnswers['6'] = selectedInsertionPoint;
       sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+      tckSave();
+      sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
     });
   });
 }
@@ -397,6 +431,7 @@ function selectOption(el){
   el.classList.add('selected');
   el.querySelector('input').checked = true;
   sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+  tckSave();
 }
 
 function navigate(dir){
@@ -407,6 +442,7 @@ function navigate(dir){
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
     sessionStorage.setItem('training_score_academic_p8',JSON.stringify({correct:sc,total:6}));
+    if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-8-answers.html';
     return;
   }
@@ -436,6 +472,7 @@ function navigate(dir){
   }
   updateParagraphVersion();
   updateProgress();
+  tckSave();
 }
 
 function updateProgress(){
@@ -506,8 +543,18 @@ function closeReview(){
   }
 })();
 
-startTimer();
-updateProgress();
+function tckBoot(){ startTimer(); updateProgress(); }
+if(window.TCKProgress && TCKProgress.hasSaved(TCK_TASK, TCK_PRACTICE)){
+  TCKProgress.promptResume(TCK_TASK, TCK_PRACTICE, {
+    onResume: function(saved){ tckBoot(); restoreState(saved); },
+    onRestart: function(){ tckBoot(); }
+  });
+} else {
+  tckBoot();
+}
+if(window.TCKProgress){
+  TCKProgress.mountExitButton(TCK_TASK, TCK_PRACTICE, snapshotState, MENU_URL);
+}
 
 if(typeof Auth !== 'undefined'){
   Auth.require();
@@ -515,5 +562,6 @@ if(typeof Auth !== 'undefined'){
 }
 </script>
 <script src="../../js/auth.js"></script>
+<script src="../../js/progress.js"></script>
 </body>
 </html>

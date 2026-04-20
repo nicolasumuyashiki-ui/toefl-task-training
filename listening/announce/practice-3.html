@@ -116,6 +116,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5;
 </div>
 
 <script src="../../js/auth.js"></script>
+<script src="../../js/progress.js"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -150,6 +151,44 @@ let timerInterval = null;
 let secondsLeft = 0;
 let audio = null;
 let instrPlayed = false;
+
+/* ===== PROGRESS (TCK exit/resume) ===== */
+const TCK_TASK = 'announce';
+const TCK_PRACTICE = 3;
+const MENU_URL = '../menu.html';
+function snapshotState(){
+  return {
+    currentQ: currentQ,
+    currentAnn: currentAnn,
+    userAnswers: userAnswers,
+    instrPlayed: instrPlayed
+  };
+}
+function restoreState(saved){
+  try {
+    userAnswers = saved.userAnswers || [null,null,null,null];
+    instrPlayed = saved.instrPlayed || true;
+    document.getElementById('startOverlay').classList.add('hidden');
+    const qIdx = (typeof saved.currentQ === 'number' && saved.currentQ >= 0) ? saved.currentQ : 0;
+    showQuestion(Math.min(qIdx, questions.length - 1));
+  } catch(e){ showQuestion(0); }
+}
+window.addEventListener('DOMContentLoaded', function(){
+  if(window.TCKProgress){
+    TCKProgress.mountExitButton(TCK_TASK, TCK_PRACTICE, snapshotState, MENU_URL);
+  }
+});
+
+/* ===== CHECK URL PARAM / RESUME ===== */
+window.addEventListener('DOMContentLoaded', function(){
+  if(window.TCKProgress && TCKProgress.hasSaved(TCK_TASK, TCK_PRACTICE)){
+    TCKProgress.promptResume(TCK_TASK, TCK_PRACTICE, {
+      onResume: restoreState,
+      onRestart: function(){}
+    });
+  }
+});
+
 
 function startListening(){
   document.getElementById('startOverlay').classList.add('hidden');
@@ -228,6 +267,7 @@ function showQuestion(qIdx){
       div.classList.add('selected');
       userAnswers[qIdx] = i;
       document.getElementById('btnNext').classList.add('active');
+      if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
     };
     container.appendChild(div);
   });
@@ -261,6 +301,8 @@ function nextStep(){
   clearInterval(timerInterval);
   document.getElementById('timer').classList.remove('warning');
 
+  if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
+
   const nextQ = currentQ + 1;
   if(nextQ >= questions.length){
     showCompletion();
@@ -274,6 +316,7 @@ function nextStep(){
 }
 
 function showCompletion(){
+  if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
   document.getElementById('audioPhase').style.display = 'none';
   document.getElementById('questionPhase').style.display = 'none';
   document.getElementById('completionPage').style.display = 'flex';

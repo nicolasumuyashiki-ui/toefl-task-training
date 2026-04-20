@@ -299,6 +299,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;min
   </div>
 </div>
 
+<script src="../../js/progress.js"></script>
 <script>
 var currentQ = 1;
 var totalQ = 4;
@@ -308,6 +309,46 @@ var timeLeft = 600; // 10 minutes
 var timerInterval;
 var storageKey = 'training_rdl_p2_answers';
 var timerKey = 'training_rdl_p2_timer';
+
+/* ===== PROGRESS (TCK exit/resume) ===== */
+var TCK_TASK = 'rdl';
+var TCK_PRACTICE = 2;
+var MENU_URL = '../menu.html';
+function snapshotState(){ return { currentQ: currentQ, userAnswers: userAnswers, timeLeft: timeLeft, answersJson: sessionStorage.getItem(storageKey) || '{}' }; }
+function restoreState(saved){
+  try {
+    if(saved.answersJson) sessionStorage.setItem(storageKey, saved.answersJson);
+    if(typeof saved.timeLeft === 'number'){ timeLeft = saved.timeLeft; sessionStorage.setItem(timerKey, timeLeft); }
+    userAnswers = saved.userAnswers || {};
+    for(var q in userAnswers){
+      var opts = document.querySelectorAll('[data-q="'+q+'"][data-v="'+userAnswers[q]+'"]');
+      if(opts.length){ opts[0].classList.add('selected'); opts[0].querySelector('input').checked = true; }
+    }
+    var target = Math.min(Math.max(saved.currentQ || 1, 1), totalQ);
+    if(target !== 1){
+      document.getElementById('page1').classList.remove('active');
+      var oldPassage = 1, newPassage = (target <= 2 ? 1 : 2);
+      if(oldPassage !== newPassage){
+        document.getElementById('passagePage1').style.display = 'none';
+        document.getElementById('passagePage2').style.display = 'flex';
+      }
+      currentQ = target;
+      document.getElementById('page'+currentQ).classList.add('active');
+      document.getElementById('qLabel').innerHTML = '<strong>'+currentQ+'</strong>';
+      document.getElementById('btnBack').disabled = (currentQ === 1);
+      document.getElementById('btnNext').textContent = (currentQ === totalQ ? 'Finish \u203A' : 'Next \u203A');
+      updateProgress();
+    }
+  } catch(e){}
+}
+window.addEventListener('DOMContentLoaded', function(){
+  if(window.TCKProgress){
+    TCKProgress.mountExitButton(TCK_TASK, TCK_PRACTICE, snapshotState, MENU_URL);
+    if(TCKProgress.hasSaved(TCK_TASK, TCK_PRACTICE)){
+      TCKProgress.promptResume(TCK_TASK, TCK_PRACTICE, { onResume: restoreState, onRestart: function(){} });
+    }
+  }
+});
 
 // Passage page mapping: questions 1-2 = passage 1, questions 3-4 = passage 2
 function getPassagePage(q){ return q <= 2 ? 1 : 2; }
@@ -322,6 +363,7 @@ function selectOption(el){
   el.classList.add('selected');
   el.querySelector('input').checked = true;
   sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
+  if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
 }
 
 function navigate(dir){
@@ -332,6 +374,7 @@ function navigate(dir){
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
     sessionStorage.setItem('training_score_rdl_p2',JSON.stringify({correct:sc,total:4}));
+    if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-2-answers.html';
     return;
   }
@@ -354,6 +397,7 @@ function navigate(dir){
     document.getElementById('btnNext').textContent = 'Next \u203A';
   }
   updateProgress();
+  if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
 }
 
 function updateProgress(){

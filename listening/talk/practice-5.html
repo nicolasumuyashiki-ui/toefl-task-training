@@ -120,6 +120,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5;
 </div>
 
 <script src="../../js/auth.js"></script>
+<script src="../../js/progress.js"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -198,6 +199,32 @@ let timerInterval = null;
 let secondsLeft = 0;
 let audio = null;
 
+/* ===== PROGRESS (TCK exit/resume) ===== */
+const TCK_TASK = 'talk';
+const TCK_PRACTICE = 5;
+const MENU_URL = '../menu.html';
+function snapshotState(){ return { currentQ: currentQ, currentTalk: currentTalk, userAnswers: userAnswers, talkAnswers: sessionStorage.getItem('talkAnswers') || '[]' }; }
+function restoreState(saved){
+    try {
+        if(saved.talkAnswers) sessionStorage.setItem('talkAnswers', saved.talkAnswers);
+        userAnswers = saved.userAnswers || [null,null,null,null,null,null,null,null];
+        document.getElementById('startOverlay').classList.add('hidden');
+        var q = (typeof saved.currentQ === 'number' && saved.currentQ >= 0) ? saved.currentQ : 0;
+        showQuestion(Math.min(q, questions.length - 1));
+    } catch(e){ playTalk(0); }
+}
+window.addEventListener('DOMContentLoaded', function(){
+    if(window.TCKProgress){
+        TCKProgress.mountExitButton(TCK_TASK, TCK_PRACTICE, snapshotState, MENU_URL);
+        if(TCKProgress.hasSaved(TCK_TASK, TCK_PRACTICE)){
+            TCKProgress.promptResume(TCK_TASK, TCK_PRACTICE, {
+                onResume: restoreState,
+                onRestart: function(){}
+            });
+        }
+    }
+});
+
 function startListening(){
     document.getElementById('startOverlay').classList.add('hidden');
     playTalk(0);
@@ -246,6 +273,7 @@ function retryAudio(){
 function showQuestion(qIdx){
     currentQ = qIdx;
     var q = questions[qIdx];
+    if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
     document.getElementById('audioPhase').style.display = 'none';
     document.getElementById('questionPhase').style.display = 'flex';
     document.getElementById('completionPage').style.display = 'none';
@@ -266,6 +294,7 @@ function showQuestion(qIdx){
             div.classList.add('selected');
             userAnswers[qIdx] = i;
             document.getElementById('btnNext').classList.add('active');
+            if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
         };
         container.appendChild(div);
     });
@@ -331,6 +360,7 @@ function showCompletion(){
     });
     document.getElementById('scoreDisplay').textContent = correct+' / 8';
     sessionStorage.setItem('talkAnswers', JSON.stringify(userAnswers));
+    if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     document.getElementById('answersBtn').style.display = 'inline-block';
 }
 </script>

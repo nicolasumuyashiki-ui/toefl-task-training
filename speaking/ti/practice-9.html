@@ -132,11 +132,30 @@ var totalQuestions = 4;
 var currentQuestion = 0;
 var currentAudio = null;
 var countdownInterval = null;
+var started = false;
+
+/* ===== PROGRESS (TCK exit/resume) ===== */
+var TCK_TASK = 'ti';
+var TCK_PRACTICE = 9;
+var MENU_URL = '../menu.html';
+function snapshotState(){ return { currentQ: currentQuestion, started: started }; }
+function restoreState(saved){
+  try {
+    started = true;
+    document.getElementById('instructionPage').style.display = 'none';
+    document.getElementById('taskPage').style.display = '';
+    buildDots();
+    var q = Math.min(Math.max(saved.currentQ || 1, 1), totalQuestions);
+    playQuestion(q);
+  } catch(e){ startTask(); }
+}
 
 function startTask() {
   document.getElementById('instructionPage').style.display = 'none';
   document.getElementById('taskPage').style.display = '';
+  started = true;
   buildDots();
+  if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
   playNarrator();
 }
 
@@ -166,6 +185,7 @@ function playNarrator() {
 function playQuestion(qNum) {
   if (qNum > totalQuestions) { showComplete(); return; }
   currentQuestion = qNum;
+  if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
   document.getElementById('qIndicator').textContent = 'Question ' + qNum + ' of ' + totalQuestions;
   document.getElementById('audioLabel').textContent = 'Interviewer is speaking...';
 
@@ -233,10 +253,20 @@ function showComplete() {
   document.getElementById('taskPage').style.display = 'none';
   document.getElementById('completePage').style.display = '';
   document.getElementById('qIndicator').textContent = 'Complete';
+  if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
 }
 
 if (typeof Auth !== 'undefined') { Auth.require(); Auth.showBadge('userBadge'); }
+window.addEventListener('DOMContentLoaded', function(){
+  if(window.TCKProgress){
+    TCKProgress.mountExitButton(TCK_TASK, TCK_PRACTICE, snapshotState, MENU_URL);
+    if(TCKProgress.hasSaved(TCK_TASK, TCK_PRACTICE)){
+      TCKProgress.promptResume(TCK_TASK, TCK_PRACTICE, { onResume: restoreState });
+    }
+  }
+});
 </script>
 <script src="../../js/auth.js"></script>
+<script src="../../js/progress.js"></script>
 </body>
 </html>

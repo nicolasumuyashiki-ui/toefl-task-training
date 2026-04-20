@@ -239,9 +239,53 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5;
 </div>
 
 <script src="../../js/auth.js"></script>
+<script src="../../js/progress.js"></script>
 <script>
 /* ===== AUTH ===== */
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+
+/* ===== TCK PROGRESS ===== */
+const TCK_TASK = 'email';
+const TCK_PRACTICE = 7;
+const MENU_URL = '../menu.html';
+let saveDebounceTimer = null;
+function snapshotState(){ return { text: document.getElementById('writingArea').value, timeLeft: secondsLeft, started: isWriting || document.getElementById('instructionPage').style.display==='none' }; }
+function restoreState(saved){
+    if(!saved) return;
+    document.getElementById('instructionPage').style.display='none';
+    document.getElementById('writingPage').style.display='flex';
+    document.getElementById('btnFinish').style.display='inline-block';
+    document.getElementById('btnReset').style.display='inline-block';
+    const ta = document.getElementById('writingArea');
+    ta.value = saved.text || '';
+    if(typeof saved.timeLeft === 'number' && saved.timeLeft > 0){ secondsLeft = saved.timeLeft; }
+    isWriting = true;
+    updateWordCount();
+    startTimer();
+    ta.focus();
+}
+function scheduleSave(){
+    if(!isWriting) return;
+    if(saveDebounceTimer) clearTimeout(saveDebounceTimer);
+    saveDebounceTimer = setTimeout(()=>{
+        if(window.TCKProgress && isWriting) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
+    }, 2000);
+}
+document.addEventListener('DOMContentLoaded', ()=>{
+    if(window.TCKProgress){
+        TCKProgress.mountExitButton(TCK_TASK, TCK_PRACTICE, snapshotState, MENU_URL);
+        if(TCKProgress.hasSaved(TCK_TASK, TCK_PRACTICE)){
+            TCKProgress.promptResume(TCK_TASK, TCK_PRACTICE, {
+                onResume: restoreState,
+                onRestart: function(){}
+            });
+        }
+    }
+    const ta = document.getElementById('writingArea');
+    if(ta) ta.addEventListener('input', scheduleSave);
+});
+
+
 
 /* ===== STATE ===== */
 let timerInterval = null;
@@ -271,6 +315,9 @@ function startTimer(){
     document.getElementById('progressFill').style.width = pct+'%';
     if(secondsLeft <= 60){
       document.getElementById('timer').classList.add('warning');
+    }
+    if(window.TCKProgress && isWriting && secondsLeft % 5 === 0){
+      TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
     }
     if(secondsLeft <= 0){
       clearInterval(timerInterval);
@@ -396,6 +443,8 @@ function finishWriting(method){
 
   sessionStorage.setItem('emailResponse_p7', JSON.stringify({text:text, words:wordCount, time:m+':'+String(s).padStart(2,'0')}));
 
+  if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
+
   document.getElementById('writingPage').style.display='none';
   document.getElementById('completionPage').style.display='flex';
   document.getElementById('btnFinish').style.display='none';
@@ -409,6 +458,7 @@ function finishWriting(method){
 function resetAll(){
   if(!confirm('Are you sure you want to reset? This will clear your response and restart the timer.')) return;
   clearInterval(timerInterval);
+  if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
   secondsLeft = totalSeconds;
   document.getElementById('writingArea').value = '';
   document.getElementById('timer').classList.remove('warning');
