@@ -54,7 +54,8 @@
     var ov = document.createElement('div');
     ov.className = 'tck-resume-overlay';
     ov.innerHTML =
-      '<div class="tck-resume-panel">'
+      '<div class="tck-resume-panel" role="dialog" aria-modal="true">'
+      + '<button type="button" class="tck-modal-close" data-close aria-label="Close">✕</button>'
       + '<div class="tck-resume-title">' + t('title') + '</div>'
       + '<div class="tck-resume-body">' + t('body') + '</div>'
       + '<div class="tck-resume-actions">'
@@ -62,15 +63,19 @@
       + '<button type="button" class="tck-btn-primary" data-resume>' + t('resume') + '</button>'
       + '</div></div>';
     document.body.appendChild(ov);
+    function dismiss(){ if(ov.parentNode) document.body.removeChild(ov); }
     ov.querySelector('[data-resume]').addEventListener('click', function(){
-      document.body.removeChild(ov);
+      dismiss();
       if(callbacks && callbacks.onResume) callbacks.onResume(saved);
     });
     ov.querySelector('[data-restart]').addEventListener('click', function(){
       clear(task,practice);
-      document.body.removeChild(ov);
+      dismiss();
       if(callbacks && callbacks.onRestart) callbacks.onRestart();
     });
+    ov.querySelector('[data-close]').addEventListener('click', dismiss);
+    ov.addEventListener('click', function(e){ if(e.target===ov) dismiss(); });
+    document.addEventListener('keydown', function esc(e){ if(e.key==='Escape'){ dismiss(); document.removeEventListener('keydown', esc); }});
   }
 
   /* Confirm-and-exit dialog. Pass current state to snapshot, menuUrl to navigate to. */
@@ -78,7 +83,8 @@
     var ov = document.createElement('div');
     ov.className = 'tck-resume-overlay';
     ov.innerHTML =
-      '<div class="tck-resume-panel">'
+      '<div class="tck-resume-panel" role="dialog" aria-modal="true">'
+      + '<button type="button" class="tck-modal-close" data-close aria-label="Close">✕</button>'
       + '<div class="tck-resume-title">' + t('exitTitle') + '</div>'
       + '<div class="tck-resume-body">' + t('exitBody') + '</div>'
       + '<div class="tck-resume-actions">'
@@ -86,7 +92,11 @@
       + '<button type="button" class="tck-btn-primary" data-confirm>' + t('exitConfirm') + '</button>'
       + '</div></div>';
     document.body.appendChild(ov);
-    ov.querySelector('[data-cancel]').addEventListener('click', function(){ document.body.removeChild(ov); });
+    function dismiss(){ if(ov.parentNode) document.body.removeChild(ov); }
+    ov.querySelector('[data-cancel]').addEventListener('click', dismiss);
+    ov.querySelector('[data-close]').addEventListener('click', dismiss);
+    ov.addEventListener('click', function(e){ if(e.target===ov) dismiss(); });
+    document.addEventListener('keydown', function esc(e){ if(e.key==='Escape'){ dismiss(); document.removeEventListener('keydown', esc); }});
     ov.querySelector('[data-confirm]').addEventListener('click', function(){
       var st = (typeof getState === 'function') ? getState() : getState;
       save(task, practice, st);
@@ -113,7 +123,9 @@
     s.id = 'tck-progress-css';
     s.textContent =
       '.tck-resume-overlay{position:fixed;inset:0;background:rgba(15,21,17,.32);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;font-family:"Manrope","Zen Kaku Gothic New","Noto Sans JP",system-ui,sans-serif}'
-      + '.tck-resume-panel{background:#FBF6EC;border-radius:16px;max-width:440px;width:100%;padding:28px 28px 24px;box-shadow:0 20px 60px rgba(0,0,0,.25)}'
+      + '.tck-resume-panel{position:relative;background:#FBF6EC;border-radius:16px;max-width:440px;width:100%;padding:28px 28px 24px;box-shadow:0 20px 60px rgba(0,0,0,.25)}'
+      + '.tck-modal-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;border:none;background:transparent;color:#5A6861;font-size:1.05em;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:inherit;line-height:1}'
+      + '.tck-modal-close:hover{background:#F5E9D3;color:#0F1511}'
       + '.tck-resume-title{font-size:1.35em;font-weight:800;color:#002817;letter-spacing:-0.01em;margin-bottom:8px}'
       + '.tck-resume-body{font-size:.92em;color:#5A6861;line-height:1.7;margin-bottom:22px}'
       + '.tck-resume-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}'
