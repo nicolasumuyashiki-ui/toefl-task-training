@@ -3,60 +3,60 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Complete the Words Practice 3 解答解説</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Nunito',sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
-.header{background:linear-gradient(135deg,#1a6b6a,#2a8a8a);color:#fff;padding:28px 24px;text-align:center;position:relative}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;background:#FBF6EC;color:#0F1511;line-height:1.8}
+.header{background:#002817;color:#fff;padding:28px 24px;text-align:center;position:relative}
 .header h1{font-size:1.5em;font-weight:800;margin-bottom:4px}
 .header p{font-size:.88em;opacity:.85}
 .btn-menu{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:8px;font-size:.78em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
 .btn-menu:hover{background:rgba(255,255,255,.25)}
 .score-summary{max-width:880px;margin:20px auto;background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:22px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-.score-card{flex:1;min-width:180px;text-align:center;padding:14px;border-radius:10px;background:#f9fafb;border:1.5px solid #F5E9D3}
-.score-card h3{font-size:.78em;color:#8898a8;font-weight:700;margin-bottom:2px}
-.score-card .score-num{font-size:1.8em;font-weight:800;color:#2d3748}
-.score-card .score-num .correct{color:#1a6b6a}
-.score-card .score-detail{font-size:.72em;color:#a0aec0;margin-top:2px;font-weight:600}
-.score-card.total{background:#e8f5f4;border-color:#1a6b6a}
-.tips-banner{background:#fff;border-left:4px solid #1a6b6a;margin:20px auto;max-width:880px;padding:18px 22px;border-radius:0 10px 10px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.tips-banner h2{font-size:1em;color:#1a6b6a;margin-bottom:10px;font-weight:800}
+.score-card{flex:1;min-width:180px;text-align:center;padding:14px;border-radius:10px;background:#FBF6EC;border:1.5px solid #F5E9D3}
+.score-card h3{font-size:.78em;color:#5A6861;font-weight:700;margin-bottom:2px}
+.score-card .score-num{font-size:1.8em;font-weight:800;color:#0F1511}
+.score-card .score-num .correct{color:#004D2E}
+.score-card .score-detail{font-size:.72em;color:#5A6861;margin-top:2px;font-weight:600}
+.score-card.total{background:#F5E9D3;border-color:#004D2E}
+.tips-banner{background:#fff;border-left:4px solid #004D2E;margin:20px auto;max-width:880px;padding:18px 22px;border-radius:0 10px 10px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.tips-banner h2{font-size:1em;color:#004D2E;margin-bottom:10px;font-weight:800}
 .tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.tip-card{background:#f0faf9;border-radius:10px;padding:12px 14px}
-.tip-num{display:inline-block;background:#1a6b6a;color:#fff;font-size:.7em;font-weight:800;padding:2px 10px;border-radius:8px;margin-bottom:6px}
-.tip-card h3{font-size:.88em;color:#2d3748;margin-bottom:4px;font-weight:700}
-.tip-card p{font-size:.78em;color:#5a6878;line-height:1.6}
-.tip-card .ex{font-size:.75em;color:#8898a8;margin-top:3px;font-style:italic}
+.tip-card{background:#F5E9D3;border-radius:10px;padding:12px 14px}
+.tip-num{display:inline-block;background:#004D2E;color:#fff;font-size:.7em;font-weight:800;padding:2px 10px;border-radius:8px;margin-bottom:6px}
+.tip-card h3{font-size:.88em;color:#0F1511;margin-bottom:4px;font-weight:700}
+.tip-card p{font-size:.78em;color:#5A6861;line-height:1.6}
+.tip-card .ex{font-size:.75em;color:#5A6861;margin-top:3px;font-style:italic}
 .set-nav{max-width:880px;margin:20px auto 0;display:flex;gap:6px;padding:0}
-.set-nav button{flex:1;padding:10px;font-size:.82em;font-family:inherit;font-weight:700;border:none;border-radius:10px 10px 0 0;cursor:pointer;transition:all .2s;background:#F5E9D3;color:#5a6878}
-.set-nav button.active{background:#fff;color:#2d3748;box-shadow:0 -2px 8px rgba(0,0,0,.05)}
+.set-nav button{flex:1;padding:10px;font-size:.82em;font-family:inherit;font-weight:700;border:none;border-radius:10px 10px 0 0;cursor:pointer;transition:all .2s;background:#F5E9D3;color:#5A6861}
+.set-nav button.active{background:#fff;color:#0F1511;box-shadow:0 -2px 8px rgba(0,0,0,.05)}
 .set-nav button:hover:not(.active){background:#F5E9D3}
 .set-panel{display:none;max-width:880px;margin:0 auto}.set-panel.active{display:block}
 .set-section{background:#fff;border-radius:0 0 14px 14px;box-shadow:0 2px 12px rgba(0,0,0,.06);overflow:hidden}
 .set-header{background:#002817;color:#fff;padding:14px 22px;display:flex;align-items:center;gap:10px}
-.set-badge{background:#4a90d9;font-size:.7em;font-weight:800;padding:3px 12px;border-radius:8px}
-.set-badge.m2{background:#e53e3e}
+.set-badge{background:#007646;font-size:.7em;font-weight:800;padding:3px 12px;border-radius:8px}
+.set-badge.m2{background:#B85C3C}
 .set-header h2{font-size:1.05em;font-weight:700}
-.passage-block{padding:18px 22px;background:#fafbfc;border-bottom:1px solid #F5E9D3}
-.passage-label{font-size:.7em;font-weight:700;color:#8898a8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
-.passage-text{font-size:.9em;line-height:2;color:#2d3748}
-.blank-word{font-weight:700;color:#1a6b6a}.blank-answer{background:#e6fffa;padding:1px 4px;border-radius:3px;border-bottom:2px solid #1a6b6a}
+.passage-block{padding:18px 22px;background:#FBF6EC;border-bottom:1px solid #F5E9D3}
+.passage-label{font-size:.7em;font-weight:700;color:#5A6861;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.passage-text{font-size:.9em;line-height:2;color:#0F1511}
+.blank-word{font-weight:700;color:#004D2E}.blank-answer{background:#F5E9D3;padding:1px 4px;border-radius:3px;border-bottom:2px solid #004D2E}
 .answers-block{padding:18px 22px}
-.answers-block h3{font-size:.92em;color:#2d3748;margin-bottom:12px;font-weight:800}
+.answers-block h3{font-size:.92em;color:#0F1511;margin-bottom:12px;font-weight:800}
 .answer-row{display:flex;align-items:flex-start;padding:11px 14px;border-bottom:1px solid #F5E9D3;gap:10px}
-.answer-row:hover{background:#f7fafc}.answer-row.incorrect{background:#fff5f5}
+.answer-row:hover{background:#FBF6EC}.answer-row.incorrect{background:#FDF4F0}
 .q-num{min-width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:800;flex-shrink:0}
-.q-num.correct{background:#c6f6d5;color:#22543d}.q-num.wrong{background:#fed7d7;color:#9b2c2c}
+.q-num.correct{background:#A8C9B8;color:#004D2E}.q-num.wrong{background:#F3DDD4;color:#8A3E24}
 .q-content{flex:1}
-.q-word{font-weight:700;color:#2d3748;font-size:.88em;margin-bottom:2px}
-.q-word .shown{color:#8898a8}.q-word .ans{color:#1a6b6a;font-weight:800}
+.q-word{font-weight:700;color:#0F1511;font-size:.88em;margin-bottom:2px}
+.q-word .shown{color:#5A6861}.q-word .ans{color:#004D2E;font-weight:800}
 .q-user{font-size:.78em;margin-bottom:3px}
-.q-explain{font-size:.78em;color:#5a6878;line-height:1.5}
+.q-explain{font-size:.78em;color:#5A6861;line-height:1.5}
 .q-tag{display:inline-block;font-size:.68em;font-weight:700;padding:1px 8px;border-radius:6px;margin-left:4px;vertical-align:middle}
-.tag-hard{background:#fed7d7;color:#9b2c2c}.tag-mod{background:#c6f6d5;color:#22543d}
-.scoring-reminder{max-width:880px;margin:20px auto 40px;background:#fffbeb;border:1.5px solid #fbbf24;border-radius:12px;padding:16px 22px;display:flex;align-items:flex-start;gap:10px}
+.tag-hard{background:#F3DDD4;color:#8A3E24}.tag-mod{background:#A8C9B8;color:#004D2E}
+.scoring-reminder{max-width:880px;margin:20px auto 40px;background:#F5E9D3;border:1.5px solid #C9A961;border-radius:12px;padding:16px 22px;display:flex;align-items:flex-start;gap:10px}
 .scoring-reminder .icon{font-size:1.3em;flex-shrink:0}
-.scoring-reminder .text h3{font-size:.9em;color:#92400e;margin-bottom:3px;font-weight:700}
-.scoring-reminder .text p{font-size:.82em;color:#a16207;line-height:1.6}
+.scoring-reminder .text h3{font-size:.9em;color:#8A6D2A;margin-bottom:3px;font-weight:700}
+.scoring-reminder .text p{font-size:.82em;color:#8A6D2A;line-height:1.6}
 </style>
 </head>
 <body>
@@ -205,7 +205,7 @@ function renderAll(){
       var ex=s.exp[qi];var uans=ua[qi]||'';var ok=uans.toLowerCase()===b.a.toLowerCase();
       var dt=ex.d==='HARD'?'<span class="q-tag tag-hard">HARD</span>':'<span class="q-tag tag-mod">MOD</span>';
       var ul='';
-      if(st){if(ok){ul='<div class="q-user" style="color:#22543d">&#10004; 正解！ あなたの回答: '+b.s+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#9b2c2c">&#11036; 未回答 — 推測でも必ず埋めよう！</div>';}else{ul='<div class="q-user" style="color:#9b2c2c">&#10060; あなた: <span style="text-decoration:line-through">'+b.s+uans+'</span> &rarr; 正解: '+b.w+'</div>';}}
+      if(st){if(ok){ul='<div class="q-user" style="color:#004D2E">&#10004; 正解！ あなたの回答: '+b.s+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#8A3E24">&#11036; 未回答 — 推測でも必ず埋めよう！</div>';}else{ul='<div class="q-user" style="color:#8A3E24">&#10060; あなた: <span style="text-decoration:line-through">'+b.s+uans+'</span> &rarr; 正解: '+b.w+'</div>';}}
       ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+b.s+'</span><span class="ans">'+b.a+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong>品詞：'+ex.pos+'</strong> '+ex.e+'</div></div></div>';
     });
     document.getElementById('ag'+si).innerHTML=ag;

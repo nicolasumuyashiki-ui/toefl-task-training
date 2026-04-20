@@ -7,46 +7,46 @@
 <link rel="stylesheet" href="../../css/common.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f9fafb;min-height:100vh;color:#2d3748;line-height:1.7}
+body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;background:#FBF6EC;min-height:100vh;color:#0F1511;line-height:1.7}
 .answers-header{background:#002817;color:#fff;padding:20px 28px;text-align:center}
 .answers-header h1{font-size:1.2em;font-weight:600;margin-bottom:4px}
 .answers-header p{font-size:.9em;color:rgba(255,255,255,.7)}
 .score-banner{background:#F5E9D3;border-bottom:1px solid #bee3f8;padding:20px 28px;text-align:center}
 .score-big{font-size:2.2em;font-weight:700;color:#2b6cb0}
-.score-label{font-size:.9em;color:#4a5568;margin-top:4px}
+.score-label{font-size:.9em;color:#5A6861;margin-top:4px}
 .answers-body{max-width:780px;margin:0 auto;padding:28px 20px 100px}
 .passage-block{margin-bottom:36px}
-.passage-title-bar{font-size:1.05em;font-weight:700;color:#2d3748;padding:12px 0;border-bottom:2px solid #F5E9D3;margin-bottom:20px}
+.passage-title-bar{font-size:1.05em;font-weight:700;color:#0F1511;padding:12px 0;border-bottom:2px solid #F5E9D3;margin-bottom:20px}
 .passage-type-badge{display:inline-block;background:#002817;color:#fff;font-size:.75em;font-weight:600;padding:3px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
 .q-card{background:#fff;border:1px solid #F5E9D3;border-radius:10px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .q-card.correct{border-left:4px solid #48bb78}
-.q-card.incorrect{border-left:4px solid #e53e3e}
-.q-num{font-weight:700;color:#4a90d9;margin-bottom:8px;font-size:.95em}
+.q-card.incorrect{border-left:4px solid #B85C3C}
+.q-num{font-weight:700;color:#007646;margin-bottom:8px;font-size:.95em}
 .q-text{font-weight:600;margin-bottom:14px;font-size:.93em;line-height:1.6}
 .answer-row{display:flex;gap:16px;margin-bottom:10px;font-size:.9em;flex-wrap:wrap}
 .answer-tag{padding:4px 12px;border-radius:6px;font-weight:600;font-size:.85em}
-.tag-correct{background:#c6f6d5;color:#276749}
-.tag-yours{background:#fed7d7;color:#9b2c2c}
-.tag-yours.match{background:#c6f6d5;color:#276749}
-.explanation{background:#f7fafc;border-radius:8px;padding:14px 16px;margin-top:12px;font-size:.88em;line-height:1.65;color:#4a5568}
-.explanation strong{color:#2d3748}
-.option-review{font-size:.88em;padding:6px 0;color:#4a5568;display:flex;gap:8px}
-.option-review .label{font-weight:600;min-width:22px;color:#718096}
+.tag-correct{background:#A8C9B8;color:#276749}
+.tag-yours{background:#F3DDD4;color:#8A3E24}
+.tag-yours.match{background:#A8C9B8;color:#276749}
+.explanation{background:#FBF6EC;border-radius:8px;padding:14px 16px;margin-top:12px;font-size:.88em;line-height:1.65;color:#5A6861}
+.explanation strong{color:#0F1511}
+.option-review{font-size:.88em;padding:6px 0;color:#5A6861;display:flex;gap:8px}
+.option-review .label{font-weight:600;min-width:22px;color:#5A6861}
 .option-review.is-correct .label{color:#276749}
 .option-review.is-correct{color:#276749;font-weight:500}
-.option-review.is-wrong-pick{color:#e53e3e;text-decoration:line-through;opacity:.7}
+.option-review.is-wrong-pick{color:#B85C3C;text-decoration:line-through;opacity:.7}
 
 /* TIPS */
 .tips-section{margin-top:8px;margin-bottom:36px}
-.tips-title{font-size:1.1em;font-weight:700;color:#2d3748;padding:14px 0;border-bottom:2px solid #F5E9D3;margin-bottom:20px}
+.tips-title{font-size:1.1em;font-weight:700;color:#0F1511;padding:14px 0;border-bottom:2px solid #F5E9D3;margin-bottom:20px}
 .tip-card{background:#fff;border:1px solid #F5E9D3;border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .tip-card-title{font-weight:700;font-size:.95em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .tip-num{background:#002817;color:#fff;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75em;flex-shrink:0}
-.tip-card-body{font-size:.88em;line-height:1.65;color:#4a5568}
-.tip-card-body strong{color:#2d3748}
+.tip-card-body{font-size:.88em;line-height:1.65;color:#5A6861}
+.tip-card-body strong{color:#0F1511}
 .tip-card-body code{background:#F5E9D3;padding:2px 6px;border-radius:3px;font-size:.9em;color:#2b6cb0}
 .tip-example{background:#fffff0;border:1px solid #ecc94b;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#744210;line-height:1.5}
-.tip-warn{background:#fff5f5;border:1px solid #feb2b2;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#9b2c2c;line-height:1.5}
+.tip-warn{background:#FDF4F0;border:1px solid #feb2b2;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#8A3E24;line-height:1.5}
 .paraphrase-box{background:#f0fff4;border:1px solid #9ae6b4;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#276749;line-height:1.5}
 
 .nav-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #F5E9D3;padding:14px 24px;display:flex;justify-content:center;gap:12px;z-index:100}
@@ -252,7 +252,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f9fafb;
   </div>
 
   <!-- FINAL TAKEAWAY -->
-  <div class="tip-card" style="border:2px solid #4a90d9;background:#F5E9D3">
+  <div class="tip-card" style="border:2px solid #007646;background:#F5E9D3">
     <div class="tip-card-title" style="color:#2b6cb0;font-size:1em">Key Takeaways</div>
     <div class="tip-card-body">
       <strong>1. Correct answers are always paraphrases of the passage.</strong> Options using the same words as the passage are often traps.<br>

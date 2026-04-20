@@ -6,37 +6,37 @@
 <title>Announcement Practice 10 — 解答解説</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;color:#2d3748;line-height:1.8}
+body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;background:#FBF6EC;color:#0F1511;line-height:1.8}
 .header{background:linear-gradient(135deg,#2d3748,#4a5568);color:#fff;padding:28px 24px;text-align:center}
 .header h1{font-size:1.5em;margin-bottom:4px}
 .header p{font-size:.85em;opacity:.8}
 .score-summary{max-width:880px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;text-align:center}
-.score-big{font-size:2.8em;font-weight:700;color:#4a90d9;margin:8px 0}
-.score-sub{font-size:.85em;color:#718096}
+.score-big{font-size:2.8em;font-weight:700;color:#007646;margin:8px 0}
+.score-sub{font-size:.85em;color:#5A6861}
 .score-bar{height:8px;background:#F5E9D3;border-radius:4px;margin:16px auto;max-width:300px}
-.score-bar-fill{height:100%;background:#4a90d9;border-radius:4px;transition:width .5s}
-.tips-banner{background:#fff;border-left:4px solid #4a90d9;margin:20px auto;max-width:880px;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.tips-banner h2{font-size:1em;color:#4a90d9;margin-bottom:14px}
+.score-bar-fill{height:100%;background:#007646;border-radius:4px;transition:width .5s}
+.tips-banner{background:#fff;border-left:4px solid #007646;margin:20px auto;max-width:880px;padding:20px 24px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tips-banner h2{font-size:1em;color:#007646;margin-bottom:14px}
 .tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media(max-width:700px){.tips-grid{grid-template-columns:1fr}}
 .tip-card{background:#F5E9D3;border-radius:8px;padding:14px;text-align:center}
 .tip-icon{font-size:1.5em;margin-bottom:6px}
 .tip-card h3{font-size:.85em;margin-bottom:4px}
-.tip-card p{font-size:.75em;color:#4a5568}
+.tip-card p{font-size:.75em;color:#5A6861}
 .ann-section{max-width:880px;margin:20px auto}
-.ann-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #4a90d9;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.ann-header h3{font-size:1em;color:#4a90d9}
-.ann-header p{font-size:.82em;color:#718096;margin-top:4px}
+.ann-header{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;border-bottom:2px solid #007646;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.ann-header h3{font-size:1em;color:#007646}
+.ann-header p{font-size:.82em;color:#5A6861;margin-top:4px}
 .script-box{background:#fff;padding:16px 20px;margin-bottom:2px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
 .script-box details{cursor:pointer}
-.script-box summary{font-size:.88em;font-weight:600;color:#4a90d9;padding:8px 0}
-.script-line{font-size:.82em;color:#4a5568;margin:4px 0;padding-left:12px}
-.script-line strong{color:#2d3748}
+.script-box summary{font-size:.88em;font-weight:600;color:#007646;padding:8px 0}
+.script-line{font-size:.82em;color:#5A6861;margin:4px 0;padding-left:12px}
+.script-line strong{color:#0F1511}
 .q-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
 .q-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #F5E9D3}
 .q-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85em;color:#fff;flex-shrink:0}
 .q-num.correct{background:#38a169}
-.q-num.wrong{background:#e53e3e}
+.q-num.wrong{background:#B85C3C}
 .q-num.skip{background:#a0aec0}
 .q-prompt{font-size:.92em;font-weight:600;flex:1}
 .q-badge{font-size:.72em;padding:3px 10px;border-radius:12px;font-weight:600}
@@ -46,19 +46,19 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
 .q-badge.purpose{background:#faf5ff;color:#6b21a8}
 .q-body{padding:16px 20px}
 .q-user{font-size:.85em;margin-bottom:10px;padding:8px 12px;border-radius:6px}
-.q-user.is-correct{background:#f0fff4;color:#22543d}
-.q-user.is-wrong{background:#fff5f5;color:#9b2c2c}
-.q-user.is-skip{background:#f7fafc;color:#718096}
+.q-user.is-correct{background:#f0fff4;color:#004D2E}
+.q-user.is-wrong{background:#FDF4F0;color:#8A3E24}
+.q-user.is-skip{background:#FBF6EC;color:#5A6861}
 .options-list{margin:10px 0}
 .opt-row{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:6px;font-size:.85em;margin-bottom:4px}
 .opt-row.is-correct{background:#f0fff4;font-weight:600}
-.opt-row.is-wrong-selected{background:#fff5f5;text-decoration:line-through;color:#e53e3e}
+.opt-row.is-wrong-selected{background:#FDF4F0;text-decoration:line-through;color:#B85C3C}
 .opt-label{font-weight:700;min-width:24px}
-.q-explain{background:#f7fafc;border-left:3px solid #4a90d9;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
+.q-explain{background:#FBF6EC;border-left:3px solid #007646;padding:12px 16px;border-radius:0 6px 6px 0;margin-top:10px;font-size:.82em}
 .q-explain strong{color:#2b6cb0}
-.q-hint{margin-top:6px;font-size:.8em;color:#718096;font-style:italic}
+.q-hint{margin-top:6px;font-size:.8em;color:#5A6861;font-style:italic}
 .nav-bottom{max-width:880px;margin:24px auto;text-align:center;padding-bottom:40px}
-.btn-back{display:inline-block;padding:12px 32px;background:#4a90d9;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
+.btn-back{display:inline-block;padding:12px 32px;background:#007646;color:#fff;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;text-decoration:none;margin:0 8px}
 .btn-back:hover{background:#3a7cc0;}
 </style>
 </head>
@@ -205,7 +205,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;
 
 <div class="nav-bottom">
   <a class="btn-back" href="practice-10.html">← もう一度解く</a>
-  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#2d3748">📋 メニューに戻る</a>
+  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
 </div>
 
 <script src="../../js/auth.js"></script>
