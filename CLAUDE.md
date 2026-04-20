@@ -84,5 +84,5 @@ speaking/ti/practice-{N}.html              — Take an Interview
 
 ## 問題作成時の参照先
 - `.claude/commands/` にあるスラッシュコマンドの仕様書を必ず読むこと
-- `docs/history-*.md` でトピック重複を確認すること
+- `docs/topic-history.md` でトピック重複を確認し、作成後は同ファイルに追記すること（以前は技能別4分割 `docs/history-{技能}.md` を想定していたが、実体は単一ファイルに統合されている）
 - PPTXの攻略コツを解答解説に組み込むこと
