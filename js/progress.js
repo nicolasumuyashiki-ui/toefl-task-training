@@ -115,15 +115,47 @@
     });
   }
 
-  /* Inject exit button into the top-right of the page. Call once after DOMReady. */
+  /* Inject exit button + language toggle as a single floating cluster at bottom-left. */
   function mountExitButton(task, practice, getState, menuUrl, opts){
     opts = opts || {};
+    var container = opts.container || document.body;
+
+    var cluster = document.createElement('div');
+    cluster.className = 'tck-floating-cluster';
+
+    // Language toggle
+    var toggle = document.createElement('div');
+    toggle.className = 'tck-lang-mini';
+    toggle.innerHTML =
+      '<button type="button" data-lang-btn="jp"' + (lang==='jp'?' class="active"':'') + '>日本語</button>'
+      + '<button type="button" data-lang-btn="en"' + (lang==='en'?' class="active"':'') + '>EN</button>';
+    toggle.querySelectorAll('[data-lang-btn]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var l = b.getAttribute('data-lang-btn');
+        lang = l;
+        localStorage.setItem('tck_lang', l);
+        document.body.setAttribute('data-lang', l);
+        document.documentElement.setAttribute('lang', l==='jp'?'ja':'en');
+        toggle.querySelectorAll('[data-lang-btn]').forEach(function(bb){
+          bb.classList.toggle('active', bb.getAttribute('data-lang-btn')===l);
+        });
+        // Also sync other toggles on the page (e.g., on top-nav)
+        document.querySelectorAll('.tck-lang-toggle [data-lang-btn]').forEach(function(bb){
+          bb.classList.toggle('active', bb.getAttribute('data-lang-btn')===l);
+        });
+      });
+    });
+    cluster.appendChild(toggle);
+
+    // Exit button
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'tck-exit-btn';
     btn.innerHTML = '<span aria-hidden="true">✕</span><span class="tck-exit-label">' + t('exitBtnShort') + '</span>';
     btn.addEventListener('click', function(){ confirmExit(task, practice, getState, menuUrl); });
-    (opts.container || document.body).appendChild(btn);
+    cluster.appendChild(btn);
+
+    container.appendChild(cluster);
     return btn;
   }
 
@@ -143,11 +175,15 @@
       + '.tck-btn-primary,.tck-btn-secondary{font-family:inherit;font-size:.88em;font-weight:600;padding:10px 20px;border-radius:999px;cursor:pointer;border:1.5px solid transparent;transition:all .15s}'
       + '.tck-btn-primary{background:#007646;color:#fff;border-color:#007646}.tck-btn-primary:hover{background:#004D2E;border-color:#004D2E}'
       + '.tck-btn-secondary{background:#fff;color:#004D2E;border-color:#F5E9D3}.tck-btn-secondary:hover{border-color:#007646}'
-      + '.tck-exit-btn{position:fixed;left:18px;bottom:18px;z-index:500;display:inline-flex;align-items:center;gap:8px;padding:10px 18px 10px 14px;background:#fff;border:1.5px solid #D6DAD7;border-radius:999px;font-family:"Manrope",system-ui,sans-serif;font-size:.82em;font-weight:600;color:#5A6861;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.08);transition:all .15s}'
+      + '.tck-floating-cluster{position:fixed;left:18px;bottom:18px;z-index:500;display:inline-flex;align-items:center;gap:8px}'
+      + '.tck-lang-mini{display:inline-flex;background:#fff;border:1.5px solid #D6DAD7;border-radius:999px;padding:3px;font-family:"Manrope",system-ui,sans-serif;font-size:.72em;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.08)}'
+      + '.tck-lang-mini button{border:none;background:transparent;padding:5px 11px;border-radius:999px;cursor:pointer;color:#5A6861;font-family:inherit;font-weight:inherit;letter-spacing:.04em}'
+      + '.tck-lang-mini button.active{background:#007646;color:#fff}'
+      + '.tck-exit-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px 10px 14px;background:#fff;border:1.5px solid #D6DAD7;border-radius:999px;font-family:"Manrope",system-ui,sans-serif;font-size:.82em;font-weight:600;color:#5A6861;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.08);transition:all .15s}'
       + '.tck-exit-btn:hover{border-color:#B85C3C;color:#B85C3C;box-shadow:0 6px 18px rgba(184,92,60,.14)}'
       + '.tck-exit-btn span[aria-hidden]{font-size:.95em;line-height:1}'
       + '.tck-exit-label{letter-spacing:.02em}'
-      + '@media(max-width:520px){.tck-exit-btn{left:12px;bottom:12px;padding:9px 14px 9px 12px}}';
+      + '@media(max-width:520px){.tck-floating-cluster{left:12px;bottom:12px;gap:6px}.tck-exit-btn{padding:9px 14px 9px 12px}.tck-lang-mini{font-size:.68em}}';
     document.head.appendChild(s);
   })();
 
