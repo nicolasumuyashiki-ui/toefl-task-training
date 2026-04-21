@@ -257,7 +257,7 @@ function render(){
       if(isCorrect) correct++;
       const icon = document.getElementById('q'+(i+1)+'icon');
       const user = document.getElementById('q'+(i+1)+'user');
-      if(isSkip){ icon.className='q-num skip'; user.className='q-user is-skip'; user.textContent='⏱️ 未回答（タイムアウト）'; }
+      if(isSkip){ icon.className='q-num skip'; user.className='q-user is-skip'; user.textContent=__i18n('⏱️ 未回答（タイムアウト）','⏱️ Not answered (timeout)'); }
       else if(isCorrect){ icon.className='q-num correct'; user.className='q-user is-correct'; user.textContent='✅ 正解！ あなたの回答: ('+labels[userAns]+')'; }
       else { icon.className='q-num wrong'; user.className='q-user is-wrong'; user.textContent='❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')'; }
     }
@@ -268,7 +268,7 @@ function render(){
     document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
   } else {
     document.getElementById('scoreBig').textContent = '— / 4';
-    document.getElementById('scoreMsg').textContent = '問題を先に解いてからこのページを見ると、スコアが表示されます';
+    document.getElementById('scoreMsg').textContent = __i18n('問題を先に解いてからこのページを見ると、スコアが表示されます','Complete the practice first to see your score.');
     for(let i=1;i<=4;i++) document.getElementById('q'+i+'user').style.display='none';
   }
 }
@@ -285,5 +285,7 @@ render();
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
+
+<script>if(typeof __i18n==='undefined'){window.__i18n=function(jp,en){return (localStorage.getItem('tck_lang')||'jp')==='en'?en:jp;};}</script>
 </body>
 </html>

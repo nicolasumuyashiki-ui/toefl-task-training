@@ -109,7 +109,7 @@ body[data-lang="en"] .jp{display:none}
   <div class="tips-grid">
     <div class="tip-card"><span class="tip-num">01</span><h3>品詞を特定してから埋める</h3><p>冠詞＋空欄 &rarr; 名詞<br>主語＋空欄 &rarr; 動詞<br>be動詞＋空欄 &rarr; 形容詞/過去分詞<br>空欄＋名詞 &rarr; 形容詞</p></div>
     <div class="tip-card"><span class="tip-num">02</span><h3>頻出パターンを暗記する</h3><p>however, therefore, although<br>particularly, especially<br>significant, demonstrate, evidence</p><div class="ex">&rarr; 見たら即座に埋められるように！</div></div>
-    <div class="tip-card"><span class="tip-num">03</span><h3>推測でも必ず埋める</h3><p>正解 &rarr; 得点 / 不正解 &rarr; 0点 / 空欄 &rarr; 0点</p><div class="ex">&rarr; 推測しないと損！必ず何か入れよう</div></div>
+    <div class="tip-card"><span class="tip-num">03</span><h3><span class="jp">推測でも必ず埋める</span><span class="en">Always fill the blank</span></h3><p><span class="jp">正解 &rarr; 得点 / 不正解 &rarr; 0点 / 空欄 &rarr; 0点</span><span class="en">Correct &rarr; points / Wrong &rarr; 0 / Blank &rarr; 0</span></p><div class="ex"><span class="jp">&rarr; 推測しないと損！必ず何か入れよう</span><span class="en">&rarr; A blank scores the same as a wrong guess — always write something.</span></div></div>
     <div class="tip-card"><span class="tip-num">04</span><h3>INTROとCONCLUSIONを先に読む</h3><p>最初と最後の文を先に読めば、トピックと流れが掴める。空欄の推測精度が上がる！</p><div class="ex">&rarr; 本文に入る前にまず全体像を把握</div></div>
   </div>
 </div>
@@ -274,5 +274,7 @@ function renderAll(){
 function showSet(i){document.querySelectorAll('.set-panel').forEach(function(p,j){p.classList.toggle('active',j===i);});document.querySelectorAll('.set-nav button').forEach(function(b,j){b.classList.toggle('active',j===i);});}
 renderAll();
 </script>
+
+<script>if(typeof __i18n==='undefined'){window.__i18n=function(jp,en){return (localStorage.getItem('tck_lang')||'jp')==='en'?en:jp;};}</script>
 </body>
 </html>
