@@ -133,114 +133,16 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
     <span class="en">Book your session</span>
   </h2>
   <p class="section-sub">
-    <span class="jp">希望日時と相談内容を記入してください。担当講師から 1 営業日以内に候補時間をメールでお送りします。</span>
-    <span class="en">Tell us when you'd like to meet and what you'd like to discuss. We will confirm a time by email within one business day.</span>
+    <span class="jp">予約フォームは準備中です。整い次第、こちらに埋め込みます。</span>
+    <span class="en">The booking form is being set up and will be embedded here shortly.</span>
   </p>
 
-  <div class="form-card">
-    <div class="success-banner" id="successBanner">
-      <strong>
-        <span class="jp">送信完了</span>
-        <span class="en">Request submitted</span>
-      </strong>
-      —
-      <span class="jp">担当者から 1 営業日以内にご連絡します。</span>
-      <span class="en">We will get back to you within one business day.</span>
-    </div>
-
-    <form id="consultForm" onsubmit="submitForm(event)">
-      <div class="field">
-        <label>
-          <span class="jp">相談言語</span>
-          <span class="en">Consultation language</span>
-        </label>
-        <div class="radio-row">
-          <div class="radio-pill">
-            <input type="radio" name="lang" id="lang-jp" value="jp" checked>
-            <label for="lang-jp">日本語</label>
-          </div>
-          <div class="radio-pill">
-            <input type="radio" name="lang" id="lang-en" value="en">
-            <label for="lang-en">English</label>
-          </div>
-          <div class="radio-pill">
-            <input type="radio" name="lang" id="lang-either" value="either">
-            <label for="lang-either">
-              <span class="jp">どちらでも</span>
-              <span class="en">Either</span>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="pref-date">
-          <span class="jp">希望日</span>
-          <span class="en">Preferred date</span>
-        </label>
-        <input type="date" id="pref-date" name="pref-date" required>
-        <div class="help">
-          <span class="jp">平日・週末のどちらでも可。第 1 希望を記入してください。</span>
-          <span class="en">Weekdays or weekends. Enter your first choice.</span>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="pref-time">
-          <span class="jp">希望時間帯</span>
-          <span class="en">Preferred time block</span>
-        </label>
-        <select id="pref-time" name="pref-time" required>
-          <option value="morning" data-label-jp="朝（9:00〜12:00）" data-label-en="Morning (9:00–12:00)">Morning · 9:00–12:00</option>
-          <option value="afternoon" data-label-jp="昼（13:00〜17:00）" data-label-en="Afternoon (13:00–17:00)">Afternoon · 13:00–17:00</option>
-          <option value="evening" data-label-jp="夜（18:00〜21:00）" data-label-en="Evening (18:00–21:00)">Evening · 18:00–21:00</option>
-          <option value="flexible" data-label-jp="いつでも可" data-label-en="Flexible">Flexible</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="topic">
-          <span class="jp">相談内容（複数選択可）</span>
-          <span class="en">Topics (select any)</span>
-        </label>
-        <select id="topic" name="topic" required>
-          <option value="score-plan" data-label-jp="スコアアップの学習計画" data-label-en="Score-raise study plan">Score-raise study plan</option>
-          <option value="speaking" data-label-jp="Speaking 対策" data-label-en="Speaking strategy">Speaking strategy</option>
-          <option value="writing" data-label-jp="Writing 対策" data-label-en="Writing strategy">Writing strategy</option>
-          <option value="listening" data-label-jp="Listening 対策" data-label-en="Listening strategy">Listening strategy</option>
-          <option value="reading" data-label-jp="Reading 対策" data-label-en="Reading strategy">Reading strategy</option>
-          <option value="schedule" data-label-jp="受験スケジュール相談" data-label-en="Test-date planning">Test-date planning</option>
-          <option value="other" data-label-jp="その他" data-label-en="Other">Other</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="notes">
-          <span class="jp">具体的に相談したいこと（任意）</span>
-          <span class="en">Details you want to discuss (optional)</span>
-        </label>
-        <textarea id="notes" name="notes" placeholder=""></textarea>
-        <div class="help">
-          <span class="jp">例：直近のスコア、苦手なセクション、目標期日など。</span>
-          <span class="en">Examples: recent score, weakest section, target test date.</span>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="email">
-          <span class="jp">連絡先メール</span>
-          <span class="en">Contact email</span>
-        </label>
-        <input type="email" id="email" name="email" required>
-      </div>
-
-      <div class="submit-row">
-        <button type="submit" class="btn-primary" id="submitBtn">
-          <span class="jp">予約を申し込む</span>
-          <span class="en">Submit request</span>
-        </button>
-      </div>
-    </form>
+  <div class="form-card" style="text-align:center;padding:44px 36px">
+    <div style="font-family:var(--font-en);font-size:.72em;font-weight:700;color:var(--green);letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px">Coming Soon</div>
+    <p style="font-size:.95em;color:var(--ink-500);line-height:1.75;max-width:460px;margin:0 auto">
+      <span class="jp">現在は下記連絡先で直接お申し込みください。予約フォームの埋め込み後は、このページから数クリックで完結します。</span>
+      <span class="en">For now, please contact us directly using the details below. A booking form will be embedded here soon.</span>
+    </p>
   </div>
 </div>
 
@@ -279,29 +181,8 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 var u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
-if(u.userName){document.getElementById('userName').textContent=u.userName;document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();if(!document.getElementById('email').value)document.getElementById('email').value=u.email||'';}
+if(u.userName){document.getElementById('userName').textContent=u.userName;document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();}
 function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='index.html';}
-
-function submitForm(e){
-  e.preventDefault();
-  var data={
-    lang:document.querySelector('input[name="lang"]:checked').value,
-    date:document.getElementById('pref-date').value,
-    time:document.getElementById('pref-time').value,
-    topic:document.getElementById('topic').value,
-    notes:document.getElementById('notes').value.trim(),
-    email:document.getElementById('email').value.trim(),
-    submittedAt:new Date().toISOString()
-  };
-  try{
-    var hist=JSON.parse(localStorage.getItem('tck_consult_requests')||'[]');
-    hist.push(data);
-    localStorage.setItem('tck_consult_requests',JSON.stringify(hist));
-  }catch(_){}
-  document.getElementById('consultForm').style.display='none';
-  document.getElementById('successBanner').classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
 </script>
 </body>
 </html>

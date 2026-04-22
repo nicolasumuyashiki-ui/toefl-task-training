@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — TCK Workshop</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-height:100vh;color:var(--ink-900);-webkit-font-smoothing:antialiased;line-height:1.55;font-size:14px}
+
+/* ===== TOP NAV ===== */
+.admin-nav{background:var(--green-deep);color:#fff;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:60}
+.admin-nav-left{display:flex;align-items:center;gap:14px}
+.admin-logo{display:inline-flex;align-items:center;gap:8px}
+.admin-logo-dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.admin-logo-text{font-family:var(--font-en);font-size:.7em;font-weight:800;color:var(--gold);letter-spacing:.16em;text-transform:uppercase}
+.admin-nav-divider{width:1px;height:16px;background:rgba(255,255,255,.25)}
+.admin-nav-title{font-family:var(--font-en);font-size:.9em;font-weight:600;color:#fff;letter-spacing:.02em}
+.admin-nav-right{display:flex;align-items:center;gap:12px}
+.admin-user{font-size:.82em;color:rgba(255,255,255,.8)}
+.admin-user strong{color:#fff}
+.admin-link{font-family:var(--font-en);font-size:.78em;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;padding:6px 12px;border:1px solid rgba(255,255,255,.2);border-radius:6px;transition:all .15s}
+.admin-link:hover{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.4)}
+
+/* ===== GATE ===== */
+.gate{max-width:480px;margin:80px auto;padding:40px 36px;background:#fff;border:1px solid var(--paper);border-radius:14px;text-align:center}
+.gate h2{font-family:var(--font-en);font-size:1.4em;font-weight:800;color:var(--green-deep);margin-bottom:10px;letter-spacing:-0.01em}
+.gate p{font-size:.92em;color:var(--ink-500);line-height:1.7;margin-bottom:20px}
+.gate a{display:inline-block;background:var(--green);color:#fff;padding:10px 24px;border-radius:999px;font-family:var(--font-en);font-size:.88em;font-weight:600;text-decoration:none}
+
+/* ===== APP ===== */
+.admin-app{display:none}
+.admin-app.active{display:block}
+
+.dev-banner{background:#FFF4D6;border-bottom:1px solid var(--gold);padding:10px 24px;font-size:.82em;color:#6B5A1E;text-align:center}
+.dev-banner strong{color:#8A6D2A}
+
+.tabs{background:#fff;border-bottom:1px solid var(--paper);padding:0 24px;display:flex;gap:2px;overflow-x:auto;position:sticky;top:49px;z-index:50}
+.tab{font-family:var(--font-en),var(--font-jp);padding:14px 22px;background:transparent;border:none;border-bottom:3px solid transparent;font-size:.88em;font-weight:600;color:var(--ink-500);cursor:pointer;white-space:nowrap;transition:all .15s}
+.tab:hover{color:var(--green-dark)}
+.tab.active{color:var(--green-deep);border-bottom-color:var(--green)}
+
+.panel{display:none;padding:24px;max-width:1400px;margin:0 auto}
+.panel.active{display:block}
+
+/* ===== TOOLBAR ===== */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.filter-group{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.input,.select{font-family:inherit;font-size:.88em;padding:8px 12px;border:1px solid var(--paper);border-radius:8px;background:#fff;color:var(--ink-900);min-width:180px;transition:border-color .15s}
+.input:focus,.select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 2px rgba(0,118,70,.1)}
+.btn{font-family:var(--font-en);font-size:.82em;font-weight:600;padding:8px 16px;border:1px solid var(--paper);border-radius:8px;background:#fff;color:var(--ink-900);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--green);color:var(--green-dark)}
+.btn-primary{background:var(--green);color:#fff;border-color:var(--green)}
+.btn-primary:hover{background:var(--green-dark);border-color:var(--green-dark);color:#fff}
+.btn-ghost{background:transparent;border-color:transparent}
+.btn-ghost:hover{background:var(--paper);border-color:var(--paper)}
+
+.count-badge{font-family:var(--font-en);font-size:.78em;color:var(--ink-500);margin-left:8px}
+.count-badge strong{color:var(--ink-900);font-weight:700}
+
+/* ===== TABLE ===== */
+.table-wrap{background:#fff;border:1px solid var(--paper);border-radius:10px;overflow:hidden}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.86em}
+thead{background:var(--green-deep);color:#fff}
+th{padding:12px 14px;text-align:left;font-family:var(--font-en),var(--font-jp);font-weight:600;font-size:.85em;letter-spacing:.02em;white-space:nowrap;cursor:pointer;user-select:none;position:relative}
+th:hover{background:var(--green-dark)}
+th.sorted-asc::after{content:"▲";font-size:.7em;margin-left:6px;opacity:.8}
+th.sorted-desc::after{content:"▼";font-size:.7em;margin-left:6px;opacity:.8}
+tbody tr{border-bottom:1px solid var(--paper);transition:background .12s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--cream)}
+tbody tr:nth-child(even){background:rgba(245,233,211,.15)}
+tbody tr:nth-child(even):hover{background:var(--cream)}
+td{padding:11px 14px;color:var(--ink-900);vertical-align:middle}
+td.num{font-family:var(--font-en);text-align:right}
+td.muted{color:var(--ink-500)}
+td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);background:var(--paper);border-radius:999px;padding:2px 10px;display:inline-block;white-space:nowrap}
+
+.pill{display:inline-block;font-family:var(--font-en);font-size:.7em;font-weight:700;padding:2px 9px;border-radius:999px;letter-spacing:.04em}
+.pill.perfect{background:var(--green);color:#fff}
+.pill.great{background:var(--sky);color:#fff}
+.pill.good{background:var(--gold);color:var(--green-deep)}
+.pill.keep{background:#B85C3C;color:#fff}
+.pill.inprog{background:var(--paper);color:var(--green-dark);border:1px solid var(--gold)}
+.pill.submitted{background:var(--green-dark);color:#fff}
+.pill.none{background:var(--ink-200);color:#fff}
+
+.link-btn{background:none;border:none;color:var(--green-dark);cursor:pointer;font-family:inherit;font-size:inherit;font-weight:600;padding:0;text-decoration:none}
+.link-btn:hover{color:var(--green);text-decoration:underline}
+
+.empty{padding:60px 20px;text-align:center;color:var(--ink-500);font-size:.9em}
+
+/* ===== STATS CARDS ===== */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+.stat-card{background:#fff;border:1px solid var(--paper);border-radius:10px;padding:18px 20px}
+.stat-label{font-family:var(--font-en);font-size:.7em;font-weight:700;color:var(--ink-500);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.stat-value{font-family:var(--font-en);font-size:1.9em;font-weight:800;color:var(--green-deep);line-height:1;letter-spacing:-0.02em}
+.stat-detail{font-family:var(--font-en);font-size:.78em;color:var(--ink-500);margin-top:4px}
+.stat-detail strong{color:var(--green-dark)}
+
+/* ===== BARS (simple chart) ===== */
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:.86em}
+.bar-label{flex-shrink:0;width:200px;color:var(--ink-900);font-weight:500}
+.bar-track{flex:1;height:22px;background:var(--paper);border-radius:6px;position:relative;overflow:hidden}
+.bar-fill{position:absolute;top:0;left:0;bottom:0;background:var(--green);border-radius:6px;transition:width .3s}
+.bar-fill.warn{background:var(--gold)}
+.bar-fill.low{background:#B85C3C}
+.bar-value{flex-shrink:0;width:72px;text-align:right;font-family:var(--font-en);font-weight:600;color:var(--green-dark)}
+
+/* ===== KARTE (individual chart) ===== */
+.karte-layout{display:grid;grid-template-columns:280px 1fr;gap:20px}
+@media(max-width:820px){.karte-layout{grid-template-columns:1fr}}
+.karte-user-list{background:#fff;border:1px solid var(--paper);border-radius:10px;max-height:70vh;overflow-y:auto}
+.karte-user{padding:12px 16px;border-bottom:1px solid var(--paper);cursor:pointer;transition:background .15s}
+.karte-user:hover{background:var(--cream)}
+.karte-user.active{background:var(--green);color:#fff}
+.karte-user.active .karte-user-meta{color:rgba(255,255,255,.8)}
+.karte-user-name{font-weight:600;margin-bottom:2px}
+.karte-user-meta{font-family:var(--font-en);font-size:.76em;color:var(--ink-500)}
+.karte-detail{background:#fff;border:1px solid var(--paper);border-radius:10px;padding:24px 28px;min-height:500px}
+.karte-head{border-bottom:1px solid var(--paper);padding-bottom:18px;margin-bottom:20px}
+.karte-head h3{font-family:var(--font-en),var(--font-jp);font-size:1.35em;font-weight:800;color:var(--green-deep);letter-spacing:-0.01em;margin-bottom:4px}
+.karte-head .kmeta{font-family:var(--font-en);font-size:.82em;color:var(--ink-500)}
+.skill-scores{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px}
+.skill-score{background:var(--cream);border:1px solid var(--paper);border-radius:8px;padding:14px 16px}
+.skill-score-label{font-family:var(--font-en);font-size:.74em;font-weight:700;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.skill-score-val{font-family:var(--font-en);font-size:1.4em;font-weight:800;color:var(--green-deep);letter-spacing:-0.01em}
+.skill-score-sub{font-family:var(--font-en);font-size:.76em;color:var(--ink-500);margin-top:2px}
+
+.karte-activity h4{font-family:var(--font-en);font-size:.78em;font-weight:700;color:var(--green-dark);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.karte-activity .atable{width:100%;font-size:.84em}
+.karte-activity .atable th{background:transparent;color:var(--ink-500);font-size:.74em;font-weight:700;padding:8px 10px;border-bottom:1px solid var(--paper)}
+.karte-activity .atable th:hover{background:transparent;color:var(--green-dark)}
+.karte-activity .atable td{padding:8px 10px;border-bottom:1px solid rgba(245,233,211,.6)}
+
+/* ===== PROGRESS MATRIX ===== */
+.matrix-wrap{background:#fff;border:1px solid var(--paper);border-radius:10px;overflow:hidden}
+.matrix-table{width:100%;border-collapse:collapse;font-size:.82em}
+.matrix-table thead{background:var(--green-deep);color:#fff}
+.matrix-table th.sticky-col{position:sticky;left:0;background:var(--green-deep);z-index:2}
+.matrix-table td.sticky-col{position:sticky;left:0;background:#fff;z-index:1;border-right:1px solid var(--paper)}
+.matrix-table tbody tr:nth-child(even) td.sticky-col{background:rgba(245,233,211,.15)}
+.cell-score{font-family:var(--font-en);font-size:.78em;font-weight:700;padding:6px 10px;border-radius:6px;display:inline-block;min-width:48px;text-align:center}
+.cell-score.s100{background:var(--green);color:#fff}
+.cell-score.s80{background:var(--sky);color:#fff}
+.cell-score.s50{background:var(--gold);color:var(--green-deep)}
+.cell-score.sLow{background:#B85C3C;color:#fff}
+.cell-score.sProg{background:var(--paper);color:var(--green-dark)}
+.cell-score.sSubmitted{background:var(--green-deep);color:#fff}
+.cell-none{color:var(--ink-200);font-size:.78em}
+
+/* ===== MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,21,17,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.active{display:flex}
+.modal-panel{background:#fff;border-radius:14px;max-width:720px;width:100%;max-height:85vh;overflow-y:auto;padding:28px 32px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--paper);padding-bottom:14px;margin-bottom:18px}
+.modal-head h3{font-family:var(--font-en);font-size:1.15em;font-weight:800;color:var(--green-deep)}
+.modal-close{background:none;border:none;font-size:1.1em;color:var(--ink-500);cursor:pointer;padding:4px 10px;border-radius:6px}
+.modal-close:hover{background:var(--paper);color:var(--green-dark)}
+</style>
+</head>
+<body>
+
+<div class="admin-nav">
+  <div class="admin-nav-left">
+    <div class="admin-logo">
+      <span class="admin-logo-dot"></span>
+      <span class="admin-logo-text">TCK Workshop · Admin</span>
+    </div>
+    <span class="admin-nav-divider"></span>
+    <span class="admin-nav-title">学習管理ダッシュボード</span>
+  </div>
+  <div class="admin-nav-right">
+    <span class="admin-user" id="adminUser">—</span>
+    <a class="admin-link" href="../menu.html">← Task Training</a>
+    <a class="admin-link" href="#" onclick="doLogout();return false;">Logout</a>
+  </div>
+</div>
+
+<!-- Access gate -->
+<div id="gate" class="gate">
+  <h2>🔒 管理者のみアクセス可</h2>
+  <p>
+    この画面は TCK Workshop の運営者向けです。<br>
+    <strong>@tckworkshop.co.jp</strong> のメールアドレスでログインしているか、個別に許可されたアカウントのみが閲覧できます。
+  </p>
+  <a href="../menu.html">← Task Training に戻る</a>
+</div>
+
+<!-- Main app -->
+<div id="adminApp" class="admin-app">
+
+  <div class="dev-banner">
+    <strong>開発プレビュー</strong> · モックデータで表示中。本番リリース時には GAS バックエンドから実データを取得します。
+  </div>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-panel="overview" type="button">一覧</button>
+    <button class="tab" data-panel="by-content" type="button">コンテンツ別</button>
+    <button class="tab" data-panel="report" type="button">レポート</button>
+    <button class="tab" data-panel="karte" type="button">個人カルテ</button>
+    <button class="tab" data-panel="progress" type="button">進捗状況</button>
+  </nav>
+
+  <!-- ========== 一覧 ========== -->
+  <section class="panel active" id="panel-overview">
+    <div class="toolbar">
+      <div class="filter-group">
+        <input type="search" id="searchOverview" class="input" placeholder="氏名・ID・コンテンツで検索…">
+        <select id="filterTask" class="select">
+          <option value="">全タスクタイプ</option>
+        </select>
+        <select id="filterStatus" class="select">
+          <option value="">全評価</option>
+          <option value="perfect">Perfect (100%)</option>
+          <option value="great">Great (80%+)</option>
+          <option value="good">Good (50%+)</option>
+          <option value="keep">Keep Going (&lt;50%)</option>
+          <option value="inprog">中断中</option>
+          <option value="submitted">提出済み (自動採点なし)</option>
+        </select>
+      </div>
+      <span class="count-badge"><strong id="overviewCount">0</strong> 件</span>
+      <button class="btn btn-primary" onclick="exportCSV('overview')">
+        <span>⤓</span> CSVエクスポート
+      </button>
+    </div>
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table id="overviewTable">
+          <thead>
+            <tr>
+              <th data-sort="userName">氏名</th>
+              <th data-sort="displayName">ディスプレイネーム</th>
+              <th data-sort="userId">ログインID</th>
+              <th data-sort="task">タスクタイプ</th>
+              <th data-sort="practice">コンテンツ名</th>
+              <th data-sort="score">得点率</th>
+              <th data-sort="status">評価</th>
+              <th data-sort="updatedAt">最終更新</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="overviewBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== コンテンツ別 ========== -->
+  <section class="panel" id="panel-by-content">
+    <div class="toolbar">
+      <div class="filter-group">
+        <input type="search" id="searchContent" class="input" placeholder="コンテンツ名で検索…">
+        <select id="filterContentTask" class="select">
+          <option value="">全タスクタイプ</option>
+        </select>
+      </div>
+      <span class="count-badge"><strong id="byContentCount">0</strong> 件</span>
+      <button class="btn btn-primary" onclick="exportCSV('by-content')">
+        <span>⤓</span> CSV
+      </button>
+    </div>
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table id="byContentTable">
+          <thead>
+            <tr>
+              <th data-sort="task">タスクタイプ</th>
+              <th data-sort="practice">Practice</th>
+              <th data-sort="attempts" class="num">受験者数</th>
+              <th data-sort="avgScore" class="num">平均得点率</th>
+              <th data-sort="highRate" class="num">高評価率<br><span style="font-weight:400;font-size:.78em;opacity:.7">(80%以上)</span></th>
+              <th>得点分布</th>
+            </tr>
+          </thead>
+          <tbody id="byContentBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== レポート ========== -->
+  <section class="panel" id="panel-report">
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Users</div>
+        <div class="stat-value" id="rptUsers">0</div>
+        <div class="stat-detail">登録アカウント総数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active (30d)</div>
+        <div class="stat-value" id="rptActive">0</div>
+        <div class="stat-detail">過去30日にアクセス</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Attempts</div>
+        <div class="stat-value" id="rptAttempts">0</div>
+        <div class="stat-detail">全受験回数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">High Score Rate</div>
+        <div class="stat-value" id="rptPassRate">0%</div>
+        <div class="stat-detail">得点率 <strong>80%</strong> 以上の割合</div>
+      </div>
+    </div>
+
+    <div class="stat-grid" style="grid-template-columns:1fr 1fr">
+      <div class="stat-card">
+        <div class="stat-label">Section Performance · 技能別平均</div>
+        <div id="sectionBars" style="margin-top:14px"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Task Popularity · 人気タスク</div>
+        <div id="popularBars" style="margin-top:14px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 個人カルテ ========== -->
+  <section class="panel" id="panel-karte">
+    <div class="toolbar">
+      <div class="filter-group">
+        <input type="search" id="searchKarte" class="input" placeholder="ユーザーを検索…" oninput="renderKarteList()">
+      </div>
+      <span class="count-badge"><strong id="karteCount">0</strong> 人</span>
+    </div>
+    <div class="karte-layout">
+      <div class="karte-user-list" id="karteUserList"></div>
+      <div class="karte-detail" id="karteDetail">
+        <p style="color:var(--ink-500)">左のリストからユーザーを選択してください。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 進捗状況 ========== -->
+  <section class="panel" id="panel-progress">
+    <div class="toolbar">
+      <div class="filter-group">
+        <input type="search" id="searchProgress" class="input" placeholder="ユーザーを検索…">
+      </div>
+      <span class="count-badge"><strong id="progressCount">0</strong> 人</span>
+      <button class="btn btn-primary" onclick="exportCSV('progress')">
+        <span>⤓</span> CSV
+      </button>
+    </div>
+    <div class="matrix-wrap">
+      <div class="table-scroll">
+        <table class="matrix-table" id="progressTable">
+          <thead><tr id="progressHead"></tr></thead>
+          <tbody id="progressBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="../js/auth.js"></script>
+<script>
+/* ============================================================
+   Access gate — admin-only
+   ============================================================ */
+const ADMIN_DOMAIN_SUFFIX = '@tckworkshop.co.jp';
+const ADMIN_ALLOWLIST = [
+  // Add explicit admin emails here
+  'nicolas@example.com',
+];
+
+function getCurrentUser() {
+  try { return JSON.parse(sessionStorage.getItem('kickstart_user') || 'null'); } catch(e) { return null; }
+}
+function isAdmin(user) {
+  if (!user) return false;
+  const email = (user.email || '').toLowerCase();
+  if (email.endsWith(ADMIN_DOMAIN_SUFFIX)) return true;
+  if (ADMIN_ALLOWLIST.indexOf(email) !== -1) return true;
+  // Dev override — allow if URL ?preview=1
+  if (location.search.indexOf('preview=1') !== -1) return true;
+  return false;
+}
+function doLogout() {
+  sessionStorage.removeItem('kickstart_user');
+  location.href = '../index.html';
+}
+
+// Gate evaluation is deferred until after data declarations below.
+// See the bottom of this script for the actual admin boot call.
+var __currentUser = getCurrentUser();
+
+/* ============================================================
+   Mock data — realistic shape, replaceable with real API
+   ============================================================ */
+const TASKS = [
+  {key:'ctw', label:'Complete the Words', total:10, section:'Reading', autoGraded:true},
+  {key:'rdl', label:'Read in Daily Life', total:5, section:'Reading', autoGraded:true},
+  {key:'academic', label:'Academic Passage', total:10, section:'Reading', autoGraded:true},
+  {key:'lcr', label:'Listen & Choose', total:8, section:'Listening', autoGraded:true},
+  {key:'conv', label:'Conversation', total:8, section:'Listening', autoGraded:true},
+  {key:'announce', label:'Announcement', total:4, section:'Listening', autoGraded:true},
+  {key:'talk', label:'Academic Talk', total:4, section:'Listening', autoGraded:true},
+  {key:'sentence', label:'Build a Sentence', total:16, section:'Writing', autoGraded:true},
+  {key:'email', label:'Write an Email', total:null, section:'Writing', autoGraded:false},
+  {key:'discussion', label:'Academic Discussion', total:null, section:'Writing', autoGraded:false},
+  {key:'lr', label:'Listen & Repeat', total:null, section:'Speaking', autoGraded:false},
+  {key:'ti', label:'Take an Interview', total:null, section:'Speaking', autoGraded:false},
+];
+
+function gradeFor(score) {
+  if (score === null || score === undefined) return null;
+  if (score === 100) return 'perfect';
+  if (score >= 80) return 'great';
+  if (score >= 50) return 'good';
+  return 'keep';
+}
+const GRADE_LABELS = { perfect:'Perfect', great:'Great', good:'Good', keep:'Keep Going', inprog:'中断中', submitted:'提出済み' };
+
+const MOCK_USERS = [
+  {userId:'tckkijin001', userName:'田中 健太', displayName:'Kenta T.', email:'kenta.tanaka@example.com', joined:'2026-01-12'},
+  {userId:'tckkijin002', userName:'山田 花子', displayName:'Hanako Y.', email:'hanako@example.com', joined:'2026-01-18'},
+  {userId:'tckkijin003', userName:'Sarah Chen', displayName:'Sarah', email:'sarah.chen@example.com', joined:'2026-02-02'},
+  {userId:'tckkijin004', userName:'佐藤 翔', displayName:'Sho S.', email:'sho.sato@example.com', joined:'2026-02-15'},
+  {userId:'tckkijin005', userName:'Alex Johnson', displayName:'Alex', email:'alex.j@example.com', joined:'2026-02-20'},
+  {userId:'tckkijin006', userName:'鈴木 美咲', displayName:'Misaki', email:'misaki@example.com', joined:'2026-03-01'},
+  {userId:'tckkijin007', userName:'高橋 大輔', displayName:'Daisuke T.', email:'daisuke.t@example.com', joined:'2026-03-08'},
+  {userId:'tckkijin008', userName:'伊藤 彩', displayName:'Aya I.', email:'aya.ito@example.com', joined:'2026-03-14'},
+  {userId:'tckkijin009', userName:'David Kim', displayName:'David', email:'david.kim@example.com', joined:'2026-03-22'},
+  {userId:'tckkijin010', userName:'中村 健一', displayName:'Kenichi', email:'ken.nakamura@example.com', joined:'2026-04-01'},
+  {userId:'tckkijin011', userName:'小林 萌', displayName:'Moe K.', email:'moe@example.com', joined:'2026-04-05'},
+  {userId:'tckkijin012', userName:'渡辺 翼', displayName:'Tsubasa', email:'tsubasa@example.com', joined:'2026-04-10'},
+  {userId:'tckkijin013', userName:'Emma Brown', displayName:'Emma', email:'emma.b@example.com', joined:'2026-04-15'},
+];
+
+function seeded(seed) {
+  let s = seed; return function() { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+}
+
+function generateAttempts() {
+  const out = [];
+  MOCK_USERS.forEach(u => {
+    const r = seeded(u.userId.charCodeAt(5) * 17 + u.userId.charCodeAt(10));
+    TASKS.forEach(t => {
+      for (let p = 1; p <= 10; p++) {
+        const attempted = r() < 0.55;
+        if (!attempted) continue;
+        const daysSinceJoin = Math.floor(r() * 60);
+        const updated = new Date(u.joined);
+        updated.setDate(updated.getDate() + daysSinceJoin);
+        const isInProg = r() < 0.12;
+        const row = {
+          userId: u.userId, userName: u.userName, displayName: u.displayName, email: u.email,
+          task: t.key, taskLabel: t.label, section: t.section, practice: p,
+          updatedAt: updated.toISOString().slice(0, 10),
+          autoGraded: t.autoGraded,
+        };
+        if (!t.autoGraded) {
+          row.correct = null; row.total = null; row.score = null;
+          row.status = isInProg ? 'inprog' : 'submitted';
+        } else {
+          const total = t.total;
+          const skillLevel = 0.4 + r() * 0.5;
+          const correct = Math.floor(total * (skillLevel * 0.6 + r() * 0.4));
+          const pct = Math.round((correct / total) * 100);
+          if (isInProg) {
+            row.correct = 0; row.total = total; row.score = null; row.status = 'inprog';
+          } else {
+            row.correct = correct; row.total = total; row.score = pct;
+            row.status = gradeFor(pct);
+          }
+        }
+        out.push(row);
+      }
+    });
+  });
+  return out;
+}
+const ATTEMPTS = generateAttempts();
+
+/* ============================================================
+   Boot + tab switching
+   ============================================================ */
+function boot() {
+  // Populate filter dropdowns
+  const taskSel = document.getElementById('filterTask');
+  const contentTaskSel = document.getElementById('filterContentTask');
+  TASKS.forEach(t => {
+    taskSel.insertAdjacentHTML('beforeend', '<option value="' + t.key + '">' + t.label + '</option>');
+    contentTaskSel.insertAdjacentHTML('beforeend', '<option value="' + t.key + '">' + t.label + '</option>');
+  });
+
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+    });
+  });
+
+  // Bind filters
+  ['searchOverview','filterTask','filterStatus'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderOverview);
+  });
+  ['searchContent','filterContentTask'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderByContent);
+  });
+  document.getElementById('searchProgress').addEventListener('input', renderProgress);
+  document.getElementById('searchKarte').addEventListener('input', renderKarteList);
+
+  // Sortable headers
+  document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => sortColumn(th));
+  });
+
+  renderOverview();
+  renderByContent();
+  renderReport();
+  renderKarteList();
+  renderProgress();
+}
+
+/* Sort state */
+const sortState = {};
+function sortColumn(th) {
+  const table = th.closest('table').id;
+  const key = th.dataset.sort;
+  const prev = sortState[table] || {};
+  const dir = (prev.key === key && prev.dir === 'asc') ? 'desc' : 'asc';
+  sortState[table] = { key, dir };
+  th.closest('thead').querySelectorAll('th').forEach(h => h.classList.remove('sorted-asc','sorted-desc'));
+  th.classList.add(dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+  if (table === 'overviewTable') renderOverview();
+  if (table === 'byContentTable') renderByContent();
+}
+
+function cmp(a, b) { return a < b ? -1 : a > b ? 1 : 0; }
+function applySort(rows, tableId) {
+  const s = sortState[tableId];
+  if (!s) return rows;
+  return rows.slice().sort((x, y) => {
+    const d = cmp(x[s.key], y[s.key]);
+    return s.dir === 'asc' ? d : -d;
+  });
+}
+
+/* ============================================================
+   Tab: 一覧
+   ============================================================ */
+function renderOverview() {
+  const q = document.getElementById('searchOverview').value.toLowerCase().trim();
+  const fTask = document.getElementById('filterTask').value;
+  const fStatus = document.getElementById('filterStatus').value;
+  let rows = ATTEMPTS.filter(a => {
+    if (fTask && a.task !== fTask) return false;
+    if (fStatus && a.status !== fStatus) return false;
+    if (q) {
+      const hay = (a.userName + ' ' + a.displayName + ' ' + a.userId + ' ' + a.taskLabel + ' ' + a.practice).toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  });
+  rows = applySort(rows, 'overviewTable');
+  document.getElementById('overviewCount').textContent = rows.length.toLocaleString();
+  const body = document.getElementById('overviewBody');
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="9" class="empty">該当データなし</td></tr>';
+    return;
+  }
+  body.innerHTML = rows.slice(0, 500).map(a => {
+    const statusPill = '<span class="pill ' + a.status + '">' + (GRADE_LABELS[a.status] || a.status) + '</span>';
+    let scoreText;
+    if (a.status === 'inprog') scoreText = '—';
+    else if (!a.autoGraded) scoreText = '—';
+    else scoreText = a.correct + '/' + a.total + ' (' + a.score + '%)';
+    return '<tr>' +
+      '<td>' + escapeHtml(a.userName) + '</td>' +
+      '<td class="muted">' + escapeHtml(a.displayName) + '</td>' +
+      '<td class="muted">' + a.userId + '</td>' +
+      '<td><span class="task-tag">' + a.taskLabel + '</span></td>' +
+      '<td>Practice ' + a.practice + '</td>' +
+      '<td class="num">' + scoreText + '</td>' +
+      '<td>' + statusPill + '</td>' +
+      '<td class="muted num">' + a.updatedAt + '</td>' +
+      '<td><button class="link-btn" onclick="showDetail(\'' + a.userId + '\',\'' + a.task + '\',' + a.practice + ')">詳細</button></td>' +
+      '</tr>';
+  }).join('') + (rows.length > 500 ? '<tr><td colspan="9" class="muted" style="text-align:center;padding:12px">…最初の 500 件を表示。CSV でエクスポート可能。</td></tr>' : '');
+}
+
+/* ============================================================
+   Tab: コンテンツ別
+   ============================================================ */
+function renderByContent() {
+  const q = document.getElementById('searchContent').value.toLowerCase().trim();
+  const fTask = document.getElementById('filterContentTask').value;
+  const groups = {};
+  ATTEMPTS.forEach(a => {
+    if (fTask && a.task !== fTask) return;
+    const k = a.task + '#' + a.practice;
+    if (!groups[k]) groups[k] = { task: a.task, taskLabel: a.taskLabel, autoGraded: a.autoGraded, practice: a.practice, attempts: 0, totalScore: 0, high: 0, counted: 0, scores: [] };
+    groups[k].attempts++;
+    if (a.autoGraded && a.score !== null) {
+      groups[k].counted++;
+      groups[k].totalScore += a.score;
+      groups[k].scores.push(a.score);
+      if (a.score >= 80) groups[k].high++;
+    }
+  });
+  let rows = Object.values(groups).map(g => ({
+    task: g.taskLabel,
+    autoGraded: g.autoGraded,
+    practice: g.practice,
+    attempts: g.attempts,
+    avgScore: g.counted ? Math.round(g.totalScore / g.counted) : null,
+    highRate: g.counted ? Math.round(g.high / g.counted * 100) : null,
+    scores: g.scores,
+  }));
+  if (q) rows = rows.filter(r => (r.task + ' Practice ' + r.practice).toLowerCase().indexOf(q) !== -1);
+  rows = applySort(rows, 'byContentTable');
+  document.getElementById('byContentCount').textContent = rows.length.toLocaleString();
+  const body = document.getElementById('byContentBody');
+  if (!rows.length) { body.innerHTML = '<tr><td colspan="6" class="empty">該当なし</td></tr>'; return; }
+  body.innerHTML = rows.map(r => {
+    const dist = r.autoGraded ? buildDistributionBar(r.scores) : '<span class="muted" style="font-size:.86em">自動採点なし</span>';
+    const avgCell = r.autoGraded ? (r.avgScore + '%') : '—';
+    const highCell = r.autoGraded ? (r.highRate + '%') : '—';
+    return '<tr>' +
+      '<td><span class="task-tag">' + r.task + '</span></td>' +
+      '<td>Practice ' + r.practice + '</td>' +
+      '<td class="num">' + r.attempts + '</td>' +
+      '<td class="num">' + avgCell + '</td>' +
+      '<td class="num">' + highCell + '</td>' +
+      '<td>' + dist + '</td>' +
+      '</tr>';
+  }).join('');
+}
+function buildDistributionBar(scores) {
+  if (!scores.length) return '<span class="muted">—</span>';
+  const buckets = [0,0,0,0]; // 0-50, 50-70, 70-90, 90+
+  scores.forEach(s => {
+    if (s < 50) buckets[0]++;
+    else if (s < 70) buckets[1]++;
+    else if (s < 90) buckets[2]++;
+    else buckets[3]++;
+  });
+  const total = scores.length;
+  const pct = buckets.map(b => Math.round(b / total * 100));
+  return '<div style="display:flex;height:14px;border-radius:4px;overflow:hidden;background:var(--paper);min-width:160px">' +
+    '<div title="<50%:' + buckets[0] + '" style="width:' + pct[0] + '%;background:#B85C3C"></div>' +
+    '<div title="50-70%:' + buckets[1] + '" style="width:' + pct[1] + '%;background:var(--gold)"></div>' +
+    '<div title="70-90%:' + buckets[2] + '" style="width:' + pct[2] + '%;background:var(--sky)"></div>' +
+    '<div title="≥90%:' + buckets[3] + '" style="width:' + pct[3] + '%;background:var(--green)"></div>' +
+    '</div>';
+}
+
+/* ============================================================
+   Tab: レポート
+   ============================================================ */
+function renderReport() {
+  document.getElementById('rptUsers').textContent = MOCK_USERS.length;
+  const activeCutoff = new Date(); activeCutoff.setDate(activeCutoff.getDate() - 30);
+  const activeSet = new Set(ATTEMPTS.filter(a => new Date(a.updatedAt) >= activeCutoff).map(a => a.userId));
+  document.getElementById('rptActive').textContent = activeSet.size;
+  document.getElementById('rptAttempts').textContent = ATTEMPTS.filter(a => a.status !== 'inprog').length.toLocaleString();
+  const scored = ATTEMPTS.filter(a => a.autoGraded && a.score !== null);
+  const highCount = scored.filter(a => a.score >= 80).length;
+  document.getElementById('rptPassRate').textContent = scored.length ? Math.round(highCount / scored.length * 100) + '%' : '—';
+
+  // Section bars — only auto-graded tasks contribute to average score
+  const sections = ['Reading','Listening','Writing','Speaking'];
+  const sectionBars = sections.map(sec => {
+    const items = ATTEMPTS.filter(a => a.section === sec && a.autoGraded && a.score !== null);
+    if (!items.length) {
+      return '<div class="bar-row"><div class="bar-label">' + sec + '</div><div class="bar-track"></div><div class="bar-value" style="color:var(--ink-500)">自動採点なし</div></div>';
+    }
+    const avg = Math.round(items.reduce((s, i) => s + i.score, 0) / items.length);
+    const cls = avg >= 70 ? '' : avg >= 50 ? 'warn' : 'low';
+    return '<div class="bar-row"><div class="bar-label">' + sec + '</div><div class="bar-track"><div class="bar-fill ' + cls + '" style="width:' + avg + '%"></div></div><div class="bar-value">' + avg + '%</div></div>';
+  }).join('');
+  document.getElementById('sectionBars').innerHTML = sectionBars;
+
+  // Popular tasks
+  const tally = {};
+  ATTEMPTS.forEach(a => { tally[a.taskLabel] = (tally[a.taskLabel] || 0) + 1; });
+  const max = Math.max.apply(null, Object.values(tally));
+  const popular = Object.entries(tally).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([label, count]) => {
+    const pct = Math.round(count / max * 100);
+    return '<div class="bar-row"><div class="bar-label">' + label + '</div><div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;background:var(--sky)"></div></div><div class="bar-value">' + count + '</div></div>';
+  }).join('');
+  document.getElementById('popularBars').innerHTML = popular;
+}
+
+/* ============================================================
+   Tab: 個人カルテ
+   ============================================================ */
+let selectedKarteUser = null;
+function renderKarteList() {
+  const q = document.getElementById('searchKarte').value.toLowerCase().trim();
+  const users = MOCK_USERS.filter(u => !q || (u.userName + ' ' + u.displayName + ' ' + u.userId + ' ' + u.email).toLowerCase().indexOf(q) !== -1);
+  document.getElementById('karteCount').textContent = users.length;
+  const list = document.getElementById('karteUserList');
+  list.innerHTML = users.map(u => {
+    const act = selectedKarteUser === u.userId ? ' active' : '';
+    return '<div class="karte-user' + act + '" onclick="selectKarte(\'' + u.userId + '\')"><div class="karte-user-name">' + escapeHtml(u.userName) + '</div><div class="karte-user-meta">' + u.userId + ' · ' + escapeHtml(u.email) + '</div></div>';
+  }).join('') || '<div class="empty">該当なし</div>';
+}
+function selectKarte(userId) {
+  selectedKarteUser = userId;
+  renderKarteList();
+  renderKarteDetail();
+}
+function renderKarteDetail() {
+  const u = MOCK_USERS.find(x => x.userId === selectedKarteUser);
+  const el = document.getElementById('karteDetail');
+  if (!u) return;
+  const attempts = ATTEMPTS.filter(a => a.userId === u.userId);
+  const sections = ['Reading','Listening','Writing','Speaking'];
+  const sectionBlocks = sections.map(sec => {
+    const auto = attempts.filter(a => a.section === sec && a.autoGraded && a.score !== null);
+    const nonAuto = attempts.filter(a => a.section === sec && !a.autoGraded && a.status === 'submitted');
+    if (auto.length) {
+      const avg = Math.round(auto.reduce((s, i) => s + i.score, 0) / auto.length);
+      return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div><div class="skill-score-val">' + avg + '%</div><div class="skill-score-sub">' + auto.length + ' attempt' + (auto.length === 1 ? '' : 's') + '</div></div>';
+    }
+    if (nonAuto.length) {
+      return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div><div class="skill-score-val" style="font-size:1.05em">' + nonAuto.length + ' 提出</div><div class="skill-score-sub">自動採点なし</div></div>';
+    }
+    return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div><div class="skill-score-val">—</div><div class="skill-score-sub">まだ未受験</div></div>';
+  }).join('');
+  const recent = attempts.slice().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, 12);
+  const activityRows = recent.map(a => {
+    const status = '<span class="pill ' + a.status + '">' + (GRADE_LABELS[a.status] || a.status) + '</span>';
+    const score = (a.status === 'inprog' || !a.autoGraded) ? '—' : (a.score + '%');
+    return '<tr><td class="muted">' + a.updatedAt + '</td><td><span class="task-tag">' + a.taskLabel + '</span></td><td>P' + a.practice + '</td><td class="num">' + score + '</td><td>' + status + '</td></tr>';
+  }).join('');
+  el.innerHTML = '<div class="karte-head"><h3>' + escapeHtml(u.userName) + ' <span style="color:var(--ink-500);font-weight:500;font-size:.7em">(' + u.displayName + ')</span></h3><div class="kmeta">' + u.userId + ' · ' + escapeHtml(u.email) + ' · 登録 ' + u.joined + '</div></div>'
+    + '<div class="skill-scores">' + sectionBlocks + '</div>'
+    + '<div class="karte-activity"><h4>Recent activity · 最新の学習履歴</h4><table class="atable"><thead><tr><th>日付</th><th>タスク</th><th>Practice</th><th class="num">スコア</th><th>合否</th></tr></thead><tbody>' + activityRows + '</tbody></table></div>';
+}
+
+/* ============================================================
+   Tab: 進捗状況 — per-user matrix
+   ============================================================ */
+function renderProgress() {
+  const q = document.getElementById('searchProgress').value.toLowerCase().trim();
+  const users = MOCK_USERS.filter(u => !q || (u.userName + ' ' + u.userId + ' ' + u.email).toLowerCase().indexOf(q) !== -1);
+  document.getElementById('progressCount').textContent = users.length;
+
+  // Head
+  const head = document.getElementById('progressHead');
+  head.innerHTML = '<th class="sticky-col">ユーザー</th>' + TASKS.map(t => '<th style="min-width:90px">' + t.label + '</th>').join('') + '<th>Total</th>';
+
+  const body = document.getElementById('progressBody');
+  body.innerHTML = users.map(u => {
+    const cells = TASKS.map(t => {
+      const items = ATTEMPTS.filter(a => a.userId === u.userId && a.task === t.key);
+      if (!items.length) return '<td><span class="cell-none">—</span></td>';
+      if (!t.autoGraded) {
+        const submitted = items.filter(a => a.status === 'submitted').length;
+        const inprog = items.filter(a => a.status === 'inprog').length;
+        if (submitted) return '<td><span class="cell-score sSubmitted" title="' + submitted + ' submitted">' + submitted + ' 提出</span></td>';
+        if (inprog) return '<td><span class="cell-score sProg">…</span></td>';
+        return '<td><span class="cell-none">—</span></td>';
+      }
+      const scored = items.filter(a => a.score !== null);
+      if (!scored.length) return '<td><span class="cell-score sProg">…</span></td>';
+      const avg = Math.round(scored.reduce((s, i) => s + i.score, 0) / scored.length);
+      const cls = avg === 100 ? 's100' : avg >= 80 ? 's80' : avg >= 50 ? 's50' : 'sLow';
+      return '<td><span class="cell-score ' + cls + '" title="' + scored.length + ' attempts">' + avg + '%</span></td>';
+    }).join('');
+    const allScored = ATTEMPTS.filter(a => a.userId === u.userId && a.autoGraded && a.score !== null);
+    const overall = allScored.length ? Math.round(allScored.reduce((s, i) => s + i.score, 0) / allScored.length) : null;
+    const overallCell = overall === null ? '<span class="cell-none">—</span>' : '<span class="cell-score ' + (overall === 100 ? 's100' : overall >= 80 ? 's80' : overall >= 50 ? 's50' : 'sLow') + '">' + overall + '%</span>';
+    return '<tr><td class="sticky-col"><strong>' + escapeHtml(u.userName) + '</strong><div style="font-size:.82em;color:var(--ink-500);font-family:var(--font-en)">' + u.userId + '</div></td>' + cells + '<td>' + overallCell + '</td></tr>';
+  }).join('');
+}
+
+/* ============================================================
+   CSV export
+   ============================================================ */
+function exportCSV(kind) {
+  let rows = [], filename = '';
+  if (kind === 'overview') {
+    filename = 'tck-learning-log-' + today() + '.csv';
+    rows.push(['氏名','ディスプレイネーム','ログインID','メール','タスクタイプ','Practice','正答数','総問数','得点率(%)','評価','自動採点','最終更新']);
+    ATTEMPTS.forEach(a => rows.push([a.userName, a.displayName, a.userId, a.email, a.taskLabel, a.practice, a.correct ?? '', a.total ?? '', a.score ?? '', GRADE_LABELS[a.status] || a.status, a.autoGraded ? 'Yes' : 'No', a.updatedAt]));
+  } else if (kind === 'by-content') {
+    filename = 'tck-by-content-' + today() + '.csv';
+    rows.push(['タスクタイプ','Practice','受験者数','平均得点率(%)','高評価率(%)']);
+    const groups = {};
+    ATTEMPTS.forEach(a => {
+      const k = a.task + '#' + a.practice;
+      if (!groups[k]) groups[k] = { task: a.taskLabel, practice: a.practice, autoGraded: a.autoGraded, attempts: 0, high: 0, total: 0, counted: 0 };
+      groups[k].attempts++;
+      if (a.autoGraded && a.score !== null) { groups[k].counted++; groups[k].total += a.score; if (a.score >= 80) groups[k].high++; }
+    });
+    Object.values(groups).forEach(g => rows.push([g.task, g.practice, g.attempts,
+      g.autoGraded ? (g.counted ? Math.round(g.total/g.counted) : '') : '',
+      g.autoGraded ? (g.counted ? Math.round(g.high/g.counted*100) : '') : '']));
+  } else if (kind === 'progress') {
+    filename = 'tck-progress-' + today() + '.csv';
+    rows.push(['ユーザー','ログインID','メール', ...TASKS.map(t => t.label), 'Overall']);
+    MOCK_USERS.forEach(u => {
+      const cells = TASKS.map(t => {
+        if (!t.autoGraded) {
+          const subs = ATTEMPTS.filter(a => a.userId === u.userId && a.task === t.key && a.status === 'submitted').length;
+          return subs ? subs + ' submitted' : '';
+        }
+        const items = ATTEMPTS.filter(a => a.userId === u.userId && a.task === t.key && a.score !== null);
+        return items.length ? Math.round(items.reduce((s,i)=>s+i.score,0)/items.length) + '%' : '';
+      });
+      const all = ATTEMPTS.filter(a => a.userId === u.userId && a.autoGraded && a.score !== null);
+      const overall = all.length ? Math.round(all.reduce((s,i)=>s+i.score,0)/all.length) + '%' : '';
+      rows.push([u.userName, u.userId, u.email, ...cells, overall]);
+    });
+  }
+  const csv = rows.map(r => r.map(cell => {
+    const s = String(cell ?? '');
+    return /[,"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }).join(',')).join('\r\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function today() { const d = new Date(); return d.toISOString().slice(0, 10); }
+function escapeHtml(s) { return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* Detail modal (stub) */
+function showDetail(userId, task, practice) {
+  const u = MOCK_USERS.find(x => x.userId === userId);
+  const a = ATTEMPTS.find(x => x.userId === userId && x.task === task && x.practice === practice);
+  alert((u ? u.userName : userId) + ' · ' + (a ? a.taskLabel : task) + ' · Practice ' + practice + '\n' +
+        (a ? ('スコア: ' + (a.score ?? '—') + '%  合否: ' + a.status + '\n最終更新: ' + a.updatedAt) : ''));
+}
+
+/* ============================================================
+   Admin gate + boot (runs after all consts are initialized)
+   ============================================================ */
+if (__currentUser && isAdmin(__currentUser)) {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('adminApp').classList.add('active');
+  document.getElementById('adminUser').innerHTML = '<strong>' + (__currentUser.userName || 'admin') + '</strong> <span style="opacity:.7">' + (__currentUser.email || '') + '</span>';
+  boot();
+} else if (!__currentUser) {
+  document.getElementById('gate').innerHTML = '<h2>🔒 ログインが必要です</h2><p>管理画面を見るには、TCK Workshop アカウントでログインしてください。</p><a href="../index.html">ログインへ</a>';
+} else {
+  document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
+}
+</script>
+</body>
+</html>
