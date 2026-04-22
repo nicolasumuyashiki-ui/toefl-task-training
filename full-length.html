@@ -53,7 +53,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 .notify-btn:hover{background:var(--green-dark);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,118,70,.2)}
 .notify-btn.subscribed{background:transparent;color:var(--green-dark);border:1.5px solid var(--green)}
 
-.footer{max-width:860px;margin:0 auto;padding:24px 28px 48px;border-top:1px solid var(--paper);color:var(--ink-500);font-size:.78em;display:flex;justify-content:space-between;font-family:var(--font-en)}
+.footer{max-width:860px;margin:0 auto;padding:24px 28px 48px;border-top:1px solid var(--paper);color:var(--ink-500);font-size:.82em;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-en);gap:16px;flex-wrap:wrap}.footer-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:var(--green);color:var(--white);border-radius:999px;font-family:var(--font-en);font-size:.88em;font-weight:600;text-decoration:none;transition:all .18s ease}.footer-cta:hover{background:var(--green-dark);transform:translateX(2px);box-shadow:0 6px 18px rgba(0,118,70,.18)}.footer-cta .arrow{font-size:1em;line-height:1}
 </style>
 </head>
 <body data-lang="jp">
@@ -98,10 +98,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 
 <div class="footer">
   <span>© TCK Workshop</span>
-  <a href="menu.html" style="color:var(--ink-500);text-decoration:none">
-    <span class="jp">メニューに戻る</span>
-    <span class="en">Back to menu</span> →
-  </a>
+  <a class="footer-cta" href="menu.html"><span class="jp">メニューに戻る</span><span class="en">Back to menu</span><span class="arrow">→</span></a>
 </div>
 
 <script src="js/auth.js"></script>

@@ -83,13 +83,29 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 
 .empty{padding:56px 20px;text-align:center;color:var(--ink-500);font-size:.9em}
 
+.review-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;background:var(--white);border:1.5px solid var(--green);border-radius:999px;font-family:var(--font-en),var(--font-jp);font-size:.78em;font-weight:600;color:var(--green-dark);text-decoration:none;cursor:pointer;transition:all .15s;white-space:nowrap}
+.review-btn:hover{background:var(--green);color:var(--white)}
+.review-btn .arrow{font-size:.95em}
+
+.activity-pager{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-top:1px solid var(--paper);background:var(--cream);font-family:var(--font-en);font-size:.82em;color:var(--ink-500);gap:12px;flex-wrap:wrap}
+.pager-info{font-weight:500}
+.pager-info strong{color:var(--ink-900);font-weight:700}
+.pager-controls{display:flex;gap:6px;align-items:center}
+.pager-btn{background:var(--white);border:1px solid var(--paper);color:var(--ink-900);padding:6px 12px;border-radius:8px;font-family:var(--font-en);font-size:.86em;font-weight:600;cursor:pointer;transition:all .15s}
+.pager-btn:hover:not(:disabled){border-color:var(--green);color:var(--green-dark)}
+.pager-btn:disabled{opacity:.35;cursor:not-allowed}
+.pager-page{font-family:var(--font-en);font-size:.86em;color:var(--ink-900);font-weight:600;padding:0 10px}
+
 /* ===== SOURCES / DISCLAIMER ===== */
 .disclaimer{max-width:980px;margin:20px auto 60px;padding:0 28px;font-size:.82em;color:var(--ink-500);line-height:1.75}
 .disclaimer h3{font-family:var(--font-en);font-size:.78em;font-weight:700;color:var(--green-dark);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
 .disclaimer ul{list-style:disc;padding-left:22px;margin-top:6px}
 .disclaimer li{margin-bottom:4px}
 
-.footer{max-width:980px;margin:0 auto;padding:24px 28px 48px;border-top:1px solid var(--paper);color:var(--ink-500);font-size:.78em;display:flex;justify-content:space-between;font-family:var(--font-en)}
+.footer{max-width:980px;margin:0 auto;padding:24px 28px 48px;border-top:1px solid var(--paper);color:var(--ink-500);font-size:.82em;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-en);gap:16px;flex-wrap:wrap}
+.footer-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:var(--green);color:var(--white);border-radius:999px;font-family:var(--font-en);font-size:.88em;font-weight:600;text-decoration:none;transition:all .18s ease}
+.footer-cta:hover{background:var(--green-dark);transform:translateX(2px);box-shadow:0 6px 18px rgba(0,118,70,.18)}
+.footer-cta .arrow{font-family:var(--font-en);font-size:1em;line-height:1}
 </style>
 </head>
 <body data-lang="jp">
@@ -146,8 +162,8 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 <div class="skills-grid" id="skillsGrid"></div>
 
 <div class="section">
-  <h2><span class="jp">最新の学習履歴</span><span class="en">Recent activity</span></h2>
-  <p class="section-sub"><span class="jp">直近 15 回分の学習履歴を表示します。</span><span class="en">Your most recent 15 attempts.</span></p>
+  <h2><span class="jp">学習履歴</span><span class="en">Activity history</span></h2>
+  <p class="section-sub"><span class="jp">これまでの学習履歴をすべて確認できます。復習したい問題にジャンプすることもできます。</span><span class="en">Browse your full practice history. You can also jump back to any item to review it.</span></p>
   <div class="activity-card">
     <table class="atable">
       <thead>
@@ -157,10 +173,12 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
           <th><span class="jp">Practice</span><span class="en">Practice</span></th>
           <th class="num"><span class="jp">得点率</span><span class="en">Score</span></th>
           <th><span class="jp">評価</span><span class="en">Grade</span></th>
+          <th style="width:1%;white-space:nowrap"></th>
         </tr>
       </thead>
       <tbody id="activityBody"></tbody>
     </table>
+    <div id="activityPager" class="activity-pager"></div>
   </div>
 </div>
 
@@ -179,8 +197,9 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 
 <div class="footer">
   <span>© TCK Workshop</span>
-  <a href="menu.html" style="color:var(--ink-500);text-decoration:none">
-    <span class="jp">メニューに戻る</span><span class="en">Back to menu</span> →
+  <a class="footer-cta" href="menu.html">
+    <span class="jp">メニューに戻る</span><span class="en">Back to menu</span>
+    <span class="arrow">→</span>
   </a>
 </div>
 
@@ -434,30 +453,90 @@ function render() {
     '</div>';
   }).join('');
 
-  // Activity — sort by most recent attempt (we don't have real timestamps per attempt,
-  // so we order by task flow + practice descending as a proxy).
-  // When real timestamps come from API, swap to updatedAt sort.
-  const activity = attempts.filter(a => a.status === 'done').slice().reverse().slice(0, 15);
+  // Store all completed attempts for pagination
+  window.__activityRows = attempts.filter(a => a.status === 'done').slice().reverse();
+  window.__activityPage = 0;
+  renderActivityPage();
+}
+
+const TASK_PATHS = {
+  ctw: (n) => 'reading/ctw/practice-' + n + '-set-1.html',
+  rdl: (n) => 'reading/rdl/practice-' + n + '.html',
+  academic: (n) => 'reading/academic/practice-' + n + '.html',
+  lcr: (n) => 'listening/lcr/practice-' + n + '.html',
+  conv: (n) => 'listening/conv/practice-' + n + '.html',
+  announce: (n) => 'listening/announce/practice-' + n + '.html',
+  talk: (n) => 'listening/talk/practice-' + n + '.html',
+  sentence: (n) => 'writing/sentence/practice-' + n + '.html',
+  email: (n) => 'writing/email/practice-' + n + '.html',
+  discussion: (n) => 'writing/discussion/practice-' + n + '.html',
+  lr: (n) => 'speaking/lr/practice-' + n + '.html',
+  ti: (n) => 'speaking/ti/practice-' + n + '.html',
+};
+
+const ROWS_PER_PAGE = 15;
+
+function renderActivityPage() {
+  const rows = window.__activityRows || [];
   const tbody = document.getElementById('activityBody');
-  if (!activity.length) {
-    tbody.innerHTML = '<tr><td colspan="5" class="empty"><span class="jp">まだ学習履歴がありません。メニューから練習を始めましょう。</span><span class="en">No practice history yet. Start from the menu.</span></td></tr>';
+  const pager = document.getElementById('activityPager');
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty"><span class="jp">まだ学習履歴がありません。メニューから練習を始めましょう。</span><span class="en">No practice history yet. Start from the menu.</span></td></tr>';
+    pager.innerHTML = '';
     return;
   }
-  tbody.innerHTML = activity.map(a => {
+  const page = window.__activityPage || 0;
+  const totalPages = Math.max(1, Math.ceil(rows.length / ROWS_PER_PAGE));
+  const start = page * ROWS_PER_PAGE;
+  const slice = rows.slice(start, start + ROWS_PER_PAGE);
+
+  tbody.innerHTML = slice.map(a => {
     const grade = a.autoGraded ? gradeFor(a.pct) : 'submitted';
     const jp = GRADE_LABELS_JP[grade] || grade;
     const en = GRADE_LABELS_EN[grade] || grade;
     const pill = '<span class="pill ' + grade + '"><span class="jp">' + jp + '</span><span class="en">' + en + '</span></span>';
     const score = a.autoGraded ? (a.correct + '/' + a.total + ' · ' + a.pct + '%') : '—';
     const when = a.updatedAt || '—';
+    const path = TASK_PATHS[a.task] ? TASK_PATHS[a.task](a.practice) : null;
+    const reviewBtn = path
+      ? '<a class="review-btn" href="' + path + '"><span class="jp">復習する</span><span class="en">Review</span><span class="arrow">→</span></a>'
+      : '';
     return '<tr>' +
       '<td class="muted">' + when + '</td>' +
       '<td><span class="task-tag">' + a.label + '</span></td>' +
       '<td>Practice ' + a.practice + '</td>' +
       '<td class="num">' + score + '</td>' +
       '<td>' + pill + '</td>' +
+      '<td>' + reviewBtn + '</td>' +
     '</tr>';
   }).join('');
+
+  const showingFrom = start + 1;
+  const showingTo = Math.min(start + ROWS_PER_PAGE, rows.length);
+  pager.innerHTML =
+    '<div class="pager-info">'
+      + '<span class="jp"><strong>' + showingFrom + '〜' + showingTo + '</strong> / ' + rows.length + ' 件</span>'
+      + '<span class="en"><strong>' + showingFrom + '–' + showingTo + '</strong> of ' + rows.length + '</span>'
+    + '</div>'
+    + '<div class="pager-controls">'
+      + '<button type="button" class="pager-btn" onclick="goActivityPage(0)"' + (page === 0 ? ' disabled' : '') + '>«</button>'
+      + '<button type="button" class="pager-btn" onclick="goActivityPage(' + (page - 1) + ')"' + (page === 0 ? ' disabled' : '') + '>‹</button>'
+      + '<span class="pager-page">' + (page + 1) + ' / ' + totalPages + '</span>'
+      + '<button type="button" class="pager-btn" onclick="goActivityPage(' + (page + 1) + ')"' + (page >= totalPages - 1 ? ' disabled' : '') + '>›</button>'
+      + '<button type="button" class="pager-btn" onclick="goActivityPage(' + (totalPages - 1) + ')"' + (page >= totalPages - 1 ? ' disabled' : '') + '>»</button>'
+    + '</div>';
+}
+
+function goActivityPage(p) {
+  const rows = window.__activityRows || [];
+  const totalPages = Math.max(1, Math.ceil(rows.length / ROWS_PER_PAGE));
+  if (p < 0) p = 0;
+  if (p >= totalPages) p = totalPages - 1;
+  window.__activityPage = p;
+  renderActivityPage();
+  // Scroll to top of the activity section
+  const sec = document.querySelector('.activity-card');
+  if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function aggregateSectionTask(attempts, taskKey) {
