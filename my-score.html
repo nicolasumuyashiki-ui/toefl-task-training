@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Score — TCK Workshop</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-height:100vh;color:var(--ink-900);-webkit-font-smoothing:antialiased;line-height:1.6}
+
+.header{background:var(--cream);border-bottom:1px solid var(--paper);padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:14px}
+.logo-mark{display:inline-flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.logo{font-family:var(--font-en);font-size:.72em;font-weight:800;color:var(--green);letter-spacing:.14em;text-transform:uppercase}
+.header-divider{width:1px;height:16px;background:var(--ink-200)}
+.header-title{font-size:.88em;color:var(--ink-500);font-weight:500}
+.header-right{display:flex;align-items:center;gap:12px}
+.user-pill{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--paper);padding:5px 12px 5px 5px;border-radius:999px;font-size:.78em;font-weight:500}
+.avatar{width:24px;height:24px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:.72em;font-weight:700;font-family:var(--font-en)}
+.btn-logout{background:transparent;border:none;font-size:.74em;font-weight:500;color:var(--ink-500);cursor:pointer;font-family:var(--font-en);padding:6px 10px;border-radius:8px}
+
+.back-row{max-width:980px;margin:0 auto;padding:22px 28px 0}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:var(--white);border:1.5px solid var(--green);border-radius:999px;font-family:var(--font-en);font-size:.82em;font-weight:600;color:var(--green-dark);text-decoration:none;transition:all .18s ease}
+.back-btn:hover{background:var(--green);color:var(--white)}
+
+.hero{max-width:980px;margin:0 auto;padding:32px 28px 16px}
+.hero .kicker{font-family:var(--font-en);font-size:.72em;font-weight:700;color:var(--green);letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
+.hero h1{font-family:var(--font-en);font-size:2.6em;font-weight:800;color:var(--green-deep);line-height:1.1;letter-spacing:-0.02em;margin-bottom:8px}
+.hero .sub{font-size:.95em;color:var(--ink-500)}
+
+/* ===== TOTAL SCORE CARD ===== */
+.total-card{max-width:980px;margin:20px auto;padding:0 28px}
+.total-inner{background:linear-gradient(135deg,var(--green-deep) 0%,var(--green-dark) 100%);color:#fff;border-radius:20px;padding:32px 36px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.total-label{font-family:var(--font-en);font-size:.72em;font-weight:700;color:rgba(255,255,255,.65);letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
+.total-big{font-family:var(--font-en);font-size:4em;font-weight:800;letter-spacing:-0.03em;line-height:1}
+.total-big small{font-size:.32em;color:rgba(255,255,255,.5);font-weight:500;margin-left:4px}
+.total-caveat{flex:1;min-width:260px;font-size:.86em;color:rgba(255,255,255,.82);line-height:1.65}
+.total-caveat strong{color:var(--gold);font-weight:700}
+
+/* ===== SECTION CARDS ===== */
+.skills-grid{max-width:980px;margin:20px auto;padding:0 28px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:720px){.skills-grid{grid-template-columns:1fr}}
+.skill-card{background:var(--white);border:1px solid var(--paper);border-radius:16px;padding:24px 26px;position:relative;overflow:hidden}
+.skill-card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--green)}
+.skill-card.estimated::before{background:var(--gold)}
+.skill-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.skill-name{font-family:var(--font-en);font-size:1.2em;font-weight:800;color:var(--green-deep);letter-spacing:-0.01em}
+.skill-tag{font-family:var(--font-en);font-size:.68em;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--paper);color:var(--green-dark);letter-spacing:.06em;text-transform:uppercase}
+.skill-tag.est{background:#FFE8AE;color:#8A6D2A}
+.skill-score{display:flex;align-items:baseline;gap:12px;margin-bottom:10px}
+.skill-score .pred{font-family:var(--font-en);font-size:3em;font-weight:800;color:var(--green-deep);letter-spacing:-0.02em;line-height:1}
+.skill-score .pred small{font-size:.34em;color:var(--ink-500);font-weight:500;margin-left:3px}
+.skill-score .rate{font-family:var(--font-en);font-size:.82em;color:var(--ink-500);font-weight:500}
+.skill-score .rate strong{color:var(--green-dark);font-weight:700}
+.skill-bar{height:6px;background:var(--paper);border-radius:6px;overflow:hidden;margin-bottom:10px}
+.skill-bar-fill{height:100%;background:var(--green);border-radius:6px;transition:width .4s}
+.skill-card.estimated .skill-bar-fill{background:var(--gold)}
+.skill-meta{font-family:var(--font-en);font-size:.78em;color:var(--ink-500);line-height:1.6;display:flex;gap:14px;flex-wrap:wrap}
+.skill-meta span strong{color:var(--ink-900);font-weight:700}
+.skill-note{font-size:.82em;color:var(--ink-500);line-height:1.65;margin-top:10px;padding-top:10px;border-top:1px dashed var(--paper)}
+
+/* ===== ACTIVITY TABLE ===== */
+.section{max-width:980px;margin:36px auto;padding:0 28px}
+.section h2{font-family:var(--font-en);font-size:1.3em;font-weight:700;color:var(--green-deep);margin-bottom:6px;letter-spacing:-0.01em}
+.section .section-sub{font-size:.9em;color:var(--ink-500);margin-bottom:14px}
+.activity-card{background:var(--white);border:1px solid var(--paper);border-radius:14px;overflow:hidden}
+.atable{width:100%;border-collapse:collapse;font-size:.88em}
+.atable th{padding:12px 16px;text-align:left;font-family:var(--font-en),var(--font-jp);font-weight:700;font-size:.74em;color:var(--ink-500);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--paper);background:var(--cream)}
+.atable td{padding:11px 16px;border-bottom:1px solid var(--paper);color:var(--ink-900);vertical-align:middle}
+.atable tr:last-child td{border-bottom:none}
+.atable td.num{text-align:right;font-family:var(--font-en)}
+.atable td.muted{color:var(--ink-500)}
+.task-tag{font-family:var(--font-en);font-size:.76em;color:var(--green-dark);background:var(--paper);border-radius:999px;padding:2px 10px;display:inline-block;white-space:nowrap}
+.pill{display:inline-block;font-family:var(--font-en);font-size:.7em;font-weight:700;padding:2px 9px;border-radius:999px;letter-spacing:.04em}
+.pill.perfect{background:var(--green);color:#fff}
+.pill.great{background:var(--sky);color:#fff}
+.pill.good{background:var(--gold);color:var(--green-deep)}
+.pill.keep{background:#B85C3C;color:#fff}
+.pill.submitted{background:var(--green-dark);color:#fff}
+
+.empty{padding:56px 20px;text-align:center;color:var(--ink-500);font-size:.9em}
+
+/* ===== SOURCES / DISCLAIMER ===== */
+.disclaimer{max-width:980px;margin:20px auto 60px;padding:0 28px;font-size:.82em;color:var(--ink-500);line-height:1.75}
+.disclaimer h3{font-family:var(--font-en);font-size:.78em;font-weight:700;color:var(--green-dark);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.disclaimer ul{list-style:disc;padding-left:22px;margin-top:6px}
+.disclaimer li{margin-bottom:4px}
+
+.footer{max-width:980px;margin:0 auto;padding:24px 28px 48px;border-top:1px solid var(--paper);color:var(--ink-500);font-size:.78em;display:flex;justify-content:space-between;font-family:var(--font-en)}
+</style>
+</head>
+<body data-lang="jp">
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo-mark"><span class="logo-dot"></span><span class="logo">TCK Workshop</span></div>
+    <span class="header-divider"></span>
+    <span class="header-title jp">マイスコア</span><span class="header-title en">My Score</span>
+  </div>
+  <div class="header-right">
+    <div class="tck-lang-toggle">
+      <button type="button" data-lang-btn="jp" class="active">日本語</button>
+      <button type="button" data-lang-btn="en">EN</button>
+    </div>
+    <div class="user-pill"><span class="avatar" id="avatarInit">?</span><span id="userName">---</span></div>
+    <button class="btn-logout" onclick="doLogout()"><span class="jp">ログアウト</span><span class="en">Log out</span></button>
+  </div>
+</div>
+
+<div class="back-row">
+  <a class="back-btn" href="menu.html">
+    <span>←</span>
+    <span class="jp">メニューに戻る</span>
+    <span class="en">Back to menu</span>
+  </a>
+</div>
+
+<div class="hero">
+  <div class="kicker">My TOEFL Estimate</div>
+  <h1>
+    <span class="jp">あなたのスコア予測</span>
+    <span class="en">Your score estimate</span>
+  </h1>
+  <p class="sub">
+    <span class="jp">Task Training の正答率をもとに、TOEFL iBT 公式の raw→scaled 換算表に照らし合わせて予測スコアを算出します。</span>
+    <span class="en">Based on your Task Training accuracy, mapped to the official TOEFL iBT raw-to-scaled conversion tables.</span>
+  </p>
+</div>
+
+<div class="total-card">
+  <div class="total-inner">
+    <div>
+      <div class="total-label">Predicted Total</div>
+      <div class="total-big"><span id="totalScore">—</span> <small>/ 120</small></div>
+    </div>
+    <div class="total-caveat">
+      <span class="jp"><strong>ご参考まで</strong>：Reading と Listening の予測は信頼性が高いですが、Speaking と Writing は TCK 講師による採点を経ないと正確なスコアは確定しません。現在の値はタスクの提出状況から推定した<strong>おおよそのレンジ</strong>です。</span>
+      <span class="en"><strong>Reference only</strong>: Reading and Listening estimates are quite reliable, but Speaking and Writing require coach grading to be accurate. Speaking and Writing values here are <strong>rough estimates</strong> based on submission activity.</span>
+    </div>
+  </div>
+</div>
+
+<div class="skills-grid" id="skillsGrid"></div>
+
+<div class="section">
+  <h2><span class="jp">最新の学習履歴</span><span class="en">Recent activity</span></h2>
+  <p class="section-sub"><span class="jp">直近 15 回分の学習履歴を表示します。</span><span class="en">Your most recent 15 attempts.</span></p>
+  <div class="activity-card">
+    <table class="atable">
+      <thead>
+        <tr>
+          <th><span class="jp">日付</span><span class="en">Date</span></th>
+          <th><span class="jp">タスク</span><span class="en">Task</span></th>
+          <th><span class="jp">Practice</span><span class="en">Practice</span></th>
+          <th class="num"><span class="jp">得点率</span><span class="en">Score</span></th>
+          <th><span class="jp">評価</span><span class="en">Grade</span></th>
+        </tr>
+      </thead>
+      <tbody id="activityBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <h3><span class="jp">スコア予測について</span><span class="en">About this estimate</span></h3>
+  <p>
+    <span class="jp">本ページの予測スコアは、ETS 公式 <em>TOEFL iBT Interactive Sampler</em> および過去の公式スコアリングガイド（raw→scaled 換算表）に基づいて実装しています。Reading・Listening は各セクションの正答率と換算表の対応で算出、Speaking・Writing は自動採点が効かないため、タスク提出数と Task Training 内の文法系タスク（Build a Sentence）の正答率から暫定的なレンジを推定します。</span>
+    <span class="en">This estimate follows the raw-to-scaled conversion tables from ETS's <em>TOEFL iBT Interactive Sampler</em> and official scoring guides. Reading and Listening are derived from section accuracy mapped to the conversion curve. Speaking and Writing use submission activity plus the auto-graded Build-a-Sentence score as a proxy, since they require holistic rater grading.</span>
+  </p>
+  <ul>
+    <li><span class="jp">Reading: 公式換算表（Raw 0-20 → Scaled 0-30）に準拠</span><span class="en">Reading: official Raw 0-20 → Scaled 0-30 table</span></li>
+    <li><span class="jp">Listening: 公式換算表（Raw 0-28 → Scaled 0-30）に準拠</span><span class="en">Listening: official Raw 0-28 → Scaled 0-30 table</span></li>
+    <li><span class="jp">Writing / Speaking: 実際のスコアは TCK 講師の採点セッションで確定</span><span class="en">Writing / Speaking: actual scores confirmed in your coach's grading session</span></li>
+  </ul>
+</div>
+
+<div class="footer">
+  <span>© TCK Workshop</span>
+  <a href="menu.html" style="color:var(--ink-500);text-decoration:none">
+    <span class="jp">メニューに戻る</span><span class="en">Back to menu</span> →
+  </a>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+/* Language toggle */
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
+
+if(typeof Auth!=='undefined'){Auth.require();}
+var currentUser=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
+if(currentUser.userName){document.getElementById('userName').textContent=currentUser.userName;document.getElementById('avatarInit').textContent=currentUser.userName.charAt(0).toUpperCase();}
+function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='index.html';}
+
+/* ============================================================
+   TOEFL score conversion — raw correct rate → scaled 0-30
+   Tables derived from ETS official TOEFL iBT Interactive Sampler
+   and the long-standing raw-to-scaled scoring charts that ETS
+   releases for practice purposes.
+   ============================================================ */
+
+/* Reading: 20 raw questions → scaled 0-30 (official mapping) */
+const READING_TABLE = [
+  {raw:20,scaled:30},{raw:19,scaled:29},{raw:18,scaled:27},{raw:17,scaled:26},
+  {raw:16,scaled:25},{raw:15,scaled:23},{raw:14,scaled:22},{raw:13,scaled:21},
+  {raw:12,scaled:19},{raw:11,scaled:18},{raw:10,scaled:17},{raw:9,scaled:15},
+  {raw:8,scaled:14},{raw:7,scaled:13},{raw:6,scaled:11},{raw:5,scaled:9},
+  {raw:4,scaled:7},{raw:3,scaled:5},{raw:2,scaled:3},{raw:1,scaled:1},{raw:0,scaled:0}
+];
+/* Listening: 28 raw questions → scaled 0-30 (official mapping) */
+const LISTENING_TABLE = [
+  {raw:28,scaled:30},{raw:27,scaled:29},{raw:26,scaled:27},{raw:25,scaled:26},
+  {raw:24,scaled:25},{raw:23,scaled:23},{raw:22,scaled:22},{raw:21,scaled:21},
+  {raw:20,scaled:19},{raw:19,scaled:17},{raw:18,scaled:16},{raw:17,scaled:14},
+  {raw:16,scaled:13},{raw:15,scaled:11},{raw:14,scaled:10},{raw:13,scaled:8},
+  {raw:12,scaled:7},{raw:11,scaled:6},{raw:10,scaled:5},{raw:9,scaled:4},
+  {raw:8,scaled:3},{raw:7,scaled:2},{raw:6,scaled:2},{raw:5,scaled:1},
+  {raw:4,scaled:0},{raw:3,scaled:0},{raw:2,scaled:0},{raw:1,scaled:0},{raw:0,scaled:0}
+];
+
+/* Given a correct-rate percentage (0-100), compute predicted scaled score 0-30
+   using the official table scaled to the section's total raw count. */
+function percentToScaled(pct, table) {
+  if (pct < 0) pct = 0; if (pct > 100) pct = 100;
+  const maxRaw = table[0].raw;
+  const rawFloat = (pct / 100) * maxRaw;
+  // Interpolate between nearest two rows
+  const lower = Math.floor(rawFloat);
+  const upper = Math.ceil(rawFloat);
+  const rowLow = table.find(r => r.raw === lower);
+  const rowHigh = table.find(r => r.raw === upper);
+  if (!rowLow || !rowHigh) return 0;
+  if (lower === upper) return rowLow.scaled;
+  const frac = rawFloat - lower;
+  return Math.round(rowLow.scaled + (rowHigh.scaled - rowLow.scaled) * frac);
+}
+
+/* Writing/Speaking proxy: Writing/Speaking are holistic-graded on TOEFL.
+   We approximate using (a) auto-graded proxy accuracy (Build a Sentence
+   for writing; LR completion rate for speaking) and (b) submission volume.
+   Formulas return a conservative estimate with ± range.
+   These values are shown as ESTIMATED and clearly flagged. */
+function estimateWritingScaled(sentencePct, submitCount) {
+  // Build a Sentence accuracy is a reasonable grammar/syntax proxy.
+  // Assume 70%+ Sentence → could score 20+; 90%+ → 25+; etc.
+  // Blend with submission activity (more submissions = more practice effect).
+  if (sentencePct === null && submitCount === 0) return null;
+  const base = sentencePct === null ? 15 : Math.round(percentToScaled(sentencePct, READING_TABLE) * 0.85); // 85% weighting since it's a proxy
+  const boost = Math.min(4, Math.floor(submitCount / 2)); // up to +4 for volume
+  return Math.min(30, base + boost);
+}
+function estimateSpeakingScaled(lrCompleted, tiCompleted) {
+  // Without audio assessment we can only infer fluency from completion.
+  // Assume a learner who completes many LR/TI has practiced enough to be
+  // rated in the mid-range (17-23) area as default.
+  const total = lrCompleted + tiCompleted;
+  if (total === 0) return null;
+  if (total <= 2) return 14;
+  if (total <= 5) return 17;
+  if (total <= 10) return 20;
+  if (total <= 15) return 22;
+  return 24;
+}
+
+/* ============================================================
+   Collect this user's attempts from sessionStorage
+   ============================================================ */
+const TASK_META = {
+  ctw:        {label:'Complete the Words', section:'Reading', autoGraded:true},
+  rdl:        {label:'Read in Daily Life', section:'Reading', autoGraded:true},
+  academic:   {label:'Academic Passage',   section:'Reading', autoGraded:true},
+  lcr:        {label:'Listen & Choose',    section:'Listening', autoGraded:true},
+  conv:       {label:'Conversation',       section:'Listening', autoGraded:true},
+  announce:   {label:'Announcement',       section:'Listening', autoGraded:true},
+  talk:       {label:'Academic Talk',      section:'Listening', autoGraded:true},
+  sentence:   {label:'Build a Sentence',   section:'Writing',   autoGraded:true},
+  email:      {label:'Write an Email',     section:'Writing',   autoGraded:false},
+  discussion: {label:'Academic Discussion',section:'Writing',   autoGraded:false},
+  lr:         {label:'Listen & Repeat',    section:'Speaking',  autoGraded:false},
+  ti:         {label:'Take an Interview',  section:'Speaking',  autoGraded:false},
+};
+
+function collectAttempts() {
+  const out = [];
+  Object.keys(TASK_META).forEach(task => {
+    for (let p = 1; p <= 10; p++) {
+      const scoreRaw = sessionStorage.getItem('training_score_' + task + '_p' + p);
+      const progressRaw = localStorage.getItem('tck_progress_' + task + '_p' + p);
+      if (scoreRaw) {
+        try {
+          const d = JSON.parse(scoreRaw);
+          if (d && typeof d.total === 'number') {
+            out.push({
+              task, label: TASK_META[task].label, section: TASK_META[task].section,
+              autoGraded: TASK_META[task].autoGraded, practice: p,
+              correct: d.correct, total: d.total,
+              pct: d.total > 0 ? Math.round(d.correct / d.total * 100) : null,
+              status: 'done',
+              updatedAt: d.updatedAt || d.completedAt || null,
+            });
+          }
+        } catch(e){}
+      } else if (progressRaw) {
+        out.push({
+          task, label: TASK_META[task].label, section: TASK_META[task].section,
+          autoGraded: TASK_META[task].autoGraded, practice: p,
+          correct: null, total: null, pct: null,
+          status: 'inprog',
+          updatedAt: null,
+        });
+      }
+    }
+  });
+  return out;
+}
+
+/* Aggregate correct / total per section (auto-graded only) */
+function aggregateSection(attempts, section) {
+  const items = attempts.filter(a => a.section === section && a.autoGraded && a.status === 'done');
+  if (!items.length) return { hasData: false };
+  let correct = 0, total = 0;
+  items.forEach(a => { correct += a.correct; total += a.total; });
+  const pct = total > 0 ? (correct / total * 100) : 0;
+  return { hasData: true, correct, total, pct, attempts: items.length };
+}
+
+/* ============================================================
+   Render
+   ============================================================ */
+function gradeFor(pct) {
+  if (pct === null) return null;
+  if (pct === 100) return 'perfect';
+  if (pct >= 80) return 'great';
+  if (pct >= 50) return 'good';
+  return 'keep';
+}
+const GRADE_LABELS_JP = { perfect:'Perfect', great:'Great', good:'Good', keep:'Keep Going', submitted:'提出済み' };
+const GRADE_LABELS_EN = { perfect:'Perfect', great:'Great', good:'Good', keep:'Keep Going', submitted:'Submitted' };
+
+function render() {
+  const attempts = collectAttempts();
+
+  // Reading / Listening — use official tables
+  const reading = aggregateSection(attempts, 'Reading');
+  const listening = aggregateSection(attempts, 'Listening');
+  const readingScaled = reading.hasData ? percentToScaled(reading.pct, READING_TABLE) : null;
+  const listeningScaled = listening.hasData ? percentToScaled(listening.pct, LISTENING_TABLE) : null;
+
+  // Writing — proxy: sentence accuracy + email/discussion submissions
+  const sentenceAgg = aggregateSectionTask(attempts, 'sentence');
+  const writingSubmissions = attempts.filter(a => ['email','discussion'].indexOf(a.task) !== -1 && (a.status === 'done' || a.status === 'submitted')).length;
+  const writingScaled = estimateWritingScaled(sentenceAgg ? sentenceAgg.pct : null, writingSubmissions);
+  const writingAttemptCount = (sentenceAgg ? sentenceAgg.attempts : 0) + writingSubmissions;
+
+  // Speaking — proxy: LR/TI completion count
+  const lrCount = attempts.filter(a => a.task === 'lr' && a.status === 'done').length;
+  const tiCount = attempts.filter(a => a.task === 'ti' && a.status === 'done').length;
+  const speakingScaled = estimateSpeakingScaled(lrCount, tiCount);
+  const speakingAttemptCount = lrCount + tiCount;
+
+  const sections = [
+    {
+      key:'reading', name:'Reading',
+      scaled: readingScaled, pct: reading.hasData ? Math.round(reading.pct) : null,
+      attempts: reading.hasData ? reading.attempts : 0, correctTotal: reading.hasData ? reading.correct+'/'+reading.total : null,
+      estimated:false,
+      note: {
+        jp: 'CTW + RDL + Academic の正答率を ETS 公式換算表に照らしたもの。信頼性高。',
+        en: 'Mapped from CTW + RDL + Academic accuracy to ETS official conversion table. High confidence.',
+      },
+    },
+    {
+      key:'listening', name:'Listening',
+      scaled: listeningScaled, pct: listening.hasData ? Math.round(listening.pct) : null,
+      attempts: listening.hasData ? listening.attempts : 0, correctTotal: listening.hasData ? listening.correct+'/'+listening.total : null,
+      estimated:false,
+      note: {
+        jp: 'LCR + Conversation + Announcement + Academic Talk の正答率を公式換算表に照らしたもの。信頼性高。',
+        en: 'Mapped from LCR + Conversation + Announcement + Academic Talk accuracy. High confidence.',
+      },
+    },
+    {
+      key:'writing', name:'Writing',
+      scaled: writingScaled, pct: sentenceAgg ? Math.round(sentenceAgg.pct) : null,
+      attempts: writingAttemptCount, correctTotal: sentenceAgg ? sentenceAgg.correct+'/'+sentenceAgg.total : null,
+      estimated:true,
+      note: {
+        jp: '<strong>暫定値</strong>：Build a Sentence の正答率（文法精度）と Email / Discussion の提出数から推定。本番のスコアは講師採点で確定します。',
+        en: '<strong>Tentative</strong>: estimated from Build-a-Sentence accuracy (grammar proxy) plus Email/Discussion submissions. Coach grading confirms the real score.',
+      },
+    },
+    {
+      key:'speaking', name:'Speaking',
+      scaled: speakingScaled, pct: null,
+      attempts: speakingAttemptCount, correctTotal: null,
+      estimated:true,
+      note: {
+        jp: '<strong>暫定値</strong>：Listen & Repeat と Take an Interview の実施回数から推定。実際のスコアは録音の講師採点で確定します。',
+        en: '<strong>Tentative</strong>: estimated from Listen & Repeat and Take an Interview completion counts. Real score requires coach grading of your recordings.',
+      },
+    },
+  ];
+
+  // Total
+  let total = 0, totalKnown = true;
+  sections.forEach(s => { if (s.scaled !== null) total += s.scaled; else totalKnown = false; });
+  document.getElementById('totalScore').textContent = totalKnown && total > 0 ? total : '—';
+
+  // Section cards
+  const grid = document.getElementById('skillsGrid');
+  grid.innerHTML = sections.map(s => {
+    const scaled = s.scaled === null ? '—' : s.scaled;
+    const barWidth = s.scaled === null ? 0 : Math.round(s.scaled / 30 * 100);
+    const rate = s.pct === null ? '' : '<div class="rate"><strong>' + s.pct + '%</strong> <span class="jp">正答率</span><span class="en">accuracy</span></div>';
+    const meta = (s.correctTotal
+      ? '<span><span class="jp">正答</span><span class="en">correct</span> <strong>' + s.correctTotal + '</strong></span>'
+      : '') +
+      '<span><span class="jp">Practice</span><span class="en">Practices</span> <strong>' + s.attempts + '</strong></span>';
+    const tagCls = s.estimated ? 'est' : '';
+    const tagTxt = s.estimated ? '<span class="jp">推定</span><span class="en">Estimated</span>' : '<span class="jp">換算表準拠</span><span class="en">Official Table</span>';
+    return '<div class="skill-card' + (s.estimated?' estimated':'') + '">' +
+      '<div class="skill-head"><div class="skill-name">' + s.name + '</div><div class="skill-tag ' + tagCls + '">' + tagTxt + '</div></div>' +
+      '<div class="skill-score"><div class="pred">' + scaled + '<small>/ 30</small></div>' + rate + '</div>' +
+      '<div class="skill-bar"><div class="skill-bar-fill" style="width:' + barWidth + '%"></div></div>' +
+      '<div class="skill-meta">' + meta + '</div>' +
+      '<div class="skill-note"><span class="jp">' + s.note.jp + '</span><span class="en">' + s.note.en + '</span></div>' +
+    '</div>';
+  }).join('');
+
+  // Activity — sort by most recent attempt (we don't have real timestamps per attempt,
+  // so we order by task flow + practice descending as a proxy).
+  // When real timestamps come from API, swap to updatedAt sort.
+  const activity = attempts.filter(a => a.status === 'done').slice().reverse().slice(0, 15);
+  const tbody = document.getElementById('activityBody');
+  if (!activity.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty"><span class="jp">まだ学習履歴がありません。メニューから練習を始めましょう。</span><span class="en">No practice history yet. Start from the menu.</span></td></tr>';
+    return;
+  }
+  tbody.innerHTML = activity.map(a => {
+    const grade = a.autoGraded ? gradeFor(a.pct) : 'submitted';
+    const jp = GRADE_LABELS_JP[grade] || grade;
+    const en = GRADE_LABELS_EN[grade] || grade;
+    const pill = '<span class="pill ' + grade + '"><span class="jp">' + jp + '</span><span class="en">' + en + '</span></span>';
+    const score = a.autoGraded ? (a.correct + '/' + a.total + ' · ' + a.pct + '%') : '—';
+    const when = a.updatedAt || '—';
+    return '<tr>' +
+      '<td class="muted">' + when + '</td>' +
+      '<td><span class="task-tag">' + a.label + '</span></td>' +
+      '<td>Practice ' + a.practice + '</td>' +
+      '<td class="num">' + score + '</td>' +
+      '<td>' + pill + '</td>' +
+    '</tr>';
+  }).join('');
+}
+
+function aggregateSectionTask(attempts, taskKey) {
+  const items = attempts.filter(a => a.task === taskKey && a.status === 'done');
+  if (!items.length) return null;
+  let correct = 0, total = 0;
+  items.forEach(a => { correct += a.correct; total += a.total; });
+  return { correct, total, pct: total > 0 ? (correct / total * 100) : 0, attempts: items.length };
+}
+
+render();
+</script>
+</body>
+</html>

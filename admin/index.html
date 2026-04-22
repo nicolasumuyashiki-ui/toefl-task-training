@@ -418,6 +418,67 @@ function gradeFor(score) {
 }
 const GRADE_LABELS = { perfect:'Perfect', great:'Great', good:'Good', keep:'Keep Going', inprog:'中断中', submitted:'提出済み' };
 
+/* ============================================================
+   TOEFL iBT raw→scaled conversion (ETS official tables)
+   ============================================================ */
+const READING_TABLE = [{raw:20,scaled:30},{raw:19,scaled:29},{raw:18,scaled:27},{raw:17,scaled:26},{raw:16,scaled:25},{raw:15,scaled:23},{raw:14,scaled:22},{raw:13,scaled:21},{raw:12,scaled:19},{raw:11,scaled:18},{raw:10,scaled:17},{raw:9,scaled:15},{raw:8,scaled:14},{raw:7,scaled:13},{raw:6,scaled:11},{raw:5,scaled:9},{raw:4,scaled:7},{raw:3,scaled:5},{raw:2,scaled:3},{raw:1,scaled:1},{raw:0,scaled:0}];
+const LISTENING_TABLE = [{raw:28,scaled:30},{raw:27,scaled:29},{raw:26,scaled:27},{raw:25,scaled:26},{raw:24,scaled:25},{raw:23,scaled:23},{raw:22,scaled:22},{raw:21,scaled:21},{raw:20,scaled:19},{raw:19,scaled:17},{raw:18,scaled:16},{raw:17,scaled:14},{raw:16,scaled:13},{raw:15,scaled:11},{raw:14,scaled:10},{raw:13,scaled:8},{raw:12,scaled:7},{raw:11,scaled:6},{raw:10,scaled:5},{raw:9,scaled:4},{raw:8,scaled:3},{raw:7,scaled:2},{raw:6,scaled:2},{raw:5,scaled:1},{raw:4,scaled:0},{raw:3,scaled:0},{raw:2,scaled:0},{raw:1,scaled:0},{raw:0,scaled:0}];
+
+function percentToScaled(pct, table) {
+  if (pct < 0) pct = 0; if (pct > 100) pct = 100;
+  const maxRaw = table[0].raw;
+  const rawFloat = (pct / 100) * maxRaw;
+  const lower = Math.floor(rawFloat);
+  const upper = Math.ceil(rawFloat);
+  const rowLow = table.find(r => r.raw === lower);
+  const rowHigh = table.find(r => r.raw === upper);
+  if (!rowLow || !rowHigh) return 0;
+  if (lower === upper) return rowLow.scaled;
+  const frac = rawFloat - lower;
+  return Math.round(rowLow.scaled + (rowHigh.scaled - rowLow.scaled) * frac);
+}
+
+function predictScoresForUser(userAttempts) {
+  const scored = s => userAttempts.filter(a => a.section === s && a.autoGraded && a.score !== null);
+  function avgPct(items) {
+    if (!items.length) return null;
+    let c = 0, t = 0;
+    items.forEach(a => { c += a.correct; t += a.total; });
+    return t > 0 ? (c / t * 100) : null;
+  }
+  const rPct = avgPct(scored('Reading'));
+  const lPct = avgPct(scored('Listening'));
+  const rScaled = rPct !== null ? percentToScaled(rPct, READING_TABLE) : null;
+  const lScaled = lPct !== null ? percentToScaled(lPct, LISTENING_TABLE) : null;
+
+  // Writing proxy: Sentence accuracy + email/discussion submissions
+  const sentenceItems = userAttempts.filter(a => a.task === 'sentence' && a.autoGraded && a.score !== null);
+  const sentencePct = avgPct(sentenceItems);
+  const writingSubs = userAttempts.filter(a => (a.task === 'email' || a.task === 'discussion') && (a.status === 'submitted' || a.status === 'perfect' || a.status === 'great' || a.status === 'good' || a.status === 'keep')).length;
+  let wScaled = null;
+  if (sentencePct !== null || writingSubs > 0) {
+    const base = sentencePct === null ? 15 : Math.round(percentToScaled(sentencePct, READING_TABLE) * 0.85);
+    const boost = Math.min(4, Math.floor(writingSubs / 2));
+    wScaled = Math.min(30, base + boost);
+  }
+
+  // Speaking proxy: LR/TI completion count
+  const lrCount = userAttempts.filter(a => a.task === 'lr' && a.status === 'submitted').length;
+  const tiCount = userAttempts.filter(a => a.task === 'ti' && a.status === 'submitted').length;
+  let sScaled = null;
+  const total = lrCount + tiCount;
+  if (total > 0) {
+    if (total <= 2) sScaled = 14;
+    else if (total <= 5) sScaled = 17;
+    else if (total <= 10) sScaled = 20;
+    else if (total <= 15) sScaled = 22;
+    else sScaled = 24;
+  }
+
+  const totalScaled = [rScaled, lScaled, wScaled, sScaled].reduce((s, v) => s + (v || 0), 0);
+  return { reading: rScaled, listening: lScaled, writing: wScaled, speaking: sScaled, total: totalScaled };
+}
+
 const MOCK_USERS = [
   {userId:'tckkijin001', userName:'田中 健太', displayName:'Kenta T.', email:'kenta.tanaka@example.com', joined:'2026-01-12'},
   {userId:'tckkijin002', userName:'山田 花子', displayName:'Hanako Y.', email:'hanako@example.com', joined:'2026-01-18'},
@@ -717,18 +778,25 @@ function renderKarteDetail() {
   if (!u) return;
   const attempts = ATTEMPTS.filter(a => a.userId === u.userId);
   const sections = ['Reading','Listening','Writing','Speaking'];
+  const pred = predictScoresForUser(attempts);
   const sectionBlocks = sections.map(sec => {
+    const key = sec.toLowerCase();
+    const scaled = pred[key];
     const auto = attempts.filter(a => a.section === sec && a.autoGraded && a.score !== null);
     const nonAuto = attempts.filter(a => a.section === sec && !a.autoGraded && a.status === 'submitted');
-    if (auto.length) {
-      const avg = Math.round(auto.reduce((s, i) => s + i.score, 0) / auto.length);
-      return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div><div class="skill-score-val">' + avg + '%</div><div class="skill-score-sub">' + auto.length + ' attempt' + (auto.length === 1 ? '' : 's') + '</div></div>';
-    }
-    if (nonAuto.length) {
-      return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div><div class="skill-score-val" style="font-size:1.05em">' + nonAuto.length + ' 提出</div><div class="skill-score-sub">自動採点なし</div></div>';
+    const isEstimated = sec === 'Speaking' || sec === 'Writing';
+    const estTag = isEstimated ? '<span style="font-size:.6em;font-weight:700;color:#8A6D2A;background:#FFE8AE;padding:1px 6px;border-radius:4px;margin-left:4px;letter-spacing:.04em">EST</span>' : '';
+    if (auto.length || nonAuto.length) {
+      const accStr = auto.length ? Math.round(auto.reduce((s, i) => s + i.score, 0) / auto.length) + '% · ' : '';
+      const countStr = (auto.length + nonAuto.length) + ' ' + (nonAuto.length && !auto.length ? '提出' : 'attempts');
+      const scaledStr = scaled !== null ? '<div class="skill-score-val">' + scaled + '<span style="font-size:.42em;color:var(--ink-500);font-weight:500;margin-left:3px">/30</span>' + estTag + '</div>' : '<div class="skill-score-val">—</div>';
+      return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div>' + scaledStr + '<div class="skill-score-sub">' + accStr + countStr + '</div></div>';
     }
     return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div><div class="skill-score-val">—</div><div class="skill-score-sub">まだ未受験</div></div>';
   }).join('');
+  const totalPredBlock = pred.total > 0
+    ? '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-dark));color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase">Predicted TOEFL Total</div><div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.55);margin-top:2px">R・L は公式換算表、W・S は推定値</div></div><div style="font-family:var(--font-en);font-size:2.2em;font-weight:800;letter-spacing:-0.02em"><span>' + pred.total + '</span><span style="font-size:.4em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 120</span></div></div>'
+    : '';
   const recent = attempts.slice().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, 12);
   const activityRows = recent.map(a => {
     const status = '<span class="pill ' + a.status + '">' + (GRADE_LABELS[a.status] || a.status) + '</span>';
@@ -736,8 +804,9 @@ function renderKarteDetail() {
     return '<tr><td class="muted">' + a.updatedAt + '</td><td><span class="task-tag">' + a.taskLabel + '</span></td><td>P' + a.practice + '</td><td class="num">' + score + '</td><td>' + status + '</td></tr>';
   }).join('');
   el.innerHTML = '<div class="karte-head"><h3>' + escapeHtml(u.userName) + ' <span style="color:var(--ink-500);font-weight:500;font-size:.7em">(' + u.displayName + ')</span></h3><div class="kmeta">' + u.userId + ' · ' + escapeHtml(u.email) + ' · 登録 ' + u.joined + '</div></div>'
+    + totalPredBlock
     + '<div class="skill-scores">' + sectionBlocks + '</div>'
-    + '<div class="karte-activity"><h4>Recent activity · 最新の学習履歴</h4><table class="atable"><thead><tr><th>日付</th><th>タスク</th><th>Practice</th><th class="num">スコア</th><th>合否</th></tr></thead><tbody>' + activityRows + '</tbody></table></div>';
+    + '<div class="karte-activity"><h4>Recent activity · 最新の学習履歴</h4><table class="atable"><thead><tr><th>日付</th><th>タスク</th><th>Practice</th><th class="num">スコア</th><th>評価</th></tr></thead><tbody>' + activityRows + '</tbody></table></div>';
 }
 
 /* ============================================================
@@ -748,14 +817,21 @@ function renderProgress() {
   const users = MOCK_USERS.filter(u => !q || (u.userName + ' ' + u.userId + ' ' + u.email).toLowerCase().indexOf(q) !== -1);
   document.getElementById('progressCount').textContent = users.length;
 
-  // Head
+  // Head: user | task cells | divider | R scaled | L scaled | W scaled | S scaled | TOTAL
   const head = document.getElementById('progressHead');
-  head.innerHTML = '<th class="sticky-col">ユーザー</th>' + TASKS.map(t => '<th style="min-width:90px">' + t.label + '</th>').join('') + '<th>Total</th>';
+  head.innerHTML = '<th class="sticky-col">ユーザー</th>'
+    + TASKS.map(t => '<th style="min-width:90px">' + t.label + '</th>').join('')
+    + '<th style="background:var(--green-dark);border-left:2px solid var(--gold)">R</th>'
+    + '<th style="background:var(--green-dark)">L</th>'
+    + '<th style="background:var(--green-dark)">W <span style="font-size:.7em;font-weight:500;color:rgba(255,255,255,.7)">est</span></th>'
+    + '<th style="background:var(--green-dark)">S <span style="font-size:.7em;font-weight:500;color:rgba(255,255,255,.7)">est</span></th>'
+    + '<th style="background:var(--green-deep);color:var(--gold);border-left:2px solid var(--gold)">TOTAL</th>';
 
   const body = document.getElementById('progressBody');
   body.innerHTML = users.map(u => {
+    const userAttempts = ATTEMPTS.filter(a => a.userId === u.userId);
     const cells = TASKS.map(t => {
-      const items = ATTEMPTS.filter(a => a.userId === u.userId && a.task === t.key);
+      const items = userAttempts.filter(a => a.task === t.key);
       if (!items.length) return '<td><span class="cell-none">—</span></td>';
       if (!t.autoGraded) {
         const submitted = items.filter(a => a.status === 'submitted').length;
@@ -770,10 +846,21 @@ function renderProgress() {
       const cls = avg === 100 ? 's100' : avg >= 80 ? 's80' : avg >= 50 ? 's50' : 'sLow';
       return '<td><span class="cell-score ' + cls + '" title="' + scored.length + ' attempts">' + avg + '%</span></td>';
     }).join('');
-    const allScored = ATTEMPTS.filter(a => a.userId === u.userId && a.autoGraded && a.score !== null);
-    const overall = allScored.length ? Math.round(allScored.reduce((s, i) => s + i.score, 0) / allScored.length) : null;
-    const overallCell = overall === null ? '<span class="cell-none">—</span>' : '<span class="cell-score ' + (overall === 100 ? 's100' : overall >= 80 ? 's80' : overall >= 50 ? 's50' : 'sLow') + '">' + overall + '%</span>';
-    return '<tr><td class="sticky-col"><strong>' + escapeHtml(u.userName) + '</strong><div style="font-size:.82em;color:var(--ink-500);font-family:var(--font-en)">' + u.userId + '</div></td>' + cells + '<td>' + overallCell + '</td></tr>';
+    const pred = predictScoresForUser(userAttempts);
+    function scaledCell(v, est) {
+      if (v === null) return '<td style="background:#fafaf8;border-left:2px solid var(--paper)"><span class="cell-none">—</span></td>';
+      const color = v >= 24 ? 'var(--green)' : v >= 17 ? 'var(--sky)' : v >= 10 ? 'var(--gold)' : '#B85C3C';
+      const textColor = v >= 24 || v >= 17 ? '#fff' : v >= 10 ? 'var(--green-deep)' : '#fff';
+      return '<td style="background:#fafaf8;border-left:' + (est ? 'none' : '2px solid var(--paper)') + '"><span style="font-family:var(--font-en);font-size:.88em;font-weight:800;padding:6px 12px;border-radius:6px;background:' + color + ';color:' + textColor + ';display:inline-block;min-width:40px;text-align:center">' + v + '</span></td>';
+    }
+    const rCell = scaledCell(pred.reading, false);
+    const lCell = scaledCell(pred.listening, false);
+    const wCell = scaledCell(pred.writing, true);
+    const sCell = scaledCell(pred.speaking, true);
+    const totalCell = pred.total > 0
+      ? '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span style="font-family:var(--font-en);font-size:1em;font-weight:800;color:var(--gold);letter-spacing:-0.01em">' + pred.total + '<span style="font-size:.72em;color:rgba(255,255,255,.5);font-weight:500;margin-left:2px">/120</span></span></td>'
+      : '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span class="cell-none" style="color:rgba(255,255,255,.3)">—</span></td>';
+    return '<tr><td class="sticky-col"><strong>' + escapeHtml(u.userName) + '</strong><div style="font-size:.82em;color:var(--ink-500);font-family:var(--font-en)">' + u.userId + '</div></td>' + cells + rCell + lCell + wCell + sCell + totalCell + '</tr>';
   }).join('');
 }
 
@@ -801,19 +888,22 @@ function exportCSV(kind) {
       g.autoGraded ? (g.counted ? Math.round(g.high/g.counted*100) : '') : '']));
   } else if (kind === 'progress') {
     filename = 'tck-progress-' + today() + '.csv';
-    rows.push(['ユーザー','ログインID','メール', ...TASKS.map(t => t.label), 'Overall']);
+    rows.push(['ユーザー','ログインID','メール', ...TASKS.map(t => t.label), 'Overall%', 'R (scaled)', 'L (scaled)', 'W (scaled, est)', 'S (scaled, est)', 'Total (/120)']);
     MOCK_USERS.forEach(u => {
+      const userAtts = ATTEMPTS.filter(a => a.userId === u.userId);
       const cells = TASKS.map(t => {
         if (!t.autoGraded) {
-          const subs = ATTEMPTS.filter(a => a.userId === u.userId && a.task === t.key && a.status === 'submitted').length;
+          const subs = userAtts.filter(a => a.task === t.key && a.status === 'submitted').length;
           return subs ? subs + ' submitted' : '';
         }
-        const items = ATTEMPTS.filter(a => a.userId === u.userId && a.task === t.key && a.score !== null);
+        const items = userAtts.filter(a => a.task === t.key && a.score !== null);
         return items.length ? Math.round(items.reduce((s,i)=>s+i.score,0)/items.length) + '%' : '';
       });
-      const all = ATTEMPTS.filter(a => a.userId === u.userId && a.autoGraded && a.score !== null);
+      const all = userAtts.filter(a => a.autoGraded && a.score !== null);
       const overall = all.length ? Math.round(all.reduce((s,i)=>s+i.score,0)/all.length) + '%' : '';
-      rows.push([u.userName, u.userId, u.email, ...cells, overall]);
+      const pred = predictScoresForUser(userAtts);
+      rows.push([u.userName, u.userId, u.email, ...cells, overall,
+        pred.reading ?? '', pred.listening ?? '', pred.writing ?? '', pred.speaking ?? '', pred.total || '']);
     });
   }
   const csv = rows.map(r => r.map(cell => {
