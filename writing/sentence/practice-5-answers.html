@@ -124,22 +124,22 @@ body[data-lang="en"] .jp{display:none}
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
-{id:1,prompt:"Do you think it will snow this weekend?",sentence:"By Sunday, it will have snowed at least three times.",grammar:"未来完了: By + 時点, S + will have + Vpp。「日曜日までに3回は降っているだろう」。at least =「少なくとも」。"},
-{id:2,prompt:"Are you going to the beach tomorrow?",sentence:"I will go unless it rains in the morning.",grammar:"unless =「〜しない限り」: I will go unless + S + V。unless節内は現在形（未来のことでも）。"},
-{id:3,prompt:"What do you like about spring?",sentence:"I enjoy both the warm weather and the cherry blossoms.",grammar:"both A and B: 2つの名詞を並列。both と and の間に同じ品詞（名詞句）を入れる。",alt:"I enjoy both the cherry blossoms and the warm weather."},
-{id:4,prompt:"Did you fix the broken window yourself?",sentence:"No, I had it repaired by a professional.",grammar:"使役の have: have + O + Vpp =「〜を…してもらう」。by + 動作主で誰にしてもらったか明示。"},
-{id:5,prompt:"Which park is good for jogging?",sentence:"The park in which we played last summer is perfect for jogging.",grammar:"前置詞 + 関係代名詞: in which = where。「去年の夏に遊んだ公園」が主語。is perfect for ~ で補語。"},
-{id:6,prompt:"Will the project be done by next Friday?",sentence:"By next Friday, we will have completed the entire project.",grammar:"未来完了: By next Friday, S + will have + Vpp。「来週の金曜までに完了しているだろう」。"},
-{id:7,prompt:"Why did you cancel the camping trip?",sentence:"We canceled it because neither the weather nor the road conditions were safe.",grammar:"neither A nor B: 否定の相関接続詞。A も B も〜ない。because節で理由を述べる。"},
-{id:8,prompt:"Is your car ready for the road trip?",sentence:"Yes, I got the engine checked before the trip.",grammar:"使役の get: get + O + Vpp =「〜を…してもらう」。before + 名詞で時を表す。"},
-{id:9,prompt:"Can we go hiking as long as it stays dry?",sentence:"Yes, we can go hiking as long as the trail is not too muddy.",grammar:"as long as =「〜する限り」: 条件を表す接続詞。否定 is not を含む条件節。"},
-{id:10,prompt:"What will you have accomplished by the end of summer?",sentence:"By the end of summer, I will have visited five national parks.",grammar:"未来完了: By the end of ~, S + will have + Vpp。「夏の終わりまでに5つの国立公園を訪れているだろう」。"},
-{id:11,prompt:"How do you stay cool in the summer?",sentence:"I enjoy both swimming in the pool and eating ice cream.",grammar:"both A and B: 動名詞句を並列。both swimming ~ and eating ~ で2つの行動を対等に結ぶ。",alt:"I enjoy both eating ice cream and swimming in the pool."},
-{id:12,prompt:"Did you paint the fence by yourself?",sentence:"No, I had my brother help me paint it.",grammar:"使役の have: have + 人 + V原形 =「人に〜してもらう」。目的語が人の場合は原形不定詞。"},
-{id:13,prompt:"Will you join us for the outdoor concert?",sentence:"I will join you unless I have to work overtime that evening.",grammar:"unless =「〜しない限り」: unless + S + V。have to =「〜しなければならない」。"},
-{id:14,prompt:"Where is the campsite you mentioned?",sentence:"The campsite at which we stayed last fall is near the lake.",grammar:"前置詞 + 関係代名詞: at which = where。stay at a campsite → the campsite at which we stayed。"},
-{id:15,prompt:"Did you wash your car before the trip?",sentence:"No, I got it washed at the shop.",grammar:"使役の get: get + O + Vpp。「洗車してもらった」。at the shop で場所を補足。"},
-{id:16,prompt:"What happens if it rains during the festival?",sentence:"The festival will continue as long as there is no lightning or strong wind.",grammar:"as long as =「〜する限り」: 条件を表す。there is no ~ =「〜がない限り」。or で2つの否定条件を並列。",alt:"The festival will continue as long as there is no strong wind or lightning."}
+{id:1,prompt:"Do you think you will finish the experiment this week?",sentence:"By Friday, I will have repeated the trial at least three times.",grammar:"未来完了: By + 時点, S + will have + Vpp。「金曜までに3回は実施しているだろう」。at least =「少なくとも」。"},
+{id:2,prompt:"Are you going to the lab tomorrow?",sentence:"I will go unless the samples arrive late in the morning.",grammar:"unless =「〜しない限り」: I will go unless + S + V。unless節内は現在形（未来のことでも）。"},
+{id:3,prompt:"What do you like about your research group?",sentence:"I enjoy both the weekly seminars and the open discussions.",grammar:"both A and B: 2つの名詞を並列。both と and の間に同じ品詞（名詞句）を入れる。",alt:"I enjoy both the open discussions and the weekly seminars."},
+{id:4,prompt:"Did you calibrate the microscope yourself?",sentence:"No, I had it calibrated by a technician.",grammar:"使役の have: have + O + Vpp =「〜を…してもらう」。by + 動作主で誰にしてもらったか明示。"},
+{id:5,prompt:"Which field site is good for sampling?",sentence:"The site at which we worked last summer is perfect for sampling.",grammar:"前置詞 + 関係代名詞: at which = where。「去年の夏に作業した場所」が主語。is perfect for ~ で補語。"},
+{id:6,prompt:"Will the thesis be done by next Friday?",sentence:"By next Friday, we will have finished the entire draft.",grammar:"未来完了: By next Friday, S + will have + Vpp。「来週の金曜までに完了しているだろう」。"},
+{id:7,prompt:"Why did you cancel the field survey?",sentence:"We canceled it because neither the equipment nor the funding was ready.",grammar:"neither A nor B: 否定の相関接続詞。A も B も〜ない。because節で理由を述べる。"},
+{id:8,prompt:"Is your paper ready for submission?",sentence:"Yes, I got the references checked before the deadline.",grammar:"使役の get: get + O + Vpp =「〜を…してもらう」。before + 名詞で時を表す。"},
+{id:9,prompt:"Can we run the test as long as the data holds?",sentence:"Yes, we can run the test as long as the sensors are not giving errors.",grammar:"as long as =「〜する限り」: 条件を表す接続詞。否定 are not を含む条件節。"},
+{id:10,prompt:"What will you have accomplished by the end of the semester?",sentence:"By the end of the semester, I will have read five key papers.",grammar:"未来完了: By the end of ~, S + will have + Vpp。「学期末までに5本の主要論文を読んでいるだろう」。"},
+{id:11,prompt:"How do you manage your workload in the lab?",sentence:"I enjoy both analyzing the data and writing the reports.",grammar:"both A and B: 動名詞句を並列。both analyzing ~ and writing ~ で2つの行動を対等に結ぶ。",alt:"I enjoy both writing the reports and analyzing the data."},
+{id:12,prompt:"Did you run the simulation by yourself?",sentence:"No, I had my advisor help me set it up.",grammar:"使役の have: have + 人 + V原形 =「人に〜してもらう」。目的語が人の場合は原形不定詞。"},
+{id:13,prompt:"Will you join us at the research conference?",sentence:"I will join you unless I have to revise the manuscript that week.",grammar:"unless =「〜しない限り」: unless + S + V。have to =「〜しなければならない」。"},
+{id:14,prompt:"Where is the lab you mentioned?",sentence:"The lab in which we trained last fall is near the main library.",grammar:"前置詞 + 関係代名詞: in which = where。train in a lab → the lab in which we trained。"},
+{id:15,prompt:"Did you proofread your paper before submission?",sentence:"No, I got it reviewed by my supervisor.",grammar:"使役の get: get + O + Vpp。「指導教員に見てもらった」。by + 動作主で誰に頼んだか明示。"},
+{id:16,prompt:"What happens if the funding runs out mid-study?",sentence:"The study will continue as long as there is no budget cut or equipment failure.",grammar:"as long as =「〜する限り」: 条件を表す。there is no ~ =「〜がない限り」。or で2つの否定条件を並列。",alt:"The study will continue as long as there is no equipment failure or budget cut."}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p5')||'null');
