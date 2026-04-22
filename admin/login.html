@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADMIN Sign in — TCK Workshop</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--font-en),var(--font-jp);background:var(--green-deep);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;color:#fff;-webkit-font-smoothing:antialiased;position:relative;overflow:hidden}
+body::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at top, rgba(0,118,70,.35) 0%, transparent 60%);pointer-events:none}
+
+.admin-banner{position:relative;z-index:2;text-align:center;margin-bottom:20px}
+.admin-banner .pill{display:inline-block;background:var(--gold);color:var(--green-deep);font-family:var(--font-en);font-size:.7em;font-weight:800;padding:5px 14px;border-radius:999px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px}
+.admin-banner h1{font-family:var(--font-en);font-size:2.4em;font-weight:800;letter-spacing:-0.02em;margin-bottom:8px;line-height:1.1}
+.admin-banner .sub{font-size:.92em;color:rgba(255,255,255,.72);max-width:440px;margin:0 auto;line-height:1.7}
+
+.card{position:relative;z-index:2;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35);padding:36px 36px 30px;width:100%;max-width:420px;color:var(--ink-900);border:2px solid var(--gold)}
+.brand{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--paper)}
+.brand-dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.brand-name{font-family:var(--font-en);font-size:.72em;font-weight:800;color:var(--green-deep);letter-spacing:.16em;text-transform:uppercase}
+.brand-admin{font-family:var(--font-en);font-size:.7em;font-weight:800;color:var(--gold);background:var(--green-deep);padding:3px 10px;border-radius:4px;letter-spacing:.14em;text-transform:uppercase}
+
+.field{text-align:left;margin-bottom:14px}
+.field label{display:block;font-family:var(--font-en);font-size:.7em;font-weight:700;color:var(--ink-500);margin-bottom:6px;letter-spacing:.1em;text-transform:uppercase}
+.field input{width:100%;padding:11px 14px;border:1.5px solid var(--paper);border-radius:10px;font-size:.95em;font-family:inherit;color:var(--ink-900);background:var(--cream);transition:all .18s}
+.field input:focus{outline:none;border-color:var(--green);background:#fff;box-shadow:0 0 0 3px rgba(0,118,70,.10)}
+
+.btn{width:100%;padding:13px;border:none;border-radius:999px;font-size:.95em;font-weight:700;font-family:var(--font-en);cursor:pointer;transition:all .18s;position:relative;letter-spacing:.02em}
+.btn-primary{background:var(--green-deep);color:#fff;margin-top:8px}
+.btn-primary:hover{background:#001810;transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.btn-primary:disabled{background:#7a8a82;cursor:not-allowed;transform:none;box-shadow:none}
+
+.msg{font-size:.84em;margin-top:12px;min-height:1.2em}
+.msg.error{color:#B85C3C}
+
+.spinner{display:none;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.alt-link{margin-top:18px;text-align:center;font-size:.78em;color:var(--ink-500);padding-top:16px;border-top:1px dashed var(--paper)}
+.alt-link a{color:var(--green-dark);font-weight:600;text-decoration:none}
+.alt-link a:hover{text-decoration:underline}
+
+.warn{background:#FFF4D6;border:1px solid var(--gold);border-radius:8px;padding:10px 14px;font-size:.8em;color:#6B5A1E;line-height:1.6;margin-bottom:18px}
+.warn strong{color:#8A6D2A}
+</style>
+</head>
+<body>
+
+<div class="admin-banner">
+  <div class="pill">🛠 Staff Portal</div>
+  <h1>Admin Sign in</h1>
+  <p class="sub">TCK Workshop 運営スタッフ向けの管理ダッシュボードにサインインします。</p>
+</div>
+
+<div class="card">
+  <div class="brand">
+    <span class="brand-dot"></span>
+    <span class="brand-name">TCK Workshop</span>
+    <span class="brand-admin">ADMIN</span>
+  </div>
+
+  <div class="warn">
+    <strong>⚠ スタッフ専用</strong>：このログインは管理画面用です。生徒は<a href="../index.html" style="color:var(--green-dark);font-weight:700">メインログインページ</a>をご利用ください。
+  </div>
+
+  <div class="field">
+    <label>Staff ID</label>
+    <input type="text" id="loginId" autocomplete="username">
+  </div>
+  <div class="field">
+    <label>Password</label>
+    <input type="password" id="loginPass" autocomplete="current-password">
+  </div>
+  <button class="btn btn-primary" id="btnLogin" onclick="doLogin()">
+    <span class="btn-text">Sign in to Admin</span>
+    <div class="spinner" id="spinLogin"></div>
+  </button>
+  <div class="msg error" id="errLogin"></div>
+
+  <div class="alt-link">
+    <a href="../index.html">← 生徒ログインはこちら / Student sign-in</a>
+  </div>
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+function setLoading(on) {
+  var b=document.getElementById('btnLogin'), s=document.getElementById('spinLogin'), t=b.querySelector('.btn-text');
+  b.disabled=on; t.style.display=on?'none':''; s.style.display=on?'inline-block':'none';
+}
+function doLogin() {
+  var id=document.getElementById('loginId').value.trim();
+  var pass=document.getElementById('loginPass').value.trim();
+  var err=document.getElementById('errLogin');
+  err.textContent='';
+  if(!id||!pass){err.textContent='Staff ID とパスワードを入力してください。';return;}
+  setLoading(true);
+  Api.login(id,pass).then(function(r){
+    if(!r.success){
+      err.textContent=r.error||'サインインに失敗しました。';setLoading(false);return;
+    }
+    if(typeof tckIsStaff!=='function' || !tckIsStaff(r.email)){
+      err.textContent='このアカウントには管理者権限がありません。@tckworkshop.co.jp アカウントでサインインしてください。';
+      setLoading(false);return;
+    }
+    sessionStorage.setItem('kickstart_user', JSON.stringify({userId:r.userId,userName:r.userName,email:r.email}));
+    location.href='index.html';
+  }).catch(function(){err.textContent='通信エラーが発生しました。';setLoading(false);});
+}
+document.getElementById('loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+</script>
+</body>
+</html>

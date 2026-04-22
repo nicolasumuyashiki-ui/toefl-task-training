@@ -82,6 +82,12 @@ h1{font-family:var(--font-en);font-size:1.85em;font-weight:800;color:var(--green
     <span class="en">TOEFL iBT Task-Based Training</span>
   </p>
 
+  <div id="gateNotice" style="display:none;background:#FDF4F0;border-left:4px solid #B85C3C;padding:12px 16px;border-radius:6px;margin-bottom:20px;font-size:.82em;color:#8A3E24;line-height:1.65;text-align:left">
+    <strong><span class="jp">アクセスが制限されています</span><span class="en">Access restricted</span></strong><br>
+    <span class="jp">このアプリは TCK Workshop 会員専用です。TCK メールアドレスでログインしてください。</span>
+    <span class="en">This app is for TCK Workshop members. Please sign in with a TCK email.</span>
+  </div>
+
   <!-- ===== LOGIN VIEW ===== -->
   <div class="view active" id="viewLogin">
     <div class="field">
@@ -163,6 +169,7 @@ h1{font-family:var(--font-en);font-size:1.85em;font-weight:800;color:var(--green
   </div>
 </div>
 
+<script src="js/auth.js"></script>
 <script src="js/api.js"></script>
 <script>
 /* Language toggle */
@@ -172,6 +179,11 @@ h1{font-family:var(--font-en);font-size:1.85em;font-weight:800;color:var(--green
   document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
+
+/* Show access-denied notice if redirected from a gated page */
+if (location.search.indexOf('gate=denied') !== -1) {
+  document.getElementById('gateNotice').style.display = 'block';
+}
 
 function showView(id) {
   document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
@@ -194,7 +206,14 @@ function doLogin() {
   if(!id||!pass){err.textContent=tMsg('IDとパスワードを入力してください','Please enter your ID and password.');return;}
   setLoading('btnLogin','spinLogin',true);
   Api.login(id,pass).then(function(r){
-    if(r.success){saveAndGo(r);}
+    if(r.success){
+      if(typeof tckIsAllowed==='function' && !tckIsAllowed(r.email)){
+        err.textContent=tMsg('このアプリは TCK Workshop 会員のみご利用いただけます。','This app is for TCK Workshop members only.');
+        setLoading('btnLogin','spinLogin',false);
+        return;
+      }
+      saveAndGo(r);
+    }
     else{err.textContent=r.error||tMsg('ログインに失敗しました','Sign-in failed.');setLoading('btnLogin','spinLogin',false);}
   }).catch(function(){err.textContent=tMsg('通信エラーが発生しました','Network error.');setLoading('btnLogin','spinLogin',false);});
 }
@@ -204,6 +223,10 @@ function doRegister() {
       err=document.getElementById('errReg'), succ=document.getElementById('succReg');
   err.textContent=''; succ.textContent='';
   if(!name||!id||!pass||!email){err.textContent=tMsg('すべての項目を入力してください','Please fill in every field.');return;}
+  if(typeof tckIsAllowed==='function' && !tckIsAllowed(email)){
+    err.textContent=tMsg('TCK Workshop のメールアドレス（@tckworkshop.co.jp）でのみ登録できます。例外が必要な場合はお問い合わせください。','You can only register with a TCK Workshop email (@tckworkshop.co.jp). Contact us for an exception.');
+    return;
+  }
   setLoading('btnRegister','spinReg',true);
   Api.register(id,pass,name,email).then(function(r){
     if(r.success){succ.textContent=tMsg('登録完了！','Registered — taking you in…');setTimeout(function(){saveAndGo(r);},400);}

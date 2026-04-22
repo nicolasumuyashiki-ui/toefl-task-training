@@ -182,12 +182,14 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
 
 <!-- Access gate -->
 <div id="gate" class="gate">
-  <h2>🔒 管理者のみアクセス可</h2>
+  <div style="display:inline-block;background:var(--gold);color:var(--green-deep);font-family:'Manrope',sans-serif;font-size:.7em;font-weight:800;padding:5px 14px;border-radius:999px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px">🛠 Staff Portal</div>
+  <h2>🔒 管理画面にアクセスできません</h2>
   <p>
-    この画面は TCK Workshop の運営者向けです。<br>
-    <strong>@tckworkshop.co.jp</strong> のメールアドレスでログインしているか、個別に許可されたアカウントのみが閲覧できます。
+    この画面は <strong>TCK Workshop 運営スタッフ専用</strong>です。<br>
+    <strong>@tckworkshop.co.jp</strong> のメールアドレスでサインインしてください。
   </p>
-  <a href="../menu.html">← Task Training に戻る</a>
+  <a href="login.html">管理用ログインへ →</a>
+  <div style="margin-top:14px;font-size:.8em;color:var(--ink-500)"><a href="../menu.html" style="color:var(--ink-500);text-decoration:underline">生徒用トップに戻る</a></div>
 </div>
 
 <!-- Main app -->
@@ -362,29 +364,20 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
 <script src="../js/auth.js"></script>
 <script>
 /* ============================================================
-   Access gate — admin-only
+   Access gate — staff only
    ============================================================ */
-const ADMIN_DOMAIN_SUFFIX = '@tckworkshop.co.jp';
-const ADMIN_ALLOWLIST = [
-  // Add explicit admin emails here
-  'nicolas@example.com',
-];
-
 function getCurrentUser() {
   try { return JSON.parse(sessionStorage.getItem('kickstart_user') || 'null'); } catch(e) { return null; }
 }
 function isAdmin(user) {
+  if (location.search.indexOf('preview=1') !== -1) return true; // dev
   if (!user) return false;
-  const email = (user.email || '').toLowerCase();
-  if (email.endsWith(ADMIN_DOMAIN_SUFFIX)) return true;
-  if (ADMIN_ALLOWLIST.indexOf(email) !== -1) return true;
-  // Dev override — allow if URL ?preview=1
-  if (location.search.indexOf('preview=1') !== -1) return true;
-  return false;
+  if (typeof window.tckIsStaff === 'function') return window.tckIsStaff(user.email);
+  return (user.email || '').toLowerCase().endsWith('@tckworkshop.co.jp');
 }
 function doLogout() {
   sessionStorage.removeItem('kickstart_user');
-  location.href = '../index.html';
+  location.href = 'login.html';
 }
 
 // Gate evaluation is deferred until after data declarations below.
@@ -937,7 +930,7 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').innerHTML = '<strong>' + (__currentUser.userName || 'admin') + '</strong> <span style="opacity:.7">' + (__currentUser.email || '') + '</span>';
   boot();
 } else if (!__currentUser) {
-  document.getElementById('gate').innerHTML = '<h2>🔒 ログインが必要です</h2><p>管理画面を見るには、TCK Workshop アカウントでログインしてください。</p><a href="../index.html">ログインへ</a>';
+  document.getElementById('gate').innerHTML = '<div style="display:inline-block;background:var(--gold);color:var(--green-deep);font-family:\'Manrope\',sans-serif;font-size:.7em;font-weight:800;padding:5px 14px;border-radius:999px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px">🛠 Staff Portal</div><h2>🔒 ログインが必要です</h2><p>管理画面を見るには <strong>管理用サインインページ</strong>から TCK Workshop スタッフアカウントでログインしてください。</p><a href="login.html">管理用ログインへ →</a>';
 } else {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
