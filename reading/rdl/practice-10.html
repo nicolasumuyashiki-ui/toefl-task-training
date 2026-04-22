@@ -97,9 +97,21 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 .review-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .review-dot.answered{background:#48bb78}
 .review-dot.unanswered{background:#F5E9D3}
+
+.tck-instruction-overlay{position:fixed;inset:0;background:rgba(15,21,17,.82);z-index:9000;display:flex;align-items:center;justify-content:center;padding:24px;font-family:"Manrope","Zen Kaku Gothic New","Noto Sans JP",sans-serif}
+.tck-instruction-card{background:#fff;border-radius:16px;max-width:580px;width:100%;padding:36px 40px;box-shadow:0 20px 60px rgba(0,0,0,.3);max-height:85vh;overflow-y:auto}
+.tck-instruction-title{font-family:"Manrope",sans-serif;font-size:1.45em;font-weight:800;color:#002817;font-style:italic;text-decoration:underline;text-decoration-color:#007646;text-underline-offset:4px;margin-bottom:18px;letter-spacing:-0.01em}
+.tck-instruction-intro{font-size:.95em;color:#0F1511;line-height:1.7;margin-bottom:18px}
+.tck-instruction-points{list-style:disc;padding-left:22px;margin-bottom:20px}
+.tck-instruction-points li{font-size:.9em;color:#5A6861;line-height:1.7;margin-bottom:8px}
+.tck-instruction-notice{background:#F5E9D3;border-left:4px solid #C9A961;padding:12px 16px;border-radius:4px;margin-bottom:22px;font-size:.88em;color:#8A6D2A}
+.tck-instruction-start{display:block;margin:0 auto;background:#007646;color:#fff;border:none;padding:14px 40px;border-radius:999px;font-family:"Manrope",sans-serif;font-size:1em;font-weight:600;cursor:pointer;transition:all .18s;letter-spacing:.01em}
+.tck-instruction-start:hover{background:#004D2E;transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,118,70,.2)}
+
 </style>
 </head>
 <body>
+<div class="tck-instruction-overlay" id="tckInstructionOverlay"><div class="tck-instruction-card" role="dialog" aria-modal="true"><h2 class="tck-instruction-title">Read an Academic Passage</h2><p class="tck-instruction-intro"><span class="jp">学術的な長文を読み、各設問に答えます。語彙・推論・要約・挿入など複数タイプの設問があります。</span><span class="en">Read an academic passage and answer the questions. Types include vocabulary, inference, summary, and insertion.</span></p><ul class="tck-instruction-points"><li><span class="jp">各パッセージの主張・サポートを把握してから設問に進むと効率的。</span><span class="en">Grasp the main idea and supports first, then tackle the questions.</span></li><li><span class="jp">語彙問題は前後の文脈から意味を推測。</span><span class="en">For vocabulary, infer from the surrounding context.</span></li><li><span class="jp">挿入問題は前後の論理関係（discourse markers）に注目。</span><span class="en">For insertion, focus on discourse markers linking sentences.</span></li></ul><div class="tck-instruction-notice">⏱ <span class="jp">制限時間 36 分。「はじめる」をクリックするとタイマーがスタートします。</span><span class="en">Time limit: 36 minutes. The timer starts when you click Start.</span></div><button class="tck-instruction-start" type="button" onclick="tckStartTask()"><span class="jp">はじめる</span><span class="en">Start</span></button></div></div>
 
 <!-- TOP NAV -->
 <div class="top-nav">
@@ -532,7 +544,8 @@ function closeReview(){
   }
 })();
 
-startTimer();
+function __tckOnStart(){ startTimer(); }
+
 updateProgress();
 
 // Auth guard
@@ -542,5 +555,6 @@ if(typeof Auth !== 'undefined'){
 }
 </script>
 <script src="../../js/auth.js"></script>
+<script>function tckStartTask(){var ov=document.getElementById('tckInstructionOverlay');if(ov&&ov.parentNode){ov.parentNode.removeChild(ov);}if(typeof __tckOnStart==='function'){try{__tckOnStart();}catch(e){}}}</script>
 </body>
 </html>
