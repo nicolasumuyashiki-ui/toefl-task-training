@@ -64,14 +64,15 @@
     if (!saved){ if(callbacks && callbacks.onRestart) callbacks.onRestart(); return; }
     var ov = document.createElement('div');
     ov.className = 'tck-resume-overlay';
+    function dual(k){ return '<span class="jp">' + strings.jp[k] + '</span><span class="en">' + strings.en[k] + '</span>'; }
     ov.innerHTML =
       '<div class="tck-resume-panel" role="dialog" aria-modal="true">'
       + '<button type="button" class="tck-modal-close" data-close aria-label="Close">✕</button>'
-      + '<div class="tck-resume-title">' + t('title') + '</div>'
-      + '<div class="tck-resume-body">' + t('body') + '</div>'
+      + '<div class="tck-resume-title">' + dual('title') + '</div>'
+      + '<div class="tck-resume-body">' + dual('body') + '</div>'
       + '<div class="tck-resume-actions">'
-      + '<button type="button" class="tck-btn-secondary" data-restart>' + t('restart') + '</button>'
-      + '<button type="button" class="tck-btn-primary" data-resume>' + t('resume') + '</button>'
+      + '<button type="button" class="tck-btn-secondary" data-restart>' + dual('restart') + '</button>'
+      + '<button type="button" class="tck-btn-primary" data-resume>' + dual('resume') + '</button>'
       + '</div></div>';
     document.body.appendChild(ov);
     function dismiss(){ if(ov.parentNode) document.body.removeChild(ov); }
@@ -93,14 +94,15 @@
   function confirmExit(task, practice, getState, menuUrl){
     var ov = document.createElement('div');
     ov.className = 'tck-resume-overlay';
+    function dual(k){ return '<span class="jp">' + strings.jp[k] + '</span><span class="en">' + strings.en[k] + '</span>'; }
     ov.innerHTML =
       '<div class="tck-resume-panel" role="dialog" aria-modal="true">'
       + '<button type="button" class="tck-modal-close" data-close aria-label="Close">✕</button>'
-      + '<div class="tck-resume-title">' + t('exitTitle') + '</div>'
-      + '<div class="tck-resume-body">' + t('exitBody') + '</div>'
+      + '<div class="tck-resume-title">' + dual('exitTitle') + '</div>'
+      + '<div class="tck-resume-body">' + dual('exitBody') + '</div>'
       + '<div class="tck-resume-actions">'
-      + '<button type="button" class="tck-btn-secondary" data-cancel>' + t('exitCancel') + '</button>'
-      + '<button type="button" class="tck-btn-primary" data-confirm>' + t('exitConfirm') + '</button>'
+      + '<button type="button" class="tck-btn-secondary" data-cancel>' + dual('exitCancel') + '</button>'
+      + '<button type="button" class="tck-btn-primary" data-confirm>' + dual('exitConfirm') + '</button>'
       + '</div></div>';
     document.body.appendChild(ov);
     function dismiss(){ if(ov.parentNode) document.body.removeChild(ov); }
@@ -147,11 +149,13 @@
     });
     cluster.appendChild(toggle);
 
-    // Exit button
+    // Exit button — dual-span so it tracks body[data-lang] live
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'tck-exit-btn';
-    btn.innerHTML = '<span aria-hidden="true">✕</span><span class="tck-exit-label">' + t('exitBtnShort') + '</span>';
+    btn.innerHTML = '<span aria-hidden="true">✕</span>'
+      + '<span class="tck-exit-label jp">' + strings.jp.exitBtnShort + '</span>'
+      + '<span class="tck-exit-label en">' + strings.en.exitBtnShort + '</span>';
     btn.addEventListener('click', function(){ confirmExit(task, practice, getState, menuUrl); });
     cluster.appendChild(btn);
 
