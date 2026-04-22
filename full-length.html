@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Length Test — TCK Workshop</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-height:100vh;color:var(--ink-900);-webkit-font-smoothing:antialiased;line-height:1.6}
+
+.header{background:var(--cream);border-bottom:1px solid var(--paper);padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:14px}
+.logo-mark{display:inline-flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.logo{font-family:var(--font-en);font-size:.72em;font-weight:800;color:var(--green);letter-spacing:.14em;text-transform:uppercase}
+.header-divider{width:1px;height:16px;background:var(--ink-200)}
+.header-title{font-size:.88em;color:var(--ink-500);font-weight:500}
+.header-right{display:flex;align-items:center;gap:12px}
+.user-pill{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--paper);padding:5px 12px 5px 5px;border-radius:999px;font-size:.78em;font-weight:500}
+.avatar{width:24px;height:24px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:.72em;font-weight:700;font-family:var(--font-en)}
+.btn-logout{background:transparent;border:none;font-size:.74em;font-weight:500;color:var(--ink-500);cursor:pointer;font-family:var(--font-en);padding:6px 10px;border-radius:8px}
+
+.back-row{max-width:860px;margin:0 auto;padding:22px 28px 0}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:var(--white);border:1.5px solid var(--green);border-radius:999px;font-family:var(--font-en);font-size:.82em;font-weight:600;color:var(--green-dark);text-decoration:none;transition:all .18s ease}
+.back-btn:hover{background:var(--green);color:var(--white)}
+
+.wrap{max-width:860px;margin:0 auto;padding:40px 28px 80px;text-align:center}
+
+.soon-badge{display:inline-block;background:var(--gold);color:var(--green-deep);font-family:var(--font-en);font-size:.72em;font-weight:800;padding:5px 14px;border-radius:999px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:24px}
+
+.hero-h1{font-family:var(--font-en);font-size:3em;font-weight:800;color:var(--green-deep);line-height:1.1;letter-spacing:-0.02em;margin-bottom:14px}
+.hero-sub{font-size:1.05em;color:var(--ink-500);max-width:640px;margin:0 auto 36px;line-height:1.75}
+
+.preview-card{background:var(--white);border:1px solid var(--paper);border-radius:20px;padding:44px 48px;text-align:left;box-shadow:0 2px 14px rgba(0,40,23,.04);margin-bottom:32px}
+.preview-card h2{font-family:var(--font-en);font-size:1.4em;font-weight:700;color:var(--green-deep);margin-bottom:8px;letter-spacing:-0.005em}
+.preview-card .lead{font-size:.95em;color:var(--ink-500);margin-bottom:22px;line-height:1.75}
+
+.section-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:24px}
+@media(max-width:620px){.section-grid{grid-template-columns:1fr}}
+
+.section-row{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:var(--cream);border:1px solid var(--paper);border-radius:12px}
+.section-row .tag{font-family:var(--font-en);font-size:.66em;font-weight:800;color:var(--green);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;display:block}
+.section-row h3{font-size:1em;font-weight:700;color:var(--green-deep);margin-bottom:4px}
+.section-row .meta{font-size:.82em;color:var(--ink-500);line-height:1.65}
+.section-row .num{font-family:var(--font-en);font-size:1.5em;font-weight:800;color:var(--green);flex-shrink:0;min-width:40px;text-align:center;line-height:1}
+
+.notify-box{background:var(--paper);border-radius:14px;padding:22px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:8px}
+.notify-box-text{flex:1;min-width:200px;font-size:.92em;color:var(--green-deep);line-height:1.65}
+.notify-box-text strong{color:var(--green-dark);font-weight:700}
+.notify-btn{background:var(--green);color:var(--white);border:none;padding:11px 24px;border-radius:999px;font-family:var(--font-en);font-size:.88em;font-weight:600;cursor:pointer;transition:all .18s}
+.notify-btn:hover{background:var(--green-dark);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,118,70,.2)}
+.notify-btn.subscribed{background:transparent;color:var(--green-dark);border:1.5px solid var(--green)}
+
+.footer{max-width:860px;margin:0 auto;padding:24px 28px 48px;border-top:1px solid var(--paper);color:var(--ink-500);font-size:.78em;display:flex;justify-content:space-between;font-family:var(--font-en)}
+</style>
+</head>
+<body data-lang="jp">
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo-mark"><span class="logo-dot"></span><span class="logo">TCK Workshop</span></div>
+    <span class="header-divider"></span>
+    <span class="header-title jp">本番形式テスト</span><span class="header-title en">Full Length Test</span>
+  </div>
+  <div class="header-right">
+    <div class="tck-lang-toggle">
+      <button type="button" data-lang-btn="jp" class="active">日本語</button>
+      <button type="button" data-lang-btn="en">EN</button>
+    </div>
+    <div class="user-pill"><span class="avatar" id="avatarInit">?</span><span id="userName">---</span></div>
+    <button class="btn-logout" onclick="doLogout()"><span class="jp">ログアウト</span><span class="en">Log out</span></button>
+  </div>
+</div>
+
+<div class="back-row">
+  <a class="back-btn" href="menu.html">
+    <span>←</span>
+    <span class="jp">メニューに戻る</span>
+    <span class="en">Back to menu</span>
+  </a>
+</div>
+
+<div class="wrap">
+  <span class="soon-badge">Coming Soon</span>
+  <h1 class="hero-h1">Full Length Test</h1>
+  <p class="hero-sub">
+    <span class="jp">本番同等の難易度・時間配分で 4 技能すべてを一気通貫で解けるフルレングス模試を準備中です。仕上げの実力テストに。</span>
+    <span class="en">A complete, timed practice test that matches the real TOEFL iBT's difficulty and pacing across all four sections — perfect for your final readiness check.</span>
+  </p>
+
+  <div class="preview-card">
+    <h2>
+      <span class="jp">実装予定の構成</span>
+      <span class="en">Planned structure</span>
+    </h2>
+    <p class="lead">
+      <span class="jp">本番さながらのフローで受験し、セクションごとのスコアと総合スコアが出ます。実施時間は約 2 時間弱。</span>
+      <span class="en">Take all four sections in sequence and receive both per-section and overall scores. Total runtime about 2 hours.</span>
+    </p>
+
+    <div class="section-grid">
+      <div class="section-row">
+        <span class="num">1</span>
+        <div>
+          <span class="tag">Reading</span>
+          <h3>2 <span class="jp">パッセージ</span><span class="en">passages</span></h3>
+          <div class="meta"><span class="jp">35 分 / 各パッセージ 10 問</span><span class="en">35 minutes · 10 questions per passage</span></div>
+        </div>
+      </div>
+      <div class="section-row">
+        <span class="num">2</span>
+        <div>
+          <span class="tag">Listening</span>
+          <h3>3 <span class="jp">音源</span><span class="en">audios</span></h3>
+          <div class="meta"><span class="jp">36 分 / 会話 1 + 講義 2</span><span class="en">36 minutes · 1 conversation + 2 lectures</span></div>
+        </div>
+      </div>
+      <div class="section-row">
+        <span class="num">3</span>
+        <div>
+          <span class="tag">Speaking</span>
+          <h3>4 <span class="jp">設問</span><span class="en">tasks</span></h3>
+          <div class="meta"><span class="jp">約 17 分 / 独立問題 1 + 統合問題 3</span><span class="en">~17 minutes · 1 independent + 3 integrated</span></div>
+        </div>
+      </div>
+      <div class="section-row">
+        <span class="num">4</span>
+        <div>
+          <span class="tag">Writing</span>
+          <h3>2 <span class="jp">設問</span><span class="en">tasks</span></h3>
+          <div class="meta"><span class="jp">約 30 分 / 統合問題 + Academic Discussion</span><span class="en">~30 minutes · Integrated + Academic Discussion</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notify-box">
+      <div class="notify-box-text">
+        <span class="jp"><strong>リリース時にお知らせを受け取る</strong>：準備が整い次第、ご登録のメールアドレスに一報いたします。</span>
+        <span class="en"><strong>Get notified on launch</strong>: we'll email the address on your account the moment this is ready.</span>
+      </div>
+      <button type="button" class="notify-btn" id="notifyBtn" onclick="toggleNotify()">
+        <span class="jp">通知を受け取る</span>
+        <span class="en">Notify me</span>
+      </button>
+    </div>
+  </div>
+
+  <p style="font-size:.82em;color:var(--ink-500)">
+    <span class="jp">リリースは近日予定。現在は Task Training のセクション別演習で着実に積み上げてください。</span>
+    <span class="en">Launch coming soon. In the meantime, keep building section-by-section in Task Training.</span>
+  </p>
+</div>
+
+<div class="footer">
+  <span>© TCK Workshop</span>
+  <a href="menu.html" style="color:var(--ink-500);text-decoration:none">
+    <span class="jp">メニューに戻る</span>
+    <span class="en">Back to menu</span> →
+  </a>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
+
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+var u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
+if(u.userName){document.getElementById('userName').textContent=u.userName;document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();}
+function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='index.html';}
+
+/* Notify button — toggle subscribed state, persisted in localStorage */
+(function(){
+  var btn=document.getElementById('notifyBtn');
+  var key='tck_fulllength_notify';
+  function refresh(){
+    var subscribed=localStorage.getItem(key)==='1';
+    btn.classList.toggle('subscribed',subscribed);
+    btn.innerHTML=subscribed
+      ? '<span class="jp">✓ 通知登録済み</span><span class="en">✓ Notification on</span>'
+      : '<span class="jp">通知を受け取る</span><span class="en">Notify me</span>';
+  }
+  refresh();
+  window.toggleNotify=function(){
+    var cur=localStorage.getItem(key)==='1';
+    localStorage.setItem(key,cur?'0':'1');
+    refresh();
+  };
+})();
+</script>
+</body>
+</html>

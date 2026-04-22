@@ -73,6 +73,24 @@ body[data-lang="en"] .jp{display:none}
 .skill-arrow{font-family:var(--font-en);font-size:1.2em;color:var(--green);transition:transform .2s}
 .skill-card:hover .skill-arrow{transform:translateX(4px)}
 
+.extras-section{max-width:980px;margin:32px auto 40px;padding:0 28px}
+.extras-label{font-family:var(--font-en);font-size:.72em;font-weight:700;color:var(--green);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px}
+.extras-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:720px){.extras-grid{grid-template-columns:1fr}}
+.extras-card{background:var(--white);border:1px solid var(--paper);border-radius:var(--radius);padding:22px 26px;text-decoration:none;color:inherit;display:flex;align-items:center;gap:18px;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.extras-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,118,70,.08)}
+.extras-card.upcoming{background:var(--paper);border-style:dashed}
+.extras-card.upcoming:hover{border-color:var(--gold);box-shadow:0 8px 24px rgba(201,169,97,.14)}
+.extras-icon{width:48px;height:48px;border-radius:12px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:1.4em;flex-shrink:0;border:1px solid var(--paper)}
+.extras-card.upcoming .extras-icon{background:var(--white)}
+.extras-body{flex:1;min-width:0}
+.extras-eyebrow{font-family:var(--font-en);font-size:.66em;font-weight:800;color:var(--green);letter-spacing:.14em;text-transform:uppercase;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.extras-eyebrow .soon{background:var(--gold);color:var(--green-deep);padding:2px 8px;border-radius:999px;font-size:.88em;letter-spacing:.06em}
+.extras-title{font-family:var(--font-en);font-size:1.25em;font-weight:700;color:var(--green-deep);line-height:1.2;letter-spacing:-0.01em;margin-bottom:4px}
+.extras-sub{font-size:.85em;color:var(--ink-500);line-height:1.55}
+.extras-arrow{font-family:var(--font-en);font-size:1.2em;color:var(--green);transition:transform .2s;flex-shrink:0}
+.extras-card:hover .extras-arrow{transform:translateX(4px)}
+
 .footer{max-width:980px;margin:0 auto;padding:28px 28px 48px;display:flex;justify-content:space-between;align-items:center;color:var(--ink-500);font-size:.78em;border-top:1px solid var(--paper)}
 .footer-left{font-family:var(--font-en);font-weight:500}
 </style>
@@ -162,6 +180,37 @@ body[data-lang="en"] .jp{display:none}
     <div class="skill-foot"><span class="skill-arrow">→</span></div>
   </a>
 
+</div>
+
+<div class="extras-section">
+  <div class="extras-label">More</div>
+  <div class="extras-grid">
+    <a class="extras-card" href="consultation.html">
+      <div class="extras-icon">🎓</div>
+      <div class="extras-body">
+        <div class="extras-eyebrow">Monthly Coaching</div>
+        <div class="extras-title">Learning Consultation</div>
+        <div class="extras-sub">
+          <span class="jp">月 1 回・30 分の TOEFL 学習相談（日本語 or 英語）</span>
+          <span class="en">One 30-minute TOEFL consultation per month (JP or EN)</span>
+        </div>
+      </div>
+      <span class="extras-arrow">→</span>
+    </a>
+
+    <a class="extras-card upcoming" href="full-length.html">
+      <div class="extras-icon">📝</div>
+      <div class="extras-body">
+        <div class="extras-eyebrow"><span>Full Test</span><span class="soon">Coming Soon</span></div>
+        <div class="extras-title">Full Length Test</div>
+        <div class="extras-sub">
+          <span class="jp">本番形式で 4 技能を一気通貫で受験できる模試（準備中）</span>
+          <span class="en">A complete, timed practice test across all four sections (in prep)</span>
+        </div>
+      </div>
+      <span class="extras-arrow">→</span>
+    </a>
+  </div>
 </div>
 
 <div class="footer">

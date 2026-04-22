@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Consultation — TCK Workshop</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-height:100vh;color:var(--ink-900);-webkit-font-smoothing:antialiased;line-height:1.6}
+
+.header{background:var(--cream);border-bottom:1px solid var(--paper);padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:14px}
+.logo-mark{display:inline-flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.logo{font-family:var(--font-en);font-size:.72em;font-weight:800;color:var(--green);letter-spacing:.14em;text-transform:uppercase}
+.header-divider{width:1px;height:16px;background:var(--ink-200)}
+.header-title{font-size:.88em;color:var(--ink-500);font-weight:500}
+.header-right{display:flex;align-items:center;gap:12px}
+.user-pill{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--paper);padding:5px 12px 5px 5px;border-radius:999px;font-size:.78em;font-weight:500}
+.avatar{width:24px;height:24px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:.72em;font-weight:700;font-family:var(--font-en)}
+.btn-logout{background:transparent;border:none;font-size:.74em;font-weight:500;color:var(--ink-500);cursor:pointer;font-family:var(--font-en);padding:6px 10px;border-radius:8px}
+
+.back-row{max-width:760px;margin:0 auto;padding:22px 28px 0}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:var(--white);border:1.5px solid var(--green);border-radius:999px;font-family:var(--font-en);font-size:.82em;font-weight:600;color:var(--green-dark);text-decoration:none;transition:all .18s ease}
+.back-btn:hover{background:var(--green);color:var(--white)}
+
+.hero{max-width:760px;margin:0 auto;padding:32px 28px 16px}
+.hero .kicker{font-family:var(--font-en);font-size:.72em;font-weight:700;color:var(--green);letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
+.hero h1{font-family:var(--font-en);font-size:2.6em;font-weight:800;color:var(--green-deep);line-height:1.1;letter-spacing:-0.02em;margin-bottom:12px}
+.hero .sub{font-size:1em;color:var(--ink-500);max-width:620px}
+
+.plan-card{max-width:760px;margin:28px auto;padding:0 28px}
+.plan-inner{background:var(--white);border:1px solid var(--paper);border-radius:16px;padding:28px 32px;display:flex;gap:22px;align-items:flex-start}
+.plan-icon{width:48px;height:48px;border-radius:12px;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:1.4em;flex-shrink:0}
+.plan-body h3{font-size:1.1em;font-weight:700;color:var(--green-deep);margin-bottom:6px;letter-spacing:-0.005em}
+.plan-body p{font-size:.92em;color:var(--ink-500);line-height:1.7}
+.plan-body p strong{color:var(--green-dark);font-weight:700}
+
+.section{max-width:760px;margin:40px auto 24px;padding:0 28px}
+.section h2{font-family:var(--font-en);font-size:1.4em;font-weight:700;color:var(--green-deep);margin-bottom:6px;letter-spacing:-0.01em}
+.section .section-sub{font-size:.9em;color:var(--ink-500);margin-bottom:18px}
+
+.form-card{background:var(--white);border:1px solid var(--paper);border-radius:16px;padding:32px 36px}
+.field{margin-bottom:20px}
+.field label{display:block;font-family:var(--font-en);font-size:.72em;font-weight:700;color:var(--ink-500);margin-bottom:6px;letter-spacing:.08em;text-transform:uppercase}
+.field input[type=text],.field input[type=email],.field input[type=date],.field select,.field textarea{width:100%;padding:12px 14px;border:1.5px solid var(--paper);border-radius:10px;font-size:.95em;font-family:var(--font-en),var(--font-jp);color:var(--ink-900);background:var(--cream);transition:all .18s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--green);background:var(--white);box-shadow:0 0 0 3px rgba(0,118,70,.10)}
+.field textarea{resize:vertical;min-height:120px;line-height:1.6}
+.field .help{font-size:.78em;color:var(--ink-500);margin-top:4px}
+
+.radio-row{display:flex;gap:12px;flex-wrap:wrap}
+.radio-pill{flex:1;min-width:120px}
+.radio-pill input{position:absolute;opacity:0;pointer-events:none}
+.radio-pill label{display:block;cursor:pointer;padding:12px 18px;border:1.5px solid var(--paper);border-radius:12px;background:var(--cream);font-family:var(--font-en);font-size:.9em;font-weight:600;color:var(--ink-900);text-align:center;transition:all .15s;margin:0;letter-spacing:normal;text-transform:none}
+.radio-pill input:checked + label{border-color:var(--green);background:var(--white);color:var(--green-dark);box-shadow:0 0 0 3px rgba(0,118,70,.10)}
+.radio-pill label:hover{border-color:var(--green-dark)}
+
+.submit-row{display:flex;justify-content:flex-end;gap:12px;margin-top:28px;align-items:center}
+.btn-primary{background:var(--green);color:var(--white);border:none;padding:13px 32px;border-radius:999px;font-family:var(--font-en);font-size:.95em;font-weight:600;cursor:pointer;transition:all .18s;letter-spacing:.01em}
+.btn-primary:hover{background:var(--green-dark);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,118,70,.2)}
+.btn-primary:disabled{background:#A8C9B8;cursor:not-allowed;transform:none;box-shadow:none}
+
+.note{max-width:760px;margin:16px auto 60px;padding:0 28px;font-size:.82em;color:var(--ink-500);line-height:1.7}
+.note a{color:var(--green-dark);font-weight:600;text-decoration:none}
+.note a:hover{text-decoration:underline}
+
+.success-banner{background:var(--paper);border-left:4px solid var(--green);border-radius:8px;padding:16px 22px;margin-bottom:20px;font-size:.92em;color:var(--green-deep);line-height:1.7;display:none}
+.success-banner.active{display:block}
+.success-banner strong{color:var(--green-dark)}
+
+.footer{max-width:760px;margin:0 auto;padding:24px 28px 48px;border-top:1px solid var(--paper);color:var(--ink-500);font-size:.78em;display:flex;justify-content:space-between;font-family:var(--font-en)}
+</style>
+</head>
+<body data-lang="jp">
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo-mark"><span class="logo-dot"></span><span class="logo">TCK Workshop</span></div>
+    <span class="header-divider"></span>
+    <span class="header-title jp">学習相談</span><span class="header-title en">Learning Consultation</span>
+  </div>
+  <div class="header-right">
+    <div class="tck-lang-toggle">
+      <button type="button" data-lang-btn="jp" class="active">日本語</button>
+      <button type="button" data-lang-btn="en">EN</button>
+    </div>
+    <div class="user-pill"><span class="avatar" id="avatarInit">?</span><span id="userName">---</span></div>
+    <button class="btn-logout" onclick="doLogout()"><span class="jp">ログアウト</span><span class="en">Log out</span></button>
+  </div>
+</div>
+
+<div class="back-row">
+  <a class="back-btn" href="menu.html">
+    <span>←</span>
+    <span class="jp">メニューに戻る</span>
+    <span class="en">Back to menu</span>
+  </a>
+</div>
+
+<div class="hero">
+  <div class="kicker">Monthly Coaching · 月 1 回</div>
+  <h1>
+    <span class="jp">学習相談</span>
+    <span class="en">Learning Consultation</span>
+  </h1>
+  <p class="sub">
+    <span class="jp">サブスク会員向けに、月 1 回オンラインで TOEFL 学習相談ができます。スコアの伸び悩み、学習計画、試験対策の疑問などを 30 分でじっくり相談。</span>
+    <span class="en">As a subscriber, you can book a 30-minute online TOEFL consultation once a month — perfect for reviewing your progress, refining your study plan, or troubleshooting any aspect of the test.</span>
+  </p>
+</div>
+
+<div class="plan-card">
+  <div class="plan-inner">
+    <div class="plan-icon">🗓</div>
+    <div class="plan-body">
+      <h3>
+        <span class="jp">今月分の予約状況</span>
+        <span class="en">This month's booking</span>
+      </h3>
+      <p>
+        <span class="jp"><strong>利用可能</strong>： 今月分の学習相談はまだ利用していません。下のフォームから希望日時を選んで申し込みください。</span>
+        <span class="en"><strong>Available</strong>: You have not used this month's consultation yet. Book your preferred time below.</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>
+    <span class="jp">相談を予約する</span>
+    <span class="en">Book your session</span>
+  </h2>
+  <p class="section-sub">
+    <span class="jp">希望日時と相談内容を記入してください。担当講師から 1 営業日以内に候補時間をメールでお送りします。</span>
+    <span class="en">Tell us when you'd like to meet and what you'd like to discuss. We will confirm a time by email within one business day.</span>
+  </p>
+
+  <div class="form-card">
+    <div class="success-banner" id="successBanner">
+      <strong>
+        <span class="jp">送信完了</span>
+        <span class="en">Request submitted</span>
+      </strong>
+      —
+      <span class="jp">担当者から 1 営業日以内にご連絡します。</span>
+      <span class="en">We will get back to you within one business day.</span>
+    </div>
+
+    <form id="consultForm" onsubmit="submitForm(event)">
+      <div class="field">
+        <label>
+          <span class="jp">相談言語</span>
+          <span class="en">Consultation language</span>
+        </label>
+        <div class="radio-row">
+          <div class="radio-pill">
+            <input type="radio" name="lang" id="lang-jp" value="jp" checked>
+            <label for="lang-jp">日本語</label>
+          </div>
+          <div class="radio-pill">
+            <input type="radio" name="lang" id="lang-en" value="en">
+            <label for="lang-en">English</label>
+          </div>
+          <div class="radio-pill">
+            <input type="radio" name="lang" id="lang-either" value="either">
+            <label for="lang-either">
+              <span class="jp">どちらでも</span>
+              <span class="en">Either</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="pref-date">
+          <span class="jp">希望日</span>
+          <span class="en">Preferred date</span>
+        </label>
+        <input type="date" id="pref-date" name="pref-date" required>
+        <div class="help">
+          <span class="jp">平日・週末のどちらでも可。第 1 希望を記入してください。</span>
+          <span class="en">Weekdays or weekends. Enter your first choice.</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="pref-time">
+          <span class="jp">希望時間帯</span>
+          <span class="en">Preferred time block</span>
+        </label>
+        <select id="pref-time" name="pref-time" required>
+          <option value="morning" data-label-jp="朝（9:00〜12:00）" data-label-en="Morning (9:00–12:00)">Morning · 9:00–12:00</option>
+          <option value="afternoon" data-label-jp="昼（13:00〜17:00）" data-label-en="Afternoon (13:00–17:00)">Afternoon · 13:00–17:00</option>
+          <option value="evening" data-label-jp="夜（18:00〜21:00）" data-label-en="Evening (18:00–21:00)">Evening · 18:00–21:00</option>
+          <option value="flexible" data-label-jp="いつでも可" data-label-en="Flexible">Flexible</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="topic">
+          <span class="jp">相談内容（複数選択可）</span>
+          <span class="en">Topics (select any)</span>
+        </label>
+        <select id="topic" name="topic" required>
+          <option value="score-plan" data-label-jp="スコアアップの学習計画" data-label-en="Score-raise study plan">Score-raise study plan</option>
+          <option value="speaking" data-label-jp="Speaking 対策" data-label-en="Speaking strategy">Speaking strategy</option>
+          <option value="writing" data-label-jp="Writing 対策" data-label-en="Writing strategy">Writing strategy</option>
+          <option value="listening" data-label-jp="Listening 対策" data-label-en="Listening strategy">Listening strategy</option>
+          <option value="reading" data-label-jp="Reading 対策" data-label-en="Reading strategy">Reading strategy</option>
+          <option value="schedule" data-label-jp="受験スケジュール相談" data-label-en="Test-date planning">Test-date planning</option>
+          <option value="other" data-label-jp="その他" data-label-en="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="notes">
+          <span class="jp">具体的に相談したいこと（任意）</span>
+          <span class="en">Details you want to discuss (optional)</span>
+        </label>
+        <textarea id="notes" name="notes" placeholder=""></textarea>
+        <div class="help">
+          <span class="jp">例：直近のスコア、苦手なセクション、目標期日など。</span>
+          <span class="en">Examples: recent score, weakest section, target test date.</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">
+          <span class="jp">連絡先メール</span>
+          <span class="en">Contact email</span>
+        </label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="btn-primary" id="submitBtn">
+          <span class="jp">予約を申し込む</span>
+          <span class="en">Submit request</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="note">
+  <p>
+    <span class="jp">※ 学習相談は月 1 回（30 分）までのサブスク特典です。予約は受付時にスロット状況を確認の上、担当講師からメールで確定日時をご連絡します。キャンセル・変更は前日 18 時までにお願いします。</span>
+    <span class="en">One 30-minute session per calendar month is included with your subscription. We will confirm the exact time by email after checking availability. Please cancel or reschedule by 6 p.m. the day before.</span>
+  </p>
+</div>
+
+<div class="footer">
+  <span>© TCK Workshop</span>
+  <a href="menu.html" style="color:var(--ink-500);text-decoration:none">
+    <span class="jp">メニューに戻る</span>
+    <span class="en">Back to menu</span> →
+  </a>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){
+    document.body.setAttribute('data-lang',l);
+    document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');
+    localStorage.setItem('tck_lang',l);
+    document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});
+    /* swap select option labels */
+    document.querySelectorAll('select option[data-label-jp]').forEach(function(op){
+      op.textContent=l==='en'?op.getAttribute('data-label-en'):op.getAttribute('data-label-jp');
+    });
+  }
+})();
+
+if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+var u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
+if(u.userName){document.getElementById('userName').textContent=u.userName;document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();if(!document.getElementById('email').value)document.getElementById('email').value=u.email||'';}
+function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='index.html';}
+
+function submitForm(e){
+  e.preventDefault();
+  var data={
+    lang:document.querySelector('input[name="lang"]:checked').value,
+    date:document.getElementById('pref-date').value,
+    time:document.getElementById('pref-time').value,
+    topic:document.getElementById('topic').value,
+    notes:document.getElementById('notes').value.trim(),
+    email:document.getElementById('email').value.trim(),
+    submittedAt:new Date().toISOString()
+  };
+  try{
+    var hist=JSON.parse(localStorage.getItem('tck_consult_requests')||'[]');
+    hist.push(data);
+    localStorage.setItem('tck_consult_requests',JSON.stringify(hist));
+  }catch(_){}
+  document.getElementById('consultForm').style.display='none';
+  document.getElementById('successBanner').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
