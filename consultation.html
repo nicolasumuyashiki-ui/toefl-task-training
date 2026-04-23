@@ -113,15 +113,15 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 </div>
 
 <div class="plan-card">
-  <div class="plan-inner">
-    <div class="plan-icon">🗓</div>
+  <div class="plan-inner" id="planInner">
+    <div class="plan-icon" id="planIcon">🗓</div>
     <div class="plan-body">
       <h3>
-        <span class="jp">今月分の予約状況</span>
-        <span class="en">This month's booking</span>
+        <span class="jp">今月の利用状況</span>
+        <span class="en">This month's usage</span>
       </h3>
-      <p>
-        <span class="jp"><strong>利用可能</strong>： 今月分の学習相談はまだ利用していません。下のフォームから希望日時を選んで申し込みください。</span>
+      <p id="planStatus">
+        <span class="jp"><strong>利用可能</strong>：今月分の学習相談はまだ利用していません。下のフォームから希望日時をお選びください。</span>
         <span class="en"><strong>Available</strong>: You have not used this month's consultation yet. Book your preferred time below.</span>
       </p>
     </div>
@@ -134,11 +134,37 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
     <span class="en">Book your session</span>
   </h2>
   <p class="section-sub">
-    <span class="jp">予約フォームは準備中です。整い次第、こちらに埋め込みます。</span>
-    <span class="en">The booking form is being set up and will be embedded here shortly.</span>
+    <span class="jp">希望日時と相談内容をフォームにご記入ください。担当者から 1 営業日以内に候補時間をメールでお送りします。</span>
+    <span class="en">Fill in your preferred time and topic; we will email back available slots within one business day.</span>
   </p>
 
-  <div class="form-card">
+  <!-- Cooldown notice (shown when user booked within last 30 days) -->
+  <div id="cooldownCard" class="form-card" style="display:none;text-align:center;padding:44px 36px;background:var(--paper);border-color:var(--gold)">
+    <div style="font-family:var(--font-en);font-size:.72em;font-weight:700;color:#8A6D2A;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px">This Month's Session Used</div>
+    <h3 style="font-family:var(--font-en);font-size:1.3em;font-weight:700;color:var(--green-deep);margin-bottom:10px;letter-spacing:-0.01em">
+      <span class="jp">今月分の学習相談はご利用済みです</span>
+      <span class="en">You have already used this month's consultation</span>
+    </h3>
+    <p id="cooldownText" style="font-size:.95em;color:var(--ink-500);line-height:1.75;max-width:480px;margin:0 auto 18px"></p>
+    <div style="background:var(--white);border-radius:10px;padding:16px 22px;display:inline-block;font-size:.88em;line-height:1.7">
+      <div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:var(--green-dark);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px">
+        <span class="jp">特別なお問い合わせ</span><span class="en">Urgent inquiry</span>
+      </div>
+      <p style="color:var(--ink-900)">
+        <span class="jp">次回利用可能日を待たずに個別で相談が必要な場合は、下記までご連絡ください：</span>
+        <span class="en">For additional inquiries before your next eligible session, contact us at:</span>
+      </p>
+      <a href="mailto:info@tckworkshop.co.jp" style="font-family:var(--font-en);font-weight:700;color:var(--green-dark);text-decoration:none;font-size:1em">info@tckworkshop.co.jp</a>
+    </div>
+    <p style="font-size:.78em;color:var(--ink-500);margin-top:18px">
+      <button type="button" id="resetCooldownBtn" style="background:none;border:none;color:var(--ink-500);font-size:.9em;text-decoration:underline;cursor:pointer;font-family:inherit">
+        <span class="jp">（担当者です — クールダウンをリセット）</span><span class="en">(Staff override — reset cooldown)</span>
+      </button>
+    </p>
+  </div>
+
+  <!-- Booking form (shown when not in cooldown) -->
+  <div id="bookingCard" class="form-card" style="display:none">
     <!-- HubSpot booking form -->
     <script src="https://js-na2.hsforms.net/forms/embed/242729130.js" defer></script>
     <div class="hs-form-frame" data-region="na2" data-form-id="98867804-1260-44e6-a939-9cdb1cc02308" data-portal-id="242729130"></div>
@@ -147,8 +173,8 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 
 <div class="note">
   <p>
-    <span class="jp">※ 学習相談は月 1 回（45 分）までのサブスク特典です。予約は受付時にスロット状況を確認の上、担当講師からメールで確定日時をご連絡します。キャンセル・変更は前日 18 時までにお願いします。</span>
-    <span class="en">One 45-minute session per calendar month is included with your subscription. We will confirm the exact time by email after checking availability. Please cancel or reschedule by 6 p.m. the day before.</span>
+    <span class="jp">※ 学習相談は月 1 回（45 分）までのサブスク特典です。一度ご予約いただくと、次回は <strong>30 日後</strong> からご利用いただけます。急ぎのご相談は <a href="mailto:info@tckworkshop.co.jp">info@tckworkshop.co.jp</a> までご連絡ください。キャンセル・変更は前日 18 時までにお願いします。</span>
+    <span class="en">One 45-minute session per calendar month is included with your subscription. After booking, the next booking becomes available <strong>30 days later</strong>. For urgent inquiries, email <a href="mailto:info@tckworkshop.co.jp">info@tckworkshop.co.jp</a>. Please cancel or reschedule by 6 p.m. the day before.</span>
   </p>
 </div>
 
@@ -179,6 +205,103 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 var u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
 if(u.userName){document.getElementById('userName').textContent=u.userName;document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();}
 function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='index.html';}
+
+/* ============================================================
+   Consultation cooldown — once a user books, hide the form for 30
+   days and show their next-available date. Key is per-user so
+   different accounts on the same browser stay isolated.
+   ============================================================ */
+(function(){
+  var COOLDOWN_DAYS = 30;
+  var COOLDOWN_MS = COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
+  var storageKey = 'tck_consult_last_booked_' + (u.userId || 'anon');
+
+  function lastBookedAt() {
+    var raw = localStorage.getItem(storageKey);
+    if (!raw) return null;
+    var d = new Date(raw);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  function render() {
+    var bookingCard = document.getElementById('bookingCard');
+    var cooldownCard = document.getElementById('cooldownCard');
+    var planStatus = document.getElementById('planStatus');
+    var planIcon = document.getElementById('planIcon');
+    var last = lastBookedAt();
+    var now = Date.now();
+
+    if (last && (now - last.getTime()) < COOLDOWN_MS) {
+      // In cooldown — hide form, show notice
+      var nextAvail = new Date(last.getTime() + COOLDOWN_MS);
+      var daysLeft = Math.ceil((nextAvail.getTime() - now) / (24 * 60 * 60 * 1000));
+      var lastStr  = last.toISOString().slice(0, 10);
+      var nextStr  = nextAvail.toISOString().slice(0, 10);
+
+      if (bookingCard) bookingCard.style.display = 'none';
+      if (cooldownCard) cooldownCard.style.display = '';
+      var cdText = document.getElementById('cooldownText');
+      if (cdText) {
+        cdText.innerHTML =
+          '<span class="jp">前回の予約日：<strong>' + lastStr + '</strong><br>次回ご予約可能日：<strong>' + nextStr + '</strong>（あと <strong>' + daysLeft + ' 日</strong>）</span>' +
+          '<span class="en">Last booked: <strong>' + lastStr + '</strong><br>Next available: <strong>' + nextStr + '</strong> (<strong>' + daysLeft + ' days</strong> to go)</span>';
+      }
+      if (planIcon) planIcon.textContent = '⏳';
+      if (planInner = document.getElementById('planInner')) {
+        planInner.style.background = 'var(--paper)';
+        planInner.style.borderColor = 'var(--gold)';
+      }
+      if (planStatus) {
+        planStatus.innerHTML =
+          '<span class="jp"><strong>ご利用済み</strong>：' + lastStr + ' に予約済みです。次回は <strong>' + nextStr + '</strong>（あと <strong>' + daysLeft + ' 日</strong>）から。</span>' +
+          '<span class="en"><strong>Used this month</strong>: booked on ' + lastStr + '. Next booking opens on <strong>' + nextStr + '</strong> (<strong>' + daysLeft + ' days</strong> to go).</span>';
+      }
+    } else {
+      // Available — show form
+      if (bookingCard) bookingCard.style.display = '';
+      if (cooldownCard) cooldownCard.style.display = 'none';
+      if (planIcon) planIcon.textContent = '🗓';
+      var planInner2 = document.getElementById('planInner');
+      if (planInner2) {
+        planInner2.style.background = '';
+        planInner2.style.borderColor = '';
+      }
+      if (planStatus) {
+        planStatus.innerHTML =
+          '<span class="jp"><strong>利用可能</strong>：今月分の学習相談はまだ利用していません。下のフォームから希望日時をお選びください。</span>' +
+          '<span class="en"><strong>Available</strong>: You have not used this month\'s consultation yet. Book your preferred time below.</span>';
+      }
+    }
+  }
+
+  render();
+
+  // Listen for HubSpot form submission to start the cooldown
+  window.addEventListener('message', function(e){
+    try {
+      var d = e.data;
+      if (d && (d.type === 'hsFormCallback' || d.type === 'hs-form-callback') && (d.eventName === 'onFormSubmitted' || d.eventName === 'onFormSubmit')) {
+        localStorage.setItem(storageKey, new Date().toISOString());
+        // Small delay so the user sees the HubSpot thank-you state first
+        setTimeout(render, 1800);
+      }
+    } catch(_){}
+  });
+
+  // Staff-only reset (useful when a consultation is cancelled by admin)
+  var resetBtn = document.getElementById('resetCooldownBtn');
+  if (resetBtn) {
+    // Only show the reset link for @tckworkshop.co.jp staff
+    var isStaff = (u.email || '').toLowerCase().endsWith('@tckworkshop.co.jp');
+    if (!isStaff) resetBtn.style.display = 'none';
+    resetBtn.addEventListener('click', function(){
+      if (confirm('クールダウンをリセットしますか？（スタッフ操作）')) {
+        localStorage.removeItem(storageKey);
+        render();
+      }
+    });
+  }
+})();
 </script>
 </body>
 </html>
