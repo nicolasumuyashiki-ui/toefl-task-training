@@ -257,6 +257,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 </div>
 
 <script src="js/auth.js"></script>
+<script src="js/api.js"></script>
 <script>
 /* Language toggle */
 (function(){
@@ -279,11 +280,9 @@ var STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_dRm8wQ2adgX2crI6m06J200';
 var stripe = (typeof Stripe === 'function') ? Stripe(STRIPE_PK) : null;
 
 /* ============================================================
-   Local subscription state (sandbox only)
-   In a real implementation, this would come from Stripe via a
-   server-side endpoint. Here we store a small mock object in
-   localStorage to demonstrate the UI states and update it when
-   the user returns from a successful Checkout session.
+   Subscription state — sourced from GAS (Stripe webhook → sheet)
+   Mirror kept in localStorage so the UI reacts instantly if GAS
+   is slow or momentarily unreachable.
    ============================================================ */
 var STORAGE_KEY = 'tck_billing_state_' + (u.userId || 'anon');
 
@@ -299,6 +298,43 @@ function saveState(s) {
 }
 function clearState() {
   localStorage.removeItem(STORAGE_KEY);
+}
+
+/* Convert a SUBSCRIPTIONS row (from GAS) + INVOICES rows into the
+   flat shape this page already renders. */
+function normalizeLiveData(sub, invoices) {
+  if (!sub) return null;
+  var status = String(sub.status || '').toLowerCase();
+  var pmBrand = sub.pm_brand || '';
+  var pmLast4 = sub.pm_last4 || '';
+  var pmExp = sub.pm_exp || '';
+  var paymentMethod = pmLast4
+    ? { brand: pmBrand || 'Card', last4: pmLast4,
+        expMonth: String(pmExp).split('/')[0] || '',
+        expYear:  String(pmExp).split('/')[1] || '' }
+    : null;
+  return {
+    status: status === 'active' || status === 'trialing' ? 'active'
+          : status === 'canceled' ? 'canceled'
+          : (status || 'none'),
+    plan: sub.plan_name || 'TCK Subscription',
+    amount: Number(sub.amount || 0),
+    currency: (sub.currency || 'jpy').toLowerCase(),
+    started: sub.started_at ? String(sub.started_at).slice(0, 10) : '',
+    nextCharge: sub.current_period_end ? String(sub.current_period_end).slice(0, 10) : '',
+    customerId: sub.customer_id || '',
+    paymentMethod: paymentMethod,
+    invoices: (invoices || []).map(function(inv){
+      return {
+        date: String(inv.date || '').slice(0, 10),
+        description: inv.description || 'Invoice',
+        amount: Number(inv.amount || 0),
+        currency: (inv.currency || 'jpy').toLowerCase(),
+        status: inv.status || 'paid',
+        receiptUrl: inv.hosted_url || inv.pdf_url || '#'
+      };
+    })
+  };
 }
 
 function fmtJpy(n) { return '¥' + Number(n).toLocaleString('ja-JP'); }
@@ -423,6 +459,32 @@ function render() {
 }
 
 render();
+
+/* ============================================================
+   Live data — fetch from GAS (Stripe webhook writes → sheets)
+   ============================================================ */
+function fetchLiveBilling() {
+  if (typeof Api === 'undefined' || !Api.getSubscription) return;
+  Promise.all([Api.getSubscription(), Api.listInvoices()]).then(function(results){
+    var subRes = results[0], invRes = results[1];
+    if (!subRes || !subRes.success) return; // auth failed etc. — keep local state
+    var live = normalizeLiveData(subRes.subscription, invRes && invRes.invoices);
+    if (live) {
+      saveState(live);
+    } else {
+      // No subscription on file — clear any stale mock
+      var cur = loadState();
+      if (cur && cur.status !== 'canceled') clearState();
+    }
+    render();
+  }).catch(function(err){
+    // Silent fallback — the cached local state stays visible
+    console.warn('[billing] live fetch failed', err);
+  });
+}
+
+/* Kick it off (won't block the initial render above). */
+fetchLiveBilling();
 
 /* ============================================================
    Actions

@@ -195,8 +195,11 @@ function setLoading(btnId, spinId, on) {
   var b=document.getElementById(btnId), s=document.getElementById(spinId), t=b.querySelector('.btn-text');
   b.disabled=on; t.style.display=on?'none':''; s.style.display=on?'inline-block':'none';
 }
-function saveAndGo(res) {
+function saveAndGo(res, pass) {
   sessionStorage.setItem('kickstart_user', JSON.stringify({userId:res.userId,userName:res.userName,email:res.email||''}));
+  // Stash the password so session-scoped billing API calls can include it.
+  // Dies when the tab closes (sessionStorage, not localStorage).
+  if (pass) sessionStorage.setItem('kickstart_pass', pass);
   window.location.href='menu.html';
 }
 function tMsg(jp, en){ return (localStorage.getItem('tck_lang')||'jp')==='en' ? en : jp; }
@@ -215,7 +218,7 @@ function doLogin() {
         setLoading('btnLogin','spinLogin',false);
         return;
       }
-      saveAndGo(r);
+      saveAndGo(r, pass);
     }
     else{err.textContent=r.error||tMsg('ログインに失敗しました','Sign-in failed.');setLoading('btnLogin','spinLogin',false);}
   }).catch(function(){err.textContent=tMsg('通信エラーが発生しました','Network error.');setLoading('btnLogin','spinLogin',false);});
@@ -232,7 +235,7 @@ function doRegister() {
   }
   setLoading('btnRegister','spinReg',true);
   Api.register(id,pass,name,email).then(function(r){
-    if(r.success){succ.textContent=tMsg('登録完了！','Registered — taking you in…');setTimeout(function(){saveAndGo(r);},400);}
+    if(r.success){succ.textContent=tMsg('登録完了！','Registered — taking you in…');setTimeout(function(){saveAndGo(r, pass);},400);}
     else{err.textContent=r.error||tMsg('登録に失敗しました','Registration failed.');setLoading('btnRegister','spinReg',false);}
   }).catch(function(){err.textContent=tMsg('通信エラーが発生しました','Network error.');setLoading('btnRegister','spinReg',false);});
 }

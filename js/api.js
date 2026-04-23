@@ -81,5 +81,23 @@ var Api = {
     return _jsonpRequest(API_URL + '?action=listAttempts'
       + '&id=' + encodeURIComponent(id || u.userId || '')
       + '&pass=' + encodeURIComponent(p));
+  },
+
+  /* Student self-data — billing. Uses kickstart_pass
+     (set on student login) or kickstart_staff_pass (set on admin login). */
+  getSubscription: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=getSubscription'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
+  },
+
+  listInvoices: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=listInvoices'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
   }
 };
