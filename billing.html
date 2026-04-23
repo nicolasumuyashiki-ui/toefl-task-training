@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Billing — TCK Workshop</title>
+<link rel="stylesheet" href="css/common.css">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-height:100vh;color:var(--ink-900);-webkit-font-smoothing:antialiased;line-height:1.6}
+
+.header{background:var(--cream);border-bottom:1px solid var(--paper);padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:14px}
+.logo-mark{display:inline-flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.logo{font-family:var(--font-en);font-size:.72em;font-weight:800;color:var(--green);letter-spacing:.14em;text-transform:uppercase}
+.header-divider{width:1px;height:16px;background:var(--ink-200)}
+.header-title{font-size:.88em;color:var(--ink-500);font-weight:500}
+.header-right{display:flex;align-items:center;gap:12px}
+.user-pill{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--paper);padding:5px 12px 5px 5px;border-radius:999px;font-size:.78em;font-weight:500}
+.avatar{width:24px;height:24px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:.72em;font-weight:700;font-family:var(--font-en)}
+.btn-logout{background:transparent;border:none;font-size:.74em;font-weight:500;color:var(--ink-500);cursor:pointer;font-family:var(--font-en);padding:6px 10px;border-radius:8px}
+
+.back-row{max-width:880px;margin:0 auto;padding:22px 28px 0}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:var(--white);border:1.5px solid var(--green);border-radius:999px;font-family:var(--font-en);font-size:.82em;font-weight:600;color:var(--green-dark);text-decoration:none;transition:all .18s ease}
+.back-btn:hover{background:var(--green);color:var(--white)}
+
+.hero{max-width:880px;margin:0 auto;padding:32px 28px 16px}
+.hero .kicker{font-family:var(--font-en);font-size:.72em;font-weight:700;color:var(--green);letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
+.hero h1{font-family:var(--font-en);font-size:2.4em;font-weight:800;color:var(--green-deep);line-height:1.1;letter-spacing:-0.02em;margin-bottom:8px}
+.hero .sub{font-size:.95em;color:var(--ink-500);max-width:620px}
+
+.test-banner{max-width:880px;margin:18px auto 0;padding:0 28px}
+.test-banner-inner{background:#FFF4D6;border:1px solid var(--gold);border-radius:10px;padding:12px 18px;font-size:.85em;color:#6B5A1E;display:flex;align-items:center;gap:10px}
+.test-banner-inner strong{color:#8A6D2A}
+
+/* ===== Plan card ===== */
+.plan-card{max-width:880px;margin:24px auto;padding:0 28px}
+.plan-inner{background:var(--white);border:1px solid var(--paper);border-radius:16px;overflow:hidden}
+.plan-head{padding:24px 28px;border-bottom:1px solid var(--paper);display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap}
+.plan-name-block .label{font-family:var(--font-en);font-size:.72em;font-weight:700;color:var(--green);letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
+.plan-name-block h2{font-family:var(--font-en);font-size:1.6em;font-weight:800;color:var(--green-deep);letter-spacing:-0.015em;margin-bottom:4px}
+.plan-name-block .desc{font-size:.86em;color:var(--ink-500)}
+.plan-price-block{text-align:right}
+.plan-price-block .amount{font-family:var(--font-en);font-size:2em;font-weight:800;color:var(--green-deep);letter-spacing:-0.02em;line-height:1}
+.plan-price-block .amount small{font-size:.4em;color:var(--ink-500);font-weight:500;margin-left:4px}
+.plan-price-block .next{font-family:var(--font-en);font-size:.78em;color:var(--ink-500);margin-top:4px}
+
+.plan-body{padding:22px 28px;display:flex;gap:24px;flex-wrap:wrap}
+.plan-row{flex:1;min-width:200px}
+.plan-row .field-label{font-family:var(--font-en);font-size:.7em;font-weight:700;color:var(--ink-500);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.plan-row .field-value{font-size:.95em;color:var(--ink-900);font-weight:500}
+.plan-row .field-value .pill{display:inline-block;font-family:var(--font-en);font-size:.7em;font-weight:700;padding:2px 9px;border-radius:999px;letter-spacing:.04em;margin-left:6px}
+.plan-row .field-value .pill.active{background:var(--green);color:#fff}
+.plan-row .field-value .pill.trial{background:var(--gold);color:var(--green-deep)}
+.plan-row .field-value .pill.canceled{background:#B85C3C;color:#fff}
+.plan-row .field-value .pill.none{background:var(--ink-200);color:#fff}
+
+.plan-actions{padding:18px 28px;border-top:1px solid var(--paper);display:flex;gap:10px;flex-wrap:wrap;background:var(--cream)}
+.btn{font-family:var(--font-en);font-size:.88em;font-weight:600;padding:10px 20px;border:1.5px solid transparent;border-radius:999px;cursor:pointer;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--green);color:#fff;border-color:var(--green)}
+.btn-primary:hover{background:var(--green-dark);border-color:var(--green-dark)}
+.btn-outline{background:#fff;border-color:var(--paper);color:var(--ink-900)}
+.btn-outline:hover{border-color:var(--green);color:var(--green-dark)}
+.btn-danger-ghost{background:transparent;color:#B85C3C;border-color:transparent}
+.btn-danger-ghost:hover{background:#FDF4F0}
+
+/* ===== Status banner ===== */
+.status-banner{max-width:880px;margin:0 auto 8px;padding:0 28px}
+.status-inner{border-radius:12px;padding:16px 22px;display:flex;align-items:flex-start;gap:14px;font-size:.92em;line-height:1.65}
+.status-inner.success{background:#E6F3EC;border:1px solid var(--green);color:var(--green-deep)}
+.status-inner.canceled{background:#FDF4F0;border:1px solid #B85C3C;color:#8A3E24}
+.status-inner .icon{font-size:1.4em;line-height:1}
+
+/* ===== Section ===== */
+.section{max-width:880px;margin:36px auto 0;padding:0 28px}
+.section h2{font-family:var(--font-en);font-size:1.3em;font-weight:700;color:var(--green-deep);margin-bottom:6px;letter-spacing:-0.01em}
+.section .section-sub{font-size:.88em;color:var(--ink-500);margin-bottom:14px}
+
+/* ===== Invoice / payment table ===== */
+.tx-card{background:var(--white);border:1px solid var(--paper);border-radius:14px;overflow:hidden}
+.tx-table{width:100%;border-collapse:collapse;font-size:.88em}
+.tx-table th{padding:12px 18px;text-align:left;font-family:var(--font-en),var(--font-jp);font-weight:700;font-size:.74em;color:var(--ink-500);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--paper);background:var(--cream)}
+.tx-table td{padding:13px 18px;border-bottom:1px solid var(--paper);color:var(--ink-900);vertical-align:middle}
+.tx-table tr:last-child td{border-bottom:none}
+.tx-table td.num{text-align:right;font-family:var(--font-en);font-weight:600}
+.tx-table td.muted{color:var(--ink-500);font-family:var(--font-en)}
+.tx-status{display:inline-block;font-family:var(--font-en);font-size:.72em;font-weight:700;padding:2px 9px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase}
+.tx-status.paid{background:var(--green);color:#fff}
+.tx-status.pending{background:var(--gold);color:var(--green-deep)}
+.tx-status.failed{background:#B85C3C;color:#fff}
+.tx-status.refunded{background:var(--ink-200);color:#fff}
+.tx-receipt{color:var(--green-dark);font-weight:600;font-size:.84em;text-decoration:none}
+.tx-receipt:hover{text-decoration:underline}
+
+/* ===== Payment method ===== */
+.pm-card{background:var(--white);border:1px solid var(--paper);border-radius:14px;padding:20px 24px;display:flex;align-items:center;gap:16px}
+.pm-icon{width:54px;height:36px;background:var(--green-deep);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--font-en);font-size:.66em;font-weight:800;letter-spacing:.04em}
+.pm-info{flex:1}
+.pm-info .brand{font-family:var(--font-en);font-weight:700;color:var(--ink-900)}
+.pm-info .meta{font-family:var(--font-en);font-size:.82em;color:var(--ink-500);margin-top:2px}
+.pm-actions a{font-family:var(--font-en);font-size:.84em;font-weight:600;color:var(--green-dark);text-decoration:none}
+.pm-actions a:hover{text-decoration:underline}
+
+.empty{padding:40px 22px;text-align:center;color:var(--ink-500);font-size:.9em}
+
+.disclaimer{max-width:880px;margin:30px auto 60px;padding:0 28px;font-size:.82em;color:var(--ink-500);line-height:1.75}
+.disclaimer h3{font-family:var(--font-en);font-size:.72em;font-weight:700;color:var(--green-dark);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.disclaimer ul{list-style:disc;padding-left:22px;margin-top:6px}
+
+.footer{max-width:880px;margin:0 auto;padding:24px 28px 48px;border-top:1px solid var(--paper);color:var(--ink-500);font-size:.82em;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-en);gap:16px;flex-wrap:wrap}
+.footer-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:var(--green);color:var(--white);border-radius:999px;font-family:var(--font-en);font-size:.88em;font-weight:600;text-decoration:none;transition:all .18s ease}
+.footer-cta:hover{background:var(--green-dark);transform:translateX(2px);box-shadow:0 6px 18px rgba(0,118,70,.18)}
+</style>
+</head>
+<body data-lang="jp">
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo-mark"><span class="logo-dot"></span><span class="logo">TCK Workshop</span></div>
+    <span class="header-divider"></span>
+    <span class="header-title jp">サブスク・お支払い</span><span class="header-title en">Billing</span>
+  </div>
+  <div class="header-right">
+    <div class="tck-lang-toggle">
+      <button type="button" data-lang-btn="jp" class="active">日本語</button>
+      <button type="button" data-lang-btn="en">EN</button>
+    </div>
+    <div class="user-pill"><span class="avatar" id="avatarInit">?</span><span id="userName">---</span></div>
+    <button class="btn-logout" onclick="doLogout()"><span class="jp">ログアウト</span><span class="en">Log out</span></button>
+  </div>
+</div>
+
+<div class="back-row">
+  <a class="back-btn" href="menu.html">
+    <span>←</span>
+    <span class="jp">メニューに戻る</span>
+    <span class="en">Back to menu</span>
+  </a>
+</div>
+
+<div class="hero">
+  <div class="kicker">Subscription · お支払い</div>
+  <h1><span class="jp">サブスク管理</span><span class="en">Manage your subscription</span></h1>
+  <p class="sub">
+    <span class="jp">プランの状況、お支払い方法、ご請求履歴をここで確認・更新できます。</span>
+    <span class="en">View and update your plan, payment method, and invoice history.</span>
+  </p>
+</div>
+
+<div class="test-banner">
+  <div class="test-banner-inner">
+    <strong>🧪 TEST MODE</strong>
+    <span>
+      <span class="jp">Stripe サンドボックスに接続中。実際の課金は発生しません。テスト用カード番号: <code>4242 4242 4242 4242</code> · 有効期限・CVC は任意。</span>
+      <span class="en">Connected to Stripe sandbox — no real charges. Test card: <code>4242 4242 4242 4242</code> · any future expiry / CVC.</span>
+    </span>
+  </div>
+</div>
+
+<div id="statusBanner" class="status-banner" style="display:none">
+  <div class="status-inner" id="statusInner"></div>
+</div>
+
+<div class="plan-card">
+  <div class="plan-inner">
+    <div class="plan-head">
+      <div class="plan-name-block">
+        <div class="label">Current Plan</div>
+        <h2 id="planName">TCK Task Training · Standard</h2>
+        <div class="desc">
+          <span class="jp">タスク別トレーニング・全 4 技能 + 月 1 回の学習相談つき</span>
+          <span class="en">Task-based training across all 4 skills + monthly coaching</span>
+        </div>
+      </div>
+      <div class="plan-price-block">
+        <div class="amount" id="planAmount">¥3,980<small>/ 月</small></div>
+        <div class="next" id="nextBilling">Next charge: 2026-05-23</div>
+      </div>
+    </div>
+    <div class="plan-body">
+      <div class="plan-row">
+        <div class="field-label">Status</div>
+        <div class="field-value" id="planStatus">— <span class="pill none">Not subscribed</span></div>
+      </div>
+      <div class="plan-row">
+        <div class="field-label">Started</div>
+        <div class="field-value" id="planStarted">—</div>
+      </div>
+      <div class="plan-row">
+        <div class="field-label">Customer ID</div>
+        <div class="field-value" id="customerId" style="font-family:var(--font-en);font-size:.84em;color:var(--ink-500)">—</div>
+      </div>
+    </div>
+    <div class="plan-actions" id="planActions">
+      <a id="subscribeBtn" class="btn btn-primary" href="https://buy.stripe.com/test_dRm8wQ2adgX2crI6m06J200?prefilled_email=&utm_source=tck_app">
+        <span class="jp">サブスクを開始</span><span class="en">Start subscription</span>
+      </a>
+      <button type="button" class="btn btn-outline" id="updatePmBtn" style="display:none">
+        <span class="jp">お支払い方法を更新</span><span class="en">Update payment method</span>
+      </button>
+      <button type="button" class="btn btn-danger-ghost" id="cancelBtn" style="display:none">
+        <span class="jp">サブスクをキャンセル</span><span class="en">Cancel subscription</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="jp">お支払い方法</span><span class="en">Payment method</span></h2>
+  <p class="section-sub"><span class="jp">登録されている主たる支払い方法。</span><span class="en">Your default payment method.</span></p>
+  <div id="pmContainer">
+    <div class="pm-card">
+      <div class="pm-icon">CARD</div>
+      <div class="pm-info">
+        <div class="brand"><span class="jp">登録なし</span><span class="en">No card on file</span></div>
+        <div class="meta"><span class="jp">サブスク開始時にカードを登録します。</span><span class="en">A card will be added when you subscribe.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span class="jp">請求履歴</span><span class="en">Invoice history</span></h2>
+  <p class="section-sub"><span class="jp">過去 12 か月分のご請求と領収書。</span><span class="en">Last 12 months of charges and receipts.</span></p>
+  <div class="tx-card">
+    <table class="tx-table">
+      <thead>
+        <tr>
+          <th><span class="jp">日付</span><span class="en">Date</span></th>
+          <th><span class="jp">摘要</span><span class="en">Description</span></th>
+          <th class="num"><span class="jp">金額</span><span class="en">Amount</span></th>
+          <th><span class="jp">状態</span><span class="en">Status</span></th>
+          <th><span class="jp">領収書</span><span class="en">Receipt</span></th>
+        </tr>
+      </thead>
+      <tbody id="txBody">
+        <tr><td colspan="5" class="empty"><span class="jp">まだ請求履歴がありません。サブスクを開始すると、ここに表示されます。</span><span class="en">No invoices yet. Once you subscribe, charges will appear here.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <h3><span class="jp">テストモードについて</span><span class="en">About test mode</span></h3>
+  <p>
+    <span class="jp">このページは Stripe のサンドボックス環境に接続されています。本番運用時には公開キー・本番キーを差し替え、Stripe Customer Portal を有効化することで、お支払い方法・請求履歴を Stripe から直接取得して表示します。バックエンド（GAS or Stripe Webhook 受け口）の実装も追加で必要です。</span>
+    <span class="en">This page is wired to Stripe's sandbox. For production, swap the test publishable key for the live key, enable Stripe's Customer Portal, and add a backend listener (GAS or another endpoint) for Stripe webhooks so invoice / subscription data flows in automatically.</span>
+  </p>
+</div>
+
+<div class="footer">
+  <span>© TCK Workshop · Powered by Stripe (test)</span>
+  <a class="footer-cta" href="menu.html"><span class="jp">メニューに戻る</span><span class="en">Back to menu</span><span class="arrow">→</span></a>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+/* Language toggle */
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
+
+if(typeof Auth!=='undefined'){Auth.require();}
+var u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
+if(u.userName){document.getElementById('userName').textContent=u.userName;document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();}
+function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='index.html';}
+
+/* ============================================================
+   Stripe (sandbox) — publishable test key
+   ============================================================ */
+var STRIPE_PK = 'pk_test_51TPITYICXoAQHe5fECVg7L48EQv5IByUQKmbP1gOshXJe5BILvKys7lPSIRrZpUCFpDQzubqdKIjlQyEmRBZvBmq00VoafoXhT';
+var STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_dRm8wQ2adgX2crI6m06J200';
+var stripe = (typeof Stripe === 'function') ? Stripe(STRIPE_PK) : null;
+
+/* ============================================================
+   Local subscription state (sandbox only)
+   In a real implementation, this would come from Stripe via a
+   server-side endpoint. Here we store a small mock object in
+   localStorage to demonstrate the UI states and update it when
+   the user returns from a successful Checkout session.
+   ============================================================ */
+var STORAGE_KEY = 'tck_billing_state_' + (u.userId || 'anon');
+
+function loadState() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e){}
+  return null;
+}
+function saveState(s) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+}
+function clearState() {
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+function fmtJpy(n) { return '¥' + Number(n).toLocaleString('ja-JP'); }
+
+function isoDate(offsetDays) {
+  var d = new Date();
+  d.setDate(d.getDate() + (offsetDays || 0));
+  return d.toISOString().slice(0, 10);
+}
+
+/* Build a mock subscription object on first successful payment */
+function newSubscriptionMock() {
+  return {
+    status: 'active',
+    plan: 'TCK Task Training · Standard',
+    amount: 3980,
+    currency: 'jpy',
+    started: isoDate(0),
+    nextCharge: isoDate(30),
+    customerId: 'cus_TEST_' + (u.userId || 'anon').slice(-6).toUpperCase() + Math.random().toString(36).slice(2, 6),
+    paymentMethod: { brand: 'Visa', last4: '4242', expMonth: 12, expYear: 2030 },
+    invoices: [
+      {
+        date: isoDate(0),
+        description: 'TCK Task Training · 月額プラン',
+        amount: 3980,
+        status: 'paid',
+        receiptUrl: 'https://dashboard.stripe.com/test/payments?receipt=demo'
+      }
+    ]
+  };
+}
+
+/* If we returned from Stripe Checkout success, mark active */
+(function checkReturn(){
+  var qs = new URLSearchParams(location.search);
+  var st = qs.get('billing');
+  var banner = document.getElementById('statusBanner');
+  var inner = document.getElementById('statusInner');
+  if (st === 'success') {
+    var existing = loadState();
+    if (!existing || existing.status !== 'active') saveState(newSubscriptionMock());
+    banner.style.display = 'block';
+    inner.className = 'status-inner success';
+    inner.innerHTML = '<span class="icon">✅</span><div><strong><span class="jp">お支払い完了！</span><span class="en">Payment successful</span></strong><br><span class="jp">サブスクが有効になりました。今すぐ全タスクをご利用いただけます。</span><span class="en">Your subscription is active. All tasks are now available.</span></div>';
+  } else if (st === 'canceled') {
+    banner.style.display = 'block';
+    inner.className = 'status-inner canceled';
+    inner.innerHTML = '<span class="icon">⚠️</span><div><strong><span class="jp">支払いがキャンセルされました</span><span class="en">Payment canceled</span></strong><br><span class="jp">いつでも再度お試しいただけます。</span><span class="en">You can try again anytime.</span></div>';
+  }
+})();
+
+/* ============================================================
+   Render subscription state into the UI
+   ============================================================ */
+function render() {
+  var s = loadState();
+  var planStatus = document.getElementById('planStatus');
+  var planAmount = document.getElementById('planAmount');
+  var planName = document.getElementById('planName');
+  var nextBilling = document.getElementById('nextBilling');
+  var planStarted = document.getElementById('planStarted');
+  var customerId = document.getElementById('customerId');
+  var subscribeBtn = document.getElementById('subscribeBtn');
+  var updatePmBtn = document.getElementById('updatePmBtn');
+  var cancelBtn = document.getElementById('cancelBtn');
+  var pmContainer = document.getElementById('pmContainer');
+  var txBody = document.getElementById('txBody');
+
+  if (!s || s.status !== 'active') {
+    /* Not subscribed */
+    planStatus.innerHTML = '— <span class="pill none">Not subscribed</span>';
+    nextBilling.textContent = '—';
+    planStarted.textContent = '—';
+    customerId.textContent = '—';
+    if (s && s.status === 'canceled') {
+      planStatus.innerHTML = '— <span class="pill canceled">Canceled</span>';
+      planStarted.textContent = s.started || '—';
+      customerId.textContent = s.customerId || '—';
+    }
+    subscribeBtn.style.display = '';
+    updatePmBtn.style.display = 'none';
+    cancelBtn.style.display = 'none';
+    return;
+  }
+
+  /* Active */
+  planStatus.innerHTML = '<span class="pill active">Active</span>';
+  planAmount.innerHTML = fmtJpy(s.amount) + '<small>/ 月</small>';
+  planName.textContent = s.plan;
+  nextBilling.textContent = 'Next charge: ' + s.nextCharge;
+  planStarted.textContent = s.started;
+  customerId.textContent = s.customerId;
+  subscribeBtn.style.display = 'none';
+  updatePmBtn.style.display = '';
+  cancelBtn.style.display = '';
+
+  /* Payment method */
+  if (s.paymentMethod) {
+    pmContainer.innerHTML = '<div class="pm-card">'
+      + '<div class="pm-icon">' + s.paymentMethod.brand.toUpperCase() + '</div>'
+      + '<div class="pm-info">'
+        + '<div class="brand">' + s.paymentMethod.brand + ' •••• ' + s.paymentMethod.last4 + '</div>'
+        + '<div class="meta">Expires ' + String(s.paymentMethod.expMonth).padStart(2,'0') + '/' + s.paymentMethod.expYear + '</div>'
+      + '</div>'
+      + '<div class="pm-actions"><a href="#" onclick="alert(\'本番環境では Stripe Customer Portal が開きます\');return false;"><span class="jp">変更</span><span class="en">Change</span></a></div>'
+      + '</div>';
+  }
+
+  /* Invoices */
+  if (s.invoices && s.invoices.length) {
+    txBody.innerHTML = s.invoices.map(function(inv){
+      return '<tr>'
+        + '<td class="muted">' + inv.date + '</td>'
+        + '<td>' + inv.description + '</td>'
+        + '<td class="num">' + fmtJpy(inv.amount) + '</td>'
+        + '<td><span class="tx-status ' + inv.status + '">' + inv.status + '</span></td>'
+        + '<td><a class="tx-receipt" href="' + (inv.receiptUrl || '#') + '" target="_blank" rel="noopener">PDF</a></td>'
+      + '</tr>';
+    }).join('');
+  }
+}
+
+render();
+
+/* ============================================================
+   Actions
+   ============================================================ */
+document.getElementById('subscribeBtn').addEventListener('click', function(e){
+  /* Append return URL so we can detect success/cancel */
+  e.preventDefault();
+  var returnSuccess = encodeURIComponent(location.origin + location.pathname + '?billing=success');
+  var returnCancel  = encodeURIComponent(location.origin + location.pathname + '?billing=canceled');
+  /* Stripe Payment Links allow ?prefilled_email and other params,
+     but custom return URLs need to be configured in the Link itself.
+     For demo, we just navigate; on test return Stripe will redirect
+     to the success URL configured in the dashboard. */
+  var url = STRIPE_PAYMENT_LINK
+    + '?prefilled_email=' + encodeURIComponent(u.email || '')
+    + '&client_reference_id=' + encodeURIComponent(u.userId || '')
+    + '&utm_source=tck_app';
+  location.href = url;
+});
+
+document.getElementById('updatePmBtn').addEventListener('click', function(){
+  alert('本番環境では Stripe Customer Portal が開き、カードを安全に更新できます。\n(In production, this opens the Stripe Customer Portal.)');
+});
+
+document.getElementById('cancelBtn').addEventListener('click', function(){
+  if (!confirm('サブスクをキャンセルします。よろしいですか？\n(Demo: cancel your subscription?)')) return;
+  var s = loadState();
+  if (s) {
+    s.status = 'canceled';
+    saveState(s);
+  }
+  render();
+});
+</script>
+</body>
+</html>
