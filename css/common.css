@@ -49,3 +49,19 @@ body[data-lang="en"] .jp { display: none; }
   letter-spacing: .04em;
 }
 .tck-lang-toggle button.active { background: var(--green); color: var(--white); }
+
+/* ============================================================
+   Suppress HubSpot marketing pop-ups (newsletter / CTA) on this app
+   while keeping embedded forms (.hs-form-frame) working.
+   Long-term fix: exclude this domain in HubSpot > Marketing > Pop-up.
+   ============================================================ */
+#leadinModal-div,
+.leadinModal,
+.leadinModal-v3,
+.leadinModal-v3-theme-default,
+[id^="hs-interactives-modal"],
+[id^="leadin-"][data-hs-cta-type="popup"],
+iframe[title*="popup"],
+iframe[id^="hs-web-interactives-"]:not([id*="form"]) {
+  display: none !important;
+}
