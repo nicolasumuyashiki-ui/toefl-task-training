@@ -10,11 +10,10 @@ var TCK_ALLOWLIST = [
   // External beta emails go here (lowercase).
   // 'beta@example.com',
 ];
-/* Staff login IDs — used until GAS backend returns `email` in the login
-   response. Any entry here counts as staff regardless of email. */
-var TCK_STAFF_ID_ALLOWLIST = [
-  'Nico1',
-];
+/* Staff login IDs — emergency bypass for users whose email cannot be
+   validated. Empty by default now that GAS returns the email field.
+   Add entries here only as a short-term override. */
+var TCK_STAFF_ID_ALLOWLIST = [];
 
 function tckIsAllowed(email, userId) {
   if (userId && TCK_STAFF_ID_ALLOWLIST.indexOf(userId) !== -1) return true;
