@@ -195,7 +195,7 @@ function setLoading(btnId, spinId, on) {
   b.disabled=on; t.style.display=on?'none':''; s.style.display=on?'inline-block':'none';
 }
 function saveAndGo(res) {
-  sessionStorage.setItem('kickstart_user', JSON.stringify({userId:res.userId,userName:res.userName}));
+  sessionStorage.setItem('kickstart_user', JSON.stringify({userId:res.userId,userName:res.userName,email:res.email||''}));
   window.location.href='menu.html';
 }
 function tMsg(jp, en){ return (localStorage.getItem('tck_lang')||'jp')==='en' ? en : jp; }
@@ -207,7 +207,9 @@ function doLogin() {
   setLoading('btnLogin','spinLogin',true);
   Api.login(id,pass).then(function(r){
     if(r.success){
-      if(typeof tckIsAllowed==='function' && !tckIsAllowed(r.email)){
+      // If GAS returns an email, verify it. If email is missing (legacy
+      // backend), fall back to userId allowlist inside tckIsAllowed.
+      if(typeof tckIsAllowed==='function' && r.email && !tckIsAllowed(r.email, r.userId)){
         err.textContent=tMsg('このアプリは TCK Workshop 会員のみご利用いただけます。','This app is for TCK Workshop members only.');
         setLoading('btnLogin','spinLogin',false);
         return;

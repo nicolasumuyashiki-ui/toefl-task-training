@@ -10,8 +10,14 @@ var TCK_ALLOWLIST = [
   // External beta emails go here (lowercase).
   // 'beta@example.com',
 ];
+/* Staff login IDs — used until GAS backend returns `email` in the login
+   response. Any entry here counts as staff regardless of email. */
+var TCK_STAFF_ID_ALLOWLIST = [
+  'Nico1',
+];
 
-function tckIsAllowed(email) {
+function tckIsAllowed(email, userId) {
+  if (userId && TCK_STAFF_ID_ALLOWLIST.indexOf(userId) !== -1) return true;
   if (!email || typeof email !== 'string') return false;
   var e = email.toLowerCase();
   for (var i = 0; i < TCK_ALLOWED_DOMAINS.length; i++) {
@@ -22,7 +28,8 @@ function tckIsAllowed(email) {
   }
   return false;
 }
-function tckIsStaff(email) {
+function tckIsStaff(email, userId) {
+  if (userId && TCK_STAFF_ID_ALLOWLIST.indexOf(userId) !== -1) return true;
   return !!email && email.toLowerCase().endsWith('@tckworkshop.co.jp');
 }
 
@@ -49,7 +56,9 @@ var Auth = {
     // 2. Enforce domain gate (skip in ?preview=1 mode)
     if (location.search.indexOf('preview=1') === -1) {
       var u = this.getUser();
-      if (u && u.email && !tckIsAllowed(u.email)) {
+      // If no email is present in the session (GAS may omit it), fall
+      // back to userId allowlist. Only reject if email exists AND fails.
+      if (u && u.email && !tckIsAllowed(u.email, u.userId)) {
         sessionStorage.removeItem(this.SESSION_KEY);
         window.location.href = tckRootPrefix() + 'index.html?gate=denied';
         return false;

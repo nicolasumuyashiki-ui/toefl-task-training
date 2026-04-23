@@ -102,11 +102,11 @@ function doLogin() {
     if(!r.success){
       err.textContent=r.error||'サインインに失敗しました。';setLoading(false);return;
     }
-    if(typeof tckIsStaff!=='function' || !tckIsStaff(r.email)){
+    if(typeof tckIsStaff!=='function' || !tckIsStaff(r.email, r.userId)){
       err.textContent='このアカウントには管理者権限がありません。@tckworkshop.co.jp アカウントでサインインしてください。';
       setLoading(false);return;
     }
-    sessionStorage.setItem('kickstart_user', JSON.stringify({userId:r.userId,userName:r.userName,email:r.email}));
+    sessionStorage.setItem('kickstart_user', JSON.stringify({userId:r.userId,userName:r.userName,email:r.email||''}));
     location.href='index.html';
   }).catch(function(){err.textContent='通信エラーが発生しました。';setLoading(false);});
 }
