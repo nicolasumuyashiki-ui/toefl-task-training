@@ -62,5 +62,24 @@ var Api = {
       + '&answers=' + encodeURIComponent(JSON.stringify(answers))
       + '&score=' + encodeURIComponent(score);
     return _jsonpRequest(url);
+  },
+
+  /* Admin endpoints — require staff id/pass.
+     Pass is read from sessionStorage.kickstart_staff_pass (set on
+     admin login) or can be provided explicitly. */
+  listUsers: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=listUsers'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
+  },
+
+  listAttempts: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=listAttempts'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
   }
 };

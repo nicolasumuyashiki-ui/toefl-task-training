@@ -107,6 +107,8 @@ function doLogin() {
       setLoading(false);return;
     }
     sessionStorage.setItem('kickstart_user', JSON.stringify({userId:r.userId,userName:r.userName,email:r.email||''}));
+    // Stash pass for admin API calls (session-scoped, cleared on logout/tab close)
+    sessionStorage.setItem('kickstart_staff_pass', pass);
     location.href='index.html';
   }).catch(function(){err.textContent='通信エラーが発生しました。';setLoading(false);});
 }

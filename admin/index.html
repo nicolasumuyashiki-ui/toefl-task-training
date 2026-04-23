@@ -195,8 +195,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
 <!-- Main app -->
 <div id="adminApp" class="admin-app">
 
-  <div class="dev-banner">
-    <strong>開発プレビュー</strong> · モックデータで表示中。本番リリース時には GAS バックエンドから実データを取得します。
+  <div class="dev-banner" id="devBanner">
+    <span id="bannerMsg"><strong>読み込み中…</strong> GAS から実データを取得しています。</span>
   </div>
 
   <nav class="tabs" role="tablist">
@@ -362,6 +362,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
 </div>
 
 <script src="../js/auth.js"></script>
+<script src="../js/api.js"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -531,7 +532,119 @@ function generateAttempts() {
   });
   return out;
 }
-const ATTEMPTS = generateAttempts();
+/* Mutable so we can swap in live data once GAS responds */
+let MOCK_USERS_LIVE = MOCK_USERS;
+let ATTEMPTS = generateAttempts();
+
+/* Parse an ANSWERS-sheet `set` string into task/practice/setNum.
+   Expected formats (extend here as more tasks start saving):
+     "CTW P5 Set 2"
+     "LCR P3"
+     "Academic P1"  */
+function parseSetLabel(s) {
+  if (!s) return null;
+  s = String(s).trim();
+  let m;
+  // CTW P{N} Set {S}
+  m = s.match(/^CTW\s*P(\d+)\s*Set\s*(\d+)/i);
+  if (m) return { task: 'ctw', practice: +m[1], setNum: +m[2] };
+  // {TaskLabel} P{N}
+  m = s.match(/^(.+?)\s*P(\d+)\b/i);
+  if (m) {
+    const label = m[1].trim().toLowerCase();
+    const map = {
+      'ctw': 'ctw', 'complete the words': 'ctw',
+      'rdl': 'rdl', 'read in daily life': 'rdl', 'reading daily': 'rdl',
+      'academic': 'academic', 'academic passage': 'academic', 'read an academic passage': 'academic',
+      'lcr': 'lcr', 'listen and choose': 'lcr', 'listen & choose': 'lcr',
+      'conv': 'conv', 'conversation': 'conv', 'listen to a conversation': 'conv',
+      'announce': 'announce', 'announcement': 'announce',
+      'talk': 'talk', 'academic talk': 'talk', 'listen to an academic talk': 'talk',
+      'sentence': 'sentence', 'build a sentence': 'sentence',
+      'email': 'email', 'write an email': 'email',
+      'discussion': 'discussion', 'academic discussion': 'discussion',
+      'lr': 'lr', 'listen and repeat': 'lr', 'listen & repeat': 'lr',
+      'ti': 'ti', 'take an interview': 'ti', 'interview': 'ti',
+    };
+    const task = map[label];
+    if (task) return { task, practice: +m[2], setNum: null };
+  }
+  return null;
+}
+
+/* Convert raw ANSWERS rows from GAS into the ATTEMPTS shape the
+   admin dashboard already knows. Enriches with section + task label. */
+function mapLiveAttempts(rawAttempts, users) {
+  const userIndex = {};
+  users.forEach(u => { userIndex[u.userId] = u; });
+  const out = [];
+  (rawAttempts || []).forEach(r => {
+    const parsed = parseSetLabel(r.set);
+    if (!parsed) return;
+    const meta = TASKS.find(t => t.key === parsed.task);
+    if (!meta) return;
+    const u = userIndex[r.userId] || { userName: r.userName || r.userId, displayName: '', email: '' };
+    const total = meta.total;
+    const score = (total && meta.autoGraded) ? Math.round((r.score / total) * 100) : null;
+    out.push({
+      userId: r.userId,
+      userName: u.userName || r.userName || r.userId,
+      displayName: u.displayName || u.userName || '',
+      email: u.email || '',
+      task: parsed.task,
+      taskLabel: meta.label,
+      section: meta.section,
+      practice: parsed.practice,
+      correct: meta.autoGraded ? r.score : null,
+      total: meta.autoGraded ? total : null,
+      score: score,
+      status: meta.autoGraded ? (score === null ? 'inprog' : gradeFor(score)) : 'submitted',
+      updatedAt: r.updatedAt || '',
+      autoGraded: meta.autoGraded,
+    });
+  });
+  return out;
+}
+
+/* Try to fetch live data. On success, replace MOCK_USERS / ATTEMPTS
+   globals and re-render every active tab. Banner is swapped to a
+   green LIVE indicator. On failure, mock data remains. */
+function loadLiveData() {
+  const banner = document.getElementById('devBanner');
+  const msg = document.getElementById('bannerMsg');
+  Promise.all([Api.listUsers(), Api.listAttempts()]).then(function(results){
+    const ures = results[0], ares = results[1];
+    if (!ures || !ures.success) throw new Error(ures && ures.error || 'listUsers failed');
+    if (!ares || !ares.success) throw new Error(ares && ares.error || 'listAttempts failed');
+    const users = (ures.users || []).map(u => Object.assign({ displayName: '' }, u));
+    const liveAttempts = mapLiveAttempts(ares.attempts || [], users);
+    // Overwrite module-level data
+    MOCK_USERS_LIVE.length = 0;
+    users.forEach(u => MOCK_USERS_LIVE.push(u));
+    ATTEMPTS = liveAttempts;
+    // Swap banner
+    if (banner) {
+      banner.style.background = '#E6F3EC';
+      banner.style.borderBottomColor = 'var(--green)';
+      banner.style.color = 'var(--green-dark)';
+      msg.innerHTML = '<strong>LIVE</strong> · GAS から ' + users.length + ' ユーザー / ' + liveAttempts.length + ' 件の受験履歴を読み込みました。';
+      setTimeout(() => { banner.style.display = 'none'; }, 4000);
+    }
+    // Re-render all tabs that are already wired
+    if (typeof renderOverview === 'function') renderOverview();
+    if (typeof renderByContent === 'function') renderByContent();
+    if (typeof renderReport === 'function') renderReport();
+    if (typeof renderKarteList === 'function') renderKarteList();
+    if (typeof renderProgress === 'function') renderProgress();
+  }).catch(function(err){
+    if (msg) {
+      banner.style.background = '#FDF4F0';
+      banner.style.borderBottomColor = '#B85C3C';
+      banner.style.color = '#8A3E24';
+      msg.innerHTML = '<strong>オフラインモード</strong> · GAS への接続に失敗（' + (err.message || 'error') + '）。モックデータで表示中。';
+    }
+  });
+}
 
 /* ============================================================
    Boot + tab switching
@@ -574,6 +687,9 @@ function boot() {
   renderReport();
   renderKarteList();
   renderProgress();
+
+  // Try to replace mock data with live data from GAS
+  if (typeof loadLiveData === 'function') loadLiveData();
 }
 
 /* Sort state */
