@@ -116,12 +116,10 @@ body[data-lang="en"] .jp{display:none}
 </div>
 <div class="set-nav" id="setNav">
   <button class="active" onclick="showSet(0)">Set 1: Vaccination</button>
-  <button onclick="showSet(1)">Set 2: Mountains</button>
-  <button onclick="showSet(2)">Set 3: Cooking</button>
+  <button onclick="showSet(1)">Set 2: Cooking</button>
 </div>
 <div class="set-panel active" id="set0"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 1: The History of Vaccination</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage0"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag0"></div></div></div></div>
-<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 2: How Mountains Form</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
-<div class="set-panel" id="set2"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2</span><h2>Set 3: The Chemistry of Cooking</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage2"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag2"></div></div></div></div>
+<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2</span><h2>Set 2: The Chemistry of Cooking</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
 <div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
 
 <script src="../../js/auth.js"></script>
@@ -158,39 +156,6 @@ var SD=[
 {pos:"動詞",d:"HARD",e:"「who＋空欄＋cowpox」→動詞。\"cau\"→caught。catch-caught-caughtの過去形。"},
 {pos:"動詞",d:"MOD",e:"「cowpox＋空欄＋protected」→動詞。\"see\"→seemed。seem＋過去分詞パターン。"},
 {pos:"前置詞",d:"HARD",e:"「protected＋空欄＋smallpox」→前置詞。\"aga\"→against。protect againstは頻出コロケーション。"}
-]},
-{intro:"Mountains are among the most dramatic features on Earth's surface, and they have fascinated travelers, scientists, and artists for thousands of years. They form slowly over millions of years through powerful geological processes that take place deep beneath the ground. Scientists study these forces to understand the history of our planet and to predict how landscapes will continue to change in the distant future. Although mountains may appear solid and unchanging, they are in fact the product of constant motion within the Earth. Mountain building typically begins deep underground, where vast sections of the Earth's crust move against one another with tremendous pressure over long stretches of geological time.",conclusion:"new mountains through repeated eruptions of hot lava and thick ash. Once formed, these towering landforms are gradually shaped by wind, water, and ice, which slowly wear down their rocky surfaces after long periods of erosion. By carefully examining rock layers and the fossils preserved within mountain ranges, geologists can reconstruct how these massive features first came into being, how they have changed over the course of time, and how they continue to evolve today.",target:[
-{w:"When",a:null,s:null,p:""},
-{w:"two",a:null,s:null,p:""},
-{w:"enormous",a:"ormous",s:"en",p:""},
-{w:"tectonic",a:"onic",s:"tect",p:""},
-{w:"plates",a:"tes",s:"pla",p:""},
-{w:"collide",a:"llide",s:"co",p:","},
-{w:"the",a:null,s:null,p:""},
-{w:"ground",a:"und",s:"gro",p:""},
-{w:"slowly",a:"ly",s:"slow",p:""},
-{w:"rises",a:"ises",s:"r",p:""},
-{w:"and",a:null,s:null,p:""},
-{w:"creates",a:null,s:null,p:""},
-{w:"high",a:null,s:null,p:""},
-{w:"peaks",a:"ks",s:"pea",p:","},
-{w:"while",a:null,s:null,p:""},
-{w:"volcanic",a:"canic",s:"vol",p:""},
-{w:"activity",a:null,s:null,p:""},
-{w:"can",a:null,s:null,p:""},
-{w:"also",a:null,s:null,p:""},
-{w:"produce",a:"oduce",s:"pr",p:""}
-],exp:[
-{pos:"形容詞",d:"HARD",e:"「two＋空欄＋tectonic」→形容詞。\"en\"→enormous（巨大な）。表示少なめ。"},
-{pos:"形容詞",d:"MOD",e:"「enormous＋空欄＋plates」→形容詞。\"tect\"→tectonic（地殻構造の）。地学頻出語。"},
-{pos:"名詞",d:"MOD",e:"「tectonic＋空欄＋collide」→名詞。\"pla\"→plates。tectonic platesは定番コロケーション。"},
-{pos:"動詞",d:"HARD",e:"「plates＋空欄」→動詞。\"co\"→collide（衝突する）。主語plates（複数）の現在形。"},
-{pos:"名詞",d:"MOD",e:"「the＋空欄＋slowly」→名詞。\"gro\"→ground。"},
-{pos:"副詞",d:"MOD",e:"「ground＋空欄＋rises」→副詞。\"slow\"→slowly。-ly語尾。"},
-{pos:"動詞",d:"HARD",e:"「slowly＋空欄＋and」→動詞。\"r\"→rises。主語groundの三人称単数現在形。表示1字で難度高め。"},
-{pos:"名詞",d:"MOD",e:"「high＋空欄」→名詞。\"pea\"→peaks（山頂）。"},
-{pos:"形容詞",d:"HARD",e:"「while＋空欄＋activity」→形容詞。\"vol\"→volcanic（火山の）。"},
-{pos:"動詞",d:"HARD",e:"「also＋空欄」→動詞。\"pr\"→produce。canの後なので原形。表示少なめ。"}
 ]},
 {intro:"Cooking is not just an art but also a science. Every time food is heated, cooled, or mixed with other ingredients, complex chemical reactions take place. Understanding these reactions can help both professional chefs and home cooks achieve better results in the kitchen.",conclusion:"Recognizing these fundamental chemical principles allows cooks to experiment with confidence and develop new techniques.",target:[
 {w:"When",a:"en",s:"Wh",p:""},

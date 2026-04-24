@@ -116,12 +116,10 @@ body[data-lang="en"] .jp{display:none}
 </div>
 <div class="set-nav" id="setNav">
   <button class="active" onclick="showSet(0)">Set 1: Sleep</button>
-  <button onclick="showSet(1)">Set 2: Bridges</button>
-  <button onclick="showSet(2)">Set 3: Trade Economics</button>
+  <button onclick="showSet(1)">Set 2: Trade Economics</button>
 </div>
 <div class="set-panel active" id="set0"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 1: The Science of Sleep</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage0"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag0"></div></div></div></div>
-<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 2: How Bridges Are Built</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
-<div class="set-panel" id="set2"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 3: The Economics of International Trade</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage2"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag2"></div></div></div></div>
+<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 2: The Economics of International Trade</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
 <div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
 
 <script src="../../js/auth.js"></script>
@@ -170,41 +168,6 @@ var SD=[
 {pos:"形容詞",d:"MOD",e:"「get＋空欄＋rest」→形容詞。\"en\"→enough（十分な）。"},
 {pos:"形容詞",d:"MOD",e:"「a＋空欄＋risk」→形容詞。\"hig\"→higher（より高い）。比較級。"},
 {pos:"形容詞",d:"MOD",e:"「of＋空欄＋health problems」→形容詞。\"ser\"→serious（深刻な）。"}
-]},
-{intro:"Bridges are among the most important structures in human civilization. They connect communities separated by rivers, valleys, and other natural obstacles, enabling trade, travel, and cultural exchange.",conclusion:"Modern engineering continues to push the limits of bridge design, allowing people to cross distances that were once considered impossible.",target:[
-{w:"Engineers",a:"neers",s:"Engi",p:""},
-{w:"must",a:null,s:null,p:""},
-{w:"carefully",a:"fully",s:"care",p:""},
-{w:"consider",a:null,s:null,p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"weight",a:"ght",s:"wei",p:""},
-{w:"of",a:null,s:null,p:""},
-{w:"vehicles",a:null,s:null,p:""},
-{w:"and",a:null,s:null,p:""},
-{w:"pedestrians",a:"strians",s:"pede",p:""},
-{w:"that",a:null,s:null,p:""},
-{w:"will",a:null,s:null,p:""},
-{w:"cross",a:"oss",s:"cr",p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"bridge",a:"idge",s:"br",p:""},
-{w:"as",a:null,s:null,p:""},
-{w:"well",a:null,s:null,p:""},
-{w:"as",a:null,s:null,p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"forces",a:"ces",s:"for",p:""},
-{w:"of",a:null,s:null,p:""},
-{w:"wind",a:null,s:null,p:""},
-{w:"and",a:null,s:null,p:""},
-{w:"earthquakes",a:"quakes",s:"earth",p:""}
-],exp:[
-{pos:"名詞（主語）",d:"MOD",e:"「空欄＋must」→主語。\"Engi\"→Engineers（技術者）。introの文脈から推測。"},
-{pos:"副詞",d:"MOD",e:"「must＋空欄＋consider」→副詞。\"care\"→carefully（慎重に）。"},
-{pos:"名詞",d:"MOD",e:"「the＋空欄＋of」→名詞。\"wei\"→weight（重さ）。3文字の答え。"},
-{pos:"名詞",d:"HARD",e:"「and＋空欄＋that will cross」→名詞。\"pede\"→pedestrians（歩行者）。7文字の答え。"},
-{pos:"動詞",d:"MOD",e:"「will＋空欄＋the bridge」→動詞。\"cr\"→cross（渡る）。bridgeとの組み合わせ。"},
-{pos:"名詞",d:"MOD",e:"「the＋空欄」→名詞。\"br\"→bridge（橋）。introから推測。4文字の答え。"},
-{pos:"名詞",d:"MOD",e:"「the＋空欄＋of wind」→名詞。\"for\"→forces（力）。"},
-{pos:"名詞",d:"HARD",e:"「and＋空欄」→名詞。\"earth\"→earthquakes（地震）。6文字の答え。自然災害の文脈。"}
 ]},
 {intro:"International trade allows countries to specialize in producing goods and services that they can create most efficiently. This exchange of products across borders has been a driving force behind global economic growth for centuries.",conclusion:"These principles continue to shape the policies that governments adopt when negotiating trade agreements with other nations.",target:[
 {w:"Economists",a:"omists",s:"Econ",p:""},

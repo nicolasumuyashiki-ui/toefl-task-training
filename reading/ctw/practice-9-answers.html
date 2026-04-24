@@ -116,12 +116,10 @@ body[data-lang="en"] .jp{display:none}
 </div>
 <div class="set-nav" id="setNav">
   <button class="active" onclick="showSet(0)">Set 1: Antibiotics</button>
-  <button onclick="showSet(1)">Set 2: Ocean Climate</button>
-  <button onclick="showSet(2)">Set 3: Language Neuroscience</button>
+  <button onclick="showSet(1)">Set 2: Language Neuroscience</button>
 </div>
 <div class="set-panel active" id="set0"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 1: The Discovery of Antibiotics</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage0"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag0"></div></div></div></div>
-<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 2: How Oceans Regulate Climate</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
-<div class="set-panel" id="set2"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 3: The Neuroscience of Language Learning</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage2"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag2"></div></div></div></div>
+<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 2: The Neuroscience of Language Learning</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
 <div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
 
 <script src="../../js/auth.js"></script>
@@ -157,37 +155,6 @@ var SD=[
 {pos:"名詞",d:"HARD",e:"「his＋空欄＋dishes」→名詞。\"labo\"→laboratory（実験室）。6文字の答え。"},
 {pos:"動詞",d:"HARD",e:"「空欄＋killing」→be動詞。\"w\"→was。1文字表示で難。"},
 {pos:"名詞",d:"MOD",e:"「the＋空欄＋around」→名詞。\"bac\"→bacteria（細菌）。introからの推測。"}
-]},
-{intro:"The world's oceans play a crucial role in controlling the global climate. They absorb heat from the sun and distribute it around the planet through a system of powerful currents.",conclusion:"Without the ocean's ability to store and move heat, temperatures on land would be far more extreme and unpredictable.",target:[
-{w:"Warm",a:"rm",s:"Wa",p:""},
-{w:"water",a:null,s:null,p:""},
-{w:"near",a:"ar",s:"ne",p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"equator",a:"ator",s:"equ",p:""},
-{w:"travels",a:null,s:null,p:""},
-{w:"toward",a:"ard",s:"tow",p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"poles",a:"les",s:"po",p:""},
-{w:"while",a:null,s:null,p:""},
-{w:"cold",a:"ld",s:"co",p:""},
-{w:"water",a:null,s:null,p:""},
-{w:"from",a:null,s:null,p:""},
-{w:"deeper",a:"per",s:"dee",p:""},
-{w:"layers",a:null,s:null,p:""},
-{w:"rises",a:"ses",s:"ri",p:""},
-{w:"to",a:null,s:null,p:""},
-{w:"replace",a:"place",s:"re",p:""},
-{w:"it",a:null,s:null,p:"."}
-],exp:[
-{pos:"形容詞",d:"MOD",e:"「空欄＋water」→形容詞。\"Wa\"→Warm（温かい）。文脈から推測。"},
-{pos:"前置詞",d:"MOD",e:"「water＋空欄＋the equator」→前置詞。\"ne\"→near（近くの）。"},
-{pos:"名詞",d:"HARD",e:"「the＋空欄」→名詞。\"equ\"→equator（赤道）。科学用語。"},
-{pos:"前置詞",d:"MOD",e:"「travels＋空欄＋the poles」→前置詞。\"tow\"→toward（〜に向かって）。"},
-{pos:"名詞",d:"MOD",e:"「the＋空欄」→名詞。\"po\"→poles（極地）。equatorとの対比。"},
-{pos:"形容詞",d:"MOD",e:"「while＋空欄＋water」→形容詞。\"co\"→cold。Warmとの対比で推測。"},
-{pos:"形容詞",d:"MOD",e:"「from＋空欄＋layers」→形容詞。\"dee\"→deeper（より深い）。比較級。"},
-{pos:"動詞",d:"HARD",e:"「layers＋空欄＋to」→動詞。\"ri\"→rises（上昇する）。3人称単数。"},
-{pos:"動詞",d:"HARD",e:"「to＋空欄＋it」→動詞。\"re\"→replace（置き換える）。5文字で難しい。"}
 ]},
 {intro:"Learning a new language is one of the most complex tasks the human brain can perform. It requires the coordination of multiple brain regions responsible for memory, attention, and pattern recognition.",conclusion:"These findings suggest that the brain's remarkable plasticity allows people of all ages to acquire new languages, though the process becomes more effortful over time.",target:[
 {w:"Researchers",a:"rchers",s:"Resea",p:""},

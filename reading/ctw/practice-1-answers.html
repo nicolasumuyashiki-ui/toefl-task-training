@@ -110,7 +110,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);color:var
 <div class="page-head">
   <div class="kicker">Complete the Words · Practice 1</div>
   <h1>Answers</h1>
-  <p class="sub"><span class="jp">3セット分のスコアと、各空欄の解答・解説。</span><span class="en">Scores across three sets, with per-blank explanations.</span></p>
+  <p class="sub"><span class="jp">2セット分のスコアと、各空欄の解答・解説。</span><span class="en">Scores across two sets, with per-blank explanations.</span></p>
 </div>
 
 <div class="score-summary" id="scoreSummary"></div>
@@ -144,8 +144,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);color:var
 
 <div class="set-nav" id="setNav">
   <button class="active" onclick="showSet(0)">Set 1 · Chocolate</button>
-  <button onclick="showSet(1)">Set 2 · Urban Gardens</button>
-  <button onclick="showSet(2)">Set 3 · Soil Ecology</button>
+  <button onclick="showSet(1)">Set 2 · Soil Ecology</button>
 </div>
 
 <div class="set-panel active" id="set0">
@@ -158,17 +157,9 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);color:var
 
 <div class="set-panel" id="set1">
   <div class="set-section">
-    <div class="set-header"><span class="set-badge">M1</span><h2>Set 2 · Urban Gardens and Community Health</h2></div>
+    <div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 2 · The Role of Microorganisms in Soil Ecology</h2></div>
     <div class="passage-block"><div class="passage-label"><span class="jp">パッセージ（正解入り）</span><span class="en">Passage with answers</span></div><div class="passage-text" id="passage1"></div></div>
     <div class="answers-block"><h3><span class="jp">各問 解答＆解説</span><span class="en">Item-by-item breakdown</span></h3><div id="ag1"></div></div>
-  </div>
-</div>
-
-<div class="set-panel" id="set2">
-  <div class="set-section">
-    <div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 3 · The Role of Microorganisms in Soil Ecology</h2></div>
-    <div class="passage-block"><div class="passage-label"><span class="jp">パッセージ（正解入り）</span><span class="en">Passage with answers</span></div><div class="passage-text" id="passage2"></div></div>
-    <div class="answers-block"><h3><span class="jp">各問 解答＆解説</span><span class="en">Item-by-item breakdown</span></h3><div id="ag2"></div></div>
   </div>
 </div>
 
@@ -223,39 +214,6 @@ var SD=[
 {pos:"名詞",d:"HARD",e:"「adding＋空欄＋to」→名詞。\"su\"→sugar。文脈推測が重要！"},
 {pos:"動詞",d:"HARD",e:"「sugar to＋空欄」→動詞（不定詞）。\"cr\"→create。表示少なめで難。"},
 {pos:"副詞",d:"MOD",e:"「a＋空欄＋pleasant」→副詞。\"ve\"→very。頻出パターン。"}
-]},
-{intro:"In many cities, residents have limited access to fresh vegetables and fruits. This problem is especially common in neighborhoods where supermarkets are far away. Community gardens offer a simple and practical solution to this growing challenge.",conclusion:"Research shows that these community efforts not only provide healthy food but also reduce stress and bring people together.",target:[
-{w:"Neighbors",a:"bors",s:"Neigh",p:""},
-{w:"often",a:null,s:null,p:""},
-{w:"gather",a:"er",s:"gath",p:""},
-{w:"in",a:null,s:null,p:""},
-{w:"shared",a:"red",s:"sha",p:""},
-{w:"garden",a:null,s:null,p:""},
-{w:"plots",a:"ots",s:"pl",p:""},
-{w:"to",a:null,s:null,p:""},
-{w:"grow",a:"ow",s:"gr",p:""},
-{w:"fresh",a:null,s:null,p:""},
-{w:"food",a:"od",s:"fo",p:""},
-{w:"and",a:null,s:null,p:""},
-{w:"they",a:"ey",s:"th",p:""},
-{w:"donate",a:null,s:null,p:""},
-{w:"extra",a:"tra",s:"ex",p:""},
-{w:"crops",a:null,s:null,p:""},
-{w:"while",a:"ile",s:"wh",p:""},
-{w:"also",a:null,s:null,p:""},
-{w:"forming",a:"ming",s:"for",p:""},
-{w:"strong",a:null,s:null,p:"."}
-],exp:[
-{pos:"名詞（主語）",d:"MOD",e:"「空欄＋often gather」→主語。\"Neigh\"→Neighbors。文頭の主語パターン。"},
-{pos:"動詞",d:"MOD",e:"「Neighbors often＋空欄」→動詞。\"gath\"→gather（集まる）。"},
-{pos:"過去分詞",d:"MOD",e:"「in＋空欄＋garden」→形容詞。\"sha\"→shared（共有の）。"},
-{pos:"名詞",d:"HARD",e:"「shared garden＋空欄」→名詞。\"pl\"→plots（区画）。表示少なめ。"},
-{pos:"動詞",d:"MOD",e:"「plots to＋空欄」→動詞。\"gr\"→grow。不定詞パターン。"},
-{pos:"名詞",d:"MOD",e:"「grow fresh＋空欄」→名詞。\"fo\"→food。"},
-{pos:"代名詞",d:"MOD",e:"「and＋空欄＋donate」→主語。\"th\"→they。"},
-{pos:"形容詞",d:"HARD",e:"「donate＋空欄＋crops」→形容詞。\"ex\"→extra（余分な）。"},
-{pos:"接続詞",d:"HARD",e:"「crops＋空欄＋also」→接続詞。\"wh\"→while。譲歩・同時の接続詞。"},
-{pos:"動名詞",d:"HARD",e:"「while also＋空欄」→動名詞。\"for\"→forming。while+-ingの構文。"}
 ]},
 {intro:"Soil is far more than just dirt beneath our feet. It contains a vast network of living organisms that play essential roles in maintaining healthy ecosystems. Scientists have discovered that even a small handful of soil can contain billions of microorganisms.",conclusion:"Without these organisms, soils would lose their ability to support plant life and sustain productive ecosystems.",target:[
 {w:"Certain",a:"tain",s:"Cer",p:""},

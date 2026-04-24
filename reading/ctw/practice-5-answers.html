@@ -116,12 +116,10 @@ body[data-lang="en"] .jp{display:none}
 </div>
 <div class="set-nav" id="setNav">
   <button class="active" onclick="showSet(0)">Set 1: Coffee</button>
-  <button onclick="showSet(1)">Set 2: Rivers</button>
-  <button onclick="showSet(2)">Set 3: Bioluminescence</button>
+  <button onclick="showSet(1)">Set 2: Bioluminescence</button>
 </div>
 <div class="set-panel active" id="set0"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 1: The History of Coffee</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage0"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag0"></div></div></div></div>
-<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 2: How Rivers Shape Landscapes</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
-<div class="set-panel" id="set2"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 3: Bioluminescence in Marine Life</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage2"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag2"></div></div></div></div>
+<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 2: Bioluminescence in Marine Life</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
 <div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
 
 <script src="../../js/auth.js"></script>
@@ -158,40 +156,6 @@ var SD=[
 {pos:"動詞",d:"MOD",e:"「it＋空欄＋an important」→動詞。\"be\"→became。SVC構文。"},
 {pos:"形容詞",d:"MOD",e:"「an＋空欄＋part」→形容詞。\"impor\"→important。冠詞＋形容詞＋名詞。"},
 {pos:"形容詞",d:"MOD",e:"「of＋空欄＋life」→形容詞。\"da\"→daily（日常の）。"}
-]},
-{intro:"Rivers are among the most powerful forces shaping the surface of the Earth. Over millions of years, flowing water carves valleys, deposits sediment, and creates fertile plains that support agriculture and human settlement.",conclusion:"Understanding how rivers shape landscapes helps scientists predict flooding and protect communities living near waterways.",target:[
-{w:"As",a:null,s:null,p:""},
-{w:"a",a:null,s:null,p:""},
-{w:"river",a:"ver",s:"ri",p:""},
-{w:"flows",a:null,s:null,p:""},
-{w:"downhill",a:"hill",s:"down",p:""},
-{w:"it",a:null,s:null,p:""},
-{w:"picks",a:"cks",s:"pi",p:""},
-{w:"up",a:null,s:null,p:""},
-{w:"small",a:"all",s:"sm",p:""},
-{w:"rocks",a:null,s:null,p:""},
-{w:"and",a:null,s:null,p:""},
-{w:"soil",a:"il",s:"so",p:""},
-{w:"which",a:null,s:null,p:""},
-{w:"gradually",a:"ually",s:"grad",p:""},
-{w:"wear",a:null,s:null,p:""},
-{w:"away",a:"ay",s:"aw",p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"surrounding",a:"unding",s:"surro",p:""},
-{w:"rock",a:null,s:null,p:""},
-{w:"and",a:null,s:null,p:""},
-{w:"create",a:"eate",s:"cr",p:""},
-{w:"deeper",a:null,s:null,p:"."}
-],exp:[
-{pos:"名詞",d:"MOD",e:"「a＋空欄＋flows」→名詞。\"ri\"→river。冠詞＋名詞＋動詞のパターン。"},
-{pos:"副詞",d:"MOD",e:"「flows＋空欄」→副詞。\"down\"→downhill（下り坂に）。"},
-{pos:"動詞",d:"MOD",e:"「it＋空欄＋up」→動詞。\"pi\"→picks。pick upは句動詞。"},
-{pos:"形容詞",d:"MOD",e:"「picks up＋空欄＋rocks」→形容詞。\"sm\"→small。"},
-{pos:"名詞",d:"MOD",e:"「and＋空欄」→名詞。\"so\"→soil（土壌）。rocksとの並列。"},
-{pos:"副詞",d:"HARD",e:"「which＋空欄＋wear」→副詞。\"grad\"→gradually（徐々に）。5文字の答え。"},
-{pos:"副詞",d:"MOD",e:"「wear＋空欄」→副詞。\"aw\"→away。wear awayは句動詞（浸食する）。"},
-{pos:"形容詞",d:"HARD",e:"「the＋空欄＋rock」→形容詞。\"surro\"→surrounding（周囲の）。6文字の答え。"},
-{pos:"動詞",d:"MOD",e:"「and＋空欄＋deeper」→動詞。\"cr\"→create。並列の動詞。"}
 ]},
 {intro:"Bioluminescence, the remarkable production of visible light by living organisms through a carefully orchestrated chemical reaction, occurs in an astonishing variety of marine species throughout the world's oceans. From tiny plankton drifting near the sunlit surface to predatory fish lurking in the crushing darkness of the abyss, countless creatures have evolved to exploit this extraordinary ability for survival. Some use glowing displays to attract mates, while others startle approaching predators with sudden flashes of brilliance, and still others lure curious prey directly into waiting jaws. The ecological importance of this phenomenon cannot be overstated in modern marine biology.",conclusion:"Scientists continue to investigate these remarkable phenomena using submersibles and advanced imaging technology, hoping that such detailed knowledge will illuminate broader questions about evolution, adaptation, and survival strategies in the deep sea. Recent genetic studies have revealed that the ability to generate light has appeared independently dozens of times across unrelated lineages, suggesting enormous selective advantages for organisms living in environments where sunlight never reaches. Understanding these glowing communities may also inspire new medical imaging techniques and energy-efficient technologies, demonstrating once again how curiosity about the natural world yields unexpected practical rewards for humanity.",target:[
 {w:"However",a:"owever",s:"H",p:","},

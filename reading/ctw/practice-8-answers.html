@@ -116,12 +116,10 @@ body[data-lang="en"] .jp{display:none}
 </div>
 <div class="set-nav" id="setNav">
   <button class="active" onclick="showSet(0)">Set 1: Paper &amp; Printing</button>
-  <button onclick="showSet(1)">Set 2: Forests</button>
-  <button onclick="showSet(2)">Set 3: Nutrition</button>
+  <button onclick="showSet(1)">Set 2: Nutrition</button>
 </div>
 <div class="set-panel active" id="set0"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 1: The History of Paper and Printing</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage0"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag0"></div></div></div></div>
-<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 2: Why Forests Are Important for the Planet</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
-<div class="set-panel" id="set2"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 3: The Science of Nutrition and Metabolism</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage2"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag2"></div></div></div></div>
+<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 2: The Science of Nutrition and Metabolism</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
 <div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
 
 <script src="../../js/auth.js"></script>
@@ -158,38 +156,6 @@ var SD=[
 {pos:"関係代名詞",d:"MOD",e:"「sheets＋空欄＋made」→関係代名詞。\"wh\"→which。"},
 {pos:"動名詞",d:"HARD",e:"「made＋空欄＋much easier」→名詞。\"wri\"→writing。目的語の動名詞。"},
 {pos:"形容詞（比較級）",d:"MOD",e:"「much＋空欄」→比較級。\"eas\"→easier。much＋比較級は頻出！"}
-]},
-{intro:"Forests cover about thirty percent of the Earth's land surface and play a vital role in maintaining environmental balance. They provide habitats for countless species and help regulate the global climate by absorbing carbon dioxide from the atmosphere.",conclusion:"Protecting forests is therefore essential for preserving biodiversity and ensuring a stable climate for future generations.",target:[
-{w:"Trees",a:"ees",s:"Tr",p:""},
-{w:"release",a:null,s:null,p:""},
-{w:"oxygen",a:"gen",s:"oxy",p:""},
-{w:"during",a:null,s:null,p:""},
-{w:"the",a:"he",s:"t",p:""},
-{w:"process",a:null,s:null,p:""},
-{w:"of",a:null,s:null,p:""},
-{w:"photosynthesis",a:"thesis",s:"photosyn",p:""},
-{w:"while",a:null,s:null,p:""},
-{w:"their",a:"eir",s:"th",p:""},
-{w:"roots",a:null,s:null,p:""},
-{w:"prevent",a:"vent",s:"pre",p:""},
-{w:"soil",a:null,s:null,p:""},
-{w:"erosion",a:"sion",s:"ero",p:""},
-{w:"by",a:null,s:null,p:""},
-{w:"holding",a:"ding",s:"hol",p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"ground",a:"ound",s:"gr",p:""},
-{w:"firmly",a:null,s:null,p:""},
-{w:"together",a:null,s:null,p:"."}
-],exp:[
-{pos:"名詞（主語）",d:"MOD",e:"「空欄＋release」→主語。\"Tr\"→Trees。文頭の主語。"},
-{pos:"名詞",d:"MOD",e:"「release＋空欄」→名詞（目的語）。\"oxy\"→oxygen（酸素）。"},
-{pos:"冠詞",d:"MOD",e:"「during＋空欄＋process」→冠詞。\"t\"→the。冠詞＋名詞パターン。"},
-{pos:"名詞",d:"HARD",e:"「the process of＋空欄」→名詞。\"photosyn\"→photosynthesis（光合成）。6文字の答え。"},
-{pos:"所有格",d:"MOD",e:"「while＋空欄＋roots」→所有格。\"th\"→their。"},
-{pos:"動詞",d:"MOD",e:"「roots＋空欄＋soil」→動詞。\"pre\"→prevent（防ぐ）。"},
-{pos:"名詞",d:"HARD",e:"「prevent soil＋空欄」→名詞。\"ero\"→erosion（浸食）。学術語彙。"},
-{pos:"動名詞",d:"MOD",e:"「by＋空欄」→動名詞。\"hol\"→holding。by+-ingは頻出パターン。"},
-{pos:"名詞",d:"MOD",e:"「the＋空欄＋firmly」→名詞。\"gr\"→ground（地面）。"}
 ]},
 {intro:"Nutrition is the study of how the body uses food to sustain life and promote growth. Every cell in the human body requires a steady supply of nutrients to function properly. Understanding the relationship between diet and metabolism has become a central focus of modern health science.",conclusion:"By studying these metabolic pathways, researchers hope to develop better strategies for preventing chronic diseases related to poor dietary habits.",target:[
 {w:"Carbohydrates",a:"ydrates",s:"Carboh",p:""},

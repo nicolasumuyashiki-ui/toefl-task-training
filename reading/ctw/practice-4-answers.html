@@ -115,12 +115,10 @@ body[data-lang="en"] .jp{display:none}
 </div>
 <div class="set-nav" id="setNav">
   <button class="active" onclick="showSet(0)">Set 1: Printing Press</button>
-  <button onclick="showSet(1)">Set 2: Animal Migration</button>
-  <button onclick="showSet(2)">Set 3: Renewable Energy</button>
+  <button onclick="showSet(1)">Set 2: Renewable Energy</button>
 </div>
 <div class="set-panel active" id="set0"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 1: The Invention of the Printing Press</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage0"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag0"></div></div></div></div>
-<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge">M1</span><h2>Set 2: Why Animals Migrate</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
-<div class="set-panel" id="set2"><div class="set-section"><div class="set-header"><span class="set-badge m2h">M2H</span><h2>Set 3: Advances in Renewable Energy Technology</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage2"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag2"></div></div></div></div>
+<div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge m2h">M2H</span><h2>Set 2: Advances in Renewable Energy Technology</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
 <div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
 
 <script src="../../js/auth.js"></script>
@@ -157,39 +155,6 @@ var SD=[
 {pos:"動名詞",d:"MOD",e:"「quickly＋空欄＋printers」→動名詞（分詞構文）。\"allo\"→allowing。"},
 {pos:"動詞",d:"MOD",e:"「printers to＋空欄」→動詞。\"pro\"→produce。不定詞パターン。"},
 {pos:"名詞",d:"HARD",e:"「hundreds of＋空欄」→名詞。\"co\"→copies。表示少なめ。"}
-]},
-{intro:"Every year, millions of animals travel long distances across land, sea, and sky. These seasonal journeys, known as migration, are among the most impressive behaviors observed in the natural world. Scientists have studied migration for centuries and continue to learn new things about it.",conclusion:"By understanding these patterns, scientists hope to protect the routes and habitats that migrating animals depend on for survival.",target:[
-{w:"Many",a:"ny",s:"Ma",p:""},
-{w:"species",a:null,s:null,p:""},
-{w:"migrate",a:"rate",s:"mig",p:""},
-{w:"to",a:null,s:null,p:""},
-{w:"find",a:"nd",s:"fi",p:""},
-{w:"warmer",a:null,s:null,p:""},
-{w:"climates",a:"mates",s:"cli",p:""},
-{w:"during",a:null,s:null,p:""},
-{w:"winter",a:"ter",s:"win",p:""},
-{w:"while",a:null,s:null,p:""},
-{w:"others",a:"ers",s:"oth",p:""},
-{w:"travel",a:null,s:null,p:""},
-{w:"long",a:"ng",s:"lo",p:""},
-{w:"distances",a:null,s:null,p:""},
-{w:"to",a:null,s:null,p:""},
-{w:"reach",a:"ach",s:"re",p:""},
-{w:"safe",a:null,s:null,p:""},
-{w:"breeding",a:"eding",s:"bre",p:""},
-{w:"grounds",a:null,s:null,p:""},
-{w:"each",a:"ch",s:"ea",p:"."}
-],exp:[
-{pos:"形容詞",d:"MOD",e:"「空欄＋species」→形容詞/限定詞。\"Ma\"→Many。頻出パターン。"},
-{pos:"動詞",d:"MOD",e:"「species＋空欄」→動詞。\"mig\"→migrate。トピック語。"},
-{pos:"動詞",d:"MOD",e:"「migrate to＋空欄」→動詞。\"fi\"→find。不定詞パターン。"},
-{pos:"名詞",d:"MOD",e:"「warmer＋空欄」→名詞。\"cli\"→climates。形容詞＋名詞パターン。"},
-{pos:"名詞",d:"MOD",e:"「during＋空欄」→名詞。\"win\"→winter。前置詞＋名詞パターン。"},
-{pos:"代名詞",d:"MOD",e:"「while＋空欄＋travel」→主語。\"oth\"→others。対比の構文。"},
-{pos:"形容詞",d:"MOD",e:"「travel＋空欄＋distances」→形容詞。\"lo\"→long。"},
-{pos:"動詞",d:"HARD",e:"「to＋空欄＋safe」→動詞。\"re\"→reach。表示少なめ。"},
-{pos:"名詞",d:"HARD",e:"「safe＋空欄＋grounds」→形容詞的名詞。\"bre\"→breeding。breeding grounds（繁殖地）。"},
-{pos:"形容詞",d:"MOD",e:"「grounds＋空欄」→形容詞。\"ea\"→each。各の意味。"}
 ]},
 {intro:"As concerns about climate change continue to grow, governments and businesses around the world are investing heavily in cleaner sources of power. Fossil fuels such as coal and oil have long been the primary sources of energy, but they release harmful gases into the atmosphere. The search for sustainable alternatives has become one of the most urgent priorities of the twenty-first century.",conclusion:"Although significant challenges remain, continued investment in research and development is expected to make renewable energy increasingly affordable and reliable in the coming decades.",target:[
 {w:"Solar",a:"lar",s:"So",p:""},
