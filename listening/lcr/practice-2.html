@@ -113,7 +113,7 @@ Next <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18
 </button>
 </div>
 
-<script src="../../js/auth.js"></script>
+<script src="../../js/auth.js"></script><script src="../../js/difficulty-badge.js"></script>
 <script src="../../js/progress.js"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
@@ -201,6 +201,7 @@ function startQuiz(){
 /* ===== LOAD QUESTION ===== */
 function loadQuestion(idx){
     currentQ = idx;
+    if(window.TCKDifficulty)TCKDifficulty.setForIndex(idx,[5,6,7]);
     const q = questions[idx];
     document.getElementById('qNum').innerHTML = 'Question <strong>'+(idx+1)+'</strong> of 8';
     document.getElementById('progressFill').style.width = (((idx+1)/8)*100)+'%';

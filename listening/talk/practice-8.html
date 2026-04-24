@@ -120,7 +120,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <button class="btn-next" id="btnNext" onclick="nextStep()">Next \u2192</button>
 </div>
 
-<script src="../../js/auth.js"></script>
+<script src="../../js/auth.js"></script><script src="../../js/difficulty-badge.js"></script>
 <script src="../../js/progress.js"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
@@ -273,6 +273,7 @@ function retryAudio(){
 
 function showQuestion(qIdx){
     currentQ = qIdx;
+    if(window.TCKDifficulty)TCKDifficulty.setForIndex(qIdx,[4,5,6,7]);
     var q = questions[qIdx];
     if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState());
     document.getElementById('audioPhase').style.display = 'none';
