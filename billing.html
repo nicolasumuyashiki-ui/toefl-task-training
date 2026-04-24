@@ -169,7 +169,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
     <div class="plan-head">
       <div class="plan-name-block">
         <div class="label">Current Plan</div>
-        <h2 id="planName">TCK Task Training · Standard</h2>
+        <h2 id="planName">TOEFL Reps · Standard</h2>
         <div class="desc">
           <span class="jp">タスク別トレーニング・全 4 技能 + 月 1 回の学習相談つき</span>
           <span class="en">Task-based training across all 4 skills + monthly coaching</span>
@@ -349,7 +349,7 @@ function isoDate(offsetDays) {
 function newSubscriptionMock() {
   return {
     status: 'active',
-    plan: 'TCK Task Training · Standard',
+    plan: 'TOEFL Reps · Standard',
     amount: 3980,
     currency: 'jpy',
     started: isoDate(0),
@@ -359,7 +359,7 @@ function newSubscriptionMock() {
     invoices: [
       {
         date: isoDate(0),
-        description: 'TCK Task Training · 月額プラン',
+        description: 'TOEFL Reps · 月額プラン',
         amount: 3980,
         status: 'paid',
         receiptUrl: 'https://dashboard.stripe.com/test/payments?receipt=demo'
@@ -440,7 +440,7 @@ function render() {
         + '<div class="brand">' + s.paymentMethod.brand + ' •••• ' + s.paymentMethod.last4 + '</div>'
         + '<div class="meta">Expires ' + String(s.paymentMethod.expMonth).padStart(2,'0') + '/' + s.paymentMethod.expYear + '</div>'
       + '</div>'
-      + '<div class="pm-actions"><a href="#" onclick="alert(\'本番環境では Stripe Customer Portal が開きます\');return false;"><span class="jp">変更</span><span class="en">Change</span></a></div>'
+      + '<div class="pm-actions"><a href="#" onclick="openCustomerPortal(this);return false;"><span class="jp">変更</span><span class="en">Change</span></a></div>'
       + '</div>';
   }
 
@@ -505,18 +505,58 @@ document.getElementById('subscribeBtn').addEventListener('click', function(e){
   location.href = url;
 });
 
+/**
+ * openCustomerPortal — fetches a Stripe Billing Portal URL via GAS and
+ * redirects the browser. Disables the trigger element while in flight to
+ * avoid double-submits. Falls back to alert on auth/customer errors so
+ * users get actionable feedback instead of a silent failure.
+ */
+function openCustomerPortal(triggerEl) {
+  if (typeof Api === 'undefined' || !Api.createPortalSession) {
+    alert('支払い管理機能が利用できません。\n(Billing module not loaded.)');
+    return;
+  }
+  var origText = triggerEl ? triggerEl.innerHTML : '';
+  if (triggerEl) {
+    triggerEl.style.pointerEvents = 'none';
+    triggerEl.style.opacity = '0.6';
+    triggerEl.innerHTML = '<span class="jp">読み込み中…</span><span class="en">Loading…</span>';
+  }
+  Api.createPortalSession().then(function(res){
+    if (res && res.success && res.url) {
+      window.location.href = res.url;
+      return;
+    }
+    if (triggerEl) {
+      triggerEl.style.pointerEvents = '';
+      triggerEl.style.opacity = '';
+      triggerEl.innerHTML = origText;
+    }
+    if (res && res.error === 'no_customer') {
+      alert('サブスクリプションが見つかりません。先にプランへの登録をお願いします。\n(No active subscription found. Please subscribe first.)');
+    } else if (res && res.error === 'auth_failed') {
+      alert('認証に失敗しました。一度ログアウトして再度ログインしてください。\n(Authentication failed. Please log out and back in.)');
+    } else {
+      alert('Stripe Customer Portal を開けませんでした。\n(Could not open Stripe Customer Portal.)\n' + (res && res.error || ''));
+    }
+  }).catch(function(err){
+    if (triggerEl) {
+      triggerEl.style.pointerEvents = '';
+      triggerEl.style.opacity = '';
+      triggerEl.innerHTML = origText;
+    }
+    alert('通信エラーが発生しました。\n(Network error: ' + err + ')');
+  });
+}
+
 document.getElementById('updatePmBtn').addEventListener('click', function(){
-  alert('本番環境では Stripe Customer Portal が開き、カードを安全に更新できます。\n(In production, this opens the Stripe Customer Portal.)');
+  openCustomerPortal(this);
 });
 
 document.getElementById('cancelBtn').addEventListener('click', function(){
-  if (!confirm('サブスクをキャンセルします。よろしいですか？\n(Demo: cancel your subscription?)')) return;
-  var s = loadState();
-  if (s) {
-    s.status = 'canceled';
-    saveState(s);
-  }
-  render();
+  /* Cancellation is handled inside Stripe's Customer Portal so the
+     billing-period-end behavior matches Stripe's configured policy. */
+  openCustomerPortal(this);
 });
 </script>
 </body>

@@ -99,5 +99,16 @@ var Api = {
     return _jsonpRequest(API_URL + '?action=listInvoices'
       + '&id=' + encodeURIComponent(id || u.userId || '')
       + '&pass=' + encodeURIComponent(p));
+  },
+
+  /* Stripe Customer Portal — returns { success, url } so the page can
+     redirect the user to Stripe's hosted portal for payment-method
+     updates, cancellation, and invoice history. */
+  createPortalSession: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=createPortalSession'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
   }
 };
