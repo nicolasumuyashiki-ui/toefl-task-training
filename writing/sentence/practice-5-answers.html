@@ -79,12 +79,12 @@ body[data-lang="en"] .jp{display:none}
 
 <div class="header">
   <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 5 | 16問</p>
+  <p>Practice 5 | 10問</p>
 </div>
 
 <div class="score-summary">
   <p class="score-sub">あなたのスコア</p>
-  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
@@ -103,11 +103,10 @@ body[data-lang="en"] .jp{display:none}
 <div class="patterns-card">
   <h2>📐 今回の語順パターン</h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 未来完了 (will have + Vpp)</h5><p>Q1「will have snowed」Q6「will have completed」Q10「will have visited」— By + 時点 と組み合わせて「〜までに…しているだろう」。</p></div>
-    <div class="pattern"><h5>🔹 unless / as long as</h5><p>Q2「unless it rains」Q9「as long as the trail is not」Q13「unless I have to」Q16「as long as there is no」— 条件の接続詞。unless =「〜しない限り」、as long as =「〜する限り」。</p></div>
-    <div class="pattern"><h5>🔹 both...and / neither...nor</h5><p>Q3「both the warm weather and」Q7「neither the weather nor」Q11「both swimming ... and」— 相関接続詞。並列する要素の品詞を揃える。</p></div>
-    <div class="pattern"><h5>🔹 使役動詞 (have/get + O + Vpp)</h5><p>Q4「had it repaired」Q8「got the engine checked」Q12「had my brother help me」Q15「got it washed」— have/get + 目的語 + 過去分詞で「〜してもらう」。</p></div>
-    <div class="pattern"><h5>🔹 前置詞付き関係代名詞</h5><p>Q5「in which we played」Q14「at which we stayed」— 前置詞 + which で場所や手段を説明する形容詞節を作る。</p></div>
+    <div class="pattern"><h5>🔹 Future perfect (will have + p.p.)</h5><p>Q1「I will have repeated the trial at least three times.」, Q4「we will have finished the entire draft.」</p></div>
+    <div class="pattern"><h5>🔹 Causative (have / get something done)</h5><p>Q6「I got the references checked before the deadline.」, Q9「I got it reviewed by my supervisor.」</p></div>
+    <div class="pattern"><h5>🔹 Correlative conjunctions (both...and / neither...nor)</h5><p>Q2「both the weekly seminars and the open discussions.」, Q5「neither the equipment nor the funding was ready.」</p></div>
+    <div class="pattern"><h5>🔹 Conditional connectors (at which / as long as)</h5><p>Q3「The site at which we worked last summer is perfect for sampling.」, Q7「as long as the sensors are not giving errors.」</p></div>
   </div>
 </div>
 
@@ -126,19 +125,13 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
 {id:1,prompt:"Do you think you will finish the experiment this week?",sentence:"By Friday, I will have repeated the trial at least three times.",grammar:"未来完了: By + 時点, S + will have + Vpp。「金曜までに3回は実施しているだろう」。at least =「少なくとも」。"},
-{id:2,prompt:"Are you going to the lab tomorrow?",sentence:"I will go unless the samples arrive late in the morning.",grammar:"unless =「〜しない限り」: I will go unless + S + V。unless節内は現在形（未来のことでも）。"},
 {id:3,prompt:"What do you like about your research group?",sentence:"I enjoy both the weekly seminars and the open discussions.",grammar:"both A and B: 2つの名詞を並列。both と and の間に同じ品詞（名詞句）を入れる。",alt:"I enjoy both the open discussions and the weekly seminars."},
-{id:4,prompt:"Did you calibrate the microscope yourself?",sentence:"No, I had it calibrated by a technician.",grammar:"使役の have: have + O + Vpp =「〜を…してもらう」。by + 動作主で誰にしてもらったか明示。"},
 {id:5,prompt:"Which field site is good for sampling?",sentence:"The site at which we worked last summer is perfect for sampling.",grammar:"前置詞 + 関係代名詞: at which = where。「去年の夏に作業した場所」が主語。is perfect for ~ で補語。"},
 {id:6,prompt:"Will the thesis be done by next Friday?",sentence:"By next Friday, we will have finished the entire draft.",grammar:"未来完了: By next Friday, S + will have + Vpp。「来週の金曜までに完了しているだろう」。"},
 {id:7,prompt:"Why did you cancel the field survey?",sentence:"We canceled it because neither the equipment nor the funding was ready.",grammar:"neither A nor B: 否定の相関接続詞。A も B も〜ない。because節で理由を述べる。"},
 {id:8,prompt:"Is your paper ready for submission?",sentence:"Yes, I got the references checked before the deadline.",grammar:"使役の get: get + O + Vpp =「〜を…してもらう」。before + 名詞で時を表す。"},
 {id:9,prompt:"Can we run the test as long as the data holds?",sentence:"Yes, we can run the test as long as the sensors are not giving errors.",grammar:"as long as =「〜する限り」: 条件を表す接続詞。否定 are not を含む条件節。"},
-{id:10,prompt:"What will you have accomplished by the end of the semester?",sentence:"By the end of the semester, I will have read five key papers.",grammar:"未来完了: By the end of ~, S + will have + Vpp。「学期末までに5本の主要論文を読んでいるだろう」。"},
 {id:11,prompt:"How do you manage your workload in the lab?",sentence:"I enjoy both analyzing the data and writing the reports.",grammar:"both A and B: 動名詞句を並列。both analyzing ~ and writing ~ で2つの行動を対等に結ぶ。",alt:"I enjoy both writing the reports and analyzing the data."},
-{id:12,prompt:"Did you run the simulation by yourself?",sentence:"No, I had my advisor help me set it up.",grammar:"使役の have: have + 人 + V原形 =「人に〜してもらう」。目的語が人の場合は原形不定詞。"},
-{id:13,prompt:"Will you join us at the research conference?",sentence:"I will join you unless I have to revise the manuscript that week.",grammar:"unless =「〜しない限り」: unless + S + V。have to =「〜しなければならない」。"},
-{id:14,prompt:"Where is the lab you mentioned?",sentence:"The lab in which we trained last fall is near the main library.",grammar:"前置詞 + 関係代名詞: in which = where。train in a lab → the lab in which we trained。"},
 {id:15,prompt:"Did you proofread your paper before submission?",sentence:"No, I got it reviewed by my supervisor.",grammar:"使役の get: get + O + Vpp。「指導教員に見てもらった」。by + 動作主で誰に頼んだか明示。"},
 {id:16,prompt:"What happens if the funding runs out mid-study?",sentence:"The study will continue as long as there is no budget cut or equipment failure.",grammar:"as long as =「〜する限り」: 条件を表す。there is no ~ =「〜がない限り」。or で2つの否定条件を並列。",alt:"The study will continue as long as there is no equipment failure or budget cut."}
 ];

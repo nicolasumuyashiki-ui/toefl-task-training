@@ -79,12 +79,12 @@ body[data-lang="en"] .jp{display:none}
 
 <div class="header">
   <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 1 | 16問</p>
+  <p>Practice 1 | 10問</p>
 </div>
 
 <div class="score-summary">
   <p class="score-sub">あなたのスコア</p>
-  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
@@ -103,10 +103,10 @@ body[data-lang="en"] .jp{display:none}
 <div class="patterns-card">
   <h2>📐 今回の語順パターン</h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 Wh疑問文への応答</h5><p>Q12「How about ~?」のように提案文もWh系。主語+動詞で返答を組み立てる。</p></div>
-    <div class="pattern"><h5>🔹 間接疑問文</h5><p>Q9「where I can」Q13「how well」のように、wh節内は平叙文語順（S+V）になる。</p></div>
-    <div class="pattern"><h5>🔹 関係代名詞（主格/目的格）</h5><p>Q5「in a way that is easy」Q12「a book that is related to」— 主格thatの後はすぐ動詞。</p></div>
-    <div class="pattern"><h5>🔹 It is + 形容詞 + to不定詞 / 仮定法</h5><p>Q13「It depends on ~」Q16「I would talk to ~」— 仮定法wouldは丁寧・仮定を表す。</p></div>
+    <div class="pattern"><h5>🔹 過去完了と時制の前後</h5><p>Q4「I had expected」Q7「the deadline had passed」— 過去のある時点より前の動作を示す had + Vpp。</p></div>
+    <div class="pattern"><h5>🔹 間接疑問文</h5><p>Q2「how people think」Q10「what I could do」のように、wh節内は平叙文語順（S+V）になる。</p></div>
+    <div class="pattern"><h5>🔹 目的・理由の接続詞</h5><p>Q6「because I was looking forward to it」Q9「so that I do not fall behind」— 理由と目的を明確に分ける。</p></div>
+    <div class="pattern"><h5>🔹 仮定法 would + V</h5><p>Q10「I would talk to the professor」— 仮定の状況への回答に使う丁寧・仮定表現。</p></div>
   </div>
 </div>
 
@@ -125,21 +125,15 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
 {id:1,prompt:"What time does the library close tonight?",sentence:"I think it closes at nine o'clock.",grammar:"SVO構文: I think (that) + S + V。間接的に答えるパターン。前置詞 at + 時刻。"},
-{id:2,prompt:"Have you finished the assignment for tomorrow?",sentence:"No, I have not started it yet.",grammar:"現在完了の否定: have not + Vpp。yet は否定文の文末に置く。"},
-{id:3,prompt:"Why did you choose to study psychology?",sentence:"I have always been interested in how people think.",grammar:"現在完了 + 間接疑問文: have always been + 形容詞。interested in + wh節（平叙文語順）。"},
-{id:4,prompt:"Do you know where the science building is?",sentence:"It is the tall building right behind the cafeteria.",grammar:"SVC構文: It is + 名詞句。場所の前置詞句 right behind ~ で修飾。"},
-{id:5,prompt:"What do you think about the new professor?",sentence:"She explains difficult concepts in a way that is easy to understand.",grammar:"関係代名詞 that（主格）: a way that is easy to understand。SVOC的な構造。"},
-{id:6,prompt:"Can I borrow your notes from last week?",sentence:"Sure, but I need them back by Friday.",grammar:"等位接続詞 but: 承諾＋条件。by + 期限 =「〜までに」。"},
-{id:7,prompt:"How did you do on the midterm exam?",sentence:"I did much better than I had expected.",grammar:"比較級 much better than ~。過去完了 had expected で「期待していたより」。"},
-{id:8,prompt:"Are you going to the study group tonight?",sentence:"Actually, I was planning to study on my own at the library.",grammar:"過去進行形 was planning to ~: 予定を述べる。on my own =「一人で」。"},
-{id:9,prompt:"What kind of job are you looking for after graduation?",sentence:"I would like to find a job where I can use my language skills.",grammar:"would like to + V: 丁寧な希望表現。関係副詞 where で場所的修飾。"},
-{id:10,prompt:"Did you hear that the field trip was canceled?",sentence:"Yes, that is really disappointing because I was looking forward to it.",grammar:"because節（理由）: 主節 + because + 理由節。look forward to + 名詞/動名詞。"},
-{id:11,prompt:"Why didn't you sign up for the workshop?",sentence:"I did not know about it until the deadline had passed.",grammar:"否定文 + until: 「〜するまで知らなかった」。過去完了 had passed で時制の前後関係を明示。"},
-{id:12,prompt:"What should we get the professor as a thank-you gift?",sentence:"How about a book that is related to her research?",grammar:"提案表現 How about ~? 関係代名詞 that（主格）+ be related to ~。"},
-{id:13,prompt:"Do you think online classes are better than in-person classes?",sentence:"It depends on the subject and how well the professor uses technology.",grammar:"It depends on ~: 「〜による」。間接疑問文 how well + S + V（平叙文語順）。"},
-{id:14,prompt:"Could you tell me what the homework is for tomorrow?",sentence:"We need to read and summarize chapter five.",grammar:"等位接続詞 and: read and summarize（2つの動詞を並列）。need to + V。",alt:"We need to summarize and read chapter five."},
-{id:15,prompt:"How do you manage your time between work and school?",sentence:"I make a schedule every week so that I do not fall behind.",grammar:"目的の接続詞 so that: 「〜するために」。fall behind =「遅れをとる」。"},
-{id:16,prompt:"What would you do if you failed the final exam?",sentence:"I would talk to the professor about what I could do to improve my grade.",grammar:"仮定法 would + V: 仮定の状況への回答。間接疑問文 what I could do。to不定詞で目的を表す。"}
+{id:2,prompt:"Why did you choose to study psychology?",sentence:"I have always been interested in how people think.",grammar:"現在完了 + 間接疑問文: have always been + 形容詞。interested in + wh節（平叙文語順）。"},
+{id:3,prompt:"Do you know where the science building is?",sentence:"It is the tall building right behind the cafeteria.",grammar:"SVC構文: It is + 名詞句。場所の前置詞句 right behind ~ で修飾。"},
+{id:4,prompt:"How did you do on the midterm exam?",sentence:"I did much better than I had expected.",grammar:"比較級 much better than ~。過去完了 had expected で「期待していたより」。"},
+{id:5,prompt:"Are you going to the study group tonight?",sentence:"Actually, I was planning to study on my own at the library.",grammar:"過去進行形 was planning to ~: 予定を述べる。on my own =「一人で」。"},
+{id:6,prompt:"Did you hear that the field trip was canceled?",sentence:"Yes, that is really disappointing because I was looking forward to it.",grammar:"because節（理由）: 主節 + because + 理由節。look forward to + 名詞/動名詞。"},
+{id:7,prompt:"Why didn't you sign up for the workshop?",sentence:"I did not know about it until the deadline had passed.",grammar:"否定文 + until: 「〜するまで知らなかった」。過去完了 had passed で時制の前後関係を明示。"},
+{id:8,prompt:"Could you tell me what the homework is for tomorrow?",sentence:"We need to read and summarize chapter five.",grammar:"等位接続詞 and: read and summarize（2つの動詞を並列）。need to + V。",alt:"We need to summarize and read chapter five."},
+{id:9,prompt:"How do you manage your time between work and school?",sentence:"I make a schedule every week so that I do not fall behind.",grammar:"目的の接続詞 so that: 「〜するために」。fall behind =「遅れをとる」。"},
+{id:10,prompt:"What would you do if you failed the final exam?",sentence:"I would talk to the professor about what I could do to improve my grade.",grammar:"仮定法 would + V: 仮定の状況への回答。間接疑問文 what I could do。to不定詞で目的を表す。"}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers')||'null');

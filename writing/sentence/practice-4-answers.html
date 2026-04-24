@@ -79,12 +79,12 @@ body[data-lang="en"] .jp{display:none}
 
 <div class="header">
   <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 4 | 16問</p>
+  <p>Practice 4 | 10問</p>
 </div>
 
 <div class="score-summary">
   <p class="score-sub">あなたのスコア</p>
-  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
@@ -103,10 +103,10 @@ body[data-lang="en"] .jp{display:none}
 <div class="patterns-card">
   <h2>📐 今回の語順パターン</h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 現在完了進行形</h5><p>Q1「have been waiting」Q6「have been preparing」Q11「have been driving」— have been + Ving で「ずっと〜している」。</p></div>
-    <div class="pattern"><h5>🔹 助動詞（should/could/might）</h5><p>Q2「could go」Q9「might want to」Q13「should cook」— 助動詞 + 動詞原形で提案・可能性・助言を表す。</p></div>
-    <div class="pattern"><h5>🔹 付加疑問文</h5><p>Q3, Q5, Q10, Q14 — 肯定文なら否定の付加疑問、否定文なら肯定の付加疑問が付く。</p></div>
-    <div class="pattern"><h5>🔹 間接話法・so/such...that</h5><p>Q4「said that ~」Q8「told me that ~」— 間接話法。Q3「so low that」Q7「such an expensive jacket that」— 結果を表す構文。</p></div>
+    <div class="pattern"><h5>🔹 Reported speech (said / told that)</h5><p>Q3「He said that the soup was the most popular dish today.」, Q6「She told me that I should bring the receipt within thirty days.」</p></div>
+    <div class="pattern"><h5>🔹 So / such ... that</h5><p>Q5「such an expensive jacket that I could not afford it.」, Q8「the bread there was the best she had ever tasted.」</p></div>
+    <div class="pattern"><h5>🔹 Present perfect (have been / have not)</h5><p>Q1「I have been waiting here for about twenty minutes.」, Q9「I have not paid it yet.」</p></div>
+    <div class="pattern"><h5>🔹 Modal / either...or</h5><p>Q7「You might want to get the large because it is a better deal.」, Q10「I could either get a refund or exchange it.」</p></div>
   </div>
 </div>
 
@@ -125,20 +125,14 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
 {id:1,prompt:"How long have you been waiting in this checkout line?",sentence:"I have been waiting here for about twenty minutes.",grammar:"現在完了進行形: have been + Ving。「ずっと〜し続けている」。for + 期間で継続時間を表す。"},
-{id:2,prompt:"Should we try the new Italian restaurant downtown?",sentence:"We could go there this weekend if you are free.",grammar:"助動詞 could: 提案・可能性を表す。if節（条件節）で「もし〜なら」。"},
 {id:3,prompt:"This store has really good sales, doesn't it?",sentence:"Yes, the prices are so low that I bought three shirts.",grammar:"so + 形容詞 + that節: 「とても〜なので…」。結果を表す構文。付加疑問文への応答。"},
 {id:4,prompt:"What did the waiter say about the daily special?",sentence:"He said that the soup was the most popular dish today.",grammar:"間接話法: said that + S + V（過去形）。直接話法を間接話法に変換する際、時制が一つ過去にずれる。"},
 {id:5,prompt:"You remembered to pick up the dry cleaning, didn't you?",sentence:"No, I completely forgot about it.",grammar:"付加疑問文への否定応答。forget about ~「〜を忘れる」。副詞 completely が動詞 forgot を修飾。"},
-{id:6,prompt:"Have you been cooking dinner this whole time?",sentence:"Yes, I have been preparing a special meal since five o'clock.",grammar:"現在完了進行形: have been + Ving。since + 時点 で「〜からずっと」。"},
 {id:7,prompt:"Why didn't you buy that jacket?",sentence:"It was such an expensive jacket that I could not afford it.",grammar:"such + a/an + 形容詞 + 名詞 + that節: 「とても〜な…なので」。so は形容詞単体、such は名詞句に使う。"},
 {id:8,prompt:"What did the cashier tell you about the return policy?",sentence:"She told me that I should bring the receipt within thirty days.",grammar:"間接話法: told me that + S + should V。tell は目的語（me）が必要。should で助言を伝達。"},
 {id:9,prompt:"Should I get the large or small coffee?",sentence:"You might want to get the large because it is a better deal.",grammar:"助動詞 might: 控えめな提案。because節で理由を述べる。比較級 a better deal。"},
-{id:10,prompt:"The food at that restaurant was amazing, wasn't it?",sentence:"Yes, it was so delicious that we ordered two desserts.",grammar:"so + 形容詞 + that節: 結果を表す。付加疑問文への肯定応答。"},
-{id:11,prompt:"Have you been looking for a parking spot this whole time?",sentence:"Yes, I have been driving around the mall for fifteen minutes.",grammar:"現在完了進行形: have been + Ving。drive around「〜の周りを走る」。for + 期間。"},
 {id:12,prompt:"What did your friend say about the new bakery?",sentence:"She said that the bread there was the best she had ever tasted.",grammar:"間接話法 + 過去完了: said that ~ had ever tasted。最上級 the best + 関係代名詞節。"},
-{id:13,prompt:"Do you think we should eat out or cook at home?",sentence:"We should cook at home because we have been eating out too often.",grammar:"助動詞 should: 助言・提案。because節に現在完了進行形 have been eating で「最近ずっと〜している」。"},
 {id:14,prompt:"You already paid the electric bill, didn't you?",sentence:"Actually, I have not paid it yet.",grammar:"現在完了の否定: have not + Vpp。yet は否定文の文末に置く。付加疑問文への否定応答。"},
-{id:15,prompt:"Why didn't you complain about the cold soup?",sentence:"The restaurant was so crowded that I could not find the waiter.",grammar:"so + 形容詞 + that節: 結果を表す構文。could not で「〜できなかった」。"},
 {id:16,prompt:"What did the manager say when you asked for a refund?",sentence:"He told me that I could either get a refund or exchange it.",grammar:"間接話法: told me that ~。either A or B「AかBのどちらか」。could で可能性を表す。"}
 ];
 

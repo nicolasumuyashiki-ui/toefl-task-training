@@ -79,12 +79,12 @@ body[data-lang="en"] .jp{display:none}
 
 <div class="header">
   <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 8 | 16問 | Travel, Transportation & City Life</p>
+  <p>Practice 8 | 10問 | Travel, Transportation & City Life</p>
 </div>
 
 <div class="score-summary">
   <p class="score-sub">あなたのスコア</p>
-  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
@@ -103,10 +103,10 @@ body[data-lang="en"] .jp{display:none}
 <div class="patterns-card">
   <h2>📐 今回の語順パターン</h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 仮定法過去完了（Third Conditional）</h5><p>Q1, Q5, Q9, Q14: If + S + had + Vpp, S + would have + Vpp。「もし〜していたら、〜だっただろう」過去の事実に反する仮定。</p></div>
-    <div class="pattern"><h5>🔹 so/such ... that 構文</h5><p>Q2, Q12: so + 形容詞 + that / Q7, Q16: such + 名詞句 + that。「あまりに〜なので…」結果を表す。</p></div>
-    <div class="pattern"><h5>🔹 not only ... but also</h5><p>Q3, Q10, Q15: Not only + V1 ... but also + V2。2つの効果・特徴を強調する相関接続詞。</p></div>
-    <div class="pattern"><h5>🔹 despite / in spite of + 名詞句</h5><p>Q4, Q8, Q13: Despite/In spite of + 名詞句, S + V。「〜にもかかわらず」逆接を表す前置詞。</p></div>
+    <div class="pattern"><h5>🔹 3rd conditional (If + past perfect, would have)</h5><p>Q4「If I had not missed the fair, I would not have lost the chance to meet the recruiter.」, Q9「If we had updated the résumé earlier, we would have received a lot of callbacks.」</p></div>
+    <div class="pattern"><h5>🔹 So / such ... that</h5><p>Q1「The workload was so heavy that it took us three days to finish the report.」, Q10「were such a valuable contact that we met again the next day.」</p></div>
+    <div class="pattern"><h5>🔹 Not only ... but also</h5><p>Q2「not only reduced overtime hours but also improved team morale.」, Q7「not only offers excellent benefits but also provides flexible working hours.」</p></div>
+    <div class="pattern"><h5>🔹 Despite / in spite of + noun</h5><p>Q3「Despite the low pay, many graduates prefer interning to starting full-time.」, Q8「Despite the six-month hiring process, thousands of candidates apply to the company every year.」</p></div>
   </div>
 </div>
 
@@ -124,21 +124,15 @@ body[data-lang="en"] .jp{display:none}
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
-{id:1,prompt:"Why didn't you prepare more for the interview yesterday?",sentence:"If I had known about the test, I would have accepted the offer.",grammar:"仮定法過去完了: If + S + had + Vpp, S + would have + Vpp。過去の事実に反する仮定を表す。「試験を知っていたらオファーを受けていた」。"},
 {id:2,prompt:"How was the workload at the office this week?",sentence:"The workload was so heavy that it took us three days to finish the report.",grammar:"so + 形容詞 + that 構文: 「あまりに〜なので…」。it takes + 人 + 時間 + to V の構文と組み合わせ。"},
 {id:3,prompt:"Did the new management policy help the employees?",sentence:"The new policy not only reduced overtime hours but also improved team morale.",grammar:"not only A but also B: 2つの効果を強調。reduced と improved が並列。主語の後に not only を置く形。"},
 {id:4,prompt:"Why do so many people choose that internship program?",sentence:"Despite the low pay, many graduates prefer interning to starting full-time.",grammar:"Despite + 名詞句: 「〜にもかかわらず」。prefer A to B =「BよりAを好む」。動名詞を使う。"},
 {id:5,prompt:"What happened when you missed the career fair?",sentence:"If I had not missed the fair, I would not have lost the chance to meet the recruiter.",grammar:"仮定法過去完了（否定形）: If + S + had not + Vpp, S + would not have + Vpp。「キャリアフェアを逃さなかったらリクルーターに会えていた」。"},
 {id:6,prompt:"Tell me about the mentor you had at the firm.",sentence:"The mentor speaking fluent Spanish showed me internal processes known only to managers.",grammar:"縮約関係詞節（分詞構文）: speaking fluent Spanish = who spoke fluent Spanish。known only to managers = which were known only to managers。2つの分詞が名詞を修飾。"},
 {id:7,prompt:"Was the training program worth the time?",sentence:"The program was such a great value that we extended our contract by six months.",grammar:"such + a/an + 形容詞 + 名詞 + that: 「あまりに〜なので…」。so は形容詞の前、such は名詞句の前に置く。"},
-{id:8,prompt:"How do people stay productive in that office?",sentence:"In spite of the lack of quiet workspace, people manage to concentrate by wearing headphones.",grammar:"In spite of + 名詞句: despite と同義。manage to + V =「なんとか〜する」。by + 動名詞 で手段を表す。"},
-{id:9,prompt:"Did the company compensate you for the extra hours?",sentence:"If I had kept the time sheet, they would have given me a full bonus.",grammar:"仮定法過去完了: If + S + had + Vpp, S + would have + Vpp。give + 人 + 物（第4文型）。「タイムシートを保管していたら満額ボーナスだった」。"},
 {id:10,prompt:"What makes that startup so appealing to job seekers?",sentence:"The company not only offers excellent benefits but also provides flexible working hours.",grammar:"not only A but also B: offers と provides が並列。主語の後に not only を配置する標準形。"},
-{id:11,prompt:"How did you find the leadership workshop?",sentence:"The skills taught in the morning sessions were absolutely useful.",grammar:"縮約関係詞節（過去分詞）: taught in the morning sessions = which were taught in ~。過去分詞が名詞を後ろから修飾。"},
-{id:12,prompt:"Was the project deadline manageable?",sentence:"The pressure was so bad that several colleagues could not sleep at all.",grammar:"so + 形容詞 + that 構文: 「あまりに〜なので…」。at all は否定文を強調する副詞句。"},
 {id:13,prompt:"Do many applicants still apply despite the long process?",sentence:"Despite the six-month hiring process, thousands of candidates apply to the company every year.",grammar:"Despite + 名詞句: 「〜にもかかわらず」。複合形容詞 six-month が hiring process を修飾。"},
 {id:14,prompt:"What would have happened if you had prepared your résumé earlier?",sentence:"If we had updated the résumé earlier, we would have received a lot of callbacks.",grammar:"仮定法過去完了: If + S + had + Vpp, S + would have + Vpp。「もっと早く履歴書を更新していたら返信がもらえた」。"},
-{id:15,prompt:"What did the new HR system achieve?",sentence:"The new HR system not only improved efficiency but also created hundreds of opportunities.",grammar:"not only A but also B: improved と created が並列。具体的な成果を2つ挙げて強調。"},
 {id:16,prompt:"How was the networking event last night?",sentence:"The people introduced by recruiters at the event were such a valuable contact that we met again the next day.",grammar:"縮約関係詞節 + such...that: introduced by recruiters = who were introduced by ~（過去分詞の後置修飾）。such + 名詞句 + that で結果を表す。"}
 ];
 

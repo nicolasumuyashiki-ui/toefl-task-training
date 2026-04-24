@@ -79,12 +79,12 @@ body[data-lang="en"] .jp{display:none}
 
 <div class="header">
   <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 6 | 16問 | Health, Food & Daily Routines</p>
+  <p>Practice 6 | 10問 | Health, Food & Daily Routines</p>
 </div>
 
 <div class="score-summary">
   <p class="score-sub">あなたのスコア</p>
-  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
@@ -103,10 +103,10 @@ body[data-lang="en"] .jp{display:none}
 <div class="patterns-card">
   <h2>📐 今回の語順パターン</h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 used to / be used to</h5><p>Q1「used to eat」= 過去の習慣。Q2「am used to eating」= 慣れている（be used to + -ing）。Q15も同様。</p></div>
-    <div class="pattern"><h5>🔹 関係代名詞 whose</h5><p>Q3「the doctor whose clinic」Q4「the place whose cakes」Q12「whose owner」— whose + 名詞 で所有を表す。</p></div>
-    <div class="pattern"><h5>🔹 enough / too...to</h5><p>Q5「too tired to wake up」Q6「big enough for ... to share」Q13「simple enough for ... to follow」— 形容詞の後にenough、tooは前に置く。</p></div>
-    <div class="pattern"><h5>🔹 間接疑問文 / wish + 過去完了</h5><p>Q7「what time it closes」Q8「where ... is」— 間接疑問は平叙文語順。Q9-10,16「wish I had (not) + Vpp」— 過去の後悔。</p></div>
+    <div class="pattern"><h5>🔹 used to / be used to</h5><p>Q1「I used to eat fast food almost every day.」, Q9「She used to skip breakfast, but now she eats a balanced meal every morning.」</p></div>
+    <div class="pattern"><h5>🔹 Relative clause with whose</h5><p>Q2「she is the doctor whose clinic is next to the park.」, Q10「a small Italian restaurant whose owner used to be a professional chef.」</p></div>
+    <div class="pattern"><h5>🔹 too / enough + to-infinitive</h5><p>Q4「I was too tired to wake up early every day.」, Q5「it is big enough for three people to share.」</p></div>
+    <div class="pattern"><h5>🔹 Embedded wh- questions</h5><p>Q6「I am not sure what time it closes on weekdays.」, Q7「Could you tell me where the nearest farmers market is?」</p></div>
   </div>
 </div>
 
@@ -125,21 +125,15 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
 {id:1,prompt:"Did you eat a lot of fast food when you were younger?",sentence:"Yes, I used to eat fast food almost every day.",grammar:"used to + 動詞の原形: 過去の習慣「以前は〜していた」。現在はもうしていないニュアンス。"},
-{id:2,prompt:"How is your new diet going?",sentence:"It was hard at first, but I am used to eating healthy food now.",grammar:"be used to + -ing: 「〜に慣れている」。used to（過去の習慣）との違いに注意。nowが現在の状態を強調。"},
 {id:3,prompt:"Do you know the woman standing near the entrance?",sentence:"Yes, she is the doctor whose clinic is next to the park.",grammar:"関係代名詞 whose + 名詞: 「〜の（所有）」。whose clinic = her clinic。先行詞は the doctor。"},
 {id:4,prompt:"Is that coffee shop popular?",sentence:"Yes, it is the place whose homemade cakes are famous in this area.",grammar:"whose + 名詞（物の所有）: whose homemade cakes = its homemade cakes。人以外にもwhoseは使える。"},
 {id:5,prompt:"Why did you stop exercising in the morning?",sentence:"I was too tired to wake up early every day.",grammar:"too + 形容詞 + to不定詞: 「〜すぎて…できない」。too tired to wake up = 疲れすぎて起きられなかった。"},
 {id:6,prompt:"Can you eat the whole pizza by yourself?",sentence:"No, it is big enough for three people to share.",grammar:"形容詞 + enough + for + 人 + to不定詞: 「〜が…するのに十分な」。enough は形容詞の後に置く。"},
 {id:7,prompt:"Do you know what time the gym closes tonight?",sentence:"I am not sure what time it closes on weekdays.",grammar:"間接疑問文: what time + S + V（平叙文語順）。直接疑問文の語順（does it close）にしない。"},
 {id:8,prompt:"Where can I buy organic vegetables around here?",sentence:"Could you tell me where the nearest farmers market is?",grammar:"間接疑問文（丁寧な質問）: Could you tell me + wh語 + S + V。where the market is（×where is the market）。"},
-{id:9,prompt:"Do you regret not seeing a doctor sooner?",sentence:"Yes, I wish I had gone to the hospital earlier.",grammar:"wish + 過去完了: 過去の事実に対する後悔「〜していればよかった」。had gone = 実際には行かなかった。"},
 {id:10,prompt:"You missed the cooking class last weekend, right?",sentence:"I wish I had not forgotten to sign up for it.",grammar:"wish + had not + Vpp: 「〜しなければよかった」。過去にしてしまったことへの後悔。forgotten to sign up = 申し込みを忘れた。"},
 {id:11,prompt:"Why does your friend look so healthy these days?",sentence:"She used to skip breakfast, but now she eats a balanced meal every morning.",grammar:"used to + V（過去の習慣）と現在の対比: used to skip → but now she eats。過去と現在の変化を述べる。"},
-{id:12,prompt:"Is there a good restaurant near the station?",sentence:"There is a small Italian restaurant whose owner used to be a professional chef.",grammar:"whose + 名詞: whose owner = its owner。さらに used to be で「以前は〜だった」を組み合わせた文。"},
-{id:13,prompt:"Should I try that new fitness program?",sentence:"The exercises are simple enough for beginners to follow.",grammar:"形容詞 + enough + for + 人 + to不定詞: simple enough for beginners to follow。Q6と同じパターン。"},
-{id:14,prompt:"Why didn't you ask the pharmacist about the medicine?",sentence:"I did not know how to ask about the side effects.",grammar:"間接疑問文 how to + V: 「どうやって〜するか」。embedded question として know の目的語になる。"},
-{id:15,prompt:"Are you getting used to your new sleep schedule?",sentence:"Not yet. I am not used to going to bed before ten o'clock.",grammar:"be not used to + -ing: 「〜に慣れていない」。going to bed = 就寝すること。Q2の否定版。"},
-{id:16,prompt:"Do you wish you had eaten less at the party?",sentence:"Yes, I wish I had not eaten so much cake and ice cream.",grammar:"wish + had not + Vpp: 過去の行動への後悔。so much + 不可算名詞（cake and ice cream をまとめて）。"}
+{id:12,prompt:"Is there a good restaurant near the station?",sentence:"There is a small Italian restaurant whose owner used to be a professional chef.",grammar:"whose + 名詞: whose owner = its owner。さらに used to be で「以前は〜だった」を組み合わせた文。"}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p6')||'null');

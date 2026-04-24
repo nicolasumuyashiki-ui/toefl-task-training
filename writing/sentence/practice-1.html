@@ -93,7 +93,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="top-nav">
 <div class="nav-left"><span class="section-label">Writing</span><span class="divider">|</span><span class="task-label">Build a Sentence</span></div>
 <div class="nav-right">
-<span class="timer-display" id="timer">07:00</span>
+<span class="timer-display" id="timer">04:30</span>
 <button class="finish-btn" id="btnFinish" onclick="showModal()" style="display:none">Finish</button>
 <div class="user-badge" id="userBadge">?</div>
 </div>
@@ -107,12 +107,12 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <table class="task-table">
 <thead><tr><th>Detail</th><th>Info</th></tr></thead>
 <tbody>
-<tr><td>Questions</td><td>16</td></tr>
-<tr><td>Time Limit</td><td>7 minutes</td></tr>
+<tr><td>Questions</td><td>10</td></tr>
+<tr><td>Time Limit</td><td>4 minutes 30 seconds</td></tr>
 <tr><td>Format</td><td>Drag words from the Word Bank into the blank slots</td></tr>
 </tbody>
 </table>
-<div class="warning-box">⏱️ You have <strong>7 minutes</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
+<div class="warning-box">⏱️ You have <strong>4 minutes 30 seconds</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
 <button class="btn-start" onclick="startQuiz()">Start</button>
 </div>
 </div>
@@ -129,7 +129,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="completion-card">
 <div style="font-size:48px">✅</div>
 <h2>Build a Sentence — Complete!</h2>
-<div class="score-display" id="scoreDisplay">0 / 16</div>
+<div class="score-display" id="scoreDisplay">0 / 10</div>
 <div class="results-list" id="resultsList"></div>
 <a class="btn-answers" href="practice-1-answers.html"><span class="jp">解答解説を見る →</span><span class="en">See Answers →</span></a>
 </div>
@@ -184,28 +184,22 @@ const speakerImages = {female:["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ
 
 const questions=[
 {id:1,prompt:"What time does the library close tonight?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["think","it","closes","at","nine o'clock."],answer:["think","it","closes","at","nine o'clock."]},
-{id:2,prompt:"Have you finished the assignment for tomorrow?",gender:"male",fixedStart:"No,",fixedEnd:"yet.",blanks:["I","have not","started","it"],answer:["I","have not","started","it"]},
-{id:3,prompt:"Why did you choose to study psychology?",gender:"female",fixedStart:"",fixedEnd:"",blanks:["I","have always","been","interested in","how people","think."],answer:["I","have always","been","interested in","how people","think."]},
-{id:4,prompt:"Do you know where the science building is?",gender:"male",fixedStart:"",fixedEnd:"the cafeteria.",blanks:["It is","the tall","building","right behind"],answer:["It is","the tall","building","right behind"]},
-{id:5,prompt:"What do you think about the new professor?",gender:"female",fixedStart:"She",fixedEnd:"",blanks:["explains","difficult","concepts","in a way","that is","easy to understand."],answer:["explains","difficult","concepts","in a way","that is","easy to understand."]},
-{id:6,prompt:"Can I borrow your notes from last week?",gender:"male",fixedStart:"Sure,",fixedEnd:"",blanks:["but","I need","them back","by Friday."],answer:["but","I need","them back","by Friday."]},
-{id:7,prompt:"How did you do on the midterm exam?",gender:"female",fixedStart:"I",fixedEnd:"expected.",blanks:["did","much better","than","I had"],answer:["did","much better","than","I had"]},
-{id:8,prompt:"Are you going to the study group tonight?",gender:"male",fixedStart:"Actually,",fixedEnd:"",blanks:["I","was planning","to study","on my own","at the library."],answer:["I","was planning","to study","on my own","at the library."]},
-{id:9,prompt:"What kind of job are you looking for after graduation?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["would like","to find","a job","where I can","use my","language skills."],answer:["would like","to find","a job","where I can","use my","language skills."]},
-{id:10,prompt:"Did you hear that the field trip was canceled?",gender:"male",fixedStart:"Yes,",fixedEnd:"",blanks:["that is","really","disappointing","because","I was","looking forward to it."],answer:["that is","really","disappointing","because","I was","looking forward to it."]},
-{id:11,prompt:"Why didn't you sign up for the workshop?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["did not","know","about it","until","the deadline","had passed."],answer:["did not","know","about it","until","the deadline","had passed."]},
-{id:12,prompt:"What should we get the professor as a thank-you gift?",gender:"male",fixedStart:"",fixedEnd:"",blanks:["How about","a book","that is","related to","her research?"],answer:["How about","a book","that is","related to","her research?"]},
-{id:13,prompt:"Do you think online classes are better than in-person classes?",gender:"female",fixedStart:"It",fixedEnd:"",blanks:["depends on","the subject","and","how well","the professor","uses technology."],answer:["depends on","the subject","and","how well","the professor","uses technology."]},
-{id:14,prompt:"Could you tell me what the homework is for tomorrow?",gender:"male",fixedStart:"We",fixedEnd:"chapter five.",blanks:["need to","read","and","summarize"],answer:["need to","read","and","summarize"],altAnswers:[["need to","summarize","and","read"]]},
-{id:15,prompt:"How do you manage your time between work and school?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["make","a schedule","every week","so that","I do not","fall behind."],answer:["make","a schedule","every week","so that","I do not","fall behind."]},
-{id:16,prompt:"What would you do if you failed the final exam?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["would talk","to the professor","about","what I could","do to","improve my grade."],answer:["would talk","to the professor","about","what I could","do to","improve my grade."]}
+{id:2,prompt:"Why did you choose to study psychology?",gender:"female",fixedStart:"",fixedEnd:"",blanks:["I","have always","been","interested in","how people","think."],answer:["I","have always","been","interested in","how people","think."]},
+{id:3,prompt:"Do you know where the science building is?",gender:"male",fixedStart:"",fixedEnd:"the cafeteria.",blanks:["It is","the tall","building","right behind"],answer:["It is","the tall","building","right behind"]},
+{id:4,prompt:"How did you do on the midterm exam?",gender:"female",fixedStart:"I",fixedEnd:"expected.",blanks:["did","much better","than","I had"],answer:["did","much better","than","I had"]},
+{id:5,prompt:"Are you going to the study group tonight?",gender:"male",fixedStart:"Actually,",fixedEnd:"",blanks:["I","was planning","to study","on my own","at the library."],answer:["I","was planning","to study","on my own","at the library."]},
+{id:6,prompt:"Did you hear that the field trip was canceled?",gender:"male",fixedStart:"Yes,",fixedEnd:"",blanks:["that is","really","disappointing","because","I was","looking forward to it."],answer:["that is","really","disappointing","because","I was","looking forward to it."]},
+{id:7,prompt:"Why didn't you sign up for the workshop?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["did not","know","about it","until","the deadline","had passed."],answer:["did not","know","about it","until","the deadline","had passed."]},
+{id:8,prompt:"Could you tell me what the homework is for tomorrow?",gender:"male",fixedStart:"We",fixedEnd:"chapter five.",blanks:["need to","read","and","summarize"],answer:["need to","read","and","summarize"],altAnswers:[["need to","summarize","and","read"]]},
+{id:9,prompt:"How do you manage your time between work and school?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["make","a schedule","every week","so that","I do not","fall behind."],answer:["make","a schedule","every week","so that","I do not","fall behind."]},
+{id:10,prompt:"What would you do if you failed the final exam?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["would talk","to the professor","about","what I could","do to","improve my grade."],answer:["would talk","to the professor","about","what I could","do to","improve my grade."]}
 ];
 
 // Shuffle word banks
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=420,isActive=false;
-const totalTime=420;
+let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=270,isActive=false;
+const totalTime=270;
 questions.forEach(()=>userAnswers.push([]));
 
 function startQuiz(){

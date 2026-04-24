@@ -93,7 +93,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="top-nav">
 <div class="nav-left"><span class="section-label">Writing</span><span class="divider">|</span><span class="task-label">Build a Sentence</span></div>
 <div class="nav-right">
-<span class="timer-display" id="timer">07:00</span>
+<span class="timer-display" id="timer">04:30</span>
 <button class="finish-btn" id="btnFinish" onclick="showModal()" style="display:none">Finish</button>
 <div class="user-badge" id="userBadge">?</div>
 </div>
@@ -107,12 +107,12 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <table class="task-table">
 <thead><tr><th>Detail</th><th>Info</th></tr></thead>
 <tbody>
-<tr><td>Questions</td><td>16</td></tr>
-<tr><td>Time Limit</td><td>7 minutes</td></tr>
+<tr><td>Questions</td><td>10</td></tr>
+<tr><td>Time Limit</td><td>4 minutes 30 seconds</td></tr>
 <tr><td>Format</td><td>Drag words from the Word Bank into the blank slots</td></tr>
 </tbody>
 </table>
-<div class="warning-box">⏱️ You have <strong>7 minutes</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
+<div class="warning-box">⏱️ You have <strong>4 minutes 30 seconds</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
 <button class="btn-start" onclick="startQuiz()">Start</button>
 </div>
 </div>
@@ -129,7 +129,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="completion-card">
 <div style="font-size:48px">✅</div>
 <h2>Build a Sentence — Complete!</h2>
-<div class="score-display" id="scoreDisplay">0 / 16</div>
+<div class="score-display" id="scoreDisplay">0 / 10</div>
 <div class="results-list" id="resultsList"></div>
 <a class="btn-answers" href="practice-6-answers.html"><span class="jp">解答解説を見る →</span><span class="en">See Answers →</span></a>
 </div>
@@ -183,27 +183,21 @@ const speakerImages = {female:["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ
 
 const questions=[
 {id:1,prompt:"Did you eat a lot of fast food when you were younger?",gender:"female",fixedStart:"Yes,",fixedEnd:"",blanks:["I","used to","eat","fast food","almost every day."],answer:["I","used to","eat","fast food","almost every day."]},
-{id:2,prompt:"How is your new diet going?",gender:"male",fixedStart:"It was hard at first,",fixedEnd:"",blanks:["but","I am","used to","eating","healthy food","now."],answer:["but","I am","used to","eating","healthy food","now."]},
 {id:3,prompt:"Do you know the woman standing near the entrance?",gender:"female",fixedStart:"Yes,",fixedEnd:"",blanks:["she is","the doctor","whose","clinic","is","next to the park."],answer:["she is","the doctor","whose","clinic","is","next to the park."]},
 {id:4,prompt:"Is that coffee shop popular?",gender:"male",fixedStart:"Yes,",fixedEnd:"",blanks:["it is","the place","whose","homemade cakes","are","famous","in this area."],answer:["it is","the place","whose","homemade cakes","are","famous","in this area."]},
 {id:5,prompt:"Why did you stop exercising in the morning?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["was","too tired","to wake up","early","every day."],answer:["was","too tired","to wake up","early","every day."]},
 {id:6,prompt:"Can you eat the whole pizza by yourself?",gender:"male",fixedStart:"No,",fixedEnd:"",blanks:["it is","big enough","for","three","people","to share."],answer:["it is","big enough","for","three","people","to share."]},
 {id:7,prompt:"Do you know what time the gym closes tonight?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["am not sure","what time","it","closes","on weekdays."],answer:["am not sure","what time","it","closes","on weekdays."]},
 {id:8,prompt:"Where can I buy organic vegetables around here?",gender:"male",fixedStart:"",fixedEnd:"",blanks:["Could you","tell me","where","the nearest","farmers market","is?"],answer:["Could you","tell me","where","the nearest","farmers market","is?"]},
-{id:9,prompt:"Do you regret not seeing a doctor sooner?",gender:"female",fixedStart:"Yes,",fixedEnd:"",blanks:["I wish","I had","gone to","the hospital","earlier."],answer:["I wish","I had","gone to","the hospital","earlier."]},
 {id:10,prompt:"You missed the cooking class last weekend, right?",gender:"male",fixedStart:"",fixedEnd:"",blanks:["I wish","I had not","forgotten","to sign up","for it."],answer:["I wish","I had not","forgotten","to sign up","for it."]},
 {id:11,prompt:"Why does your friend look so healthy these days?",gender:"female",fixedStart:"She",fixedEnd:"",blanks:["used to","skip","breakfast,","but now","she eats","a balanced meal","every morning."],answer:["used to","skip","breakfast,","but now","she eats","a balanced meal","every morning."]},
-{id:12,prompt:"Is there a good restaurant near the station?",gender:"male",fixedStart:"There is",fixedEnd:"",blanks:["a small","Italian restaurant","whose","owner","used to","be","a professional chef."],answer:["a small","Italian restaurant","whose","owner","used to","be","a professional chef."]},
-{id:13,prompt:"Should I try that new fitness program?",gender:"female",fixedStart:"",fixedEnd:"",blanks:["The exercises","are","simple enough","for","beginners","to follow."],answer:["The exercises","are","simple enough","for","beginners","to follow."]},
-{id:14,prompt:"Why didn't you ask the pharmacist about the medicine?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["did not know","how","to ask","about","the side effects."],answer:["did not know","how","to ask","about","the side effects."]},
-{id:15,prompt:"Are you getting used to your new sleep schedule?",gender:"female",fixedStart:"Not yet.",fixedEnd:"",blanks:["I am","not used to","going to bed","before","ten o'clock."],answer:["I am","not used to","going to bed","before","ten o'clock."]},
-{id:16,prompt:"Do you wish you had eaten less at the party?",gender:"male",fixedStart:"Yes,",fixedEnd:"",blanks:["I wish","I had not","eaten","so much","cake and ice cream."],answer:["I wish","I had not","eaten","so much","cake and ice cream."]}
+{id:12,prompt:"Is there a good restaurant near the station?",gender:"male",fixedStart:"There is",fixedEnd:"",blanks:["a small","Italian restaurant","whose","owner","used to","be","a professional chef."],answer:["a small","Italian restaurant","whose","owner","used to","be","a professional chef."]}
 ];
 
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=420,isActive=false;
-const totalTime=420;
+let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=270,isActive=false;
+const totalTime=270;
 questions.forEach(()=>userAnswers.push([]));
 
 function startQuiz(){

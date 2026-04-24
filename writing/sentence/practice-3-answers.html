@@ -79,12 +79,12 @@ body[data-lang="en"] .jp{display:none}
 
 <div class="header">
   <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 3 | 16問</p>
+  <p>Practice 3 | 10問</p>
 </div>
 
 <div class="score-summary">
   <p class="score-sub">あなたのスコア</p>
-  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
@@ -103,10 +103,10 @@ body[data-lang="en"] .jp{display:none}
 <div class="patterns-card">
   <h2>📐 今回の語順パターン</h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 過去完了（had + Vpp）</h5><p>Q1「had already been filled」Q11「had been canceled」— 過去のある時点より前の出来事を表す。by the time + 過去形との組み合わせに注目。</p></div>
-    <div class="pattern"><h5>🔹 wish / if only + 仮定法</h5><p>Q2「wish our professor would let」Q7「If only I had known」— 現在の願望にはwish + 過去形、過去の後悔にはwish/if only + 過去完了。</p></div>
-    <div class="pattern"><h5>🔹 比較級（-er / more ~）</h5><p>Q3「much larger than」Q8「more heavily than」Q9「more smoothly than」— much/far で比較級を強調。than の後に比較対象。</p></div>
-    <div class="pattern"><h5>🔹 動名詞 vs 不定詞</h5><p>Q5「enjoy meeting」Q6「considering writing」Q12「prefer studying」— enjoy/consider/prefer の後は動名詞。Q13 gerund as subject: Sitting ... makes it easier。</p></div>
+    <div class="pattern"><h5>🔹 3rd conditional (If...had + would have)</h5><p>Q4「If only I had known about it earlier, I would have attended.」, Q10「We would have finished on time if the data had been collected earlier.」</p></div>
+    <div class="pattern"><h5>🔹 wish / subjunctive (suggest that + V)</h5><p>Q1「I wish our professor would let us choose our own partners.」, Q9「She suggested that I take fewer courses this semester.」</p></div>
+    <div class="pattern"><h5>🔹 Comparative (more/-er than)</h5><p>Q2「the lecture hall is much larger than the seminar room.」, Q5「It went more smoothly than we had expected.」</p></div>
+    <div class="pattern"><h5>🔹 Whether + to-inf / gerund subject</h5><p>Q6「whether to take art history or linguistics.」, Q8「Sitting in the front makes it easier for me to concentrate.」</p></div>
   </div>
 </div>
 
@@ -124,22 +124,16 @@ body[data-lang="en"] .jp{display:none}
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
-{id:1,prompt:"Did you manage to register for the biology course?",sentence:"No, by the time I tried to register, the class had already been filled.",grammar:"過去完了 + 受動態: had already been filled。by the time + 過去形で「〜した時にはもう」という時間関係を表す。"},
 {id:2,prompt:"How do you feel about working in groups for this project?",sentence:"I wish our professor would let us choose our own partners.",grammar:"wish + would: 現在の状況への不満・願望。wish + 仮定法過去で「〜だったらいいのに」。let + O + V原形。"},
 {id:3,prompt:"Is the lecture hall bigger than the seminar room?",sentence:"Yes, the lecture hall is much larger than the seminar room.",grammar:"比較級の強調: much + 比較級（much larger）。large → larger の規則変化。than の後に比較対象。"},
-{id:4,prompt:"Why did you go to the professor's office hours?",sentence:"I went there to ask about the research paper that was assigned last week.",grammar:"to不定詞（目的）: went there to ask（〜するために行った）。関係代名詞 that + 受動態 was assigned。"},
 {id:5,prompt:"What do you enjoy most about university life?",sentence:"I really enjoy meeting people from different backgrounds and learning from them.",grammar:"enjoy + 動名詞: enjoy meeting / learning。等位接続詞 and で2つの動名詞を並列。from + 名詞で出所を示す。"},
-{id:6,prompt:"Have you decided what to write your essay about?",sentence:"I am considering writing about how social media is used in education.",grammar:"consider + 動名詞: am considering writing。間接疑問文 how + S + V（平叙文語順）。受動態 is used。"},
 {id:7,prompt:"Why didn't you attend the study session last night?",sentence:"If only I had known about it earlier, I would have attended.",grammar:"if only + 過去完了: 過去の後悔を表す仮定法過去完了。would have + Vpp で「〜しただろうに」。"},
-{id:8,prompt:"Did the professor explain the grading criteria?",sentence:"Yes, we were told that participation would be weighted more heavily than exams.",grammar:"受動態 + that節: were told that ~。比較級 more heavily than で「〜よりも重く」。受動態 would be weighted。"},
 {id:9,prompt:"How was the group presentation yesterday?",sentence:"It went more smoothly than we had expected.",grammar:"比較級 more smoothly than ~。過去完了 had expected で「期待していたよりも」。smoothly は副詞の比較級。"},
 {id:10,prompt:"Are you planning to take an elective next semester?",sentence:"I have not decided whether to take art history or linguistics.",grammar:"whether to V: 「〜するかどうか」。A or B で選択肢を示す。現在完了の否定 have not decided。",alt:"I have not decided whether to take linguistics or art history."},
-{id:11,prompt:"What happened with your course registration?",sentence:"The course I wanted to take had been canceled due to low enrollment.",grammar:"過去完了 + 受動態: had been canceled。関係代名詞の省略（the course (that) I wanted）。due to + 名詞で理由。"},
 {id:12,prompt:"Do you prefer studying alone or in a group?",sentence:"I prefer studying in a group because it helps me stay motivated.",grammar:"prefer + 動名詞: prefer studying。because節で理由。help + O + V原形（使役動詞的用法）。"},
 {id:13,prompt:"Why do you always sit in the front row?",sentence:"Sitting in the front makes it easier for me to concentrate on the lecture.",grammar:"動名詞主語: Sitting ... makes it easier。make it + 形容詞 + for + 人 + to V（形式目的語構文）。"},
 {id:14,prompt:"What did the advisor recommend?",sentence:"She suggested that I take fewer courses this semester to avoid burnout.",grammar:"suggest + that + S + V原形（仮定法現在）: suggested that I take。fewer + 可算名詞の比較級。to不定詞で目的。"},
-{id:15,prompt:"Did your group finish the project on time?",sentence:"We would have finished on time if the data had been collected earlier.",grammar:"仮定法過去完了: would have finished + if + had been collected。過去の事実に反する仮定。受動態との組み合わせ。"},
-{id:16,prompt:"How are office hours different from regular class?",sentence:"During office hours, students are given the opportunity to ask questions individually.",grammar:"受動態: are given the opportunity。to不定詞で機会の内容を説明。individually（副詞）は文末に配置。"}
+{id:15,prompt:"Did your group finish the project on time?",sentence:"We would have finished on time if the data had been collected earlier.",grammar:"仮定法過去完了: would have finished + if + had been collected。過去の事実に反する仮定。受動態との組み合わせ。"}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p3')||'null');

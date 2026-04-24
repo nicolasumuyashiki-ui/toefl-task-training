@@ -93,7 +93,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="top-nav">
 <div class="nav-left"><span class="section-label">Writing</span><span class="divider">|</span><span class="task-label">Build a Sentence</span></div>
 <div class="nav-right">
-<span class="timer-display" id="timer">07:00</span>
+<span class="timer-display" id="timer">04:30</span>
 <button class="finish-btn" id="btnFinish" onclick="showModal()" style="display:none">Finish</button>
 <div class="user-badge" id="userBadge">?</div>
 </div>
@@ -107,12 +107,12 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <table class="task-table">
 <thead><tr><th>Detail</th><th>Info</th></tr></thead>
 <tbody>
-<tr><td>Questions</td><td>16</td></tr>
-<tr><td>Time Limit</td><td>7 minutes</td></tr>
+<tr><td>Questions</td><td>10</td></tr>
+<tr><td>Time Limit</td><td>4 minutes 30 seconds</td></tr>
 <tr><td>Format</td><td>Drag words from the Word Bank into the blank slots</td></tr>
 </tbody>
 </table>
-<div class="warning-box">⏱️ You have <strong>7 minutes</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
+<div class="warning-box">⏱️ You have <strong>4 minutes 30 seconds</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
 <button class="btn-start" onclick="startQuiz()">Start</button>
 </div>
 </div>
@@ -129,7 +129,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="completion-card">
 <div style="font-size:48px">✅</div>
 <h2>Build a Sentence — Complete!</h2>
-<div class="score-display" id="scoreDisplay">0 / 16</div>
+<div class="score-display" id="scoreDisplay">0 / 10</div>
 <div class="results-list" id="resultsList"></div>
 <a class="btn-answers" href="practice-9-answers.html"><span class="jp">解答解説を見る →</span><span class="en">See Answers →</span></a>
 </div>
@@ -184,26 +184,20 @@ const speakerImages = {female:["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ
 const questions=[
 {id:1,prompt:"Are you happy with your new apartment?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["wish","the neighbors","would","stop","playing","music so late at night."],answer:["wish","the neighbors","would","stop","playing","music so late at night."]},
 {id:2,prompt:"Who repainted the walls in your living room?",gender:"male",fixedStart:"We",fixedEnd:"",blanks:["had","the walls","repainted","by","a local","contractor."],answer:["had","the walls","repainted","by","a local","contractor."]},
-{id:3,prompt:"What do you think about the community garden?",gender:"female",fixedStart:"The garden,",fixedEnd:"is becoming very popular.",blanks:["which","allows residents","to grow vegetables","in shared plots,"],answer:["which","allows residents","to grow vegetables","in shared plots,"]},
 {id:4,prompt:"Will you finish the house cleaning before the weekend?",gender:"male",fixedStart:"",fixedEnd:"",blanks:["By the time","the weekend","arrives,","I will have","cleaned","every room."],answer:["By the time","the weekend","arrives,","I will have","cleaned","every room."]},
 {id:5,prompt:"Can I borrow your lawn mower?",gender:"female",fixedStart:"You can",fixedEnd:"",blanks:["use it","as long as","you do not","leave","it in the rain."],answer:["use it","as long as","you do not","leave","it in the rain."]},
-{id:6,prompt:"Why are you upset about the rent increase?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["wish","the landlord","would","listen to","tenant complaints","more carefully."],answer:["wish","the landlord","would","listen to","tenant complaints","more carefully."]},
 {id:7,prompt:"How did you get your leaking sink fixed?",gender:"female",fixedStart:"I",fixedEnd:"by a plumber.",blanks:["had","the pipe","replaced"],answer:["had","the pipe","replaced"]},
 {id:8,prompt:"Do you know Mrs. Park from next door?",gender:"male",fixedStart:"Mrs. Park,",fixedEnd:"gave us an excellent recipe.",blanks:["who","is an expert","at home cooking,"],answer:["who","is an expert","at home cooking,"]},
 {id:9,prompt:"Did you tidy up before the guests arrived?",gender:"female",fixedStart:"",fixedEnd:"",blanks:["By the time","the guests","arrived,","I had already","put away","all the laundry."],answer:["By the time","the guests","arrived,","I had already","put away","all the laundry."]},
 {id:10,prompt:"Will the landlord approve a pet in the apartment?",gender:"male",fixedStart:"They",fixedEnd:"",blanks:["will approve it","provided","that","tenants","maintain","a clean living space."],answer:["will approve it","provided","that","tenants","maintain","a clean living space."]},
-{id:11,prompt:"What bothers you about weekend chores?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["wish","my family","would","help","more often with","the household tasks."],answer:["wish","my family","would","help","more often with","the household tasks."]},
 {id:12,prompt:"Is that the handyman who renovated your kitchen?",gender:"male",fixedStart:"Yes,",fixedEnd:"",blanks:["that is","the handyman","who","renovated","the kitchen","for our family."],answer:["that is","the handyman","who","renovated","the kitchen","for our family."]},
-{id:13,prompt:"Where did you get those family portraits?",gender:"female",fixedStart:"I",fixedEnd:"at a local studio.",blanks:["had","the photos","taken"],answer:["had","the photos","taken"]},
-{id:14,prompt:"Had your children finished homework when you got home?",gender:"male",fixedStart:"",fixedEnd:"I got home.",blanks:["By the time","the kids","had finished","their homework,"],answer:["By the time","the kids","had finished","their homework,"]},
-{id:15,prompt:"Can anyone use the building's rooftop garden?",gender:"female",fixedStart:"You can",fixedEnd:"",blanks:["go up there","as long as","you","have","your resident key."],answer:["go up there","as long as","you","have","your resident key."]},
-{id:16,prompt:"Tell me about the neighbor you mentioned.",gender:"male",fixedStart:"Ms. Chen,",fixedEnd:"has lived here for thirty years.",blanks:["who","works","for a small","family bakery,"],answer:["who","works","for a small","family bakery,"]}
+{id:13,prompt:"Where did you get those family portraits?",gender:"female",fixedStart:"I",fixedEnd:"at a local studio.",blanks:["had","the photos","taken"],answer:["had","the photos","taken"]}
 ];
 
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=420,isActive=false;
-const totalTime=420;
+let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=270,isActive=false;
+const totalTime=270;
 questions.forEach(()=>userAnswers.push([]));
 
 function startQuiz(){

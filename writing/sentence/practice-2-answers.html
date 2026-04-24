@@ -79,12 +79,12 @@ body[data-lang="en"] .jp{display:none}
 
 <div class="header">
   <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 2 | 16問</p>
+  <p>Practice 2 | 10問</p>
 </div>
 
 <div class="score-summary">
   <p class="score-sub">あなたのスコア</p>
-  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
@@ -103,10 +103,10 @@ body[data-lang="en"] .jp{display:none}
 <div class="patterns-card">
   <h2>📐 今回の語順パターン</h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 条件文（If節）</h5><p>Q5「If you help me..., I will...」Q10「I would go if I did not...」Q13「If the rules were...」— 直説法・仮定法の使い分けに注意。</p></div>
-    <div class="pattern"><h5>🔹 受動態</h5><p>Q2「was opened」Q7「was postponed」Q11「is prepared」Q15「was proposed / was rejected」— be + 過去分詞の語順。</p></div>
-    <div class="pattern"><h5>🔹 関係代名詞・関係副詞</h5><p>Q4「a course that is offered」Q8「a coffee shop where」Q12「a company that is known」Q14「a group chat where」— 先行詞の直後に置く。</p></div>
-    <div class="pattern"><h5>🔹 報告文（Reported Speech）</h5><p>Q3「told me that she would」Q9「said that the exam would cover」Q16「told us that the essay should be」— 時制の一致に注意。</p></div>
+    <div class="pattern"><h5>🔹 Reported speech</h5><p>Q1「I heard that the temples are much more beautiful in autumn.」, Q7「He said that the tour would cover everything we had requested.」</p></div>
+    <div class="pattern"><h5>🔹 Passive voice</h5><p>Q2「A new low-cost airline was launched at the international terminal.」, Q5「It was postponed until tomorrow afternoon.」</p></div>
+    <div class="pattern"><h5>🔹 Relative clauses (where / who used to)</h5><p>Q6「a small Italian place where tourists often go to have dinner.」, Q8「a chef who used to work at a famous resort.」</p></div>
+    <div class="pattern"><h5>🔹 Conditional (if...)</h5><p>Q4「If you drive me tomorrow, I will buy you coffee afterward.」, Q9「If the rules were less strict, more travelers would be willing...」</p></div>
   </div>
 </div>
 
@@ -127,19 +127,13 @@ const answers=[
 {id:1,prompt:"Are you excited about your trip to Kyoto next week?",sentence:"Yes, I heard that the temples are much more beautiful in autumn.",grammar:"比較級 much more beautiful: 「ずっと美しい」。I heard that + S + V で伝聞を表す。"},
 {id:2,prompt:"Why is the airport so crowded this morning?",sentence:"A new low-cost airline was launched at the international terminal.",grammar:"受動態 was launched: 「就航された」。場所の前置詞句 at the ~ terminal で修飾。"},
 {id:3,prompt:"Did the hotel staff tell you about breakfast?",sentence:"She told me that the buffet would close if we arrived after ten.",grammar:"報告文（間接話法）: told me that + S + would V。条件節 if we arrived で仮定の条件。"},
-{id:4,prompt:"How was your call with the travel agent?",sentence:"She recommended a tour that is offered only during the summer season.",grammar:"関係代名詞 that（主格）: a tour that is offered。受動態 is offered =「提供されている」。"},
 {id:5,prompt:"Can you drive me to the train station tomorrow?",sentence:"If you drive me tomorrow, I will buy you coffee afterward.",grammar:"条件文（直説法）: If + 現在形, will + V。実現可能な条件を表す。"},
-{id:6,prompt:"Why did you cancel your flight to Paris?",sentence:"I realized that I was more interested in visiting Rome than seeing Paris again.",grammar:"比較級 more interested in A than B: 「BよりAに興味がある」。reported speech の時制一致。"},
 {id:7,prompt:"What happened to the sightseeing bus tour?",sentence:"It was postponed until tomorrow afternoon.",grammar:"受動態 was postponed: 「延期された」。until + 時点 =「〜まで」。"},
 {id:8,prompt:"Do you know a good restaurant near the hotel?",sentence:"There is a small Italian place where tourists often go to have dinner.",grammar:"There is 構文 + 関係副詞 where: 場所を説明する関係副詞節。go to have dinner =「夕食を食べに行く」。"},
 {id:9,prompt:"What did the tour guide say about the itinerary?",sentence:"He said that the tour would cover everything we had requested in advance.",grammar:"報告文: said that + S + would V。過去完了 had requested で「それまでに要望した」を表す。"},
-{id:10,prompt:"Are you joining the harbor cruise tonight?",sentence:"I would go if I did not have so much packing to finish.",grammar:"仮定法過去: would + V + if + 過去形。現在の事実に反する仮定。「荷造りがなければ行くのに」。"},
 {id:11,prompt:"Why do you always stay at that hotel?",sentence:"The breakfast is prepared by a chef who used to work at a famous resort.",grammar:"受動態 is prepared by ~: 「〜によって調理される」。関係代名詞 who + used to V =「以前〜していた」。"},
-{id:12,prompt:"Have you decided which airline to book?",sentence:"I am considering a carrier that is known for its on-time record.",grammar:"関係代名詞 that（主格）+ 受動態: a carrier that is known for ~ =「〜で知られている航空会社」。"},
 {id:13,prompt:"What do you think about the new baggage rules?",sentence:"If the rules were less strict, more travelers would be willing to fly this airline.",grammar:"仮定法過去: If + 過去形, would + V。現在の事実に反する仮定。be willing to =「〜する気がある」。"},
-{id:14,prompt:"How do you keep track of your travel plans?",sentence:"We have a shared app where we save details about each reservation.",grammar:"関係副詞 where: a shared app where + S + V。場所的な概念（アプリ）を関係副詞で説明。"},
-{id:15,prompt:"Did you hear what happened at the customs desk?",sentence:"The passport that was issued by the embassy was questioned by the officer.",grammar:"受動態の連続: that was issued by ~ + was questioned by ~。関係代名詞 that で主語を修飾。"},
-{id:16,prompt:"Why are you packing so late tonight?",sentence:"The airline told us that the luggage should be checked in by six tomorrow morning.",grammar:"報告文 + 受動態: told us that + S + should be + Vpp。should be checked in =「チェックインされるべき」。"}
+{id:14,prompt:"How do you keep track of your travel plans?",sentence:"We have a shared app where we save details about each reservation.",grammar:"関係副詞 where: a shared app where + S + V。場所的な概念（アプリ）を関係副詞で説明。"}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p2')||'null');

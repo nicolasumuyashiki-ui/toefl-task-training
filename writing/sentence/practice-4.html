@@ -93,7 +93,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="top-nav">
 <div class="nav-left"><span class="section-label">Writing</span><span class="divider">|</span><span class="task-label">Build a Sentence</span></div>
 <div class="nav-right">
-<span class="timer-display" id="timer">07:00</span>
+<span class="timer-display" id="timer">04:30</span>
 <button class="finish-btn" id="btnFinish" onclick="showModal()" style="display:none">Finish</button>
 <div class="user-badge" id="userBadge">?</div>
 </div>
@@ -107,12 +107,12 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <table class="task-table">
 <thead><tr><th>Detail</th><th>Info</th></tr></thead>
 <tbody>
-<tr><td>Questions</td><td>16</td></tr>
-<tr><td>Time Limit</td><td>7 minutes</td></tr>
+<tr><td>Questions</td><td>10</td></tr>
+<tr><td>Time Limit</td><td>4 minutes 30 seconds</td></tr>
 <tr><td>Format</td><td>Drag words from the Word Bank into the blank slots</td></tr>
 </tbody>
 </table>
-<div class="warning-box">⏱️ You have <strong>7 minutes</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
+<div class="warning-box">⏱️ You have <strong>4 minutes 30 seconds</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
 <button class="btn-start" onclick="startQuiz()">Start</button>
 </div>
 </div>
@@ -129,7 +129,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="completion-card">
 <div style="font-size:48px">✅</div>
 <h2>Build a Sentence — Complete!</h2>
-<div class="score-display" id="scoreDisplay">0 / 16</div>
+<div class="score-display" id="scoreDisplay">0 / 10</div>
 <div class="results-list" id="resultsList"></div>
 <a class="btn-answers" href="practice-4-answers.html"><span class="jp">解答解説を見る →</span><span class="en">See Answers →</span></a>
 </div>
@@ -183,27 +183,21 @@ const speakerImages = {female:["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ
 
 const questions=[
 {id:1,prompt:"How long have you been waiting in this checkout line?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["have been","waiting","here","for","about twenty minutes."],answer:["have been","waiting","here","for","about twenty minutes."]},
-{id:2,prompt:"Should we try the new Italian restaurant downtown?",gender:"male",fixedStart:"We",fixedEnd:"",blanks:["could","go there","this weekend","if you","are free."],answer:["could","go there","this weekend","if you","are free."]},
 {id:3,prompt:"This store has really good sales, doesn't it?",gender:"female",fixedStart:"Yes,",fixedEnd:"",blanks:["the prices","are","so low","that","I bought","three shirts."],answer:["the prices","are","so low","that","I bought","three shirts."]},
 {id:4,prompt:"What did the waiter say about the daily special?",gender:"male",fixedStart:"He",fixedEnd:"",blanks:["said","that","the soup","was","the most popular","dish today."],answer:["said","that","the soup","was","the most popular","dish today."]},
 {id:5,prompt:"You remembered to pick up the dry cleaning, didn't you?",gender:"female",fixedStart:"No,",fixedEnd:"",blanks:["I","completely","forgot","about it."],answer:["I","completely","forgot","about it."]},
-{id:6,prompt:"Have you been cooking dinner this whole time?",gender:"male",fixedStart:"Yes,",fixedEnd:"",blanks:["I","have been","preparing","a special meal","since five o'clock."],answer:["I","have been","preparing","a special meal","since five o'clock."]},
 {id:7,prompt:"Why didn't you buy that jacket?",gender:"female",fixedStart:"It",fixedEnd:"",blanks:["was","such","an expensive","jacket","that I","could not","afford it."],answer:["was","such","an expensive","jacket","that I","could not","afford it."]},
 {id:8,prompt:"What did the cashier tell you about the return policy?",gender:"male",fixedStart:"She",fixedEnd:"",blanks:["told me","that","I should","bring","the receipt","within thirty days."],answer:["told me","that","I should","bring","the receipt","within thirty days."]},
 {id:9,prompt:"Should I get the large or small coffee?",gender:"female",fixedStart:"You",fixedEnd:"",blanks:["might","want to","get the large","because","it is","a better deal."],answer:["might","want to","get the large","because","it is","a better deal."]},
-{id:10,prompt:"The food at that restaurant was amazing, wasn't it?",gender:"male",fixedStart:"Yes,",fixedEnd:"",blanks:["it","was","so delicious","that","we ordered","two desserts."],answer:["it","was","so delicious","that","we ordered","two desserts."]},
-{id:11,prompt:"Have you been looking for a parking spot this whole time?",gender:"female",fixedStart:"Yes,",fixedEnd:"",blanks:["I","have been","driving around","the mall","for fifteen minutes."],answer:["I","have been","driving around","the mall","for fifteen minutes."]},
 {id:12,prompt:"What did your friend say about the new bakery?",gender:"male",fixedStart:"She",fixedEnd:"",blanks:["said","that","the bread","there","was the best","she had ever tasted."],answer:["said","that","the bread","there","was the best","she had ever tasted."]},
-{id:13,prompt:"Do you think we should eat out or cook at home?",gender:"female",fixedStart:"We",fixedEnd:"",blanks:["should","cook at home","because","we have been","eating out","too often."],answer:["should","cook at home","because","we have been","eating out","too often."]},
 {id:14,prompt:"You already paid the electric bill, didn't you?",gender:"male",fixedStart:"Actually,",fixedEnd:"",blanks:["I","have not","paid it","yet."],answer:["I","have not","paid it","yet."]},
-{id:15,prompt:"Why didn't you complain about the cold soup?",gender:"female",fixedStart:"The",fixedEnd:"",blanks:["restaurant","was","so crowded","that","I could not","find the waiter."],answer:["restaurant","was","so crowded","that","I could not","find the waiter."]},
 {id:16,prompt:"What did the manager say when you asked for a refund?",gender:"male",fixedStart:"He",fixedEnd:"",blanks:["told me","that","I could","either get","a refund","or exchange it."],answer:["told me","that","I could","either get","a refund","or exchange it."]}
 ];
 
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=420,isActive=false;
-const totalTime=420;
+let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=270,isActive=false;
+const totalTime=270;
 questions.forEach(()=>userAnswers.push([]));
 
 function startQuiz(){

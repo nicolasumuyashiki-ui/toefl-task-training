@@ -79,12 +79,12 @@ body[data-lang="en"] .jp{display:none}
 
 <div class="header">
   <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 9 | Technology, Internet & Digital Life | 16問</p>
+  <p>Practice 9 | Technology, Internet & Digital Life | 10問</p>
 </div>
 
 <div class="score-summary">
   <p class="score-sub">あなたのスコア</p>
-  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
@@ -103,10 +103,10 @@ body[data-lang="en"] .jp{display:none}
 <div class="patterns-card">
   <h2>📐 今回の語順パターン</h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 wish + would（不満・願望）</h5><p>Q1「I wish people would stop」Q6「I wish the developers would listen」— 現在の習慣的行為への不満を表す。wishの後はwouldを使う。</p></div>
-    <div class="pattern"><h5>🔹 非制限関係代名詞（, which / , who）</h5><p>Q3「Online learning, which allows...」Q8「Dr. Park, who is an expert...」— コンマ付きで追加情報を挿入。先行詞を補足説明する。</p></div>
-    <div class="pattern"><h5>🔹 have something done（使役）</h5><p>Q2「had the website designed」Q7「had my screen replaced」Q13「had my photos taken」— 「〜してもらう」の受身使役。have + O + 過去分詞。</p></div>
-    <div class="pattern"><h5>🔹 by the time + 過去完了 / provided (that)</h5><p>Q4「By the time the deadline arrives」Q9「By the time the system crashed」— 時間の前後関係を明示。Q10「provided that」= 条件「〜する限り」。</p></div>
+    <div class="pattern"><h5>🔹 Causative (have / get something done)</h5><p>Q2「We had the walls repainted by a local contractor.」, Q5「I had the pipe replaced by a plumber.」</p></div>
+    <div class="pattern"><h5>🔹 By the time + perfect tense</h5><p>Q3「By the time the weekend arrives, I will have cleaned every room.」, Q7「By the time the guests arrived, I had already put away all the laundry.」</p></div>
+    <div class="pattern"><h5>🔹 Relative clauses (non-defining / defining who)</h5><p>Q6「Mrs. Park, who is an expert at home cooking, gave us an excellent recipe.」, Q9「that is the handyman who renovated the kitchen for our family.」</p></div>
+    <div class="pattern"><h5>🔹 Conditional connectors (as long as / provided that)</h5><p>Q4「You can use it as long as you do not leave it in the rain.」, Q8「They will approve it provided that tenants maintain a clean living space.」</p></div>
   </div>
 </div>
 
@@ -126,20 +126,14 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 const answers=[
 {id:1,prompt:"Are you happy with your new apartment?",sentence:"I wish the neighbors would stop playing music so late at night.",grammar:"wish + would: 他者の習慣的行為への不満を表す。I wish + S + would + V。stop + V-ing（〜するのをやめる）。"},
 {id:2,prompt:"Who repainted the walls in your living room?",sentence:"We had the walls repainted by a local contractor.",grammar:"使役構文 have + O + 過去分詞:「〜してもらう」。by + 動作主で誰に依頼したかを示す。"},
-{id:3,prompt:"What do you think about the community garden?",sentence:"The garden, which allows residents to grow vegetables in shared plots, is becoming very popular.",grammar:"非制限関係代名詞 , which ~: 先行詞 The garden に補足情報を追加。コンマで挟む。allow + O + to V。"},
 {id:4,prompt:"Will you finish the house cleaning before the weekend?",sentence:"By the time the weekend arrives, I will have cleaned every room.",grammar:"by the time + 現在形, S + will have + Vpp: 未来完了。「〜するまでには…し終えている」。"},
 {id:5,prompt:"Can I borrow your lawn mower?",sentence:"You can use it as long as you do not leave it in the rain.",grammar:"as long as =「〜する限り」条件を表す接続詞。provided that と同義。否定は do not + V。"},
-{id:6,prompt:"Why are you upset about the rent increase?",sentence:"I wish the landlord would listen to tenant complaints more carefully.",grammar:"wish + would: 不満・願望。listen to ~（〜に耳を傾ける）。副詞 more carefully は文末に置く。"},
 {id:7,prompt:"How did you get your leaking sink fixed?",sentence:"I had the pipe replaced by a plumber.",grammar:"使役構文 have + O + 過去分詞: had the pipe replaced =「パイプを交換してもらった」。by + 動作主。"},
 {id:8,prompt:"Do you know Mrs. Park from next door?",sentence:"Mrs. Park, who is an expert at home cooking, gave us an excellent recipe.",grammar:"非制限関係代名詞 , who ~: 人の先行詞に補足情報を追加。コンマで挟み、主節に戻る。"},
 {id:9,prompt:"Did you tidy up before the guests arrived?",sentence:"By the time the guests arrived, I had already put away all the laundry.",grammar:"by the time + 過去形, S + had + Vpp: 過去完了で「〜した時にはもう…していた」。already で強調。"},
 {id:10,prompt:"Will the landlord approve a pet in the apartment?",sentence:"They will approve it provided that tenants maintain a clean living space.",grammar:"provided (that) =「〜という条件で」。as long as と同義の条件接続詞。maintain =「維持する」。"},
-{id:11,prompt:"What bothers you about weekend chores?",sentence:"I wish my family would help more often with the household tasks.",grammar:"wish + would: 不満・改善の願望。help with ~（〜を手伝う）。more often は頻度の副詞。"},
 {id:12,prompt:"Is that the handyman who renovated your kitchen?",sentence:"Yes, that is the handyman who renovated the kitchen for our family.",grammar:"制限関係代名詞 who（主格）: 先行詞 the handyman を修飾。for our family は目的を示す前置詞句。"},
-{id:13,prompt:"Where did you get those family portraits?",sentence:"I had the photos taken at a local studio.",grammar:"使役構文 have + O + 過去分詞: had the photos taken =「写真を撮ってもらった」。at + 場所。"},
-{id:14,prompt:"Had your children finished homework when you got home?",sentence:"By the time the kids had finished their homework, I got home.",grammar:"by the time + S + had Vpp, S + 過去形: 時系列を明示。「宿題を終えた頃に帰宅した」。"},
-{id:15,prompt:"Can anyone use the building's rooftop garden?",sentence:"You can go up there as long as you have your resident key.",grammar:"as long as =「〜する限り」条件。go up（上がる）。have + O（持っている）。"},
-{id:16,prompt:"Tell me about the neighbor you mentioned.",sentence:"Ms. Chen, who works for a small family bakery, has lived here for thirty years.",grammar:"非制限関係代名詞 , who ~: Ms. Chen に追加情報を挿入。work for ~（〜に勤めている）。現在完了 has lived で継続を述べる。"}
+{id:13,prompt:"Where did you get those family portraits?",sentence:"I had the photos taken at a local studio.",grammar:"使役構文 have + O + 過去分詞: had the photos taken =「写真を撮ってもらった」。at + 場所。"}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p9')||'null');

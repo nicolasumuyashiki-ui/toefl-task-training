@@ -93,7 +93,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="top-nav">
 <div class="nav-left"><span class="section-label">Writing</span><span class="divider">|</span><span class="task-label">Build a Sentence</span></div>
 <div class="nav-right">
-<span class="timer-display" id="timer">07:00</span>
+<span class="timer-display" id="timer">04:30</span>
 <button class="finish-btn" id="btnFinish" onclick="showModal()" style="display:none">Finish</button>
 <div class="user-badge" id="userBadge">?</div>
 </div>
@@ -107,12 +107,12 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <table class="task-table">
 <thead><tr><th>Detail</th><th>Info</th></tr></thead>
 <tbody>
-<tr><td>Questions</td><td>16</td></tr>
-<tr><td>Time Limit</td><td>7 minutes</td></tr>
+<tr><td>Questions</td><td>10</td></tr>
+<tr><td>Time Limit</td><td>4 minutes 30 seconds</td></tr>
 <tr><td>Format</td><td>Drag words from the Word Bank into the blank slots</td></tr>
 </tbody>
 </table>
-<div class="warning-box">⏱️ You have <strong>7 minutes</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
+<div class="warning-box">⏱️ You have <strong>4 minutes 30 seconds</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
 <button class="btn-start" onclick="startQuiz()">Start</button>
 </div>
 </div>
@@ -129,7 +129,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="completion-card">
 <div style="font-size:48px">✅</div>
 <h2>Build a Sentence — Complete!</h2>
-<div class="score-display" id="scoreDisplay">0 / 16</div>
+<div class="score-display" id="scoreDisplay">0 / 10</div>
 <div class="results-list" id="resultsList"></div>
 <a class="btn-answers" href="practice-2-answers.html"><span class="jp">解答解説を見る →</span><span class="en">See Answers →</span></a>
 </div>
@@ -186,26 +186,20 @@ const questions=[
 {id:1,prompt:"Are you excited about your trip to Kyoto next week?",gender:"female",fixedStart:"Yes,",fixedEnd:"",blanks:["I heard","that","the temples","are much more beautiful","in autumn."],answer:["I heard","that","the temples","are much more beautiful","in autumn."]},
 {id:2,prompt:"Why is the airport so crowded this morning?",gender:"male",fixedStart:"",fixedEnd:"",blanks:["A new","low-cost airline","was launched","at the","international terminal."],answer:["A new","low-cost airline","was launched","at the","international terminal."]},
 {id:3,prompt:"Did the hotel staff tell you about breakfast?",gender:"female",fixedStart:"She",fixedEnd:"",blanks:["told me","that","the buffet","would close","if we arrived","after ten."],answer:["told me","that","the buffet","would close","if we arrived","after ten."]},
-{id:4,prompt:"How was your call with the travel agent?",gender:"male",fixedStart:"She",fixedEnd:"",blanks:["recommended","a tour","that is","offered","only during","the summer season."],answer:["recommended","a tour","that is","offered","only during","the summer season."]},
 {id:5,prompt:"Can you drive me to the train station tomorrow?",gender:"female",fixedStart:"If",fixedEnd:"",blanks:["you drive me","tomorrow,","I will","buy you","coffee afterward."],answer:["you drive me","tomorrow,","I will","buy you","coffee afterward."]},
-{id:6,prompt:"Why did you cancel your flight to Paris?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["realized","that","I was","more interested in","visiting Rome","than seeing Paris again."],answer:["realized","that","I was","more interested in","visiting Rome","than seeing Paris again."]},
 {id:7,prompt:"What happened to the sightseeing bus tour?",gender:"female",fixedStart:"It",fixedEnd:"tomorrow afternoon.",blanks:["was postponed","until"],answer:["was postponed","until"]},
 {id:8,prompt:"Do you know a good restaurant near the hotel?",gender:"male",fixedStart:"There is",fixedEnd:"",blanks:["a small","Italian place","where","tourists often","go to","have dinner."],answer:["a small","Italian place","where","tourists often","go to","have dinner."]},
 {id:9,prompt:"What did the tour guide say about the itinerary?",gender:"female",fixedStart:"He",fixedEnd:"",blanks:["said that","the tour","would cover","everything","we had","requested in advance."],answer:["said that","the tour","would cover","everything","we had","requested in advance."]},
-{id:10,prompt:"Are you joining the harbor cruise tonight?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["would go","if","I did not","have","so much packing","to finish."],answer:["would go","if","I did not","have","so much packing","to finish."]},
 {id:11,prompt:"Why do you always stay at that hotel?",gender:"female",fixedStart:"The breakfast",fixedEnd:"",blanks:["is prepared","by a chef","who used to","work at","a famous resort."],answer:["is prepared","by a chef","who used to","work at","a famous resort."]},
-{id:12,prompt:"Have you decided which airline to book?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["am considering","a carrier","that","is known","for its","on-time record."],answer:["am considering","a carrier","that","is known","for its","on-time record."]},
 {id:13,prompt:"What do you think about the new baggage rules?",gender:"female",fixedStart:"",fixedEnd:"",blanks:["If the rules","were","less strict,","more travelers","would be","willing to","fly this airline."],answer:["If the rules","were","less strict,","more travelers","would be","willing to","fly this airline."]},
-{id:14,prompt:"How do you keep track of your travel plans?",gender:"male",fixedStart:"We",fixedEnd:"",blanks:["have","a shared app","where","we save","details about","each reservation."],answer:["have","a shared app","where","we save","details about","each reservation."]},
-{id:15,prompt:"Did you hear what happened at the customs desk?",gender:"female",fixedStart:"",fixedEnd:"",blanks:["The passport","that","was issued","by the embassy","was questioned","by the officer."],answer:["The passport","that","was issued","by the embassy","was questioned","by the officer."]},
-{id:16,prompt:"Why are you packing so late tonight?",gender:"male",fixedStart:"The airline",fixedEnd:"",blanks:["told us","that","the luggage","should be","checked in","by six tomorrow morning."],answer:["told us","that","the luggage","should be","checked in","by six tomorrow morning."]}
+{id:14,prompt:"How do you keep track of your travel plans?",gender:"male",fixedStart:"We",fixedEnd:"",blanks:["have","a shared app","where","we save","details about","each reservation."],answer:["have","a shared app","where","we save","details about","each reservation."]}
 ];
 
 // Shuffle word banks
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=420,isActive=false;
-const totalTime=420;
+let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=270,isActive=false;
+const totalTime=270;
 questions.forEach(()=>userAnswers.push([]));
 
 function startQuiz(){

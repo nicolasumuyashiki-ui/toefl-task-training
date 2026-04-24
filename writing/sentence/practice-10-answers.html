@@ -79,12 +79,12 @@ body[data-lang="en"] .jp{display:none}
 
 <div class="header">
   <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 10 | Health, Nutrition & Fitness | 16問</p>
+  <p>Practice 10 | Health, Nutrition & Fitness | 10問</p>
 </div>
 
 <div class="score-summary">
   <p class="score-sub">あなたのスコア</p>
-  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
@@ -103,10 +103,10 @@ body[data-lang="en"] .jp{display:none}
 <div class="patterns-card">
   <h2>📐 今回の語順パターン</h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 wish + would（不満・願望）</h5><p>Q1「I wish the gym would offer」Q6「I wish restaurants would include」Q11「I wish food companies would use」— 現在の習慣的行為への不満を表す。wishの後はwouldを使う。</p></div>
-    <div class="pattern"><h5>🔹 非制限関係代名詞（, which / , who）</h5><p>Q3「Yoga, which combines...」Q8「Dr. Nguyen, who specializes...」Q16「Ms. Rivera, who works...」— コンマ付きで追加情報を挿入。先行詞を補足説明する。</p></div>
-    <div class="pattern"><h5>🔹 have something done（使役）</h5><p>Q2「had their meals prepared」Q7「had my blood tested」Q13「had my knee examined」— 「〜してもらう」の受身使役。have + O + 過去分詞。</p></div>
-    <div class="pattern"><h5>🔹 by the time + 過去完了 / provided (that)</h5><p>Q4「By the time the race begins」Q9「By the time the coach arrived」— 時間の前後関係を明示。Q10「provided that」= 条件「〜する限り」。</p></div>
+    <div class="pattern"><h5>🔹 Causative (have / get something done)</h5><p>Q2「The organizers had the concert performed by a local jazz band.」, Q5「I had my guitar repaired at the music shop.」</p></div>
+    <div class="pattern"><h5>🔹 By the time + perfect tense</h5><p>Q3「By the time the race begins, I will have trained for six full months.」, Q7「By the time the coach arrived, I had already completed my entire warm-up routine.」</p></div>
+    <div class="pattern"><h5>🔹 Relative clauses (non-defining / defining who)</h5><p>Q6「Mr. Nguyen, who specializes in landscape painting, gave a fascinating talk on watercolors.」, Q9「that is the coach who designed a personalized program for me.」</p></div>
+    <div class="pattern"><h5>🔹 Conditional connectors (as long as / provided that)</h5><p>Q4「You can join us as long as you bring a valid ID card.」, Q8「She will approve it provided that each volunteer follows the safety guidelines strictly.」</p></div>
   </div>
 </div>
 
@@ -126,20 +126,14 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 const answers=[
 {id:1,prompt:"Are you satisfied with the gym's schedule?",sentence:"I wish the gym would offer more early morning classes.",grammar:"wish + would: 施設の方針への不満を表す。I wish + S + would + V。offer + O（〜を提供する）。"},
 {id:2,prompt:"Who performed at the charity concert last weekend?",sentence:"The organizers had the concert performed by a local jazz band.",grammar:"使役構文 have + O + 過去分詞:「〜してもらう」。by + 動作主で誰に依頼したかを示す。"},
-{id:3,prompt:"What do you think about painting as a hobby?",sentence:"Painting, which combines creativity with relaxation, has become a popular weekend activity.",grammar:"非制限関係代名詞 , which ~: 先行詞 Painting に補足情報を追加。コンマで挟む。combine A with B（AとBを組み合わせる）。"},
 {id:4,prompt:"Will you finish the marathon training before the race?",sentence:"By the time the race begins, I will have trained for six full months.",grammar:"by the time + 現在形, S + will have + Vpp: 未来完了。「〜するまでには…し終えている」。"},
 {id:5,prompt:"Can I join your volunteer group?",sentence:"You can join us as long as you bring a valid ID card.",grammar:"as long as =「〜する限り」条件を表す接続詞。valid = 有効な。bring + O。"},
-{id:6,prompt:"Why are you frustrated with the music app?",sentence:"I wish the app would include lyrics and translations for every song.",grammar:"wish + would: 不満・改善の願望。include + O（〜を含める）。lyrics and translations は目的語。"},
 {id:7,prompt:"How did you get your guitar repaired?",sentence:"I had my guitar repaired at the music shop.",grammar:"使役構文 have + O + 過去分詞: had my guitar repaired =「ギターを修理してもらった」。場所は at + 場所。"},
 {id:8,prompt:"Do you know Mr. Nguyen from the art class?",sentence:"Mr. Nguyen, who specializes in landscape painting, gave a fascinating talk on watercolors.",grammar:"非制限関係代名詞 , who ~: 人の先行詞に補足情報を追加。specialize in ~（〜を専門とする）。"},
 {id:9,prompt:"Had you finished your warm-up before the coach arrived?",sentence:"By the time the coach arrived, I had already completed my entire warm-up routine.",grammar:"by the time + 過去形, S + had + Vpp: 過去完了で「〜した時にはもう…していた」。already で強調。"},
 {id:10,prompt:"Will the coordinator approve the new volunteer schedule?",sentence:"She will approve it provided that each volunteer follows the safety guidelines strictly.",grammar:"provided (that) =「〜という条件で」。as long as と同義の条件接続詞。follow + O + 副詞。strictly =「厳密に」。"},
-{id:11,prompt:"What annoys you about the art supply store?",sentence:"I wish the store would use simpler labels on their paints.",grammar:"wish + would: 不満・改善の願望。use + O（目的語）。simpler は比較級で labels を修飾。"},
 {id:12,prompt:"Is that the coach who helped you improve your swimming?",sentence:"Yes, that is the coach who designed a personalized program for me.",grammar:"制限関係代名詞 who（主格）: 先行詞 the coach を修飾。for me は受益者を示す前置詞句。"},
-{id:13,prompt:"Where did you get your bicycle tuned up?",sentence:"I had my bike tuned at the cycling center.",grammar:"使役構文 have + O + 過去分詞: had my bike tuned =「自転車を調整してもらった」。at + 場所。"},
-{id:14,prompt:"Had the volunteers finished sorting donations when the center closed?",sentence:"By the time most volunteers had sorted the donations, the center closed for the day.",grammar:"by the time + S + had Vpp, S + 過去形: 時系列を明示。「仕分けを終えた頃にセンターが閉まった」。"},
-{id:15,prompt:"Can anyone use the community art studio?",sentence:"You can use the studio as long as you wear a proper apron.",grammar:"as long as =「〜する限り」条件。use + O（〜を使う）。wear + O（〜を着用する）。"},
-{id:16,prompt:"Tell me about the musician you mentioned.",sentence:"Ms. Rivera, who plays at a leading jazz club, has performed in several countries.",grammar:"非制限関係代名詞 , who ~: Ms. Rivera に追加情報を挿入。play at ~（〜で演奏する）。現在完了 has performed で実績を述べる。"}
+{id:13,prompt:"Where did you get your bicycle tuned up?",sentence:"I had my bike tuned at the cycling center.",grammar:"使役構文 have + O + 過去分詞: had my bike tuned =「自転車を調整してもらった」。at + 場所。"}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p10')||'null');

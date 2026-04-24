@@ -93,7 +93,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="top-nav">
 <div class="nav-left"><span class="section-label">Writing</span><span class="divider">|</span><span class="task-label">Build a Sentence</span></div>
 <div class="nav-right">
-<span class="timer-display" id="timer">07:00</span>
+<span class="timer-display" id="timer">04:30</span>
 <button class="finish-btn" id="btnFinish" onclick="showModal()" style="display:none">Finish</button>
 <div class="user-badge" id="userBadge">?</div>
 </div>
@@ -107,12 +107,12 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <table class="task-table">
 <thead><tr><th>Detail</th><th>Info</th></tr></thead>
 <tbody>
-<tr><td>Questions</td><td>16</td></tr>
-<tr><td>Time Limit</td><td>7 minutes</td></tr>
+<tr><td>Questions</td><td>10</td></tr>
+<tr><td>Time Limit</td><td>4 minutes 30 seconds</td></tr>
 <tr><td>Format</td><td>Drag words from the Word Bank into the blank slots</td></tr>
 </tbody>
 </table>
-<div class="warning-box">⏱️ You have <strong>7 minutes</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
+<div class="warning-box">⏱️ You have <strong>4 minutes 30 seconds</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
 <button class="btn-start" onclick="startQuiz()">Start</button>
 </div>
 </div>
@@ -129,7 +129,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="completion-card">
 <div style="font-size:48px">✅</div>
 <h2>Build a Sentence — Complete!</h2>
-<div class="score-display" id="scoreDisplay">0 / 16</div>
+<div class="score-display" id="scoreDisplay">0 / 10</div>
 <div class="results-list" id="resultsList"></div>
 <a class="btn-answers" href="practice-10-answers.html"><span class="jp">解答解説を見る →</span><span class="en">See Answers →</span></a>
 </div>
@@ -184,26 +184,20 @@ const speakerImages = {female:["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ
 const questions=[
 {id:1,prompt:"Are you satisfied with the gym's schedule?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["wish","the gym","would","offer","more early morning","classes."],answer:["wish","the gym","would","offer","more early morning","classes."]},
 {id:2,prompt:"Who performed at the charity concert last weekend?",gender:"male",fixedStart:"The organizers",fixedEnd:"",blanks:["had","the concert","performed","by","a local","jazz band."],answer:["had","the concert","performed","by","a local","jazz band."]},
-{id:3,prompt:"What do you think about painting as a hobby?",gender:"female",fixedStart:"Painting,",fixedEnd:"has become a popular weekend activity.",blanks:["which","combines","creativity","with relaxation,"],answer:["which","combines","creativity","with relaxation,"]},
 {id:4,prompt:"Will you finish the marathon training before the race?",gender:"male",fixedStart:"",fixedEnd:"",blanks:["By the time","the race","begins,","I will have","trained","for six full months."],answer:["By the time","the race","begins,","I will have","trained","for six full months."]},
 {id:5,prompt:"Can I join your volunteer group?",gender:"female",fixedStart:"You can",fixedEnd:"",blanks:["join us","as long as","you bring","a valid","ID card."],answer:["join us","as long as","you bring","a valid","ID card."]},
-{id:6,prompt:"Why are you frustrated with the music app?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["wish","the app","would","include","lyrics and translations","for every song."],answer:["wish","the app","would","include","lyrics and translations","for every song."]},
 {id:7,prompt:"How did you get your guitar repaired?",gender:"female",fixedStart:"I",fixedEnd:"at the music shop.",blanks:["had","my guitar","repaired"],answer:["had","my guitar","repaired"]},
 {id:8,prompt:"Do you know Mr. Nguyen from the art class?",gender:"male",fixedStart:"Mr. Nguyen,",fixedEnd:"gave a fascinating talk on watercolors.",blanks:["who","specializes","in landscape painting,"],answer:["who","specializes","in landscape painting,"]},
 {id:9,prompt:"Had you finished your warm-up before the coach arrived?",gender:"female",fixedStart:"",fixedEnd:"",blanks:["By the time","the coach","arrived,","I had already","completed","my entire warm-up routine."],answer:["By the time","the coach","arrived,","I had already","completed","my entire warm-up routine."]},
 {id:10,prompt:"Will the coordinator approve the new volunteer schedule?",gender:"male",fixedStart:"She",fixedEnd:"",blanks:["will approve it","provided","that","each volunteer","follows","the safety guidelines strictly."],answer:["will approve it","provided","that","each volunteer","follows","the safety guidelines strictly."]},
-{id:11,prompt:"What annoys you about the art supply store?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["wish","the store","would","use","simpler labels","on their paints."],answer:["wish","the store","would","use","simpler labels","on their paints."]},
 {id:12,prompt:"Is that the coach who helped you improve your swimming?",gender:"male",fixedStart:"Yes,",fixedEnd:"",blanks:["that is","the coach","who","designed","a personalized program","for me."],answer:["that is","the coach","who","designed","a personalized program","for me."]},
-{id:13,prompt:"Where did you get your bicycle tuned up?",gender:"female",fixedStart:"I",fixedEnd:"at the cycling center.",blanks:["had","my bike","tuned"],answer:["had","my bike","tuned"]},
-{id:14,prompt:"Had the volunteers finished sorting donations when the center closed?",gender:"male",fixedStart:"",fixedEnd:"the center closed for the day.",blanks:["By the time","most volunteers","had sorted","the donations,"],answer:["By the time","most volunteers","had sorted","the donations,"]},
-{id:15,prompt:"Can anyone use the community art studio?",gender:"female",fixedStart:"You can",fixedEnd:"",blanks:["use the studio","as long as","you","wear","a proper apron."],answer:["use the studio","as long as","you","wear","a proper apron."]},
-{id:16,prompt:"Tell me about the musician you mentioned.",gender:"male",fixedStart:"Ms. Rivera,",fixedEnd:"has performed in several countries.",blanks:["who","plays","at a leading","jazz club,"],answer:["who","plays","at a leading","jazz club,"]}
+{id:13,prompt:"Where did you get your bicycle tuned up?",gender:"female",fixedStart:"I",fixedEnd:"at the cycling center.",blanks:["had","my bike","tuned"],answer:["had","my bike","tuned"]}
 ];
 
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=420,isActive=false;
-const totalTime=420;
+let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=270,isActive=false;
+const totalTime=270;
 questions.forEach(()=>userAnswers.push([]));
 
 function startQuiz(){

@@ -93,7 +93,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="top-nav">
 <div class="nav-left"><span class="section-label">Writing</span><span class="divider">|</span><span class="task-label">Build a Sentence</span></div>
 <div class="nav-right">
-<span class="timer-display" id="timer">07:00</span>
+<span class="timer-display" id="timer">04:30</span>
 <button class="finish-btn" id="btnFinish" onclick="showModal()" style="display:none">Finish</button>
 <div class="user-badge" id="userBadge">?</div>
 </div>
@@ -107,12 +107,12 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <table class="task-table">
 <thead><tr><th>Detail</th><th>Info</th></tr></thead>
 <tbody>
-<tr><td>Questions</td><td>16</td></tr>
-<tr><td>Time Limit</td><td>7 minutes</td></tr>
+<tr><td>Questions</td><td>10</td></tr>
+<tr><td>Time Limit</td><td>4 minutes 30 seconds</td></tr>
 <tr><td>Format</td><td>Drag words from the Word Bank into the blank slots</td></tr>
 </tbody>
 </table>
-<div class="warning-box">⏱️ You have <strong>7 minutes</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
+<div class="warning-box">⏱️ You have <strong>4 minutes 30 seconds</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
 <button class="btn-start" onclick="startQuiz()">Start</button>
 </div>
 </div>
@@ -129,7 +129,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="completion-card">
 <div style="font-size:48px">✅</div>
 <h2>Build a Sentence — Complete!</h2>
-<div class="score-display" id="scoreDisplay">0 / 16</div>
+<div class="score-display" id="scoreDisplay">0 / 10</div>
 <div class="results-list" id="resultsList"></div>
 <a class="btn-answers" href="practice-7-answers.html"><span class="jp">解答解説を見る →</span><span class="en">See Answers →</span></a>
 </div>
@@ -183,27 +183,21 @@ const speakerImages = {female:["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ
 
 const questions=[
 {id:1,prompt:"What does the shop manager suggest about the holiday sale?",gender:"female",fixedStart:"They",fixedEnd:"",blanks:["suggest","that","the sale","be held","online","this year."],answer:["suggest","that","the sale","be held","online","this year."]},
-{id:2,prompt:"Why did the bank manager recommend a new savings plan?",gender:"male",fixedStart:"She",fixedEnd:"",blanks:["recommended","that","every customer","deposit","at least","a fixed amount monthly."],answer:["recommended","that","every customer","deposit","at least","a fixed amount monthly."]},
-{id:3,prompt:"What should customers do before picking up a package?",gender:"female",fixedStart:"It is",fixedEnd:"",blanks:["important","that","each customer","show ID","before","the counter closes."],answer:["important","that","each customer","show ID","before","the counter closes."]},
 {id:4,prompt:"How do you balance shopping and saving money?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["try to","make a list,","compare prices,","and","avoid impulse","purchases."],answer:["try to","make a list,","compare prices,","and","avoid impulse","purchases."],altAnswers:[["try to","compare prices,","make a list,","and","avoid impulse","purchases."]]},
 {id:5,prompt:"What happened when you forgot your wallet at the store?",gender:"female",fixedStart:"Not only",fixedEnd:"",blanks:["did I","lose the sale,","but I also","missed the","delivery slot."],answer:["did I","lose the sale,","but I also","missed the","delivery slot."]},
 {id:6,prompt:"Have you ever had a bad experience at a clinic?",gender:"male",fixedStart:"Never",fixedEnd:"",blanks:["have I","been","so embarrassed","as when I","waited","three hours there."],answer:["have I","been","so embarrassed","as when I","waited","three hours there."]},
 {id:7,prompt:"What is it that makes that bakery so popular?",gender:"female",fixedStart:"It is",fixedEnd:"",blanks:["the variety","of fresh bread","that","makes","the bakery","so popular."],answer:["the variety","of fresh bread","that","makes","the bakery","so popular."]},
 {id:8,prompt:"Who delivered the package to the post office yesterday?",gender:"male",fixedStart:"It was",fixedEnd:"",blanks:["the courier company","that","delivered","the package","yesterday afternoon."],answer:["the courier company","that","delivered","the package","yesterday afternoon."]},
-{id:9,prompt:"What do the clerks recommend for the customer appreciation day?",gender:"female",fixedStart:"They",fixedEnd:"",blanks:["recommend","that","shoppers","arrive early","for special","discounts."],answer:["recommend","that","shoppers","arrive early","for special","discounts."]},
 {id:10,prompt:"Did the pharmacist suggest anything about your prescription?",gender:"male",fixedStart:"Yes, she",fixedEnd:"",blanks:["suggested","that","the dosage","be reduced","to once a day."],answer:["suggested","that","the dosage","be reduced","to once a day."]},
-{id:11,prompt:"Why is that department store important to you?",gender:"female",fixedStart:"It is",fixedEnd:"",blanks:["the chance","to browse through","imported goods","that","I value","the most."],answer:["the chance","to browse through","imported goods","that","I value","the most."]},
 {id:12,prompt:"What did the receptionist do about your appointment?",gender:"male",fixedStart:"She",fixedEnd:"",blanks:["looked into","the schedule,","picked out","a new time,","and","confirmed the booking."],answer:["looked into","the schedule,","picked out","a new time,","and","confirmed the booking."],altAnswers:[["picked out","a new time,","looked into","the schedule,","and","confirmed the booking."]]},
 {id:13,prompt:"Have you ever regretted buying something online?",gender:"female",fixedStart:"Rarely",fixedEnd:"",blanks:["have I","regretted","a purchase","as much as","ordering","that used camera."],answer:["have I","regretted","a purchase","as much as","ordering","that used camera."]},
-{id:14,prompt:"What does the post office propose about package delivery?",gender:"male",fixedStart:"The post office",fixedEnd:"",blanks:["proposes","that","deliveries","be made","to the","local pickup center."],answer:["proposes","that","deliveries","be made","to the","local pickup center."]},
-{id:15,prompt:"How did the service turn out after all the complaints?",gender:"female",fixedStart:"Not only",fixedEnd:"",blanks:["was the service","improved,","but it also","brought","many customers","back again."],answer:["was the service","improved,","but it also","brought","many customers","back again."]},
 {id:16,prompt:"Why did you stop by the clinic so early today?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["stopped by","early","to pick up","a prescription","before the","pharmacy closed."],answer:["stopped by","early","to pick up","a prescription","before the","pharmacy closed."]}
 ];
 
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=420,isActive=false;
-const totalTime=420;
+let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=270,isActive=false;
+const totalTime=270;
 questions.forEach(()=>userAnswers.push([]));
 
 function startQuiz(){

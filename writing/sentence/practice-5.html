@@ -93,7 +93,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="top-nav">
 <div class="nav-left"><span class="section-label">Writing</span><span class="divider">|</span><span class="task-label">Build a Sentence</span></div>
 <div class="nav-right">
-<span class="timer-display" id="timer">07:00</span>
+<span class="timer-display" id="timer">04:30</span>
 <button class="finish-btn" id="btnFinish" onclick="showModal()" style="display:none">Finish</button>
 <div class="user-badge" id="userBadge">?</div>
 </div>
@@ -107,12 +107,12 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <table class="task-table">
 <thead><tr><th>Detail</th><th>Info</th></tr></thead>
 <tbody>
-<tr><td>Questions</td><td>16</td></tr>
-<tr><td>Time Limit</td><td>7 minutes</td></tr>
+<tr><td>Questions</td><td>10</td></tr>
+<tr><td>Time Limit</td><td>4 minutes 30 seconds</td></tr>
 <tr><td>Format</td><td>Drag words from the Word Bank into the blank slots</td></tr>
 </tbody>
 </table>
-<div class="warning-box">⏱️ You have <strong>7 minutes</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
+<div class="warning-box">⏱️ You have <strong>4 minutes 30 seconds</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
 <button class="btn-start" onclick="startQuiz()">Start</button>
 </div>
 </div>
@@ -129,7 +129,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="completion-card">
 <div style="font-size:48px">✅</div>
 <h2>Build a Sentence — Complete!</h2>
-<div class="score-display" id="scoreDisplay">0 / 16</div>
+<div class="score-display" id="scoreDisplay">0 / 10</div>
 <div class="results-list" id="resultsList"></div>
 <a class="btn-answers" href="practice-5-answers.html"><span class="jp">解答解説を見る →</span><span class="en">See Answers →</span></a>
 </div>
@@ -183,19 +183,13 @@ const speakerImages = {female:["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ
 
 const questions=[
 {id:1,prompt:"Do you think you will finish the experiment this week?",gender:"female",fixedStart:"By",fixedEnd:"",blanks:["Friday,","I","will have","repeated","the trial","at least","three times."],answer:["Friday,","I","will have","repeated","the trial","at least","three times."]},
-{id:2,prompt:"Are you going to the lab tomorrow?",gender:"male",fixedStart:"I",fixedEnd:"",blanks:["will go","unless","the samples","arrive","late in the morning."],answer:["will go","unless","the samples","arrive","late in the morning."]},
 {id:3,prompt:"What do you like about your research group?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["enjoy","both","the weekly seminars","and","the open discussions."],answer:["enjoy","both","the weekly seminars","and","the open discussions."],altAnswers:[["enjoy","both","the open discussions","and","the weekly seminars."]]},
-{id:4,prompt:"Did you calibrate the microscope yourself?",gender:"male",fixedStart:"No,",fixedEnd:"",blanks:["I","had","it","calibrated","by a technician."],answer:["I","had","it","calibrated","by a technician."]},
 {id:5,prompt:"Which field site is good for sampling?",gender:"female",fixedStart:"The",fixedEnd:"",blanks:["site","at which","we worked","last summer","is perfect","for sampling."],answer:["site","at which","we worked","last summer","is perfect","for sampling."]},
 {id:6,prompt:"Will the thesis be done by next Friday?",gender:"male",fixedStart:"By",fixedEnd:"the entire draft.",blanks:["next Friday,","we","will have","finished"],answer:["next Friday,","we","will have","finished"]},
 {id:7,prompt:"Why did you cancel the field survey?",gender:"female",fixedStart:"We",fixedEnd:"",blanks:["canceled","it","because","neither","the equipment","nor","the funding","was ready."],answer:["canceled","it","because","neither","the equipment","nor","the funding","was ready."]},
 {id:8,prompt:"Is your paper ready for submission?",gender:"male",fixedStart:"Yes,",fixedEnd:"",blanks:["I","got","the references","checked","before the deadline."],answer:["I","got","the references","checked","before the deadline."]},
 {id:9,prompt:"Can we run the test as long as the data holds?",gender:"female",fixedStart:"Yes,",fixedEnd:"",blanks:["we can","run the test","as long as","the sensors","are not","giving errors."],answer:["we can","run the test","as long as","the sensors","are not","giving errors."]},
-{id:10,prompt:"What will you have accomplished by the end of the semester?",gender:"male",fixedStart:"By",fixedEnd:"",blanks:["the end","of the semester,","I","will have","read","five key papers."],answer:["the end","of the semester,","I","will have","read","five key papers."]},
 {id:11,prompt:"How do you manage your workload in the lab?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["enjoy","both","analyzing the data","and","writing the reports."],answer:["enjoy","both","analyzing the data","and","writing the reports."],altAnswers:[["enjoy","both","writing the reports","and","analyzing the data."]]},
-{id:12,prompt:"Did you run the simulation by yourself?",gender:"male",fixedStart:"No,",fixedEnd:"",blanks:["I","had","my advisor","help me","set it up."],answer:["I","had","my advisor","help me","set it up."]},
-{id:13,prompt:"Will you join us at the research conference?",gender:"female",fixedStart:"I",fixedEnd:"",blanks:["will join you","unless","I have to","revise the manuscript","that week."],answer:["will join you","unless","I have to","revise the manuscript","that week."]},
-{id:14,prompt:"Where is the lab you mentioned?",gender:"male",fixedStart:"The",fixedEnd:"",blanks:["lab","in which","we trained","last fall","is near","the main library."],answer:["lab","in which","we trained","last fall","is near","the main library."]},
 {id:15,prompt:"Did you proofread your paper before submission?",gender:"female",fixedStart:"No,",fixedEnd:"by my supervisor.",blanks:["I","got","it","reviewed"],answer:["I","got","it","reviewed"]},
 {id:16,prompt:"What happens if the funding runs out mid-study?",gender:"male",fixedStart:"The",fixedEnd:"",blanks:["study","will continue","as long as","there is","no budget cut","or equipment failure."],answer:["study","will continue","as long as","there is","no budget cut","or equipment failure."],altAnswers:[["study","will continue","as long as","there is","no equipment failure","or budget cut."]]}
 ];
@@ -203,8 +197,8 @@ const questions=[
 // Shuffle word banks
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=420,isActive=false;
-const totalTime=420;
+let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=270,isActive=false;
+const totalTime=270;
 questions.forEach(()=>userAnswers.push([]));
 
 function startQuiz(){

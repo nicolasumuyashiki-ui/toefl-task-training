@@ -79,12 +79,12 @@ body[data-lang="en"] .jp{display:none}
 
 <div class="header">
   <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 7 | 16問 — University Social Events & Campus Life</p>
+  <p>Practice 7 | 10問 — University Social Events & Campus Life</p>
 </div>
 
 <div class="score-summary">
   <p class="score-sub">あなたのスコア</p>
-  <div class="score-big" id="scoreBig">— / 16</div>
+  <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
@@ -103,10 +103,10 @@ body[data-lang="en"] .jp{display:none}
 <div class="patterns-card">
   <h2>📐 今回の語順パターン</h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 仮定法現在（subjunctive）</h5><p>Q1「suggest that the festival be held」Q2「recommended that every member attend」— suggest/recommend/propose の後は that + S + 動詞原形。</p></div>
-    <div class="pattern"><h5>🔹 並列構造（parallel structure）</h5><p>Q4「plan ahead, stay organized, and set clear priorities」Q12「looked into..., picked out..., and ordered...」— and で結ぶ要素は同じ形にする。</p></div>
-    <div class="pattern"><h5>🔹 否定副詞の倒置（inversion）</h5><p>Q5「Not only did I miss...」Q6「Never have I been...」Q13「Rarely have I regretted...」— 否定語が文頭に来ると疑問文語順になる。</p></div>
-    <div class="pattern"><h5>🔹 強調構文（cleft sentence）</h5><p>Q7「It is the variety... that makes...」Q8「It was the volunteer club that organized...」Q11「It is the opportunity... that I value...」— It is/was + 強調部分 + that。</p></div>
+    <div class="pattern"><h5>🔹 Subjunctive after suggest/recommend/propose</h5><p>Q1「They suggest that the sale be held online this year.」, Q7「she suggested that the dosage be reduced to once a day.」</p></div>
+    <div class="pattern"><h5>🔹 Inversion (Never / Rarely + aux)</h5><p>Q4「Never have I been so embarrassed as when I waited three hours there.」, Q9「Rarely have I regretted a purchase as much as ordering that used camera.」</p></div>
+    <div class="pattern"><h5>🔹 Cleft sentence (It is/was ... that)</h5><p>Q5「It is the variety of fresh bread that makes the bakery so popular.」, Q6「It was the courier company that delivered the package yesterday afternoon.」</p></div>
+    <div class="pattern"><h5>🔹 Parallel listing (A, B, and C)</h5><p>Q2「make a list, compare prices, and avoid impulse purchases.」, Q8「looked into the schedule, picked out a new time, and confirmed the booking.」</p></div>
   </div>
 </div>
 
@@ -125,20 +125,14 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
 {id:1,prompt:"What does the shop manager suggest about the holiday sale?",sentence:"They suggest that the sale be held online this year.",grammar:"仮定法現在（subjunctive）: suggest that + S + 動詞原形。be held は受動態の原形。「〜することを提案する」。"},
-{id:2,prompt:"Why did the bank manager recommend a new savings plan?",sentence:"She recommended that every customer deposit at least a fixed amount monthly.",grammar:"仮定法現在: recommended that + S + 動詞原形。depositにsが付かないのがポイント（× deposits）。"},
-{id:3,prompt:"What should customers do before picking up a package?",sentence:"It is important that each customer show ID before the counter closes.",grammar:"仮定法現在: It is important that + S + 動詞原形。形容詞 important/necessary/essential の後も仮定法現在を使う。"},
 {id:4,prompt:"How do you balance shopping and saving money?",sentence:"I try to make a list, compare prices, and avoid impulse purchases.",grammar:"並列構造（parallel structure）: try to + V1, V2, and V3。3つの動詞原形が and で並列。カンマの使い方にも注意。",alt:"I try to compare prices, make a list, and avoid impulse purchases."},
 {id:5,prompt:"What happened when you forgot your wallet at the store?",sentence:"Not only did I lose the sale, but I also missed the delivery slot.",grammar:"否定副詞の倒置: Not only + 疑問文語順(did I lose), but (S) also + V。「〜だけでなく…も」。"},
 {id:6,prompt:"Have you ever had a bad experience at a clinic?",sentence:"Never have I been so embarrassed as when I waited three hours there.",grammar:"否定副詞の倒置: Never + have I + Vpp。文頭のNeverにより疑問文語順。so...as when で「〜したときほど」。"},
 {id:7,prompt:"What is it that makes that bakery so popular?",sentence:"It is the variety of fresh bread that makes the bakery so popular.",grammar:"強調構文（cleft sentence）: It is + 強調部分 + that + V。the variety（単数）なので makes。"},
 {id:8,prompt:"Who delivered the package to the post office yesterday?",sentence:"It was the courier company that delivered the package yesterday afternoon.",grammar:"強調構文: It was + 強調部分 + that + 過去形。「〜したのは…だ」と主語を強調。"},
-{id:9,prompt:"What do the clerks recommend for the customer appreciation day?",sentence:"They recommend that shoppers arrive early for special discounts.",grammar:"仮定法現在: recommend that + S + 動詞原形。arrive early =「早く着く」。"},
 {id:10,prompt:"Did the pharmacist suggest anything about your prescription?",sentence:"Yes, she suggested that the dosage be reduced to once a day.",grammar:"仮定法現在: suggested that + S + be + Vpp（受動態の原形）。「用量を減らすこと」を提案。"},
-{id:11,prompt:"Why is that department store important to you?",sentence:"It is the chance to browse through imported goods that I value the most.",grammar:"強調構文: It is + 名詞句 + that + S + V。「私が最も大切にしているのは〜だ」。the most で最上級の意味。"},
 {id:12,prompt:"What did the receptionist do about your appointment?",sentence:"She looked into the schedule, picked out a new time, and confirmed the booking.",grammar:"並列構造 + 句動詞: looked into（調べた）, picked out（選んだ）, and confirmed（確認した）。3つの過去形が並列。",alt:"She picked out a new time, looked into the schedule, and confirmed the booking."},
 {id:13,prompt:"Have you ever regretted buying something online?",sentence:"Rarely have I regretted a purchase as much as ordering that used camera.",grammar:"否定副詞の倒置: Rarely + have I + Vpp。as much as =「〜と同じくらい」。ordering は動名詞。"},
-{id:14,prompt:"What does the post office propose about package delivery?",sentence:"The post office proposes that deliveries be made to the local pickup center.",grammar:"仮定法現在: proposes that + S + 動詞原形（be made）。propose も suggest/recommend と同様に仮定法現在を取る。"},
-{id:15,prompt:"How did the service turn out after all the complaints?",sentence:"Not only was the service improved, but it also brought many customers back again.",grammar:"否定副詞の倒置: Not only + was + S + Vpp, but S also + V。bring back =「取り戻す」（句動詞）。"},
 {id:16,prompt:"Why did you stop by the clinic so early today?",sentence:"I stopped by early to pick up a prescription before the pharmacy closed.",grammar:"句動詞: stopped by（立ち寄る）, pick up（受け取る）。to pick up は目的を表す不定詞。"}
 ];
 
