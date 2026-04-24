@@ -17,6 +17,14 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 .brand{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px}
 .brand-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
 .brand-name{font-family:var(--font-en);font-size:.74em;font-weight:800;color:var(--green);letter-spacing:.16em;text-transform:uppercase}
+/* Product wordmark — sits between the brand pill and the greeting so
+   the product has a clear visual identity distinct from the parent
+   brand (TCK Workshop). Two-tone treatment: "TOEFL" as filled brand
+   chip, "Reps" as the signature word in serif-ish display weight. */
+.product-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin:-6px 0 18px;user-select:none}
+.product-logo .pl-chip{font-family:var(--font-en);font-size:.78em;font-weight:900;letter-spacing:.14em;color:#fff;background:var(--green-deep);padding:4px 10px 3px;border-radius:4px;line-height:1}
+.product-logo .pl-name{font-family:var(--font-jp,var(--font-en));font-size:1.55em;font-weight:800;color:var(--green-deep);letter-spacing:-0.015em;line-height:1}
+.product-logo .pl-name .dot{color:var(--green);margin-left:2px}
 
 h1{font-family:var(--font-en);font-size:1.85em;font-weight:800;color:var(--green-deep);letter-spacing:-0.015em;line-height:1.2;margin-bottom:6px;text-align:center}
 .sub{font-size:.88em;color:var(--ink-500);margin-bottom:28px;text-align:center}
@@ -72,6 +80,11 @@ h1{font-family:var(--font-en);font-size:1.85em;font-weight:800;color:var(--green
   <div class="brand">
     <span class="brand-dot"></span>
     <span class="brand-name">TCK Workshop</span>
+  </div>
+
+  <div class="product-logo" aria-label="TOEFL Reps">
+    <span class="pl-chip">TOEFL</span>
+    <span class="pl-name">Reps<span class="dot">.</span></span>
   </div>
 
   <h1>
