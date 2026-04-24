@@ -433,6 +433,49 @@ function percentToScaled(pct, table) {
   return Math.round(rowLow.scaled + (rowHigh.scaled - rowLow.scaled) * frac);
 }
 
+/**
+ * ETS 2026 new 1.0-6.0 band score conversion.
+ *
+ * Source: ETS Japan (toefl-ibt.jp 2026/01 announcement) and the
+ * 2-year transition chart that ETS ships on every new-format score
+ * report (Jan 21 2026 onward). The total-score bands below are the
+ * official 0-120 → 1.0-6.0 lookup; we derive section bands by
+ * applying the same cut-points to (section_score × 4) since ETS
+ * defines the overall band as the average of section bands rounded
+ * to the nearest 0.5.
+ *
+ * Source references:
+ *   - https://www.toefl-ibt.jp/test_takers/toefl_ibt/202601/
+ *   - https://www.ets.org/toefl/china/toefl/score-scale-update.html
+ */
+function totalToBand(total0_120) {
+  if (total0_120 === null || total0_120 === undefined || isNaN(total0_120)) return null;
+  var t = Number(total0_120);
+  if (t >= 114) return 6.0;
+  if (t >= 107) return 5.5;
+  if (t >= 95)  return 5.0;
+  if (t >= 86)  return 4.5;
+  if (t >= 72)  return 4.0;
+  if (t >= 58)  return 3.5;
+  if (t >= 44)  return 3.0;
+  if (t >= 34)  return 2.5;
+  if (t >= 24)  return 2.0;
+  if (t >= 12)  return 1.5;
+  return 1.0;
+}
+/* Per-section 0-30 → band: scale up to 0-120 equivalent and reuse the
+   total chart. (ETS has not published an official per-section cut chart;
+   this is the mathematically consistent derivation given the overall
+   chart and ETS's own rule that overall = avg(sections) rounded to 0.5.) */
+function sectionToBand(section0_30) {
+  if (section0_30 === null || section0_30 === undefined || isNaN(section0_30)) return null;
+  return totalToBand(Number(section0_30) * 4);
+}
+/* Format band as "X.X" (ETS shows one decimal place). */
+function formatBand(b) {
+  return b === null || b === undefined ? '—' : Number(b).toFixed(1);
+}
+
 function predictScoresForUser(userAttempts) {
   const scored = s => userAttempts.filter(a => a.section === s && a.autoGraded && a.score !== null);
   function avgPct(items) {
@@ -899,13 +942,15 @@ function renderKarteDetail() {
     if (auto.length || nonAuto.length) {
       const accStr = auto.length ? Math.round(auto.reduce((s, i) => s + i.score, 0) / auto.length) + '% · ' : '';
       const countStr = (auto.length + nonAuto.length) + ' ' + (nonAuto.length && !auto.length ? '提出' : 'attempts');
-      const scaledStr = scaled !== null ? '<div class="skill-score-val">' + scaled + '<span style="font-size:.42em;color:var(--ink-500);font-weight:500;margin-left:3px">/30</span>' + estTag + '</div>' : '<div class="skill-score-val">—</div>';
+      var bandStr = scaled !== null ? '<div style="font-family:var(--font-en);font-size:.55em;color:var(--ink-500);font-weight:600;margin-top:2px;letter-spacing:.02em">Band ' + formatBand(sectionToBand(scaled)) + '</div>' : '';
+      const scaledStr = scaled !== null ? '<div class="skill-score-val">' + scaled + '<span style="font-size:.42em;color:var(--ink-500);font-weight:500;margin-left:3px">/30</span>' + estTag + '</div>' + bandStr : '<div class="skill-score-val">—</div>';
       return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div>' + scaledStr + '<div class="skill-score-sub">' + accStr + countStr + '</div></div>';
     }
     return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div><div class="skill-score-val">—</div><div class="skill-score-sub">まだ未受験</div></div>';
   }).join('');
+  const totalBandStr = pred.total > 0 ? formatBand(totalToBand(pred.total)) : '—';
   const totalPredBlock = pred.total > 0
-    ? '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-dark));color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase">Predicted TOEFL Total</div><div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.55);margin-top:2px">R・L は公式換算表、W・S は推定値</div></div><div style="font-family:var(--font-en);font-size:2.2em;font-weight:800;letter-spacing:-0.02em"><span>' + pred.total + '</span><span style="font-size:.4em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 120</span></div></div>'
+    ? '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-dark));color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase">Predicted TOEFL Total</div><div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.55);margin-top:2px">0-120（旧）+ 1.0-6.0（新・2026〜）両対応</div></div><div style="text-align:right"><div style="font-family:var(--font-en);font-size:2.2em;font-weight:800;letter-spacing:-0.02em;line-height:1"><span>' + pred.total + '</span><span style="font-size:.4em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 120</span></div><div style="font-family:var(--font-en);font-size:1em;font-weight:700;color:var(--gold);margin-top:4px">Band ' + totalBandStr + '<span style="font-size:.6em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 6.0</span></div></div></div>'
     : '';
   const recent = attempts.slice().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, 12);
   const activityRows = recent.map(a => {
@@ -961,14 +1006,15 @@ function renderProgress() {
       if (v === null) return '<td style="background:#fafaf8;border-left:2px solid var(--paper)"><span class="cell-none">—</span></td>';
       const color = v >= 24 ? 'var(--green)' : v >= 17 ? 'var(--sky)' : v >= 10 ? 'var(--gold)' : '#B85C3C';
       const textColor = v >= 24 || v >= 17 ? '#fff' : v >= 10 ? 'var(--green-deep)' : '#fff';
-      return '<td style="background:#fafaf8;border-left:' + (est ? 'none' : '2px solid var(--paper)') + '"><span style="font-family:var(--font-en);font-size:.88em;font-weight:800;padding:6px 12px;border-radius:6px;background:' + color + ';color:' + textColor + ';display:inline-block;min-width:40px;text-align:center">' + v + '</span></td>';
+      const band = formatBand(sectionToBand(v));
+      return '<td style="background:#fafaf8;border-left:' + (est ? 'none' : '2px solid var(--paper)') + '"><span style="font-family:var(--font-en);font-size:.88em;font-weight:800;padding:6px 12px;border-radius:6px;background:' + color + ';color:' + textColor + ';display:inline-block;min-width:40px;text-align:center">' + v + '</span><div style="font-family:var(--font-en);font-size:.68em;color:var(--ink-500);font-weight:600;margin-top:2px;text-align:center">' + band + '</div></td>';
     }
     const rCell = scaledCell(pred.reading, false);
     const lCell = scaledCell(pred.listening, false);
     const wCell = scaledCell(pred.writing, true);
     const sCell = scaledCell(pred.speaking, true);
     const totalCell = pred.total > 0
-      ? '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span style="font-family:var(--font-en);font-size:1em;font-weight:800;color:var(--gold);letter-spacing:-0.01em">' + pred.total + '<span style="font-size:.72em;color:rgba(255,255,255,.5);font-weight:500;margin-left:2px">/120</span></span></td>'
+      ? '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span style="font-family:var(--font-en);font-size:1em;font-weight:800;color:var(--gold);letter-spacing:-0.01em">' + pred.total + '<span style="font-size:.72em;color:rgba(255,255,255,.5);font-weight:500;margin-left:2px">/120</span></span><div style="font-family:var(--font-en);font-size:.72em;color:rgba(255,255,255,.75);font-weight:700;margin-top:2px">Band ' + formatBand(totalToBand(pred.total)) + '</div></td>'
       : '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span class="cell-none" style="color:rgba(255,255,255,.3)">—</span></td>';
     return '<tr><td class="sticky-col"><strong>' + escapeHtml(u.userName) + '</strong><div style="font-size:.82em;color:var(--ink-500);font-family:var(--font-en)">' + u.userId + '</div></td>' + cells + rCell + lCell + wCell + sCell + totalCell + '</tr>';
   }).join('');
@@ -998,7 +1044,7 @@ function exportCSV(kind) {
       g.autoGraded ? (g.counted ? Math.round(g.high/g.counted*100) : '') : '']));
   } else if (kind === 'progress') {
     filename = 'tck-progress-' + today() + '.csv';
-    rows.push(['ユーザー','ログインID','メール', ...TASKS.map(t => t.label), 'Overall%', 'R (scaled)', 'L (scaled)', 'W (scaled, est)', 'S (scaled, est)', 'Total (/120)']);
+    rows.push(['ユーザー','ログインID','メール', ...TASKS.map(t => t.label), 'Overall%', 'R (scaled)', 'R (band)', 'L (scaled)', 'L (band)', 'W (scaled, est)', 'W (band)', 'S (scaled, est)', 'S (band)', 'Total (/120)', 'Total (Band /6.0)']);
     MOCK_USERS.forEach(u => {
       const userAtts = ATTEMPTS.filter(a => a.userId === u.userId);
       const cells = TASKS.map(t => {
@@ -1013,7 +1059,11 @@ function exportCSV(kind) {
       const overall = all.length ? Math.round(all.reduce((s,i)=>s+i.score,0)/all.length) + '%' : '';
       const pred = predictScoresForUser(userAtts);
       rows.push([u.userName, u.userId, u.email, ...cells, overall,
-        pred.reading ?? '', pred.listening ?? '', pred.writing ?? '', pred.speaking ?? '', pred.total || '']);
+        pred.reading ?? '',  pred.reading  !== null ? formatBand(sectionToBand(pred.reading))  : '',
+        pred.listening ?? '', pred.listening !== null ? formatBand(sectionToBand(pred.listening)) : '',
+        pred.writing ?? '',   pred.writing   !== null ? formatBand(sectionToBand(pred.writing))   : '',
+        pred.speaking ?? '',  pred.speaking  !== null ? formatBand(sectionToBand(pred.speaking))  : '',
+        pred.total || '',     pred.total > 0 ? formatBand(totalToBand(pred.total)) : '']);
     });
   }
   const csv = rows.map(r => r.map(cell => {

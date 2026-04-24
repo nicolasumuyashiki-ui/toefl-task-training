@@ -152,6 +152,10 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
     <div>
       <div class="total-label">Predicted Total</div>
       <div class="total-big"><span id="totalScore">—</span> <small>/ 120</small></div>
+      <div style="font-family:var(--font-en);font-size:.95em;font-weight:700;color:var(--gold);margin-top:6px;letter-spacing:.02em">
+        <span class="jp">新スコア</span><span class="en">New scale</span>
+        <span style="margin-left:6px">Band <span id="totalBand">—</span> <small style="opacity:.7">/ 6.0</small></span>
+      </div>
     </div>
     <div class="total-caveat">
       <span class="jp"><strong>ご参考まで</strong>：Reading と Listening の予測は信頼性が高いですが、Speaking と Writing は TCK 講師による採点を経ないと正確なスコアは確定しません。現在の値はタスクの提出状況から推定した<strong>おおよそのレンジ</strong>です。</span>
@@ -225,6 +229,38 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
    and the long-standing raw-to-scaled scoring charts that ETS
    releases for practice purposes.
    ============================================================ */
+
+/**
+ * ETS 2026 new 1.0-6.0 band score conversion.
+ *
+ * Source: ETS Japan 2026/01 announcement (toefl-ibt.jp/test_takers/
+ * toefl_ibt/202601/) + the 2-year transition chart shipped on every
+ * new-format score report from Jan 21 2026. Total-score cut-points
+ * below are official; section bands are derived by applying the same
+ * cuts to (section_score × 4), consistent with ETS's rule that the
+ * overall band is the average of the four section bands rounded to
+ * the nearest 0.5.
+ */
+function totalToBand(t) {
+  if (t === null || t === undefined || isNaN(t)) return null;
+  t = Number(t);
+  if (t >= 114) return 6.0;
+  if (t >= 107) return 5.5;
+  if (t >= 95)  return 5.0;
+  if (t >= 86)  return 4.5;
+  if (t >= 72)  return 4.0;
+  if (t >= 58)  return 3.5;
+  if (t >= 44)  return 3.0;
+  if (t >= 34)  return 2.5;
+  if (t >= 24)  return 2.0;
+  if (t >= 12)  return 1.5;
+  return 1.0;
+}
+function sectionToBand(s30) {
+  if (s30 === null || s30 === undefined || isNaN(s30)) return null;
+  return totalToBand(Number(s30) * 4);
+}
+function formatBand(b) { return b === null || b === undefined ? '—' : Number(b).toFixed(1); }
 
 /* Reading: 20 raw questions → scaled 0-30 (official mapping) */
 const READING_TABLE = [
@@ -428,10 +464,15 @@ function render() {
     },
   ];
 
-  // Total
+  // Total — shown both on the legacy 0-120 scale and the new 1.0-6.0
+  // band (ETS, effective Jan 21 2026). The band is the official lookup
+  // from the 0-120 total, NOT the average of section bands, because
+  // section bands here are themselves derived (sectionToBand) from the
+  // scaled values — going through the average would compound rounding.
   let total = 0, totalKnown = true;
   sections.forEach(s => { if (s.scaled !== null) total += s.scaled; else totalKnown = false; });
   document.getElementById('totalScore').textContent = totalKnown && total > 0 ? total : '—';
+  document.getElementById('totalBand').textContent = totalKnown && total > 0 ? formatBand(totalToBand(total)) : '—';
 
   // Section cards
   const grid = document.getElementById('skillsGrid');
@@ -447,7 +488,9 @@ function render() {
     const tagTxt = s.estimated ? '<span class="jp">推定</span><span class="en">Estimated</span>' : '<span class="jp">換算表準拠</span><span class="en">Official Table</span>';
     return '<div class="skill-card' + (s.estimated?' estimated':'') + '">' +
       '<div class="skill-head"><div class="skill-name">' + s.name + '</div><div class="skill-tag ' + tagCls + '">' + tagTxt + '</div></div>' +
-      '<div class="skill-score"><div class="pred">' + scaled + '<small>/ 30</small></div>' + rate + '</div>' +
+      '<div class="skill-score"><div class="pred">' + scaled + '<small>/ 30</small>' +
+        (s.scaled !== null ? '<div style="font-family:var(--font-en);font-size:.4em;font-weight:700;color:var(--ink-500);margin-top:2px;letter-spacing:.02em">Band ' + formatBand(sectionToBand(s.scaled)) + ' <span style="opacity:.6">/ 6.0</span></div>' : '') +
+      '</div>' + rate + '</div>' +
       '<div class="skill-bar"><div class="skill-bar-fill" style="width:' + barWidth + '%"></div></div>' +
       '<div class="skill-meta">' + meta + '</div>' +
       '<div class="skill-note"><span class="jp">' + s.note.jp + '</span><span class="en">' + s.note.en + '</span></div>' +
