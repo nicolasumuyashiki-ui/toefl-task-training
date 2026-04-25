@@ -53,14 +53,29 @@ var Api = {
     return _jsonpRequest(API_URL + '?action=recover&email=' + encodeURIComponent(email));
   },
 
-  saveAnswers: function(setName, answers, score) {
+  /**
+   * Save a completed practice attempt.
+   *   setName  — e.g. "CTW P1 Set 1", "LCR P3"
+   *   answers  — per-question answer payload
+   *   score    — total correct count (raw, unweighted)
+   *   meta     — optional { harderCorrect, harderTotal, attemptNumber }
+   *
+   * `meta` is added so admin's Predicted Score can apply 1.5× Harder
+   * weighting and dedupe to first-attempt only. When omitted (legacy
+   * callers / pages not yet updated), GAS defaults to 0/0/1.
+   */
+  saveAnswers: function(setName, answers, score, meta) {
     var user = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    meta = meta || {};
     var url = API_URL + '?action=saveAnswers'
       + '&userId=' + encodeURIComponent(user.userId || '')
       + '&userName=' + encodeURIComponent(user.userName || '')
       + '&set=' + encodeURIComponent(setName)
       + '&answers=' + encodeURIComponent(JSON.stringify(answers))
-      + '&score=' + encodeURIComponent(score);
+      + '&score=' + encodeURIComponent(score)
+      + '&harderCorrect=' + encodeURIComponent(meta.harderCorrect || 0)
+      + '&harderTotal=' + encodeURIComponent(meta.harderTotal || 0)
+      + '&attemptNumber=' + encodeURIComponent(meta.attemptNumber || 1);
     return _jsonpRequest(url);
   },
 
