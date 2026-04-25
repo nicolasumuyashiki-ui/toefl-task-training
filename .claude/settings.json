@@ -1,19 +1,8 @@
 {
   "permissions": {
+    "defaultMode": "acceptEdits",
     "allow": [
-      "Bash(git *)",
-      "Bash(python3 *)",
-      "Bash(cd *)",
-      "Bash(find *)",
-      "Bash(echo *)",
-      "Bash(wc *)",
-      "Bash(mkdir *)",
-      "Bash(ls *)",
-      "Bash(cat *)",
-      "Bash(grep *)",
-      "Bash(sort *)",
-      "Bash(head *)",
-      "Bash(tail *)",
+      "Bash",
       "Write",
       "Edit",
       "Read",
@@ -21,7 +10,15 @@
       "Grep",
       "Agent",
       "TodoWrite",
-      "NotebookEdit"
+      "NotebookEdit",
+      "WebFetch",
+      "WebSearch"
+    ],
+    "ask": [
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(git push --force*)",
+      "Bash(git reset --hard*)"
     ]
   }
 }

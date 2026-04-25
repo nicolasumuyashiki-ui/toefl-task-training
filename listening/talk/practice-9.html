@@ -361,6 +361,7 @@ function showCompletion(){
         grid.appendChild(div);
     });
     document.getElementById('scoreDisplay').textContent = correct+' / 8';
+    try{sessionStorage.setItem('training_score_talk_p9',JSON.stringify({correct:correct,total:8,updatedAt:new Date().toISOString()}));}catch(e){}
     sessionStorage.setItem('talkAnswers', JSON.stringify(userAnswers));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     document.getElementById('answersBtn').style.display = 'inline-block';

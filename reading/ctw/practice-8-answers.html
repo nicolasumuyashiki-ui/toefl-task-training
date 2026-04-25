@@ -212,7 +212,7 @@ function renderAll(){
     document.getElementById('ag'+si).innerHTML=ag;
   });
   sh+='<div class="score-card total"><h3>合計</h3><div class="score-num"><span class="correct">'+ts+'</span>/'+tq+'</div><div class="score-detail">'+Math.round(ts/tq*100)+'%</div></div>';
-  document.getElementById('scoreSummary').innerHTML=sh;
+  document.getElementById('scoreSummary').innerHTML=sh;try{sessionStorage.setItem("training_score_ctw_p8",JSON.stringify({correct:ts,total:tq,updatedAt:new Date().toISOString()}));}catch(e){}
 }
 function showSet(i){document.querySelectorAll('.set-panel').forEach(function(p,j){p.classList.toggle('active',j===i);});document.querySelectorAll('.set-nav button').forEach(function(b,j){b.classList.toggle('active',j===i);});}
 renderAll();

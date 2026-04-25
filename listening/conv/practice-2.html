@@ -333,6 +333,7 @@ function showCompletion(){
         grid.appendChild(div);
     });
     document.getElementById('scoreDisplay').textContent = correct+' / 4';
+    try{sessionStorage.setItem('training_score_conv_p2',JSON.stringify({correct:correct,total:4,updatedAt:new Date().toISOString()}));}catch(e){}
     sessionStorage.setItem('convAnswers', JSON.stringify(userAnswers));
     document.getElementById('answersBtn').style.display = 'inline-block';
 }
