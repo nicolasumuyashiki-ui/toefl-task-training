@@ -290,15 +290,38 @@ if (typeof window !== 'undefined') {
   function attach(el) {
     if (el.__tckAsciiBound) return;
     el.__tckAsciiBound = true;
-    var composing = false;
-    el.addEventListener('compositionstart', function () { composing = true; });
+
+    /* Layer 1: block IME composition before any character renders.
+       Firefox + Chromium honor preventDefault on compositionstart and
+       refuse to begin the composition session at all. WebKit ignores
+       this; Layer 2 catches it there. */
+    el.addEventListener('compositionstart', function (e) {
+      e.preventDefault();
+      try { el.blur(); el.focus(); } catch (e2) {}
+    });
+
+    /* Layer 2: cancel non-ASCII insertion at the input layer. The
+       beforeinput event fires before the value mutates and can be
+       cancelled for both keystrokes and IME commits in modern
+       browsers. */
+    el.addEventListener('beforeinput', function (e) {
+      var data = e.data;
+      var t = e.inputType || '';
+      if ((t === 'insertText' || t === 'insertCompositionText' || t === 'insertFromPaste' ||
+           t === 'insertFromDrop' || t === 'insertFromComposition') &&
+          data && /[^\x20-\x7E\n\r\t]/.test(data)) {
+        e.preventDefault();
+      }
+    });
+
+    /* Layer 3: post-mutation safety net for browsers that didn't
+       honor the cancellation. Strips anything that slipped through
+       and rolls the cursor back so typing still feels natural. */
     el.addEventListener('compositionend', function () {
-      composing = false;
       var clean = stripNonAscii(el.value);
       if (clean !== el.value) el.value = clean;
     });
     el.addEventListener('input', function () {
-      if (composing) return;  // wait for compositionend to clean up
       var clean = stripNonAscii(el.value);
       if (clean !== el.value) {
         var pos = el.selectionStart;
@@ -306,7 +329,8 @@ if (typeof window !== 'undefined') {
         try { el.setSelectionRange(pos - 1, pos - 1); } catch (e) {}
       }
     });
-    /* Block paste of non-ASCII content too. */
+
+    /* Paste — strip non-ASCII from clipboard payload before insertion. */
     el.addEventListener('paste', function (e) {
       var txt = (e.clipboardData || window.clipboardData).getData('text');
       if (/[^\x20-\x7E\n\r\t]/.test(txt)) {
