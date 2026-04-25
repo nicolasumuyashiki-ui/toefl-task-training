@@ -8,6 +8,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%}
+/* Heartbeat pulse for "ACTIVE NOW" indicator on user karte */
+@keyframes tckPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(34,197,94,.25); }
+  50%      { box-shadow: 0 0 0 6px rgba(34,197,94,.05); }
+}
 body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-height:100vh;color:var(--ink-900);-webkit-font-smoothing:antialiased;line-height:1.55;font-size:14px}
 
 /* ===== TOP NAV ===== */
@@ -963,7 +968,14 @@ function renderKarteDetail() {
     const score = (a.status === 'inprog' || !a.autoGraded) ? '—' : (a.score + '%');
     return '<tr><td class="muted">' + a.updatedAt + '</td><td><span class="task-tag">' + a.taskLabel + '</span></td><td>P' + a.practice + '</td><td class="num">' + score + '</td><td>' + status + '</td></tr>';
   }).join('');
-  el.innerHTML = '<div class="karte-head"><h3>' + escapeHtml(u.userName) + ' <span style="color:var(--ink-500);font-weight:500;font-size:.7em">(' + u.displayName + ')</span></h3><div class="kmeta">' + u.userId + ' · ' + escapeHtml(u.email) + ' · 登録 ' + u.joined + '</div></div>'
+  /* Active-now badge: green dot if last_seen within 5 min, soft tag
+     for last login time. Both flow from the GAS USERS sheet (live
+     mode only — mock users won't have these fields). */
+  var loginTag = u.lastLoginAt ? '<span style="font-family:var(--font-en);color:var(--ink-500)"> · 最終ログイン ' + formatRelative(u.lastLoginAt) + '</span>' : '';
+  var activeDot = u.lastSeenAt && (Date.now() - new Date(u.lastSeenAt).getTime()) < 5 * 60 * 1000
+    ? '<span style="display:inline-flex;align-items:center;gap:5px;background:#E6F3EC;color:#005434;font-family:var(--font-en);font-size:.7em;font-weight:700;padding:3px 9px;border-radius:999px;margin-left:8px;letter-spacing:.04em"><span style="width:7px;height:7px;background:#22C55E;border-radius:50%;box-shadow:0 0 0 3px rgba(34,197,94,.25);animation:tckPulse 1.6s ease-in-out infinite"></span>ACTIVE NOW</span>'
+    : '';
+  el.innerHTML = '<div class="karte-head"><h3>' + escapeHtml(u.userName) + ' <span style="color:var(--ink-500);font-weight:500;font-size:.7em">(' + u.displayName + ')</span>' + activeDot + '</h3><div class="kmeta">' + u.userId + ' · ' + escapeHtml(u.email) + ' · 登録 ' + u.joined + loginTag + '</div></div>'
     + totalPredBlock
     + '<div class="skill-scores">' + sectionBlocks + '</div>'
     + '<div class="karte-activity"><h4>Recent activity · 最新の学習履歴</h4><table class="atable"><thead><tr><th>日付</th><th>タスク</th><th>Practice</th><th class="num">スコア</th><th>評価</th></tr></thead><tbody>' + activityRows + '</tbody></table></div>';
@@ -1084,6 +1096,24 @@ function exportCSV(kind) {
 }
 function today() { const d = new Date(); return d.toISOString().slice(0, 10); }
 function escapeHtml(s) { return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* Human-friendly relative time ("2分前", "昨日", "3日前", "2026-04-12").
+   Used for last_login_at displays so admin can scan recency at a glance. */
+function formatRelative(iso) {
+  if (!iso) return '—';
+  var t = new Date(iso).getTime();
+  if (isNaN(t)) return iso;
+  var diff = Date.now() - t;
+  var min = Math.floor(diff / 60000);
+  if (min < 1) return 'たった今';
+  if (min < 60) return min + ' 分前';
+  var hr = Math.floor(min / 60);
+  if (hr < 24) return hr + ' 時間前';
+  var day = Math.floor(hr / 24);
+  if (day === 1) return '昨日';
+  if (day < 7) return day + ' 日前';
+  return new Date(iso).toISOString().slice(0, 10);
+}
 
 /* Detail modal (stub) */
 function showDetail(userId, task, practice) {

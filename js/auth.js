@@ -250,6 +250,21 @@ if (typeof window !== 'undefined') {
   // Auto-trigger on practice pages.
   function _autoCheck() {
     if (window.TCKAttempt) window.TCKAttempt.maybeShowRetryModal();
+    _startHeartbeat();
+  }
+
+  /* Heartbeat keeps last_seen_at on the USERS sheet fresh so admin
+     can show "active now". Skip if Api isn't loaded (e.g. login page
+     before session) or if user isn't signed in. */
+  function _startHeartbeat() {
+    if (window.__TCKHeartbeatStarted) return;
+    if (typeof Api === 'undefined' || !Api.heartbeat) return;
+    var u = (function(){ try { return JSON.parse(sessionStorage.getItem('kickstart_user') || '{}'); } catch(e){ return {}; }})();
+    if (!u.userId) return;
+    window.__TCKHeartbeatStarted = true;
+    function ping() { try { Api.heartbeat().catch(function(){}); } catch (e) {} }
+    ping();                            // immediate
+    setInterval(ping, 2 * 60 * 1000);  // every 2 min while page open
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', _autoCheck);

@@ -53,6 +53,14 @@ var Api = {
     return _jsonpRequest(API_URL + '?action=recover&email=' + encodeURIComponent(email));
   },
 
+  /* Heartbeat — fire-and-forget ping that updates the user's
+     last_seen_at on the USERS sheet so admin can show "active now". */
+  heartbeat: function() {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    if (!u.userId) return Promise.resolve(null);
+    return _jsonpRequest(API_URL + '?action=heartbeat&id=' + encodeURIComponent(u.userId));
+  },
+
   /**
    * Save a completed practice attempt.
    *   setName  — e.g. "CTW P1 Set 1", "LCR P3"
