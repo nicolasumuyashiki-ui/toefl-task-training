@@ -150,11 +150,18 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 <div class="total-card">
   <div class="total-inner">
     <div>
-      <div class="total-label">Predicted Total</div>
+      <div class="total-label">Predicted Total <span style="font-size:.7em;opacity:.55;font-weight:500;text-transform:none;letter-spacing:.02em">· 1回目スコアベース</span></div>
       <div class="total-big"><span id="totalScore">—</span> <small>/ 120</small></div>
       <div style="font-family:var(--font-en);font-size:.95em;font-weight:700;color:var(--gold);margin-top:6px;letter-spacing:.02em">
         <span class="jp">新スコア</span><span class="en">New scale</span>
         <span style="margin-left:6px">Band <span id="totalBand">—</span> <small style="opacity:.7">/ 6.0</small></span>
+      </div>
+      <div id="masteryBlock" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.18);display:none">
+        <div style="font-family:var(--font-en);font-size:.66em;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px">Mastery Rate <span style="font-weight:500;text-transform:none;letter-spacing:.02em;opacity:.85">· 復習による習得率（最新スコア）</span></div>
+        <div style="display:flex;align-items:baseline;gap:10px">
+          <div style="font-family:var(--font-en);font-size:1.6em;font-weight:800;letter-spacing:-0.02em"><span id="masteryPct">—</span><span style="font-size:.5em;color:rgba(255,255,255,.5);font-weight:500;margin-left:2px">%</span></div>
+          <div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.65)"><span id="masteryFrac">—</span> <span class="jp">問マスター済み（80%以上）</span><span class="en">practices ≥ 80% accuracy</span></div>
+        </div>
       </div>
     </div>
     <div class="total-caveat">
@@ -343,33 +350,47 @@ const TASK_META = {
   ti:         {label:'Take an Interview',  section:'Speaking',  autoGraded:false},
 };
 
+/**
+ * Each completed practice now has up to two records:
+ *   - first  → localStorage `training_first_{task}_p{N}` (set by auth.js
+ *              hook on the first sessionStorage write; never overwritten)
+ *   - latest → sessionStorage `training_score_{task}_p{N}` (overwritten
+ *              on every retake)
+ * The `attemptCount` is read from localStorage `training_attempts_*`.
+ *
+ * Predicted Score is derived from `first` only (mirrors TOEFL's one-shot
+ * nature). Mastery Rate uses `latest`. Both flow through aggregateSection
+ * via the `which` arg.
+ */
 function collectAttempts() {
   const out = [];
   Object.keys(TASK_META).forEach(task => {
     for (let p = 1; p <= 10; p++) {
-      const scoreRaw = sessionStorage.getItem('training_score_' + task + '_p' + p);
+      const latestRaw = sessionStorage.getItem('training_score_' + task + '_p' + p);
+      const firstRaw  = localStorage.getItem('training_first_' + task + '_p' + p);
       const progressRaw = localStorage.getItem('tck_progress_' + task + '_p' + p);
-      if (scoreRaw) {
-        try {
-          const d = JSON.parse(scoreRaw);
-          if (d && typeof d.total === 'number') {
-            out.push({
-              task, label: TASK_META[task].label, section: TASK_META[task].section,
-              autoGraded: TASK_META[task].autoGraded, practice: p,
-              correct: d.correct, total: d.total,
-              pct: d.total > 0 ? Math.round(d.correct / d.total * 100) : null,
-              status: 'done',
-              updatedAt: d.updatedAt || d.completedAt || null,
-            });
-          }
-        } catch(e){}
+      const attemptCount = parseInt(localStorage.getItem('training_attempts_' + task + '_p' + p) || '0', 10) || 0;
+      let first = null, latest = null;
+      try { if (firstRaw)  first  = JSON.parse(firstRaw); } catch(e){}
+      try { if (latestRaw) latest = JSON.parse(latestRaw); } catch(e){}
+
+      if (first || latest) {
+        const baseline = first || latest;       // Predicted source
+        const recent   = latest || first;       // Mastery source
+        out.push({
+          task, label: TASK_META[task].label, section: TASK_META[task].section,
+          autoGraded: TASK_META[task].autoGraded, practice: p,
+          first:  baseline ? { correct: baseline.correct, total: baseline.total } : null,
+          latest: recent   ? { correct: recent.correct,   total: recent.total   } : null,
+          attemptCount: attemptCount,
+          status: 'done',
+        });
       } else if (progressRaw) {
         out.push({
           task, label: TASK_META[task].label, section: TASK_META[task].section,
           autoGraded: TASK_META[task].autoGraded, practice: p,
-          correct: null, total: null, pct: null,
+          first: null, latest: null, attemptCount: 0,
           status: 'inprog',
-          updatedAt: null,
         });
       }
     }
@@ -377,14 +398,25 @@ function collectAttempts() {
   return out;
 }
 
-/* Aggregate correct / total per section (auto-graded only) */
-function aggregateSection(attempts, section) {
-  const items = attempts.filter(a => a.section === section && a.autoGraded && a.status === 'done');
+/* Aggregate correct / total per section (auto-graded only).
+   `which` = 'first' (default — drives Predicted Score) | 'latest' (Mastery). */
+function aggregateSection(attempts, section, which) {
+  const key = which === 'latest' ? 'latest' : 'first';
+  const items = attempts.filter(a => a.section === section && a.autoGraded && a.status === 'done' && a[key]);
   if (!items.length) return { hasData: false };
   let correct = 0, total = 0;
-  items.forEach(a => { correct += a.correct; total += a.total; });
+  items.forEach(a => { correct += a[key].correct; total += a[key].total; });
   const pct = total > 0 ? (correct / total * 100) : 0;
   return { hasData: true, correct, total, pct, attempts: items.length };
+}
+
+/* Mastery Rate: % of completed practices whose LATEST attempt is ≥ 80%.
+   Reflects how much retake-driven review has actually paid off. */
+function computeMastery(attempts) {
+  const done = attempts.filter(a => a.status === 'done' && a.autoGraded && a.latest && a.latest.total > 0);
+  if (!done.length) return { hasData: false };
+  const mastered = done.filter(a => (a.latest.correct / a.latest.total) >= 0.8).length;
+  return { hasData: true, mastered, total: done.length, pct: Math.round(mastered / done.length * 100) };
 }
 
 /* ============================================================
@@ -474,6 +506,15 @@ function render() {
   document.getElementById('totalScore').textContent = totalKnown && total > 0 ? total : '—';
   document.getElementById('totalBand').textContent = totalKnown && total > 0 ? formatBand(totalToBand(total)) : '—';
 
+  // Mastery Rate (latest-attempt aggregate). Hidden until at least one retry exists.
+  const mastery = computeMastery(attempts);
+  const hasRetries = attempts.some(a => a.attemptCount > 1);
+  if (mastery.hasData && hasRetries) {
+    document.getElementById('masteryBlock').style.display = '';
+    document.getElementById('masteryPct').textContent = mastery.pct;
+    document.getElementById('masteryFrac').textContent = mastery.mastered + ' / ' + mastery.total;
+  }
+
   // Section cards
   const grid = document.getElementById('skillsGrid');
   grid.innerHTML = sections.map(s => {
@@ -535,11 +576,17 @@ function renderActivityPage() {
   const slice = rows.slice(start, start + ROWS_PER_PAGE);
 
   tbody.innerHTML = slice.map(a => {
-    const grade = a.autoGraded ? gradeFor(a.pct) : 'submitted';
+    /* Activity history shows the LATEST attempt — what the learner did
+       most recently — so they recognize the practice they're reviewing.
+       Predicted Score continues to use the first attempt elsewhere. */
+    const lat = a.latest || a.first || { correct: 0, total: 0 };
+    const pct = lat.total > 0 ? Math.round(lat.correct / lat.total * 100) : 0;
+    const grade = a.autoGraded ? gradeFor(pct) : 'submitted';
     const jp = GRADE_LABELS_JP[grade] || grade;
     const en = GRADE_LABELS_EN[grade] || grade;
     const pill = '<span class="pill ' + grade + '"><span class="jp">' + jp + '</span><span class="en">' + en + '</span></span>';
-    const score = a.autoGraded ? (a.correct + '/' + a.total + ' · ' + a.pct + '%') : '—';
+    const retryTag = a.attemptCount > 1 ? ' <span style="font-size:.72em;color:var(--ink-500);font-weight:600">×' + a.attemptCount + '</span>' : '';
+    const score = a.autoGraded ? (lat.correct + '/' + lat.total + ' · ' + pct + '%' + retryTag) : '—';
     const when = a.updatedAt || '—';
     const path = TASK_PATHS[a.task] ? TASK_PATHS[a.task](a.practice) : null;
     const reviewBtn = path
@@ -583,11 +630,12 @@ function goActivityPage(p) {
   if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+/* Sentence proxy — uses first-attempt for honest baseline. */
 function aggregateSectionTask(attempts, taskKey) {
-  const items = attempts.filter(a => a.task === taskKey && a.status === 'done');
+  const items = attempts.filter(a => a.task === taskKey && a.status === 'done' && a.first);
   if (!items.length) return null;
   let correct = 0, total = 0;
-  items.forEach(a => { correct += a.correct; total += a.total; });
+  items.forEach(a => { correct += a.first.correct; total += a.first.total; });
   return { correct, total, pct: total > 0 ? (correct / total * 100) : 0, attempts: items.length };
 }
 

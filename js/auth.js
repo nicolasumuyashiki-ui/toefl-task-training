@@ -97,3 +97,163 @@ if (typeof window !== 'undefined') {
   window.tckIsAllowed = tckIsAllowed;
   window.tckIsStaff = tckIsStaff;
 }
+
+/* ============================================================
+   First-Attempt capture for Predicted Score integrity.
+   ----------------------------------------------------------
+   TOEFL is a one-shot test, so the most honest predictor of
+   real performance is the FIRST attempt at each practice.
+   Subsequent retakes still get useful learning value, but
+   they're tallied separately as "Mastery Rate" — they never
+   inflate the Predicted Score.
+
+   Implementation: monkey-patch sessionStorage.setItem so that
+   the first time a `training_score_{task}_p{N}` value is
+   written, we mirror it to localStorage as
+   `training_first_{task}_p{N}` (and never overwrite). This
+   means problem pages don't need to know about the convention
+   — auth.js is loaded by every page, so the hook is universal.
+
+   Also exposes `TCKAttempt.count(task, practice)` so problem
+   pages can detect retries on load and show the retry modal.
+   ============================================================ */
+(function () {
+  if (window.__TCKFirstAttemptInit) return;
+  window.__TCKFirstAttemptInit = true;
+
+  var origSet = sessionStorage.setItem.bind(sessionStorage);
+  sessionStorage.setItem = function (key, value) {
+    origSet(key, value);
+    var m = String(key).match(/^training_score_(.+)_p(\d+)$/);
+    if (!m) return;
+    var firstKey = 'training_first_' + m[1] + '_p' + m[2];
+    var countKey = 'training_attempts_' + m[1] + '_p' + m[2];
+    try {
+      var d = JSON.parse(value);
+      if (!d || typeof d.total !== 'number') return;
+      // Lock in the first completed attempt forever.
+      if (!localStorage.getItem(firstKey)) {
+        localStorage.setItem(firstKey, JSON.stringify({
+          correct: d.correct, total: d.total,
+          capturedAt: new Date().toISOString()
+        }));
+      }
+      // Bump attempt counter (used for retry-modal display).
+      var n = parseInt(localStorage.getItem(countKey) || '0', 10) || 0;
+      localStorage.setItem(countKey, String(n + 1));
+    } catch (e) {}
+  };
+
+  window.TCKAttempt = {
+    /** Returns number of completed attempts for this practice. */
+    count: function (task, practice) {
+      return parseInt(localStorage.getItem('training_attempts_' + task + '_p' + practice) || '0', 10) || 0;
+    },
+    /** Returns the first-attempt score, or null if not yet completed. */
+    first: function (task, practice) {
+      try { return JSON.parse(localStorage.getItem('training_first_' + task + '_p' + practice) || 'null'); }
+      catch (e) { return null; }
+    },
+    /** Reset all first-attempt + counter data (for testing or admin). */
+    resetAll: function () {
+      Object.keys(localStorage).forEach(function (k) {
+        if (k.indexOf('training_first_') === 0 || k.indexOf('training_attempts_') === 0) {
+          localStorage.removeItem(k);
+        }
+      });
+    },
+
+    /** Parse the current URL to (task, practice). Returns null if not
+       a practice page. */
+    parseUrl: function () {
+      var p = location.pathname;
+      if (/-answers\.html$|-tips\.html$/.test(p)) return null;
+      var m = p.match(/\/(reading|listening|writing|speaking)\/(\w+)\/practice-(\d+)(?:-set-\d+)?\.html$/);
+      if (!m) return null;
+      return { task: m[2], practice: parseInt(m[3], 10) };
+    },
+
+    /** Auto-detect retake on the current practice page. If this is at
+       least the 2nd attempt at this practice, show a modal explaining
+       that Predicted Score keeps the first attempt and only Mastery
+       updates. Called automatically on DOMContentLoaded. */
+    maybeShowRetryModal: function () {
+      var info = this.parseUrl();
+      if (!info) return;
+      var n = this.count(info.task, info.practice);
+      if (n < 1) return;  // First time — no modal
+      _showRetryModal(n + 1);
+    }
+  };
+
+  function _showRetryModal(attemptN) {
+    if (document.getElementById('tckRetryBackdrop')) return;
+    var css = document.createElement('style');
+    css.textContent =
+      '#tckRetryBackdrop{position:fixed;inset:0;background:rgba(15,21,17,.32);backdrop-filter:blur(4px);' +
+        'display:flex;align-items:center;justify-content:center;padding:24px;z-index:9999;' +
+        'animation:tckRetryFade .25s ease}' +
+      '@keyframes tckRetryFade{from{opacity:0}to{opacity:1}}' +
+      '#tckRetryModal{background:#fff;border-radius:18px;max-width:460px;width:100%;' +
+        'box-shadow:0 24px 64px rgba(0,40,23,.24);overflow:hidden;font-family:"Manrope","Zen Kaku Gothic New",sans-serif;color:#0F1511;line-height:1.7;' +
+        'animation:tckRetrySlide .35s cubic-bezier(.16,1,.3,1)}' +
+      '@keyframes tckRetrySlide{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}' +
+      '#tckRetryModal .rh{background:linear-gradient(135deg,#007646,#005434);color:#fff;padding:24px 28px 20px}' +
+      '#tckRetryModal .ic{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.18);font-size:20px;margin-bottom:10px}' +
+      '#tckRetryModal .kk{font-family:"Manrope",sans-serif;font-size:.7em;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:3px}' +
+      '#tckRetryModal .ti{font-size:1.3em;font-weight:800;letter-spacing:-0.01em}' +
+      '#tckRetryModal .bd{padding:22px 28px}' +
+      '#tckRetryModal .bd p{font-size:.92em;margin-bottom:12px}' +
+      '#tckRetryModal .bd p:last-of-type{margin-bottom:0}' +
+      '#tckRetryModal .bd strong{color:#005434;font-weight:700}' +
+      '#tckRetryModal .pill{display:inline-flex;align-items:center;gap:6px;background:#FDF4F0;color:#8A3E24;font-family:"Manrope",sans-serif;font-size:.7em;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:12px}' +
+      '#tckRetryModal .hint{background:#F7F4EB;border-left:3px solid #D4A349;padding:11px 14px;border-radius:6px;font-size:.8em;color:#5B6660;line-height:1.7;margin-top:14px}' +
+      '#tckRetryModal .ac{padding:0 28px 24px;display:flex;gap:10px;justify-content:flex-end}' +
+      '#tckRetryModal .b{font-family:"Manrope",sans-serif;font-weight:700;font-size:.86em;padding:10px 22px;border-radius:999px;border:none;cursor:pointer;letter-spacing:.02em}' +
+      '#tckRetryModal .pr{background:#007646;color:#fff}' +
+      '#tckRetryModal .pr:hover{background:#005434}' +
+      '#tckRetryModal .gh{background:transparent;color:#5B6660;border:1px solid #E8E4D8}' +
+      '#tckRetryModal .gh:hover{background:#E8E4D8;color:#0F1511}';
+    document.head.appendChild(css);
+
+    var bd = document.createElement('div');
+    bd.id = 'tckRetryBackdrop';
+    bd.innerHTML =
+      '<div id="tckRetryModal" role="dialog" aria-modal="true">' +
+        '<div class="rh">' +
+          '<div class="ic">🔁</div>' +
+          '<div class="kk">Retry Session</div>' +
+          '<div class="ti">これは ' + attemptN + ' 回目 の挑戦です</div>' +
+        '</div>' +
+        '<div class="bd">' +
+          '<span class="pill">⚡ Attempt #' + attemptN + '</span>' +
+          '<p>予想スコアには <strong>最初に完了した結果のみ</strong> が反映されます（中断含む）。この練習の予想スコアは既に記録済みです。</p>' +
+          '<p>このページは復習用として、何度でも取り組んでください。解き直した結果は <strong>「習得率（Mastery Rate）」</strong> に反映されます。</p>' +
+          '<div class="hint">💡 TOEFL は一発勝負のテスト。初回の素点が本番の実力を最も正確に予測します。じっくり復習して、解法の定着を目指しましょう。</div>' +
+        '</div>' +
+        '<div class="ac">' +
+          '<button class="b gh" type="button" onclick="window.history.back()">戻る</button>' +
+          '<button class="b pr" type="button" onclick="document.getElementById(\'tckRetryBackdrop\').remove()">復習を始める</button>' +
+        '</div>' +
+      '</div>';
+    bd.addEventListener('click', function (e) { if (e.target === bd) bd.remove(); });
+    document.addEventListener('keydown', function esc(e) {
+      if (e.key === 'Escape' && document.getElementById('tckRetryBackdrop')) {
+        bd.remove();
+        document.removeEventListener('keydown', esc);
+      }
+    });
+    if (document.body) document.body.appendChild(bd);
+    else document.addEventListener('DOMContentLoaded', function () { document.body.appendChild(bd); });
+  }
+
+  // Auto-trigger on practice pages.
+  function _autoCheck() {
+    if (window.TCKAttempt) window.TCKAttempt.maybeShowRetryModal();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _autoCheck);
+  } else {
+    _autoCheck();
+  }
+})();
