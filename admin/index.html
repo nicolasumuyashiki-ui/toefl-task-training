@@ -482,7 +482,34 @@ function formatBand(b) {
 }
 
 function predictScoresForUser(userAttempts) {
-  const scored = s => userAttempts.filter(a => a.section === s && a.autoGraded && a.score !== null);
+  /* First-attempt only: TOEFL is a one-shot test, so the predictor
+     should reflect cold performance, not memorization through retries.
+     Dedupe by (task + practice + set) keeping the earliest timestamp.
+     If an attempt has answeredCount of 0 (immediate abandonment), it's
+     skipped so a tab-close-on-load doesn't tank the prediction. */
+  function pickFirstAttempts(items) {
+    const sorted = items.slice().sort((a, b) => {
+      const ta = a.updatedAt || a.timestamp || '';
+      const tb = b.updatedAt || b.timestamp || '';
+      return ta.localeCompare(tb);
+    });
+    const seen = {};
+    const out = [];
+    for (const a of sorted) {
+      const key = a.task + '#' + a.practice + '#' + (a.set || '');
+      if (seen[key]) continue;
+      // Skip 0-answered abandons — surface the next attempt instead.
+      if (a.correct === 0 && a.total === 0) continue;
+      seen[key] = true;
+      out.push(a);
+    }
+    return out;
+  }
+
+  const allScored = userAttempts.filter(a => a.autoGraded && a.score !== null);
+  const firstScored = pickFirstAttempts(allScored);
+
+  const scored = s => firstScored.filter(a => a.section === s);
   /* Weighted accuracy with 1.5× boost for TOEFL Harder Module items.
      Falls back gracefully when an attempt has no Harder breakdown
      fields (older mock rows / pre-rollout attempts). */
@@ -507,9 +534,9 @@ function predictScoresForUser(userAttempts) {
 
   // Writing — Build a Sentence accuracy mapped through the Reading
   // raw→scaled curve. Email/Discussion are not auto-graded; we assume
-  // they perform in line with the learner's Sentence accuracy. No
-  // submission-volume inflation.
-  const sentenceItems = userAttempts.filter(a => a.task === 'sentence' && a.autoGraded && a.score !== null);
+  // they perform in line with the learner's Sentence accuracy. Use
+  // first-attempt only (same dedupe as R/L for consistency).
+  const sentenceItems = firstScored.filter(a => a.task === 'sentence');
   const sentencePct = avgPct(sentenceItems);
   const wScaled = sentencePct !== null ? percentToScaled(sentencePct, READING_TABLE) : null;
 
