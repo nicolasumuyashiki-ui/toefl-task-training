@@ -492,7 +492,7 @@ function navigate(dir){
     var ca={'1':'B','2':'B','3':'C','4':'A','5':'B','6':'C'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    sessionStorage.setItem('training_score_rdl_p2',JSON.stringify({correct:sc,total:6}));
+    sessionStorage.setItem('training_score_rdl_p2',JSON.stringify({correct:sc,total:6,harderCorrect:0,harderTotal:0,updatedAt:new Date().toISOString()}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-2-answers.html';
     return;

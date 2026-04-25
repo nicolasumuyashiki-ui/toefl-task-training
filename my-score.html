@@ -367,8 +367,14 @@ function collectAttempts() {
         out.push({
           task, label: TASK_META[task].label, section: TASK_META[task].section,
           autoGraded: TASK_META[task].autoGraded, practice: p,
-          first:  baseline ? { correct: baseline.correct, total: baseline.total } : null,
-          latest: recent   ? { correct: recent.correct,   total: recent.total   } : null,
+          first: baseline ? {
+            correct: baseline.correct, total: baseline.total,
+            harderCorrect: baseline.harderCorrect || 0, harderTotal: baseline.harderTotal || 0,
+          } : null,
+          latest: recent ? {
+            correct: recent.correct, total: recent.total,
+            harderCorrect: recent.harderCorrect || 0, harderTotal: recent.harderTotal || 0,
+          } : null,
           attemptCount: attemptCount,
           status: 'done',
         });
@@ -385,16 +391,31 @@ function collectAttempts() {
   return out;
 }
 
-/* Aggregate correct / total per section (auto-graded only).
-   `which` = 'first' (default — drives Predicted Score) | 'latest' (Mastery). */
+/* Aggregate per section with TOEFL Harder Module 1.5× weighting.
+   `which` = 'first' (Predicted Score baseline) | 'latest' (Mastery).
+   ----------------------------------------------------------
+   Standard correct counts as 1 point each; Harder correct as 1.5.
+   Same applies to denominators. So a learner who nails Harder items
+   is rewarded more than one who only handles Standard, mirroring
+   the way ETS's adaptive Harder Module probes upper-band ability.
+   The raw (unweighted) correct/total are still returned for the
+   "X / Y" display fragment. */
 function aggregateSection(attempts, section, which) {
   const key = which === 'latest' ? 'latest' : 'first';
   const items = attempts.filter(a => a.section === section && a.autoGraded && a.status === 'done' && a[key]);
   if (!items.length) return { hasData: false };
-  let correct = 0, total = 0;
-  items.forEach(a => { correct += a[key].correct; total += a[key].total; });
-  const pct = total > 0 ? (correct / total * 100) : 0;
-  return { hasData: true, correct, total, pct, attempts: items.length };
+  let correct = 0, total = 0, hC = 0, hT = 0;
+  items.forEach(a => {
+    correct += a[key].correct;
+    total   += a[key].total;
+    hC      += a[key].harderCorrect;
+    hT      += a[key].harderTotal;
+  });
+  const stdC = correct - hC, stdT = total - hT;
+  const wCorrect = stdC + hC * 1.5;
+  const wTotal   = stdT + hT * 1.5;
+  const pct = wTotal > 0 ? (wCorrect / wTotal * 100) : 0;
+  return { hasData: true, correct, total, harderCorrect: hC, harderTotal: hT, pct, attempts: items.length };
 }
 
 /* Mastery Rate: % of completed practices whose LATEST attempt is ≥ 80%.

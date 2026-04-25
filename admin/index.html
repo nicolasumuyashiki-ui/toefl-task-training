@@ -478,11 +478,22 @@ function formatBand(b) {
 
 function predictScoresForUser(userAttempts) {
   const scored = s => userAttempts.filter(a => a.section === s && a.autoGraded && a.score !== null);
+  /* Weighted accuracy with 1.5× boost for TOEFL Harder Module items.
+     Falls back gracefully when an attempt has no Harder breakdown
+     fields (older mock rows / pre-rollout attempts). */
   function avgPct(items) {
     if (!items.length) return null;
-    let c = 0, t = 0;
-    items.forEach(a => { c += a.correct; t += a.total; });
-    return t > 0 ? (c / t * 100) : null;
+    let c = 0, t = 0, hC = 0, hT = 0;
+    items.forEach(a => {
+      c  += a.correct;
+      t  += a.total;
+      hC += a.harderCorrect || 0;
+      hT += a.harderTotal   || 0;
+    });
+    const stdC = c - hC, stdT = t - hT;
+    const wC = stdC + hC * 1.5;
+    const wT = stdT + hT * 1.5;
+    return wT > 0 ? (wC / wT * 100) : null;
   }
   const rPct = avgPct(scored('Reading'));
   const lPct = avgPct(scored('Listening'));

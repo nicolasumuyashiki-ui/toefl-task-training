@@ -394,7 +394,8 @@ function navigate(dir){
     var ca={'1':'A','2':'B','3':'C','4':'B','5':'C','6':'B'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    sessionStorage.setItem('training_score_academic_p5',JSON.stringify({correct:sc,total:6}));
+    var harderCorrect=0,harderTotal=0;['4','5','6'].forEach(function(k){harderTotal++;if(ans[k]===ca[k])harderCorrect++;});
+    sessionStorage.setItem('training_score_academic_p5',JSON.stringify({correct:sc,total:6,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-5-answers.html';
     return;

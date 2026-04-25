@@ -335,7 +335,7 @@ function finishQuiz(){
   if(window.TCKProgress) TCKProgress.clear(TCK_TASK,TCK_PRACTICE);
   // Save to sessionStorage
   sessionStorage.setItem('sentenceAnswers',JSON.stringify({answers:userAnswers,score:correct,total:questions.length}));
-  sessionStorage.setItem('training_score_sentence_p1',JSON.stringify({correct:correct,total:questions.length}));
+  sessionStorage.setItem('training_score_sentence_p1',JSON.stringify({correct:correct,total:questions.length,harderCorrect:0,harderTotal:0,updatedAt:new Date().toISOString()}));
 
   document.getElementById('quizPage').style.display='none';
   document.getElementById('completionPage').style.display='flex';

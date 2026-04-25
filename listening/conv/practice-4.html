@@ -333,7 +333,9 @@ function showCompletion(){
         grid.appendChild(div);
     });
     document.getElementById('scoreDisplay').textContent = correct+' / 4';
-    try{sessionStorage.setItem('training_score_conv_p4',JSON.stringify({correct:correct,total:4,updatedAt:new Date().toISOString()}));}catch(e){}
+    var harderCorrect = 0, harderTotal = 0;
+    [2,3].forEach(function(idx){ harderTotal++; if(userAnswers[idx] === questions[idx].correct) harderCorrect++; });
+    try{sessionStorage.setItem('training_score_conv_p4',JSON.stringify({correct:correct,total:4,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));}catch(e){}
     sessionStorage.setItem('convAnswers', JSON.stringify(userAnswers));
     document.getElementById('answersBtn').style.display = 'inline-block';
 }

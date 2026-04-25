@@ -361,7 +361,9 @@ function showCompletion(){
         grid.appendChild(div);
     });
     document.getElementById('scoreDisplay').textContent = correct+' / 8';
-    try{sessionStorage.setItem('training_score_talk_p10',JSON.stringify({correct:correct,total:8,updatedAt:new Date().toISOString()}));}catch(e){}
+    var harderCorrect = 0, harderTotal = 0;
+    [4,5,6,7].forEach(function(idx){ harderTotal++; if(userAnswers[idx] === questions[idx].correct) harderCorrect++; });
+    try{sessionStorage.setItem('training_score_talk_p10',JSON.stringify({correct:correct,total:8,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));}catch(e){}
     sessionStorage.setItem('talkAnswers', JSON.stringify(userAnswers));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     document.getElementById('answersBtn').style.display = 'inline-block';

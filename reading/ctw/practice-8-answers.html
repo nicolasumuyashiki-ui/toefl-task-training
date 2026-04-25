@@ -191,11 +191,11 @@ var SD=[
 ];
 
 function renderAll(){
-  var ts=0,tq=0,sh='';
+  var ts=0,tq=0,harderCorrect=0,harderTotal=0,sh='';
   SD.forEach(function(s,si){
     var bl=s.target.filter(function(t){return t.a!==null;});
     var st=null;try{st=JSON.parse(sessionStorage.getItem('ctw_p8_answers_'+(si+1)));}catch(e){}
-    var ua=st?st.answers:[];var sc=st?st.score:0;ts+=sc;tq+=bl.length;
+    var ua=st?st.answers:[];var sc=st?st.score:0;ts+=sc;tq+=bl.length;if(si===1){harderCorrect+=sc;harderTotal+=bl.length;}
     sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+bl.length+'</div><div class="score-detail">'+(st?Math.round(sc/bl.length*100)+'%':'—')+'</div></div>';
     var ph='<span>'+s.intro+'</span> ';
     s.target.forEach(function(t){if(t.a!==null){ph+='<span class="blank-word">'+t.s+'<span class="blank-answer">'+t.a+'</span></span>';if(t.p)ph+=t.p;ph+=' ';}else{ph+=t.w+(t.p||'')+' ';}});
@@ -212,7 +212,7 @@ function renderAll(){
     document.getElementById('ag'+si).innerHTML=ag;
   });
   sh+='<div class="score-card total"><h3>合計</h3><div class="score-num"><span class="correct">'+ts+'</span>/'+tq+'</div><div class="score-detail">'+Math.round(ts/tq*100)+'%</div></div>';
-  document.getElementById('scoreSummary').innerHTML=sh;try{sessionStorage.setItem("training_score_ctw_p8",JSON.stringify({correct:ts,total:tq,updatedAt:new Date().toISOString()}));}catch(e){}
+  document.getElementById('scoreSummary').innerHTML=sh;try{sessionStorage.setItem("training_score_ctw_p8",JSON.stringify({correct:ts,total:tq,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));}catch(e){}
 }
 function showSet(i){document.querySelectorAll('.set-panel').forEach(function(p,j){p.classList.toggle('active',j===i);});document.querySelectorAll('.set-nav button').forEach(function(b,j){b.classList.toggle('active',j===i);});}
 renderAll();

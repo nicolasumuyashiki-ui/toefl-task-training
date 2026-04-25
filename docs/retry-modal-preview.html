@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>再挑戦モーダル プレビュー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#007646;--green-deep:#005434;--green-dark:#003822;
+  --paper:#E8E4D8;--cream:#FBF6EC;--white:#FFFFFF;
+  --ink:#1B2620;--ink-500:#5B6660;--ink-300:#8A9690;
+  --gold:#D4A349;--harder:#E07B39;
+  --font-jp:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN',sans-serif;
+  --font-en:'Manrope',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font-jp);background:var(--cream);color:var(--ink);
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:40px 20px;line-height:1.7
+}
+
+/* Dummy background to show the modal overlay in context */
+.bg-demo{
+  position:fixed;inset:0;background:var(--cream);z-index:0;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--ink-300);font-size:14px;letter-spacing:.08em
+}
+.bg-demo::before{
+  content:'（ここに問題ページが表示されます）';
+  opacity:.5
+}
+
+/* ===== Modal backdrop ===== */
+.retry-backdrop{
+  position:fixed;inset:0;background:rgba(15,21,17,.32);backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;padding:24px;z-index:100;
+  animation:fadeIn .25s ease
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ===== Modal card ===== */
+.retry-modal{
+  background:var(--white);border-radius:18px;max-width:460px;width:100%;
+  box-shadow:0 24px 64px rgba(0,40,23,.24);overflow:hidden;
+  animation:slideUp .35s cubic-bezier(.16,1,.3,1)
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.retry-head{
+  background:linear-gradient(135deg,var(--green),var(--green-deep));
+  color:#fff;padding:26px 28px 22px;position:relative
+}
+.retry-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.18);
+  font-size:22px;margin-bottom:12px
+}
+.retry-title{
+  font-family:var(--font-en);font-size:.72em;font-weight:800;
+  letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75);
+  margin-bottom:4px
+}
+.retry-title-main{font-size:1.35em;font-weight:800;letter-spacing:-0.01em}
+
+.retry-body{padding:24px 28px 22px}
+.retry-body p{font-size:.95em;color:var(--ink);margin-bottom:14px}
+.retry-body p:last-of-type{margin-bottom:0}
+.retry-body .hint{
+  background:#F7F4EB;border-left:3px solid var(--gold);
+  padding:12px 14px;border-radius:6px;font-size:.82em;color:var(--ink-500);
+  line-height:1.7;margin-top:16px
+}
+.retry-body strong{color:var(--green-deep);font-weight:700}
+
+.retry-actions{
+  padding:0 28px 26px;display:flex;gap:10px;justify-content:flex-end
+}
+.btn{
+  font-family:var(--font-en);font-weight:700;font-size:.88em;
+  padding:11px 22px;border-radius:999px;border:none;cursor:pointer;
+  transition:all .15s;letter-spacing:.02em
+}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-deep);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--ink-500);border:1px solid var(--paper)}
+.btn-ghost:hover{background:var(--paper);color:var(--ink)}
+
+/* Attempt counter pill inside body */
+.attempt-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#FDF4F0;color:#8A3E24;
+  font-family:var(--font-en);font-size:.74em;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;margin-bottom:14px
+}
+
+/* ===== Preview controls ===== */
+.controls{
+  position:fixed;top:20px;left:20px;z-index:200;
+  background:#fff;border:1px solid var(--paper);border-radius:12px;
+  padding:16px 18px;box-shadow:0 8px 24px rgba(0,40,23,.08);
+  font-size:.85em
+}
+.controls h3{font-family:var(--font-en);font-size:.72em;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:10px}
+.controls label{display:block;margin-bottom:6px;cursor:pointer;color:var(--ink-500)}
+.controls label:hover{color:var(--ink)}
+.controls input{margin-right:6px}
+.controls .show-again{margin-top:10px;font-size:.82em;color:var(--green);cursor:pointer;text-decoration:underline;border:none;background:none;padding:0;font-family:inherit}
+</style>
+</head>
+<body>
+
+<div class="bg-demo"></div>
+
+<div class="controls">
+  <h3>Preview Controls</h3>
+  <label><input type="radio" name="variant" value="2" checked onchange="renderModal()"> 2回目</label>
+  <label><input type="radio" name="variant" value="3" onchange="renderModal()"> 3回目</label>
+  <label><input type="radio" name="variant" value="n" onchange="renderModal()"> N回目（5回目）</label>
+  <button class="show-again" onclick="renderModal()">再表示</button>
+</div>
+
+<div id="modalMount"></div>
+
+<script>
+function renderModal(){
+  var v = document.querySelector('input[name="variant"]:checked').value;
+  var nMap = {'2':'2回目','3':'3回目','n':'5回目'};
+  var label = nMap[v];
+  var mount = document.getElementById('modalMount');
+  mount.innerHTML =
+    '<div class="retry-backdrop" onclick="if(event.target===this)this.remove()">' +
+      '<div class="retry-modal">' +
+        '<div class="retry-head">' +
+          '<div class="retry-icon">🔁</div>' +
+          '<div class="retry-title">Retry Session</div>' +
+          '<div class="retry-title-main">これは ' + label + ' の挑戦です</div>' +
+        '</div>' +
+        '<div class="retry-body">' +
+          '<span class="attempt-pill">⚡ Attempt #' + v.replace('n','5') + '</span>' +
+          '<p><strong>予想スコア（Predicted Score）</strong> には <strong>1回目の結果のみ</strong> が反映されます。' +
+          'この練習の予想スコアは既に記録済みです。</p>' +
+          '<p>このページは<strong>復習用</strong>として、何度でも取り組んでください。' +
+          '解き直した結果は <strong>「習得率（Mastery Rate）」</strong> に反映されます。</p>' +
+          '<div class="hint">💡 TOEFL は一発勝負のテスト。' +
+          '初回の素点が本番の実力を最も正確に予測します。' +
+          'じっくり復習して、解法の定着を目指しましょう。</div>' +
+        '</div>' +
+        '<div class="retry-actions">' +
+          '<button class="btn btn-ghost" onclick="this.closest(\'.retry-backdrop\').remove()">戻る</button>' +
+          '<button class="btn btn-primary" onclick="this.closest(\'.retry-backdrop\').remove()">復習を始める</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+}
+renderModal();
+</script>
+</body>
+</html>
