@@ -151,10 +151,10 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   <div class="total-inner">
     <div>
       <div class="total-label">Predicted Total <span style="font-size:.7em;opacity:.55;font-weight:500;text-transform:none;letter-spacing:.02em">· 1回目スコアベース</span></div>
-      <div class="total-big"><span id="totalScore">—</span> <small>/ 120</small></div>
+      <div class="total-big"><span id="totalScore">—</span> <small>/ 90 <span style="font-size:.55em;opacity:.7;font-weight:500;letter-spacing:.04em;margin-left:2px">(Speaking 採点なし)</span></small></div>
       <div style="font-family:var(--font-en);font-size:.95em;font-weight:700;color:var(--gold);margin-top:6px;letter-spacing:.02em">
         <span class="jp">新スコア</span><span class="en">New scale</span>
-        <span style="margin-left:6px">Band <span id="totalBand">—</span> <small style="opacity:.7">/ 6.0</small></span>
+        <span style="margin-left:6px">Band <span id="totalBand">—</span> <small style="opacity:.7">/ 6.0 <span style="font-size:.85em;opacity:.7;font-weight:500">(Reading・Listening・Writing 換算)</span></small></span>
       </div>
       <div id="masteryBlock" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.18);display:none">
         <div style="font-family:var(--font-en);font-size:.66em;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px">Mastery Rate <span style="font-weight:500;text-transform:none;letter-spacing:.02em;opacity:.85">· 復習による習得率（最新スコア）</span></div>
@@ -305,31 +305,18 @@ function percentToScaled(pct, table) {
   return Math.round(rowLow.scaled + (rowHigh.scaled - rowLow.scaled) * frac);
 }
 
-/* Writing/Speaking proxy: Writing/Speaking are holistic-graded on TOEFL.
-   We approximate using (a) auto-graded proxy accuracy (Build a Sentence
-   for writing; LR completion rate for speaking) and (b) submission volume.
-   Formulas return a conservative estimate with ± range.
-   These values are shown as ESTIMATED and clearly flagged. */
-function estimateWritingScaled(sentencePct, submitCount) {
-  // Build a Sentence accuracy is a reasonable grammar/syntax proxy.
-  // Assume 70%+ Sentence → could score 20+; 90%+ → 25+; etc.
-  // Blend with submission activity (more submissions = more practice effect).
-  if (sentencePct === null && submitCount === 0) return null;
-  const base = sentencePct === null ? 15 : Math.round(percentToScaled(sentencePct, READING_TABLE) * 0.85); // 85% weighting since it's a proxy
-  const boost = Math.min(4, Math.floor(submitCount / 2)); // up to +4 for volume
-  return Math.min(30, base + boost);
-}
-function estimateSpeakingScaled(lrCompleted, tiCompleted) {
-  // Without audio assessment we can only infer fluency from completion.
-  // Assume a learner who completes many LR/TI has practiced enough to be
-  // rated in the mid-range (17-23) area as default.
-  const total = lrCompleted + tiCompleted;
-  if (total === 0) return null;
-  if (total <= 2) return 14;
-  if (total <= 5) return 17;
-  if (total <= 10) return 20;
-  if (total <= 15) return 22;
-  return 24;
+/* Writing prediction — derive purely from Build a Sentence accuracy.
+   Email and Discussion are holistic-graded essay tasks that require
+   coach review, but ETS Writing rubrics weight grammatical control
+   and sentence-formation strongly. We assume Email/Discussion
+   performance mirrors the learner's Build a Sentence accuracy and
+   apply the official Reading raw→scaled curve as a stand-in. No
+   "submission volume" inflation. Returns null if no Sentence data.
+   Speaking is intentionally not predicted: TCK has no automated
+   audio assessment, so any number we'd produce would be misleading. */
+function estimateWritingScaled(sentencePct) {
+  if (sentencePct === null || sentencePct === undefined) return null;
+  return percentToScaled(sentencePct, READING_TABLE);
 }
 
 /* ============================================================
@@ -441,16 +428,19 @@ function render() {
   const readingScaled = reading.hasData ? percentToScaled(reading.pct, READING_TABLE) : null;
   const listeningScaled = listening.hasData ? percentToScaled(listening.pct, LISTENING_TABLE) : null;
 
-  // Writing — proxy: sentence accuracy + email/discussion submissions
+  // Writing — Sentence accuracy as the sole signal (Email/Discussion
+  // would need coach grading; we estimate they'd land where Sentence
+  // does). Submission count of Email/Discussion is shown in metadata
+  // but doesn't affect the predicted scaled score.
   const sentenceAgg = aggregateSectionTask(attempts, 'sentence');
   const writingSubmissions = attempts.filter(a => ['email','discussion'].indexOf(a.task) !== -1 && (a.status === 'done' || a.status === 'submitted')).length;
-  const writingScaled = estimateWritingScaled(sentenceAgg ? sentenceAgg.pct : null, writingSubmissions);
+  const writingScaled = estimateWritingScaled(sentenceAgg ? sentenceAgg.pct : null);
   const writingAttemptCount = (sentenceAgg ? sentenceAgg.attempts : 0) + writingSubmissions;
 
-  // Speaking — proxy: LR/TI completion count
+  // Speaking — no automated audio assessment, no prediction.
   const lrCount = attempts.filter(a => a.task === 'lr' && a.status === 'done').length;
   const tiCount = attempts.filter(a => a.task === 'ti' && a.status === 'done').length;
-  const speakingScaled = estimateSpeakingScaled(lrCount, tiCount);
+  const speakingScaled = null;
   const speakingAttemptCount = lrCount + tiCount;
 
   const sections = [
@@ -460,8 +450,8 @@ function render() {
       attempts: reading.hasData ? reading.attempts : 0, correctTotal: reading.hasData ? reading.correct+'/'+reading.total : null,
       estimated:false,
       note: {
-        jp: 'CTW + RDL + Academic の正答率を ETS 公式換算表に照らしたもの。信頼性高。',
-        en: 'Mapped from CTW + RDL + Academic accuracy to ETS official conversion table. High confidence.',
+        jp: 'CTW + RDL + Academic の正答率を ETS 公式換算表に照らしたもの。',
+        en: 'Mapped from CTW + RDL + Academic accuracy to the ETS official conversion table.',
       },
     },
     {
@@ -470,8 +460,8 @@ function render() {
       attempts: listening.hasData ? listening.attempts : 0, correctTotal: listening.hasData ? listening.correct+'/'+listening.total : null,
       estimated:false,
       note: {
-        jp: 'LCR + Conversation + Announcement + Academic Talk の正答率を公式換算表に照らしたもの。信頼性高。',
-        en: 'Mapped from LCR + Conversation + Announcement + Academic Talk accuracy. High confidence.',
+        jp: 'LCR + Conversation + Announcement + Academic Talk の正答率を ETS 公式換算表に照らしたもの。',
+        en: 'Mapped from LCR + Conversation + Announcement + Academic Talk accuracy to the ETS official conversion table.',
       },
     },
     {
@@ -480,31 +470,34 @@ function render() {
       attempts: writingAttemptCount, correctTotal: sentenceAgg ? sentenceAgg.correct+'/'+sentenceAgg.total : null,
       estimated:true,
       note: {
-        jp: '<strong>暫定値</strong>：Build a Sentence の正答率（文法精度）と Email / Discussion の提出数から推定。本番のスコアは講師採点で確定します。',
-        en: '<strong>Tentative</strong>: estimated from Build-a-Sentence accuracy (grammar proxy) plus Email/Discussion submissions. Coach grading confirms the real score.',
+        jp: '<strong>暫定値</strong>：Build a Sentence の正答率を Reading 換算表に当てはめた推定スコア。Email / Discussion も同等の出来と仮定して算出（講師採点で確定）。',
+        en: '<strong>Tentative</strong>: derived from Build-a-Sentence accuracy mapped through the Reading conversion table, assuming Email and Discussion perform similarly. Coach grading confirms the real score.',
       },
     },
     {
       key:'speaking', name:'Speaking',
-      scaled: speakingScaled, pct: null,
+      scaled: null, pct: null,
       attempts: speakingAttemptCount, correctTotal: null,
       estimated:true,
       note: {
-        jp: '<strong>暫定値</strong>：Listen & Repeat と Take an Interview の実施回数から推定。実際のスコアは録音の講師採点で確定します。',
-        en: '<strong>Tentative</strong>: estimated from Listen & Repeat and Take an Interview completion counts. Real score requires coach grading of your recordings.',
+        jp: '採点不可。録音の講師採点で確定するため、自動推定は行いません。Listen & Repeat と Take an Interview を実施することで本番に向けた発話練習を積めます。',
+        en: 'Not scored. Speaking requires coach grading of your recordings; no automated estimate is shown. Use Listen & Repeat and Take an Interview to build production fluency for test day.',
       },
     },
   ];
 
-  // Total — shown both on the legacy 0-120 scale and the new 1.0-6.0
-  // band (ETS, effective Jan 21 2026). The band is the official lookup
-  // from the 0-120 total, NOT the average of section bands, because
-  // section bands here are themselves derived (sectionToBand) from the
-  // scaled values — going through the average would compound rounding.
+  // Total — Speaking is intentionally unscored, so the headline number
+  // is the sum of Reading + Listening + Writing (max 90). For the band
+  // estimate we scale up to a 0-120 equivalent so the new TOEFL band
+  // (1.0-6.0) lookup remains meaningful — this is a rough projection,
+  // assuming Speaking would land in line with the other three sections.
+  const scoredSections = sections.filter(s => s.key !== 'speaking');
   let total = 0, totalKnown = true;
-  sections.forEach(s => { if (s.scaled !== null) total += s.scaled; else totalKnown = false; });
+  scoredSections.forEach(s => { if (s.scaled !== null) total += s.scaled; else totalKnown = false; });
   document.getElementById('totalScore').textContent = totalKnown && total > 0 ? total : '—';
-  document.getElementById('totalBand').textContent = totalKnown && total > 0 ? formatBand(totalToBand(total)) : '—';
+  // Project to a 120-scale for band lookup so the 1-6 chart still applies.
+  const projected120 = totalKnown && total > 0 ? Math.round(total * 4 / 3) : null;
+  document.getElementById('totalBand').textContent = projected120 !== null ? formatBand(totalToBand(projected120)) : '—';
 
   // Mastery Rate (latest-attempt aggregate). Hidden until at least one retry exists.
   const mastery = computeMastery(attempts);

@@ -489,31 +489,20 @@ function predictScoresForUser(userAttempts) {
   const rScaled = rPct !== null ? percentToScaled(rPct, READING_TABLE) : null;
   const lScaled = lPct !== null ? percentToScaled(lPct, LISTENING_TABLE) : null;
 
-  // Writing proxy: Sentence accuracy + email/discussion submissions
+  // Writing — Build a Sentence accuracy mapped through the Reading
+  // raw→scaled curve. Email/Discussion are not auto-graded; we assume
+  // they perform in line with the learner's Sentence accuracy. No
+  // submission-volume inflation.
   const sentenceItems = userAttempts.filter(a => a.task === 'sentence' && a.autoGraded && a.score !== null);
   const sentencePct = avgPct(sentenceItems);
-  const writingSubs = userAttempts.filter(a => (a.task === 'email' || a.task === 'discussion') && (a.status === 'submitted' || a.status === 'perfect' || a.status === 'great' || a.status === 'good' || a.status === 'keep')).length;
-  let wScaled = null;
-  if (sentencePct !== null || writingSubs > 0) {
-    const base = sentencePct === null ? 15 : Math.round(percentToScaled(sentencePct, READING_TABLE) * 0.85);
-    const boost = Math.min(4, Math.floor(writingSubs / 2));
-    wScaled = Math.min(30, base + boost);
-  }
+  const wScaled = sentencePct !== null ? percentToScaled(sentencePct, READING_TABLE) : null;
 
-  // Speaking proxy: LR/TI completion count
-  const lrCount = userAttempts.filter(a => a.task === 'lr' && a.status === 'submitted').length;
-  const tiCount = userAttempts.filter(a => a.task === 'ti' && a.status === 'submitted').length;
-  let sScaled = null;
-  const total = lrCount + tiCount;
-  if (total > 0) {
-    if (total <= 2) sScaled = 14;
-    else if (total <= 5) sScaled = 17;
-    else if (total <= 10) sScaled = 20;
-    else if (total <= 15) sScaled = 22;
-    else sScaled = 24;
-  }
+  // Speaking — intentionally not predicted: TCK has no automated audio
+  // assessment, so any number would be misleading. The Total below
+  // intentionally excludes Speaking (Total / 90, not / 120).
+  const sScaled = null;
 
-  const totalScaled = [rScaled, lScaled, wScaled, sScaled].reduce((s, v) => s + (v || 0), 0);
+  const totalScaled = [rScaled, lScaled, wScaled].reduce((s, v) => s + (v || 0), 0);
   return { reading: rScaled, listening: lScaled, writing: wScaled, speaking: sScaled, total: totalScaled };
 }
 
@@ -948,9 +937,14 @@ function renderKarteDetail() {
     }
     return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div><div class="skill-score-val">—</div><div class="skill-score-sub">まだ未受験</div></div>';
   }).join('');
-  const totalBandStr = pred.total > 0 ? formatBand(totalToBand(pred.total)) : '—';
+  /* Total = R + L + W out of 90 (Speaking is intentionally not predicted).
+     Project to a 120-equivalent for the band lookup so the new 1-6 chart
+     remains meaningful — assumes Speaking would land in line with the
+     other three sections. */
+  const total120Proj = pred.total > 0 ? Math.round(pred.total * 4 / 3) : 0;
+  const totalBandStr = pred.total > 0 ? formatBand(totalToBand(total120Proj)) : '—';
   const totalPredBlock = pred.total > 0
-    ? '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-dark));color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase">Predicted TOEFL Total</div><div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.55);margin-top:2px">0-120（旧）+ 1.0-6.0（新・2026〜）両対応</div></div><div style="text-align:right"><div style="font-family:var(--font-en);font-size:2.2em;font-weight:800;letter-spacing:-0.02em;line-height:1"><span>' + pred.total + '</span><span style="font-size:.4em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 120</span></div><div style="font-family:var(--font-en);font-size:1em;font-weight:700;color:var(--gold);margin-top:4px">Band ' + totalBandStr + '<span style="font-size:.6em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 6.0</span></div></div></div>'
+    ? '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-dark));color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase">Predicted TOEFL Total</div><div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.55);margin-top:2px">R+L+W のみ（Speaking 採点なし）／ Band は 120 換算</div></div><div style="text-align:right"><div style="font-family:var(--font-en);font-size:2.2em;font-weight:800;letter-spacing:-0.02em;line-height:1"><span>' + pred.total + '</span><span style="font-size:.4em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 90</span></div><div style="font-family:var(--font-en);font-size:1em;font-weight:700;color:var(--gold);margin-top:4px">Band ' + totalBandStr + '<span style="font-size:.6em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 6.0</span></div></div></div>'
     : '';
   const recent = attempts.slice().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, 12);
   const activityRows = recent.map(a => {
@@ -1014,7 +1008,7 @@ function renderProgress() {
     const wCell = scaledCell(pred.writing, true);
     const sCell = scaledCell(pred.speaking, true);
     const totalCell = pred.total > 0
-      ? '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span style="font-family:var(--font-en);font-size:1em;font-weight:800;color:var(--gold);letter-spacing:-0.01em">' + pred.total + '<span style="font-size:.72em;color:rgba(255,255,255,.5);font-weight:500;margin-left:2px">/120</span></span><div style="font-family:var(--font-en);font-size:.72em;color:rgba(255,255,255,.75);font-weight:700;margin-top:2px">Band ' + formatBand(totalToBand(pred.total)) + '</div></td>'
+      ? '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span style="font-family:var(--font-en);font-size:1em;font-weight:800;color:var(--gold);letter-spacing:-0.01em">' + pred.total + '<span style="font-size:.72em;color:rgba(255,255,255,.5);font-weight:500;margin-left:2px">/90</span></span><div style="font-family:var(--font-en);font-size:.72em;color:rgba(255,255,255,.75);font-weight:700;margin-top:2px">Band ' + formatBand(totalToBand(Math.round(pred.total * 4 / 3))) + '</div></td>'
       : '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span class="cell-none" style="color:rgba(255,255,255,.3)">—</span></td>';
     return '<tr><td class="sticky-col"><strong>' + escapeHtml(u.userName) + '</strong><div style="font-size:.82em;color:var(--ink-500);font-family:var(--font-en)">' + u.userId + '</div></td>' + cells + rCell + lCell + wCell + sCell + totalCell + '</tr>';
   }).join('');
@@ -1044,7 +1038,7 @@ function exportCSV(kind) {
       g.autoGraded ? (g.counted ? Math.round(g.high/g.counted*100) : '') : '']));
   } else if (kind === 'progress') {
     filename = 'tck-progress-' + today() + '.csv';
-    rows.push(['ユーザー','ログインID','メール', ...TASKS.map(t => t.label), 'Overall%', 'R (scaled)', 'R (band)', 'L (scaled)', 'L (band)', 'W (scaled, est)', 'W (band)', 'S (scaled, est)', 'S (band)', 'Total (/120)', 'Total (Band /6.0)']);
+    rows.push(['ユーザー','ログインID','メール', ...TASKS.map(t => t.label), 'Overall%', 'R (scaled)', 'R (band)', 'L (scaled)', 'L (band)', 'W (scaled, est)', 'W (band)', 'S (採点なし)', 'Total (/90)', 'Total (Band /6.0 換算)']);
     MOCK_USERS.forEach(u => {
       const userAtts = ATTEMPTS.filter(a => a.userId === u.userId);
       const cells = TASKS.map(t => {
@@ -1062,8 +1056,8 @@ function exportCSV(kind) {
         pred.reading ?? '',  pred.reading  !== null ? formatBand(sectionToBand(pred.reading))  : '',
         pred.listening ?? '', pred.listening !== null ? formatBand(sectionToBand(pred.listening)) : '',
         pred.writing ?? '',   pred.writing   !== null ? formatBand(sectionToBand(pred.writing))   : '',
-        pred.speaking ?? '',  pred.speaking  !== null ? formatBand(sectionToBand(pred.speaking))  : '',
-        pred.total || '',     pred.total > 0 ? formatBand(totalToBand(pred.total)) : '']);
+        '採点なし',
+        pred.total || '',     pred.total > 0 ? formatBand(totalToBand(Math.round(pred.total * 4 / 3))) : '']);
     });
   }
   const csv = rows.map(r => r.map(cell => {
