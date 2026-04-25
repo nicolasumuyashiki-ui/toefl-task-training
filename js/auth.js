@@ -257,3 +257,102 @@ if (typeof window !== 'undefined') {
     _autoCheck();
   }
 })();
+
+/* ============================================================
+   ASCII-only input lock for English-language tasks.
+   ----------------------------------------------------------
+   TOEFL is English-only, so any answer field on a practice page
+   should reject IME input (Japanese, Chinese, etc.). The classic
+   `lang="en" inputmode="latin"` attributes don't actually block
+   IME on most desktop browsers — users can still commit JP text.
+   We listen for `input` and `compositionend` events on every
+   text input / textarea inside a problem page (URL-scoped), and
+   strip every non-ASCII printable character on the way out.
+   Cursor is restored to a sensible position so typing flow isn't
+   visibly disrupted.
+   ============================================================ */
+(function () {
+  if (window.__TCKAsciiInit) return;
+  window.__TCKAsciiInit = true;
+
+  function isPracticePage() {
+    var p = location.pathname;
+    if (/-answers\.html$|-tips\.html$/.test(p)) return false;
+    return /\/(reading|listening|writing|speaking)\//.test(p);
+  }
+
+  /* Keep ASCII printable + tab + newline. Strips Japanese / emoji /
+     accented Latin (TOEFL accepts only plain English ASCII). */
+  function stripNonAscii(s) {
+    return String(s || '').replace(/[^\x20-\x7E\n\r\t]/g, '');
+  }
+
+  function attach(el) {
+    if (el.__tckAsciiBound) return;
+    el.__tckAsciiBound = true;
+    var composing = false;
+    el.addEventListener('compositionstart', function () { composing = true; });
+    el.addEventListener('compositionend', function () {
+      composing = false;
+      var clean = stripNonAscii(el.value);
+      if (clean !== el.value) el.value = clean;
+    });
+    el.addEventListener('input', function () {
+      if (composing) return;  // wait for compositionend to clean up
+      var clean = stripNonAscii(el.value);
+      if (clean !== el.value) {
+        var pos = el.selectionStart;
+        el.value = clean;
+        try { el.setSelectionRange(pos - 1, pos - 1); } catch (e) {}
+      }
+    });
+    /* Block paste of non-ASCII content too. */
+    el.addEventListener('paste', function (e) {
+      var txt = (e.clipboardData || window.clipboardData).getData('text');
+      if (/[^\x20-\x7E\n\r\t]/.test(txt)) {
+        e.preventDefault();
+        var clean = stripNonAscii(txt);
+        var s = el.selectionStart, eEnd = el.selectionEnd, v = el.value;
+        el.value = v.slice(0, s) + clean + v.slice(eEnd);
+        try { el.setSelectionRange(s + clean.length, s + clean.length); } catch (e2) {}
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    });
+  }
+
+  function bindAll() {
+    if (!isPracticePage()) return;
+    var nodes = document.querySelectorAll('input[type="text"], input:not([type]), textarea');
+    for (var i = 0; i < nodes.length; i++) attach(nodes[i]);
+  }
+
+  // Re-bind on DOM mutations: many practice pages render inputs after
+  // the user clicks Start, so the initial query misses them.
+  function watchMutations() {
+    if (!isPracticePage()) return;
+    var mo = new MutationObserver(function (muts) {
+      for (var i = 0; i < muts.length; i++) {
+        var added = muts[i].addedNodes;
+        for (var j = 0; j < added.length; j++) {
+          var n = added[j];
+          if (!n.querySelectorAll) continue;
+          if ((n.tagName === 'INPUT' && (n.type === 'text' || !n.type)) ||
+              n.tagName === 'TEXTAREA') attach(n);
+          var kids = n.querySelectorAll('input[type="text"], input:not([type]), textarea');
+          for (var k = 0; k < kids.length; k++) attach(kids[k]);
+        }
+      }
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      bindAll();
+      watchMutations();
+    });
+  } else {
+    bindAll();
+    watchMutations();
+  }
+})();
