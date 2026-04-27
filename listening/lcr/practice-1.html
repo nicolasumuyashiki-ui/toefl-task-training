@@ -211,6 +211,8 @@ const questions = [
         ], answer:'C'
     }
 ];
+/* Normalize answer index→letter so "userAns === q.answer" matches across legacy + new data shapes. */
+questions.forEach(function(q){ if (typeof q.answer === "number" && q.choices) q.answer = q.choices[q.answer].letter; });
 
 /* ===== STATE ===== */
 let currentQ = 0;
