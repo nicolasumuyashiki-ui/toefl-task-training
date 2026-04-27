@@ -85,35 +85,43 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
+
 <div class="header">
-  <h1>🎧 Listen to a Conversation — Practice 6 解答解説</h1>
+  <h1><span class="jp">🎧 Listen to a Conversation — Practice 6 解答解説</span><span class="en">🎧 Listen to a Conversation — Practice 6 Answers</span></h1>
   <p>Task Training — Listening</p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 4</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
 
 <div class="tips-banner">
-  <h2>💡 Conversation 攻略のコツ</h2>
+  <h2><span class="jp">💡 Conversation 攻略のコツ</span><span class="en">💡 Conversation strategy tips</span></h2>
   <div class="tips-grid">
     <div class="tip-card">
       <div class="tip-icon">📝</div>
-      <h3>メモの取り方</h3>
-      <p>問題は何か？解決策は何か？をキーワードだけメモ。全文書き取ろうとしない！</p>
+      <h3><span class="jp">メモの取り方</span><span class="en">How to take notes</span></h3>
+      <p><span class="jp">問題は何か？解決策は何か？をキーワードだけメモ。全文書き取ろうとしない！</span><span class="en">Note only the keywords for 'What is the problem? What is the solution?' Do not try to transcribe everything!</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">😮</div>
-      <h3>感情表現に注目</h3>
-      <p>"That's really helpful" "I appreciate that" などの反応から話者の状況を把握する</p>
+      <h3><span class="jp">感情表現に注目</span><span class="en">Watch for emotion words</span></h3>
+      <p><span class="jp">"That's really helpful" "I appreciate that" などの反応から話者の状況を把握する</span><span class="en">Catch the speaker's situation from reactions like 'That's really helpful' or 'I appreciate that.'</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">🔄</div>
-      <h3>2人の役割を区別</h3>
-      <p>学生＝問題を持ち込む側、スタッフ＝解決策を提示する側。役割を意識してメモ</p>
+      <h3><span class="jp">2人の役割を区別</span><span class="en">Distinguish the two roles</span></h3>
+      <p><span class="jp">学生＝問題を持ち込む側、スタッフ＝解決策を提示する側。役割を意識してメモ</span><span class="en">Student = the one with the problem; staff = the one with the solution. Take notes with the roles in mind.</span></p>
     </div>
   </div>
 </div>
@@ -121,12 +129,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Conversation 1 -->
 <div class="conv-section">
   <div class="conv-header">
-    <h3>🗣️ Conversation 1 — 食物アレルギー対応</h3>
-    <p>場面：Campus Dining Hall Office ｜ 学生（女性）＋ マネージャー（男性）</p>
+    <h3><span class="jp">🗣️ Conversation 1 — 食物アレルギー対応</span><span class="en">🗣️ Conversation 1 — Food allergy accommodation</span></h3>
+    <p><span class="jp">場面：Campus Dining Hall Office ｜ 学生（女性）＋ マネージャー（男性）</span><span class="en">Setting: Campus Dining Hall Office | Student (female) + Manager (male)</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[Student]</strong> Excuse me, I wanted to talk to someone about the meal options in the dining hall. I have a severe peanut allergy, and I've been finding it really difficult to know which dishes are safe for me.</div>
       <div class="script-line"><strong>[Manager]</strong> I'm sorry to hear that. We do take food allergies very seriously. Have you noticed any specific dishes that were a concern?</div>
       <div class="script-line"><strong>[Student]</strong> Well, last Tuesday the stir-fry was listed as vegetarian, but there was no mention of peanut oil, which was actually used in the sauce. I only found out when I asked the kitchen staff directly.</div>
@@ -152,8 +160,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> To apply for a job in the kitchen.</div>
         <div class="opt-row is-correct"><span class="opt-label">(D)</span> To discuss food allergy accommodation.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 学生の最初の発言で「I have a severe peanut allergy」と述べ、食事の安全性について相談に来ている。会話全体がアレルギー対応の改善について。</div>
-      <div class="q-hint">🔑 目的問題は冒頭に答え：学生の最初の発話で「なぜ来たか」が明確に述べられるパターン。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">学生の最初の発言で「I have a severe peanut allergy」と述べ、食事の安全性について相談に来ている。会話全体がアレルギー対応の改善について。</span><span class="en">The student says at the start, 'I have a severe peanut allergy,' coming to discuss meal safety. The whole conversation is about improving allergy responses.</span></div>
+      <div class="q-hint">🔑 <span class="jp">目的問題は冒頭に答え：学生の最初の発話で「なぜ来たか」が明確に述べられるパターン。</span><span class="en">Purpose at the start: the typical pattern is the student's first line saying 'why I came.'</span></div>
     </div>
   </div>
 
@@ -171,8 +179,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> Refund her meal plan fees.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> Transfer her to a different dining hall.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> マネージャーは「I can also add you to our allergy notification list, which sends an email alert whenever a dish contains one of the major allergens」と提案。具体的な行動の提示。</div>
-      <div class="q-hint">🔑 「offer to do」は解決策パートに：スタッフが提示する具体的なアクションが正解。"I can..." "I'll..." の後に注目。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">マネージャーは「I can also add you to our allergy notification list, which sends an email alert whenever a dish contains one of the major allergens」と提案。具体的な行動の提示。</span><span class="en">The manager offers, 'I can also add you to our allergy notification list, which sends an email alert whenever a dish contains one of the major allergens.' That's a concrete next action.</span></div>
+      <div class="q-hint">🔑 <span class="jp">「offer to do」は解決策パートに：スタッフが提示する具体的なアクションが正解。"I can..." "I'll..." の後に注目。</span><span class="en">'Offer to do' belongs to the solution part. 'I can...' / 'I'll...' precedes the right answer.</span></div>
     </div>
   </div>
 </div>
@@ -180,12 +188,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Conversation 2 -->
 <div class="conv-section">
   <div class="conv-header">
-    <h3>🗣️ Conversation 2 — 研究論文のテーゼ絞り込み</h3>
-    <p>場面：Writing Center ｜ 学生（男性）＋ チューター（女性）</p>
+    <h3><span class="jp">🗣️ Conversation 2 — 研究論文のテーゼ絞り込み</span><span class="en">🗣️ Conversation 2 — Narrowing a research paper thesis</span></h3>
+    <p><span class="jp">場面：Writing Center ｜ 学生（男性）＋ チューター（女性）</span><span class="en">Setting: Writing Center | Student (male) + Tutor (female)</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[Student]</strong> Hi, I signed up for a tutoring session because I'm struggling with the structure of my research paper. My professor said my thesis is too broad.</div>
       <div class="script-line"><strong>[Tutor]</strong> That's actually one of the most common issues we see here. Can you tell me what your paper is about?</div>
       <div class="script-line"><strong>[Student]</strong> It's for my sociology class. I'm writing about how social media affects young people. But I'm not sure how to narrow it down.</div>
@@ -211,8 +219,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row is-correct"><span class="opt-label">(C)</span> He chose a topic that was too broad.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> He did not understand the grading rubric.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 学生は「I'm writing about how social media affects young people」と述べ、チューターも「that's definitely a very broad topic」と同意している。教授の指摘と合わせて、テーマが広すぎたことが推測できる。</div>
-      <div class="q-hint">🔑 推論問題：話者の発言から状況を推測する。「too broad」というキーワードが複数回登場することに注目。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">学生は「I'm writing about how social media affects young people」と述べ、チューターも「that's definitely a very broad topic」と同意している。教授の指摘と合わせて、テーマが広すぎたことが推測できる。</span><span class="en">The student says, 'I'm writing about how social media affects young people,' and the tutor agrees, 'that's definitely a very broad topic.' Combined with the professor's comment, we can infer the topic was too broad.</span></div>
+      <div class="q-hint">🔑 <span class="jp">推論問題：話者の発言から状況を推測する。「too broad」というキーワードが複数回登場することに注目。</span><span class="en">Inference: infer the situation from the speaker's words. Note that 'too broad' shows up multiple times.</span></div>
     </div>
   </div>
 
@@ -230,14 +238,14 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> Add more references to the bibliography section.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> Change the topic to something completely different.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> チューターは「I'd recommend starting with the thesis」と助言し、学生は「That's really helpful」と受け入れている。面談後にまずテーゼの修正に取り組むと推測できる。</div>
-      <div class="q-hint">🔑 推論問題：「What will...most likely do」は会話の結論から次のアクションを推測する。チューターの助言＋学生の同意がヒント。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">チューターは「I'd recommend starting with the thesis」と助言し、学生は「That's really helpful」と受け入れている。面談後にまずテーゼの修正に取り組むと推測できる。</span><span class="en">The tutor advises, 'I'd recommend starting with the thesis,' and the student replies, 'That's really helpful.' We can infer the student will work on revising the thesis first after the meeting.</span></div>
+      <div class="q-hint">🔑 <span class="jp">推論問題：「What will...most likely do」は会話の結論から次のアクションを推測する。チューターの助言＋学生の同意がヒント。</span><span class="en">Inference: 'What will...most likely do' is answered by inferring the next step from the conclusion. Tutor's advice + student's agreement is the hint.</span></div>
     </div>
   </div>
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-6.html">← もう一度解く</a>
+  <a class="btn-back" href="practice-6.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
   <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
 </div>
 
@@ -264,11 +272,15 @@ function render(){
     document.getElementById('scoreBig').textContent = correct + ' / 4';
     document.getElementById('scoreBar').style.width = (correct/4*100)+'%';
     const pct = Math.round(correct/4*100);
-    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
-    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+    var __lang=(localStorage.getItem('tck_lang')||'jp');
+    var msgJp = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    var msgEn = pct >= 75 ? 'Excellent! 🎉' : pct >= 50 ? 'Good pace!' : 'Review and use it next time 💪';
+    let msg = __lang==='en' ? msgEn : msgJp;
+    var __pctLabel = __lang==='en' ? '% correct — ' : '% 正答率 — ';
+    document.getElementById('scoreMsg').textContent = pct + __pctLabel + msg;
   } else {
     document.getElementById('scoreBig').textContent = '— / 4';
-    document.getElementById('scoreMsg').textContent = __i18n('問題を先に解いてからこのページを見ると、スコアが表示されます','Complete the practice first to see your score.');
+    document.getElementById('scoreMsg').innerHTML = '<span class="jp">問題を先に解いてからこのページを見ると、スコアが表示されます</span>'+'<span class="en">Complete the practice first to see your score.</span>';
     for(let i=1;i<=4;i++) document.getElementById('q'+i+'user').style.display='none';
   }
 }

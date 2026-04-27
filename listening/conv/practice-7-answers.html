@@ -85,35 +85,43 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
+
 <div class="header">
-  <h1>🎧 Listen to a Conversation — Practice 7 解答解説</h1>
+  <h1><span class="jp">🎧 Listen to a Conversation — Practice 7 解答解説</span><span class="en">🎧 Listen to a Conversation — Practice 7 Answers</span></h1>
   <p>Task Training — Listening</p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 4</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
 
 <div class="tips-banner">
-  <h2>💡 Conversation 攻略のコツ</h2>
+  <h2><span class="jp">💡 Conversation 攻略のコツ</span><span class="en">💡 Conversation strategy tips</span></h2>
   <div class="tips-grid">
     <div class="tip-card">
       <div class="tip-icon">📝</div>
-      <h3>メモの取り方</h3>
-      <p>問題は何か？解決策は何か？をキーワードだけメモ。全文書き取ろうとしない！</p>
+      <h3><span class="jp">メモの取り方</span><span class="en">How to take notes</span></h3>
+      <p><span class="jp">問題は何か？解決策は何か？をキーワードだけメモ。全文書き取ろうとしない！</span><span class="en">Note only the keywords for 'What is the problem? What is the solution?' Do not try to transcribe everything!</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">🔄</div>
-      <h3>問題解決パターン</h3>
-      <p>挨拶→問題提示→解決策提案→結論。キャンパス会話の多くはこのパターンに従う</p>
+      <h3><span class="jp">問題解決パターン</span><span class="en">Problem-solving pattern</span></h3>
+      <p><span class="jp">挨拶→問題提示→解決策提案→結論。キャンパス会話の多くはこのパターンに従う</span><span class="en">Greeting → problem → proposed solution → conclusion. Most campus conversations follow this pattern.</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">😮</div>
-      <h3>感情表現に注目</h3>
-      <p>"That's a problem" "That would be great" などの反応から話者の状況を把握する</p>
+      <h3><span class="jp">感情表現に注目</span><span class="en">Watch for emotion words</span></h3>
+      <p><span class="jp">"That's a problem" "That would be great" などの反応から話者の状況を把握する</span><span class="en">Catch the speaker's situation from reactions like 'That's a problem' or 'That would be great.'</span></p>
     </div>
   </div>
 </div>
@@ -121,12 +129,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Conversation 1 -->
 <div class="conv-section">
   <div class="conv-header">
-    <h3>🗣️ Conversation 1 — 寮の部屋変更リクエスト</h3>
-    <p>場面：Housing Office ｜ 学生（男性）＋ コーディネーター（女性）</p>
+    <h3><span class="jp">🗣️ Conversation 1 — 寮の部屋変更リクエスト</span><span class="en">🗣️ Conversation 1 — Dorm room change request</span></h3>
+    <p><span class="jp">場面：Housing Office ｜ 学生（男性）＋ コーディネーター（女性）</span><span class="en">Setting: Housing Office | Student (male) + Coordinator (female)</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[Student]</strong> Hi, I'd like to request a room change. I'm currently in Baker Hall, but I was wondering if there are any openings in Greenfield Residence.</div>
       <div class="script-line"><strong>[Coordinator]</strong> I see. May I ask why you'd like to switch?</div>
       <div class="script-line"><strong>[Student]</strong> Well, my roommate has a completely different schedule from mine. He stays up until three in the morning, and I have an eight AM class every day. It's really affecting my sleep.</div>
@@ -152,8 +160,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> He wants to live closer to the science building.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> His room has a maintenance problem.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 学生は「He stays up until three in the morning」「It's really affecting my sleep」と明確に述べている。ルームメイトの生活リズムの違いが睡眠に影響している。</div>
-      <div class="q-hint">🔑 ヒント位置：会話の冒頭（学生の2発話目）— 問題提示パターンの典型。最初の数発話で理由が語られる。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">学生は「He stays up until three in the morning」「It's really affecting my sleep」と明確に述べている。ルームメイトの生活リズムの違いが睡眠に影響している。</span><span class="en">The student says clearly, 'He stays up until three in the morning,' 'It's really affecting my sleep.' The roommate's lifestyle difference is hurting the student's sleep.</span></div>
+      <div class="q-hint">🔑 <span class="jp">ヒント位置：会話の冒頭（学生の2発話目）— 問題提示パターンの典型。最初の数発話で理由が語られる。</span><span class="en">Hint location: the start of the conversation (student's second line) — the typical 'problem statement' pattern. The reason is told in the first few turns.</span></div>
     </div>
   </div>
 
@@ -171,8 +179,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row is-correct"><span class="opt-label">(C)</span> Single rooms are available but cost more.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> It is being renovated until next month.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> コーディネーターは「a few single rooms available」「cost about two hundred dollars more per semester」と説明している。空き有り＋追加費用の2つの情報。</div>
-      <div class="q-hint">🔑 解決策パートの「but」に注意：「空きがある、でも高い」のように条件付きの解決策が出る場合、両方の要素を含む選択肢が正解。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">コーディネーターは「a few single rooms available」「cost about two hundred dollars more per semester」と説明している。空き有り＋追加費用の2つの情報。</span><span class="en">The coordinator explains 'a few single rooms available' and 'cost about two hundred dollars more per semester.' Two pieces of info: availability + extra fee.</span></div>
+      <div class="q-hint">🔑 <span class="jp">解決策パートの「but」に注意：「空きがある、でも高い」のように条件付きの解決策が出る場合、両方の要素を含む選択肢が正解。</span><span class="en">Watch for 'but' in the solution part: when the solution is conditional ('available, but more expensive'), the right answer includes both elements.</span></div>
     </div>
   </div>
 </div>
@@ -180,12 +188,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Conversation 2 -->
 <div class="conv-section">
   <div class="conv-header">
-    <h3>🗣️ Conversation 2 — 中間試験後の追加点</h3>
-    <p>場面：Professor's Office ｜ 学生（女性）＋ 教授（男性）</p>
+    <h3><span class="jp">🗣️ Conversation 2 — 中間試験後の追加点</span><span class="en">🗣️ Conversation 2 — Bonus credit after the midterm</span></h3>
+    <p><span class="jp">場面：Professor's Office ｜ 学生（女性）＋ 教授（男性）</span><span class="en">Setting: Professor's Office | Student (female) + Professor (male)</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[Student]</strong> Professor Davis, do you have a moment? I wanted to ask about extra credit opportunities for your sociology class.</div>
       <div class="script-line"><strong>[Professor]</strong> Sure, come in. What's on your mind?</div>
       <div class="script-line"><strong>[Student]</strong> Well, I didn't do as well as I expected on the midterm, and I'm worried about my final grade. I was hoping there might be some way to earn additional points.</div>
@@ -211,8 +219,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> She is struggling to understand the course material.</div>
         <div class="opt-row is-correct"><span class="opt-label">(D)</span> Her midterm score was lower than she expected.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 学生は「I didn't do as well as I expected on the midterm」と述べ、「worried about my final grade」と続けている。期待を下回る中間成績が心配の原因だと推測できる。</div>
-      <div class="q-hint">🔑 推論問題：「なぜ心配しているか」は発言の行間を読む。"as well as I expected" が期待と現実のギャップを示す。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">学生は「I didn't do as well as I expected on the midterm」と述べ、「worried about my final grade」と続けている。期待を下回る中間成績が心配の原因だと推測できる。</span><span class="en">The student says, 'I didn't do as well as I expected on the midterm,' and continues, 'worried about my final grade.' We can infer the gap between expectation and reality on the midterm is the source of worry.</span></div>
+      <div class="q-hint">🔑 <span class="jp">推論問題：「なぜ心配しているか」は発言の行間を読む。"as well as I expected" が期待と現実のギャップを示す。</span><span class="en">Inference: 'why is the student worried' requires reading between the lines. 'as well as I expected' shows the gap between hope and reality.</span></div>
     </div>
   </div>
 
@@ -230,14 +238,14 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> Drop the course and register again next semester.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> Form a study group with her classmates.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 学生は教授の提案（ゲスト講義に出席してサマリーを書く）に「That sounds great」と同意し、講義の時間も確認している。次に取る行動として最も妥当。</div>
-      <div class="q-hint">🔑 推論問題：「What will...most likely do next」は会話の結論から推測。学生の「I'll definitely do that」が決定的なヒント。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">学生は教授の提案（ゲスト講義に出席してサマリーを書く）に「That sounds great」と同意し、講義の時間も確認している。次に取る行動として最も妥当。</span><span class="en">The student agrees with the professor's suggestion (attend the guest lecture and write a summary) with 'That sounds great' and even confirms the lecture time. The most plausible next action.</span></div>
+      <div class="q-hint">🔑 <span class="jp">推論問題：「What will...most likely do next」は会話の結論から推測。学生の「I'll definitely do that」が決定的なヒント。</span><span class="en">Inference: 'What will...most likely do next' is answered by inferring from the conclusion. The student's 'I'll definitely do that' is the decisive hint.</span></div>
     </div>
   </div>
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-7.html">← もう一度解く</a>
+  <a class="btn-back" href="practice-7.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
   <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
 </div>
 
@@ -264,11 +272,15 @@ function render(){
     document.getElementById('scoreBig').textContent = correct + ' / 4';
     document.getElementById('scoreBar').style.width = (correct/4*100)+'%';
     const pct = Math.round(correct/4*100);
-    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
-    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+    var __lang=(localStorage.getItem('tck_lang')||'jp');
+    var msgJp = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    var msgEn = pct >= 75 ? 'Excellent! 🎉' : pct >= 50 ? 'Good pace!' : 'Review and use it next time 💪';
+    let msg = __lang==='en' ? msgEn : msgJp;
+    var __pctLabel = __lang==='en' ? '% correct — ' : '% 正答率 — ';
+    document.getElementById('scoreMsg').textContent = pct + __pctLabel + msg;
   } else {
     document.getElementById('scoreBig').textContent = '— / 4';
-    document.getElementById('scoreMsg').textContent = __i18n('問題を先に解いてからこのページを見ると、スコアが表示されます','Complete the practice first to see your score.');
+    document.getElementById('scoreMsg').innerHTML = '<span class="jp">問題を先に解いてからこのページを見ると、スコアが表示されます</span>'+'<span class="en">Complete the practice first to see your score.</span>';
     for(let i=1;i<=4;i++) document.getElementById('q'+i+'user').style.display='none';
   }
 }

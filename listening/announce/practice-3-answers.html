@@ -89,35 +89,43 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
+
 <div class="header">
-  <h1>📢 Listen to an Announcement — Practice 3 解答解説</h1>
-  <p>タスク別トレーニング</p>
+  <h1><span class="jp">📢 Listen to an Announcement — Practice 3 解答解説</span><span class="en">📢 Listen to an Announcement — Practice 3 Answers</span></h1>
+  <p><span class="jp">タスク別トレーニング</span><span class="en">Task-based training</span></p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 4</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
 
 <div class="tips-banner">
-  <h2>💡 Announcement 攻略のコツ</h2>
+  <h2><span class="jp">💡 Announcement 攻略のコツ</span><span class="en">💡 Announcement strategy tips</span></h2>
   <div class="tips-grid">
     <div class="tip-card">
       <div class="tip-icon">🎯</div>
-      <h3>4つの焦点で聞く</h3>
-      <p>WHO（誰が）・WHAT（何を）・WHEN（いつ）・WHERE（どこで）を聞き逃さない</p>
+      <h3><span class="jp">4つの焦点で聞く</span><span class="en">Listen for the four W's</span></h3>
+      <p><span class="jp">WHO（誰が）・WHAT（何を）・WHEN（いつ）・WHERE（どこで）を聞き逃さない</span><span class="en">Don't miss WHO, WHAT, WHEN, WHERE.</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">📍</div>
-      <h3>目的問題は冒頭に答え</h3>
-      <p>「What is the announcement about?」の答えは最初の1〜2文にある。冒頭に全集中！</p>
+      <h3><span class="jp">目的問題は冒頭に答え</span><span class="en">Purpose answers come at the start</span></h3>
+      <p><span class="jp">「What is the announcement about?」の答えは最初の1〜2文にある。冒頭に全集中！</span><span class="en">The answer to 'What is the announcement about?' is in the first one or two sentences. Focus on the opening!</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">🔚</div>
-      <h3>推奨・次のアクションは末尾</h3>
-      <p>「What does the speaker recommend?」の答えは最後の文に隠れていることが多い</p>
+      <h3><span class="jp">推奨・次のアクションは末尾</span><span class="en">Recommendations come at the end</span></h3>
+      <p><span class="jp">「What does the speaker recommend?」の答えは最後の文に隠れていることが多い</span><span class="en">The answer to 'What does the speaker recommend?' is often hidden in the last line.</span></p>
     </div>
   </div>
 </div>
@@ -125,12 +133,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Announcement 1 -->
 <div class="ann-section">
   <div class="ann-header">
-    <h3>📢 Announcement 1 — 図書館データベースとワークショップ</h3>
-    <p>場面：図書館オリエンテーション ｜ 話者：司書</p>
+    <h3><span class="jp">📢 Announcement 1 — 図書館データベースとワークショップ</span><span class="en">📢 Announcement 1 — Library database & workshop</span></h3>
+    <p><span class="jp">場面：図書館オリエンテーション ｜ 話者：司書</span><span class="en">Setting: Library orientation | Speaker: Librarian</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[NARRATOR]</strong> Listen to an announcement in a university library.</div>
       <div class="script-line"><strong>[SPEAKER]</strong> Good afternoon, everyone. I'm pleased to announce that the university library has just acquired access to three major academic databases: JSTOR, ScienceDirect, and ProQuest. These databases contain millions of peer-reviewed journal articles, and they are now available to all enrolled students free of charge. To access them, simply log in to the library website using your student credentials. Additionally, we will be holding a series of research workshops starting next Monday. The first session will cover how to use these databases effectively to find sources for your research papers. Workshops will run every Monday and Wednesday at three PM in Room 204 of the library. No registration is required — just show up.</div>
     </details>
@@ -150,8 +158,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> A renovation of the library building.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> A new library card system for students.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 司書は新しいデータベースへのアクセス開始と、リサーチワークショップの開催を伝えている。この2つがアナウンスの主旨。(A)開館時間の変更は言及されていない。(C)図書館の改修工事は話題に出ていない。(D)新しい図書カードシステムは言及されていない。</div>
-      <div class="q-hint">🔑 冒頭の「I'm pleased to announce that...」の直後に主旨が来る。データベースとワークショップの2点が主題。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">司書は新しいデータベースへのアクセス開始と、リサーチワークショップの開催を伝えている。この2つがアナウンスの主旨。(A)開館時間の変更は言及されていない。(C)図書館の改修工事は話題に出ていない。(D)新しい図書カードシステムは言及されていない。</span><span class="en">The librarian announces access to a new database and a research workshop. These two items are the main points. (A) hours change isn't mentioned. (C) renovation isn't mentioned. (D) a new card system isn't mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">冒頭の「I'm pleased to announce that...」の直後に主旨が来る。データベースとワークショップの2点が主題。</span><span class="en">Main point right after 'I'm pleased to announce that...'. The database and the workshop are the two themes.</span></div>
     </div>
   </div>
 
@@ -169,8 +177,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> To apologize for a scheduling error.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> To promote a new library membership program.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 司書は「No registration is required — just show up」と述べている。登録不要であることを強調することで、参加のハードルを下げ、より多くの学生に参加を促す目的がある。(B)登録ポリシーの変更説明ではなく、参加を促す発言。(C)スケジュールエラーの謝罪は無関係。(D)図書館会員プログラムの宣伝ではない。</div>
-      <div class="q-hint">🔑 目的問題：「No registration is required — just show up」は参加を気軽にするための発言。参加障壁を取り除く = encourage attendance。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">司書は「No registration is required — just show up」と述べている。登録不要であることを強調することで、参加のハードルを下げ、より多くの学生に参加を促す目的がある。(B)登録ポリシーの変更説明ではなく、参加を促す発言。(C)スケジュールエラーの謝罪は無関係。(D)図書館会員プログラムの宣伝ではない。</span><span class="en">The librarian says, 'No registration is required — just show up.' Stressing no registration lowers the participation barrier and encourages more students to attend. (B) it's not explaining a registration policy change. (C) it's not an apology for a scheduling error. (D) it's not promoting a library membership program.</span></div>
+      <div class="q-hint">🔑 <span class="jp">目的問題：「No registration is required — just show up」は参加を気軽にするための発言。参加障壁を取り除く = encourage attendance。</span><span class="en">Purpose question: 'No registration is required — just show up' is meant to make joining easy. Removing barriers = encourage attendance.</span></div>
     </div>
   </div>
 </div>
@@ -178,12 +186,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Announcement 2 -->
 <div class="ann-section">
   <div class="ann-header">
-    <h3>📢 Announcement 2 — 冬季暴風雪によるスケジュール変更</h3>
-    <p>場面：大学全体メール / キャンパス放送 ｜ 話者：学部長</p>
+    <h3><span class="jp">📢 Announcement 2 — 冬季暴風雪によるスケジュール変更</span><span class="en">📢 Announcement 2 — Schedule change due to winter storm</span></h3>
+    <p><span class="jp">場面：大学全体メール / キャンパス放送 ｜ 話者：学部長</span><span class="en">Setting: University-wide email / campus broadcast | Speaker: Dean</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[NARRATOR]</strong> Listen to a campus-wide announcement.</div>
       <div class="script-line"><strong>[SPEAKER]</strong> Attention all students and faculty. Due to the severe winter storm warning issued for this area, the university has decided to make several changes to tomorrow's schedule. All classes before noon have been canceled. Afternoon classes will proceed as scheduled, but they will be held remotely via the university's online learning platform. The campus dining halls will operate on a limited schedule, opening only from eleven AM to seven PM. All evening events, including the guest lecture in the auditorium and the basketball game, have been postponed to next week. Please check your university email for updates, and stay safe.</div>
     </details>
@@ -203,8 +211,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> Because of a national holiday.</div>
         <div class="opt-row is-correct"><span class="opt-label">(D)</span> Because of a severe winter storm warning.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 学部長は冒頭で「Due to the severe winter storm warning issued for this area」と変更の理由を明確に述べている。(A)停電は言及されていない。(B)建物の検査は話題に出ていない。(C)祝日は無関係。</div>
-      <div class="q-hint">🔑 WHY問題：「Due to...」の直後に理由が明示されている。「severe winter storm warning」がキーフレーズ。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">学部長は冒頭で「Due to the severe winter storm warning issued for this area」と変更の理由を明確に述べている。(A)停電は言及されていない。(B)建物の検査は話題に出ていない。(C)祝日は無関係。</span><span class="en">The dean opens with 'Due to the severe winter storm warning issued for this area,' clearly stating the reason. (A) a power outage isn't mentioned. (B) building inspection isn't mentioned. (C) holidays are unrelated.</span></div>
+      <div class="q-hint">🔑 <span class="jp">WHY問題：「Due to...」の直後に理由が明示されている。「severe winter storm warning」がキーフレーズ。</span><span class="en">WHY question: the reason is stated right after 'Due to...'. 'severe winter storm warning' is the key phrase.</span></div>
     </div>
   </div>
 
@@ -222,14 +230,14 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row is-correct"><span class="opt-label">(C)</span> They will take place the following week.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> They will be held in a different building.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 「All evening events...have been postponed to next week」と述べられている。「postponed to next week」= 翌週に延期 = take place the following week。(A)永久にキャンセルされたのではなく延期。(B)オンライン形式への変更は夜のイベントには言及されていない（午後の授業のみ）。(D)別の建物での開催は言及されていない。</div>
-      <div class="q-hint">🔑 推論問題：「postponed to next week」の意味を理解する。postponed = delayed, will take place later = the following week。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">「All evening events...have been postponed to next week」と述べられている。「postponed to next week」= 翌週に延期 = take place the following week。(A)永久にキャンセルされたのではなく延期。(B)オンライン形式への変更は夜のイベントには言及されていない（午後の授業のみ）。(D)別の建物での開催は言及されていない。</span><span class="en">'All evening events...have been postponed to next week.' 'postponed to next week' = will take place the following week. (A) not canceled permanently, just postponed. (B) only afternoon classes mention online format, not evening events. (D) a different building isn't mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">推論問題：「postponed to next week」の意味を理解する。postponed = delayed, will take place later = the following week。</span><span class="en">Inference: understand 'postponed to next week.' postponed = delayed, will take place later = the following week.</span></div>
     </div>
   </div>
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-3.html">← もう一度解く</a>
+  <a class="btn-back" href="practice-3.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
   <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
 </div>
 
@@ -257,25 +265,29 @@ function render(){
       if(isSkip){
         icon.className = 'q-num skip';
         user.className = 'q-user is-skip';
-        user.textContent = __i18n('⏱️ 未回答（タイムアウト）','⏱️ Not answered (timeout)');
+        user.innerHTML = '<span class="jp">⏱️ 未回答（タイムアウト）</span>'+'<span class="en">⏱️ Not answered (timeout)</span>';
       } else if(isCorrect){
         icon.className = 'q-num correct';
         user.className = 'q-user is-correct';
-        user.textContent = '✅ 正解！ あなたの回答: ('+labels[userAns]+')';
+        user.innerHTML = '<span class="jp">✅ 正解！ あなたの回答: ('+labels[userAns]+')</span>'+'<span class="en">✅ Correct! Your answer: ('+labels[userAns]+')</span>';
       } else {
         icon.className = 'q-num wrong';
         user.className = 'q-user is-wrong';
-        user.textContent = '❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')';
+        user.innerHTML = '<span class="jp">❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')</span>'+'<span class="en">❌ Your answer: ('+labels[userAns]+') → Correct: ('+labels[correctAnswers[i]]+')</span>';
       }
     }
     document.getElementById('scoreBig').textContent = correct + ' / 4';
     document.getElementById('scoreBar').style.width = (correct/4*100)+'%';
     const pct = Math.round(correct/4*100);
-    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
-    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+    var __lang=(localStorage.getItem('tck_lang')||'jp');
+    var msgJp = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    var msgEn = pct >= 75 ? 'Excellent! 🎉' : pct >= 50 ? 'Good pace!' : 'Review and use it next time 💪';
+    let msg = __lang==='en' ? msgEn : msgJp;
+    var __pctLabel = __lang==='en' ? '% correct — ' : '% 正答率 — ';
+    document.getElementById('scoreMsg').textContent = pct + __pctLabel + msg;
   } else {
     document.getElementById('scoreBig').textContent = '— / 4';
-    document.getElementById('scoreMsg').textContent = __i18n('問題を先に解いてからこのページを見ると、スコアが表示されます','Complete the practice first to see your score.');
+    document.getElementById('scoreMsg').innerHTML = '<span class="jp">問題を先に解いてからこのページを見ると、スコアが表示されます</span>'+'<span class="en">Complete the practice first to see your score.</span>';
     for(let i=1;i<=4;i++) document.getElementById('q'+i+'user').style.display='none';
   }
 }

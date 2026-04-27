@@ -89,35 +89,43 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
+
 <div class="header">
-  <h1>📢 Listen to an Announcement — Practice 1 解答解説</h1>
-  <p>タスク別トレーニング</p>
+  <h1><span class="jp">📢 Listen to an Announcement — Practice 1 解答解説</span><span class="en">📢 Listen to an Announcement — Practice 1 Answers</span></h1>
+  <p><span class="jp">タスク別トレーニング</span><span class="en">Task-based training</span></p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 4</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
 
 <div class="tips-banner">
-  <h2>💡 Announcement 攻略のコツ</h2>
+  <h2><span class="jp">💡 Announcement 攻略のコツ</span><span class="en">💡 Announcement strategy tips</span></h2>
   <div class="tips-grid">
     <div class="tip-card">
       <div class="tip-icon">🎯</div>
-      <h3>4つの焦点で聞く</h3>
-      <p>WHO（誰が）・WHAT（何を）・WHEN（いつ）・WHERE（どこで）を聞き逃さない</p>
+      <h3><span class="jp">4つの焦点で聞く</span><span class="en">Listen for the four W's</span></h3>
+      <p><span class="jp">WHO（誰が）・WHAT（何を）・WHEN（いつ）・WHERE（どこで）を聞き逃さない</span><span class="en">Don't miss WHO, WHAT, WHEN, WHERE.</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">📍</div>
-      <h3>目的問題は冒頭に答え</h3>
-      <p>「What is the announcement about?」の答えは最初の1〜2文にある。冒頭に全集中！</p>
+      <h3><span class="jp">目的問題は冒頭に答え</span><span class="en">Purpose answers come at the start</span></h3>
+      <p><span class="jp">「What is the announcement about?」の答えは最初の1〜2文にある。冒頭に全集中！</span><span class="en">The answer to 'What is the announcement about?' is in the first one or two sentences. Focus on the opening!</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">🔚</div>
-      <h3>推奨・次のアクションは末尾</h3>
-      <p>「What does the speaker recommend?」の答えは最後の文に隠れていることが多い</p>
+      <h3><span class="jp">推奨・次のアクションは末尾</span><span class="en">Recommendations come at the end</span></h3>
+      <p><span class="jp">「What does the speaker recommend?」の答えは最後の文に隠れていることが多い</span><span class="en">The answer to 'What does the speaker recommend?' is often hidden in the last line.</span></p>
     </div>
   </div>
 </div>
@@ -125,12 +133,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Announcement 1 -->
 <div class="ann-section">
   <div class="ann-header">
-    <h3>📢 Announcement 1 — 中間試験の日程変更</h3>
-    <p>場面：教室 ｜ 話者：教授</p>
+    <h3><span class="jp">📢 Announcement 1 — 中間試験の日程変更</span><span class="en">📢 Announcement 1 — Midterm date change</span></h3>
+    <p><span class="jp">場面：教室 ｜ 話者：教授</span><span class="en">Setting: Classroom | Speaker: Professor</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[NARRATOR]</strong> Listen to an announcement in a classroom.</div>
       <div class="script-line"><strong>[SPEAKER]</strong> Good morning, everyone. I wanted to let you know that our midterm exam has been rescheduled. Instead of next Thursday, it will now take place on the following Monday, October 14th, in this same room. The exam will cover chapters one through six, so please make sure to review all the material. Also, I will be holding extra office hours this Friday from two to four PM if anyone needs help.</div>
     </details>
@@ -150,8 +158,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> A guest speaker visiting the class.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> A field trip scheduled for next week.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 教授は冒頭で「our midterm exam has been rescheduled」と述べており、中間試験の日程変更がアナウンスの主旨。(A)教科書の要件については言及されていない。(C)ゲストスピーカーの訪問は話題に出ていない。(D)フィールドトリップは無関係。</div>
-      <div class="q-hint">🔑 冒頭の「I wanted to let you know that...」の直後に主旨が来る。「rescheduled」= A change in the midterm exam date。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">教授は冒頭で「our midterm exam has been rescheduled」と述べており、中間試験の日程変更がアナウンスの主旨。(A)教科書の要件については言及されていない。(C)ゲストスピーカーの訪問は話題に出ていない。(D)フィールドトリップは無関係。</span><span class="en">The professor opens with 'our midterm exam has been rescheduled' — a midterm date change is the announcement's main point. (A) textbook requirements aren't mentioned. (C) a guest speaker isn't mentioned. (D) a field trip is unrelated.</span></div>
+      <div class="q-hint">🔑 <span class="jp">冒頭の「I wanted to let you know that...」の直後に主旨が来る。「rescheduled」= A change in the midterm exam date。</span><span class="en">The main point comes right after 'I wanted to let you know that...'. 'rescheduled' = a change in the midterm exam date.</span></div>
     </div>
   </div>
 
@@ -169,8 +177,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row is-correct"><span class="opt-label">(C)</span> To help students prepare for the rescheduled exam.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> To explain changes to the grading policy.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 教授は試験日程変更を伝えた後、「I will be holding extra office hours this Friday from two to four PM if anyone needs help」と述べている。試験準備を支援するためにオフィスアワーを追加した。(A)宿題の追加は言及されていない。(B)TAの紹介は話題に出ていない。(D)成績方針の変更は無関係。</div>
-      <div class="q-hint">🔑 目的問題：「if anyone needs help」が手がかり。試験範囲を説明した直後にオフィスアワーを言及＝試験準備のサポート目的。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">教授は試験日程変更を伝えた後、「I will be holding extra office hours this Friday from two to four PM if anyone needs help」と述べている。試験準備を支援するためにオフィスアワーを追加した。(A)宿題の追加は言及されていない。(B)TAの紹介は話題に出ていない。(D)成績方針の変更は無関係。</span><span class="en">After announcing the change, the professor says, 'I will be holding extra office hours this Friday from two to four PM if anyone needs help.' The added office hours are to support exam preparation. (A) (B) (D) are not mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">目的問題：「if anyone needs help」が手がかり。試験範囲を説明した直後にオフィスアワーを言及＝試験準備のサポート目的。</span><span class="en">Purpose question: 'if anyone needs help' is the cue. Office hours mentioned right after the syllabus = exam prep support.</span></div>
     </div>
   </div>
 </div>
@@ -178,12 +186,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Announcement 2 -->
 <div class="ann-section">
   <div class="ann-header">
-    <h3>📢 Announcement 2 — 図書館の改修工事</h3>
-    <p>場面：キャンパスラジオ / 図書館通知 ｜ 話者：管理者</p>
+    <h3><span class="jp">📢 Announcement 2 — 図書館の改修工事</span><span class="en">📢 Announcement 2 — Library renovation work</span></h3>
+    <p><span class="jp">場面：キャンパスラジオ / 図書館通知 ｜ 話者：管理者</span><span class="en">Setting: Campus radio / Library notice | Speaker: Administrator</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[NARRATOR]</strong> Listen to an announcement on the campus radio.</div>
       <div class="script-line"><strong>[SPEAKER]</strong> Attention all students. The main campus library will be undergoing renovations starting November 1st. During the renovation period, which is expected to last approximately three weeks, the second and third floors will be closed. However, the ground floor reading room and the computer lab will remain open as usual. Temporary study spaces have been set up in the student union building for those who need quiet areas. Please visit the library website for updated hours and available services.</div>
     </details>
@@ -203,8 +211,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> The entire library building.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> The library cafe and bookstore.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 「the ground floor reading room and the computer lab will remain open as usual」と明確に述べられている。(B)2階と3階は閉鎖される。(C)図書館全体ではなく、一部のみ営業。(D)カフェや書店は言及されていない。</div>
-      <div class="q-hint">🔑 「However」の後に例外情報が来る。「remain open as usual」が根拠。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">「the ground floor reading room and the computer lab will remain open as usual」と明確に述べられている。(B)2階と3階は閉鎖される。(C)図書館全体ではなく、一部のみ営業。(D)カフェや書店は言及されていない。</span><span class="en">Clearly stated: 'the ground floor reading room and the computer lab will remain open as usual.' (B) the 2nd and 3rd floors are closed. (C) only part of the library, not all. (D) cafés or bookstores aren't mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">「However」の後に例外情報が来る。「remain open as usual」が根拠。</span><span class="en">Exception info comes after 'However.' 'remain open as usual' is the basis.</span></div>
     </div>
   </div>
 
@@ -222,14 +230,14 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> The computer lab will move to the student union building.</div>
         <div class="opt-row is-correct"><span class="opt-label">(D)</span> Students can still study on campus despite the closures.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 1階の読書室とコンピュータラボは通常通り営業し、学生会館に仮設学習スペースも設置されている。つまり、改修中でもキャンパスで勉強できると推測できる。(A)1階は引き続き利用可能。(B)仮設スペースの利用料は言及されていない。(C)コンピュータラボは移転せず、元の場所で営業。</div>
-      <div class="q-hint">🔑 推論問題：「ground floor...remain open」+「Temporary study spaces have been set up」の2点から、勉強場所は確保されていると推論できる。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">1階の読書室とコンピュータラボは通常通り営業し、学生会館に仮設学習スペースも設置されている。つまり、改修中でもキャンパスで勉強できると推測できる。(A)1階は引き続き利用可能。(B)仮設スペースの利用料は言及されていない。(C)コンピュータラボは移転せず、元の場所で営業。</span><span class="en">The ground floor and computer lab stay open, plus temporary study spaces are set up in the student union. So studying on campus is still possible during the renovation. (A) the ground floor is still usable. (B) usage fees aren't mentioned. (C) the computer lab isn't moving.</span></div>
+      <div class="q-hint">🔑 <span class="jp">推論問題：「ground floor...remain open」+「Temporary study spaces have been set up」の2点から、勉強場所は確保されていると推論できる。</span><span class="en">Inference: from 'ground floor...remain open' + 'Temporary study spaces have been set up,' study space is still secured.</span></div>
     </div>
   </div>
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-1.html">← もう一度解く</a>
+  <a class="btn-back" href="practice-1.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
   <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
 </div>
 
@@ -257,25 +265,29 @@ function render(){
       if(isSkip){
         icon.className = 'q-num skip';
         user.className = 'q-user is-skip';
-        user.textContent = __i18n('⏱️ 未回答（タイムアウト）','⏱️ Not answered (timeout)');
+        user.innerHTML = '<span class="jp">⏱️ 未回答（タイムアウト）</span>'+'<span class="en">⏱️ Not answered (timeout)</span>';
       } else if(isCorrect){
         icon.className = 'q-num correct';
         user.className = 'q-user is-correct';
-        user.textContent = '✅ 正解！ あなたの回答: ('+labels[userAns]+')';
+        user.innerHTML = '<span class="jp">✅ 正解！ あなたの回答: ('+labels[userAns]+')</span>'+'<span class="en">✅ Correct! Your answer: ('+labels[userAns]+')</span>';
       } else {
         icon.className = 'q-num wrong';
         user.className = 'q-user is-wrong';
-        user.textContent = '❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')';
+        user.innerHTML = '<span class="jp">❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')</span>'+'<span class="en">❌ Your answer: ('+labels[userAns]+') → Correct: ('+labels[correctAnswers[i]]+')</span>';
       }
     }
     document.getElementById('scoreBig').textContent = correct + ' / 4';
     document.getElementById('scoreBar').style.width = (correct/4*100)+'%';
     const pct = Math.round(correct/4*100);
-    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
-    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+    var __lang=(localStorage.getItem('tck_lang')||'jp');
+    var msgJp = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    var msgEn = pct >= 75 ? 'Excellent! 🎉' : pct >= 50 ? 'Good pace!' : 'Review and use it next time 💪';
+    let msg = __lang==='en' ? msgEn : msgJp;
+    var __pctLabel = __lang==='en' ? '% correct — ' : '% 正答率 — ';
+    document.getElementById('scoreMsg').textContent = pct + __pctLabel + msg;
   } else {
     document.getElementById('scoreBig').textContent = '— / 4';
-    document.getElementById('scoreMsg').textContent = __i18n('問題を先に解いてからこのページを見ると、スコアが表示されます','Complete the practice first to see your score.');
+    document.getElementById('scoreMsg').innerHTML = '<span class="jp">問題を先に解いてからこのページを見ると、スコアが表示されます</span>'+'<span class="en">Complete the practice first to see your score.</span>';
     for(let i=1;i<=4;i++) document.getElementById('q'+i+'user').style.display='none';
   }
 }

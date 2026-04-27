@@ -85,35 +85,43 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
+
 <div class="header">
-  <h1>🎧 Listen to a Conversation — Practice 8 解答解説</h1>
+  <h1><span class="jp">🎧 Listen to a Conversation — Practice 8 解答解説</span><span class="en">🎧 Listen to a Conversation — Practice 8 Answers</span></h1>
   <p>Task Training — Listening</p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 4</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
 
 <div class="tips-banner">
-  <h2>💡 Conversation 攻略のコツ</h2>
+  <h2><span class="jp">💡 Conversation 攻略のコツ</span><span class="en">💡 Conversation strategy tips</span></h2>
   <div class="tips-grid">
     <div class="tip-card">
       <div class="tip-icon">📝</div>
-      <h3>メモの取り方</h3>
-      <p>問題は何か？解決策は何か？をキーワードだけメモ。全文書き取ろうとしない！</p>
+      <h3><span class="jp">メモの取り方</span><span class="en">How to take notes</span></h3>
+      <p><span class="jp">問題は何か？解決策は何か？をキーワードだけメモ。全文書き取ろうとしない！</span><span class="en">Note only the keywords for 'What is the problem? What is the solution?' Do not try to transcribe everything!</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">🔚</div>
-      <h3>最後の発言に注意</h3>
-      <p>結論・次のアクションは会話の終盤に出ることが多い。「I'll...」に全集中！</p>
+      <h3><span class="jp">最後の発言に注意</span><span class="en">Watch the closing line</span></h3>
+      <p><span class="jp">結論・次のアクションは会話の終盤に出ることが多い。「I'll...」に全集中！</span><span class="en">Conclusions and next actions usually come near the end. Lock in on 'I'll...'!</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">🔄</div>
-      <h3>2人の役割を区別</h3>
-      <p>学生＝問題を持ち込む側、スタッフ＝解決策を提示する側。役割を意識してメモ</p>
+      <h3><span class="jp">2人の役割を区別</span><span class="en">Distinguish the two roles</span></h3>
+      <p><span class="jp">学生＝問題を持ち込む側、スタッフ＝解決策を提示する側。役割を意識してメモ</span><span class="en">Student = the one with the problem; staff = the one with the solution. Take notes with the roles in mind.</span></p>
     </div>
   </div>
 </div>
@@ -121,12 +129,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Conversation 1 -->
 <div class="conv-section">
   <div class="conv-header">
-    <h3>🗣️ Conversation 1 — ワークスタディの申請</h3>
-    <p>場面：Financial Aid Office ｜ 学生（男性）＋ アドバイザー（女性）</p>
+    <h3><span class="jp">🗣️ Conversation 1 — ワークスタディの申請</span><span class="en">🗣️ Conversation 1 — Work-study application</span></h3>
+    <p><span class="jp">場面：Financial Aid Office ｜ 学生（男性）＋ アドバイザー（女性）</span><span class="en">Setting: Financial Aid Office | Student (male) + Advisor (female)</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[Student]</strong> Hi, I was wondering if I'm eligible for the work-study program this semester. I applied last month but haven't heard back.</div>
       <div class="script-line"><strong>[Advisor]</strong> Let me pull up your file. Could I have your student ID number?</div>
       <div class="script-line"><strong>[Student]</strong> Sure, it's 4-7-2-9-0-1.</div>
@@ -153,8 +161,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> His GPA does not meet the minimum requirement.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> The program is already full for this semester.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> アドバイザーが「you haven't submitted your most recent tax documents」と明確に述べている。税関連書類の未提出が原因。</div>
-      <div class="q-hint">🔑 原因問題は「Why hasn't...」：スタッフの説明部分に理由が示される。「It looks like...」の後に注目。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">アドバイザーが「you haven't submitted your most recent tax documents」と明確に述べている。税関連書類の未提出が原因。</span><span class="en">The advisor says clearly, 'you haven't submitted your most recent tax documents.' The missing tax paperwork is the cause.</span></div>
+      <div class="q-hint">🔑 <span class="jp">原因問題は「Why hasn't...」：スタッフの説明部分に理由が示される。「It looks like...」の後に注目。</span><span class="en">Cause questions ('Why hasn't...'): the reason is shown in the staff's explanation. Focus after 'It looks like...'</span></div>
     </div>
   </div>
 
@@ -172,8 +180,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row is-correct"><span class="opt-label">(C)</span> Upload tax documents through the student portal.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> Apply directly to on-campus employers.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 学生は最後に「I'll upload those documents today」と明言。アドバイザーも「upload your most recent tax return through the student portal」と指示している。</div>
-      <div class="q-hint">🔑 「次に何をするか」は常に会話の締めに出る：最後の1〜2文に全集中！「I'll...」が直接のヒント。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">学生は最後に「I'll upload those documents today」と明言。アドバイザーも「upload your most recent tax return through the student portal」と指示している。</span><span class="en">At the end, the student says, 'I'll upload those documents today,' and the advisor instructs, 'upload your most recent tax return through the student portal.'</span></div>
+      <div class="q-hint">🔑 <span class="jp">「次に何をするか」は常に会話の締めに出る：最後の1〜2文に全集中！「I'll...」が直接のヒント。</span><span class="en">'What to do next' always comes at the conversation's wrap-up. Focus on the last 1–2 sentences! 'I'll...' is the direct hint.</span></div>
     </div>
   </div>
 </div>
@@ -181,12 +189,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Conversation 2 -->
 <div class="conv-section">
   <div class="conv-header">
-    <h3>🗣️ Conversation 2 — 実験結果の食い違い</h3>
-    <p>場面：Chemistry Lab ｜ 学生A（女性）＋ 学生B / ラボパートナー（男性）</p>
+    <h3><span class="jp">🗣️ Conversation 2 — 実験結果の食い違い</span><span class="en">🗣️ Conversation 2 — Mismatched experiment results</span></h3>
+    <p><span class="jp">場面：Chemistry Lab ｜ 学生A（女性）＋ 学生B / ラボパートナー（男性）</span><span class="en">Setting: Chemistry Lab | Student A (female) + Student B / lab partner (male)</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[Student A]</strong> Hey, did you look at our experiment results from last Thursday? My numbers are totally different from yours.</div>
       <div class="script-line"><strong>[Student B]</strong> Really? I got a concentration of 0.45 moles per liter. What did you get?</div>
       <div class="script-line"><strong>[Student A]</strong> I got 0.32. That's a pretty big difference. Do you think one of us made a measurement error?</div>
@@ -212,8 +220,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> The spectrophotometer was broken during the test.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> They conducted the experiment on different days.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> Student Bが「the solution looked a bit cloudy」「some of the solid hadn't fully dissolved yet」と述べ、Student Aも「undissolved particles might have affected the spectrophotometer reading」と同意。溶液が完全に溶けていなかったことが原因。</div>
-      <div class="q-hint">🔑 推論問題：2人が議論して合意した結論が答え。「That could explain...」「Good point」など同意の表現に注目。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">Student Bが「the solution looked a bit cloudy」「some of the solid hadn't fully dissolved yet」と述べ、Student Aも「undissolved particles might have affected the spectrophotometer reading」と同意。溶液が完全に溶けていなかったことが原因。</span><span class="en">Student B says, 'the solution looked a bit cloudy,' 'some of the solid hadn't fully dissolved yet,' and Student A agrees, 'undissolved particles might have affected the spectrophotometer reading.' The cause is incomplete dissolution.</span></div>
+      <div class="q-hint">🔑 <span class="jp">推論問題：2人が議論して合意した結論が答え。「That could explain...」「Good point」など同意の表現に注目。</span><span class="en">Inference: the agreed conclusion of the two speakers is the answer. Watch for agreement signals like 'That could explain...' / 'Good point.'</span></div>
     </div>
   </div>
 
@@ -231,14 +239,14 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> Use the average of their two results.</div>
         <div class="opt-row is-correct"><span class="opt-label">(D)</span> Redo the experiment after getting the professor's approval.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> Student Bは「I'll email the professor right now」と述べ、Student Aも「I think that's a good idea」と同意。教授の許可を得て実験をやり直す流れが推測できる。</div>
-      <div class="q-hint">🔑 推論問題：2人の合意から次の行動を推測。「Should we...」→「I think that's a good idea」→「I'll email...」の流れが答えのヒント。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">Student Bは「I'll email the professor right now」と述べ、Student Aも「I think that's a good idea」と同意。教授の許可を得て実験をやり直す流れが推測できる。</span><span class="en">Student B says, 'I'll email the professor right now,' and Student A agrees, 'I think that's a good idea.' We can infer they'll get permission to repeat the experiment.</span></div>
+      <div class="q-hint">🔑 <span class="jp">推論問題：2人の合意から次の行動を推測。「Should we...」→「I think that's a good idea」→「I'll email...」の流れが答えのヒント。</span><span class="en">Inference: infer the next action from the agreement. The flow 'Should we...' → 'I think that's a good idea' → 'I'll email...' is the hint.</span></div>
     </div>
   </div>
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-8.html">← もう一度解く</a>
+  <a class="btn-back" href="practice-8.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
   <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
 </div>
 
@@ -265,11 +273,15 @@ function render(){
     document.getElementById('scoreBig').textContent = correct + ' / 4';
     document.getElementById('scoreBar').style.width = (correct/4*100)+'%';
     const pct = Math.round(correct/4*100);
-    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
-    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+    var __lang=(localStorage.getItem('tck_lang')||'jp');
+    var msgJp = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    var msgEn = pct >= 75 ? 'Excellent! 🎉' : pct >= 50 ? 'Good pace!' : 'Review and use it next time 💪';
+    let msg = __lang==='en' ? msgEn : msgJp;
+    var __pctLabel = __lang==='en' ? '% correct — ' : '% 正答率 — ';
+    document.getElementById('scoreMsg').textContent = pct + __pctLabel + msg;
   } else {
     document.getElementById('scoreBig').textContent = '— / 4';
-    document.getElementById('scoreMsg').textContent = __i18n('問題を先に解いてからこのページを見ると、スコアが表示されます','Complete the practice first to see your score.');
+    document.getElementById('scoreMsg').innerHTML = '<span class="jp">問題を先に解いてからこのページを見ると、スコアが表示されます</span>'+'<span class="en">Complete the practice first to see your score.</span>';
     for(let i=1;i<=4;i++) document.getElementById('q'+i+'user').style.display='none';
   }
 }

@@ -88,13 +88,21 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
+
 <div class="header">
-  <h1>Listen to an Academic Talk — Practice 1 解答解説</h1>
+  <h1><span class="jp">Listen to an Academic Talk — Practice 1 解答解説</span><span class="en">Listen to an Academic Talk — Practice 1 Answers</span></h1>
   <p>Task Training | Talk 1: Honeybee Communication | Talk 2: The Greenhouse Effect</p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 8</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
@@ -103,18 +111,18 @@ body[data-lang="en"] .jp{display:none}
 <div class="tips-grid">
   <div class="tip-card">
     <div class="icon">&#9733;</div>
-    <h3>シグナルワードに集中</h3>
-    <p>「Today I want to talk about...」「For example...」「However...」が聞こえたら印をつけ、直後のキーワードだけメモ。</p>
+    <h3><span class="jp">シグナルワードに集中</span><span class="en">Focus on signal words</span></h3>
+    <p><span class="jp">「Today I want to talk about...」「For example...」「However...」が聞こえたら印をつけ、直後のキーワードだけメモ。</span><span class="en">When you hear 'Today I want to talk about...', 'For example...', 'However...', mark it and note only the keyword that follows.</span></p>
   </div>
   <div class="tip-card">
     <div class="icon">&#128221;</div>
-    <h3>ノートはキーワードだけ</h3>
-    <p>全文を書き取ろうとしない。トピック・キーポイント・例・結論を短い単語で記録する。聞くことが最優先。</p>
+    <h3><span class="jp">ノートはキーワードだけ</span><span class="en">Notes are keywords only</span></h3>
+    <p><span class="jp">全文を書き取ろうとしない。トピック・キーポイント・例・結論を短い単語で記録する。聞くことが最優先。</span><span class="en">Don't try to transcribe everything. Record topic, key points, examples, and conclusion in short words. Listening comes first.</span></p>
   </div>
   <div class="tip-card">
     <div class="icon">&#128269;</div>
-    <h3>目的問題の攻略</h3>
-    <p>「Why does the speaker mention X?」はXそのものではなく、Xが話全体で果たす役割（例示・対比・根拠）を問う。前後の文脈を確認。</p>
+    <h3><span class="jp">目的問題の攻略</span><span class="en">How to handle Purpose questions</span></h3>
+    <p><span class="jp">「Why does the speaker mention X?」はXそのものではなく、Xが話全体で果たす役割（例示・対比・根拠）を問う。前後の文脈を確認。</span><span class="en">'Why does the speaker mention X?' asks the role X plays in the talk (example, contrast, evidence) — not X itself. Check the surrounding context.</span></p>
   </div>
 </div>
 
@@ -122,11 +130,11 @@ body[data-lang="en"] .jp{display:none}
 <div class="talk-section">
   <div class="talk-header">
     <h3>Talk 1 — Honeybee Communication (Life Science)</h3>
-    <p>話者：教授 ｜ Standard</p>
+    <p><span class="jp">話者：教授 ｜ Standard</span><span class="en">Speaker: Professor | Standard</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <summary><span class="jp">スクリプトを見る（シグナルワードをハイライト付き）</span><span class="en">View transcript (signal words highlighted)</span></summary>
       <div class="script-text">
         <span class="highlight">Today, I want to talk about</span> one of the most fascinating forms of animal communication — the waggle dance of honeybees. When a forager bee discovers a good source of nectar or pollen, it returns to the hive and performs a special dance to tell other bees exactly where to find it. The bee moves in a figure-eight pattern while waggling its body. The direction of the waggle run indicates the angle of the food source relative to the sun. If the bee waggles straight up on the honeycomb, it means the food is in the direction of the sun. The duration of the waggle is equally important — <span class="highlight">the longer the bee dances, the farther away the food source is</span>. This remarkable behavior was first decoded by the Austrian scientist <span class="highlight">Karl von Frisch</span>, who spent decades studying bee communication. His groundbreaking research earned him the Nobel Prize in Physiology or Medicine in 1973. <span class="highlight">What makes this especially interesting is that</span> it shows us that even insects with tiny brains can communicate precise information in ways that scientists once thought were far too complex for them.
       </div>
@@ -147,8 +155,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row is-correct"><span class="opt-label">(C)</span> How honeybees communicate the location of food sources.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> How bees produce honey.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 冒頭で「I want to talk about ... the waggle dance of honeybees」と主題を明示。全体を通してミツバチのコミュニケーション方法に焦点を当てている。(A)ライフサイクル、(B)養蜂の歴史、(D)ハチミツの生産は言及なし。</div>
-      <div class="q-hint">🔑 Main Idea問題：冒頭の「I want to talk about...」がそのまま答え。★シグナルワード直後に注目。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">冒頭で「I want to talk about ... the waggle dance of honeybees」と主題を明示。全体を通してミツバチのコミュニケーション方法に焦点を当てている。(A)ライフサイクル、(B)養蜂の歴史、(D)ハチミツの生産は言及なし。</span><span class="en">The opening declares the topic: 'I want to talk about ... the waggle dance of honeybees.' The whole talk focuses on bee communication. (A) life cycle, (B) beekeeping history, (D) honey production are not mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">Main Idea問題：冒頭の「I want to talk about...」がそのまま答え。★シグナルワード直後に注目。</span><span class="en">Main Idea: the answer is right after 'I want to talk about...'. ★Focus right after the signal phrase.</span></div>
     </div>
   </div>
 
@@ -166,8 +174,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> To introduce a new theory about insect behavior.</div>
         <div class="opt-row is-correct"><span class="opt-label">(D)</span> To credit the scientist who discovered the waggle dance.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> Karl von Frischはワグルダンスを「decoded（解読）」した科学者として紹介されている。彼の業績を認め、ノーベル賞受賞という文脈で言及。(A)絶滅危機、(B)比較、(C)新理論は言及なし。</div>
-      <div class="q-hint">🔑 Purpose問題のコツ：「Why does the speaker mention X?」→ Xの前後の文脈を見る。ここでは研究の功績を紹介する目的。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">Karl von Frischはワグルダンスを「decoded（解読）」した科学者として紹介されている。彼の業績を認め、ノーベル賞受賞という文脈で言及。(A)絶滅危機、(B)比較、(C)新理論は言及なし。</span><span class="en">Karl von Frisch is introduced as the scientist who 'decoded' the waggle dance. He's mentioned to credit his work, in the context of his Nobel Prize. (A) extinction, (B) comparison, (C) new theory are not mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">Purpose問題のコツ：「Why does the speaker mention X?」→ Xの前後の文脈を見る。ここでは研究の功績を紹介する目的。</span><span class="en">Purpose tip: 'Why does the speaker mention X?' → look at the context around X. Here it's to credit the researcher.</span></div>
     </div>
   </div>
 
@@ -185,8 +193,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> The quality of the food source.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> The type of flower producing the nectar.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 講師は「the longer the bee dances, the farther away the food source is」と明確に述べている。ダンスの持続時間＝食料源までの距離。(B)(C)(D)は言及なし。</div>
-      <div class="q-hint">🔑 Detail問題：キーワード「duration」「longer」に注目。本文中の対応箇所を正確に聞き取る。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">講師は「the longer the bee dances, the farther away the food source is」と明確に述べている。ダンスの持続時間＝食料源までの距離。(B)(C)(D)は言及なし。</span><span class="en">The lecturer states clearly, 'the longer the bee dances, the farther away the food source is.' Dance duration = distance to the food source. (B) (C) (D) are not mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">Detail問題：キーワード「duration」「longer」に注目。本文中の対応箇所を正確に聞き取る。</span><span class="en">Detail: focus on keywords 'duration' / 'longer.' Catch the matching phrase precisely.</span></div>
     </div>
   </div>
 
@@ -204,8 +212,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> All insects use the waggle dance.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> Karl von Frisch trained bees to perform the dance.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 講師は最後に「even insects with tiny brains can communicate precise information in ways that scientists once thought were far too complex for them」と述べている。ミツバチのコミュニケーションが以前考えられていたよりも高度であることが示唆されている。(A)「only」は極端、(C)全昆虫とは述べていない、(D)解読であり教えたのではない。</div>
-      <div class="q-hint">🔑 Inference問題：直接述べていないが論理的に導ける結論を選ぶ。最後の文に注目。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">講師は最後に「even insects with tiny brains can communicate precise information in ways that scientists once thought were far too complex for them」と述べている。ミツバチのコミュニケーションが以前考えられていたよりも高度であることが示唆されている。(A)「only」は極端、(C)全昆虫とは述べていない、(D)解読であり教えたのではない。</span><span class="en">The lecturer ends with, 'even insects with tiny brains can communicate precise information in ways that scientists once thought were far too complex for them.' This implies bee communication is more sophisticated than previously thought. (A) 'only' is too extreme; (C) not all insects; (D) it was decoding, not teaching.</span></div>
+      <div class="q-hint">🔑 <span class="jp">Inference問題：直接述べていないが論理的に導ける結論を選ぶ。最後の文に注目。</span><span class="en">Inference: pick the conclusion that's not stated directly but logically follows. Focus on the last sentence.</span></div>
     </div>
   </div>
 </div>
@@ -214,11 +222,11 @@ body[data-lang="en"] .jp{display:none}
 <div class="talk-section">
   <div class="talk-header">
     <h3>Talk 2 — The Greenhouse Effect (Physical Science)</h3>
-    <p>話者：教授 ｜ Harder</p>
+    <p><span class="jp">話者：教授 ｜ Harder</span><span class="en">Speaker: Professor | Harder</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <summary><span class="jp">スクリプトを見る（シグナルワードをハイライト付き）</span><span class="en">View transcript (signal words highlighted)</span></summary>
       <div class="script-text">
         <span class="highlight">Let's discuss</span> a topic that's critically important for understanding our planet's climate — the greenhouse effect. Now, first of all, the greenhouse effect is not inherently a bad thing. <span class="highlight">In fact,</span> without it, the Earth's average surface temperature would be about minus 18 degrees Celsius, far too cold to support life as we know it.<br><br>
         Here's how it works: solar radiation from the sun passes through the atmosphere and warms the Earth's surface. The Earth then radiates heat back toward space. <span class="highlight">However,</span> certain gases in the atmosphere — called greenhouse gases — absorb some of this outgoing heat and re-emit it in all directions, including back toward the surface. This is the natural greenhouse effect, and the main greenhouse gases involved are carbon dioxide, methane, and water vapor.<br><br>
@@ -242,8 +250,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> Methods of reducing carbon emissions.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> The formation of the Earth's atmosphere.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 講義全体が温室効果の仕組み（自然な温室効果と人為的な強化温室効果）とその気候への影響を説明している。(B)化石燃料の歴史は部分的、(C)排出削減の方法は未議論、(D)大気の形成は言及なし。</div>
-      <div class="q-hint">🔑 Main Idea問題：冒頭の「Let's discuss...」がそのまま答え。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">講義全体が温室効果の仕組み（自然な温室効果と人為的な強化温室効果）とその気候への影響を説明している。(B)化石燃料の歴史は部分的、(C)排出削減の方法は未議論、(D)大気の形成は言及なし。</span><span class="en">The whole lecture explains how the greenhouse effect works (natural and human-amplified) and its climate impact. (B) fossil-fuel history is partial; (C) reduction methods aren't discussed; (D) atmospheric formation isn't mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">Main Idea問題：冒頭の「Let's discuss...」がそのまま答え。</span><span class="en">Main Idea: the answer is right after 'Let's discuss...'.</span></div>
     </div>
   </div>
 
@@ -261,8 +269,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row is-correct"><span class="opt-label">(C)</span> A process that keeps the Earth warm enough to support life.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> A process that only affects the polar regions.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 講師は「without it, the Earth's average surface temperature would be about minus 18 degrees Celsius, far too cold to support life」と述べている。自然な温室効果は生命維持に必要な温暖さを保つプロセス。(A)暑くしすぎるは逆、(B)最近の現象ではない、(D)極地だけではない。</div>
-      <div class="q-hint">🔑 定義問題：「the greenhouse effect is not inherently a bad thing」の直後に理由が続く。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">講師は「without it, the Earth's average surface temperature would be about minus 18 degrees Celsius, far too cold to support life」と述べている。自然な温室効果は生命維持に必要な温暖さを保つプロセス。(A)暑くしすぎるは逆、(B)最近の現象ではない、(D)極地だけではない。</span><span class="en">The lecturer says, 'without it, the Earth's average surface temperature would be about minus 18 degrees Celsius, far too cold to support life.' The natural greenhouse effect maintains the warmth needed for life. (A) overheating is the opposite; (B) it's not a recent phenomenon; (D) not just polar regions.</span></div>
+      <div class="q-hint">🔑 <span class="jp">定義問題：「the greenhouse effect is not inherently a bad thing」の直後に理由が続く。</span><span class="en">Definition: the reason follows right after 'the greenhouse effect is not inherently a bad thing.'</span></div>
     </div>
   </div>
 
@@ -280,8 +288,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> To compare forests in different regions.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> To discuss the lumber industry's economic impact.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 講師は森林伐採について「trees naturally absorb CO2」「when we cut down forests...the carbon stored in the trees is released back into the atmosphere」と説明。CO2濃度を上昇させる人間活動の具体例として言及。(A)(C)(D)は言及なし。</div>
-      <div class="q-hint">🔑 Purpose問題：「Deforestation makes the problem worse because...」と因果関係で接続されている。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">講師は森林伐採について「trees naturally absorb CO2」「when we cut down forests...the carbon stored in the trees is released back into the atmosphere」と説明。CO2濃度を上昇させる人間活動の具体例として言及。(A)(C)(D)は言及なし。</span><span class="en">On deforestation: 'trees naturally absorb CO2,' 'when we cut down forests...the carbon stored in the trees is released back into the atmosphere.' Mentioned as a concrete example of human activity raising CO2. (A) (C) (D) are not mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">Purpose問題：「Deforestation makes the problem worse because...」と因果関係で接続されている。</span><span class="en">Purpose: connected with 'Deforestation makes the problem worse because...' — a cause-effect link.</span></div>
     </div>
   </div>
 
@@ -299,15 +307,15 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> Water vapor.</div>
         <div class="opt-row is-correct"><span class="opt-label">(D)</span> Oxygen.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 講師が挙げた温室効果ガスは carbon dioxide、methane、water vapor の3つ。Oxygen（酸素）は温室効果ガスとして言及されていない。NOT問題は消去法で解く。</div>
-      <div class="q-hint">🔑 NOT/EXCEPT問題の鉄則：消去法で解く。本文に言及のある3つを消し、残った1つが正解。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">講師が挙げた温室効果ガスは carbon dioxide、methane、water vapor の3つ。Oxygen（酸素）は温室効果ガスとして言及されていない。NOT問題は消去法で解く。</span><span class="en">The greenhouse gases mentioned are carbon dioxide, methane, and water vapor. Oxygen is not mentioned as a greenhouse gas. NOT questions are solved by elimination.</span></div>
+      <div class="q-hint">🔑 <span class="jp">NOT/EXCEPT問題の鉄則：消去法で解く。本文に言及のある3つを消し、残った1つが正解。</span><span class="en">NOT/EXCEPT rule: solve by elimination. Cross out the 3 mentioned items; the remaining one is the answer.</span></div>
     </div>
   </div>
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-1.html">← もう一度解く</a>
-  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">メニューに戻る</a>
+  <a class="btn-back" href="practice-1.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
+  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">メニューに戻る</span><span class="en">Back to menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
@@ -337,11 +345,15 @@ function render(){
     document.getElementById('scoreBig').textContent = correct + ' / ' + totalQ;
     document.getElementById('scoreBar').style.width = (correct/totalQ*100)+'%';
     const pct = Math.round(correct/totalQ*100);
-    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
-    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+    var __lang=(localStorage.getItem('tck_lang')||'jp');
+    var msgJp = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    var msgEn = pct >= 75 ? 'Excellent! 🎉' : pct >= 50 ? 'Good pace!' : 'Review and use it next time 💪';
+    let msg = __lang==='en' ? msgEn : msgJp;
+    var __pctLabel = __lang==='en' ? '% correct — ' : '% 正答率 — ';
+    document.getElementById('scoreMsg').textContent = pct + __pctLabel + msg;
   } else {
     document.getElementById('scoreBig').textContent = '— / ' + totalQ;
-    document.getElementById('scoreMsg').textContent = __i18n('問題を先に解いてからこのページを見ると、スコアが表示されます','Complete the practice first to see your score.');
+    document.getElementById('scoreMsg').innerHTML = '<span class="jp">問題を先に解いてからこのページを見ると、スコアが表示されます</span>'+'<span class="en">Complete the practice first to see your score.</span>';
     for(let i=1;i<=totalQ;i++) document.getElementById('q'+i+'user').style.display='none';
   }
 }

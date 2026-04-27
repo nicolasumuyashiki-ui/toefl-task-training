@@ -89,35 +89,43 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
+
 <div class="header">
-  <h1>📢 Listen to an Announcement — Practice 2 解答解説</h1>
-  <p>タスク別トレーニング</p>
+  <h1><span class="jp">📢 Listen to an Announcement — Practice 2 解答解説</span><span class="en">📢 Listen to an Announcement — Practice 2 Answers</span></h1>
+  <p><span class="jp">タスク別トレーニング</span><span class="en">Task-based training</span></p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 4</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
 </div>
 
 <div class="tips-banner">
-  <h2>💡 Announcement 攻略のコツ</h2>
+  <h2><span class="jp">💡 Announcement 攻略のコツ</span><span class="en">💡 Announcement strategy tips</span></h2>
   <div class="tips-grid">
     <div class="tip-card">
       <div class="tip-icon">🎯</div>
-      <h3>4つの焦点で聞く</h3>
-      <p>WHO（誰が）・WHAT（何を）・WHEN（いつ）・WHERE（どこで）を聞き逃さない</p>
+      <h3><span class="jp">4つの焦点で聞く</span><span class="en">Listen for the four W's</span></h3>
+      <p><span class="jp">WHO（誰が）・WHAT（何を）・WHEN（いつ）・WHERE（どこで）を聞き逃さない</span><span class="en">Don't miss WHO, WHAT, WHEN, WHERE.</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">📍</div>
-      <h3>目的問題は冒頭に答え</h3>
-      <p>「What is the announcement about?」の答えは最初の1〜2文にある。冒頭に全集中！</p>
+      <h3><span class="jp">目的問題は冒頭に答え</span><span class="en">Purpose answers come at the start</span></h3>
+      <p><span class="jp">「What is the announcement about?」の答えは最初の1〜2文にある。冒頭に全集中！</span><span class="en">The answer to 'What is the announcement about?' is in the first one or two sentences. Focus on the opening!</span></p>
     </div>
     <div class="tip-card">
       <div class="tip-icon">🔚</div>
-      <h3>推奨・次のアクションは末尾</h3>
-      <p>「What does the speaker recommend?」の答えは最後の文に隠れていることが多い</p>
+      <h3><span class="jp">推奨・次のアクションは末尾</span><span class="en">Recommendations come at the end</span></h3>
+      <p><span class="jp">「What does the speaker recommend?」の答えは最後の文に隠れていることが多い</span><span class="en">The answer to 'What does the speaker recommend?' is often hidden in the last line.</span></p>
     </div>
   </div>
 </div>
@@ -125,12 +133,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Announcement 1 -->
 <div class="ann-section">
   <div class="ann-header">
-    <h3>📢 Announcement 1 — 博物館フィールドトリップ</h3>
-    <p>場面：教室 ｜ 話者：教授</p>
+    <h3><span class="jp">📢 Announcement 1 — 博物館フィールドトリップ</span><span class="en">📢 Announcement 1 — Museum field trip</span></h3>
+    <p><span class="jp">場面：教室 ｜ 話者：教授</span><span class="en">Setting: Classroom | Speaker: Professor</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[NARRATOR]</strong> Listen to an announcement in a classroom.</div>
       <div class="script-line"><strong>[SPEAKER]</strong> Good afternoon, class. I have an exciting announcement. Our department has arranged a field trip to the local history museum next Thursday, November 7th. We'll meet in front of the science building at 9 AM, and the bus will leave at 9:15 sharp. The museum visit is directly related to our current unit on cultural artifacts, so I expect everyone to attend. Please bring a notebook, as you'll need to complete a short observation worksheet during the visit. If you have any scheduling conflicts, please let me know by this Friday so I can make alternative arrangements.</div>
     </details>
@@ -150,8 +158,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> A new assignment for the class.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> A guest lecture on cultural artifacts.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 教授は冒頭で「Our department has arranged a field trip to the local history museum next Thursday」と述べており、博物館へのフィールドトリップがアナウンスの主旨。(A)教室のスケジュール変更ではなく、課外活動の告知。(C)新しい課題ではなく、フィールドトリップの案内。(D)ゲスト講義は言及されていない。</div>
-      <div class="q-hint">🔑 冒頭の「I have an exciting announcement」の直後に主旨が来る。「a field trip to the local history museum」が根拠。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">教授は冒頭で「Our department has arranged a field trip to the local history museum next Thursday」と述べており、博物館へのフィールドトリップがアナウンスの主旨。(A)教室のスケジュール変更ではなく、課外活動の告知。(C)新しい課題ではなく、フィールドトリップの案内。(D)ゲスト講義は言及されていない。</span><span class="en">The professor opens with 'Our department has arranged a field trip to the local history museum next Thursday' — a museum field trip is the main point. (A) is not a class schedule change but an extracurricular announcement. (C) is not a new assignment, but a field trip. (D) a guest lecture isn't mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">冒頭の「I have an exciting announcement」の直後に主旨が来る。「a field trip to the local history museum」が根拠。</span><span class="en">Main point comes right after 'I have an exciting announcement.' 'a field trip to the local history museum' is the basis.</span></div>
     </div>
   </div>
 
@@ -169,8 +177,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> To write questions for the museum guide.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> To record attendance at the museum.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 教授は「Please bring a notebook, as you'll need to complete a short observation worksheet during the visit」と述べている。ノート持参の理由は観察ワークシートの記入。(B)バスのスケジュールのメモは言及されていない。(C)博物館ガイドへの質問は話題に出ていない。(D)出席の記録は言及されていない。</div>
-      <div class="q-hint">🔑 目的問題：「as you'll need to...」が理由を示す。「complete a short observation worksheet」が根拠。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">教授は「Please bring a notebook, as you'll need to complete a short observation worksheet during the visit」と述べている。ノート持参の理由は観察ワークシートの記入。(B)バスのスケジュールのメモは言及されていない。(C)博物館ガイドへの質問は話題に出ていない。(D)出席の記録は言及されていない。</span><span class="en">The professor says, 'Please bring a notebook, as you'll need to complete a short observation worksheet during the visit.' The reason for bringing a notebook is to fill out the observation worksheet. (B) (C) (D) are not mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">目的問題：「as you'll need to...」が理由を示す。「complete a short observation worksheet」が根拠。</span><span class="en">Purpose question: 'as you'll need to...' shows the reason. 'complete a short observation worksheet' is the basis.</span></div>
     </div>
   </div>
 </div>
@@ -178,12 +186,12 @@ body[data-lang="en"] .jp{display:none}
 <!-- Announcement 2 -->
 <div class="ann-section">
   <div class="ann-header">
-    <h3>📢 Announcement 2 — 自転車登録義務化</h3>
-    <p>場面：キャンパスラジオ / セキュリティ通知 ｜ 話者：管理者</p>
+    <h3><span class="jp">📢 Announcement 2 — 自転車登録義務化</span><span class="en">📢 Announcement 2 — Bicycle registration requirement</span></h3>
+    <p><span class="jp">場面：キャンパスラジオ / セキュリティ通知 ｜ 話者：管理者</span><span class="en">Setting: Campus radio / security notice | Speaker: Administrator</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>📜 スクリプトを見る（クリックで展開）</summary>
+      <summary><span class="jp">📜 スクリプトを見る（クリックで展開）</span><span class="en">📜 View transcript (click to expand)</span></summary>
       <div class="script-line"><strong>[NARRATOR]</strong> Listen to a campus security announcement.</div>
       <div class="script-line"><strong>[SPEAKER]</strong> Attention all students and staff. The campus security office would like to remind everyone about the new bicycle registration requirement that goes into effect starting December 1st. All bicycles parked on campus must display a valid registration sticker. You can register your bicycle for free at the security office in Building C, Monday through Friday, from 8 AM to 5 PM. Unregistered bicycles found on campus after December 15th may be removed. This policy is being introduced to reduce bicycle theft and help recover stolen bikes more quickly.</div>
     </details>
@@ -203,8 +211,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> To promote environmental awareness.</div>
         <div class="opt-row is-correct"><span class="opt-label">(D)</span> To reduce bicycle theft and aid recovery.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> アナウンスの末尾で「This policy is being introduced to reduce bicycle theft and help recover stolen bikes more quickly」と明確に述べられている。(A)自転車の台数を制限する目的ではない。(B)登録は無料であり、収益目的ではない。(C)環境意識の向上は言及されていない。</div>
-      <div class="q-hint">🔑 目的問題：「This policy is being introduced to...」の直後に理由が明示されている。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">アナウンスの末尾で「This policy is being introduced to reduce bicycle theft and help recover stolen bikes more quickly」と明確に述べられている。(A)自転車の台数を制限する目的ではない。(B)登録は無料であり、収益目的ではない。(C)環境意識の向上は言及されていない。</span><span class="en">At the end: 'This policy is being introduced to reduce bicycle theft and help recover stolen bikes more quickly.' (A) the goal isn't to limit bike numbers. (B) registration is free, so it's not for revenue. (C) environmental awareness isn't mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">目的問題：「This policy is being introduced to...」の直後に理由が明示されている。</span><span class="en">Purpose question: the reason is stated right after 'This policy is being introduced to...'</span></div>
     </div>
   </div>
 
@@ -222,14 +230,14 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row is-correct"><span class="opt-label">(C)</span> They may be taken away from campus.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> They will be locked by campus security.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 「Unregistered bicycles found on campus after December 15th may be removed」と述べられている。「may be removed」= 撤去される可能性がある = taken away from campus。(A)警告ステッカーの貼付は言及されていない。(B)罰金は言及されていない。(D)施錠は言及されていない。</div>
-      <div class="q-hint">🔑 推論問題：「may be removed」の意味を正確に理解する。removed = taken away from campus。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">「Unregistered bicycles found on campus after December 15th may be removed」と述べられている。「may be removed」= 撤去される可能性がある = taken away from campus。(A)警告ステッカーの貼付は言及されていない。(B)罰金は言及されていない。(D)施錠は言及されていない。</span><span class="en">'Unregistered bicycles found on campus after December 15th may be removed.' 'may be removed' = could be taken away from campus. (A) sticker warnings aren't mentioned. (B) fines aren't mentioned. (D) locking isn't mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">推論問題：「may be removed」の意味を正確に理解する。removed = taken away from campus。</span><span class="en">Inference: understand what 'may be removed' means. removed = taken away from campus.</span></div>
     </div>
   </div>
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-2.html">← もう一度解く</a>
+  <a class="btn-back" href="practice-2.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
   <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
 </div>
 
@@ -257,25 +265,29 @@ function render(){
       if(isSkip){
         icon.className = 'q-num skip';
         user.className = 'q-user is-skip';
-        user.textContent = __i18n('⏱️ 未回答（タイムアウト）','⏱️ Not answered (timeout)');
+        user.innerHTML = '<span class="jp">⏱️ 未回答（タイムアウト）</span>'+'<span class="en">⏱️ Not answered (timeout)</span>';
       } else if(isCorrect){
         icon.className = 'q-num correct';
         user.className = 'q-user is-correct';
-        user.textContent = '✅ 正解！ あなたの回答: ('+labels[userAns]+')';
+        user.innerHTML = '<span class="jp">✅ 正解！ あなたの回答: ('+labels[userAns]+')</span>'+'<span class="en">✅ Correct! Your answer: ('+labels[userAns]+')</span>';
       } else {
         icon.className = 'q-num wrong';
         user.className = 'q-user is-wrong';
-        user.textContent = '❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')';
+        user.innerHTML = '<span class="jp">❌ あなたの回答: ('+labels[userAns]+') → 正解: ('+labels[correctAnswers[i]]+')</span>'+'<span class="en">❌ Your answer: ('+labels[userAns]+') → Correct: ('+labels[correctAnswers[i]]+')</span>';
       }
     }
     document.getElementById('scoreBig').textContent = correct + ' / 4';
     document.getElementById('scoreBar').style.width = (correct/4*100)+'%';
     const pct = Math.round(correct/4*100);
-    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
-    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+    var __lang=(localStorage.getItem('tck_lang')||'jp');
+    var msgJp = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    var msgEn = pct >= 75 ? 'Excellent! 🎉' : pct >= 50 ? 'Good pace!' : 'Review and use it next time 💪';
+    let msg = __lang==='en' ? msgEn : msgJp;
+    var __pctLabel = __lang==='en' ? '% correct — ' : '% 正答率 — ';
+    document.getElementById('scoreMsg').textContent = pct + __pctLabel + msg;
   } else {
     document.getElementById('scoreBig').textContent = '— / 4';
-    document.getElementById('scoreMsg').textContent = __i18n('問題を先に解いてからこのページを見ると、スコアが表示されます','Complete the practice first to see your score.');
+    document.getElementById('scoreMsg').innerHTML = '<span class="jp">問題を先に解いてからこのページを見ると、スコアが表示されます</span>'+'<span class="en">Complete the practice first to see your score.</span>';
     for(let i=1;i<=4;i++) document.getElementById('q'+i+'user').style.display='none';
   }
 }

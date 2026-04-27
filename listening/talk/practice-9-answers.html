@@ -88,13 +88,21 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
+
 <div class="header">
-  <h1>Listen to an Academic Talk — Practice 9 解答解説</h1>
+  <h1><span class="jp">Listen to an Academic Talk — Practice 9 解答解説</span><span class="en">Listen to an Academic Talk — Practice 9 Answers</span></h1>
   <p>Task Training | Talk 1: The Bystander Effect | Talk 2: The Water Cycle and Climate Change</p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 8</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
@@ -103,18 +111,18 @@ body[data-lang="en"] .jp{display:none}
 <div class="tips-grid">
   <div class="tip-card">
     <div class="icon">&#9733;</div>
-    <h3>シグナルワードに集中</h3>
-    <p>「Today we're going to look at...」「In other words...」「However...」が聞こえたら印をつけ、直後のキーワードだけメモ。</p>
+    <h3><span class="jp">シグナルワードに集中</span><span class="en">Focus on signal words</span></h3>
+    <p><span class="jp">「Today we're going to look at...」「In other words...」「However...」が聞こえたら印をつけ、直後のキーワードだけメモ。</span><span class="en">When you hear 'Today we're going to look at...', 'In other words...', 'However...', mark it and note only the keyword that follows.</span></p>
   </div>
   <div class="tip-card">
     <div class="icon">&#128221;</div>
-    <h3>ノートはキーワードだけ</h3>
-    <p>全文を書き取ろうとしない。トピック・キーポイント・例・結論を短い単語で記録する。聞くことが最優先。</p>
+    <h3><span class="jp">ノートはキーワードだけ</span><span class="en">Notes are keywords only</span></h3>
+    <p><span class="jp">全文を書き取ろうとしない。トピック・キーポイント・例・結論を短い単語で記録する。聞くことが最優先。</span><span class="en">Don't try to transcribe everything. Record topic, key points, examples, and conclusion in short words. Listening comes first.</span></p>
   </div>
   <div class="tip-card">
     <div class="icon">&#128269;</div>
-    <h3>目的問題の攻略</h3>
-    <p>「Why does the speaker mention X?」はXそのものではなく、Xが話全体で果たす役割（例示・対比・根拠）を問う。前後の文脈を確認。</p>
+    <h3><span class="jp">目的問題の攻略</span><span class="en">How to handle Purpose questions</span></h3>
+    <p><span class="jp">「Why does the speaker mention X?」はXそのものではなく、Xが話全体で果たす役割（例示・対比・根拠）を問う。前後の文脈を確認。</span><span class="en">'Why does the speaker mention X?' asks the role X plays in the talk (example, contrast, evidence) — not X itself. Check the surrounding context.</span></p>
   </div>
 </div>
 
@@ -122,11 +130,11 @@ body[data-lang="en"] .jp{display:none}
 <div class="talk-section">
   <div class="talk-header">
     <h3>Talk 1 — The Bystander Effect (Social Science)</h3>
-    <p>話者：教授 ｜ Standard</p>
+    <p><span class="jp">話者：教授 ｜ Standard</span><span class="en">Speaker: Professor | Standard</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <summary><span class="jp">スクリプトを見る（シグナルワードをハイライト付き）</span><span class="en">View transcript (signal words highlighted)</span></summary>
       <p style="font-size:.82em;color:#6b7280;margin-bottom:6px;font-style:italic;">Narrator: Listen to part of a lecture in a psychology class.</p>
       <div class="script-text">
         <span class="highlight">Today we're going to look at</span> a fascinating phenomenon in social psychology called the bystander effect. The bystander effect refers to the tendency for people to be less likely to help someone in need when other people are present. <span class="highlight">In other words,</span> the more witnesses there are to an emergency, the less likely any single person is to step in and offer assistance.<br><br>
@@ -151,8 +159,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> Crime prevention strategies in urban areas.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> The relationship between personality and helping behavior.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 冒頭で「Today we're going to look at a fascinating phenomenon ... called the bystander effect」と主題を明示。全体を通して緊急時のグループ行動について議論されている。(A)は心理学全般で範囲が広すぎ、(C)(D)は言及なし。</div>
-      <div class="q-hint">🔑 Main Idea問題：冒頭の「Today we're going to look at...」がそのまま答え。★シグナルワード直後に注目。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">冒頭で「Today we're going to look at a fascinating phenomenon ... called the bystander effect」と主題を明示。全体を通して緊急時のグループ行動について議論されている。(A)は心理学全般で範囲が広すぎ、(C)(D)は言及なし。</span><span class="en">The opening declares the topic 'a fascinating phenomenon ... called the bystander effect.' The whole talk is about group behavior in emergencies. (A) is too broad (psychology in general); (C) (D) are not mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">Main Idea問題：冒頭の「Today we're going to look at...」がそのまま答え。★シグナルワード直後に注目。</span><span class="en">Main Idea: the answer is right after 'Today we're going to look at...'. ★Focus right after the signal phrase.</span></div>
     </div>
   </div>
 
@@ -170,8 +178,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> To argue that bystanders should be held legally responsible.</div>
         <div class="opt-row is-correct"><span class="opt-label">(D)</span> To describe the event that inspired research on the bystander effect.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> Kitty Genovese事件は「following the widely reported case of...」と、DarleyとLataneが傍観者効果の研究を始めるきっかけとして紹介されている。(A)の近隣監視プログラム、(B)の犯罪率、(D)の法的責任は言及なし。</div>
-      <div class="q-hint">🔑 Purpose問題のコツ：「Why does the speaker mention X?」→ Xの前後の文脈を見る。ここでは「first studied ... following the ... case」と研究のきっかけとして提示されている。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">Kitty Genovese事件は「following the widely reported case of...」と、DarleyとLataneが傍観者効果の研究を始めるきっかけとして紹介されている。(A)の近隣監視プログラム、(B)の犯罪率、(D)の法的責任は言及なし。</span><span class="en">The Kitty Genovese case is introduced as 'following the widely reported case of...' — the spark for Darley and Latane's bystander research. (A) neighborhood watch; (B) crime rates; (D) legal liability are not mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">Purpose問題のコツ：「Why does the speaker mention X?」→ Xの前後の文脈を見る。ここでは「first studied ... following the ... case」と研究のきっかけとして提示されている。</span><span class="en">Purpose tip: 'Why does the speaker mention X?' → look at the context around X. Here it's presented as 'first studied ... following the ... case' — the spark for the research.</span></div>
     </div>
   </div>
 
@@ -189,8 +197,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> The fear of being judged for intervening.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> The confusion about what kind of help to offer.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 講師は「each individual feels less personal obligation to act because they assume someone else will help」と明確に定義。他者がいる場合に個人の義務感が薄れるという信念。(B)は正反対、(C)(D)は別の概念。</div>
-      <div class="q-hint">🔑 専門用語の定義問題：「called X」「known as X」と導入された直後に必ず説明が続く。「which means...」の後が定義そのもの。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">講師は「each individual feels less personal obligation to act because they assume someone else will help」と明確に定義。他者がいる場合に個人の義務感が薄れるという信念。(B)は正反対、(C)(D)は別の概念。</span><span class="en">The lecturer defines clearly, 'each individual feels less personal obligation to act because they assume someone else will help.' The belief that personal duty fades when others are present. (B) is the opposite; (C) (D) are different concepts.</span></div>
+      <div class="q-hint">🔑 <span class="jp">専門用語の定義問題：「called X」「known as X」と導入された直後に必ず説明が続く。「which means...」の後が定義そのもの。</span><span class="en">Definition: an explanation always follows after 'called X' / 'known as X.' What follows 'which means...' is the definition itself.</span></div>
     </div>
   </div>
 
@@ -208,8 +216,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> Waiting for trained professionals to arrive.</div>
         <div class="opt-row is-correct"><span class="opt-label">(D)</span> Asking a specific person for help directly.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 講師は「when the victim directly asks a specific person for assistance」と述べている。特定の人に直接助けを求めることで傍観者効果が減少する。(A)はむしろ効果を強める。(B)(D)は言及なし。</div>
-      <div class="q-hint">🔑 Detail問題：講義の最後に解決策が述べられることが多い。「can be reduced ... such as when...」のパターンに注目。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">講師は「when the victim directly asks a specific person for assistance」と述べている。特定の人に直接助けを求めることで傍観者効果が減少する。(A)はむしろ効果を強める。(B)(D)は言及なし。</span><span class="en">The lecturer says, 'when the victim directly asks a specific person for assistance.' Asking a specific person directly reduces the bystander effect. (A) actually strengthens it; (B) (D) are not mentioned.</span></div>
+      <div class="q-hint">🔑 <span class="jp">Detail問題：講義の最後に解決策が述べられることが多い。「can be reduced ... such as when...」のパターンに注目。</span><span class="en">Detail: solutions often appear at the end of the lecture. Watch the pattern 'can be reduced ... such as when...'.</span></div>
     </div>
   </div>
 </div>
@@ -218,11 +226,11 @@ body[data-lang="en"] .jp{display:none}
 <div class="talk-section">
   <div class="talk-header">
     <h3>Talk 2 — The Water Cycle and Climate Change (Physical Science)</h3>
-    <p>話者：教授 ｜ Harder</p>
+    <p><span class="jp">話者：教授 ｜ Harder</span><span class="en">Speaker: Professor | Harder</span></p>
   </div>
   <div class="script-box">
     <details>
-      <summary>スクリプトを見る（シグナルワードをハイライト付き）</summary>
+      <summary><span class="jp">スクリプトを見る（シグナルワードをハイライト付き）</span><span class="en">View transcript (signal words highlighted)</span></summary>
       <p style="font-size:.82em;color:#6b7280;margin-bottom:6px;font-style:italic;">Narrator: Listen to part of a lecture in an earth science class.</p>
       <div class="script-text">
         <span class="highlight">Let's talk about</span> the water cycle and how climate change is affecting this fundamental process. The water cycle, also known as the hydrological cycle, describes the continuous movement of water through the Earth's systems.<br><br>
@@ -249,8 +257,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> The formation of different types of clouds.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> Strategies for conserving water in agriculture.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 冒頭で「Let's talk about the water cycle and how climate change is affecting this fundamental process」と主題を明示。前半で水循環の仕組み、後半で気候変動の影響を説明。(A)(C)(D)は主題ではない。</div>
-      <div class="q-hint">🔑 Main Idea問題：「Let's talk about...」が冒頭に来たら、その直後がトピック。2つの要素（水循環＋気候変動）を含む選択肢を選ぶ。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">冒頭で「Let's talk about the water cycle and how climate change is affecting this fundamental process」と主題を明示。前半で水循環の仕組み、後半で気候変動の影響を説明。(A)(C)(D)は主題ではない。</span><span class="en">The opening declares the topic 'the water cycle and how climate change is affecting this fundamental process.' First half explains the cycle, second half explains climate impact. (A) (C) (D) are not the theme.</span></div>
+      <div class="q-hint">🔑 <span class="jp">Main Idea問題：「Let's talk about...」が冒頭に来たら、その直後がトピック。2つの要素（水循環＋気候変動）を含む選択肢を選ぶ。</span><span class="en">Main Idea: when 'Let's talk about...' opens the talk, the topic comes right after. Pick the option that includes both elements (water cycle + climate change).</span></div>
     </div>
   </div>
 
@@ -268,8 +276,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row"><span class="opt-label">(C)</span> The movement of water underground.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> The melting of glaciers due to rising temperatures.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 講師は「transpiration, where water is released from their leaves into the air」と明確に定義。(A)は凝結（condensation）、(C)は地下浸透、(D)は氷河融解で別の概念。</div>
-      <div class="q-hint">🔑 専門用語の定義問題：「called X, where...」のパターンで導入される。where以下が定義そのもの。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">講師は「transpiration, where water is released from their leaves into the air」と明確に定義。(A)は凝結（condensation）、(C)は地下浸透、(D)は氷河融解で別の概念。</span><span class="en">The lecturer defines clearly, 'transpiration, where water is released from their leaves into the air.' (A) is condensation; (C) is groundwater infiltration; (D) is glacier melting — different concepts.</span></div>
+      <div class="q-hint">🔑 <span class="jp">専門用語の定義問題：「called X, where...」のパターンで導入される。where以下が定義そのもの。</span><span class="en">Definition: introduced by the pattern 'called X, where...'. What follows 'where' is the definition.</span></div>
     </div>
   </div>
 
@@ -287,8 +295,8 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row is-correct"><span class="opt-label">(C)</span> To point out that some areas get more rain while others face droughts.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> To compare rainfall in the Northern and Southern Hemispheres.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 「However, the distribution is uneven」の直後に「some areas experience heavier rainfall and flooding, others face prolonged droughts」と説明。降水量の地域差を強調している。(A)は正反対。</div>
-      <div class="q-hint">🔑 Purpose問題：「However」（⇔対比シグナル）の後に出てきた発言。前の内容（降水量増加）に対して「でも均一ではない」と対比を示す役割。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">「However, the distribution is uneven」の直後に「some areas experience heavier rainfall and flooding, others face prolonged droughts」と説明。降水量の地域差を強調している。(A)は正反対。</span><span class="en">Right after 'However, the distribution is uneven,' it explains 'some areas experience heavier rainfall and flooding, others face prolonged droughts.' Stresses regional disparity in precipitation. (A) is the opposite.</span></div>
+      <div class="q-hint">🔑 <span class="jp">Purpose問題：「However」（⇔対比シグナル）の後に出てきた発言。前の内容（降水量増加）に対して「でも均一ではない」と対比を示す役割。</span><span class="en">Purpose: a remark after 'However' (⇔ contrast signal). Plays the role of contrasting with the prior content (precipitation increase) by saying 'but it's uneven.'</span></div>
     </div>
   </div>
 
@@ -306,15 +314,15 @@ body[data-lang="en"] .jp{display:none}
         <div class="opt-row is-correct"><span class="opt-label">(C)</span> Increased earthquake activity.</div>
         <div class="opt-row"><span class="opt-label">(D)</span> Prolonged droughts in some regions.</div>
       </div>
-      <div class="q-explain"><strong>解説：</strong> 講師が挙げた影響は、より激しい降水現象(A)、氷河の融解(B)、長期的な干ばつ(D)。地震活動の増加(C)は言及されていない。NOT問題は消去法で3つの正しい情報を確認する。</div>
-      <div class="q-hint">🔑 NOT/EXCEPT問題の鉄則：消去法で解く。本文に言及のある3つを消し、残った1つが正解。メモで各ポイントにチェックを入れると確実。</div>
+      <div class="q-explain"><strong><span class="jp">解説：</span><span class="en">Explanation:</span></strong> <span class="jp">講師が挙げた影響は、より激しい降水現象(A)、氷河の融解(B)、長期的な干ばつ(D)。地震活動の増加(C)は言及されていない。NOT問題は消去法で3つの正しい情報を確認する。</span><span class="en">The cited impacts are heavier rainfall (A), glacier melting (B), and prolonged droughts (D). Increased earthquake activity (C) is not mentioned. NOT questions: confirm the 3 mentioned items by elimination.</span></div>
+      <div class="q-hint">🔑 <span class="jp">NOT/EXCEPT問題の鉄則：消去法で解く。本文に言及のある3つを消し、残った1つが正解。メモで各ポイントにチェックを入れると確実。</span><span class="en">NOT/EXCEPT rule: solve by elimination. Cross out 3 mentioned items; the remaining one is the answer. Adding checkmarks in your notes makes it reliable.</span></div>
     </div>
   </div>
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-9.html">← もう一度解く</a>
-  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">メニューに戻る</a>
+  <a class="btn-back" href="practice-9.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
+  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">メニューに戻る</span><span class="en">Back to menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
@@ -344,11 +352,15 @@ function render(){
     document.getElementById('scoreBig').textContent = correct + ' / ' + totalQ;
     document.getElementById('scoreBar').style.width = (correct/totalQ*100)+'%';
     const pct = Math.round(correct/totalQ*100);
-    let msg = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
-    document.getElementById('scoreMsg').textContent = pct + '% 正答率 — ' + msg;
+    var __lang=(localStorage.getItem('tck_lang')||'jp');
+    var msgJp = pct >= 75 ? '素晴らしい！🎉' : pct >= 50 ? 'いい調子！' : '復習して次に活かそう💪';
+    var msgEn = pct >= 75 ? 'Excellent! 🎉' : pct >= 50 ? 'Good pace!' : 'Review and use it next time 💪';
+    let msg = __lang==='en' ? msgEn : msgJp;
+    var __pctLabel = __lang==='en' ? '% correct — ' : '% 正答率 — ';
+    document.getElementById('scoreMsg').textContent = pct + __pctLabel + msg;
   } else {
     document.getElementById('scoreBig').textContent = '— / ' + totalQ;
-    document.getElementById('scoreMsg').textContent = __i18n('問題を先に解いてからこのページを見ると、スコアが表示されます','Complete the practice first to see your score.');
+    document.getElementById('scoreMsg').innerHTML = '<span class="jp">問題を先に解いてからこのページを見ると、スコアが表示されます</span>'+'<span class="en">Complete the practice first to see your score.</span>';
     for(let i=1;i<=totalQ;i++) document.getElementById('q'+i+'user').style.display='none';
   }
 }
