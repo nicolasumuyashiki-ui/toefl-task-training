@@ -205,11 +205,14 @@ function renderAll(){
     document.getElementById('passage'+si).innerHTML=ph;
     var ag='';
     bl.forEach(function(b,qi){
-      var ex=s.exp[qi];var uans=ua[qi]||'';var ok=uans.toLowerCase()===b.a.toLowerCase();
+      var ex=s.exp[qi];var uans=ua[qi]||'';
+      var savedA=(st&&st.correctAnswers&&st.correctAnswers[qi])||b.a;
+      var savedS=(st&&st.prefixes&&st.prefixes[qi]!=null)?st.prefixes[qi]:b.s;
+      var ok=uans.toLowerCase()===savedA.toLowerCase();
       var dt=ex.d==='HARD'?'<span class="q-tag tag-hard">HARD</span>':'<span class="q-tag tag-mod">MOD</span>';
       var ul='';
-      if(st){if(ok){ul='<div class="q-user" style="color:#004D2E">&#10004; 正解！ あなたの回答: '+b.s+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#8A3E24">&#11036; 未回答 — 推測でも必ず埋めよう！</div>';}else{ul='<div class="q-user" style="color:#8A3E24">&#10060; あなた: <span style="text-decoration:line-through">'+b.s+uans+'</span> &rarr; 正解: '+b.w+'</div>';}}
-      ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+b.s+'</span><span class="ans">'+b.a+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong>品詞：'+ex.pos+'</strong> '+ex.e+'</div></div></div>';
+      if(st){if(ok){ul='<div class="q-user" style="color:#004D2E">&#10004; 正解！ あなたの回答: '+savedS+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#8A3E24">&#11036; 未回答 — 推測でも必ず埋めよう！</div>';}else{ul='<div class="q-user" style="color:#8A3E24">&#10060; あなた: <span style="text-decoration:line-through">'+savedS+uans+'</span> &rarr; 正解: '+b.w+'</div>';}}
+      ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+savedS+'</span><span class="ans">'+savedA+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong>品詞：'+ex.pos+'</strong> '+ex.e+'</div></div></div>';
     });
     document.getElementById('ag'+si).innerHTML=ag;
   });

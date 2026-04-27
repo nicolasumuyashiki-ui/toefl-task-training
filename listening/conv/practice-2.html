@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Listen to a Conversation \u2014 Practice 2</title>
+<title>Listen to a Conversation \— Practice 2</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;background:#FBF6EC;min-height:100vh;display:flex;flex-direction:column;}
@@ -106,18 +106,18 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 <div class="completion" id="completionPage">
 <div class="completion-card">
-<div style="font-size:48px">\u2705</div>
+<div style="font-size:48px">\✅</div>
 <h2>Conversation Section Complete!</h2>
 <div class="score-display" id="scoreDisplay">0 / 4</div>
 <div class="result-grid" id="resultGrid"></div>
-<a class="btn-answers" href="practice-2-answers.html" id="answersBtn" style="display:none">\u89e3\u7b54\u89e3\u8aac\u3092\u898b\u308b \u2192</a>
+<a class="btn-answers" href="practice-2-answers.html" id="answersBtn" style="display:none">\解\答\解\説\を\見\る \→</a>
 </div>
 </div>
 </div>
 
 <!-- FOOTER -->
 <div class="footer-nav">
-<button class="btn-next" id="btnNext" onclick="nextStep()">Next \u2192</button>
+<button class="btn-next" id="btnNext" onclick="nextStep()">Next \→</button>
 </div>
 
 <script src="../../js/auth.js"></script><script src="../../js/difficulty-badge.js"></script>
@@ -200,7 +200,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 function startListening(){
     document.getElementById('startOverlay').classList.add('hidden');
-    playConversation(0);
+    var ov=document.createElement('div');ov.id='cdOverlay';ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:90;color:#fff;font-size:96px;font-weight:800;font-family:Manrope,sans-serif;';ov.textContent='3';document.body.appendChild(ov);var n=3;var iv=setInterval(function(){n--;if(n>0){ov.textContent=String(n);}else{clearInterval(iv);if(ov.parentNode)ov.parentNode.removeChild(ov);playConversation(0);}},1000);
 }
 
 function playConversation(idx){
