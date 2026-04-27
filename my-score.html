@@ -165,8 +165,8 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
       </div>
     </div>
     <div class="total-caveat">
-      <span class="jp"><strong>ご参考まで</strong>：Reading と Listening の予測は信頼性が高いですが、Speaking と Writing は TCK 講師による採点を経ないと正確なスコアは確定しません。現在の値はタスクの提出状況から推定した<strong>おおよそのレンジ</strong>です。</span>
-      <span class="en"><strong>Reference only</strong>: Reading and Listening estimates are quite reliable, but Speaking and Writing require coach grading to be accurate. Speaking and Writing values here are <strong>rough estimates</strong> based on submission activity.</span>
+      <span class="jp"><strong>ご参考まで</strong>：Reading と Listening は信頼性の高い推定スコアです。Writing は Build a Sentence の出来から概算、Speaking は自動採点不可です。詳細な指導は有料の個別指導オプションでご利用いただけます。</span>
+      <span class="en"><strong>Reference only</strong>: Reading and Listening estimates are reliable. Writing is approximated from Build a Sentence accuracy; Speaking is not auto-scored. Detailed feedback is available via the paid private coaching option.</span>
     </div>
   </div>
 </div>
@@ -491,8 +491,8 @@ function render() {
       attempts: writingAttemptCount, correctTotal: sentenceAgg ? sentenceAgg.correct+'/'+sentenceAgg.total : null,
       estimated:true,
       note: {
-        jp: '<strong>暫定値</strong>：Build a Sentence の正答率を Reading 換算表に当てはめた推定スコア。Email / Discussion も同等の出来と仮定して算出（講師採点で確定）。',
-        en: '<strong>Tentative</strong>: derived from Build-a-Sentence accuracy mapped through the Reading conversion table, assuming Email and Discussion perform similarly. Coach grading confirms the real score.',
+        jp: '<strong>暫定値</strong>：Build a Sentence の正答率を Reading 換算表に当てはめた推定スコア。Email / Discussion も同等の出来と仮定して算出。詳細なフィードバックや修正提案が必要な場合は、有料の<strong>個別指導オプション</strong>をご利用ください。',
+        en: '<strong>Tentative</strong>: derived from Build-a-Sentence accuracy mapped through the Reading conversion table, assuming Email and Discussion perform similarly. For detailed feedback or revisions, see the paid <strong>private coaching option</strong>.',
       },
     },
     {
@@ -501,8 +501,8 @@ function render() {
       attempts: speakingAttemptCount, correctTotal: null,
       estimated:true,
       note: {
-        jp: '採点不可。録音の講師採点で確定するため、自動推定は行いません。Listen & Repeat と Take an Interview を実施することで本番に向けた発話練習を積めます。',
-        en: 'Not scored. Speaking requires coach grading of your recordings; no automated estimate is shown. Use Listen & Repeat and Take an Interview to build production fluency for test day.',
+        jp: 'Speaking は自動採点に対応していません。Listen & Repeat と Take an Interview で発話練習を積み、より詳しい指導が必要な場合は有料の<strong>個別指導オプション</strong>をご活用ください。',
+        en: 'Speaking is not auto-scored. Practice with Listen & Repeat and Take an Interview; for tailored coaching, see the paid <strong>private coaching option</strong>.',
       },
     },
   ];

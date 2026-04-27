@@ -57,6 +57,29 @@ body[data-lang="en"] .jp{display:none}
 .skill-grid{max-width:980px;margin:24px auto 80px;padding:0 28px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 @media(max-width:720px){.skill-grid{grid-template-columns:1fr}.hero h1{font-size:1.7em}}
 
+/* Full Length Test banner — sits above the four-skill grid as a
+   prominent secondary entrypoint distinct from the regular
+   task-by-task practice. Gold/dark-green palette so it reads as a
+   "test day rehearsal" call-to-action rather than another skill tile. */
+.flt-banner{max-width:980px;margin:8px auto 0;padding:0 28px}
+.flt-card{display:flex;align-items:center;gap:22px;padding:22px 28px;
+  background:linear-gradient(135deg,var(--green-deep),var(--green-dark));
+  color:#fff;border-radius:var(--radius);text-decoration:none;
+  box-shadow:0 8px 24px rgba(0,40,23,.16);
+  transition:transform .2s ease, box-shadow .2s ease;position:relative;overflow:hidden}
+.flt-card:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,40,23,.22)}
+.flt-card::before{content:"";position:absolute;top:0;right:0;width:160px;height:100%;
+  background:radial-gradient(circle at top right, rgba(201,169,97,.18), transparent 70%);pointer-events:none}
+.flt-icon{flex-shrink:0;width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center}
+.flt-body{flex:1;min-width:0;position:relative;z-index:1}
+.flt-eyebrow{font-family:var(--font-en);font-size:.7em;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.flt-eyebrow .soon{background:var(--gold);color:var(--green-deep);padding:2px 9px;border-radius:999px;font-size:.86em;letter-spacing:.06em;font-weight:700}
+.flt-title{font-family:var(--font-en);font-size:1.55em;font-weight:800;letter-spacing:-0.01em;line-height:1.15;margin-bottom:4px}
+.flt-sub{font-size:.92em;color:rgba(255,255,255,.78);line-height:1.55}
+.flt-arrow{font-family:var(--font-en);font-size:1.4em;color:var(--gold);position:relative;z-index:1;transition:transform .2s}
+.flt-card:hover .flt-arrow{transform:translateX(4px)}
+
 .skill-card{background:var(--white);border:1px solid var(--paper);border-radius:var(--radius);padding:26px 26px 22px;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
 .skill-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,118,70,.08)}
 .skill-card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--green);opacity:0;transition:opacity .2s}
@@ -129,6 +152,23 @@ body[data-lang="en"] .jp{display:none}
     <span class="jp">4つの技能を、<br>一歩ずつ鍛える。</span>
     <span class="en">Four skills,<br>one step at a time.</span>
   </h1>
+</div>
+
+<!-- Full Length Test entrypoint — promoted out of the More section so
+     it reads as a test-day rehearsal, not a sidebar add-on. -->
+<div class="flt-banner">
+  <a class="flt-card" href="full-length.html">
+    <div class="flt-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+    <div class="flt-body">
+      <div class="flt-eyebrow"><span class="jp">本番形式テスト</span><span class="en">Full Test</span><span class="soon">Coming Soon</span></div>
+      <div class="flt-title">Full Length Test</div>
+      <div class="flt-sub">
+        <span class="jp">本番と同じ形式・時間配分で、4 技能を一気通貫で受験できる模試（準備中）</span>
+        <span class="en">A complete, timed practice test across all four sections — built to mirror the real exam (in prep)</span>
+      </div>
+    </div>
+    <span class="flt-arrow">→</span>
+  </a>
 </div>
 
 <div class="skill-grid">
@@ -225,14 +265,14 @@ body[data-lang="en"] .jp{display:none}
       <span class="extras-arrow">→</span>
     </a>
 
-    <a class="extras-card upcoming" href="full-length.html">
-      <div class="extras-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8A6D2A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="13" y2="16"/></svg></div>
+    <a class="extras-card" href="private-coaching.html">
+      <div class="extras-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#007646" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11l-3 3-2-2"/></svg></div>
       <div class="extras-body">
-        <div class="extras-eyebrow"><span>Full Test</span><span class="soon">Coming Soon</span></div>
-        <div class="extras-title">Full Length Test</div>
+        <div class="extras-eyebrow">Premium</div>
+        <div class="extras-title">個別指導オプション</div>
         <div class="extras-sub">
-          <span class="jp">本番形式で 4 技能を一気通貫で受験できる模試（準備中）</span>
-          <span class="en">A complete, timed practice test across all four sections (in prep)</span>
+          <span class="jp">Writing 添削・Speaking 模範解答・1on1 セッション（有料）</span>
+          <span class="en">Writing feedback, Speaking model answers, 1-on-1 sessions (paid)</span>
         </div>
       </div>
       <span class="extras-arrow">→</span>
