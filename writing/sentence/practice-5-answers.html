@@ -77,13 +77,20 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
 <div class="header">
-  <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 5 | 10問</p>
+  <h1>🔤 <span class="jp">Build a Sentence — 解答解説</span><span class="en">Build a Sentence — Answers & Explanations</span></h1>
+  <p><span class="jp">Practice 5 | 10問</span><span class="en">Practice 5 | 10 questions</span></p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
@@ -92,21 +99,21 @@ body[data-lang="en"] .jp{display:none}
 <div class="container">
 
 <div class="tips-card">
-  <h2>💡 Build a Sentence 攻略 3ステップ</h2>
+  <h2>💡 <span class="jp">Build a Sentence 攻略 3ステップ</span><span class="en">Build a Sentence — 3-step strategy</span></h2>
   <div class="step-grid">
-    <div class="step"><div class="step-num">1</div><h4>主語と動詞を見つける</h4><p>「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</p></div>
-    <div class="step"><div class="step-num">2</div><h4>骨格を作る</h4><p>S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</p></div>
-    <div class="step"><div class="step-num">3</div><h4>残りを配置</h4><p>修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</p></div>
+    <div class="step"><div class="step-num">1</div><h4><span class="jp">主語と動詞を見つける</span><span class="en">Find the subject and verb</span></h4><p><span class="jp">「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</span><span class="en">Look first for who (the subject) and what they do (the verb). These two form the backbone of the sentence.</span></p></div>
+    <div class="step"><div class="step-num">2</div><h4><span class="jp">骨格を作る</span><span class="en">Build the skeleton</span></h4><p><span class="jp">S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</span><span class="en">Combine S + V into a basic shape. Stay aware of the sentence pattern (SV, SVC, SVO).</span></p></div>
+    <div class="step"><div class="step-num">3</div><h4><span class="jp">残りを配置</span><span class="en">Place the rest</span></h4><p><span class="jp">修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</span><span class="en">Slot modifiers, prepositional phrases, and conjunctions into the right spots. Finish with a 5-second read-aloud check.</span></p></div>
   </div>
 </div>
 
 <div class="patterns-card">
-  <h2>📐 今回の語順パターン</h2>
+  <h2>📐 <span class="jp">今回の語順パターン</span><span class="en">Word-order patterns in this set</span></h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 Future perfect (will have + p.p.)</h5><p>Q1「I will have repeated the trial at least three times.」, Q4「we will have finished the entire draft.」</p></div>
-    <div class="pattern"><h5>🔹 Causative (have / get something done)</h5><p>Q6「I got the references checked before the deadline.」, Q9「I got it reviewed by my supervisor.」</p></div>
-    <div class="pattern"><h5>🔹 Correlative conjunctions (both...and / neither...nor)</h5><p>Q2「both the weekly seminars and the open discussions.」, Q5「neither the equipment nor the funding was ready.」</p></div>
-    <div class="pattern"><h5>🔹 Conditional connectors (at which / as long as)</h5><p>Q3「The site at which we worked last summer is perfect for sampling.」, Q7「as long as the sensors are not giving errors.」</p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Future perfect (will have + p.p.)</span><span class="en">Future perfect (will have + p.p.)</span></h5><p><span class="jp">Q1「I will have repeated the trial at least three times.」, Q4「we will have finished the entire draft.」</span><span class="en">Q1 'I will have repeated the trial at least three times.', Q4 'we will have finished the entire draft.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Causative (have / get something done)</span><span class="en">Causative (have / get something done)</span></h5><p><span class="jp">Q6「I got the references checked before the deadline.」, Q9「I got it reviewed by my supervisor.」</span><span class="en">Q6 'I got the references checked before the deadline.', Q9 'I got it reviewed by my supervisor.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Correlative conjunctions (both...and / neither...nor)</span><span class="en">Correlative conjunctions (both...and / neither...nor)</span></h5><p><span class="jp">Q2「both the weekly seminars and the open discussions.」, Q5「neither the equipment nor the funding was ready.」</span><span class="en">Q2 'both the weekly seminars and the open discussions.', Q5 'neither the equipment nor the funding was ready.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Conditional connectors (at which / as long as)</span><span class="en">Conditional connectors (at which / as long as)</span></h5><p><span class="jp">Q3「The site at which we worked last summer is perfect for sampling.」, Q7「as long as the sensors are not giving errors.」</span><span class="en">Q3 'The site at which we worked last summer is perfect for sampling.', Q7 'as long as the sensors are not giving errors.'</span></p></div>
   </div>
 </div>
 
@@ -115,8 +122,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-5.html">← もう一度解く</a>
-  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
+  <a class="btn-back" href="practice-5.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
+  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
@@ -124,16 +131,16 @@ body[data-lang="en"] .jp{display:none}
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
-{id:1,prompt:"Do you think you will finish the experiment this week?",sentence:"By Friday, I will have repeated the trial at least three times.",grammar:"未来完了: By + 時点, S + will have + Vpp。「金曜までに3回は実施しているだろう」。at least =「少なくとも」。"},
-{id:3,prompt:"What do you like about your research group?",sentence:"I enjoy both the weekly seminars and the open discussions.",grammar:"both A and B: 2つの名詞を並列。both と and の間に同じ品詞（名詞句）を入れる。",alt:"I enjoy both the open discussions and the weekly seminars."},
-{id:5,prompt:"Which field site is good for sampling?",sentence:"The site at which we worked last summer is perfect for sampling.",grammar:"前置詞 + 関係代名詞: at which = where。「去年の夏に作業した場所」が主語。is perfect for ~ で補語。"},
-{id:6,prompt:"Will the thesis be done by next Friday?",sentence:"By next Friday, we will have finished the entire draft.",grammar:"未来完了: By next Friday, S + will have + Vpp。「来週の金曜までに完了しているだろう」。"},
-{id:7,prompt:"Why did you cancel the field survey?",sentence:"We canceled it because neither the equipment nor the funding was ready.",grammar:"neither A nor B: 否定の相関接続詞。A も B も〜ない。because節で理由を述べる。"},
-{id:8,prompt:"Is your paper ready for submission?",sentence:"Yes, I got the references checked before the deadline.",grammar:"使役の get: get + O + Vpp =「〜を…してもらう」。before + 名詞で時を表す。"},
-{id:9,prompt:"Can we run the test as long as the data holds?",sentence:"Yes, we can run the test as long as the sensors are not giving errors.",grammar:"as long as =「〜する限り」: 条件を表す接続詞。否定 are not を含む条件節。"},
-{id:11,prompt:"How do you manage your workload in the lab?",sentence:"I enjoy both analyzing the data and writing the reports.",grammar:"both A and B: 動名詞句を並列。both analyzing ~ and writing ~ で2つの行動を対等に結ぶ。",alt:"I enjoy both writing the reports and analyzing the data."},
-{id:15,prompt:"Did you proofread your paper before submission?",sentence:"No, I got it reviewed by my supervisor.",grammar:"使役の get: get + O + Vpp。「指導教員に見てもらった」。by + 動作主で誰に頼んだか明示。"},
-{id:16,prompt:"What happens if the funding runs out mid-study?",sentence:"The study will continue as long as there is no budget cut or equipment failure.",grammar:"as long as =「〜する限り」: 条件を表す。there is no ~ =「〜がない限り」。or で2つの否定条件を並列。",alt:"The study will continue as long as there is no equipment failure or budget cut."}
+{id:1,prompt:"Do you think you will finish the experiment this week?",sentence:"By Friday, I will have repeated the trial at least three times.",grammar:"未来完了: By + 時点, S + will have + Vpp。「金曜までに3回は実施しているだろう」。at least =「少なくとも」。",grammar_en:"Future perfect: 'By + time, S + will have + Vpp'. 'I will have run the trial three times by Friday'. 'at least' = 'no fewer than'."},
+{id:3,prompt:"What do you like about your research group?",sentence:"I enjoy both the weekly seminars and the open discussions.",grammar:"both A and B: 2つの名詞を並列。both と and の間に同じ品詞（名詞句）を入れる。",grammar_en:"both A and B: two parallel nouns. The same parts of speech (noun phrases) appear between 'both' and 'and'.",alt:"I enjoy both the open discussions and the weekly seminars."},
+{id:5,prompt:"Which field site is good for sampling?",sentence:"The site at which we worked last summer is perfect for sampling.",grammar:"前置詞 + 関係代名詞: at which = where。「去年の夏に作業した場所」が主語。is perfect for ~ で補語。",grammar_en:"Preposition + relative pronoun: 'at which' = 'where'. The site we worked at last summer is the subject. 'is perfect for ~' is the complement."},
+{id:6,prompt:"Will the thesis be done by next Friday?",sentence:"By next Friday, we will have finished the entire draft.",grammar:"未来完了: By next Friday, S + will have + Vpp。「来週の金曜までに完了しているだろう」。",grammar_en:"Future perfect: 'By next Friday, S + will have + Vpp' = 'will have finished by next Friday'."},
+{id:7,prompt:"Why did you cancel the field survey?",sentence:"We canceled it because neither the equipment nor the funding was ready.",grammar:"neither A nor B: 否定の相関接続詞。A も B も〜ない。because節で理由を述べる。",grammar_en:"neither A nor B: a negative correlative — neither A nor B. because-clause for the reason."},
+{id:8,prompt:"Is your paper ready for submission?",sentence:"Yes, I got the references checked before the deadline.",grammar:"使役の get: get + O + Vpp =「〜を…してもらう」。before + 名詞で時を表す。",grammar_en:"Causative get: 'get + O + Vpp' = 'have someone do something'. 'before + N' shows when."},
+{id:9,prompt:"Can we run the test as long as the data holds?",sentence:"Yes, we can run the test as long as the sensors are not giving errors.",grammar:"as long as =「〜する限り」: 条件を表す接続詞。否定 are not を含む条件節。",grammar_en:"as long as = 'so long as / on the condition that': a conjunction expressing condition. Includes the negative 'are not' inside the condition."},
+{id:11,prompt:"How do you manage your workload in the lab?",sentence:"I enjoy both analyzing the data and writing the reports.",grammar:"both A and B: 動名詞句を並列。both analyzing ~ and writing ~ で2つの行動を対等に結ぶ。",grammar_en:"both A and B: parallel gerund phrases. 'both analyzing ~ and writing ~' equates the two activities.",alt:"I enjoy both writing the reports and analyzing the data."},
+{id:15,prompt:"Did you proofread your paper before submission?",sentence:"No, I got it reviewed by my supervisor.",grammar:"使役の get: get + O + Vpp。「指導教員に見てもらった」。by + 動作主で誰に頼んだか明示。",grammar_en:"Causative get: 'get + O + Vpp'. 'had it reviewed by my supervisor'. 'by + agent' shows who did it."},
+{id:16,prompt:"What happens if the funding runs out mid-study?",sentence:"The study will continue as long as there is no budget cut or equipment failure.",grammar:"as long as =「〜する限り」: 条件を表す。there is no ~ =「〜がない限り」。or で2つの否定条件を並列。",grammar_en:"as long as = 'on the condition that'. 'there is no ~' = 'as long as there is no ~'. 'or' joins two negative conditions.",alt:"The study will continue as long as there is no equipment failure or budget cut."}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p5')||'null');
@@ -144,15 +151,15 @@ if(stored){
   document.getElementById('scoreBig').textContent=score+' / '+stored.total;
   document.getElementById('scoreBar').style.width=(score/stored.total*100)+'%';
   const pct=Math.round(score/stored.total*100);
-  document.getElementById('scoreMsg').textContent=pct+'% 正答率'+(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');
+  var jpTail=(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');var enTail=(pct>=80?' — Excellent! 🎉':pct>=50?' — Nice work!':' — Review and use it next time 💪');document.getElementById('scoreMsg').innerHTML='<span class="jp">'+pct+'% 正答率'+jpTail+'</span><span class="en">'+pct+'% correct'+enTail+'</span>';
 }
 
 let html='';
 answers.forEach((a,i)=>{
   html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"</div></div>'
     +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
-    +'<div class="q-grammar">📝 '+a.grammar+'</div>'
-    +(a.alt?'<div class="q-hint" style="margin-top:8px;"><strong>別解:</strong> '+a.alt+' も正解です。並列構造の順序は入れ替え可能です。</div>':'')
+    +'<div class="q-grammar">📝 <span class="jp">'+a.grammar+'</span><span class="en">'+(a.grammar_en||a.grammar)+'</span></div>'
+    +(a.alt?'<div class="q-hint" style="margin-top:8px;"><strong><span class="jp">別解:</span><span class="en">Alt:</span></strong> '+a.alt+' <span class="jp">も正解です。並列構造の順序は入れ替え可能です。</span><span class="en">is also acceptable. The order of parallel items can be swapped.</span></div>':'')
     +'</div></div>';
 });
 document.getElementById('qList').innerHTML=html;

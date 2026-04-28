@@ -77,13 +77,20 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
 <div class="header">
-  <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 1 | 10問</p>
+  <h1>🔤 <span class="jp">Build a Sentence — 解答解説</span><span class="en">Build a Sentence — Answers & Explanations</span></h1>
+  <p><span class="jp">Practice 1 | 10問</span><span class="en">Practice 1 | 10 questions</span></p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
@@ -92,21 +99,21 @@ body[data-lang="en"] .jp{display:none}
 <div class="container">
 
 <div class="tips-card">
-  <h2>💡 Build a Sentence 攻略 3ステップ</h2>
+  <h2>💡 <span class="jp">Build a Sentence 攻略 3ステップ</span><span class="en">Build a Sentence — 3-step strategy</span></h2>
   <div class="step-grid">
-    <div class="step"><div class="step-num">1</div><h4>主語と動詞を見つける</h4><p>「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</p></div>
-    <div class="step"><div class="step-num">2</div><h4>骨格を作る</h4><p>S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</p></div>
-    <div class="step"><div class="step-num">3</div><h4>残りを配置</h4><p>修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</p></div>
+    <div class="step"><div class="step-num">1</div><h4><span class="jp">主語と動詞を見つける</span><span class="en">Find the subject and verb</span></h4><p><span class="jp">「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</span><span class="en">Look first for who (the subject) and what they do (the verb). These two form the backbone of the sentence.</span></p></div>
+    <div class="step"><div class="step-num">2</div><h4><span class="jp">骨格を作る</span><span class="en">Build the skeleton</span></h4><p><span class="jp">S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</span><span class="en">Combine S + V into a basic shape. Stay aware of the sentence pattern (SV, SVC, SVO).</span></p></div>
+    <div class="step"><div class="step-num">3</div><h4><span class="jp">残りを配置</span><span class="en">Place the rest</span></h4><p><span class="jp">修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</span><span class="en">Slot modifiers, prepositional phrases, and conjunctions into the right spots. Finish with a 5-second read-aloud check.</span></p></div>
   </div>
 </div>
 
 <div class="patterns-card">
-  <h2>📐 今回の語順パターン</h2>
+  <h2>📐 <span class="jp">今回の語順パターン</span><span class="en">Word-order patterns in this set</span></h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 過去完了と時制の前後</h5><p>Q4「I had expected」Q7「the deadline had passed」— 過去のある時点より前の動作を示す had + Vpp。</p></div>
-    <div class="pattern"><h5>🔹 間接疑問文</h5><p>Q2「how people think」Q10「what I could do」のように、wh節内は平叙文語順（S+V）になる。</p></div>
-    <div class="pattern"><h5>🔹 目的・理由の接続詞</h5><p>Q6「because I was looking forward to it」Q9「so that I do not fall behind」— 理由と目的を明確に分ける。</p></div>
-    <div class="pattern"><h5>🔹 仮定法 would + V</h5><p>Q10「I would talk to the professor」— 仮定の状況への回答に使う丁寧・仮定表現。</p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">過去完了と時制の前後</span><span class="en">Past perfect & sequence of tenses</span></h5><p><span class="jp">Q4「I had expected」Q7「the deadline had passed」— 過去のある時点より前の動作を示す had + Vpp。</span><span class="en">Q4 'I had expected', Q7 'the deadline had passed' — had + past participle marks an action prior to a past reference point.</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">間接疑問文</span><span class="en">Indirect questions</span></h5><p><span class="jp">Q2「how people think」Q10「what I could do」のように、wh節内は平叙文語順（S+V）になる。</span><span class="en">As in Q2 'how people think' and Q10 'what I could do', the wh-clause uses statement word order (S + V).</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">目的・理由の接続詞</span><span class="en">Conjunctions of purpose & reason</span></h5><p><span class="jp">Q6「because I was looking forward to it」Q9「so that I do not fall behind」— 理由と目的を明確に分ける。</span><span class="en">Q6 'because I was looking forward to it', Q9 'so that I do not fall behind' — clearly distinguish reason from purpose.</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">仮定法 would + V</span><span class="en">Subjunctive 'would + V'</span></h5><p><span class="jp">Q10「I would talk to the professor」— 仮定の状況への回答に使う丁寧・仮定表現。</span><span class="en">Q10 'I would talk to the professor' — a polite, hypothetical response to an imagined situation.</span></p></div>
   </div>
 </div>
 
@@ -115,8 +122,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-1.html">← もう一度解く</a>
-  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
+  <a class="btn-back" href="practice-1.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
+  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
@@ -124,16 +131,16 @@ body[data-lang="en"] .jp{display:none}
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
-{id:1,prompt:"What time does the library close tonight?",sentence:"I think it closes at nine o'clock.",grammar:"SVO構文: I think (that) + S + V。間接的に答えるパターン。前置詞 at + 時刻。"},
-{id:2,prompt:"Why did you choose to study psychology?",sentence:"I have always been interested in how people think.",grammar:"現在完了 + 間接疑問文: have always been + 形容詞。interested in + wh節（平叙文語順）。"},
-{id:3,prompt:"Do you know where the science building is?",sentence:"It is the tall building right behind the cafeteria.",grammar:"SVC構文: It is + 名詞句。場所の前置詞句 right behind ~ で修飾。"},
-{id:4,prompt:"How did you do on the midterm exam?",sentence:"I did much better than I had expected.",grammar:"比較級 much better than ~。過去完了 had expected で「期待していたより」。"},
-{id:5,prompt:"Are you going to the study group tonight?",sentence:"Actually, I was planning to study on my own at the library.",grammar:"過去進行形 was planning to ~: 予定を述べる。on my own =「一人で」。"},
-{id:6,prompt:"Did you hear that the field trip was canceled?",sentence:"Yes, that is really disappointing because I was looking forward to it.",grammar:"because節（理由）: 主節 + because + 理由節。look forward to + 名詞/動名詞。"},
-{id:7,prompt:"Why didn't you sign up for the workshop?",sentence:"I did not know about it until the deadline had passed.",grammar:"否定文 + until: 「〜するまで知らなかった」。過去完了 had passed で時制の前後関係を明示。"},
-{id:8,prompt:"Could you tell me what the homework is for tomorrow?",sentence:"We need to read and summarize chapter five.",grammar:"等位接続詞 and: read and summarize（2つの動詞を並列）。need to + V。",alt:"We need to summarize and read chapter five."},
-{id:9,prompt:"How do you manage your time between work and school?",sentence:"I make a schedule every week so that I do not fall behind.",grammar:"目的の接続詞 so that: 「〜するために」。fall behind =「遅れをとる」。"},
-{id:10,prompt:"What would you do if you failed the final exam?",sentence:"I would talk to the professor about what I could do to improve my grade.",grammar:"仮定法 would + V: 仮定の状況への回答。間接疑問文 what I could do。to不定詞で目的を表す。"}
+{id:1,prompt:"What time does the library close tonight?",sentence:"I think it closes at nine o'clock.",grammar:"SVO構文: I think (that) + S + V。間接的に答えるパターン。前置詞 at + 時刻。",grammar_en:"SVO structure: I think (that) + S + V — an indirect way of answering. The preposition 'at' is used with clock times."},
+{id:2,prompt:"Why did you choose to study psychology?",sentence:"I have always been interested in how people think.",grammar:"現在完了 + 間接疑問文: have always been + 形容詞。interested in + wh節（平叙文語順）。",grammar_en:"Present perfect + indirect question: have always been + adjective. 'interested in' takes a wh-clause in statement word order."},
+{id:3,prompt:"Do you know where the science building is?",sentence:"It is the tall building right behind the cafeteria.",grammar:"SVC構文: It is + 名詞句。場所の前置詞句 right behind ~ で修飾。",grammar_en:"SVC structure: It is + noun phrase. The locative preposition phrase 'right behind ~' modifies the noun."},
+{id:4,prompt:"How did you do on the midterm exam?",sentence:"I did much better than I had expected.",grammar:"比較級 much better than ~。過去完了 had expected で「期待していたより」。",grammar_en:"Comparative 'much better than ~'. The past perfect 'had expected' conveys 'better than I had expected'."},
+{id:5,prompt:"Are you going to the study group tonight?",sentence:"Actually, I was planning to study on my own at the library.",grammar:"過去進行形 was planning to ~: 予定を述べる。on my own =「一人で」。",grammar_en:"Past progressive 'was planning to ~' to describe a prior plan. 'on my own' = 'by myself'."},
+{id:6,prompt:"Did you hear that the field trip was canceled?",sentence:"Yes, that is really disappointing because I was looking forward to it.",grammar:"because節（理由）: 主節 + because + 理由節。look forward to + 名詞/動名詞。",grammar_en:"because-clause (reason): main clause + because + reason clause. 'look forward to' takes a noun or gerund."},
+{id:7,prompt:"Why didn't you sign up for the workshop?",sentence:"I did not know about it until the deadline had passed.",grammar:"否定文 + until: 「〜するまで知らなかった」。過去完了 had passed で時制の前後関係を明示。",grammar_en:"Negative + until: 'I did not know ... until ~'. The past perfect 'had passed' makes the time sequence explicit."},
+{id:8,prompt:"Could you tell me what the homework is for tomorrow?",sentence:"We need to read and summarize chapter five.",grammar:"等位接続詞 and: read and summarize（2つの動詞を並列）。need to + V。",grammar_en:"Coordinating conjunction 'and': 'read and summarize' (two parallel verbs). Pattern: need to + V.",alt:"We need to summarize and read chapter five."},
+{id:9,prompt:"How do you manage your time between work and school?",sentence:"I make a schedule every week so that I do not fall behind.",grammar:"目的の接続詞 so that: 「〜するために」。fall behind =「遅れをとる」。",grammar_en:"Conjunction of purpose 'so that': 'in order to ~'. 'fall behind' = 'get behind / lag behind'."},
+{id:10,prompt:"What would you do if you failed the final exam?",sentence:"I would talk to the professor about what I could do to improve my grade.",grammar:"仮定法 would + V: 仮定の状況への回答。間接疑問文 what I could do。to不定詞で目的を表す。",grammar_en:"Subjunctive 'would + V' for a hypothetical response. Indirect question 'what I could do'. The to-infinitive expresses purpose."}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers')||'null');
@@ -144,15 +151,15 @@ if(stored){
   document.getElementById('scoreBig').textContent=score+' / '+stored.total;
   document.getElementById('scoreBar').style.width=(score/stored.total*100)+'%';
   const pct=Math.round(score/stored.total*100);
-  document.getElementById('scoreMsg').textContent=pct+'% 正答率'+(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');
+  var jpTail=(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');var enTail=(pct>=80?' — Excellent! 🎉':pct>=50?' — Nice work!':' — Review and use it next time 💪');document.getElementById('scoreMsg').innerHTML='<span class="jp">'+pct+'% 正答率'+jpTail+'</span><span class="en">'+pct+'% correct'+enTail+'</span>';
 }
 
 let html='';
 answers.forEach((a,i)=>{
   html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"</div></div>'
     +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
-    +'<div class="q-grammar">📝 '+a.grammar+'</div>'
-    +(a.alt?'<div class="q-hint" style="margin-top:8px;"><strong>別解:</strong> '+a.alt+' も正解です。並列構造の順序は入れ替え可能です。</div>':'')
+    +'<div class="q-grammar">📝 <span class="jp">'+a.grammar+'</span><span class="en">'+(a.grammar_en||a.grammar)+'</span></div>'
+    +(a.alt?'<div class="q-hint" style="margin-top:8px;"><strong><span class="jp">別解:</span><span class="en">Alt:</span></strong> '+a.alt+' <span class="jp">も正解です。並列構造の順序は入れ替え可能です。</span><span class="en">is also acceptable. The order of parallel items can be swapped.</span></div>':'')
     +'</div></div>';
 });
 document.getElementById('qList').innerHTML=html;

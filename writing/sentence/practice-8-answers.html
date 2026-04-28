@@ -77,13 +77,20 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
 <div class="header">
-  <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 8 | 10問 | Travel, Transportation & City Life</p>
+  <h1>🔤 <span class="jp">Build a Sentence — 解答解説</span><span class="en">Build a Sentence — Answers & Explanations</span></h1>
+  <p>Practice 8 | <span class="jp">10問 | Travel, Transportation & City Life</span><span class="en">10 questions | Travel, Transportation & City Life</span></p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
@@ -92,21 +99,21 @@ body[data-lang="en"] .jp{display:none}
 <div class="container">
 
 <div class="tips-card">
-  <h2>💡 Build a Sentence 攻略 3ステップ</h2>
+  <h2>💡 <span class="jp">Build a Sentence 攻略 3ステップ</span><span class="en">Build a Sentence — 3-step strategy</span></h2>
   <div class="step-grid">
-    <div class="step"><div class="step-num">1</div><h4>主語と動詞を見つける</h4><p>「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</p></div>
-    <div class="step"><div class="step-num">2</div><h4>骨格を作る</h4><p>S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</p></div>
-    <div class="step"><div class="step-num">3</div><h4>残りを配置</h4><p>修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</p></div>
+    <div class="step"><div class="step-num">1</div><h4><span class="jp">主語と動詞を見つける</span><span class="en">Find the subject and verb</span></h4><p><span class="jp">「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</span><span class="en">Look first for who (the subject) and what they do (the verb). These two form the backbone of the sentence.</span></p></div>
+    <div class="step"><div class="step-num">2</div><h4><span class="jp">骨格を作る</span><span class="en">Build the skeleton</span></h4><p><span class="jp">S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</span><span class="en">Combine S + V into a basic shape. Stay aware of the sentence pattern (SV, SVC, SVO).</span></p></div>
+    <div class="step"><div class="step-num">3</div><h4><span class="jp">残りを配置</span><span class="en">Place the rest</span></h4><p><span class="jp">修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</span><span class="en">Slot modifiers, prepositional phrases, and conjunctions into the right spots. Finish with a 5-second read-aloud check.</span></p></div>
   </div>
 </div>
 
 <div class="patterns-card">
-  <h2>📐 今回の語順パターン</h2>
+  <h2>📐 <span class="jp">今回の語順パターン</span><span class="en">Word-order patterns in this set</span></h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 3rd conditional (If + past perfect, would have)</h5><p>Q4「If I had not missed the fair, I would not have lost the chance to meet the recruiter.」, Q9「If we had updated the résumé earlier, we would have received a lot of callbacks.」</p></div>
-    <div class="pattern"><h5>🔹 So / such ... that</h5><p>Q1「The workload was so heavy that it took us three days to finish the report.」, Q10「were such a valuable contact that we met again the next day.」</p></div>
-    <div class="pattern"><h5>🔹 Not only ... but also</h5><p>Q2「not only reduced overtime hours but also improved team morale.」, Q7「not only offers excellent benefits but also provides flexible working hours.」</p></div>
-    <div class="pattern"><h5>🔹 Despite / in spite of + noun</h5><p>Q3「Despite the low pay, many graduates prefer interning to starting full-time.」, Q8「Despite the six-month hiring process, thousands of candidates apply to the company every year.」</p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">3rd conditional (If + past perfect, would have)</span><span class="en">3rd conditional (If + past perfect, would have)</span></h5><p><span class="jp">Q4「If I had not missed the fair, I would not have lost the chance to meet the recruiter.」, Q9「If we had updated the résumé earlier, we would have received a lot of callbacks.」</span><span class="en">Q4 'If I had not missed the fair, I would not have lost the chance to meet the recruiter.', Q9 'If we had updated the résumé earlier, we would have received a lot of callbacks.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">So / such ... that</span><span class="en">So / such ... that</span></h5><p><span class="jp">Q1「The workload was so heavy that it took us three days to finish the report.」, Q10「were such a valuable contact that we met again the next day.」</span><span class="en">Q1 'The workload was so heavy that it took us three days to finish the report.', Q10 'were such a valuable contact that we met again the next day.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Not only ... but also</span><span class="en">Not only ... but also</span></h5><p><span class="jp">Q2「not only reduced overtime hours but also improved team morale.」, Q7「not only offers excellent benefits but also provides flexible working hours.」</span><span class="en">Q2 'not only reduced overtime hours but also improved team morale.', Q7 'not only offers excellent benefits but also provides flexible working hours.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Despite / in spite of + noun</span><span class="en">Despite / in spite of + noun</span></h5><p><span class="jp">Q3「Despite the low pay, many graduates prefer interning to starting full-time.」, Q8「Despite the six-month hiring process, thousands of candidates apply to the company every year.」</span><span class="en">Q3 'Despite the low pay, many graduates prefer interning to starting full-time.', Q8 'Despite the six-month hiring process, thousands of candidates apply to the company every year.'</span></p></div>
   </div>
 </div>
 
@@ -115,8 +122,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-8.html">← もう一度解く</a>
-  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
+  <a class="btn-back" href="practice-8.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
+  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
@@ -124,16 +131,16 @@ body[data-lang="en"] .jp{display:none}
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
-{id:2,prompt:"How was the workload at the office this week?",sentence:"The workload was so heavy that it took us three days to finish the report.",grammar:"so + 形容詞 + that 構文: 「あまりに〜なので…」。it takes + 人 + 時間 + to V の構文と組み合わせ。"},
-{id:3,prompt:"Did the new management policy help the employees?",sentence:"The new policy not only reduced overtime hours but also improved team morale.",grammar:"not only A but also B: 2つの効果を強調。reduced と improved が並列。主語の後に not only を置く形。"},
-{id:4,prompt:"Why do so many people choose that internship program?",sentence:"Despite the low pay, many graduates prefer interning to starting full-time.",grammar:"Despite + 名詞句: 「〜にもかかわらず」。prefer A to B =「BよりAを好む」。動名詞を使う。"},
-{id:5,prompt:"What happened when you missed the career fair?",sentence:"If I had not missed the fair, I would not have lost the chance to meet the recruiter.",grammar:"仮定法過去完了（否定形）: If + S + had not + Vpp, S + would not have + Vpp。「キャリアフェアを逃さなかったらリクルーターに会えていた」。"},
-{id:6,prompt:"Tell me about the mentor you had at the firm.",sentence:"The mentor speaking fluent Spanish showed me internal processes known only to managers.",grammar:"縮約関係詞節（分詞構文）: speaking fluent Spanish = who spoke fluent Spanish。known only to managers = which were known only to managers。2つの分詞が名詞を修飾。"},
-{id:7,prompt:"Was the training program worth the time?",sentence:"The program was such a great value that we extended our contract by six months.",grammar:"such + a/an + 形容詞 + 名詞 + that: 「あまりに〜なので…」。so は形容詞の前、such は名詞句の前に置く。"},
-{id:10,prompt:"What makes that startup so appealing to job seekers?",sentence:"The company not only offers excellent benefits but also provides flexible working hours.",grammar:"not only A but also B: offers と provides が並列。主語の後に not only を配置する標準形。"},
-{id:13,prompt:"Do many applicants still apply despite the long process?",sentence:"Despite the six-month hiring process, thousands of candidates apply to the company every year.",grammar:"Despite + 名詞句: 「〜にもかかわらず」。複合形容詞 six-month が hiring process を修飾。"},
-{id:14,prompt:"What would have happened if you had prepared your résumé earlier?",sentence:"If we had updated the résumé earlier, we would have received a lot of callbacks.",grammar:"仮定法過去完了: If + S + had + Vpp, S + would have + Vpp。「もっと早く履歴書を更新していたら返信がもらえた」。"},
-{id:16,prompt:"How was the networking event last night?",sentence:"The people introduced by recruiters at the event were such a valuable contact that we met again the next day.",grammar:"縮約関係詞節 + such...that: introduced by recruiters = who were introduced by ~（過去分詞の後置修飾）。such + 名詞句 + that で結果を表す。"}
+{id:2,prompt:"How was the workload at the office this week?",sentence:"The workload was so heavy that it took us three days to finish the report.",grammar:"so + 形容詞 + that 構文: 「あまりに〜なので…」。it takes + 人 + 時間 + to V の構文と組み合わせ。",grammar_en:"so + adj + that construction: 'so ~ that ...'. Combined with 'it takes + person + time + to V'."},
+{id:3,prompt:"Did the new management policy help the employees?",sentence:"The new policy not only reduced overtime hours but also improved team morale.",grammar:"not only A but also B: 2つの効果を強調。reduced と improved が並列。主語の後に not only を置く形。",grammar_en:"not only A but also B: emphasizes two effects. 'reduced' and 'improved' are parallel. 'not only' is placed after the subject."},
+{id:4,prompt:"Why do so many people choose that internship program?",sentence:"Despite the low pay, many graduates prefer interning to starting full-time.",grammar:"Despite + 名詞句: 「〜にもかかわらず」。prefer A to B =「BよりAを好む」。動名詞を使う。",grammar_en:"Despite + noun phrase: 'in spite of ~'. 'prefer A to B' = 'like A more than B'. Use a gerund."},
+{id:5,prompt:"What happened when you missed the career fair?",sentence:"If I had not missed the fair, I would not have lost the chance to meet the recruiter.",grammar:"仮定法過去完了（否定形）: If + S + had not + Vpp, S + would not have + Vpp。「キャリアフェアを逃さなかったらリクルーターに会えていた」。",grammar_en:"Third conditional (negative): 'If + S + had not + Vpp, S + would not have + Vpp'. 'If I had not missed the fair, I would have met the recruiter'."},
+{id:6,prompt:"Tell me about the mentor you had at the firm.",sentence:"The mentor speaking fluent Spanish showed me internal processes known only to managers.",grammar:"縮約関係詞節（分詞構文）: speaking fluent Spanish = who spoke fluent Spanish。known only to managers = which were known only to managers。2つの分詞が名詞を修飾。",grammar_en:"Reduced relative clause (participial): 'speaking fluent Spanish' = 'who spoke fluent Spanish'. 'known only to managers' = 'which were known only to managers'. Two participles modify the noun."},
+{id:7,prompt:"Was the training program worth the time?",sentence:"The program was such a great value that we extended our contract by six months.",grammar:"such + a/an + 形容詞 + 名詞 + that: 「あまりに〜なので…」。so は形容詞の前、such は名詞句の前に置く。",grammar_en:"such + a/an + adj + N + that-clause: 'such ~ that ...'. Place 'so' before an adjective; 'such' before a noun phrase."},
+{id:10,prompt:"What makes that startup so appealing to job seekers?",sentence:"The company not only offers excellent benefits but also provides flexible working hours.",grammar:"not only A but also B: offers と provides が並列。主語の後に not only を配置する標準形。",grammar_en:"not only A but also B: 'offers' and 'provides' are parallel. The standard pattern places 'not only' after the subject."},
+{id:13,prompt:"Do many applicants still apply despite the long process?",sentence:"Despite the six-month hiring process, thousands of candidates apply to the company every year.",grammar:"Despite + 名詞句: 「〜にもかかわらず」。複合形容詞 six-month が hiring process を修飾。",grammar_en:"Despite + noun phrase: 'in spite of ~'. The compound adjective 'six-month' modifies 'hiring process'."},
+{id:14,prompt:"What would have happened if you had prepared your résumé earlier?",sentence:"If we had updated the résumé earlier, we would have received a lot of callbacks.",grammar:"仮定法過去完了: If + S + had + Vpp, S + would have + Vpp。「もっと早く履歴書を更新していたら返信がもらえた」。",grammar_en:"Third conditional: 'If + S + had + Vpp, S + would have + Vpp'. 'If we had updated the résumé earlier, we would have gotten replies'."},
+{id:16,prompt:"How was the networking event last night?",sentence:"The people introduced by recruiters at the event were such a valuable contact that we met again the next day.",grammar:"縮約関係詞節 + such...that: introduced by recruiters = who were introduced by ~（過去分詞の後置修飾）。such + 名詞句 + that で結果を表す。",grammar_en:"Reduced relative clause + such...that: 'introduced by recruiters' = 'who were introduced by ~' (post-modifying past participle). 'such + noun phrase + that' shows result."}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p8')||'null');
@@ -144,7 +151,7 @@ if(stored){
   document.getElementById('scoreBig').textContent=score+' / '+stored.total;
   document.getElementById('scoreBar').style.width=(score/stored.total*100)+'%';
   const pct=Math.round(score/stored.total*100);
-  document.getElementById('scoreMsg').textContent=pct+'% 正答率'+(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');
+  var jpTail=(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');var enTail=(pct>=80?' — Excellent! 🎉':pct>=50?' — Nice work!':' — Review and use it next time 💪');document.getElementById('scoreMsg').innerHTML='<span class="jp">'+pct+'% 正答率'+jpTail+'</span><span class="en">'+pct+'% correct'+enTail+'</span>';
 }
 
 let html='';

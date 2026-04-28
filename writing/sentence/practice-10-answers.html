@@ -77,13 +77,20 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
 <div class="header">
-  <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 10 | Health, Nutrition & Fitness | 10問</p>
+  <h1>🔤 <span class="jp">Build a Sentence — 解答解説</span><span class="en">Build a Sentence — Answers & Explanations</span></h1>
+  <p>Practice 10 | Health, Nutrition & Fitness | <span class="jp">10問</span><span class="en">10 questions</span></p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
@@ -92,21 +99,21 @@ body[data-lang="en"] .jp{display:none}
 <div class="container">
 
 <div class="tips-card">
-  <h2>💡 Build a Sentence 攻略 3ステップ</h2>
+  <h2>💡 <span class="jp">Build a Sentence 攻略 3ステップ</span><span class="en">Build a Sentence — 3-step strategy</span></h2>
   <div class="step-grid">
-    <div class="step"><div class="step-num">1</div><h4>主語と動詞を見つける</h4><p>「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</p></div>
-    <div class="step"><div class="step-num">2</div><h4>骨格を作る</h4><p>S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</p></div>
-    <div class="step"><div class="step-num">3</div><h4>残りを配置</h4><p>修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</p></div>
+    <div class="step"><div class="step-num">1</div><h4><span class="jp">主語と動詞を見つける</span><span class="en">Find the subject and verb</span></h4><p><span class="jp">「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</span><span class="en">Look first for who (the subject) and what they do (the verb). These two form the backbone of the sentence.</span></p></div>
+    <div class="step"><div class="step-num">2</div><h4><span class="jp">骨格を作る</span><span class="en">Build the skeleton</span></h4><p><span class="jp">S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</span><span class="en">Combine S + V into a basic shape. Stay aware of the sentence pattern (SV, SVC, SVO).</span></p></div>
+    <div class="step"><div class="step-num">3</div><h4><span class="jp">残りを配置</span><span class="en">Place the rest</span></h4><p><span class="jp">修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</span><span class="en">Slot modifiers, prepositional phrases, and conjunctions into the right spots. Finish with a 5-second read-aloud check.</span></p></div>
   </div>
 </div>
 
 <div class="patterns-card">
-  <h2>📐 今回の語順パターン</h2>
+  <h2>📐 <span class="jp">今回の語順パターン</span><span class="en">Word-order patterns in this set</span></h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 Causative (have / get something done)</h5><p>Q2「The organizers had the concert performed by a local jazz band.」, Q5「I had my guitar repaired at the music shop.」</p></div>
-    <div class="pattern"><h5>🔹 By the time + perfect tense</h5><p>Q3「By the time the race begins, I will have trained for six full months.」, Q7「By the time the coach arrived, I had already completed my entire warm-up routine.」</p></div>
-    <div class="pattern"><h5>🔹 Relative clauses (non-defining / defining who)</h5><p>Q6「Mr. Nguyen, who specializes in landscape painting, gave a fascinating talk on watercolors.」, Q9「that is the coach who designed a personalized program for me.」</p></div>
-    <div class="pattern"><h5>🔹 Conditional connectors (as long as / provided that)</h5><p>Q4「You can join us as long as you bring a valid ID card.」, Q8「She will approve it provided that each volunteer follows the safety guidelines strictly.」</p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Causative (have / get something done)</span><span class="en">Causative (have / get something done)</span></h5><p><span class="jp">Q2「The organizers had the concert performed by a local jazz band.」, Q5「I had my guitar repaired at the music shop.」</span><span class="en">Q2 'The organizers had the concert performed by a local jazz band.', Q5 'I had my guitar repaired at the music shop.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">By the time + perfect tense</span><span class="en">By the time + perfect tense</span></h5><p><span class="jp">Q3「By the time the race begins, I will have trained for six full months.」, Q7「By the time the coach arrived, I had already completed my entire warm-up routine.」</span><span class="en">Q3 'By the time the race begins, I will have trained for six full months.', Q7 'By the time the coach arrived, I had already completed my entire warm-up routine.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Relative clauses (non-defining / defining who)</span><span class="en">Relative clauses (non-defining / defining who)</span></h5><p><span class="jp">Q6「Mr. Nguyen, who specializes in landscape painting, gave a fascinating talk on watercolors.」, Q9「that is the coach who designed a personalized program for me.」</span><span class="en">Q6 'Mr. Nguyen, who specializes in landscape painting, gave a fascinating talk on watercolors.', Q9 'that is the coach who designed a personalized program for me.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Conditional connectors (as long as / provided that)</span><span class="en">Conditional connectors (as long as / provided that)</span></h5><p><span class="jp">Q4「You can join us as long as you bring a valid ID card.」, Q8「She will approve it provided that each volunteer follows the safety guidelines strictly.」</span><span class="en">Q4 'You can join us as long as you bring a valid ID card.', Q8 'She will approve it provided that each volunteer follows the safety guidelines strictly.'</span></p></div>
   </div>
 </div>
 
@@ -115,8 +122,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-10.html">← もう一度解く</a>
-  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
+  <a class="btn-back" href="practice-10.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
+  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
@@ -124,16 +131,16 @@ body[data-lang="en"] .jp{display:none}
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
-{id:1,prompt:"Are you satisfied with the gym's schedule?",sentence:"I wish the gym would offer more early morning classes.",grammar:"wish + would: 施設の方針への不満を表す。I wish + S + would + V。offer + O（〜を提供する）。"},
-{id:2,prompt:"Who performed at the charity concert last weekend?",sentence:"The organizers had the concert performed by a local jazz band.",grammar:"使役構文 have + O + 過去分詞:「〜してもらう」。by + 動作主で誰に依頼したかを示す。"},
-{id:4,prompt:"Will you finish the marathon training before the race?",sentence:"By the time the race begins, I will have trained for six full months.",grammar:"by the time + 現在形, S + will have + Vpp: 未来完了。「〜するまでには…し終えている」。"},
-{id:5,prompt:"Can I join your volunteer group?",sentence:"You can join us as long as you bring a valid ID card.",grammar:"as long as =「〜する限り」条件を表す接続詞。valid = 有効な。bring + O。"},
-{id:7,prompt:"How did you get your guitar repaired?",sentence:"I had my guitar repaired at the music shop.",grammar:"使役構文 have + O + 過去分詞: had my guitar repaired =「ギターを修理してもらった」。場所は at + 場所。"},
-{id:8,prompt:"Do you know Mr. Nguyen from the art class?",sentence:"Mr. Nguyen, who specializes in landscape painting, gave a fascinating talk on watercolors.",grammar:"非制限関係代名詞 , who ~: 人の先行詞に補足情報を追加。specialize in ~（〜を専門とする）。"},
-{id:9,prompt:"Had you finished your warm-up before the coach arrived?",sentence:"By the time the coach arrived, I had already completed my entire warm-up routine.",grammar:"by the time + 過去形, S + had + Vpp: 過去完了で「〜した時にはもう…していた」。already で強調。"},
-{id:10,prompt:"Will the coordinator approve the new volunteer schedule?",sentence:"She will approve it provided that each volunteer follows the safety guidelines strictly.",grammar:"provided (that) =「〜という条件で」。as long as と同義の条件接続詞。follow + O + 副詞。strictly =「厳密に」。"},
-{id:12,prompt:"Is that the coach who helped you improve your swimming?",sentence:"Yes, that is the coach who designed a personalized program for me.",grammar:"制限関係代名詞 who（主格）: 先行詞 the coach を修飾。for me は受益者を示す前置詞句。"},
-{id:13,prompt:"Where did you get your bicycle tuned up?",sentence:"I had my bike tuned at the cycling center.",grammar:"使役構文 have + O + 過去分詞: had my bike tuned =「自転車を調整してもらった」。at + 場所。"}
+{id:1,prompt:"Are you satisfied with the gym's schedule?",sentence:"I wish the gym would offer more early morning classes.",grammar:"wish + would: 施設の方針への不満を表す。I wish + S + would + V。offer + O（〜を提供する）。",grammar_en:"wish + would: a complaint about an institution's policy. 'I wish + S + would + V'. 'offer + O' = 'provide ~'."},
+{id:2,prompt:"Who performed at the charity concert last weekend?",sentence:"The organizers had the concert performed by a local jazz band.",grammar:"使役構文 have + O + 過去分詞:「〜してもらう」。by + 動作主で誰に依頼したかを示す。",grammar_en:"Causative 'have + O + past participle': 'have something done'. 'by + agent' shows who did it."},
+{id:4,prompt:"Will you finish the marathon training before the race?",sentence:"By the time the race begins, I will have trained for six full months.",grammar:"by the time + 現在形, S + will have + Vpp: 未来完了。「〜するまでには…し終えている」。",grammar_en:"by the time + present, S + will have + Vpp: future perfect. 'by the time ~, S will have ~ed'."},
+{id:5,prompt:"Can I join your volunteer group?",sentence:"You can join us as long as you bring a valid ID card.",grammar:"as long as =「〜する限り」条件を表す接続詞。valid = 有効な。bring + O。",grammar_en:"as long as = 'on the condition that': a conditional conjunction. 'valid' = 'in effect / acceptable'. bring + O."},
+{id:7,prompt:"How did you get your guitar repaired?",sentence:"I had my guitar repaired at the music shop.",grammar:"使役構文 have + O + 過去分詞: had my guitar repaired =「ギターを修理してもらった」。場所は at + 場所。",grammar_en:"Causative 'have + O + past participle': 'had my guitar repaired' = 'had a shop repair my guitar'. 'at + place'."},
+{id:8,prompt:"Do you know Mr. Nguyen from the art class?",sentence:"Mr. Nguyen, who specializes in landscape painting, gave a fascinating talk on watercolors.",grammar:"非制限関係代名詞 , who ~: 人の先行詞に補足情報を追加。specialize in ~（〜を専門とする）。",grammar_en:"Non-defining relative pronoun ', who ~': adds extra information about a person. 'specialize in ~' = 'be a specialist in ~'."},
+{id:9,prompt:"Had you finished your warm-up before the coach arrived?",sentence:"By the time the coach arrived, I had already completed my entire warm-up routine.",grammar:"by the time + 過去形, S + had + Vpp: 過去完了で「〜した時にはもう…していた」。already で強調。",grammar_en:"by the time + past, S + had + Vpp: past perfect for 'by the time ~ had already ~ed'. 'already' adds emphasis."},
+{id:10,prompt:"Will the coordinator approve the new volunteer schedule?",sentence:"She will approve it provided that each volunteer follows the safety guidelines strictly.",grammar:"provided (that) =「〜という条件で」。as long as と同義の条件接続詞。follow + O + 副詞。strictly =「厳密に」。",grammar_en:"provided (that) = 'on the condition that'. A conditional conjunction synonymous with 'as long as'. 'follow + O + adv'. 'strictly' = 'rigorously'."},
+{id:12,prompt:"Is that the coach who helped you improve your swimming?",sentence:"Yes, that is the coach who designed a personalized program for me.",grammar:"制限関係代名詞 who（主格）: 先行詞 the coach を修飾。for me は受益者を示す前置詞句。",grammar_en:"Defining relative pronoun 'who' (subjective): modifies the antecedent 'the coach'. 'for me' is a beneficiary phrase."},
+{id:13,prompt:"Where did you get your bicycle tuned up?",sentence:"I had my bike tuned at the cycling center.",grammar:"使役構文 have + O + 過去分詞: had my bike tuned =「自転車を調整してもらった」。at + 場所。",grammar_en:"Causative 'have + O + past participle': 'had my bike tuned' = 'had a center tune my bike'. 'at + place'."}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p10')||'null');
@@ -144,7 +151,7 @@ if(stored){
   document.getElementById('scoreBig').textContent=score+' / '+stored.total;
   document.getElementById('scoreBar').style.width=(score/stored.total*100)+'%';
   const pct=Math.round(score/stored.total*100);
-  document.getElementById('scoreMsg').textContent=pct+'% 正答率'+(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');
+  var jpTail=(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');var enTail=(pct>=80?' — Excellent! 🎉':pct>=50?' — Nice work!':' — Review and use it next time 💪');document.getElementById('scoreMsg').innerHTML='<span class="jp">'+pct+'% 正答率'+jpTail+'</span><span class="en">'+pct+'% correct'+enTail+'</span>';
 }
 
 let html='';

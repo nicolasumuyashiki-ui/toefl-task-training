@@ -80,55 +80,62 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
 <div class="header">
-  <h1>Academic Discussion — Model Answer &amp; Explanation</h1>
-  <p>Practice 4 | Technology</p>
+  <h1><span class="jp">Academic Discussion — 解答解説・模範回答</span><span class="en">Academic Discussion — Model Answer & Explanation</span></h1>
+  <p>Practice 4 | <span class="jp">Technology</span><span class="en">Technology</span></p>
 </div>
 
 <div class="container">
 
   <!-- Your response -->
   <div class="card">
-    <div class="card-header">Your Response</div>
+    <div class="card-header"><span class="jp">あなたの回答</span><span class="en">Your Response</span></div>
     <div class="card-body">
-      <div class="user-preview" id="userPreview"><span class="no-response">Complete the practice first to see your response here.</span></div>
+      <div class="user-preview" id="userPreview"><span class="no-response"><span class="jp">問題を先に解いてからこのページを見ると、あなたの回答が表示されます</span><span class="en">Complete the practice first to see your response here.</span></span></div>
       <div id="userStats" style="font-size:.82em;color:#5A6861"></div>
     </div>
   </div>
 
   <!-- Structure guide -->
   <div class="card">
-    <div class="card-header">Academic Discussion Strategy: Response Structure</div>
+    <div class="card-header"><span class="jp">Academic Discussion 攻略：回答の構成</span><span class="en">Academic Discussion Strategy: Response Structure</span></div>
     <div class="card-body">
       <div class="structure-grid">
         <div class="struct-item">
-          <div class="struct-time">1 sentence</div>
-          <h4>Claim</h4>
-          <p>I believe that...<br>State your position clearly</p>
+          <div class="struct-time"><span class="jp">1文</span><span class="en">1 sentence</span></div>
+          <h4><span class="jp">主張</span><span class="en">Claim</span></h4>
+          <p><span class="jp">I believe that...<br>質問に対して立場を明確に</span><span class="en">I believe that...<br>State your position clearly</span></p>
         </div>
         <div class="struct-item">
-          <div class="struct-time">2-3 sentences</div>
-          <h4>Reason</h4>
-          <p>Why you hold this position<br>Be specific, not vague</p>
+          <div class="struct-time"><span class="jp">2-3文</span><span class="en">2-3 sentences</span></div>
+          <h4><span class="jp">理由</span><span class="en">Reason</span></h4>
+          <p><span class="jp">なぜその主張をするのか<br>抽象的でなく具体的に</span><span class="en">Why you hold this position<br>Be specific, not vague</span></p>
         </div>
         <div class="struct-item">
-          <div class="struct-time">2-3 sentences</div>
-          <h4>Example</h4>
-          <p>One concrete example<br>Go deep on just one</p>
+          <div class="struct-time"><span class="jp">2-3文</span><span class="en">2-3 sentences</span></div>
+          <h4><span class="jp">具体例</span><span class="en">Example</span></h4>
+          <p><span class="jp">理由を裏付ける例を1つ<br>1つだけ深く掘り下げる</span><span class="en">One concrete example<br>Go deep on just one</span></p>
         </div>
         <div class="struct-item">
-          <div class="struct-time">1-2 sentences</div>
-          <h4>Reference</h4>
-          <p>I agree with...<br>Building on what X said...</p>
+          <div class="struct-time"><span class="jp">1-2文</span><span class="en">1-2 sentences</span></div>
+          <h4><span class="jp">他の学生への言及</span><span class="en">Reference</span></h4>
+          <p><span class="jp">I agree with...<br>Building on what X said...</span><span class="en">I agree with...<br>Building on what X said...</span></p>
         </div>
       </div>
-      <p style="font-size:.82em;color:#5A6861;margin-top:8px">Target word count: <strong>100-130 words</strong>. One example, explored in depth, is better than two shallow ones.</p>
+      <p style="font-size:.82em;color:#5A6861;margin-top:8px"><span class="jp">目標語数: <strong>100〜130語</strong>。具体例は「1つだけ」「短く」が鉄則。2つ書くと時間切れリスク大。</span><span class="en">Target word count: <strong>100-130 words</strong>. One example, explored in depth, is better than two shallow ones.</span></p>
     </div>
   </div>
 
   <!-- Discussion recap -->
   <div class="card">
-    <div class="card-header">Discussion Recap</div>
+    <div class="card-header"><span class="jp">ディスカッション内容の確認</span><span class="en">Discussion Recap</span></div>
     <div class="card-body">
       <div class="discussion-recap">
         <div class="post prof">
@@ -136,12 +143,12 @@ body[data-lang="en"] .jp{display:none}
           Should schools replace textbooks with tablets and laptops? Why or why not?
         </div>
         <div class="post student">
-          <div class="author">Priya (pro-technology)</div>
-          Tablets and laptops offer interactive content, videos, simulations, and up-to-date information. They help teachers customize lessons.
+          <div class="author"><span class="jp">Priya（テクノロジー賛成派）</span><span class="en">Priya (pro-technology)</span></div>
+          <span class="jp">タブレットやノートPCはインタラクティブな教材・動画・シミュレーション・最新情報を提供できる。教師が授業をカスタマイズしやすくなる。</span><span class="en">Tablets and laptops offer interactive content, videos, simulations, and up-to-date information. They help teachers customize lessons.</span>
         </div>
         <div class="post student">
-          <div class="author">Ethan (pro-textbook)</div>
-          Screens cause eye strain and distraction. Textbooks are reliable, need no charging, and help students focus.
+          <div class="author"><span class="jp">Ethan（教科書賛成派）</span><span class="en">Ethan (pro-textbook)</span></div>
+          <span class="jp">画面は目の疲れや注意散漫を招く。教科書は安定していて充電不要、生徒の集中を助ける。</span><span class="en">Screens cause eye strain and distraction. Textbooks are reliable, need no charging, and help students focus.</span>
         </div>
       </div>
     </div>
@@ -149,43 +156,43 @@ body[data-lang="en"] .jp{display:none}
 
   <!-- Model Answer -->
   <div class="card">
-    <div class="card-header">Model Answer (approximately 115 words)</div>
+    <div class="card-header"><span class="jp">模範回答（約115語）</span><span class="en">Model Answer (approximately 115 words)</span></div>
     <div class="card-body">
       <div class="model-answer">
-<span class="highlight"><span class="part-tag claim">Claim</span> I believe that schools should gradually integrate tablets and laptops alongside textbooks rather than replacing them entirely.</span><br><br>
-<span class="highlight"><span class="part-tag reference">Reference</span> While I understand Ethan's concern about screen-related distractions, I agree with Priya that digital tools provide valuable learning opportunities that textbooks alone cannot offer.</span><br><br>
-<span class="highlight"><span class="part-tag reason">Reason</span> The key advantage of technology is that it allows students to engage with material in interactive ways. Digital platforms can include quizzes, videos, and real-time feedback, which help students understand difficult concepts more effectively than static text.</span><br><br>
-<span class="highlight"><span class="part-tag example">Example</span> For example, in my high school science class, we used a tablet application that let us explore 3D models of the human body, which made anatomy lessons far more engaging than reading from a textbook.</span><br><br>
+<span class="highlight"><span class="part-tag claim"><span class="jp">主張</span><span class="en">Claim</span></span> I believe that schools should gradually integrate tablets and laptops alongside textbooks rather than replacing them entirely.</span><br><br>
+<span class="highlight"><span class="part-tag reference"><span class="jp">言及</span><span class="en">Reference</span></span> While I understand Ethan's concern about screen-related distractions, I agree with Priya that digital tools provide valuable learning opportunities that textbooks alone cannot offer.</span><br><br>
+<span class="highlight"><span class="part-tag reason"><span class="jp">理由</span><span class="en">Reason</span></span> The key advantage of technology is that it allows students to engage with material in interactive ways. Digital platforms can include quizzes, videos, and real-time feedback, which help students understand difficult concepts more effectively than static text.</span><br><br>
+<span class="highlight"><span class="part-tag example"><span class="jp">具体例</span><span class="en">Example</span></span> For example, in my high school science class, we used a tablet application that let us explore 3D models of the human body, which made anatomy lessons far more engaging than reading from a textbook.</span><br><br>
 A balanced approach that combines both formats would give students the benefits of technology while preserving the focus that printed materials provide.
       </div>
-      <p style="font-size:.8em;color:#5A6861;margin-top:10px">Note: This model answer takes a "balanced" position. A fully pro-technology or fully pro-textbook stance is also acceptable, as long as it is well-supported.</p>
+      <p style="font-size:.8em;color:#5A6861;margin-top:10px"><span class="jp">この模範回答は「バランス型」の立場を取っています。完全にテクノロジー賛成・教科書賛成どちらの立場でも、根拠がしっかりしていればOKです。</span><span class="en">Note: This model answer takes a "balanced" position. A fully pro-technology or fully pro-textbook stance is also acceptable, as long as it is well-supported.</span></p>
     </div>
   </div>
 
   <!-- Checklist -->
   <div class="card">
-    <div class="card-header">Self-Check Checklist</div>
+    <div class="card-header"><span class="jp">自己チェックリスト</span><span class="en">Self-Check Checklist</span></div>
     <div class="card-body">
       <div class="checklist">
-        <div class="check-item"><span class="icon">&#9745;</span> The first sentence clearly states your position (I believe that...)</div>
-        <div class="check-item"><span class="icon">&#9745;</span> You reference at least one other student's opinion (I agree with... / While I understand...)</div>
-        <div class="check-item"><span class="icon">&#9745;</span> You provide at least one clear reason</div>
-        <div class="check-item"><span class="icon">&#9745;</span> You include one specific example</div>
-        <div class="check-item"><span class="icon">&#9745;</span> Your response is at least 100 words</div>
-        <div class="check-item"><span class="icon">&#9745;</span> You end with a concluding sentence (So overall... / A balanced approach...)</div>
+        <div class="check-item"><span class="icon">&#9745;</span> <span class="jp">最初の1文で立場を明確にしている（I believe that...）</span><span class="en">The first sentence clearly states your position (I believe that...)</span></div>
+        <div class="check-item"><span class="icon">&#9745;</span> <span class="jp">他の学生の意見に言及している（I agree with... / While I understand...）</span><span class="en">You reference at least one other student's opinion (I agree with... / While I understand...)</span></div>
+        <div class="check-item"><span class="icon">&#9745;</span> <span class="jp">明確な理由が1つ以上ある</span><span class="en">You provide at least one clear reason</span></div>
+        <div class="check-item"><span class="icon">&#9745;</span> <span class="jp">具体例が1つある（自分の経験でOK）</span><span class="en">You include one specific example</span></div>
+        <div class="check-item"><span class="icon">&#9745;</span> <span class="jp">100語以上ある</span><span class="en">Your response is at least 100 words</span></div>
+        <div class="check-item"><span class="icon">&#9745;</span> <span class="jp">まとめの文で締めくくっている（So overall... / A balanced approach...）</span><span class="en">You end with a concluding sentence (So overall... / A balanced approach...)</span></div>
       </div>
     </div>
   </div>
 
   <!-- Common mistakes -->
   <div class="card">
-    <div class="card-header">Common Mistakes to Avoid</div>
+    <div class="card-header"><span class="jp">よくあるミス</span><span class="en">Common Mistakes to Avoid</span></div>
     <div class="card-body">
       <div class="mistakes-grid">
-        <div class="mistake"><h5>&#10007; Unclear position</h5><p>Starting with "This is a very interesting topic..." without stating your stance. Begin with "I believe that..." immediately.</p></div>
-        <div class="mistake"><h5>&#10007; Two shallow reasons</h5><p>Listing two reasons briefly is weaker than developing one reason in depth with a concrete example.</p></div>
-        <div class="mistake"><h5>&#10007; No reference to classmates</h5><p>This is a discussion, so you are expected to engage with other students' posts. Always mention at least one.</p></div>
-        <div class="mistake"><h5>&#10007; Example too long</h5><p>Keep your example to 2-3 sentences. A lengthy example risks running out of time.</p></div>
+        <div class="mistake"><h5>&#10007; <span class="jp">立場が不明確</span><span class="en">Unclear position</span></h5><p><span class="jp">"This is a very interesting topic..." で始めて立場を述べない → I believe that... ですぐ始める</span><span class="en">Starting with "This is a very interesting topic..." without stating your stance. Begin with "I believe that..." immediately.</span></p></div>
+        <div class="mistake"><h5>&#10007; <span class="jp">理由が2つで浅い</span><span class="en">Two shallow reasons</span></h5><p><span class="jp">2つの理由を浅く並べるより、1つの理由を深く掘り下げる方が高得点</span><span class="en">Listing two reasons briefly is weaker than developing one reason in depth with a concrete example.</span></p></div>
+        <div class="mistake"><h5>&#10007; <span class="jp">他の学生への言及なし</span><span class="en">No reference to classmates</span></h5><p><span class="jp">ディスカッションなので他の投稿に触れることが期待されている</span><span class="en">This is a discussion, so you are expected to engage with other students' posts. Always mention at least one.</span></p></div>
+        <div class="mistake"><h5>&#10007; <span class="jp">具体例が長すぎる</span><span class="en">Example too long</span></h5><p><span class="jp">具体例は2-3文で十分。長すぎると時間切れのリスク</span><span class="en">Keep your example to 2-3 sentences. A lengthy example risks running out of time.</span></p></div>
       </div>
     </div>
   </div>
@@ -193,8 +200,8 @@ A balanced approach that combines both formats would give students the benefits 
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-4.html">&larr; Try Again</a>
-  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">Back to Menu</a>
+  <a class="btn-back" href="practice-4.html"><span class="jp">← もう一度解く</span><span class="en">← Try Again</span></a>
+  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">Back to Menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
@@ -204,7 +211,7 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 const stored = JSON.parse(sessionStorage.getItem('discussionResponse_p4')||'null');
 if(stored && stored.text){
   document.getElementById('userPreview').textContent = stored.text;
-  document.getElementById('userStats').textContent = 'Words: ' + stored.words + ' | Time used: ' + stored.time;
+  document.getElementById('userStats').innerHTML = '<span class="jp">語数: ' + stored.words + ' | 使用時間: ' + stored.time + '</span><span class="en">Words: ' + stored.words + ' | Time used: ' + stored.time + '</span>';
 }
 </script>
 

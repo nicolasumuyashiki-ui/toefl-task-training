@@ -80,55 +80,62 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
 <div class="header">
-  <h1>💬 Academic Discussion — 解答解説・模範回答</h1>
-  <p>Practice 7 | Sociology</p>
+  <h1>💬 <span class="jp">Academic Discussion — 解答解説・模範回答</span><span class="en">Academic Discussion — Answers & Model Response</span></h1>
+  <p>Practice 7 | <span class="jp">Sociology</span><span class="en">Sociology</span></p>
 </div>
 
 <div class="container">
 
   <!-- Your response -->
   <div class="card">
-    <div class="card-header">📝 あなたの回答</div>
+    <div class="card-header">📝 <span class="jp">あなたの回答</span><span class="en">Your response</span></div>
     <div class="card-body">
-      <div class="user-preview" id="userPreview"><span class="no-response">問題を先に解いてからこのページを見ると、あなたの回答が表示されます</span></div>
+      <div class="user-preview" id="userPreview"><span class="no-response"><span class="jp">問題を先に解いてからこのページを見ると、あなたの回答が表示されます</span><span class="en">Complete the practice first; your response will appear here.</span></span></div>
       <div id="userStats" style="font-size:.82em;color:#5A6861"></div>
     </div>
   </div>
 
   <!-- Structure guide -->
   <div class="card">
-    <div class="card-header">💡 Academic Discussion 攻略：回答の構成</div>
+    <div class="card-header">💡 <span class="jp">Academic Discussion 攻略：回答の構成</span><span class="en">Academic Discussion — Response structure</span></div>
     <div class="card-body">
       <div class="structure-grid">
         <div class="struct-item">
-          <div class="struct-time">1文</div>
-          <h4>主張</h4>
-          <p>I believe that...<br>質問に対して立場を明確に</p>
+          <div class="struct-time"><span class="jp">1文</span><span class="en">1 sentence</span></div>
+          <h4><span class="jp">主張</span><span class="en">Your claim</span></h4>
+          <p><span class="jp">I believe that...<br>質問に対して立場を明確に</span><span class="en">I believe that...<br>State your position on the question.</span></p>
         </div>
         <div class="struct-item">
-          <div class="struct-time">2-3文</div>
-          <h4>理由</h4>
-          <p>なぜその主張をするのか<br>抽象的でなく具体的に</p>
+          <div class="struct-time"><span class="jp">2-3文</span><span class="en">2–3 sentences</span></div>
+          <h4><span class="jp">理由</span><span class="en">Reason</span></h4>
+          <p><span class="jp">なぜその主張をするのか<br>抽象的でなく具体的に</span><span class="en">Why you hold that view.<br>Be concrete, not abstract.</span></p>
         </div>
         <div class="struct-item">
-          <div class="struct-time">2-3文</div>
-          <h4>具体例</h4>
-          <p>理由を裏付ける例を1つ<br>1つだけ深く掘り下げる</p>
+          <div class="struct-time"><span class="jp">2-3文</span><span class="en">2–3 sentences</span></div>
+          <h4><span class="jp">具体例</span><span class="en">Specific example</span></h4>
+          <p><span class="jp">理由を裏付ける例を1つ<br>1つだけ深く掘り下げる</span><span class="en">One example that supports your reason.<br>Develop just one in depth.</span></p>
         </div>
         <div class="struct-item">
-          <div class="struct-time">1-2文</div>
-          <h4>他の学生への言及</h4>
-          <p>I agree with...<br>Building on what X said...</p>
+          <div class="struct-time"><span class="jp">1-2文</span><span class="en">1–2 sentences</span></div>
+          <h4><span class="jp">他の学生への言及</span><span class="en">Reference to other students</span></h4>
+          <p><span class="jp">I agree with...<br>Building on what X said...</span><span class="en">I agree with...<br>Building on what X said...</span></p>
         </div>
       </div>
-      <p style="font-size:.82em;color:#5A6861;margin-top:8px">目標語数: <strong>100〜130語</strong>。具体例は「1つだけ」「短く」が鉄則。2つ書くと時間切れリスク大。</p>
+      <p style="font-size:.82em;color:#5A6861;margin-top:8px"><span class="jp">目標語数: <strong>100〜130語</strong>。具体例は「1つだけ」「短く」が鉄則。2つ書くと時間切れリスク大。</span><span class="en">Target length: <strong>100–130 words</strong>. Stick to one short example — two examples risks running out of time.</span></p>
     </div>
   </div>
 
   <!-- Discussion recap -->
   <div class="card">
-    <div class="card-header">📋 ディスカッション内容の確認</div>
+    <div class="card-header">📋 <span class="jp">ディスカッション内容の確認</span><span class="en">Discussion recap</span></div>
     <div class="card-body">
       <div class="discussion-recap">
         <div class="post prof">
@@ -136,12 +143,12 @@ body[data-lang="en"] .jp{display:none}
           Should voting be mandatory for all citizens? Why or why not?
         </div>
         <div class="post student">
-          <div class="author">Mia（義務投票賛成派）</div>
-          全員が投票すれば政府は全国民を代表する。マイノリティや若者の声も反映される。オーストラリアが好例。
+          <div class="author"><span class="jp">Mia（義務投票賛成派）</span><span class="en">Mia (pro-mandatory voting)</span></div>
+          <span class="jp">全員が投票すれば政府は全国民を代表する。マイノリティや若者の声も反映される。オーストラリアが好例。</span><span class="en">If everyone votes, the government truly represents the whole population. Minority and youth voices also get heard. Australia is a clear example.</span>
         </div>
         <div class="post student">
-          <div class="author">Daniel（義務投票反対派）</div>
-          投票は権利であり義務ではない。強制は無知な投票を招き、民主主義を害する。教育と投票環境の改善が先。
+          <div class="author"><span class="jp">Daniel（義務投票反対派）</span><span class="en">Daniel (against mandatory voting)</span></div>
+          <span class="jp">投票は権利であり義務ではない。強制は無知な投票を招き、民主主義を害する。教育と投票環境の改善が先。</span><span class="en">Voting is a right, not a duty. Forcing it produces uninformed votes and harms democracy. Education and easier access should come first.</span>
         </div>
       </div>
     </div>
@@ -149,29 +156,29 @@ body[data-lang="en"] .jp{display:none}
 
   <!-- Model Answer -->
   <div class="card">
-    <div class="card-header">✅ 模範回答（約115語）</div>
+    <div class="card-header">✅ <span class="jp">模範回答（約115語）</span><span class="en">Model response (~115 words)</span></div>
     <div class="card-body">
       <div class="model-answer">
-<span class="highlight"><span class="part-tag claim">主張</span> I believe that voting should not be strictly mandatory, but governments should take stronger steps to encourage participation.</span><br><br>
-<span class="highlight"><span class="part-tag reference">言及</span> I understand Mia's point that mandatory voting can ensure broader representation. However, I agree more with Daniel that forcing people to vote may lead to uninformed choices that do not truly benefit democracy.</span><br><br>
-<span class="highlight"><span class="part-tag reason">理由</span> Rather than making voting compulsory, I think the focus should be on removing barriers to participation. Many people do not vote because of long lines, inconvenient polling locations, or a lack of understanding about the candidates.</span><br><br>
-<span class="highlight"><span class="part-tag example">具体例</span> For example, in my home country, introducing online voter registration and early voting options significantly increased turnout among young adults without the need for penalties.</span><br><br>
+<span class="highlight"><span class="part-tag claim"><span class="jp">主張</span><span class="en">Claim</span></span> I believe that voting should not be strictly mandatory, but governments should take stronger steps to encourage participation.</span><br><br>
+<span class="highlight"><span class="part-tag reference"><span class="jp">言及</span><span class="en">Reference</span></span> I understand Mia's point that mandatory voting can ensure broader representation. However, I agree more with Daniel that forcing people to vote may lead to uninformed choices that do not truly benefit democracy.</span><br><br>
+<span class="highlight"><span class="part-tag reason"><span class="jp">理由</span><span class="en">Reason</span></span> Rather than making voting compulsory, I think the focus should be on removing barriers to participation. Many people do not vote because of long lines, inconvenient polling locations, or a lack of understanding about the candidates.</span><br><br>
+<span class="highlight"><span class="part-tag example"><span class="jp">具体例</span><span class="en">Example</span></span> For example, in my home country, introducing online voter registration and early voting options significantly increased turnout among young adults without the need for penalties.</span><br><br>
 In short, encouraging informed participation is more effective than simply requiring everyone to show up at the polls.
       </div>
-      <p style="font-size:.8em;color:#5A6861;margin-top:10px">※ この模範回答は「義務投票に反対だが投票促進は賛成」という中間的立場を取っています。完全に賛成・反対どちらの立場でもOKです。</p>
+      <p style="font-size:.8em;color:#5A6861;margin-top:10px">※ <span class="jp">この模範回答は「義務投票に反対だが投票促進は賛成」という中間的立場を取っています。完全に賛成・反対どちらの立場でもOKです。</span><span class="en">This model response takes a middle stance — against mandatory voting but in favor of encouraging participation. A fully pro or fully con stance is also acceptable.</span></p>
     </div>
   </div>
 
   <!-- Checklist -->
   <div class="card">
-    <div class="card-header">✅ 自己チェックリスト</div>
+    <div class="card-header">✅ <span class="jp">自己チェックリスト</span><span class="en">Self-check list</span></div>
     <div class="card-body">
       <div class="checklist">
-        <div class="check-item"><span class="icon">☑️</span> 最初の1文で立場を明確にしている（I believe that...）</div>
+        <div class="check-item"><span class="icon">☑️</span> <span class="jp">最初の1文で立場を明確にしている（I believe that...）</span><span class="en">The first sentence clearly states your position (I believe that...)</span></div>
         <div class="check-item"><span class="icon">☑️</span> 他の学生の意見に言及している（I agree with... / I understand...）</div>
-        <div class="check-item"><span class="icon">☑️</span> 明確な理由が1つ以上ある</div>
+        <div class="check-item"><span class="icon">☑️</span> <span class="jp">明確な理由が1つ以上ある</span><span class="en">Includes at least one clear reason</span></div>
         <div class="check-item"><span class="icon">☑️</span> 具体例が1つある（自分の経験や知識でOK）</div>
-        <div class="check-item"><span class="icon">☑️</span> 100語以上ある</div>
+        <div class="check-item"><span class="icon">☑️</span> <span class="jp">100語以上ある</span><span class="en">Length is at least 100 words</span></div>
         <div class="check-item"><span class="icon">☑️</span> まとめの文で締めくくっている（In short...）</div>
       </div>
     </div>
@@ -179,13 +186,13 @@ In short, encouraging informed participation is more effective than simply requi
 
   <!-- Common mistakes -->
   <div class="card">
-    <div class="card-header">⚠️ よくあるミス</div>
+    <div class="card-header">⚠️ <span class="jp">よくあるミス</span><span class="en">Common mistakes</span></div>
     <div class="card-body">
       <div class="mistakes-grid">
         <div class="mistake"><h5>✗ 立場が不明確</h5><p>"This is a complicated issue..." で始めて立場を述べない → I believe that... ですぐ始める</p></div>
-        <div class="mistake"><h5>✗ 理由が2つで浅い</h5><p>2つの理由を浅く並べるより、1つの理由を深く掘り下げる方が高得点</p></div>
-        <div class="mistake"><h5>✗ 他の学生への言及なし</h5><p>ディスカッションなので他の投稿に触れることが期待されている</p></div>
-        <div class="mistake"><h5>✗ 具体例が長すぎる</h5><p>具体例は2-3文で十分。長すぎると時間切れのリスク</p></div>
+        <div class="mistake"><h5><span class="jp">✗ 理由が2つで浅い</span><span class="en">✗ Two reasons, both shallow</span></h5><p><span class="jp">2つの理由を浅く並べるより、1つの理由を深く掘り下げる方が高得点</span><span class="en">Developing one reason in depth scores higher than listing two shallow reasons.</span></p></div>
+        <div class="mistake"><h5><span class="jp">✗ 他の学生への言及なし</span><span class="en">✗ No reference to other students</span></h5><p><span class="jp">ディスカッションなので他の投稿に触れることが期待されている</span><span class="en">It is a discussion, so referring to other posts is expected.</span></p></div>
+        <div class="mistake"><h5><span class="jp">✗ 具体例が長すぎる</span><span class="en">✗ Example too long</span></h5><p><span class="jp">具体例は2-3文で十分。長すぎると時間切れのリスク</span><span class="en">2–3 sentences is plenty for the example — going longer risks running out of time.</span></p></div>
       </div>
     </div>
   </div>
@@ -193,8 +200,8 @@ In short, encouraging informed participation is more effective than simply requi
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-7.html">← もう一度解く</a>
-  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
+  <a class="btn-back" href="practice-7.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
+  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
@@ -204,7 +211,7 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 const stored = JSON.parse(sessionStorage.getItem('discussionResponse_p7')||'null');
 if(stored && stored.text){
   document.getElementById('userPreview').textContent = stored.text;
-  document.getElementById('userStats').textContent = '語数: ' + stored.words + ' | 使用時間: ' + stored.time;
+  document.getElementById('userStats').innerHTML = '<span class="jp">語数: ' + stored.words + ' | 使用時間: ' + stored.time + '</span><span class="en">Words: ' + stored.words + ' | Time used: ' + stored.time + '</span>';
 }
 </script>
 

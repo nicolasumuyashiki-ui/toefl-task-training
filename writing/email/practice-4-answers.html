@@ -75,8 +75,15 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
 <div class="header">
-  <h1>✍️ Write an Email — 解答解説・模範回答</h1>
+  <h1>✍️ <span class="jp">Write an Email — 解答解説・模範回答</span><span class="en">Write an Email — Answers & Model Response</span></h1>
   <p>Practice 4</p>
 </div>
 
@@ -84,39 +91,39 @@ body[data-lang="en"] .jp{display:none}
 
   <!-- Your response -->
   <div class="card">
-    <div class="card-header">📝 あなたの回答</div>
+    <div class="card-header">📝 <span class="jp">あなたの回答</span><span class="en">Your response</span></div>
     <div class="card-body">
-      <div class="user-preview" id="userPreview"><span class="no-response">問題を先に解いてからこのページを見ると、あなたの回答が表示されます</span></div>
+      <div class="user-preview" id="userPreview"><span class="no-response"><span class="jp">問題を先に解いてからこのページを見ると、あなたの回答が表示されます</span><span class="en">Complete the practice first; your response will appear here.</span></span></div>
       <div id="userStats" style="font-size:.82em;color:#5A6861"></div>
     </div>
   </div>
 
   <!-- Tips -->
   <div class="card">
-    <div class="card-header">💡 Write an Email 攻略のコツ</div>
+    <div class="card-header">💡 <span class="jp">Write an Email 攻略のコツ</span><span class="en">Write an Email — Strategy tips</span></div>
     <div class="card-body">
       <div class="tips-grid">
         <div class="tip">
           <div class="time">0:00–0:30</div>
-          <h4>問題文を読み3ポイントをメモ</h4>
-          <p>最初の30秒で3つのポイントを確認。見落とし＝大減点</p>
+          <h4><span class="jp">問題文を読み3ポイントをメモ</span><span class="en">Read the prompt and jot down all 3 points</span></h4>
+          <p><span class="jp">最初の30秒で3つのポイントを確認。見落とし＝大減点</span><span class="en">Identify the 3 required points in the first 30 seconds. Missing one = big score loss.</span></p>
         </div>
         <div class="tip">
           <div class="time">0:30–1:00</div>
-          <h4>構成を決める</h4>
-          <p>Dear → 挨拶 → Point 1 → Point 2 → Point 3 → 締め。テンプレを頭に入れる</p>
+          <h4><span class="jp">構成を決める</span><span class="en">Plan the structure</span></h4>
+          <p><span class="jp">Dear → 挨拶 → Point 1 → Point 2 → Point 3 → 締め。テンプレを頭に入れる</span><span class="en">Dear → opening → Point 1 → Point 2 → Point 3 → closing. Keep the template ready.</span></p>
         </div>
         <div class="tip">
           <div class="time">1:00–5:30</div>
-          <h4>書く（各ポイント2-3文）</h4>
-          <p>冗長にする必要なし。80〜120語で十分</p>
+          <h4><span class="jp">書く（各ポイント2-3文）</span><span class="en">Write (2–3 sentences per point)</span></h4>
+          <p><span class="jp">冗長にする必要なし。80〜120語で十分</span><span class="en">No need to pad. 80–120 words is enough.</span></p>
         </div>
       </div>
       <div class="tips-grid" style="grid-template-columns:1fr;max-width:300px;margin:10px auto 0">
         <div class="tip">
           <div class="time">5:30–7:00</div>
-          <h4>見直し・修正</h4>
-          <p>3ポイント全部入ってるか？スペルミスはないか？を最終確認</p>
+          <h4><span class="jp">見直し・修正</span><span class="en">Review and revise</span></h4>
+          <p><span class="jp">3ポイント全部入ってるか？スペルミスはないか？を最終確認</span><span class="en">Check that all 3 points are in and there are no spelling errors.</span></p>
         </div>
       </div>
     </div>
@@ -124,7 +131,7 @@ body[data-lang="en"] .jp{display:none}
 
   <!-- Scenario reminder -->
   <div class="card">
-    <div class="card-header">📋 問題の確認</div>
+    <div class="card-header">📋 <span class="jp">問題の確認</span><span class="en">Prompt recap</span></div>
     <div class="card-body">
       <div class="scenario-box">
         <strong>Scenario:</strong> While walking across campus near the library yesterday afternoon, you found a wallet on a bench. Inside the wallet, there is a student ID card belonging to Jamie Park. You want to return the wallet to its owner.
@@ -140,7 +147,7 @@ body[data-lang="en"] .jp{display:none}
 
   <!-- Model Answer -->
   <div class="card">
-    <div class="card-header">✅ 模範回答（約95語）</div>
+    <div class="card-header">✅ <span class="jp">模範回答（約95語）</span><span class="en">Model response (~95 words)</span></div>
     <div class="card-body">
       <div class="model-answer">
 Dear Jamie,<br><br>
@@ -154,14 +161,14 @@ Best regards
 
   <!-- Checklist -->
   <div class="card">
-    <div class="card-header">✅ 自己チェックリスト</div>
+    <div class="card-header">✅ <span class="jp">自己チェックリスト</span><span class="en">Self-check list</span></div>
     <div class="card-body">
       <div class="checklist">
-        <div class="check-item"><span class="icon">☑️</span> 3つのポイントがすべて含まれている</div>
-        <div class="check-item"><span class="icon">☑️</span> 各ポイントに2〜3文の説明がある</div>
-        <div class="check-item"><span class="icon">☑️</span> Dear [Name] で始まり、Best regards で終わっている</div>
-        <div class="check-item"><span class="icon">☑️</span> 80〜120語の範囲に収まっている</div>
-        <div class="check-item"><span class="icon">☑️</span> スペルミス・文法ミスがない</div>
+        <div class="check-item"><span class="icon">☑️</span> <span class="jp">3つのポイントがすべて含まれている</span><span class="en">All 3 required points are included</span></div>
+        <div class="check-item"><span class="icon">☑️</span> <span class="jp">各ポイントに2〜3文の説明がある</span><span class="en">Each point is developed with 2–3 sentences</span></div>
+        <div class="check-item"><span class="icon">☑️</span> <span class="jp">Dear [Name] で始まり、Best regards で終わっている</span><span class="en">Begins with 'Dear [Name]' and ends with 'Best regards'</span></div>
+        <div class="check-item"><span class="icon">☑️</span> <span class="jp">80〜120語の範囲に収まっている</span><span class="en">Total length stays in the 80–120 word range</span></div>
+        <div class="check-item"><span class="icon">☑️</span> <span class="jp">スペルミス・文法ミスがない</span><span class="en">No spelling or grammar errors</span></div>
         <div class="check-item"><span class="icon">☑️</span> 丁寧だが堅すぎないトーン（同じ学生宛て）</div>
       </div>
     </div>
@@ -169,13 +176,13 @@ Best regards
 
   <!-- Common mistakes -->
   <div class="card">
-    <div class="card-header">⚠️ よくあるミス</div>
+    <div class="card-header">⚠️ <span class="jp">よくあるミス</span><span class="en">Common mistakes</span></div>
     <div class="card-body">
       <div class="mistakes-grid">
-        <div class="mistake"><h5>✗ ポイント見落とし</h5><p>3つのうち1つを書き忘れる → 大減点。書き終わったら必ず再確認</p></div>
-        <div class="mistake"><h5>✗ 冗長な前置き</h5><p>"I hope this email finds you well..." は不要。すぐに目的を述べる</p></div>
+        <div class="mistake"><h5><span class="jp">✗ ポイント見落とし</span><span class="en">✗ Missing a required point</span></h5><p><span class="jp">3つのうち1つを書き忘れる → 大減点。書き終わったら必ず再確認</span><span class="en">Forgetting one of the three points = a big score hit. Always re-check after writing.</span></p></div>
+        <div class="mistake"><h5><span class="jp">✗ 冗長な前置き</span><span class="en">✗ Long-winded openings</span></h5><p><span class="jp">"I hope this email finds you well..." は不要。すぐに目的を述べる</span><span class="en">"I hope this email finds you well..." is unnecessary — get to the point immediately.</span></p></div>
         <div class="mistake"><h5>✗ 具体性の欠如</h5><p>"I found your wallet somewhere" ではなく、場所・時間を具体的に書く</p></div>
-        <div class="mistake"><h5>✗ 書きすぎ</h5><p>120語を超えても加点なし。簡潔に3ポイントを網羅することが重要</p></div>
+        <div class="mistake"><h5><span class="jp">✗ 書きすぎ</span><span class="en">✗ Writing too much</span></h5><p><span class="jp">120語を超えても加点なし。簡潔に3ポイントを網羅することが重要</span><span class="en">Going over 120 words earns no extra credit. Cover the 3 points concisely.</span></p></div>
       </div>
     </div>
   </div>
@@ -183,8 +190,8 @@ Best regards
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-4.html">← もう一度解く</a>
-  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
+  <a class="btn-back" href="practice-4.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
+  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
@@ -194,7 +201,7 @@ if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 const stored = JSON.parse(sessionStorage.getItem('emailResponse_p4')||'null');
 if(stored && stored.text){
   document.getElementById('userPreview').textContent = stored.text;
-  document.getElementById('userStats').textContent = '語数: ' + stored.words + ' | 使用時間: ' + stored.time;
+  document.getElementById('userStats').innerHTML = '<span class="jp">語数: ' + stored.words + ' | 使用時間: ' + stored.time + '</span><span class="en">Words: ' + stored.words + ' | Time used: ' + stored.time + '</span>';
 }
 </script>
 

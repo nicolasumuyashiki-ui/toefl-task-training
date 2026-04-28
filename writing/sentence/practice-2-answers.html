@@ -77,13 +77,20 @@ body[data-lang="en"] .jp{display:none}
 </head>
 <body data-lang="jp">
 
+<div class="top-nav" style="background:#FBF6EC;border-bottom:1px solid #F5E9D3;padding:10px 28px;display:flex;align-items:center;justify-content:flex-end;position:sticky;top:0;z-index:50">
+  <div class="tck-lang-toggle" style="display:inline-flex;background:#fff;border:1px solid #F5E9D3;border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600">
+    <button type="button" data-lang-btn="jp" class="active" style="border:none;background:#007646;color:#fff;padding:5px 12px;border-radius:999px;cursor:pointer">日本語</button>
+    <button type="button" data-lang-btn="en" style="border:none;background:transparent;color:#5A6861;padding:5px 12px;border-radius:999px;cursor:pointer">EN</button>
+  </div>
+</div>
+
 <div class="header">
-  <h1>🔤 Build a Sentence — 解答解説</h1>
-  <p>Practice 2 | 10問</p>
+  <h1>🔤 <span class="jp">Build a Sentence — 解答解説</span><span class="en">Build a Sentence — Answers & Explanations</span></h1>
+  <p><span class="jp">Practice 2 | 10問</span><span class="en">Practice 2 | 10 questions</span></p>
 </div>
 
 <div class="score-summary">
-  <p class="score-sub">あなたのスコア</p>
+  <p class="score-sub"><span class="jp">あなたのスコア</span><span class="en">Your score</span></p>
   <div class="score-big" id="scoreBig">— / 10</div>
   <div class="score-bar"><div class="score-bar-fill" id="scoreBar" style="width:0%"></div></div>
   <p class="score-sub" id="scoreMsg"></p>
@@ -92,21 +99,21 @@ body[data-lang="en"] .jp{display:none}
 <div class="container">
 
 <div class="tips-card">
-  <h2>💡 Build a Sentence 攻略 3ステップ</h2>
+  <h2>💡 <span class="jp">Build a Sentence 攻略 3ステップ</span><span class="en">Build a Sentence — 3-step strategy</span></h2>
   <div class="step-grid">
-    <div class="step"><div class="step-num">1</div><h4>主語と動詞を見つける</h4><p>「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</p></div>
-    <div class="step"><div class="step-num">2</div><h4>骨格を作る</h4><p>S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</p></div>
-    <div class="step"><div class="step-num">3</div><h4>残りを配置</h4><p>修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</p></div>
+    <div class="step"><div class="step-num">1</div><h4><span class="jp">主語と動詞を見つける</span><span class="en">Find the subject and verb</span></h4><p><span class="jp">「誰が（主語）」「どうする（動詞）」を最初に探す。この2つが文の骨格。</span><span class="en">Look first for who (the subject) and what they do (the verb). These two form the backbone of the sentence.</span></p></div>
+    <div class="step"><div class="step-num">2</div><h4><span class="jp">骨格を作る</span><span class="en">Build the skeleton</span></h4><p><span class="jp">S+V を組み合わせて基本形を作る。文型（SV, SVC, SVO）を意識。</span><span class="en">Combine S + V into a basic shape. Stay aware of the sentence pattern (SV, SVC, SVO).</span></p></div>
+    <div class="step"><div class="step-num">3</div><h4><span class="jp">残りを配置</span><span class="en">Place the rest</span></h4><p><span class="jp">修飾語、前置詞句、接続詞を適切な位置に。最後に音読チェック（5秒）。</span><span class="en">Slot modifiers, prepositional phrases, and conjunctions into the right spots. Finish with a 5-second read-aloud check.</span></p></div>
   </div>
 </div>
 
 <div class="patterns-card">
-  <h2>📐 今回の語順パターン</h2>
+  <h2>📐 <span class="jp">今回の語順パターン</span><span class="en">Word-order patterns in this set</span></h2>
   <div class="pattern-grid">
-    <div class="pattern"><h5>🔹 Reported speech</h5><p>Q1「I heard that the temples are much more beautiful in autumn.」, Q7「He said that the tour would cover everything we had requested.」</p></div>
-    <div class="pattern"><h5>🔹 Passive voice</h5><p>Q2「A new low-cost airline was launched at the international terminal.」, Q5「It was postponed until tomorrow afternoon.」</p></div>
-    <div class="pattern"><h5>🔹 Relative clauses (where / who used to)</h5><p>Q6「a small Italian place where tourists often go to have dinner.」, Q8「a chef who used to work at a famous resort.」</p></div>
-    <div class="pattern"><h5>🔹 Conditional (if...)</h5><p>Q4「If you drive me tomorrow, I will buy you coffee afterward.」, Q9「If the rules were less strict, more travelers would be willing...」</p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Reported speech</span><span class="en">Reported speech</span></h5><p><span class="jp">Q1「I heard that the temples are much more beautiful in autumn.」, Q7「He said that the tour would cover everything we had requested.」</span><span class="en">Q1 'I heard that the temples are much more beautiful in autumn.', Q7 'He said that the tour would cover everything we had requested.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Passive voice</span><span class="en">Passive voice</span></h5><p><span class="jp">Q2「A new low-cost airline was launched at the international terminal.」, Q5「It was postponed until tomorrow afternoon.」</span><span class="en">Q2 'A new low-cost airline was launched at the international terminal.', Q5 'It was postponed until tomorrow afternoon.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Relative clauses (where / who used to)</span><span class="en">Relative clauses (where / who used to)</span></h5><p><span class="jp">Q6「a small Italian place where tourists often go to have dinner.」, Q8「a chef who used to work at a famous resort.」</span><span class="en">Q6 'a small Italian place where tourists often go to have dinner.', Q8 'a chef who used to work at a famous resort.'</span></p></div>
+    <div class="pattern"><h5>🔹 <span class="jp">Conditional (if...)</span><span class="en">Conditional (if...)</span></h5><p><span class="jp">Q4「If you drive me tomorrow, I will buy you coffee afterward.」, Q9「If the rules were less strict, more travelers would be willing...」</span><span class="en">Q4 'If you drive me tomorrow, I will buy you coffee afterward.', Q9 'If the rules were less strict, more travelers would be willing...'</span></p></div>
   </div>
 </div>
 
@@ -115,8 +122,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="nav-bottom">
-  <a class="btn-back" href="practice-2.html">← もう一度解く</a>
-  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511">📋 メニューに戻る</a>
+  <a class="btn-back" href="practice-2.html"><span class="jp">← もう一度解く</span><span class="en">← Try again</span></a>
+  <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
@@ -124,16 +131,16 @@ body[data-lang="en"] .jp{display:none}
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
 const answers=[
-{id:1,prompt:"Are you excited about your trip to Kyoto next week?",sentence:"Yes, I heard that the temples are much more beautiful in autumn.",grammar:"比較級 much more beautiful: 「ずっと美しい」。I heard that + S + V で伝聞を表す。"},
-{id:2,prompt:"Why is the airport so crowded this morning?",sentence:"A new low-cost airline was launched at the international terminal.",grammar:"受動態 was launched: 「就航された」。場所の前置詞句 at the ~ terminal で修飾。"},
-{id:3,prompt:"Did the hotel staff tell you about breakfast?",sentence:"She told me that the buffet would close if we arrived after ten.",grammar:"報告文（間接話法）: told me that + S + would V。条件節 if we arrived で仮定の条件。"},
-{id:5,prompt:"Can you drive me to the train station tomorrow?",sentence:"If you drive me tomorrow, I will buy you coffee afterward.",grammar:"条件文（直説法）: If + 現在形, will + V。実現可能な条件を表す。"},
-{id:7,prompt:"What happened to the sightseeing bus tour?",sentence:"It was postponed until tomorrow afternoon.",grammar:"受動態 was postponed: 「延期された」。until + 時点 =「〜まで」。"},
-{id:8,prompt:"Do you know a good restaurant near the hotel?",sentence:"There is a small Italian place where tourists often go to have dinner.",grammar:"There is 構文 + 関係副詞 where: 場所を説明する関係副詞節。go to have dinner =「夕食を食べに行く」。"},
-{id:9,prompt:"What did the tour guide say about the itinerary?",sentence:"He said that the tour would cover everything we had requested in advance.",grammar:"報告文: said that + S + would V。過去完了 had requested で「それまでに要望した」を表す。"},
-{id:11,prompt:"Why do you always stay at that hotel?",sentence:"The breakfast is prepared by a chef who used to work at a famous resort.",grammar:"受動態 is prepared by ~: 「〜によって調理される」。関係代名詞 who + used to V =「以前〜していた」。"},
-{id:13,prompt:"What do you think about the new baggage rules?",sentence:"If the rules were less strict, more travelers would be willing to fly this airline.",grammar:"仮定法過去: If + 過去形, would + V。現在の事実に反する仮定。be willing to =「〜する気がある」。"},
-{id:14,prompt:"How do you keep track of your travel plans?",sentence:"We have a shared app where we save details about each reservation.",grammar:"関係副詞 where: a shared app where + S + V。場所的な概念（アプリ）を関係副詞で説明。"}
+{id:1,prompt:"Are you excited about your trip to Kyoto next week?",sentence:"Yes, I heard that the temples are much more beautiful in autumn.",grammar:"比較級 much more beautiful: 「ずっと美しい」。I heard that + S + V で伝聞を表す。",grammar_en:"Comparative 'much more beautiful' = 'far more beautiful'. 'I heard that + S + V' reports hearsay."},
+{id:2,prompt:"Why is the airport so crowded this morning?",sentence:"A new low-cost airline was launched at the international terminal.",grammar:"受動態 was launched: 「就航された」。場所の前置詞句 at the ~ terminal で修飾。",grammar_en:"Passive 'was launched' = 'was put into service'. The locative phrase 'at the ~ terminal' modifies the verb."},
+{id:3,prompt:"Did the hotel staff tell you about breakfast?",sentence:"She told me that the buffet would close if we arrived after ten.",grammar:"報告文（間接話法）: told me that + S + would V。条件節 if we arrived で仮定の条件。",grammar_en:"Reported speech: 'told me that + S + would V'. The conditional 'if we arrived' expresses a hypothetical condition."},
+{id:5,prompt:"Can you drive me to the train station tomorrow?",sentence:"If you drive me tomorrow, I will buy you coffee afterward.",grammar:"条件文（直説法）: If + 現在形, will + V。実現可能な条件を表す。",grammar_en:"First conditional: If + present, will + V — used for realistic future conditions."},
+{id:7,prompt:"What happened to the sightseeing bus tour?",sentence:"It was postponed until tomorrow afternoon.",grammar:"受動態 was postponed: 「延期された」。until + 時点 =「〜まで」。",grammar_en:"Passive 'was postponed' = 'was rescheduled'. 'until + time point' = 'up to'."},
+{id:8,prompt:"Do you know a good restaurant near the hotel?",sentence:"There is a small Italian place where tourists often go to have dinner.",grammar:"There is 構文 + 関係副詞 where: 場所を説明する関係副詞節。go to have dinner =「夕食を食べに行く」。",grammar_en:"There-is construction + relative adverb 'where' to describe a place. 'go to have dinner' = 'go for dinner'."},
+{id:9,prompt:"What did the tour guide say about the itinerary?",sentence:"He said that the tour would cover everything we had requested in advance.",grammar:"報告文: said that + S + would V。過去完了 had requested で「それまでに要望した」を表す。",grammar_en:"Reported speech: 'said that + S + would V'. The past perfect 'had requested' captures 'had requested in advance'."},
+{id:11,prompt:"Why do you always stay at that hotel?",sentence:"The breakfast is prepared by a chef who used to work at a famous resort.",grammar:"受動態 is prepared by ~: 「〜によって調理される」。関係代名詞 who + used to V =「以前〜していた」。",grammar_en:"Passive 'is prepared by ~' = 'is cooked by ~'. The relative pronoun 'who' + 'used to V' = 'who used to ~'."},
+{id:13,prompt:"What do you think about the new baggage rules?",sentence:"If the rules were less strict, more travelers would be willing to fly this airline.",grammar:"仮定法過去: If + 過去形, would + V。現在の事実に反する仮定。be willing to =「〜する気がある」。",grammar_en:"Second conditional: If + past, would + V — for a hypothetical contrary to present fact. 'be willing to' = 'be ready to'."},
+{id:14,prompt:"How do you keep track of your travel plans?",sentence:"We have a shared app where we save details about each reservation.",grammar:"関係副詞 where: a shared app where + S + V。場所的な概念（アプリ）を関係副詞で説明。",grammar_en:"Relative adverb 'where': 'a shared app where + S + V'. The relative adverb describes a place-like concept (an app)."}
 ];
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p2')||'null');
@@ -144,7 +151,7 @@ if(stored){
   document.getElementById('scoreBig').textContent=score+' / '+stored.total;
   document.getElementById('scoreBar').style.width=(score/stored.total*100)+'%';
   const pct=Math.round(score/stored.total*100);
-  document.getElementById('scoreMsg').textContent=pct+'% 正答率'+(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');
+  var jpTail=(pct>=80?' — 素晴らしい！🎉':pct>=50?' — いい調子！':' — 復習して次に活かそう💪');var enTail=(pct>=80?' — Excellent! 🎉':pct>=50?' — Nice work!':' — Review and use it next time 💪');document.getElementById('scoreMsg').innerHTML='<span class="jp">'+pct+'% 正答率'+jpTail+'</span><span class="en">'+pct+'% correct'+enTail+'</span>';
 }
 
 let html='';
