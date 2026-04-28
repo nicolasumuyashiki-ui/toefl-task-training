@@ -145,3 +145,13 @@ docs/topic-history.md のTIセクションを確認し、使用済みテーマ�
 2. HTML問題ページを作成（Narrator + Q1-Q4の構造をHTMLに反映）
 3. Tips ページをkickstart-hw形式で作成
 4. `docs/topic-history.md` のTIセクションにテーマを追記
+
+## 音源ポーズ仕様（必読）
+スクリプトを TTS（ElevenLabs 等）に渡す前に、必ずターン交代・文間に
+SSML の `<break time="..."/>` を明示すること。ターン交代のデフォルトは
+**400–600 ms**、熟考系は 800–1200 ms、上限 1500 ms。詳細は
+`docs/audio-pause-spec.md` を参照。
+
+生成後は `python3 audit_audio.py` で 250 ms 未満 / 1500 ms 超の
+ポーズが残っていないことを必ず確認。残っている場合は
+`python3 normalize_audio.py` で正規化。

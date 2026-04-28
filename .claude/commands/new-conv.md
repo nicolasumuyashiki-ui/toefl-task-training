@@ -70,3 +70,13 @@ Google Driveフォルダの画像ストック4種から、設定に合った画�
 2. HTML雛形を作成
 3. `docs/topic-history.md` のConversationセクションに使用したトピックを追記
 4. 検証サマリーを表示
+
+## 音源ポーズ仕様（必読）
+スクリプトを TTS（ElevenLabs 等）に渡す前に、必ずターン交代・文間に
+SSML の `<break time="..."/>` を明示すること。ターン交代のデフォルトは
+**400–600 ms**、熟考系は 800–1200 ms、上限 1500 ms。詳細は
+`docs/audio-pause-spec.md` を参照。
+
+生成後は `python3 audit_audio.py` で 250 ms 未満 / 1500 ms 超の
+ポーズが残っていないことを必ず確認。残っている場合は
+`python3 normalize_audio.py` で正規化。

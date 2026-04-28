@@ -61,6 +61,15 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - **スクリプトファイルの保存**: 音声生成に使用したスクリプトは `docs/scripts/` に `{tasktype}-practice-{N}-scripts.md` として保存すること。音声と解答ページの照合に使う。
 - **生成フロー**: ① スクリプトを確定 → ② スクリプトファイルを保存 → ③ ElevenLabsで音声生成 → ④ 同じスクリプトを解答ページにコピー → ⑤ base64化してHTMLに埋め込み
 - **検証**: 音声埋め込み後、解答ページの問題文とスクリプトファイルの内容が完全一致するか必ず確認すること
+- **ポーズ仕様**: ターン交代・節間の沈黙時間は `docs/audio-pause-spec.md` の標準（デフォルト 400–600 ms、上限 1500 ms）に従う。SSML `<break time="500ms"/>` をスクリプトに必ず明示すること。生成後は `audit_audio.py` で検証、外れ値が出れば `normalize_audio.py` で正規化。
+
+## HTML 生成時の再発防止チェック（過去のバグ）
+- **`\u####` リテラル**: HTML テキスト（`<script>` の外側）に `✅` 等の Unicode escape を埋め込まない。実際の文字（✅、→ など）を直接書くこと。JS 文字列内の `'✅'` は OK（パーサが解釈する）。
+- **データ整合性 (LCR系)**: 練習ページの `questions` と解答ページの `QS` が一致しない事故が過去発生。新規生成時は同じソースから両ファイルを派生させること。`{choices:[{letter,text}],answer:N}` のような数値 index 形式を使う場合、比較コードも数値で行うか letter に正規化する一文を入れる。
+- **EN テキスト混入**: メニュー・全画面で日本語 UI を使う場合は `<span class="jp">…</span><span class="en">…</span>` のペアで bilingual 化。片方だけ書くと言語切替時に空表示になる。
+- **基底 CSS の前提**: `css/common.css` は design tokens + i18n primitive のみ。`.header` `.back-pill` `.user-pill` 等のページ chrome は各 HTML の inline `<style>` で持つこと。
+- **CTW 入力欄スペーシング**: `.sh{margin-right:.22em}` `.word-blank{margin-right:.45em}` を必ず適用（短すぎると「a m■■don't」が「am◆◆don't」と詰まって読みづらい）。
+- **Build a Sentence ピリオド**: 文末の `.` `!` `?` を word bank の最後の piece に含めない（最後の piece が一目で判別できてしまうため）。`fixedEnd` に移動。
 
 ## kickstart HW形式への準拠（重要）
 すべてのタスクはTOEFL kickstart HWの形式を踏襲する。参照先: `toefl-kickstart-hw` リポジトリ。
