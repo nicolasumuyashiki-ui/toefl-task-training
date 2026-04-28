@@ -25,7 +25,7 @@ TCK Workshop の TOEFL 学習アプリ「TOEFL Reps」をご利用中の生徒�
 ## 3. 個別指導セッションのフォーマット
 
 - **料金**: ¥10,000（税込 ¥11,000）／ 1 セッション
-- **時間**: 60 分（Zoom）
+- **時間**: 60 分（Google Meet）
 - **内容**: 1 セッションあたり**最大 2 技能**まで生徒さんがリクエスト可能
   - 例：Speaking + Writing、Reading + Listening、Writing 単体 など
 - **申し込み**: 生徒さんが `private-coaching.html` から `info@tckworkshop.co.jp` にメール → 事務局経由で先生にお繋ぎ
