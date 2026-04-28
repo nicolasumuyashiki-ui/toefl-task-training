@@ -330,28 +330,9 @@ if(u.userName){
   document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();
 }
 
-/* Subscription nudge — show banner if non-TCK user without active sub.
-   Uses the cache populated by Auth._enforceSubscriptionGate to avoid an
-   extra GAS round-trip; falls back to live check if cache is empty. */
-(function(){
-  if(!u.userId) return;
-  if(typeof tckIsStaff==='function' && tckIsStaff(u.email,u.userId)) return; // staff bypass
-  var nudge=document.getElementById('subNudge'); if(!nudge) return;
-  var key='tck_sub_status_'+u.userId;
-  var cached=null;
-  try{cached=JSON.parse(sessionStorage.getItem(key)||'null');}catch(e){}
-  if(cached && (Date.now()-cached.checkedAt)<15*60*1000){
-    if(!cached.active) nudge.style.display='block';
-    return;
-  }
-  if(typeof Api==='undefined' || !Api.getSubscription) return;
-  Api.getSubscription().then(function(res){
-    var active=!!(res && res.success && res.subscription &&
-      ['active','trialing'].indexOf(String(res.subscription.status||'').toLowerCase())!==-1);
-    try{sessionStorage.setItem(key,JSON.stringify({active:active,checkedAt:Date.now()}));}catch(e){}
-    if(!active) nudge.style.display='block';
-  }).catch(function(){});
-})();
+/* Subscription gate UX is wired in js/auth.js for any menu.html
+   (root + per-skill). It auto-runs and locks .skill-card / .flt-card
+   / .practice-btn elements with a modal for non-subscribed users. */
 
 /* Admin entry has been moved to the login page (link "管理者はこちら")
    so that students can never see an Admin affordance from menu.html. */

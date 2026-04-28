@@ -160,6 +160,146 @@ if (typeof window !== 'undefined') {
 }
 
 /* ============================================================
+   Menu-side subscription click interceptor.
+   ----------------------------------------------------------
+   Runs on any menu.html (root + per-skill). For non-staff users
+   without an active subscription, intercepts clicks on .skill-card
+   / .flt-card / .practice-btn (the elements that lead into actual
+   tasks) and shows a polite modal instead of letting auth.js's
+   hard redirect kick in afterwards. "More" cards (My Score,
+   Billing, Consultation, Private Coaching) stay clickable so
+   users can still pay or manage their account.
+   ============================================================ */
+(function () {
+  if (window.__TCKSubGateInit) return;
+  window.__TCKSubGateInit = true;
+
+  function isMenuPage() {
+    var page = (location.pathname.split('/').pop() || '').toLowerCase();
+    return page === 'menu.html';
+  }
+  if (!isMenuPage()) return;
+
+  function init() {
+    var u; try { u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}'); } catch (e) { u = {}; }
+    if (!u.userId) return;
+    if (typeof tckIsStaff === 'function' && tckIsStaff(u.email, u.userId)) return; // Staff bypass
+
+    var cacheKey = 'tck_sub_status_' + u.userId;
+    var cached = null;
+    try { cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null'); } catch (e) {}
+    if (cached && (Date.now() - cached.checkedAt) < 15 * 60 * 1000) {
+      if (!cached.active) applyLockedState();
+      return;
+    }
+    if (typeof Api === 'undefined' || !Api.getSubscription) return;
+    Api.getSubscription().then(function (res) {
+      var active = !!(res && res.success && res.subscription &&
+        ['active','trialing'].indexOf(String(res.subscription.status || '').toLowerCase()) !== -1);
+      try { sessionStorage.setItem(cacheKey, JSON.stringify({ active: active, checkedAt: Date.now() })); } catch (e) {}
+      if (!active) applyLockedState();
+    }).catch(function () {});
+  }
+
+  function applyLockedState() {
+    var sel = '.skill-card, .flt-card, .practice-btn:not(.locked)';
+    var cards = document.querySelectorAll(sel);
+    cards.forEach(function (c) {
+      c.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        showSubModal();
+      }, true);
+      c.style.cursor = 'not-allowed';
+      c.style.opacity = '.62';
+      c.setAttribute('aria-disabled', 'true');
+    });
+    // Optional inline nudge already in the page
+    var nudge = document.getElementById('subNudge');
+    if (nudge) nudge.style.display = 'block';
+  }
+
+  function showSubModal() {
+    if (document.getElementById('tckSubBd')) return;
+    if (!document.getElementById('tckSubGateCSS')) {
+      var css = document.createElement('style');
+      css.id = 'tckSubGateCSS';
+      css.textContent =
+        '#tckSubBd{position:fixed;inset:0;background:rgba(15,21,17,.42);backdrop-filter:blur(6px);' +
+          'display:flex;align-items:center;justify-content:center;padding:24px;z-index:10000;' +
+          'animation:tckSubFade .22s ease}' +
+        '@keyframes tckSubFade{from{opacity:0}to{opacity:1}}' +
+        '#tckSubModal{background:#fff;border-radius:18px;max-width:440px;width:100%;' +
+          'box-shadow:0 24px 64px rgba(0,40,23,.28);overflow:hidden;' +
+          'font-family:"Manrope","Zen Kaku Gothic New",sans-serif;color:#0F1511;' +
+          'animation:tckSubSlide .3s cubic-bezier(.16,1,.3,1)}' +
+        '@keyframes tckSubSlide{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}' +
+        '#tckSubModal .h{background:linear-gradient(135deg,#B85C3C,#8A3E24);color:#fff;padding:24px 28px 20px}' +
+        '#tckSubModal .ic{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;' +
+          'border-radius:12px;background:rgba(255,255,255,.18);font-size:22px;margin-bottom:10px}' +
+        '#tckSubModal .ek{font-family:"Manrope",sans-serif;font-size:.7em;font-weight:800;letter-spacing:.12em;' +
+          'text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:3px}' +
+        '#tckSubModal .ti{font-size:1.3em;font-weight:800;letter-spacing:-0.01em;line-height:1.25}' +
+        '#tckSubModal .b{padding:24px 28px;font-size:.95em;line-height:1.7}' +
+        '#tckSubModal .b p{margin-bottom:10px}' +
+        '#tckSubModal .b p:last-child{margin-bottom:0}' +
+        '#tckSubModal .b strong{color:#8A3E24}' +
+        '#tckSubModal .ac{padding:0 28px 24px;display:flex;gap:10px;justify-content:flex-end}' +
+        '#tckSubModal .btn{font-family:"Manrope",sans-serif;font-weight:700;font-size:.88em;' +
+          'padding:11px 22px;border-radius:999px;border:none;cursor:pointer;letter-spacing:.02em;' +
+          'text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .15s}' +
+        '#tckSubModal .btn-pri{background:#007646;color:#fff}' +
+        '#tckSubModal .btn-pri:hover{background:#005434;transform:translateY(-1px)}' +
+        '#tckSubModal .btn-gh{background:transparent;color:#5B6660;border:1px solid #E8E4D8}' +
+        '#tckSubModal .btn-gh:hover{background:#E8E4D8;color:#0F1511}';
+      document.head.appendChild(css);
+    }
+
+    var billingHref = tckRootPrefix() + 'billing.html';
+
+    var bd = document.createElement('div');
+    bd.id = 'tckSubBd';
+    bd.innerHTML =
+      '<div id="tckSubModal" role="dialog" aria-modal="true">' +
+        '<div class="h">' +
+          '<div class="ic">🔒</div>' +
+          '<div class="ek">Subscription required</div>' +
+          '<div class="ti"><span class="jp">サブスクリプションが必要です</span><span class="en">Subscription required</span></div>' +
+        '</div>' +
+        '<div class="b">' +
+          '<p><span class="jp">TOEFL Reps の各タスクをご利用いただくには、月額プラン <strong>¥3,980 / 月</strong>（税込 ¥4,378）へのご登録が必要です。</span>' +
+          '<span class="en">An active subscription is required to use TOEFL Reps tasks. The plan is <strong>¥3,980/month</strong> (¥4,378 tax incl.).</span></p>' +
+          '<p><span class="jp">登録後すぐに全タスクが解放されます。いつでもキャンセル可能です。</span>' +
+          '<span class="en">All tasks unlock immediately after sign-up. Cancel anytime.</span></p>' +
+        '</div>' +
+        '<div class="ac">' +
+          '<button class="btn btn-gh" type="button" onclick="document.getElementById(\'tckSubBd\').remove()">' +
+            '<span class="jp">閉じる</span><span class="en">Close</span>' +
+          '</button>' +
+          '<a class="btn btn-pri" href="' + billingHref + '">' +
+            '<span class="jp">サブスクを開始</span><span class="en">Start subscription</span>' +
+            '<span>→</span>' +
+          '</a>' +
+        '</div>' +
+      '</div>';
+    bd.addEventListener('click', function (e) { if (e.target === bd) bd.remove(); });
+    document.addEventListener('keydown', function esc(e) {
+      if (e.key === 'Escape' && document.getElementById('tckSubBd')) {
+        bd.remove();
+        document.removeEventListener('keydown', esc);
+      }
+    });
+    document.body.appendChild(bd);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/* ============================================================
    First-Attempt capture for Predicted Score integrity.
    ----------------------------------------------------------
    TOEFL is a one-shot test, so the most honest predictor of
