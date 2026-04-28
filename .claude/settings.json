@@ -1,24 +1,5 @@
 {
   "permissions": {
-    "defaultMode": "acceptEdits",
-    "allow": [
-      "Bash",
-      "Write",
-      "Edit",
-      "Read",
-      "Glob",
-      "Grep",
-      "Agent",
-      "TodoWrite",
-      "NotebookEdit",
-      "WebFetch",
-      "WebSearch"
-    ],
-    "ask": [
-      "Bash(git commit*)",
-      "Bash(git push*)",
-      "Bash(git push --force*)",
-      "Bash(git reset --hard*)"
-    ]
+    "defaultMode": "bypassPermissions"
   }
 }
