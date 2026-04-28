@@ -154,6 +154,25 @@ body[data-lang="en"] .jp{display:none}
   </h1>
 </div>
 
+<!-- Subscription nudge banner — shown only to non-staff users without
+     an active subscription. The actual gate enforcement happens when
+     they tap into a task (auth.js redirects them to billing.html). -->
+<div id="subNudge" style="display:none;max-width:980px;margin:0 auto 8px;padding:0 28px">
+  <div style="background:linear-gradient(135deg,#FDF4F0,#F7E5DA);border:1px solid #E5B8A0;border-left:4px solid #B85C3C;border-radius:12px;padding:16px 22px;display:flex;gap:16px;align-items:center">
+    <div style="font-size:1.4em">🔒</div>
+    <div style="flex:1;font-size:.92em;color:#5A2D1A;line-height:1.55">
+      <strong style="color:#8A3E24">
+        <span class="jp">サブスクリプション未登録</span><span class="en">No active subscription</span>
+      </strong><br>
+      <span class="jp">タスクを開始するには月額プランへのご登録が必要です。</span>
+      <span class="en">Subscribe to unlock the tasks below.</span>
+    </div>
+    <a href="billing.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:var(--green);color:#fff;border-radius:999px;font-family:var(--font-en);font-size:.85em;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0">
+      <span class="jp">登録する</span><span class="en">Subscribe</span><span>→</span>
+    </a>
+  </div>
+</div>
+
 <!-- Full Length Test entrypoint — promoted out of the More section so
      it reads as a test-day rehearsal, not a sidebar add-on. -->
 <div class="flt-banner">
@@ -285,6 +304,7 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <script src="js/auth.js"></script>
+<script src="js/api.js"></script>
 <script>
 /* i18n */
 (function(){
@@ -309,6 +329,30 @@ if(u.userName){
   document.getElementById('userName').textContent=u.userName;
   document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();
 }
+
+/* Subscription nudge — show banner if non-TCK user without active sub.
+   Uses the cache populated by Auth._enforceSubscriptionGate to avoid an
+   extra GAS round-trip; falls back to live check if cache is empty. */
+(function(){
+  if(!u.userId) return;
+  if(typeof tckIsStaff==='function' && tckIsStaff(u.email,u.userId)) return; // staff bypass
+  var nudge=document.getElementById('subNudge'); if(!nudge) return;
+  var key='tck_sub_status_'+u.userId;
+  var cached=null;
+  try{cached=JSON.parse(sessionStorage.getItem(key)||'null');}catch(e){}
+  if(cached && (Date.now()-cached.checkedAt)<15*60*1000){
+    if(!cached.active) nudge.style.display='block';
+    return;
+  }
+  if(typeof Api==='undefined' || !Api.getSubscription) return;
+  Api.getSubscription().then(function(res){
+    var active=!!(res && res.success && res.subscription &&
+      ['active','trialing'].indexOf(String(res.subscription.status||'').toLowerCase())!==-1);
+    try{sessionStorage.setItem(key,JSON.stringify({active:active,checkedAt:Date.now()}));}catch(e){}
+    if(!active) nudge.style.display='block';
+  }).catch(function(){});
+})();
+
 /* Admin entry has been moved to the login page (link "管理者はこちら")
    so that students can never see an Admin affordance from menu.html. */
 function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='index.html';}

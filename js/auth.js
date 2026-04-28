@@ -62,8 +62,69 @@ var Auth = {
         window.location.href = tckRootPrefix() + 'index.html?gate=denied';
         return false;
       }
+      // 3. Subscription gate — TCK staff bypass; everyone else needs an
+      //    active subscription. Runs in the background so the page paints
+      //    immediately; if the check fails, redirects to billing.html.
+      this._enforceSubscriptionGate(u);
     }
     return true;
+  },
+
+  /* Allow billing/consultation/score pages to render without the gate
+     redirecting away from itself. The gate redirects TO billing.html, so
+     the gate must NOT trigger on billing.html itself. */
+  _SUB_EXEMPT_PAGES: [
+    'billing.html',          // the gate redirect target
+    'private-coaching.html', // upsell page
+    'consultation.html',     // free perk
+    'my-score.html',         // self-data view
+    'index.html',            // login (Auth.require shouldn't run here anyway)
+    'menu.html',             // landing — a "subscribe" banner there is friendlier than a redirect
+  ],
+
+  _enforceSubscriptionGate: function(user) {
+    if (!user) return;
+    // Staff bypass — TCK domain users always have access.
+    if (tckIsStaff(user.email, user.userId)) return;
+
+    // Pages where the gate should not redirect (so users can pay).
+    var page = (location.pathname.split('/').pop() || '').toLowerCase();
+    if (this._SUB_EXEMPT_PAGES.indexOf(page) !== -1) return;
+
+    // Cached subscription status (15-min TTL) so we don't hit GAS on
+    // every page load. Cache key includes userId so multiple sessions
+    // on the same browser don't collide.
+    var cacheKey = 'tck_sub_status_' + user.userId;
+    var cached = null;
+    try { cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null'); } catch (e) {}
+    var fresh = cached && (Date.now() - cached.checkedAt) < 15 * 60 * 1000;
+    if (fresh) {
+      if (cached.active) return;       // proven active — let through
+      this._redirectToBilling();
+      return;
+    }
+
+    // No fresh cache → check via Api. Render the page in the meantime;
+    // if the check resolves to "not active", redirect.
+    var self = this;
+    if (typeof Api === 'undefined' || !Api.getSubscription) return; // Api not loaded yet — fail-open
+    Api.getSubscription().then(function(res) {
+      var active = !!(res && res.success && res.subscription &&
+        ['active','trialing'].indexOf(String(res.subscription.status || '').toLowerCase()) !== -1);
+      try {
+        sessionStorage.setItem(cacheKey, JSON.stringify({ active: active, checkedAt: Date.now() }));
+      } catch (e) {}
+      if (!active) self._redirectToBilling();
+    }).catch(function(){
+      // Network failure — fail-open so we don't lock paying users out.
+    });
+  },
+
+  _redirectToBilling: function() {
+    // Avoid redirect loops if already on billing.
+    var page = (location.pathname.split('/').pop() || '').toLowerCase();
+    if (page === 'billing.html') return;
+    window.location.href = tckRootPrefix() + 'billing.html?gate=subscribe';
   },
 
   getUser: function() {
