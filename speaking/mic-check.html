@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マイクチェック — TOEFL Reps</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-height:100vh;display:flex;align-items:center;justify-content:center;color:var(--ink-900);padding:20px;-webkit-font-smoothing:antialiased}
+.lang-floater{position:fixed;top:20px;right:20px;z-index:10}
+.card{background:var(--white);border:1px solid var(--paper);border-radius:18px;box-shadow:0 16px 48px rgba(0,40,23,.08);padding:42px 40px 34px;width:100%;max-width:520px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--green)}
+
+.brand{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.brand-name{font-family:var(--font-en);font-size:.74em;font-weight:800;color:var(--green);letter-spacing:.16em;text-transform:uppercase}
+
+h1{font-family:var(--font-en);font-size:1.45em;font-weight:800;color:var(--green-deep);letter-spacing:-0.01em;line-height:1.25;margin-bottom:8px;text-align:center}
+.sub{font-size:.86em;color:var(--ink-500);margin-bottom:22px;text-align:center;line-height:1.6}
+
+.notice{background:#FDF7E8;border-left:3px solid var(--gold);padding:12px 14px;border-radius:6px;font-size:.82em;color:#8A6D2A;margin-bottom:22px;line-height:1.65}
+.notice strong{color:#7A5C1F}
+
+.mic-box{background:var(--cream);border:1px solid var(--paper);border-radius:12px;padding:22px;margin-bottom:18px;text-align:center}
+.mic-icon{width:54px;height:54px;background:var(--green);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;transition:all .3s}
+.mic-icon.active{background:var(--green);box-shadow:0 0 0 0 rgba(0,118,70,.5);animation:pulse 1.5s infinite}
+.mic-icon svg{width:24px;height:24px;fill:#fff}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,118,70,.4)}70%{box-shadow:0 0 0 14px rgba(0,118,70,0)}100%{box-shadow:0 0 0 0 rgba(0,118,70,0)}}
+
+.meter-track{position:relative;height:14px;background:var(--paper);border-radius:7px;overflow:hidden;margin:14px 0 8px}
+.meter-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--green),var(--gold));border-radius:7px;transition:width .08s}
+.meter-labels{display:flex;justify-content:space-between;font-size:.7em;color:var(--ink-500);font-family:var(--font-en);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+
+.status{font-size:.82em;color:var(--ink-500);margin-top:8px;min-height:20px}
+.status.ok{color:var(--green-dark);font-weight:600}
+.status.err{color:var(--terracotta);font-weight:600}
+
+.btn{width:100%;padding:13px 18px;border:none;border-radius:999px;font-size:.95em;font-weight:600;font-family:var(--font-en);cursor:pointer;transition:all .18s;letter-spacing:.01em;margin-top:6px}
+.btn-primary{background:var(--green);color:var(--white)}
+.btn-primary:hover{background:var(--green-dark);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,118,70,.18)}
+.btn-primary:disabled{background:#A8C9B8;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-outline{background:var(--white);color:var(--ink-500);border:1.5px solid var(--paper);margin-top:8px}
+.btn-outline:hover{border-color:var(--ink-500);color:var(--ink-900)}
+
+.links{margin-top:14px;font-size:.78em;text-align:center;color:var(--ink-500)}
+.links a{color:var(--green-dark);text-decoration:none;font-weight:600}
+.links a:hover{text-decoration:underline}
+
+[data-lang="jp"] .en,[data-lang="en"] .jp{display:none}
+</style>
+</head>
+<body data-lang="jp">
+
+<div class="lang-floater">
+  <div class="tck-lang-toggle">
+    <button type="button" data-lang-btn="jp" class="active">日本語</button>
+    <button type="button" data-lang-btn="en">EN</button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="brand">
+    <span class="brand-dot"></span>
+    <span class="brand-name">TOEFL Reps · Speaking</span>
+  </div>
+
+  <h1>
+    <span class="jp">マイクチェック</span>
+    <span class="en">Microphone Check</span>
+  </h1>
+  <p class="sub">
+    <span class="jp">Speaking タスクを始める前に、マイクが正しく動作するか確認します。</span>
+    <span class="en">Let's confirm your microphone works before starting Speaking tasks.</span>
+  </p>
+
+  <div class="notice">
+    <span class="jp"><strong>解答音声は録音され、Drive に保存されます。</strong>採点・フィードバック・サービス品質向上の目的で利用します。詳細は<a href="../terms.html" target="_blank">利用規約</a>第 2 条をご確認ください。</span>
+    <span class="en"><strong>Your responses are recorded and stored on Drive</strong> for grading, feedback, and quality assurance. See <a href="../terms.html" target="_blank">Terms of Service</a> §2 for details.</span>
+  </div>
+
+  <div class="mic-box">
+    <div class="mic-icon" id="micIcon">
+      <svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V5a3 3 0 00-6 0v6a3 3 0 003 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+    </div>
+    <div style="font-family:var(--font-en);font-size:.78em;font-weight:700;color:var(--ink-500);letter-spacing:.08em;text-transform:uppercase">
+      <span class="jp">音量レベル</span><span class="en">Input Level</span>
+    </div>
+    <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+    <div class="meter-labels"><span>Quiet</span><span>Loud</span></div>
+    <div class="status info" id="status"><span class="jp">下のボタンを押してマイクを有効化してください。</span><span class="en">Press the button below to enable your mic.</span></div>
+  </div>
+
+  <button class="btn btn-primary" id="btnEnable" onclick="enableMic()">
+    <span class="jp">マイクを有効にする</span><span class="en">Enable microphone</span>
+  </button>
+
+  <button class="btn btn-primary" id="btnContinue" onclick="goBack()" style="display:none">
+    <span class="jp">続ける →</span><span class="en">Continue →</span>
+  </button>
+
+  <button class="btn btn-outline" onclick="skipMic()">
+    <span class="jp">録音せずに進む（推奨しません）</span><span class="en">Skip recording (not recommended)</span>
+  </button>
+
+  <div class="links">
+    <a href="../menu.html"><span class="jp">← メニューに戻る</span><span class="en">← Back to menu</span></a>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script>
+/* Language toggle */
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
+function tMsg(jp, en){ return (localStorage.getItem('tck_lang')||'jp')==='en' ? en : jp; }
+
+if (typeof Auth !== 'undefined') Auth.require();
+
+var stream = null;
+var audioCtx = null;
+var analyser = null;
+var rafId = null;
+
+function setStatus(text, cls){
+  var el = document.getElementById('status');
+  el.className = 'status ' + (cls || 'info');
+  el.textContent = text;
+}
+
+function enableMic(){
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    setStatus(tMsg('お使いのブラウザは録音に対応していません。Chrome / Edge / Safari の最新版でアクセスしてください。','Your browser does not support recording. Please use the latest Chrome, Edge, or Safari.'), 'err');
+    return;
+  }
+  document.getElementById('btnEnable').disabled = true;
+  setStatus(tMsg('マイクを起動しています…','Starting microphone…'), 'info');
+
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(function(s){
+    stream = s;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var src = audioCtx.createMediaStreamSource(s);
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+    src.connect(analyser);
+
+    document.getElementById('micIcon').classList.add('active');
+    setStatus(tMsg('✓ マイクが有効です。声を出すとメーターが動きます。','✓ Microphone is live. Speak to see the meter move.'), 'ok');
+    document.getElementById('btnEnable').style.display = 'none';
+    document.getElementById('btnContinue').style.display = 'block';
+    drawMeter();
+  }).catch(function(err){
+    var name = (err && err.name) || '';
+    if (name === 'NotAllowedError' || name === 'PermissionDeniedError'){
+      setStatus(tMsg('マイクの使用が拒否されました。ブラウザのアドレスバー左の鍵アイコンから許可してください。','Microphone access was denied. Click the lock icon in the address bar to allow.'), 'err');
+    } else if (name === 'NotFoundError'){
+      setStatus(tMsg('マイクが見つかりません。デバイスを接続してください。','No microphone found. Please connect one.'), 'err');
+    } else {
+      setStatus(tMsg('マイクを起動できませんでした：','Could not start microphone: ') + (err && err.message || name || 'unknown'), 'err');
+    }
+    document.getElementById('btnEnable').disabled = false;
+  });
+}
+
+function drawMeter(){
+  if (!analyser) return;
+  var data = new Uint8Array(analyser.frequencyBinCount);
+  analyser.getByteFrequencyData(data);
+  var sum = 0; for (var i=0;i<data.length;i++) sum += data[i];
+  var avg = sum / data.length;        // 0-128 typical speech range
+  var pct = Math.min(100, avg * 1.5); // visual scaling
+  document.getElementById('meterFill').style.width = pct + '%';
+  rafId = requestAnimationFrame(drawMeter);
+}
+
+function cleanup(){
+  if (rafId) cancelAnimationFrame(rafId);
+  if (stream) stream.getTracks().forEach(function(t){ try { t.stop(); } catch(e){} });
+  if (audioCtx) try { audioCtx.close(); } catch(e){}
+  stream = null; audioCtx = null; analyser = null;
+}
+
+function goBack(){
+  // Mark mic as checked for this session so the recorder hook lets the user pass
+  sessionStorage.setItem('tck_mic_checked', '1');
+  cleanup();
+  var ret = new URLSearchParams(location.search).get('return');
+  location.href = ret || '../menu.html';
+}
+
+function skipMic(){
+  if (!confirm(tMsg('録音をスキップすると、Speaking 解答の振り返りや個別指導でのフィードバックができません。本当にスキップしますか？','Skipping recording means you cannot review your responses or get coach feedback. Are you sure?'))) return;
+  sessionStorage.setItem('tck_mic_checked', 'skipped');
+  cleanup();
+  var ret = new URLSearchParams(location.search).get('return');
+  location.href = ret || '../menu.html';
+}
+
+window.addEventListener('beforeunload', cleanup);
+</script>
+</body>
+</html>

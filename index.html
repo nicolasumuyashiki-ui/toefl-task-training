@@ -217,6 +217,11 @@ function saveAndGo(res, pass) {
   // Stash the password so session-scoped billing API calls can include it.
   // Dies when the tab closes (sessionStorage, not localStorage).
   if (pass) sessionStorage.setItem('kickstart_pass', pass);
+  // Forced password-change after temp-password login.
+  if (res.mustChangePassword) {
+    window.location.href = 'password-change.html?forced=1';
+    return;
+  }
   window.location.href='menu.html';
 }
 function tMsg(jp, en){ return (localStorage.getItem('tck_lang')||'jp')==='en' ? en : jp; }
@@ -237,6 +242,17 @@ function doLogin() {
       }
       saveAndGo(r, pass);
     }
+    else if (r.error === 'temp_password_expired') {
+      err.textContent = tMsg(
+        '仮パスワードの有効期限（24時間）が切れています。再度「パスワードを忘れた」から発行してください。',
+        'Your temporary password has expired (24h). Please request a new one from "Forgot password".'
+      );
+      setLoading('btnLogin','spinLogin',false);
+    }
+    else if (r.error === 'invalid_credentials') {
+      err.textContent = tMsg('IDまたはパスワードが正しくありません。','ID or password is incorrect.');
+      setLoading('btnLogin','spinLogin',false);
+    }
     else{err.textContent=r.error||tMsg('ログインに失敗しました','Sign-in failed.');setLoading('btnLogin','spinLogin',false);}
   }).catch(function(){err.textContent=tMsg('通信エラーが発生しました','Network error.');setLoading('btnLogin','spinLogin',false);});
 }
@@ -253,6 +269,18 @@ function doRegister() {
   setLoading('btnRegister','spinReg',true);
   Api.register(id,pass,name,email).then(function(r){
     if(r.success){succ.textContent=tMsg('登録完了！','Registered — taking you in…');setTimeout(function(){saveAndGo(r, pass);},400);}
+    else if (r.error === 'duplicate_id') {
+      err.textContent = tMsg('このIDはすでに使われています。別のIDを試してください。','This ID is already taken. Please try a different one.');
+      setLoading('btnRegister','spinReg',false);
+    }
+    else if (r.error === 'duplicate_email') {
+      err.textContent = tMsg('このメールアドレスはすでに登録されています。「パスワードを忘れた」からログインしてください。','This email is already registered. Please use "Forgot password" to sign in.');
+      setLoading('btnRegister','spinReg',false);
+    }
+    else if (r.error === 'missing_params') {
+      err.textContent = tMsg('すべての項目を入力してください','Please fill in every field.');
+      setLoading('btnRegister','spinReg',false);
+    }
     else{err.textContent=r.error||tMsg('登録に失敗しました','Registration failed.');setLoading('btnRegister','spinReg',false);}
   }).catch(function(){err.textContent=tMsg('通信エラーが発生しました','Network error.');setLoading('btnRegister','spinReg',false);});
 }
@@ -264,8 +292,18 @@ function doRecover() {
   setLoading('btnRecover','spinRecover',true);
   Api.recover(email).then(function(r){
     setLoading('btnRecover','spinRecover',false);
-    if(r.success){succ.textContent=r.message;}
-    else{err.textContent=r.error||tMsg('送信に失敗しました','Could not send.');}
+    if(r.success){
+      succ.textContent=tMsg(
+        '仮パスワードをメールで送信しました。24時間以内にログインし、新しいパスワードを設定してください。',
+        'A temporary password has been sent to your email. Sign in and set a new password within 24 hours.'
+      );
+    } else if (r.error === 'not_found') {
+      err.textContent = tMsg('このメールアドレスは登録されていません。','This email is not registered.');
+    } else if (r.error === 'mail_failed') {
+      err.textContent = tMsg('メール送信に失敗しました。少し時間をおいて再度お試しください。','Email delivery failed. Please try again shortly.');
+    } else {
+      err.textContent=tMsg('送信に失敗しました','Could not send.');
+    }
   }).catch(function(){err.textContent=tMsg('通信エラーが発生しました','Network error.');setLoading('btnRecover','spinRecover',false);});
 }
 document.getElementById('loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});

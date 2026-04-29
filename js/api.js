@@ -53,6 +53,17 @@ var Api = {
     return _jsonpRequest(API_URL + '?action=recover&email=' + encodeURIComponent(email));
   },
 
+  /* Change password — used by the forced password-change flow after a
+     temp-password login, and also available for self-service later.
+     Verifies `current` against col B; on success writes `newPass` and
+     clears col H (pass_temp_at). */
+  changePassword: function(id, current, newPass) {
+    return _jsonpRequest(API_URL + '?action=changePassword'
+      + '&id=' + encodeURIComponent(id)
+      + '&current=' + encodeURIComponent(current)
+      + '&newPass=' + encodeURIComponent(newPass));
+  },
+
   /* Heartbeat — fire-and-forget ping that updates the user's
      last_seen_at on the USERS sheet so admin can show "active now". */
   heartbeat: function() {
@@ -106,6 +117,14 @@ var Api = {
       + '&pass=' + encodeURIComponent(p));
   },
 
+  listRecordings: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=listRecordings'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
+  },
+
   /* Student self-data — billing. Uses kickstart_pass
      (set on student login) or kickstart_staff_pass (set on admin login). */
   getSubscription: function(id, pass) {
@@ -127,6 +146,31 @@ var Api = {
   /* Stripe Customer Portal — returns { success, url } so the page can
      redirect the user to Stripe's hosted portal for payment-method
      updates, cancellation, and invoice history. */
+  /* Upload a Speaking recording (LR / TI) to GAS, which writes the audio
+     to a Drive folder and appends a row to the RECORDINGS sheet.
+     Uses POST + form-urlencoded so JSONP's URL-length limit doesn't bite
+     a ~500KB base64 payload. We send no Content-Type override so GAS
+     receives e.parameter.* normally and CORS preflight is skipped.
+     Returns { success, fileId, url } or { success:false, error }. */
+  uploadRecording: function(meta, base64Audio) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var body = new URLSearchParams();
+    body.append('action',        'uploadRecording');
+    body.append('userId',        u.userId   || '');
+    body.append('userName',      u.userName || '');
+    body.append('task',          meta.task          || ''); // 'lr' | 'ti'
+    body.append('practiceSet',   String(meta.practiceSet || ''));
+    body.append('questionIndex', String(meta.questionIndex || 0));
+    body.append('mime',          meta.mime || 'audio/webm');
+    body.append('ext',           meta.ext  || 'webm');
+    body.append('durationSec',   String(meta.durationSec || 0));
+    body.append('attemptNumber', String(meta.attemptNumber || 1));
+    body.append('audioB64',      base64Audio || '');
+    return fetch(API_URL, { method: 'POST', body: body })
+      .then(function(r){ return r.json().catch(function(){ return { success: true, transparent: true }; }); })
+      .catch(function(err){ return { success: false, error: 'network_error', detail: String(err) }; });
+  },
+
   createPortalSession: function(id, pass) {
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';

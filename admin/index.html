@@ -211,6 +211,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
     <button class="tab" data-panel="report" type="button">レポート</button>
     <button class="tab" data-panel="karte" type="button">個人カルテ</button>
     <button class="tab" data-panel="progress" type="button">進捗状況</button>
+    <button class="tab" data-panel="recordings" type="button">録音</button>
   </nav>
 
   <!-- ========== 一覧 ========== -->
@@ -360,6 +361,48 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
         <table class="matrix-table" id="progressTable">
           <thead><tr id="progressHead"></tr></thead>
           <tbody id="progressBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 録音 ========== -->
+  <section class="panel" id="panel-recordings">
+    <div class="toolbar">
+      <div class="filter-group">
+        <input type="search" id="searchRec" class="input" placeholder="ユーザー名・IDで検索…">
+        <select id="filterRecTask" class="select">
+          <option value="">全タスク</option>
+          <option value="lr">Listen &amp; Repeat (LR)</option>
+          <option value="ti">Take an Interview (TI)</option>
+        </select>
+        <select id="filterRecSet" class="select">
+          <option value="">全 Practice Set</option>
+        </select>
+      </div>
+      <span class="count-badge"><strong id="recCount">0</strong> 件</span>
+      <button class="btn btn-primary" onclick="loadRecordings()">
+        <span>↻</span> 再読み込み
+      </button>
+    </div>
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table id="recTable">
+          <thead>
+            <tr>
+              <th style="white-space:nowrap">日時</th>
+              <th>ユーザー</th>
+              <th>タスク</th>
+              <th>Set</th>
+              <th>Q</th>
+              <th>長さ</th>
+              <th style="min-width:280px">プレイヤー</th>
+              <th>Drive</th>
+            </tr>
+          </thead>
+          <tbody id="recBody">
+            <tr><td colspan="8" style="text-align:center;color:var(--ink-500);padding:32px">読み込み中…</td></tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -740,7 +783,18 @@ function boot() {
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+      // Lazy-load recordings the first time the tab is opened.
+      if (btn.dataset.panel === 'recordings' && !window.__recordingsLoaded) {
+        loadRecordings();
+      }
     });
+  });
+
+  // Recordings filter bindings (recordings tab is lazy-loaded but the
+  // controls exist in DOM from boot, so wire them now).
+  ['searchRec','filterRecTask','filterRecSet'].forEach(id => {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('input', renderRecordings);
   });
 
   // Bind filters
@@ -1148,6 +1202,88 @@ function showDetail(userId, task, practice) {
   const a = ATTEMPTS.find(x => x.userId === userId && x.task === task && x.practice === practice);
   alert((u ? u.userName : userId) + ' · ' + (a ? a.taskLabel : task) + ' · Practice ' + practice + '\n' +
         (a ? ('スコア: ' + (a.score ?? '—') + '%  合否: ' + a.status + '\n最終更新: ' + a.updatedAt) : ''));
+}
+
+/* ============================================================
+   Recordings tab — Speaking LR/TI playback
+   ============================================================ */
+window.__recordings = [];
+window.__recordingsLoaded = false;
+
+function loadRecordings() {
+  var body = document.getElementById('recBody');
+  body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--ink-500);padding:32px">読み込み中…</td></tr>';
+  Api.listRecordings().then(function(r){
+    if (!r || !r.success) {
+      body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--terracotta);padding:32px">読み込みに失敗しました（' + (r && r.error || 'unknown') + '）</td></tr>';
+      return;
+    }
+    window.__recordings = r.recordings || [];
+    window.__recordingsLoaded = true;
+    // Populate Set filter from data
+    var sets = {};
+    window.__recordings.forEach(function(rec){ sets[rec.practiceSet] = true; });
+    var setSel = document.getElementById('filterRecSet');
+    var keep = setSel.value;
+    setSel.innerHTML = '<option value="">全 Practice Set</option>';
+    Object.keys(sets).sort(function(a,b){ return Number(a)-Number(b); }).forEach(function(s){
+      setSel.insertAdjacentHTML('beforeend', '<option value="' + s + '">Set ' + s + '</option>');
+    });
+    setSel.value = keep;
+    renderRecordings();
+  }).catch(function(err){
+    body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--terracotta);padding:32px">通信エラー：' + String(err && err.message || err) + '</td></tr>';
+  });
+}
+
+function renderRecordings() {
+  var body = document.getElementById('recBody');
+  var q  = (document.getElementById('searchRec').value || '').trim().toLowerCase();
+  var ft = document.getElementById('filterRecTask').value;
+  var fs = document.getElementById('filterRecSet').value;
+
+  var rows = (window.__recordings || []).filter(function(r){
+    if (ft && r.task !== ft) return false;
+    if (fs && String(r.practiceSet) !== String(fs)) return false;
+    if (q) {
+      var hay = (r.userId + ' ' + r.userName).toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  });
+  // newest first
+  rows.sort(function(a,b){ return (b.timestamp || '').localeCompare(a.timestamp || ''); });
+
+  document.getElementById('recCount').textContent = rows.length;
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--ink-500);padding:32px">該当する録音はありません。</td></tr>';
+    return;
+  }
+
+  body.innerHTML = rows.map(function(r){
+    var dt = r.timestamp ? new Date(r.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
+    var taskLabel = r.task === 'lr' ? 'LR' : (r.task === 'ti' ? 'TI' : r.task);
+    var dur = r.durationSec ? (Math.floor(r.durationSec/60) + ':' + String(r.durationSec%60).padStart(2,'0')) : '—';
+    // Drive direct-stream URL (works for "anyone with link" files):
+    //   https://drive.google.com/uc?export=download&id=FILE_ID
+    var streamUrl = r.fileId ? ('https://drive.google.com/uc?export=download&id=' + r.fileId) : '';
+    var player = streamUrl
+      ? '<audio controls preload="none" style="width:100%;max-width:280px"><source src="' + streamUrl + '" type="' + (r.mime || 'audio/webm') + '"></audio>'
+      : '<span style="color:var(--ink-500)">—</span>';
+    var driveLink = r.fileUrl
+      ? '<a href="' + r.fileUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.85em">開く →</a>'
+      : '';
+    return '<tr>' +
+      '<td style="white-space:nowrap;font-size:.82em">' + dt + '</td>' +
+      '<td><div style="font-weight:600">' + escapeHtml(r.userName || '—') + '</div><div style="font-size:.78em;color:var(--ink-500)">' + escapeHtml(r.userId) + '</div></td>' +
+      '<td><span style="font-family:var(--font-en);font-weight:700;color:var(--green-dark)">' + taskLabel + '</span></td>' +
+      '<td style="text-align:center">' + r.practiceSet + '</td>' +
+      '<td style="text-align:center">' + r.questionIndex + '</td>' +
+      '<td style="white-space:nowrap;font-family:var(--font-en);font-size:.85em">' + dur + '</td>' +
+      '<td>' + player + '</td>' +
+      '<td>' + driveLink + '</td>' +
+    '</tr>';
+  }).join('');
 }
 
 /* ============================================================
