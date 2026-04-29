@@ -32,15 +32,33 @@ function tckIsStaff(email, userId) {
   return !!email && email.toLowerCase().endsWith('@tckworkshop.co.jp');
 }
 
-/* Figure out the relative prefix to reach the root (index.html / menu.html).
-   Examples:
-     /index.html           → ''
-     /menu.html            → ''
-     /admin/index.html     → '../'
-     /reading/ctw/x.html   → '../../' */
+/* Figure out the absolute URL of the app root (where index.html /
+   menu.html live). Returns e.g. "https://apps.tckworkshop.co.jp/toefl-task-training/"
+   or "/" depending on deployment.
+
+   Strategy: locate the <script> tag that loaded this auth.js. Its src
+   ends in ".../js/auth.js", so strip that suffix to get the app root.
+   This is robust against:
+   - subpath deployments (/toefl-task-training/...)
+   - nested pages (/reading/ctw/practice-1.html, /admin/index.html, etc.)
+   - local filesystem testing (file://...)
+   - custom-domain → GitHub Pages forwarding
+
+   Bug fixed 2026-04: the old "count slashes in pathname" approach
+   wrongly treated "/toefl-task-training/" as a directory to traverse,
+   so menu.html → ../index.html resolved to the host root, which 404'd
+   into GitHub's user-profile page. */
 function tckRootPrefix() {
-  var parts = location.pathname.split('/').filter(function(s){ return s && s.indexOf('.html') === -1; });
-  return parts.length > 0 ? new Array(parts.length + 1).join('../') : '';
+  var scripts = document.getElementsByTagName('script');
+  for (var i = 0; i < scripts.length; i++) {
+    var src = scripts[i].src || '';
+    var m = src.match(/^(.*\/)js\/auth\.js(?:\?.*)?$/);
+    if (m) return m[1];
+  }
+  // Fallback for edge cases (e.g. inline auth.js): empty prefix means
+  // "current directory", which is correct for index.html / menu.html
+  // accessed at the app root and acceptable elsewhere.
+  return '';
 }
 
 var Auth = {
