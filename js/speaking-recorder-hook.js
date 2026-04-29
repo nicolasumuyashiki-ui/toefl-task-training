@@ -83,8 +83,11 @@
     if (!recordingActive) return Promise.resolve();
     var dur = Math.round((Date.now() - recStartedAt) / 1000);
     recordingActive = false; showRec(false);
+    console.log('[recorder-hook] uploadCurrent q=' + qNum + ' dur=' + dur + 's — calling stop()');
     return TCKRecorder.stop().then(function(blob){
+      console.log('[recorder-hook] q=' + qNum + ' blob size=' + (blob ? blob.size : 'null') + 'B type=' + (blob ? blob.type : 'null'));
       return TCKRecorder.blobToBase64(blob).then(function(b64){
+        console.log('[recorder-hook] q=' + qNum + ' base64 length=' + (b64 ? b64.length : 0) + ' chars');
         return Api.uploadRecording({
           task:           (typeof TCK_TASK !== 'undefined') ? TCK_TASK : 'speaking',
           practiceSet:    (typeof TCK_PRACTICE !== 'undefined') ? TCK_PRACTICE : 0,
