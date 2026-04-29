@@ -59,12 +59,25 @@
     document.head.appendChild(s);
     indicator = document.createElement('div');
     indicator.id = 'tckRecIndicator';
-    indicator.style.cssText = 'position:fixed;top:14px;right:24px;display:none;align-items:center;gap:8px;padding:6px 14px;background:#B85C3C;color:#fff;border-radius:999px;font-size:.85em;font-weight:600;z-index:9999;box-shadow:0 4px 12px rgba(184,92,60,.3);font-family:inherit';
-    indicator.innerHTML = '<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#fff;animation:recPulse 1s infinite;"></span><span>REC</span>';
-    document.body.appendChild(indicator);
+    // !important on display + visibility + z-index so page CSS / stacking
+    // contexts can't hide the badge.
+    indicator.setAttribute('style',
+      'position:fixed!important;top:60px!important;right:20px!important;' +
+      'display:none;align-items:center;gap:8px;padding:8px 18px;' +
+      'background:#B85C3C!important;color:#fff!important;border-radius:999px;' +
+      'font-size:.95em;font-weight:700;z-index:2147483647!important;' +
+      'box-shadow:0 6px 20px rgba(184,92,60,.45);font-family:inherit;' +
+      'visibility:visible!important;opacity:1!important;pointer-events:none');
+    indicator.innerHTML = '<span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#fff;animation:recPulse 1s infinite;"></span><span>REC</span>';
+    (document.body || document.documentElement).appendChild(indicator);
+    console.log('[recorder-hook] indicator created and appended');
     return indicator;
   }
-  function showRec(on){ ensureIndicator().style.display = on ? 'inline-flex' : 'none'; }
+  function showRec(on){
+    var el = ensureIndicator();
+    el.style.setProperty('display', on ? 'inline-flex' : 'none', 'important');
+    console.log('[recorder-hook] showRec', on, '— display=', el.style.display);
+  }
 
   function uploadCurrent(qNum){
     if (!recordingActive) return Promise.resolve();
@@ -103,6 +116,7 @@
   // --- Begin recording at the start of each response countdown ---
   var origCountdown = window.startCountdown;
   window.startCountdown = function(qNum){
+    console.log('[recorder-hook] startCountdown wrapper fired q=' + qNum, '| skip=' + SKIP_RECORDING, '| isReady=' + TCKRecorder.isReady());
     if (!SKIP_RECORDING && TCKRecorder.isReady()){
       try {
         TCKRecorder.start();
@@ -113,6 +127,8 @@
       } catch(e){
         console.warn('[recorder-hook] rec start failed:', e);
       }
+    } else if (!SKIP_RECORDING) {
+      console.warn('[recorder-hook] skipping recording for q' + qNum + ' — recorder not ready');
     }
     return origCountdown.apply(this, arguments);
   };
