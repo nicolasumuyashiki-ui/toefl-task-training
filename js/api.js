@@ -148,27 +148,70 @@ var Api = {
      updates, cancellation, and invoice history. */
   /* Upload a Speaking recording (LR / TI) to GAS, which writes the audio
      to a Drive folder and appends a row to the RECORDINGS sheet.
-     Uses POST + form-urlencoded so JSONP's URL-length limit doesn't bite
-     a ~500KB base64 payload. We send no Content-Type override so GAS
-     receives e.parameter.* normally and CORS preflight is skipped.
-     Returns { success, fileId, url } or { success:false, error }. */
+
+     Why hidden-iframe form submit instead of fetch?
+     GAS Web App POST returns a 302 redirect to script.googleusercontent.com.
+     Browser fetch (per RFC ambiguity) demotes 302 POST to GET on follow,
+     so the request body never reaches doPost — we'd see 401 at the redirect
+     target. HTML form submission to a same-name iframe target follows the
+     redirect with the POST body intact. We can't read the response (the
+     iframe is cross-origin), but recording uploads are fire-and-forget
+     anyway: success is verified server-side via the RECORDINGS sheet.
+
+     Returns a Promise that resolves once the iframe finishes loading. */
   uploadRecording: function(meta, base64Audio) {
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
-    var body = new URLSearchParams();
-    body.append('action',        'uploadRecording');
-    body.append('userId',        u.userId   || '');
-    body.append('userName',      u.userName || '');
-    body.append('task',          meta.task          || ''); // 'lr' | 'ti'
-    body.append('practiceSet',   String(meta.practiceSet || ''));
-    body.append('questionIndex', String(meta.questionIndex || 0));
-    body.append('mime',          meta.mime || 'audio/webm');
-    body.append('ext',           meta.ext  || 'webm');
-    body.append('durationSec',   String(meta.durationSec || 0));
-    body.append('attemptNumber', String(meta.attemptNumber || 1));
-    body.append('audioB64',      base64Audio || '');
-    return fetch(API_URL, { method: 'POST', body: body })
-      .then(function(r){ return r.json().catch(function(){ return { success: true, transparent: true }; }); })
-      .catch(function(err){ return { success: false, error: 'network_error', detail: String(err) }; });
+    var data = {
+      action:        'uploadRecording',
+      userId:        u.userId   || '',
+      userName:      u.userName || '',
+      task:          meta.task          || '',
+      practiceSet:   String(meta.practiceSet || ''),
+      questionIndex: String(meta.questionIndex || 0),
+      mime:          meta.mime || 'audio/webm',
+      ext:           meta.ext  || 'webm',
+      durationSec:   String(meta.durationSec || 0),
+      attemptNumber: String(meta.attemptNumber || 1),
+      audioB64:      base64Audio || ''
+    };
+    return new Promise(function(resolve){
+      var name = 'gasUpload_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+      var iframe = document.createElement('iframe');
+      iframe.name = name;
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = API_URL;
+      form.target = name;
+      form.enctype = 'application/x-www-form-urlencoded';
+      form.acceptCharset = 'UTF-8';
+      form.style.display = 'none';
+
+      Object.keys(data).forEach(function(k){
+        var inp = document.createElement('input');
+        inp.type = 'hidden';
+        inp.name = k;
+        inp.value = data[k];
+        form.appendChild(inp);
+      });
+      document.body.appendChild(form);
+
+      var done = false;
+      function cleanup(result){
+        if (done) return; done = true;
+        setTimeout(function(){
+          try { form.parentNode && form.parentNode.removeChild(form); } catch(e){}
+          try { iframe.parentNode && iframe.parentNode.removeChild(iframe); } catch(e){}
+        }, 250);
+        resolve(result);
+      }
+      iframe.onload = function(){ cleanup({ success: true, transparent: true }); };
+      // Safety timeout — cross-origin onload sometimes doesn't fire.
+      setTimeout(function(){ cleanup({ success: true, timeout: true }); }, 30000);
+      form.submit();
+    });
   },
 
   createPortalSession: function(id, pass) {
