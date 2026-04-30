@@ -99,15 +99,36 @@ body[data-lang="jp"] .en{display:none}body[data-lang="en"] .jp{display:none}
   <h1>Speaking</h1>
 </div>
 
-<div class="tip">
+<div class="tip" id="randomTipBox">
   <div class="tip-inner">
-    <span class="tip-label">Tip</span>
+    <span class="tip-label" id="randomTipLabel">Tip</span>
     <div class="tip-text">
       <span class="jp"><strong>Speaking攻略の鉄則：</strong>Listen &amp; Repeatは「チャンク記憶 → リズムコピー → 2秒待ってから開始」。Interviewは「主張5秒 / 理由15秒 / 具体例15秒 / まとめ10秒 = 45秒」を使い切る。</span>
       <span class="en"><strong>Speaking strategy:</strong> For Listen &amp; Repeat, chunk first, copy the rhythm, pause 2s before starting. For Interview, use 5s claim / 15s reason / 15s example / 10s wrap-up = 45s.</span>
     </div>
   </div>
 </div>
+<script src="../js/tips-library.js"></script>
+<script>
+(function(){
+  if (!window.TCK_TIPS || !window.TCK_TIPS.speaking || !window.TCK_TIPS.speaking.length) return;
+  var pool = window.TCK_TIPS.speaking;
+  var pick = pool[Math.floor(Math.random() * pool.length)];
+  var lang = localStorage.getItem('tck_lang') || 'jp';
+  var box = document.getElementById('randomTipBox'); if (!box) return;
+  var label = document.getElementById('randomTipLabel');
+  if (label) label.textContent = (lang === 'en' ? pick.task : pick.taskJp) + ' Tip';
+  var tt = box.querySelector('.tip-text');
+  if (tt) {
+    var titleJp = pick.titleJp || '', titleEn = pick.titleEn || titleJp;
+    var bodyJp  = pick.bodyJp  || '', bodyEn  = pick.bodyEn  || bodyJp;
+    tt.innerHTML =
+      '<span class="jp"><strong>' + esc(titleJp) + ':</strong> ' + esc(bodyJp) + '</span>' +
+      '<span class="en"><strong>' + esc(titleEn) + ':</strong> ' + esc(bodyEn) + '</span>';
+  }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+})();
+</script>
 
 <!-- Listen and Repeat -->
 <div class="task-section">

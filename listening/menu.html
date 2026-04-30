@@ -98,15 +98,36 @@ body[data-lang="jp"] .en{display:none}body[data-lang="en"] .jp{display:none}
   <h1>Listening</h1>
 </div>
 
-<div class="tip">
+<div class="tip" id="randomTipBox">
   <div class="tip-inner">
-    <span class="tip-label">Tip</span>
+    <span class="tip-label" id="randomTipLabel">Tip</span>
     <div class="tip-text">
       <span class="jp"><strong>Listening攻略の鉄則：</strong>最初の2語に全集中して話題を掴む。メモは名詞・動詞・数字のキーワードだけ。全部書き取ろうとしないこと。</span>
       <span class="en"><strong>Listening strategy:</strong> focus on the first two words to catch the topic. Note only keywords — nouns, verbs, numbers.</span>
     </div>
   </div>
 </div>
+<script src="../js/tips-library.js"></script>
+<script>
+(function(){
+  if (!window.TCK_TIPS || !window.TCK_TIPS.listening || !window.TCK_TIPS.listening.length) return;
+  var pool = window.TCK_TIPS.listening;
+  var pick = pool[Math.floor(Math.random() * pool.length)];
+  var lang = localStorage.getItem('tck_lang') || 'jp';
+  var box = document.getElementById('randomTipBox'); if (!box) return;
+  var label = document.getElementById('randomTipLabel');
+  if (label) label.textContent = (lang === 'en' ? pick.task : pick.taskJp) + ' Tip';
+  var tt = box.querySelector('.tip-text');
+  if (tt) {
+    var titleJp = pick.titleJp || '', titleEn = pick.titleEn || titleJp;
+    var bodyJp  = pick.bodyJp  || '', bodyEn  = pick.bodyEn  || bodyJp;
+    tt.innerHTML =
+      '<span class="jp"><strong>' + esc(titleJp) + ':</strong> ' + esc(bodyJp) + '</span>' +
+      '<span class="en"><strong>' + esc(titleEn) + ':</strong> ' + esc(bodyEn) + '</span>';
+  }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+})();
+</script>
 
 <!-- LCR -->
 <div class="task-section">

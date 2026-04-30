@@ -126,15 +126,42 @@ body[data-lang="en"] .jp{display:none}
   <h1>Reading</h1>
 </div>
 
-<div class="tip">
+<div class="tip" id="randomTipBox">
   <div class="tip-inner">
-    <span class="tip-label">Tip</span>
+    <span class="tip-label" id="randomTipLabel">Tip</span>
     <div class="tip-text">
       <span class="jp"><strong>Reading攻略の鉄則：</strong>前半のモジュールでは「速さ」より「正確さ」。品詞の特定 → 文脈推測 → パラフレーズ発見の順番を身につけましょう。</span>
       <span class="en"><strong>Reading strategy:</strong> accuracy before speed. Identify parts of speech, infer from context, then spot the paraphrase.</span>
     </div>
   </div>
 </div>
+<script src="../js/tips-library.js"></script>
+<script>
+/* Pick a random tip from this skill's pool and render into #randomTipBox.
+   Each tip is task-labeled (e.g. CTW / RDL / Academic) so users see which
+   sub-task the tip applies to. Keeps the original static tip as fallback. */
+(function(){
+  if (!window.TCK_TIPS || !window.TCK_TIPS.reading || !window.TCK_TIPS.reading.length) return;
+  var pool = window.TCK_TIPS.reading;
+  var pick = pool[Math.floor(Math.random() * pool.length)];
+  var lang = localStorage.getItem('tck_lang') || 'jp';
+  var box = document.getElementById('randomTipBox');
+  if (!box) return;
+  var label = document.getElementById('randomTipLabel');
+  if (label) label.textContent = (lang === 'en' ? pick.task : pick.taskJp) + ' Tip';
+  var tt = box.querySelector('.tip-text');
+  if (tt) {
+    var titleJp = pick.titleJp || '';
+    var titleEn = pick.titleEn || titleJp;
+    var bodyJp  = pick.bodyJp  || '';
+    var bodyEn  = pick.bodyEn  || bodyJp;
+    tt.innerHTML =
+      '<span class="jp"><strong>' + escHTML(titleJp) + ':</strong> ' + escHTML(bodyJp) + '</span>' +
+      '<span class="en"><strong>' + escHTML(titleEn) + ':</strong> ' + escHTML(bodyEn) + '</span>';
+  }
+  function escHTML(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+})();
+</script>
 
 <!-- CTW -->
 <div class="task-section">

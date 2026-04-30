@@ -98,15 +98,36 @@ body[data-lang="jp"] .en{display:none}body[data-lang="en"] .jp{display:none}
   <h1>Writing</h1>
 </div>
 
-<div class="tip">
+<div class="tip" id="randomTipBox">
   <div class="tip-inner">
-    <span class="tip-label">Tip</span>
+    <span class="tip-label" id="randomTipLabel">Tip</span>
     <div class="tip-text">
       <span class="jp"><strong>Writing攻略の鉄則：</strong>Build a Sentenceは「主語→動詞→骨格→残り配置」。Emailは3ポイントを絶対に見落とさない。Discussionは「主張→理由→具体例→言及」のテンプレートで。</span>
       <span class="en"><strong>Writing strategy:</strong> For Build a Sentence, follow subject → verb → frame → rest. For Email, cover all three prompts. For Discussion, use claim → reason → example → citation.</span>
     </div>
   </div>
 </div>
+<script src="../js/tips-library.js"></script>
+<script>
+(function(){
+  if (!window.TCK_TIPS || !window.TCK_TIPS.writing || !window.TCK_TIPS.writing.length) return;
+  var pool = window.TCK_TIPS.writing;
+  var pick = pool[Math.floor(Math.random() * pool.length)];
+  var lang = localStorage.getItem('tck_lang') || 'jp';
+  var box = document.getElementById('randomTipBox'); if (!box) return;
+  var label = document.getElementById('randomTipLabel');
+  if (label) label.textContent = (lang === 'en' ? pick.task : pick.taskJp) + ' Tip';
+  var tt = box.querySelector('.tip-text');
+  if (tt) {
+    var titleJp = pick.titleJp || '', titleEn = pick.titleEn || titleJp;
+    var bodyJp  = pick.bodyJp  || '', bodyEn  = pick.bodyEn  || bodyJp;
+    tt.innerHTML =
+      '<span class="jp"><strong>' + esc(titleJp) + ':</strong> ' + esc(bodyJp) + '</span>' +
+      '<span class="en"><strong>' + esc(titleEn) + ':</strong> ' + esc(bodyEn) + '</span>';
+  }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+})();
+</script>
 
 <!-- Build a Sentence -->
 <div class="task-section">
