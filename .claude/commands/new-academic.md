@@ -44,9 +44,19 @@ $ARGUMENTS
 
 ### 選択肢ルール
 - 各問題4択（A-D）
-- 各選択肢 5-15語
+- 各選択肢 5-15語（Vocabulary問題は除く）
 - 正解分布: できるだけ均等に
-- Vocabulary問題: 選択肢は単語または短いフレーズ
+- **Vocabulary問題: 選択肢は原則すべて単語1語の synonym**
+  - 例: thrive → A struggle / B flourish / C compete / D migrate
+  - フレーズ型（例: "grow and develop successfully"）は **1セットあたり最大1問まで（≦10%）**
+  - 残り90%以上は単語1語形式にする（実 TOEFL の実態に合わせる）
+
+### 質問文の paragraph 参照ルール
+- ❌ `According to paragraph N, ...` 形式は**使わない**（新形式 TOEFL に存在しない）
+  - 代わりに `According to the passage, ...` または paragraph ref 無し
+- ✅ Vocabulary 問題の `The word "X" in paragraph N is closest in meaning to` は OK
+- ✅ Sentence Insertion の `Look at the four squares [■] in paragraph N` は OK（必須）
+- ✅ Rhetorical purpose の `Why does the author mention X in paragraph N?` は OK
 
 ### HTML構造（既存踏襲 — 必ず practice-1.html を参照）
 - トップナビ: `Question X of 20` / タイマー / Review / ユーザーバッジ
@@ -85,7 +95,9 @@ $ARGUMENTS
 - [ ] 4問が異なる問題タイプ（最低3種類）
 - [ ] Sentence Insertion使用時: 正解位置が一意（discourse markers/代名詞で特定可能）
 - [ ] Vocabulary問題使用時: ターゲット語が `.highlight-word` でハイライト
-- [ ] 選択肢が5-15語で均一長
+- [ ] **Vocabulary問題の選択肢は単語1語形式（フレーズ型は ≦10% / 1セット最大1問）**
+- [ ] **`According to paragraph N` を使っていない**（`According to the passage` または paragraph ref 無し）
+- [ ] 選択肢が5-15語で均一長（Vocabularyは除く）
 - [ ] 正解が明確に1つだけ
 - [ ] 過去セットとトピック重複なし
 
