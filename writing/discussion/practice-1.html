@@ -298,7 +298,7 @@ function finishWriting(method){
   document.getElementById('previewText').textContent=text||'(No response written)';
 
   sessionStorage.setItem('discussionResponse', JSON.stringify({text:text, words:wc, time:m+':'+String(s).padStart(2,'0')}));
-  if(typeof TCKProgress!=='undefined')TCKProgress.clear(TCK_TASK,TCK_PRACTICE);
+  if(typeof TCKProgress!=='undefined')TCKProgress.clear(TCK_TASK,TCK_PRACTICE); if(window.TCKProgress)TCKProgress.markDone(TCK_TASK,TCK_PRACTICE);
 
   document.getElementById('writingPage').style.display='none';
   document.getElementById('completionPage').style.display='flex';

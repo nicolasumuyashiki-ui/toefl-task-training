@@ -57,6 +57,20 @@
   }
   function hasSaved(task, practice){ return !!load(task,practice); }
 
+  /* Done marker — used by tasks that can't be auto-scored (Email, Discussion,
+     LR, TI) to indicate "submitted at least once". Persists in localStorage
+     so menu pages can render a "提出済み / Submitted" badge across sessions. */
+  function doneKey(task, practice){ return 'tck_done_' + task + '_p' + practice; }
+  function markDone(task, practice){
+    try { localStorage.setItem(doneKey(task,practice), new Date().toISOString()); } catch(e){}
+  }
+  function isDone(task, practice){
+    try { return !!localStorage.getItem(doneKey(task,practice)); } catch(e){ return false; }
+  }
+  function clearDone(task, practice){
+    try { localStorage.removeItem(doneKey(task,practice)); } catch(e){}
+  }
+
   /* Resume modal — calls onResume(savedState) or onRestart() based on choice.
      If no saved state, onRestart() fires immediately. */
   function promptResume(task, practice, callbacks){
@@ -197,6 +211,9 @@
     load: load,
     clear: clear,
     hasSaved: hasSaved,
+    markDone: markDone,
+    isDone: isDone,
+    clearDone: clearDone,
     promptResume: promptResume,
     confirmExit: confirmExit,
     mountExitButton: mountExitButton,

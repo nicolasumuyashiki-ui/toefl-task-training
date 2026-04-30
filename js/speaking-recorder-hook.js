@@ -146,12 +146,16 @@
     };
   }
 
-  // --- Final question / Section Complete: stop, upload, release mic ---
+  // --- Final question / Section Complete: stop, upload, release mic, mark done ---
   var origShowComplete = window.showComplete;
   window.showComplete = function(){
     var lastQ = recQNum || (typeof totalQuestions === 'number' ? totalQuestions : 0);
     var p = recordingActive ? uploadCurrent(lastQ) : Promise.resolve();
     p.then(function(){ TCKRecorder.release(); });
+    // Persist "done" so the menu shows a 提出済み / Submitted badge.
+    if (window.TCKProgress && typeof TCK_TASK !== 'undefined' && typeof TCK_PRACTICE !== 'undefined') {
+      try { TCKProgress.markDone(TCK_TASK, TCK_PRACTICE); } catch(e){}
+    }
     return origShowComplete.apply(this, arguments);
   };
 
