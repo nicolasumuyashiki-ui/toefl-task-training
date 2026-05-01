@@ -65,3 +65,18 @@ iframe[title*="popup"],
 iframe[id^="hs-web-interactives-"]:not([id*="form"]) {
   display: none !important;
 }
+
+/* TCK brand mark image — replaces the legacy dot+text combo */
+.brand-logo{height:28px;width:auto;display:inline-block;vertical-align:middle;flex-shrink:0}
+.brand-logo--lg{height:48px}
+.brand-logo--xs{height:22px}
+.brand-logo--xl{height:72px}
+
+/* Print styles — keep the logo and clean up chrome on printed reports */
+@media print{
+  .brand-logo{height:36px!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .btn-logout,.btn-start,.btn-next,.user-pill,.tck-lang-toggle,
+  .modal-overlay,.section-footer{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:none}
+}
