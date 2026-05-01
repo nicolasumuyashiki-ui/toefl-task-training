@@ -133,6 +133,12 @@ body[data-lang="en"] .jp{display:none}
 
 .footer{max-width:980px;margin:0 auto;padding:28px 28px 48px;display:flex;justify-content:space-between;align-items:center;color:var(--ink-500);font-size:.78em;border-top:1px solid var(--paper)}
 .footer-left{font-family:var(--font-en);font-weight:500}
+
+/* TOEFL Reps product wordmark — mirrors index.html */
+.product-logo{display:inline-flex;align-items:center;gap:6px;user-select:none}
+.product-logo .pl-chip{font-family:'Manrope',system-ui,sans-serif;font-size:.7em;font-weight:900;letter-spacing:.14em;color:#fff;background:#002817;padding:3px 8px 2px;border-radius:3px;line-height:1}
+.product-logo .pl-name{font-family:'Manrope',system-ui,sans-serif;font-size:1.05em;font-weight:800;color:#002817;letter-spacing:-0.015em;line-height:1}
+.product-logo .pl-name .dot{color:#007646;margin-left:1px}
 </style>
 <!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
 </head>
@@ -141,11 +147,13 @@ body[data-lang="en"] .jp{display:none}
 <div class="header">
   <div class="header-left">
     <div class="logo-mark">
-      <img class="brand-logo" src="assets/tck-logo.png" alt="TCK Workshop">
+      <img class="brand-logo" src="assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto">
     </div>
     <span class="header-divider"></span>
-    <span class="header-title jp">タスク別トレーニング</span>
-    <span class="header-title en">Task-Based Training</span>
+    <div class="product-logo" aria-label="TOEFL Reps">
+      <span class="pl-chip">TOEFL</span>
+      <span class="pl-name">Reps<span class="dot">.</span></span>
+    </div>
   </div>
   <div class="header-right">
     <div class="lang-toggle" role="group" aria-label="Language">
