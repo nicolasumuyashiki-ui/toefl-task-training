@@ -209,6 +209,13 @@ if (typeof window !== 'undefined') {
     var u; try { u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}'); } catch (e) { u = {}; }
     if (!u.userId) return;
     if (typeof tckIsStaff === 'function' && tckIsStaff(u.email, u.userId)) return; // Staff bypass
+    // Grandfather bypass — same logic as Auth._enforceSubscriptionGate.
+    // Sessions saved before GAS started returning the email field have
+    // u.email === '' (or undefined). We can't distinguish a TCK staffer
+    // from an external member at that point, so default to "let them
+    // through" rather than show a false subscription banner / lock the
+    // tiles. The actual task pages still gate on a fresh API check.
+    if (!u.email) return;
 
     var cacheKey = 'tck_sub_status_' + u.userId;
     var cached = null;
