@@ -104,6 +104,13 @@ var Auth = {
     if (!user) return;
     // Staff bypass — TCK domain users always have access.
     if (tckIsStaff(user.email, user.userId)) return;
+    // Grandfather bypass — sessions from before GAS started returning the
+    // email field have no email at all. Such users have already passed
+    // tckIsAllowed (which fails-open when email is missing), so we can't
+    // distinguish a TCK staffer from an external member here. Default to
+    // "let them through" rather than show a false subscription banner;
+    // the gate still fires on actual task pages where it matters.
+    if (!user.email) return;
 
     // Pages where the gate should not redirect (so users can pay).
     var page = (location.pathname.split('/').pop() || '').toLowerCase();
