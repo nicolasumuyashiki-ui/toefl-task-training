@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Length Test — TCK Workshop</title>
+<script>
+/* practice-test/index.html is a stub inside Task Training. Direct visitors
+   land here only by accident — bounce them either to the test selector
+   (if already authenticated as a TT member) or back to the TT login. */
+(function(){
+  var ttUser = null;
+  try { ttUser = JSON.parse(sessionStorage.getItem('kickstart_user') || 'null'); } catch(e){}
+  if (ttUser && (ttUser.userId || ttUser.userName)) {
+    location.replace('test-select.html');
+  } else {
+    location.replace('../index.html');
+  }
+})();
+</script>
+</head>
+<body>
+<noscript>
+  <p>Please <a href="../index.html">log in to TCK Workshop</a> to start the Full Length Test.</p>
+</noscript>
+</body>
+</html>
