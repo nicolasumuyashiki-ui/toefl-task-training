@@ -16,7 +16,17 @@ $ARGUMENTS
 3. `listening/lcr/practice-{N}-answers.html` — 解答解説ページ
 
 ================================================================================
-TOEFL iBT - Listen and Choose a Response 問題作成ガイド v2.4（Module 1 — Routing Module）
+TOEFL iBT - Listen and Choose a Response 問題作成ガイド v2.4.1（Module 1 — Routing Module）
+
+【CHANGELOG v2.4 → v2.4.1】※ 既存88問の監査で実検出した複数正解パターンを反映
+[ADDED] §3 落とし穴 ④:「集団行動への誘い」発話 + "alone" / "on my own" /
+        "I prefer to..." を含む distractor の組み合わせを禁止。
+        実検出例: TT practice-3 Q4 "Would you like to form a study group?" +
+        (B) "I always study alone at home." / PT test3 Q1 "Did you find a study
+        group?" + (D) "I prefer to study on my own most of the time." はいずれも
+        Type 12 暗示的断りとして 100% 自然に成立してしまう。
+[ADDED] §4 誤答設計原則に (e) 一般陳述（generic statement）を追加（4 → 5 分類）。
+[ADDED] §8 チェックリストに「落とし穴 ④ の回避確認」項目を追加。
 
 【CHANGELOG v2.3 → v2.4】※ 複数正解の根本対策
 [ADDED] §3 冒頭に「Distractor Justification Table」を導入。
@@ -280,6 +290,24 @@ LCRの正解は「自然な会話における応答」である。以下の12タ
   対称的に自然な応答。distractor 設計時、"instead", "already", "actually I..."
   などの暗示的断り marker を含む選択肢は除外する。
 
+落とし穴 ④【v2.4.1 追加 — 既存88問監査で実検出】「集団行動への誘い」+「一人行動表明」
+- 発話例:
+  - "Would you like to form a study group?"
+  - "Did you find a study group for the midterm?"
+  - "Are you joining the debate club this semester?"
+- 正解例: "Great idea! Some others might join." [Type 9/4 承諾]
+        / "Yes — I joined one that meets twice a week." [Type 10 体験]
+- ❌ 競合: "I always study alone at home."
+        / "I prefer to study on my own most of the time."
+        / "I usually do my own thing."
+  → これらは Type 12 暗示的断り（一人派なので不参加）として 100% 自然
+- 教訓: グループ参加/勉強会/クラブ加入など **集団行動への誘い** を発話に使う場合、
+  "alone" / "by myself" / "on my own" / "I prefer to..." を含む選択肢は
+  **必ず除外** する。代わりに **科目内容の一般陳述 (e)** や
+  **事実情報 (e)**、**無関係話題 (a)** を distractor に使う。
+  例: "Organic chemistry has a lot of memorization." (e)
+      "The midterm covers chapters four through seven." (e)
+
 特に注意すべきパターン (再掲＋追加):
 - 招待/依頼 → Type 4 承諾系 distractor が競合
 - ニュース/報告 → Type 9 意図表明 / Type 10 体験共有 distractor が競合
@@ -287,6 +315,7 @@ LCRの正解は「自然な会話における応答」である。以下の12タ
 - 確認質問 ("..., right?") → Type 4/9/12 すべてが競合候補
 - 計画報告 ("I'm planning to...") → Type 7/9/10 が競合候補
 - 募集/勧誘 → Type 9 と Type 12 が対称的に成立しやすい
+- 集団行動の誘い → "alone" / "on my own" / "I prefer to..." 系 distractor は **全面禁止** (落とし穴 ④)
 
 ================================================================================
 §4. 問題作成ルール
@@ -339,11 +368,12 @@ Q: "Didn't I just see you in the library an hour ago?"
 ### 正解分布
 - A = 2問、B = 2問、C = 2問、D = 2問（完全均等）
 
-### 誤答（Distractor）の設計原則
-- 音の類似（phonetic trap）: 発話中の単語と似た音を含む
-- 話題の関連（topic trap）: 同じトピックだが質問に答えていない
-- 文法的に正しいが不適切（pragmatic trap）: 文として成立するが応答として不自然
-- 過剰推論（inference trap）: もっともらしいが発話の意図を誤解
+### 誤答（Distractor）の設計原則 — 5 分類
+- (a) 音の類似（phonetic trap）: 発話中の単語と似た音を含むが意味が合わない
+- (b) 話題の関連（topic trap）: 同じトピックだが質問に答えていない
+- (c) 文法的に正しいが不適切（pragmatic trap）: 文として成立するが応答として不自然
+- (d) 過剰推論（inference trap）: もっともらしいが発話の意図を誤解
+- (e) 一般陳述（generic statement）: トピックに関する事実だが個人的応答ではない
 
 ================================================================================
 §5. 出力ファイルと形式
@@ -476,6 +506,7 @@ B2: Q6, Q7, Q8
   - [ ] §3 落とし穴① 確認質問 + Type 9 競合パターンを回避している
   - [ ] §3 落とし穴② 計画報告 + Type 7/9/10 競合パターンを回避している
   - [ ] §3 落とし穴③ 募集勧誘 + Type 9 vs 12 競合パターンを回避している
+  - [ ] §3 落とし穴④ 集団行動の誘い + "alone/on my own/I prefer to..." 系 distractor を回避している
 
 - [ ] **Response Typology**
   - [ ] 各問題にResponse Typeが明記されている
@@ -499,7 +530,7 @@ B2: Q6, Q7, Q8
   - [ ] 使用済みトピックと重複していない
 
 ================================================================================
-END OF GUIDE (v2.4)
+END OF GUIDE (v2.4.1)
 
 ## 作成後
 1. スクリプト＋問題＋Answer Keyを `docs/scripts/` に保存
