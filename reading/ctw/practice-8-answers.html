@@ -202,6 +202,7 @@ var SD=[
 ]}
 ];
 
+var posEn={'代名詞':'pronoun','冠詞':'article','前置詞':'preposition','副詞':'adverb','副詞（接続）':'adverb (connector)','助動詞':'auxiliary verb','動名詞':'gerund','動詞':'verb','名詞':'noun','名詞（主語）':'noun (subject)','固有名詞':'proper noun','形容詞':'adjective','形容詞（比較級）':'adjective (comparative)','指示形容詞':'demonstrative adjective','接続副詞':'conjunctive adverb','接続詞':'conjunction','数詞':'numeral','過去分詞':'past participle','関係代名詞':'relative pronoun','関係副詞':'relative adverb'};
 function renderAll(){
   var ts=0,tq=0,harderCorrect=0,harderTotal=0,sh='';
   SD.forEach(function(s,si){
@@ -221,8 +222,8 @@ function renderAll(){
       var ok=uans.toLowerCase()===savedA.toLowerCase();
       var dt=ex.d==='HARD'?'<span class="q-tag tag-hard">HARD</span>':'<span class="q-tag tag-mod">MOD</span>';
       var ul='';
-      if(st){if(ok){ul='<div class="q-user" style="color:#004D2E">&#10004; 正解！ あなたの回答: '+savedS+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#8A3E24">&#11036; 未回答 — 推測でも必ず埋めよう！</div>';}else{ul='<div class="q-user" style="color:#8A3E24">&#10060; あなた: <span style="text-decoration:line-through">'+savedS+uans+'</span> &rarr; 正解: '+b.w+'</div>';}}
-      ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+savedS+'</span><span class="ans">'+savedA+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong>品詞：'+ex.pos+'</strong> '+ex.e+'</div></div></div>';
+      if(st){if(ok){ul='<div class="q-user" style="color:#004D2E">&#10004; <span class="jp">正解！ あなたの回答: </span><span class="en">Correct! Your answer: </span>'+savedS+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#8A3E24">&#11036; <span class="jp">未回答 — 推測でも必ず埋めよう！</span><span class="en">Blank — always guess, never leave it empty!</span></div>';}else{ul='<div class="q-user" style="color:#8A3E24">&#10060; <span class="jp">あなた: </span><span class="en">You: </span><span style="text-decoration:line-through">'+savedS+uans+'</span> <span class="jp">&rarr; 正解: </span><span class="en">&rarr; Correct: </span>'+b.w+'</div>';}}
+      ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+savedS+'</span><span class="ans">'+savedA+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong><span class="jp">品詞：'+ex.pos+'</span><span class="en">POS: '+(posEn[ex.pos]||ex.pos)+'</span></strong> <span class="jp">'+ex.e+'</span><span class="en" style="font-style:italic;color:#888">(English explanation pending — JP version above)</span></div></div></div>';
     });
     document.getElementById('ag'+si).innerHTML=ag;
   });
