@@ -211,6 +211,28 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   </div>
 </div>
 
+<div class="section">
+  <h2><span class="jp">Speaking 録音</span><span class="en">Speaking recordings</span></h2>
+  <p class="section-sub"><span class="jp">Listen &amp; Repeat と Take an Interview の発話録音を聴き返せます。Task Training と Practice Test の両方を含みます。</span><span class="en">Play back your Listen &amp; Repeat and Take an Interview recordings. Both Task Training and Practice Test submissions are included.</span></p>
+  <div class="activity-card">
+    <table class="atable">
+      <thead>
+        <tr>
+          <th><span class="jp">日付</span><span class="en">Date</span></th>
+          <th><span class="jp">タスク</span><span class="en">Task</span></th>
+          <th><span class="jp">Practice / Q#</span><span class="en">Practice / Q#</span></th>
+          <th><span class="jp">出典</span><span class="en">Source</span></th>
+          <th class="num"><span class="jp">時間</span><span class="en">Length</span></th>
+          <th style="min-width:200px"><span class="jp">プレーヤー</span><span class="en">Player</span></th>
+        </tr>
+      </thead>
+      <tbody id="recordingsBody">
+        <tr><td colspan="6" class="empty"><span class="jp">読み込み中…</span><span class="en">Loading…</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <div class="disclaimer">
   <h3><span class="jp">スコア予測について</span><span class="en">About this estimate</span></h3>
   <p>
@@ -233,6 +255,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 </div>
 
 <script src="js/auth.js"></script>
+<script src="js/api.js"></script>
 <script>
 /* Language toggle */
 (function(){
@@ -671,6 +694,59 @@ function aggregateSectionTask(attempts, taskKey) {
 }
 
 render();
+
+/* ============================================================
+   Speaking Recordings — fetch via Api.listMyRecordings (student
+   auth) and render audio players. Drive files are shared
+   "anyone with link", so the uc?export=download URL streams
+   directly into <audio>.
+   ============================================================ */
+function loadMyRecordings(){
+  var body = document.getElementById('recordingsBody');
+  if (!body) return;
+  if (typeof Api === 'undefined' || !Api.listMyRecordings){
+    body.innerHTML = '<tr><td colspan="6" class="empty"><span class="jp">録音機能の読み込みに失敗しました。</span><span class="en">Failed to load recordings module.</span></td></tr>';
+    return;
+  }
+  Api.listMyRecordings().then(function(r){
+    if (!r || !r.success){
+      body.innerHTML = '<tr><td colspan="6" class="empty"><span class="jp">録音の取得に失敗しました（'+ (r && r.error || 'unknown') +'）。</span><span class="en">Failed to load recordings ('+ (r && r.error || 'unknown') +').</span></td></tr>';
+      return;
+    }
+    var rows = r.recordings || [];
+    if (!rows.length){
+      body.innerHTML = '<tr><td colspan="6" class="empty"><span class="jp">まだ録音がありません。Listen &amp; Repeat や Take an Interview を解くと、ここに録音が並びます。</span><span class="en">No recordings yet. Submit Listen &amp; Repeat or Take an Interview tasks to see them here.</span></td></tr>';
+      return;
+    }
+    body.innerHTML = rows.map(function(rec){
+      var dt = rec.timestamp ? new Date(rec.timestamp).toLocaleString('ja-JP', { hour12:false }) : '—';
+      var taskLabel = rec.task === 'lr' ? 'LR' : (rec.task === 'ti' ? 'TI' : rec.task);
+      var taskFull  = rec.task === 'lr' ? 'Listen & Repeat' : (rec.task === 'ti' ? 'Take an Interview' : rec.task);
+      var src = rec.source === 'pt' ? 'Practice Test' : 'Task Training';
+      var srcJp = rec.source === 'pt' ? '模試' : '通常練習';
+      var dur = rec.durationSec ? (Math.floor(rec.durationSec/60) + ':' + String(rec.durationSec%60).padStart(2,'0')) : '—';
+      // Drive's uc?export=download URL no longer streams directly into
+      // <audio> (Google now returns an HTML wrapper for many files), so
+      // we embed the official Drive preview iframe — it supports webm/mp3
+      // playback and works for "anyone with link" files.
+      var previewUrl = rec.fileId ? ('https://drive.google.com/file/d/' + rec.fileId + '/preview') : '';
+      var player = previewUrl
+        ? '<iframe src="' + previewUrl + '" allow="autoplay" style="width:100%;max-width:260px;height:60px;border:0;border-radius:6px;background:#FBF6EC" loading="lazy"></iframe>'
+        : '<span class="muted">—</span>';
+      return '<tr>' +
+        '<td style="white-space:nowrap;font-size:.84em;color:var(--ink-500)">' + dt + '</td>' +
+        '<td><span class="task-tag" title="'+ taskFull +'">' + taskLabel + '</span></td>' +
+        '<td>P' + rec.practiceSet + ' / Q' + rec.questionIndex + '</td>' +
+        '<td><span class="jp">' + srcJp + '</span><span class="en">' + src + '</span></td>' +
+        '<td class="num">' + dur + '</td>' +
+        '<td>' + player + '</td>' +
+      '</tr>';
+    }).join('');
+  }).catch(function(err){
+    body.innerHTML = '<tr><td colspan="6" class="empty"><span class="jp">通信エラー：</span><span class="en">Network error: </span>' + String(err && err.message || err) + '</td></tr>';
+  });
+}
+loadMyRecordings();
 </script>
 </body>
 </html>

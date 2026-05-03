@@ -3,28 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Favicon -->
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../../assets/favicon-16.png">
 <link rel="shortcut icon" href="../../assets/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicon-180.png">
-<!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Take an Interview 攻略コツ — Practice 4">
+<meta property="og:title" content="Take an Interview — Practice 4 Tips">
 <meta property="og:description" content="TCK Workshop TOEFL Reps — task-by-task TOEFL iBT practice.">
 <meta property="og:image" content="https://apps.tckworkshop.co.jp/toefl-task-training/assets/ogp-card.jpg">
 <meta property="og:site_name" content="TCK Workshop">
-
-<title>Take an Interview 攻略コツ — Practice 4</title>
+<title>Take an Interview — Practice 4 Tips</title>
 <link rel="stylesheet" href="../../css/common.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;background:#FBF6EC;min-height:100vh;color:#0F1511;line-height:1.7}
-.answers-header{background:#002817;color:#fff;padding:20px 28px;text-align:center}
+.answers-header{background:#002817;color:#fff;padding:20px 28px;text-align:center;position:relative}
 .answers-header h1{font-size:1.2em;font-weight:600;margin-bottom:4px}
 .answers-header p{font-size:.9em;color:rgba(255,255,255,.7)}
+.lang-floater{position:absolute;top:14px;right:18px;z-index:10}
+.tck-lang-toggle{display:inline-flex;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600}
+.tck-lang-toggle button{border:none;background:transparent;padding:5px 12px;border-radius:999px;cursor:pointer;color:rgba(255,255,255,.7);font-family:inherit;font-weight:inherit;letter-spacing:.04em}
+.tck-lang-toggle button.active{background:#fff;color:#002817}
 .answers-body{max-width:780px;margin:0 auto;padding:28px 20px 100px}
-
 .tips-section{margin-bottom:36px}
 .tips-title{font-size:1.1em;font-weight:700;color:#0F1511;padding:14px 0;border-bottom:2px solid #F5E9D3;margin-bottom:20px}
 .tip-card{background:#fff;border:1px solid #F5E9D3;border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
@@ -36,16 +36,12 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 .tip-example{background:#fffff0;border:1px solid #ecc94b;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#744210;line-height:1.5}
 .tip-warn{background:#FDF4F0;border:1px solid #feb2b2;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#8A3E24;line-height:1.5}
 .tip-good{background:#f0fff4;border:1px solid #9ae6b4;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#276749;line-height:1.5}
-
-/* TIME STRUCTURE */
 .time-bar{display:flex;border-radius:6px;overflow:hidden;margin:12px 0 8px;height:28px;font-size:.75em;font-weight:700;color:#fff}
 .time-seg{display:flex;align-items:center;justify-content:center;padding:0 6px}
 .seg-claim{background:#2b6cb0;flex:1}
 .seg-reason{background:#38a169;flex:3}
 .seg-example{background:#e8912d;flex:3}
 .seg-wrap{background:#805ad5;flex:2}
-
-/* TEMPLATE STEPS */
 .template-section{margin-bottom:36px}
 .template-title{font-size:1.05em;font-weight:700;color:#0F1511;padding:12px 0;border-bottom:2px solid #F5E9D3;margin-bottom:20px}
 .template-card{background:#fff;border:1px solid #F5E9D3;border-radius:10px;padding:18px 20px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);display:flex;align-items:flex-start;gap:12px}
@@ -53,68 +49,75 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 .template-text{font-size:.9em;color:#0F1511}
 .template-text strong{display:block;font-weight:700;margin-bottom:2px}
 .template-text span{color:#5A6861;font-weight:400;font-size:.92em}
-
-/* FILLER BOX */
 .filler-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 .filler-item{background:#FBF6EC;border:1px solid #F5E9D3;border-radius:6px;padding:10px 14px}
 .filler-label{font-size:.78em;font-weight:700;color:#5A6861;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .filler-text{font-size:.88em;color:#0F1511}
-
-/* EXAMPLE TAGS */
 .example-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .example-tag{display:inline-block;background:#F5E9D3;border:1px solid #bee3f8;border-radius:8px;padding:6px 14px;font-size:.85em;font-weight:600;color:#2b6cb0}
-
 .nav-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #F5E9D3;padding:14px 24px;display:flex;justify-content:center;gap:12px;z-index:100}
 .btn-menu{display:inline-flex;align-items:center;gap:8px;padding:12px 32px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#002817;transition:all .2s;text-decoration:none}
 .btn-menu:hover{background:#4a5568}
+.jp{font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif}
+.en{font-family:"Manrope",sans-serif;letter-spacing:-0.005em}
+body[data-lang="jp"] .en{display:none}
+body[data-lang="en"] .jp{display:none}
 </style>
-<!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script>
 </head>
-<body>
+<body data-lang="jp">
 
 <div class="answers-header">
-  <img class="brand-logo" src="../../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px;filter:brightness(0) invert(1)"><h1>Take an Interview — 攻略コツ</h1>
-  <p>Practice 4 — 45秒テンプレートで健康・フィットネスの質問を攻略</p>
+  <img class="brand-logo" src="../../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px;filter:brightness(0) invert(1)">
+  <h1><span class="jp">Take an Interview — 攻略コツ</span><span class="en">Take an Interview — Strategy Tips</span></h1>
+  <p><span class="jp">Practice 4 — 45秒テンプレートで健康・フィットネスの質問を攻略</span><span class="en">Practice 4 — Use the 45-second template to handle health & fitness questions</span></p>
+  <div class="lang-floater">
+    <div class="tck-lang-toggle">
+      <button type="button" data-lang-btn="jp" class="active">日本語</button>
+      <button type="button" data-lang-btn="en">EN</button>
+    </div>
+  </div>
 </div>
 
 <div class="answers-body">
 
-  <!-- ========== TIPS ========== -->
   <div class="tips-section">
-    <div class="tips-title">🎤 Take an Interview 攻略ポイント</div>
+    <div class="tips-title">🎤 <span class="jp">Take an Interview 攻略ポイント</span><span class="en">Take an Interview Strategy</span></div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">1</span> 45秒の時間配分</div>
+      <div class="tip-card-title"><span class="tip-num">1</span> <span class="jp">45秒の時間配分</span><span class="en">45-second time allocation</span></div>
       <div class="tip-card-body">
-        45秒は短いようで、テンプレートに沿えば十分な内容を詰め込める。時間配分を体に覚えさせることが重要。
+        <span class="jp">45秒は短いようで、テンプレートに沿えば十分な内容を詰め込める。時間配分を体に覚えさせることが重要。</span>
+        <span class="en">45 seconds may seem short, but with a template you can fit plenty of content. Internalizing the timing is the key.</span>
         <div class="time-bar">
-          <div class="time-seg seg-claim">主張 5秒</div>
-          <div class="time-seg seg-reason">理由 15秒</div>
-          <div class="time-seg seg-example">具体例 15秒</div>
-          <div class="time-seg seg-wrap">まとめ 10秒</div>
+          <div class="time-seg seg-claim"><span class="jp">主張 5秒</span><span class="en">Claim 5s</span></div>
+          <div class="time-seg seg-reason"><span class="jp">理由 15秒</span><span class="en">Reason 15s</span></div>
+          <div class="time-seg seg-example"><span class="jp">具体例 15秒</span><span class="en">Example 15s</span></div>
+          <div class="time-seg seg-wrap"><span class="jp">まとめ 10秒</span><span class="en">Wrap 10s</span></div>
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">2</span> Health テーマで使えるフレーズ</div>
+      <div class="tip-card-title"><span class="tip-num">2</span> <span class="jp">Health テーマで使えるフレーズ</span><span class="en">Phrases for the Health theme</span></div>
       <div class="tip-card-body">
-        健康・フィットネスの話題で頻出するフレーズを事前に準備しておく。
+        <span class="jp">健康・フィットネスの話題で頻出するフレーズを事前に準備しておく。</span>
+        <span class="en">Prepare phrases that come up often in health and fitness topics.</span>
         <div class="filler-grid">
           <div class="filler-item">
-            <div class="filler-label">運動の習慣</div>
+            <div class="filler-label"><span class="jp">運動の習慣</span><span class="en">Exercise habit</span></div>
             <div class="filler-text"><code>I try to exercise regularly...</code></div>
           </div>
           <div class="filler-item">
-            <div class="filler-label">健康の重要性</div>
+            <div class="filler-label"><span class="jp">健康の重要性</span><span class="en">Importance of health</span></div>
             <div class="filler-text"><code>Health is one of the most important things...</code></div>
           </div>
           <div class="filler-item">
-            <div class="filler-label">生活習慣</div>
+            <div class="filler-label"><span class="jp">生活習慣</span><span class="en">Daily routine</span></div>
             <div class="filler-text"><code>In terms of my daily routine...</code></div>
           </div>
           <div class="filler-item">
-            <div class="filler-label">意見を述べる</div>
+            <div class="filler-label"><span class="jp">意見を述べる</span><span class="en">Stating an opinion</span></div>
             <div class="filler-text"><code>From my perspective...</code></div>
           </div>
         </div>
@@ -122,87 +125,87 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">3</span> よくある失敗パターンと対策</div>
+      <div class="tip-card-title"><span class="tip-num">3</span> <span class="jp">よくある失敗パターンと対策</span><span class="en">Common failure patterns and fixes</span></div>
       <div class="tip-card-body">
         <div class="tip-warn">
-          <strong>✗ NG：</strong> 具体例なしで抽象的に話し続ける<br>
-          <strong>✓ OK：</strong> → "For example, last month I started jogging..." のように自分の体験を入れる
+          <span class="jp"><strong>✗ NG：</strong> 具体例なしで抽象的に話し続ける<br><strong>✓ OK：</strong> → "For example, last month I started jogging..." のように自分の体験を入れる</span>
+          <span class="en"><strong>✗ NG:</strong> talking abstractly with no concrete example<br><strong>✓ OK:</strong> drop in your own experience, e.g. "For example, last month I started jogging..."</span>
         </div>
         <div class="tip-warn" style="margin-top:8px">
-          <strong>✗ NG：</strong> 理由を2つ挙げて両方中途半端<br>
-          <strong>✓ OK：</strong> → 理由は1つに絞り、具体例で深く掘り下げる
+          <span class="jp"><strong>✗ NG：</strong> 理由を2つ挙げて両方中途半端<br><strong>✓ OK：</strong> → 理由は1つに絞り、具体例で深く掘り下げる</span>
+          <span class="en"><strong>✗ NG:</strong> two half-developed reasons<br><strong>✓ OK:</strong> pick one reason and go deep with a specific example</span>
         </div>
         <div class="tip-warn" style="margin-top:8px">
-          <strong>✗ NG：</strong> 時間が余って沈黙で終わる<br>
-          <strong>✓ OK：</strong> → まとめで「That's why I strongly believe...」と繰り返して時間を使い切る
+          <span class="jp"><strong>✗ NG：</strong> 時間が余って沈黙で終わる<br><strong>✓ OK：</strong> → まとめで「That's why I strongly believe...」と繰り返して時間を使い切る</span>
+          <span class="en"><strong>✗ NG:</strong> ending in silence with time left<br><strong>✓ OK:</strong> use the wrap-up to restate ("That's why I strongly believe...") and fill the remaining time</span>
         </div>
         <div class="tip-warn" style="margin-top:8px">
-          <strong>✗ NG：</strong> 難しい単語を使おうとして詰まる<br>
-          <strong>✓ OK：</strong> → シンプルな単語で流暢に話す方が高得点
+          <span class="jp"><strong>✗ NG：</strong> 難しい単語を使おうとして詰まる<br><strong>✓ OK：</strong> → シンプルな単語で流暢に話す方が高得点</span>
+          <span class="en"><strong>✗ NG:</strong> stalling because you reached for a hard word<br><strong>✓ OK:</strong> simple vocabulary delivered fluently scores higher</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ========== TEMPLATE ========== -->
   <div class="template-section">
-    <div class="template-title">📋 45秒テンプレート（Health テーマ版）</div>
+    <div class="template-title">📋 <span class="jp">45秒テンプレート（Health テーマ版）</span><span class="en">45-second template (Health-theme version)</span></div>
 
     <div class="template-card">
       <span class="template-num">1</span>
-      <div class="template-text"><strong>In my opinion, ... / I believe that ...</strong><span>主張を1文で明確に述べる（5秒）</span></div>
+      <div class="template-text"><strong>In my opinion, ... / I believe that ...</strong><span><span class="jp">主張を1文で明確に述べる（5秒）</span><span class="en">State your claim clearly in one sentence (5s)</span></span></div>
     </div>
     <div class="template-card">
       <span class="template-num">2</span>
-      <div class="template-text"><strong>The main reason is that ... / This is because ...</strong><span>理由を具体的に1つ説明する（15秒）</span></div>
+      <div class="template-text"><strong>The main reason is that ... / This is because ...</strong><span><span class="jp">理由を具体的に1つ説明する（15秒）</span><span class="en">Explain one specific reason (15s)</span></span></div>
     </div>
     <div class="template-card">
       <span class="template-num">3</span>
-      <div class="template-text"><strong>For example, when I ... / In my experience, ...</strong><span>自分の経験や具体的なエピソードを入れる（15秒）</span></div>
+      <div class="template-text"><strong>For example, when I ... / In my experience, ...</strong><span><span class="jp">自分の経験や具体的なエピソードを入れる（15秒）</span><span class="en">Insert your own experience or a specific anecdote (15s)</span></span></div>
     </div>
     <div class="template-card">
       <span class="template-num">4</span>
-      <div class="template-text"><strong>So that's why I believe ... / Overall, ...</strong><span>最初の主張を別の言葉で繰り返して締める（10秒）</span></div>
+      <div class="template-text"><strong>So that's why I believe ... / Overall, ...</strong><span><span class="jp">最初の主張を別の言葉で繰り返して締める（10秒）</span><span class="en">Restate the original claim in different words to close (10s)</span></span></div>
     </div>
   </div>
 
-  <!-- ========== EXAMPLE STOCK ========== -->
   <div class="tip-card">
-    <div class="tip-card-title"><span class="tip-num">★</span> 使い回せる具体例ストック</div>
+    <div class="tip-card-title"><span class="tip-num">★</span> <span class="jp">使い回せる具体例ストック</span><span class="en">Stock of reusable examples</span></div>
     <div class="tip-card-body">
-      健康テーマでどんな質問にも応用できるエピソードを準備しておく。
+      <span class="jp">健康テーマでどんな質問にも応用できるエピソードを準備しておく。</span>
+      <span class="en">Prepare anecdotes that work across any health-themed question.</span>
       <div class="example-tags">
-        <span class="example-tag">🏃 ジョギングを始めた経験</span>
-        <span class="example-tag">🥗 食生活を変えた経験</span>
-        <span class="example-tag">💤 睡眠習慣の改善</span>
-        <span class="example-tag">🏋 部活・スポーツクラブ</span>
-        <span class="example-tag">🩺 健康診断のエピソード</span>
+        <span class="example-tag">🏃 <span class="jp">ジョギングを始めた経験</span><span class="en">Started jogging</span></span>
+        <span class="example-tag">🥗 <span class="jp">食生活を変えた経験</span><span class="en">Changed your diet</span></span>
+        <span class="example-tag">💤 <span class="jp">睡眠習慣の改善</span><span class="en">Improved sleep habits</span></span>
+        <span class="example-tag">🏋 <span class="jp">部活・スポーツクラブ</span><span class="en">Sports club</span></span>
+        <span class="example-tag">🩺 <span class="jp">健康診断のエピソード</span><span class="en">Health check-up story</span></span>
       </div>
     </div>
   </div>
 
-  <!-- ========== PRACTICE ADVICE ========== -->
   <div class="tip-card" style="border:2px solid #e8912d;background:#fffaf0">
-    <div class="tip-card-title" style="color:#e8912d;font-size:1em">🏋️ 自主練習の方法</div>
+    <div class="tip-card-title" style="color:#e8912d;font-size:1em">🏋️ <span class="jp">自主練習の方法</span><span class="en">How to practice on your own</span></div>
     <div class="tip-card-body">
-      <strong>Step 1:</strong> スマホのタイマーを45秒にセットする<br>
-      <strong>Step 2:</strong> 質問を声に出して読む（本番では音声で流れる部分）<br>
-      <strong>Step 3:</strong> 読み終わったらすぐタイマースタート → 45秒以内に「主張→理由→具体例→まとめ」を言い切る<br>
-      <strong>Step 4:</strong> 録音して聞き返す → 沈黙がないか、まとめまで到達しているかチェック<br><br>
-      <strong>💡 本番では質問は音声のみ（画面にテキストは表示されません）。</strong>聞いた瞬間に回答を組み立てる練習が重要！<br><br>
-      <strong>目標：</strong> 1日2〜3回のルーティンを体に覚えさせる。完璧な英語でなくてOK — <strong>止まらず話し続けること</strong>が最優先！
+      <span class="jp"><strong>Step 1:</strong> スマホのタイマーを45秒にセットする<br><strong>Step 2:</strong> 質問を声に出して読む（本番では音声で流れる部分）<br><strong>Step 3:</strong> 読み終わったらすぐタイマースタート → 45秒以内に「主張→理由→具体例→まとめ」を言い切る<br><strong>Step 4:</strong> 録音して聞き返す → 沈黙がないか、まとめまで到達しているかチェック<br><br><strong>💡 本番では質問は音声のみ（画面にテキストは表示されません）。</strong>聞いた瞬間に回答を組み立てる練習が重要！<br><br><strong>目標：</strong> 1日2〜3回のルーティンを体に覚えさせる。完璧な英語でなくてOK — <strong>止まらず話し続けること</strong>が最優先！</span>
+      <span class="en"><strong>Step 1:</strong> Set your phone timer to 45 seconds.<br><strong>Step 2:</strong> Read the question aloud (in the real test it plays as audio).<br><strong>Step 3:</strong> Start the timer the moment you finish reading → deliver claim → reason → example → wrap-up within 45 seconds.<br><strong>Step 4:</strong> Record yourself and listen back → check for silences and confirm you reached the wrap-up.<br><br><strong>💡 In the real test the question is audio only (no text on screen).</strong> Practice composing your answer the moment you hear the question!<br><br><strong>Goal:</strong> Build a 2–3-times-a-day routine until it becomes automatic. Perfect English isn't required — <strong>not stopping</strong> is what matters most.</span>
     </div>
   </div>
 
 </div>
 
 <div class="nav-footer">
-  <a class="btn-menu" href="practice-4.html">← Practice 4 に戻る</a>
-  <a class="btn-menu" href="../menu.html">メニューに戻る</a>
+  <a class="btn-menu" href="practice-4.html"><span class="jp">← Practice 4 に戻る</span><span class="en">← Back to Practice 4</span></a>
+  <a class="btn-menu" href="../menu.html"><span class="jp">メニューに戻る</span><span class="en">Back to menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
 <script>
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
 if(typeof Auth!=='undefined'){Auth.require();}
 </script>
 </body>

@@ -47,6 +47,46 @@
   // "Skip recording" we still load the hook but no-op the recorder.
   var SKIP_RECORDING = sessionStorage.getItem('tck_mic_checked') === 'skipped';
 
+  /* Per-session record/skip toggle.
+     The mic-check gate above only runs once per session (once
+     tck_mic_checked is set, the redirect is skipped). On the 2nd / 3rd /
+     ... LR or TI practice in the same session the user might want to
+     change their mind without going back to mic-check. We inject a small
+     floating pill that reads the current preference, toggles it, and
+     reloads the page so the recorder picks up the new SKIP_RECORDING
+     value cleanly. */
+  function injectRecPrefToggle(){
+    if (document.getElementById('tckRecPref')) return;
+    if (!sessionStorage.getItem('tck_mic_checked')) return;
+    var skip = sessionStorage.getItem('tck_mic_checked') === 'skipped';
+    var lang = (localStorage.getItem('tck_lang') || 'jp');
+    var label = skip
+      ? (lang === 'en' ? '🔕 Recording OFF' : '🔕 録音 OFF')
+      : (lang === 'en' ? '🎤 Recording ON'  : '🎤 録音 ON');
+    var bar = document.createElement('div');
+    bar.id = 'tckRecPref';
+    bar.title = lang === 'en'
+      ? 'Click to toggle recording for this session'
+      : 'クリックで録音 ON / OFF を切り替え（ページ再読み込み）';
+    bar.setAttribute('style',
+      'position:fixed;top:14px;left:14px;z-index:2147483646;' +
+      'background:#fff;border:1.5px solid ' + (skip ? '#D6DAD7' : '#007646') + ';' +
+      'border-radius:999px;padding:6px 14px;font-size:.78em;font-weight:600;' +
+      'color:' + (skip ? '#5A6861' : '#007646') + ';' +
+      'box-shadow:0 4px 12px rgba(0,0,0,.08);cursor:pointer;' +
+      'font-family:Manrope,"Zen Kaku Gothic New","Noto Sans JP",system-ui,sans-serif;' +
+      'user-select:none;display:inline-flex;align-items:center;gap:6px;');
+    bar.textContent = label;
+    bar.addEventListener('click', function(){
+      var cur = sessionStorage.getItem('tck_mic_checked');
+      sessionStorage.setItem('tck_mic_checked', cur === 'skipped' ? '1' : 'skipped');
+      location.reload();
+    });
+    (document.body || document.documentElement).appendChild(bar);
+  }
+  if (document.body) injectRecPrefToggle();
+  else document.addEventListener('DOMContentLoaded', injectRecPrefToggle);
+
   var recordingActive = false;
   var recStartedAt = 0;
   var recQNum = 0;

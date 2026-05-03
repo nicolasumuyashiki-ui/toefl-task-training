@@ -420,14 +420,33 @@ function getCurrentUser() {
   try { return JSON.parse(sessionStorage.getItem('kickstart_user') || 'null'); } catch(e) { return null; }
 }
 function isAdmin(user) {
-  if (location.search.indexOf('preview=1') !== -1) return true; // dev
   if (!user) return false;
-  if (typeof window.tckIsStaff === 'function') return window.tckIsStaff(user.email);
+  if (typeof window.tckIsStaff === 'function') return window.tckIsStaff(user.email, user.userId);
   return (user.email || '').toLowerCase().endsWith('@tckworkshop.co.jp');
 }
 function doLogout() {
   sessionStorage.removeItem('kickstart_user');
   location.href = 'login.html';
+}
+
+/* Staff password handling (moved out of sessionStorage)
+   On login.html → index.html navigation, the password lands briefly in
+   sessionStorage.kickstart_staff_pass. We capture it into a module-scope
+   closure variable here, then immediately delete the sessionStorage entry
+   so it is no longer readable by any later-loaded same-origin script.
+   Page reload will result in __staffPass = '' → redirect to login. */
+var __staffPass = (function(){
+  var p = sessionStorage.getItem('kickstart_staff_pass') || '';
+  try { sessionStorage.removeItem('kickstart_staff_pass'); } catch(e){}
+  return p;
+})();
+function getStaffPass() { return __staffPass; }
+function requireStaffPass() {
+  if (!__staffPass) {
+    location.href = 'login.html';
+    return false;
+  }
+  return true;
 }
 
 // Gate evaluation is deferred until after data declarations below.
@@ -731,7 +750,9 @@ function mapLiveAttempts(rawAttempts, users) {
 function loadLiveData() {
   const banner = document.getElementById('devBanner');
   const msg = document.getElementById('bannerMsg');
-  Promise.all([Api.listUsers(), Api.listAttempts()]).then(function(results){
+  if (!requireStaffPass()) return;
+  var __u = getCurrentUser() || {};
+  Promise.all([Api.listUsers(__u.userId, __staffPass), Api.listAttempts(__u.userId, __staffPass)]).then(function(results){
     const ures = results[0], ares = results[1];
     if (!ures || !ures.success) throw new Error(ures && ures.error || 'listUsers failed');
     if (!ares || !ares.success) throw new Error(ares && ares.error || 'listAttempts failed');
@@ -1213,7 +1234,9 @@ window.__recordingsLoaded = false;
 function loadRecordings() {
   var body = document.getElementById('recBody');
   body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--ink-500);padding:32px">読み込み中…</td></tr>';
-  Api.listRecordings().then(function(r){
+  if (!requireStaffPass()) return;
+  var __u = getCurrentUser() || {};
+  Api.listRecordings(__u.userId, __staffPass).then(function(r){
     if (!r || !r.success) {
       body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--terracotta);padding:32px">読み込みに失敗しました（' + (r && r.error || 'unknown') + '）</td></tr>';
       return;
@@ -1264,11 +1287,12 @@ function renderRecordings() {
     var dt = r.timestamp ? new Date(r.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
     var taskLabel = r.task === 'lr' ? 'LR' : (r.task === 'ti' ? 'TI' : r.task);
     var dur = r.durationSec ? (Math.floor(r.durationSec/60) + ':' + String(r.durationSec%60).padStart(2,'0')) : '—';
-    // Drive direct-stream URL (works for "anyone with link" files):
-    //   https://drive.google.com/uc?export=download&id=FILE_ID
-    var streamUrl = r.fileId ? ('https://drive.google.com/uc?export=download&id=' + r.fileId) : '';
-    var player = streamUrl
-      ? '<audio controls preload="none" style="width:100%;max-width:280px"><source src="' + streamUrl + '" type="' + (r.mime || 'audio/webm') + '"></audio>'
+    // Drive's uc?export=download URL returns an HTML wrapper for many
+    // file types and won't stream into <audio>, so we embed Drive's own
+    // preview iframe instead. Works for any "anyone with link" file.
+    var previewUrl = r.fileId ? ('https://drive.google.com/file/d/' + r.fileId + '/preview') : '';
+    var player = previewUrl
+      ? '<iframe src="' + previewUrl + '" allow="autoplay" style="width:100%;max-width:280px;height:60px;border:0;border-radius:6px;background:var(--cream)" loading="lazy"></iframe>'
       : '<span style="color:var(--ink-500)">—</span>';
     var driveLink = r.fileUrl
       ? '<a href="' + r.fileUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.85em">開く →</a>'

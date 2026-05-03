@@ -3,28 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Favicon -->
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../../assets/favicon-16.png">
 <link rel="shortcut icon" href="../../assets/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicon-180.png">
-<!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Take an Interview 攻略コツ — Practice 7">
+<meta property="og:title" content="Take an Interview — Practice 7 Tips">
 <meta property="og:description" content="TCK Workshop TOEFL Reps — task-by-task TOEFL iBT practice.">
 <meta property="og:image" content="https://apps.tckworkshop.co.jp/toefl-task-training/assets/ogp-card.jpg">
 <meta property="og:site_name" content="TCK Workshop">
-
-<title>Take an Interview 攻略コツ — Practice 7</title>
+<title>Take an Interview — Practice 7 Tips</title>
 <link rel="stylesheet" href="../../css/common.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;background:#FBF6EC;min-height:100vh;color:#0F1511;line-height:1.7}
-.answers-header{background:#002817;color:#fff;padding:20px 28px;text-align:center}
+.answers-header{background:#002817;color:#fff;padding:20px 28px;text-align:center;position:relative}
 .answers-header h1{font-size:1.2em;font-weight:600;margin-bottom:4px}
 .answers-header p{font-size:.9em;color:rgba(255,255,255,.7)}
+.lang-floater{position:absolute;top:14px;right:18px;z-index:10}
+.tck-lang-toggle{display:inline-flex;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:3px;font-family:'Manrope',sans-serif;font-size:.72em;font-weight:600}
+.tck-lang-toggle button{border:none;background:transparent;padding:5px 12px;border-radius:999px;cursor:pointer;color:rgba(255,255,255,.7);font-family:inherit;font-weight:inherit;letter-spacing:.04em}
+.tck-lang-toggle button.active{background:#fff;color:#002817}
 .answers-body{max-width:780px;margin:0 auto;padding:28px 20px 100px}
-
 .tips-section{margin-bottom:36px}
 .tips-title{font-size:1.1em;font-weight:700;color:#0F1511;padding:14px 0;border-bottom:2px solid #F5E9D3;margin-bottom:20px}
 .tip-card{background:#fff;border:1px solid #F5E9D3;border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
@@ -36,16 +36,12 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 .tip-example{background:#fffff0;border:1px solid #ecc94b;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#744210;line-height:1.5}
 .tip-warn{background:#FDF4F0;border:1px solid #feb2b2;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#8A3E24;line-height:1.5}
 .tip-good{background:#f0fff4;border:1px solid #9ae6b4;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.85em;color:#276749;line-height:1.5}
-
-/* TIME STRUCTURE */
 .time-bar{display:flex;border-radius:6px;overflow:hidden;margin:12px 0 8px;height:28px;font-size:.75em;font-weight:700;color:#fff}
 .time-seg{display:flex;align-items:center;justify-content:center;padding:0 6px}
 .seg-claim{background:#2b6cb0;flex:1}
 .seg-reason{background:#38a169;flex:3}
 .seg-example{background:#e8912d;flex:3}
 .seg-wrap{background:#805ad5;flex:2}
-
-/* TEMPLATE STEPS */
 .template-section{margin-bottom:36px}
 .template-title{font-size:1.05em;font-weight:700;color:#0F1511;padding:12px 0;border-bottom:2px solid #F5E9D3;margin-bottom:20px}
 .template-card{background:#fff;border:1px solid #F5E9D3;border-radius:10px;padding:18px 20px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);display:flex;align-items:flex-start;gap:12px}
@@ -53,68 +49,75 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 .template-text{font-size:.9em;color:#0F1511}
 .template-text strong{display:block;font-weight:700;margin-bottom:2px}
 .template-text span{color:#5A6861;font-weight:400;font-size:.92em}
-
-/* FILLER BOX */
 .filler-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 .filler-item{background:#FBF6EC;border:1px solid #F5E9D3;border-radius:6px;padding:10px 14px}
 .filler-label{font-size:.78em;font-weight:700;color:#5A6861;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .filler-text{font-size:.88em;color:#0F1511}
-
-/* EXAMPLE TAGS */
 .example-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .example-tag{display:inline-block;background:#F5E9D3;border:1px solid #bee3f8;border-radius:8px;padding:6px 14px;font-size:.85em;font-weight:600;color:#2b6cb0}
-
 .nav-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #F5E9D3;padding:14px 24px;display:flex;justify-content:center;gap:12px;z-index:100}
 .btn-menu{display:inline-flex;align-items:center;gap:8px;padding:12px 32px;font-size:.95em;font-family:inherit;font-weight:600;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#002817;transition:all .2s;text-decoration:none}
 .btn-menu:hover{background:#4a5568}
+.jp{font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif}
+.en{font-family:"Manrope",sans-serif;letter-spacing:-0.005em}
+body[data-lang="jp"] .en{display:none}
+body[data-lang="en"] .jp{display:none}
 </style>
-<!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script>
 </head>
-<body>
+<body data-lang="jp">
 
 <div class="answers-header">
-  <img class="brand-logo" src="../../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px;filter:brightness(0) invert(1)"><h1>Take an Interview — 攻略コツ</h1>
-  <p>Practice 7 — 45秒を最大限に活用するための戦略</p>
+  <img class="brand-logo" src="../../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px;filter:brightness(0) invert(1)">
+  <h1><span class="jp">Take an Interview — 攻略コツ</span><span class="en">Take an Interview — Strategy Tips</span></h1>
+  <p><span class="jp">Practice 7 — 45秒を最大限に活用するための戦略</span><span class="en">Practice 7 — Strategies to make the most of your 45 seconds</span></p>
+  <div class="lang-floater">
+    <div class="tck-lang-toggle">
+      <button type="button" data-lang-btn="jp" class="active">日本語</button>
+      <button type="button" data-lang-btn="en">EN</button>
+    </div>
+  </div>
 </div>
 
 <div class="answers-body">
 
-  <!-- ========== TIPS ========== -->
   <div class="tips-section">
-    <div class="tips-title">🎤 Take an Interview 攻略ポイント</div>
+    <div class="tips-title">🎤 <span class="jp">Take an Interview 攻略ポイント</span><span class="en">Take an Interview Strategy</span></div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">1</span> 45秒の使い方</div>
+      <div class="tip-card-title"><span class="tip-num">1</span> <span class="jp">45秒の使い方</span><span class="en">How to use the 45 seconds</span></div>
       <div class="tip-card-body">
-        時間配分を決めておくと、沈黙を避けて内容を詰め込める。
+        <span class="jp">時間配分を決めておくと、沈黙を避けて内容を詰め込める。</span>
+        <span class="en">Decide your time allocation in advance to avoid silence and pack in content.</span>
         <div class="time-bar">
-          <div class="time-seg seg-claim">主張 5秒</div>
-          <div class="time-seg seg-reason">理由 15秒</div>
-          <div class="time-seg seg-example">具体例 15秒</div>
-          <div class="time-seg seg-wrap">まとめ 10秒</div>
+          <div class="time-seg seg-claim"><span class="jp">主張 5秒</span><span class="en">Claim 5s</span></div>
+          <div class="time-seg seg-reason"><span class="jp">理由 15秒</span><span class="en">Reason 15s</span></div>
+          <div class="time-seg seg-example"><span class="jp">具体例 15秒</span><span class="en">Example 15s</span></div>
+          <div class="time-seg seg-wrap"><span class="jp">まとめ 10秒</span><span class="en">Wrap 10s</span></div>
         </div>
       </div>
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">2</span> 沈黙を避けるフレーズ</div>
+      <div class="tip-card-title"><span class="tip-num">2</span> <span class="jp">沈黙を避けるフレーズ</span><span class="en">Phrases to avoid silence</span></div>
       <div class="tip-card-body">
-        困ったときに使えるフレーズを事前に準備しておく。
+        <span class="jp">困ったときに使えるフレーズを事前に準備しておく。</span>
+        <span class="en">Prepare go-to phrases for moments when you're stuck.</span>
         <div class="filler-grid">
           <div class="filler-item">
-            <div class="filler-label">考え中</div>
+            <div class="filler-label"><span class="jp">考え中</span><span class="en">Thinking</span></div>
             <div class="filler-text"><code>Let me think about that...</code></div>
           </div>
           <div class="filler-item">
-            <div class="filler-label">始める</div>
+            <div class="filler-label"><span class="jp">始める</span><span class="en">Starting</span></div>
             <div class="filler-text"><code>Well, in my opinion...</code></div>
           </div>
           <div class="filler-item">
-            <div class="filler-label">例を出す</div>
+            <div class="filler-label"><span class="jp">例を出す</span><span class="en">Giving an example</span></div>
             <div class="filler-text"><code>For instance...</code></div>
           </div>
           <div class="filler-item">
-            <div class="filler-label">まとめ</div>
+            <div class="filler-label"><span class="jp">まとめ</span><span class="en">Wrapping up</span></div>
             <div class="filler-text"><code>So overall...</code></div>
           </div>
         </div>
@@ -122,87 +125,87 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">3</span> 失敗パターンとリカバリー</div>
+      <div class="tip-card-title"><span class="tip-num">3</span> <span class="jp">失敗パターンとリカバリー</span><span class="en">Failure patterns and recovery</span></div>
       <div class="tip-card-body">
         <div class="tip-warn">
-          <strong>✗ NG：</strong> 5秒以上の沈黙<br>
-          <strong>✓ OK：</strong> → "Well, let me think..." でつなぐ
+          <span class="jp"><strong>✗ NG：</strong> 5秒以上の沈黙<br><strong>✓ OK：</strong> → "Well, let me think..." でつなぐ</span>
+          <span class="en"><strong>✗ NG:</strong> 5+ seconds of silence<br><strong>✓ OK:</strong> bridge with "Well, let me think..."</span>
         </div>
         <div class="tip-warn" style="margin-top:8px">
-          <strong>✗ NG：</strong> 理由が2つで中途半端<br>
-          <strong>✓ OK：</strong> → 1つに絞って深く説明する
+          <span class="jp"><strong>✗ NG：</strong> 理由が2つで中途半端<br><strong>✓ OK：</strong> → 1つに絞って深く説明する</span>
+          <span class="en"><strong>✗ NG:</strong> two half-developed reasons<br><strong>✓ OK:</strong> pick one reason and explain it deeply</span>
         </div>
         <div class="tip-warn" style="margin-top:8px">
-          <strong>✗ NG：</strong> 同語反復（同じ言葉を繰り返す）<br>
-          <strong>✓ OK：</strong> → "What I mean by that is..." で言い換える
+          <span class="jp"><strong>✗ NG：</strong> 同語反復（同じ言葉を繰り返す）<br><strong>✓ OK：</strong> → "What I mean by that is..." で言い換える</span>
+          <span class="en"><strong>✗ NG:</strong> repeating the same words<br><strong>✓ OK:</strong> rephrase with "What I mean by that is..."</span>
         </div>
         <div class="tip-warn" style="margin-top:8px">
-          <strong>✗ NG：</strong> 途中で止まる<br>
-          <strong>✓ OK：</strong> → 間違えても続ける。流暢性が重要
+          <span class="jp"><strong>✗ NG：</strong> 途中で止まる<br><strong>✓ OK：</strong> → 間違えても続ける。流暢性が重要</span>
+          <span class="en"><strong>✗ NG:</strong> stopping mid-answer<br><strong>✓ OK:</strong> keep going even after a mistake — fluency matters</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ========== TEMPLATE ========== -->
   <div class="template-section">
-    <div class="template-title">📋 万能テンプレート</div>
+    <div class="template-title">📋 <span class="jp">万能テンプレート</span><span class="en">All-purpose template</span></div>
 
     <div class="template-card">
       <span class="template-num">1</span>
-      <div class="template-text"><strong>I believe / prefer / think that...</strong><span>主張を明確に述べる</span></div>
+      <div class="template-text"><strong>I believe / prefer / think that...</strong><span><span class="jp">主張を明確に述べる</span><span class="en">State your claim clearly</span></span></div>
     </div>
     <div class="template-card">
       <span class="template-num">2</span>
-      <div class="template-text"><strong>The main reason is that...</strong><span>理由を1つしっかり説明</span></div>
+      <div class="template-text"><strong>The main reason is that...</strong><span><span class="jp">理由を1つしっかり説明</span><span class="en">Explain one solid reason</span></span></div>
     </div>
     <div class="template-card">
       <span class="template-num">3</span>
-      <div class="template-text"><strong>For example, when I...</strong><span>具体的なエピソードを入れる</span></div>
+      <div class="template-text"><strong>For example, when I...</strong><span><span class="jp">具体的なエピソードを入れる</span><span class="en">Drop in a specific anecdote</span></span></div>
     </div>
     <div class="template-card">
       <span class="template-num">4</span>
-      <div class="template-text"><strong>So overall, that's why I...</strong><span>主張を繰り返して締める</span></div>
+      <div class="template-text"><strong>So overall, that's why I...</strong><span><span class="jp">主張を繰り返して締める</span><span class="en">Restate the claim and wrap up</span></span></div>
     </div>
   </div>
 
-  <!-- ========== EXAMPLE STOCK ========== -->
   <div class="tip-card">
-    <div class="tip-card-title"><span class="tip-num">★</span> 使い回せる具体例ストック</div>
+    <div class="tip-card-title"><span class="tip-num">★</span> <span class="jp">使い回せる具体例ストック</span><span class="en">Stock of reusable examples</span></div>
     <div class="tip-card-body">
-      どんなトピックでも使えるエピソードを5つ準備しておく。
+      <span class="jp">どんなトピックでも使えるエピソードを5つ準備しておく。</span>
+      <span class="en">Prepare 5 anecdotes that work for any topic.</span>
       <div class="example-tags">
-        <span class="example-tag">📚 学校の課題</span>
-        <span class="example-tag">🙋 友人エピソード</span>
-        <span class="example-tag">🚙 家族との旅行</span>
-        <span class="example-tag">⚽ 部活・クラブ</span>
-        <span class="example-tag">💻 テクノロジー</span>
+        <span class="example-tag">📚 <span class="jp">学校の課題</span><span class="en">School project</span></span>
+        <span class="example-tag">🙋 <span class="jp">友人エピソード</span><span class="en">Friend story</span></span>
+        <span class="example-tag">🚙 <span class="jp">家族との旅行</span><span class="en">Family trip</span></span>
+        <span class="example-tag">⚽ <span class="jp">部活・クラブ</span><span class="en">Club / team</span></span>
+        <span class="example-tag">💻 <span class="jp">テクノロジー</span><span class="en">Technology</span></span>
       </div>
     </div>
   </div>
 
-  <!-- ========== PRACTICE ADVICE ========== -->
   <div class="tip-card" style="border:2px solid #e8912d;background:#fffaf0">
-    <div class="tip-card-title" style="color:#e8912d;font-size:1em">🏋️ 自主練習の方法</div>
+    <div class="tip-card-title" style="color:#e8912d;font-size:1em">🏋️ <span class="jp">自主練習の方法</span><span class="en">How to practice on your own</span></div>
     <div class="tip-card-body">
-      <strong>Step 1:</strong> スマホのタイマーを45秒にセットする<br>
-      <strong>Step 2:</strong> 質問を声に出して読む（本番では音声で流れる部分）<br>
-      <strong>Step 3:</strong> 読み終わったらすぐタイマースタート → 45秒以内に「主張→理由→具体例→まとめ」を言い切る<br>
-      <strong>Step 4:</strong> 録音して聞き返す → 沈黙がないか、まとめまで到達しているかチェック<br><br>
-      <strong>💡 本番では質問は音声のみ（画面にテキストは表示されません）。</strong>聞いた瞬間に回答を組み立てる練習が重要！<br><br>
-      <strong>目標：</strong> 1日2〜3回のルーティンを体に覚えさせる。完璧な英語でなくてOK — <strong>止まらず話し続けること</strong>が最優先！
+      <span class="jp"><strong>Step 1:</strong> スマホのタイマーを45秒にセットする<br><strong>Step 2:</strong> 質問を声に出して読む（本番では音声で流れる部分）<br><strong>Step 3:</strong> 読み終わったらすぐタイマースタート → 45秒以内に「主張→理由→具体例→まとめ」を言い切る<br><strong>Step 4:</strong> 録音して聞き返す → 沈黙がないか、まとめまで到達しているかチェック<br><br><strong>💡 本番では質問は音声のみ（画面にテキストは表示されません）。</strong>聞いた瞬間に回答を組み立てる練習が重要！<br><br><strong>目標：</strong> 1日2〜3回のルーティンを体に覚えさせる。完璧な英語でなくてOK — <strong>止まらず話し続けること</strong>が最優先！</span>
+      <span class="en"><strong>Step 1:</strong> Set your phone timer to 45 seconds.<br><strong>Step 2:</strong> Read the question aloud (in the real test it plays as audio).<br><strong>Step 3:</strong> Start the timer the moment you finish reading → deliver claim → reason → example → wrap-up within 45 seconds.<br><strong>Step 4:</strong> Record yourself and listen back → check for silences and confirm you reached the wrap-up.<br><br><strong>💡 In the real test the question is audio only (no text on screen).</strong> Practice composing your answer the moment you hear the question!<br><br><strong>Goal:</strong> Build a 2–3-times-a-day routine until it becomes automatic. Perfect English isn't required — <strong>not stopping</strong> is what matters most.</span>
     </div>
   </div>
 
 </div>
 
 <div class="nav-footer">
-  <a class="btn-menu" href="practice-7.html">← Practice 7 に戻る</a>
-  <a class="btn-menu" href="../menu.html">メニューに戻る</a>
+  <a class="btn-menu" href="practice-7.html"><span class="jp">← Practice 7 に戻る</span><span class="en">← Back to Practice 7</span></a>
+  <a class="btn-menu" href="../menu.html"><span class="jp">メニューに戻る</span><span class="en">Back to menu</span></a>
 </div>
 
 <script src="../../js/auth.js"></script>
 <script>
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
 if(typeof Auth!=='undefined'){Auth.require();}
 </script>
 </body>
