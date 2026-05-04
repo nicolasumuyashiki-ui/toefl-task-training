@@ -396,12 +396,13 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
               <th>Set</th>
               <th>Q</th>
               <th>長さ</th>
+              <th style="min-width:260px">対象テキスト</th>
               <th style="min-width:280px">プレイヤー</th>
               <th>Drive</th>
             </tr>
           </thead>
           <tbody id="recBody">
-            <tr><td colspan="8" style="text-align:center;color:var(--ink-500);padding:32px">読み込み中…</td></tr>
+            <tr><td colspan="9" style="text-align:center;color:var(--ink-500);padding:32px">読み込み中…</td></tr>
           </tbody>
         </table>
       </div>
@@ -412,6 +413,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
 
 <script src="../js/auth.js"></script>
 <script src="../js/api.js"></script>
+<script src="../js/speaking-scripts.js"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -1238,7 +1240,7 @@ function loadRecordings() {
   var __u = getCurrentUser() || {};
   Api.listRecordings(__u.userId, __staffPass).then(function(r){
     if (!r || !r.success) {
-      body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--terracotta);padding:32px">読み込みに失敗しました（' + (r && r.error || 'unknown') + '）</td></tr>';
+      body.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--terracotta);padding:32px">読み込みに失敗しました（' + (r && r.error || 'unknown') + '）</td></tr>';
       return;
     }
     window.__recordings = r.recordings || [];
@@ -1279,7 +1281,7 @@ function renderRecordings() {
 
   document.getElementById('recCount').textContent = rows.length;
   if (!rows.length) {
-    body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--ink-500);padding:32px">該当する録音はありません。</td></tr>';
+    body.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--ink-500);padding:32px">該当する録音はありません。</td></tr>';
     return;
   }
 
@@ -1297,6 +1299,34 @@ function renderRecordings() {
     var driveLink = r.fileUrl
       ? '<a href="' + r.fileUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.85em">開く →</a>'
       : '';
+
+    // Look up the question/sentence text from the bundled speaking-scripts
+    // data so reviewers see what the student was answering or repeating
+    // alongside the audio. Falls back to a "no script" placeholder for
+    // tasks we don't have script data for (currently only LR + TI).
+    var scriptCell = '<span style="color:var(--ink-500);font-size:.82em">—</span>';
+    var scripts = window.TCK_SPEAKING_SCRIPTS;
+    if (scripts && (r.task === 'lr' || r.task === 'ti')) {
+      var practiceData = scripts[r.task] && scripts[r.task][String(r.practiceSet)];
+      if (practiceData) {
+        var item = (practiceData.items || []).find(function(it){ return it.q === Number(r.questionIndex); });
+        if (item) {
+          var theme = practiceData.theme || '';
+          var itemMeta = '';
+          if (r.task === 'lr' && item.words) {
+            itemMeta = '<span style="font-family:var(--font-en);font-size:.74em;color:var(--ink-500);font-weight:600">'
+              + item.words + ' words · ' + item.time + 's · ★' + item.difficulty + '</span>';
+          }
+          var practiceUrl = '../speaking/' + r.task + '/practice-' + r.practiceSet + '.html';
+          scriptCell =
+            (theme ? '<div style="font-size:.74em;color:var(--green-dark);font-weight:700;margin-bottom:3px;letter-spacing:.04em">' + escapeHtml(theme) + '</div>' : '')
+            + '<div style="font-size:.85em;line-height:1.5;color:var(--ink-900);max-width:520px">' + escapeHtml(item.text) + '</div>'
+            + (itemMeta ? '<div style="margin-top:3px">' + itemMeta + '</div>' : '')
+            + '<div style="margin-top:6px"><a href="' + practiceUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.78em;font-weight:600">問題ページを開く →</a></div>';
+        }
+      }
+    }
+
     return '<tr>' +
       '<td style="white-space:nowrap;font-size:.82em">' + dt + '</td>' +
       '<td><div style="font-weight:600">' + escapeHtml(r.userName || '—') + '</div><div style="font-size:.78em;color:var(--ink-500)">' + escapeHtml(r.userId) + '</div></td>' +
@@ -1304,6 +1334,7 @@ function renderRecordings() {
       '<td style="text-align:center">' + r.practiceSet + '</td>' +
       '<td style="text-align:center">' + r.questionIndex + '</td>' +
       '<td style="white-space:nowrap;font-family:var(--font-en);font-size:.85em">' + dur + '</td>' +
+      '<td style="vertical-align:top;padding-top:10px">' + scriptCell + '</td>' +
       '<td>' + player + '</td>' +
       '<td>' + driveLink + '</td>' +
     '</tr>';
