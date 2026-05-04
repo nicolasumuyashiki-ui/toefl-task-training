@@ -378,6 +378,23 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
         </select>
         <select id="filterRecSet" class="select">
           <option value="">全 Practice Set</option>
+          <optgroup label="Task Training">
+            <option value="tt-1">TT Set 1</option>
+            <option value="tt-2">TT Set 2</option>
+            <option value="tt-3">TT Set 3</option>
+            <option value="tt-4">TT Set 4</option>
+            <option value="tt-5">TT Set 5</option>
+            <option value="tt-6">TT Set 6</option>
+            <option value="tt-7">TT Set 7</option>
+            <option value="tt-8">TT Set 8</option>
+            <option value="tt-9">TT Set 9</option>
+            <option value="tt-10">TT Set 10</option>
+          </optgroup>
+          <optgroup label="Mock Test">
+            <option value="pt-1">Mock Set 1</option>
+            <option value="pt-2">Mock Set 2</option>
+            <option value="pt-3">Mock Set 3</option>
+          </optgroup>
         </select>
       </div>
       <span class="count-badge"><strong id="recCount">0</strong> 件</span>
@@ -391,18 +408,17 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
           <thead>
             <tr>
               <th style="white-space:nowrap">日時</th>
-              <th>ユーザー</th>
+              <th style="min-width:180px;white-space:nowrap">ユーザー</th>
               <th>タスク</th>
               <th>Set</th>
               <th>Q</th>
               <th>長さ</th>
-              <th style="min-width:260px">対象テキスト</th>
-              <th style="min-width:280px">プレイヤー</th>
-              <th>Drive</th>
+              <th style="min-width:340px">対象テキスト</th>
+              <th style="min-width:230px">プレイヤー</th>
             </tr>
           </thead>
           <tbody id="recBody">
-            <tr><td colspan="9" style="text-align:center;color:var(--ink-500);padding:32px">読み込み中…</td></tr>
+            <tr><td colspan="8" style="text-align:center;color:var(--ink-500);padding:32px">読み込み中…</td></tr>
           </tbody>
         </table>
       </div>
@@ -1240,21 +1256,14 @@ function loadRecordings() {
   var __u = getCurrentUser() || {};
   Api.listRecordings(__u.userId, __staffPass).then(function(r){
     if (!r || !r.success) {
-      body.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--terracotta);padding:32px">読み込みに失敗しました（' + (r && r.error || 'unknown') + '）</td></tr>';
+      body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--terracotta);padding:32px">読み込みに失敗しました（' + (r && r.error || 'unknown') + '）</td></tr>';
       return;
     }
     window.__recordings = r.recordings || [];
     window.__recordingsLoaded = true;
-    // Populate Set filter from data
-    var sets = {};
-    window.__recordings.forEach(function(rec){ sets[rec.practiceSet] = true; });
-    var setSel = document.getElementById('filterRecSet');
-    var keep = setSel.value;
-    setSel.innerHTML = '<option value="">全 Practice Set</option>';
-    Object.keys(sets).sort(function(a,b){ return Number(a)-Number(b); }).forEach(function(s){
-      setSel.insertAdjacentHTML('beforeend', '<option value="' + s + '">Set ' + s + '</option>');
-    });
-    setSel.value = keep;
+    // Set filter is now a static dropdown (TT 1-10 + Mock 1-3) — see the
+    // <select id="filterRecSet"> markup. We don't repopulate from data
+    // anymore so the user can target sets that have no recordings yet.
     renderRecordings();
   }).catch(function(err){
     body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--terracotta);padding:32px">通信エラー：' + String(err && err.message || err) + '</td></tr>';
@@ -1267,9 +1276,23 @@ function renderRecordings() {
   var ft = document.getElementById('filterRecTask').value;
   var fs = document.getElementById('filterRecSet').value;
 
+  // Set filter values are encoded as "<source>-<setNum>" (e.g. "tt-3",
+  // "pt-1") so a single dropdown can distinguish Task Training from
+  // Mock Test recordings even when the practice number overlaps.
+  var fsSource = '';
+  var fsNum = '';
+  if (fs) {
+    var dash = fs.indexOf('-');
+    fsSource = dash >= 0 ? fs.slice(0, dash) : '';
+    fsNum    = dash >= 0 ? fs.slice(dash + 1) : fs;
+  }
+
   var rows = (window.__recordings || []).filter(function(r){
     if (ft && r.task !== ft) return false;
-    if (fs && String(r.practiceSet) !== String(fs)) return false;
+    if (fs) {
+      if (fsSource && (r.source || 'tt') !== fsSource) return false;
+      if (String(r.practiceSet) !== String(fsNum)) return false;
+    }
     if (q) {
       var hay = (r.userId + ' ' + r.userName).toLowerCase();
       if (hay.indexOf(q) === -1) return false;
@@ -1281,7 +1304,7 @@ function renderRecordings() {
 
   document.getElementById('recCount').textContent = rows.length;
   if (!rows.length) {
-    body.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--ink-500);padding:32px">該当する録音はありません。</td></tr>';
+    body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--ink-500);padding:32px">該当する録音はありません。</td></tr>';
     return;
   }
 
@@ -1294,7 +1317,7 @@ function renderRecordings() {
     // preview iframe instead. Works for any "anyone with link" file.
     var previewUrl = r.fileId ? ('https://drive.google.com/file/d/' + r.fileId + '/preview') : '';
     var player = previewUrl
-      ? '<iframe src="' + previewUrl + '" allow="autoplay" style="width:100%;max-width:280px;height:60px;border:0;border-radius:6px;background:var(--cream)" loading="lazy"></iframe>'
+      ? '<iframe src="' + previewUrl + '" allow="autoplay" style="width:100%;max-width:200px;height:46px;border:0;border-radius:6px;background:var(--cream)" loading="lazy"></iframe>'
       : '<span style="color:var(--ink-500)">—</span>';
     var driveLink = r.fileUrl
       ? '<a href="' + r.fileUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.85em">開く →</a>'
@@ -1303,9 +1326,12 @@ function renderRecordings() {
     // Look up the question/sentence text from the bundled speaking-scripts
     // data so reviewers see what the student was answering or repeating
     // alongside the audio. Falls back to a "no script" placeholder for
-    // tasks we don't have script data for (currently only LR + TI).
+    // tasks we don't have script data for (currently only LR + TI). Note
+    // that Mock Test (source=pt) recordings use a different practice URL
+    // pattern (practice-test/speaking-{task}.html), so we branch on source.
     var scriptCell = '<span style="color:var(--ink-500);font-size:.82em">—</span>';
     var scripts = window.TCK_SPEAKING_SCRIPTS;
+    var src = r.source || 'tt';
     if (scripts && (r.task === 'lr' || r.task === 'ti')) {
       var practiceData = scripts[r.task] && scripts[r.task][String(r.practiceSet)];
       if (practiceData) {
@@ -1317,7 +1343,9 @@ function renderRecordings() {
             itemMeta = '<span style="font-family:var(--font-en);font-size:.74em;color:var(--ink-500);font-weight:600">'
               + item.words + ' words · ' + item.time + 's · ★' + item.difficulty + '</span>';
           }
-          var practiceUrl = '../speaking/' + r.task + '/practice-' + r.practiceSet + '.html';
+          var practiceUrl = src === 'pt'
+            ? '../practice-test/speaking-' + r.task + '.html'
+            : '../speaking/' + r.task + '/practice-' + r.practiceSet + '.html';
           scriptCell =
             (theme ? '<div style="font-size:.74em;color:var(--green-dark);font-weight:700;margin-bottom:3px;letter-spacing:.04em">' + escapeHtml(theme) + '</div>' : '')
             + '<div style="font-size:.85em;line-height:1.5;color:var(--ink-900);max-width:520px">' + escapeHtml(item.text) + '</div>'
@@ -1326,17 +1354,19 @@ function renderRecordings() {
         }
       }
     }
+    var srcBadge = src === 'pt'
+      ? '<span style="display:inline-block;background:#B85C3C;color:#fff;font-family:var(--font-en);font-size:.62em;font-weight:800;padding:1px 6px;border-radius:4px;letter-spacing:.06em;margin-left:4px">MOCK</span>'
+      : '<span style="display:inline-block;background:var(--green);color:#fff;font-family:var(--font-en);font-size:.62em;font-weight:800;padding:1px 6px;border-radius:4px;letter-spacing:.06em;margin-left:4px">TT</span>';
 
     return '<tr>' +
       '<td style="white-space:nowrap;font-size:.82em">' + dt + '</td>' +
-      '<td><div style="font-weight:600">' + escapeHtml(r.userName || '—') + '</div><div style="font-size:.78em;color:var(--ink-500)">' + escapeHtml(r.userId) + '</div></td>' +
+      '<td style="min-width:180px;white-space:nowrap"><div style="font-weight:600">' + escapeHtml(r.userName || '—') + '</div><div style="font-size:.78em;color:var(--ink-500)">' + escapeHtml(r.userId) + '</div></td>' +
       '<td><span style="font-family:var(--font-en);font-weight:700;color:var(--green-dark)">' + taskLabel + '</span></td>' +
-      '<td style="text-align:center">' + r.practiceSet + '</td>' +
+      '<td style="text-align:center;white-space:nowrap">' + r.practiceSet + srcBadge + '</td>' +
       '<td style="text-align:center">' + r.questionIndex + '</td>' +
       '<td style="white-space:nowrap;font-family:var(--font-en);font-size:.85em">' + dur + '</td>' +
       '<td style="vertical-align:top;padding-top:10px">' + scriptCell + '</td>' +
-      '<td>' + player + '</td>' +
-      '<td>' + driveLink + '</td>' +
+      '<td style="vertical-align:middle">' + player + (driveLink ? '<div style="margin-top:4px">' + driveLink + '</div>' : '') + '</td>' +
     '</tr>';
   }).join('');
 }
