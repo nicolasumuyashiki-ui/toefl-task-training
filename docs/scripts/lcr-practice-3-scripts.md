@@ -87,7 +87,7 @@ I've been struggling with organic chemistry. Would you like to form a study grou
 
 Choices:
 A) That is the hardest course here.
-B) I always study alone at home.
+B) Organic chemistry has a lot of memorization.
 C) I scored well on that exam.
 D) Great idea! Some others might join.
 

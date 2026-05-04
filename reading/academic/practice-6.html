@@ -311,7 +311,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
       <div class="question-text">
         <span class="question-number">6.</span>Look at the four squares [&#9632;] in the highlighted paragraph that indicate where the following sentence could be added to the passage.
       </div>
-      <p class="insertion-sentence-display">Furthermore, his detailed drawings of these moons showed that they changed position from night to night, confirming that they were indeed in orbit.</p>
+      <p class="insertion-sentence-display">Furthermore, his detailed drawings of these newly discovered satellites showed that they changed position from night to night, confirming that they were indeed in orbit around Jupiter.</p>
       <div class="insertion-instruction">
         <strong>Directions:</strong> Click on a square [&#9632;] in the passage on the left to add the sentence. The sentence will appear in <strong>bold</strong> at the position you choose. Click a different square to move it.
       </div>
@@ -387,7 +387,7 @@ function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 4; }
 /* ===== SENTENCE INSERTION SETUP ===== */
 var normalParagraphHTML = 'The Italian scientist Galileo Galilei was among the first to use a telescope for systematic astronomical observation. In 1610, he discovered four moons orbiting Jupiter, providing strong evidence that not everything in the sky revolved around the Earth. This observation directly challenged the geocentric model that had <span class="highlight-word">dominated</span> European thought for over a thousand years. Galileo also observed the phases of Venus and the rough, cratered surface of the Moon, further demonstrating that celestial bodies were physical objects subject to natural laws rather than perfect, unchanging spheres.';
 var insertionParagraphHTML = 'The Italian scientist Galileo Galilei was among the first to use a telescope for systematic astronomical observation. <span class="insert-square" data-insert="A">\u25A0</span> In 1610, he discovered four moons orbiting Jupiter, providing strong evidence that not everything in the sky revolved around the Earth. <span class="insert-square" data-insert="B">\u25A0</span> This observation directly challenged the geocentric model that had <span class="highlight-word">dominated</span> European thought for over a thousand years. <span class="insert-square" data-insert="C">\u25A0</span> Galileo also observed the phases of Venus and the rough, cratered surface of the Moon, further demonstrating that celestial bodies were physical objects subject to natural laws rather than perfect, unchanging spheres. <span class="insert-square" data-insert="D">\u25A0</span>';
-var insertSentenceText = "Furthermore, his detailed drawings of these moons showed that they changed position from night to night, confirming that they were indeed in orbit.";
+var insertSentenceText = "Furthermore, his detailed drawings of these newly discovered satellites showed that they changed position from night to night, confirming that they were indeed in orbit around Jupiter.";
 var correctInsertion = "B";
 var insertionQuestionPage = 6;
 var selectedInsertionPoint = null;

@@ -311,7 +311,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
       <div class="question-text">
         <span class="question-number">6.</span>Look at the four squares [&#9632;] in the highlighted paragraph that indicate where the following sentence could be added to the passage.
       </div>
-      <p class="insertion-sentence-display">Precise satellite measurements of the range have confirmed that the two plates continue to move toward each other at a measurable rate.</p>
+      <p class="insertion-sentence-display">Indeed, precise satellite measurements have confirmed that this ongoing collision continues to push the two plates toward each other at a measurable rate.</p>
       <div class="insertion-instruction">
         <strong>Directions:</strong> Click on a square [&#9632;] in the passage on the left to add the sentence. The sentence will appear in <strong>bold</strong> at the position you choose. Click a different square to move it.
       </div>
@@ -388,7 +388,7 @@ function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 4; }
 /* ===== SENTENCE INSERTION SETUP ===== */
 var normalParagraphHTML = 'When two tectonic plates collide, the immense pressure can cause the Earth\u2019s crust to buckle and fold upward, creating mountain ranges. This process, known as orogeny, is responsible for the formation of some of the world\u2019s most <span class="highlight-word">prominent</span> mountain chains. The Himalayas, for instance, were formed by the ongoing collision between the Indian Plate and the Eurasian Plate, a process that began approximately 50 million years ago and continues to this day. As a result, the Himalayas are still rising by about five millimeters per year.';
 var insertionParagraphHTML = 'When two tectonic plates collide, the immense pressure can cause the Earth\u2019s crust to buckle and fold upward, creating mountain ranges. <span class="insert-square" data-insert="A">\u25A0</span> This process, known as orogeny, is responsible for the formation of some of the world\u2019s most <span class="highlight-word">prominent</span> mountain chains. <span class="insert-square" data-insert="B">\u25A0</span> The Himalayas, for instance, were formed by the ongoing collision between the Indian Plate and the Eurasian Plate, a process that began approximately 50 million years ago and continues to this day. <span class="insert-square" data-insert="C">\u25A0</span> As a result, the Himalayas are still rising by about five millimeters per year. <span class="insert-square" data-insert="D">\u25A0</span>';
-var insertSentenceText = "Precise satellite measurements of the range have confirmed that the two plates continue to move toward each other at a measurable rate.";
+var insertSentenceText = "Indeed, precise satellite measurements have confirmed that this ongoing collision continues to push the two plates toward each other at a measurable rate.";
 var correctInsertion = "C";
 var insertionQuestionPage = 6;
 var selectedInsertionPoint = null;

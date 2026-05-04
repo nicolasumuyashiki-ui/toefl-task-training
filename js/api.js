@@ -99,8 +99,11 @@ var Api = {
   },
 
   /* Admin endpoints — require staff id/pass.
-     Pass is read from sessionStorage.kickstart_staff_pass (set on
-     admin login) or can be provided explicitly. */
+     Callers in admin/index.html must pass `pass` explicitly (held in a
+     module-scope closure variable on that page; see admin/index.html
+     getStaffPass()). The sessionStorage fallback below is retained only
+     for backwards compatibility with any not-yet-migrated caller and is
+     expected to return '' under the current admin flow. */
   listUsers: function(id, pass) {
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
@@ -121,6 +124,17 @@ var Api = {
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
     return _jsonpRequest(API_URL + '?action=listRecordings'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
+  },
+
+  /* Student self-recordings — returns ONLY the caller's own LR/TI
+     recordings, authenticated with the student pass. Used by my-score.html
+     so learners can review their own audio without staff privileges. */
+  listMyRecordings: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_pass') || '';
+    return _jsonpRequest(API_URL + '?action=listMyRecordings'
       + '&id=' + encodeURIComponent(id || u.userId || '')
       + '&pass=' + encodeURIComponent(p));
   },

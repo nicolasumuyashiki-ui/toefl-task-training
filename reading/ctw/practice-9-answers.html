@@ -160,13 +160,13 @@ var SD=[
 {w:"around",a:null,s:null,p:""},
 {w:"it",a:null,s:null,p:"."}
 ],exp:[
-{pos:"固有名詞",d:"MOD",e:"「1928, 空欄 Fleming」→人名。\"Alex\"→Alexander。固有名詞は文脈から推測。"},
-{pos:"動詞",d:"MOD",e:"「Fleming＋空欄＋that」→動詞。\"not\"→noticed（気づいた）。過去形。"},
-{pos:"名詞",d:"MOD",e:"「a＋空欄＋growing」→名詞。\"mo\"→mold（カビ）。文脈でカビと推測。"},
-{pos:"数詞",d:"HARD",e:"「on＋空欄＋of」→数詞。\"o\"→one。1文字のみで難しい。"},
-{pos:"名詞",d:"HARD",e:"「his＋空欄＋dishes」→名詞。\"labo\"→laboratory（実験室）。6文字の答え。"},
-{pos:"動詞",d:"HARD",e:"「空欄＋killing」→be動詞。\"w\"→was。1文字表示で難。"},
-{pos:"名詞",d:"MOD",e:"「the＋空欄＋around」→名詞。\"bac\"→bacteria（細菌）。introからの推測。"}
+{pos:"固有名詞",d:"MOD",e:"「1928, 空欄 Fleming」→人名。\"Alex\"→Alexander。固有名詞は文脈から推測。",e_en:"\"1928, blank Fleming\" → personal name. \"Alex\" → Alexander. Guess proper nouns from context."},
+{pos:"動詞",d:"MOD",e:"「Fleming＋空欄＋that」→動詞。\"not\"→noticed（気づいた）。過去形。",e_en:"\"Fleming + blank + that\" → verb. \"not\" → noticed. Past tense."},
+{pos:"名詞",d:"MOD",e:"「a＋空欄＋growing」→名詞。\"mo\"→mold（カビ）。文脈でカビと推測。",e_en:"\"a + blank + growing\" → noun. \"mo\" → mold. Guess \"mold\" from context."},
+{pos:"数詞",d:"HARD",e:"「on＋空欄＋of」→数詞。\"o\"→one。1文字のみで難しい。",e_en:"\"on + blank + of\" → numeral. \"o\" → one. Hard with only 1 hint letter."},
+{pos:"名詞",d:"HARD",e:"「his＋空欄＋dishes」→名詞。\"labo\"→laboratory（実験室）。6文字の答え。",e_en:"\"his + blank + dishes\" → noun. \"labo\" → laboratory. 6-letter answer."},
+{pos:"動詞",d:"HARD",e:"「空欄＋killing」→be動詞。\"w\"→was。1文字表示で難。",e_en:"\"blank + killing\" → be-verb. \"w\" → was. Only 1-letter hint shown — hard."},
+{pos:"名詞",d:"MOD",e:"「the＋空欄＋around」→名詞。\"bac\"→bacteria（細菌）。introからの推測。",e_en:"\"the + blank + around\" → noun. \"bac\" → bacteria. Guess from intro."}
 ]},
 {intro:"Learning a new language is one of the most complex tasks the human brain can perform. It requires the coordination of multiple brain regions responsible for memory, attention, and pattern recognition.",conclusion:"These findings suggest that the brain's remarkable plasticity allows people of all ages to acquire new languages, though the process becomes more effortful over time.",target:[
 {w:"Researchers",a:"rchers",s:"Resea",p:""},
@@ -194,20 +194,21 @@ var SD=[
 {w:"frontal",a:"ntal",s:"fro",p:""},
 {w:"cortex",a:null,s:null,p:"."}
 ],exp:[
-{pos:"名詞（主語）",d:"HARD",e:"「空欄＋have demonstrated」→主語。\"Resea\"→Researchers。6文字の答え。"},
-{pos:"動詞",d:"HARD",e:"「Researchers have＋空欄」→過去分詞。\"demon\"→demonstrated。7文字の答え。"},
-{pos:"動名詞",d:"HARD",e:"「that＋空欄＋vocabulary」→主語（動名詞）。\"acqu\"→acquiring（習得すること）。"},
-{pos:"副詞",d:"HARD",e:"「vocabulary＋空欄＋engages」→副詞。\"pri\"→primarily（主に）。"},
-{pos:"名詞",d:"HARD",e:"「the＋空欄」→名詞。\"hippo\"→hippocampus（海馬）。専門用語。"},
-{pos:"接続詞",d:"MOD",e:"「hippocampus,＋空欄＋mastering」→接続詞。\"whe\"→whereas（一方で）。"},
-{pos:"名詞",d:"MOD",e:"「mastering＋空欄」→名詞。\"gra\"→grammar（文法）。"},
-{pos:"副詞",d:"MOD",e:"「relies＋空欄＋on」→副詞。\"hea\"→heavily。relies heavily onは頻出。"},
-{pos:"形容詞",d:"HARD",e:"「on＋空欄＋memory」→形容詞。\"proce\"→procedural（手続き的な）。専門用語。"},
-{pos:"名詞",d:"HARD",e:"「memory＋空欄」→名詞。\"cir\"→circuits（回路）。5文字の答え。"},
-{pos:"形容詞",d:"MOD",e:"「the＋空欄＋cortex」→形容詞。\"fro\"→frontal（前頭の）。"}
+{pos:"名詞（主語）",d:"HARD",e:"「空欄＋have demonstrated」→主語。\"Resea\"→Researchers。6文字の答え。",e_en:"\"blank + have demonstrated\" → subject. \"Resea\" → Researchers. 6-letter answer."},
+{pos:"動詞",d:"HARD",e:"「Researchers have＋空欄」→過去分詞。\"demon\"→demonstrated。7文字の答え。",e_en:"\"Researchers have + blank\" → past participle. \"demon\" → demonstrated. 7-letter answer."},
+{pos:"動名詞",d:"HARD",e:"「that＋空欄＋vocabulary」→主語（動名詞）。\"acqu\"→acquiring（習得すること）。",e_en:"\"that + blank + vocabulary\" → subject (gerund). \"acqu\" → acquiring."},
+{pos:"副詞",d:"HARD",e:"「vocabulary＋空欄＋engages」→副詞。\"pri\"→primarily（主に）。",e_en:"\"vocabulary + blank + engages\" → adverb. \"pri\" → primarily."},
+{pos:"名詞",d:"HARD",e:"「the＋空欄」→名詞。\"hippo\"→hippocampus（海馬）。専門用語。",e_en:"\"the + blank\" → noun. \"hippo\" → hippocampus. Specialized term."},
+{pos:"接続詞",d:"MOD",e:"「hippocampus,＋空欄＋mastering」→接続詞。\"whe\"→whereas（一方で）。",e_en:"\"hippocampus, + blank + mastering\" → conjunction. \"whe\" → whereas."},
+{pos:"名詞",d:"MOD",e:"「mastering＋空欄」→名詞。\"gra\"→grammar（文法）。",e_en:"\"mastering + blank\" → noun. \"gra\" → grammar."},
+{pos:"副詞",d:"MOD",e:"「relies＋空欄＋on」→副詞。\"hea\"→heavily。relies heavily onは頻出。",e_en:"\"relies + blank + on\" → adverb. \"hea\" → heavily. relies heavily on is frequent."},
+{pos:"形容詞",d:"HARD",e:"「on＋空欄＋memory」→形容詞。\"proce\"→procedural（手続き的な）。専門用語。",e_en:"\"on + blank + memory\" → adjective. \"proce\" → procedural. Specialized term."},
+{pos:"名詞",d:"HARD",e:"「memory＋空欄」→名詞。\"cir\"→circuits（回路）。5文字の答え。",e_en:"\"memory + blank\" → noun. \"cir\" → circuits. 5-letter answer."},
+{pos:"形容詞",d:"MOD",e:"「the＋空欄＋cortex」→形容詞。\"fro\"→frontal（前頭の）。",e_en:"\"the + blank + cortex\" → adjective. \"fro\" → frontal."}
 ]}
 ];
 
+var posEn={'代名詞':'pronoun','冠詞':'article','前置詞':'preposition','副詞':'adverb','副詞（接続）':'adverb (connector)','助動詞':'auxiliary verb','動名詞':'gerund','動詞':'verb','名詞':'noun','名詞（主語）':'noun (subject)','固有名詞':'proper noun','形容詞':'adjective','形容詞（比較級）':'adjective (comparative)','指示形容詞':'demonstrative adjective','接続副詞':'conjunctive adverb','接続詞':'conjunction','数詞':'numeral','過去分詞':'past participle','関係代名詞':'relative pronoun','関係副詞':'relative adverb'};
 function renderAll(){
   var ts=0,tq=0,harderCorrect=0,harderTotal=0,sh='';
   SD.forEach(function(s,si){
@@ -227,8 +228,8 @@ function renderAll(){
       var ok=uans.toLowerCase()===savedA.toLowerCase();
       var dt=ex.d==='HARD'?'<span class="q-tag tag-hard">HARD</span>':'<span class="q-tag tag-mod">MOD</span>';
       var ul='';
-      if(st){if(ok){ul='<div class="q-user" style="color:#004D2E">&#10004; 正解！ あなたの回答: '+savedS+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#8A3E24">&#11036; 未回答 — 推測でも必ず埋めよう！</div>';}else{ul='<div class="q-user" style="color:#8A3E24">&#10060; あなた: <span style="text-decoration:line-through">'+savedS+uans+'</span> &rarr; 正解: '+b.w+'</div>';}}
-      ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+savedS+'</span><span class="ans">'+savedA+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong>品詞：'+ex.pos+'</strong> '+ex.e+'</div></div></div>';
+      if(st){if(ok){ul='<div class="q-user" style="color:#004D2E">&#10004; <span class="jp">正解！ あなたの回答: </span><span class="en">Correct! Your answer: </span>'+savedS+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#8A3E24">&#11036; <span class="jp">未回答 — 推測でも必ず埋めよう！</span><span class="en">Blank — always guess, never leave it empty!</span></div>';}else{ul='<div class="q-user" style="color:#8A3E24">&#10060; <span class="jp">あなた: </span><span class="en">You: </span><span style="text-decoration:line-through">'+savedS+uans+'</span> <span class="jp">&rarr; 正解: </span><span class="en">&rarr; Correct: </span>'+b.w+'</div>';}}
+      ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+savedS+'</span><span class="ans">'+savedA+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong><span class="jp">品詞：'+ex.pos+'</span><span class="en">POS: '+(posEn[ex.pos]||ex.pos)+'</span></strong> <span class="jp">'+ex.e+'</span><span class="en">'+(ex.e_en||ex.e)+'</span></div></div></div>';
     });
     document.getElementById('ag'+si).innerHTML=ag;
   });
