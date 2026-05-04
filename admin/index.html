@@ -391,13 +391,13 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
           <thead>
             <tr>
               <th style="white-space:nowrap">日時</th>
-              <th>ユーザー</th>
+              <th style="min-width:140px">ユーザー</th>
               <th>タスク</th>
               <th>Set</th>
               <th>Q</th>
               <th>長さ</th>
-              <th style="min-width:260px">対象テキスト</th>
-              <th style="min-width:280px">プレイヤー</th>
+              <th style="min-width:280px">対象テキスト</th>
+              <th style="min-width:210px">プレイヤー</th>
               <th>Drive</th>
             </tr>
           </thead>
@@ -1294,7 +1294,7 @@ function renderRecordings() {
     // preview iframe instead. Works for any "anyone with link" file.
     var previewUrl = r.fileId ? ('https://drive.google.com/file/d/' + r.fileId + '/preview') : '';
     var player = previewUrl
-      ? '<iframe src="' + previewUrl + '" allow="autoplay" style="width:100%;max-width:280px;height:60px;border:0;border-radius:6px;background:var(--cream)" loading="lazy"></iframe>'
+      ? '<iframe src="' + previewUrl + '" allow="autoplay" style="width:100%;max-width:200px;height:46px;border:0;border-radius:6px;background:var(--cream)" loading="lazy"></iframe>'
       : '<span style="color:var(--ink-500)">—</span>';
     var driveLink = r.fileUrl
       ? '<a href="' + r.fileUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.85em">開く →</a>'
@@ -1329,7 +1329,7 @@ function renderRecordings() {
 
     return '<tr>' +
       '<td style="white-space:nowrap;font-size:.82em">' + dt + '</td>' +
-      '<td><div style="font-weight:600">' + escapeHtml(r.userName || '—') + '</div><div style="font-size:.78em;color:var(--ink-500)">' + escapeHtml(r.userId) + '</div></td>' +
+      '<td style="min-width:140px"><div style="font-weight:600;white-space:nowrap">' + escapeHtml(r.userName || '—') + '</div><div style="font-size:.78em;color:var(--ink-500);white-space:nowrap">' + escapeHtml(r.userId) + '</div></td>' +
       '<td><span style="font-family:var(--font-en);font-weight:700;color:var(--green-dark)">' + taskLabel + '</span></td>' +
       '<td style="text-align:center">' + r.practiceSet + '</td>' +
       '<td style="text-align:center">' + r.questionIndex + '</td>' +
