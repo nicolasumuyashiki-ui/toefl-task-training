@@ -413,8 +413,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
               <th>Set</th>
               <th>Q</th>
               <th>長さ</th>
-              <th style="min-width:340px">対象テキスト</th>
-              <th style="min-width:230px">プレイヤー</th>
+              <th style="min-width:300px;max-width:440px">対象テキスト</th>
+              <th style="min-width:320px;width:340px">プレイヤー</th>
             </tr>
           </thead>
           <tbody id="recBody">
@@ -1319,7 +1319,7 @@ function renderRecordings() {
     // preview iframe instead. Works for any "anyone with link" file.
     var previewUrl = r.fileId ? ('https://drive.google.com/file/d/' + r.fileId + '/preview') : '';
     var player = previewUrl
-      ? '<iframe src="' + previewUrl + '" allow="autoplay" style="width:100%;max-width:200px;height:46px;border:0;border-radius:6px;background:var(--cream)" loading="lazy"></iframe>'
+      ? '<iframe src="' + previewUrl + '" allow="autoplay" style="width:300px;height:46px;border:0;border-radius:6px;background:var(--cream)" loading="lazy"></iframe>'
       : '<span style="color:var(--ink-500)">—</span>';
     var driveLink = r.fileUrl
       ? '<a href="' + r.fileUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.85em">開く →</a>'
@@ -1368,7 +1368,7 @@ function renderRecordings() {
       '<td style="text-align:center">' + r.questionIndex + '</td>' +
       '<td style="white-space:nowrap;font-family:var(--font-en);font-size:.85em">' + dur + '</td>' +
       '<td style="vertical-align:top;padding-top:10px">' + scriptCell + '</td>' +
-      '<td style="vertical-align:middle">' + player + (driveLink ? '<div style="margin-top:4px">' + driveLink + '</div>' : '') + '</td>' +
+      '<td style="vertical-align:middle;white-space:nowrap;padding-left:16px">' + player + (driveLink ? '<div style="margin-top:4px">' + driveLink + '</div>' : '') + '</td>' +
     '</tr>';
   }).join('');
 }
