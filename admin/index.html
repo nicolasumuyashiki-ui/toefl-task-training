@@ -1067,8 +1067,10 @@ function renderKarteDetail() {
     if (auto.length || nonAuto.length) {
       const accStr = auto.length ? Math.round(auto.reduce((s, i) => s + i.score, 0) / auto.length) + '% · ' : '';
       const countStr = (auto.length + nonAuto.length) + ' ' + (nonAuto.length && !auto.length ? '提出' : 'attempts');
-      var bandStr = scaled !== null ? '<div style="font-family:var(--font-en);font-size:.55em;color:var(--ink-500);font-weight:600;margin-top:2px;letter-spacing:.02em">Band ' + formatBand(sectionToBand(scaled)) + '</div>' : '';
-      const scaledStr = scaled !== null ? '<div class="skill-score-val">' + scaled + '<span style="font-size:.42em;color:var(--ink-500);font-weight:500;margin-left:3px">/30</span>' + estTag + '</div>' + bandStr : '<div class="skill-score-val">—</div>';
+      // Display Band (new scoring scale) prominently and the legacy /30
+      // scaled score below as small secondary metadata.
+      var legacyStr = scaled !== null ? '<div style="font-family:var(--font-en);font-size:.62em;color:var(--ink-500);font-weight:600;margin-top:2px;letter-spacing:.02em">' + scaled + ' <span style="opacity:.7">/ 30 旧スコア</span></div>' : '';
+      const scaledStr = scaled !== null ? '<div class="skill-score-val">Band ' + formatBand(sectionToBand(scaled)) + '<span style="font-size:.42em;color:var(--ink-500);font-weight:500;margin-left:3px">/ 6.0</span>' + estTag + '</div>' + legacyStr : '<div class="skill-score-val">—</div>';
       return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div>' + scaledStr + '<div class="skill-score-sub">' + accStr + countStr + '</div></div>';
     }
     return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div><div class="skill-score-val">—</div><div class="skill-score-sub">まだ未受験</div></div>';
