@@ -249,5 +249,17 @@ var Api = {
       + '&email='    + encodeURIComponent(u.email    || '')
       + '&skills='   + encodeURIComponent(skills)
       + '&lang='     + encodeURIComponent(lang));
+  },
+
+  /* Consultation booking status — reads CONSULTATION_BOOKINGS sheet (which
+     Zapier populates from eeasy webhook events) and returns whether the
+     user is currently locked out (already booked this calendar month).
+     Backed by handleGetConsultationStatus_ on the GAS side. */
+  getConsultationStatus: function() {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=getConsultationStatus'
+      + '&id='   + encodeURIComponent(u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
   }
 };

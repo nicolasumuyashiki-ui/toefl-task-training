@@ -274,6 +274,46 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
     return null;
   }
 
+  /* Server-side cooldown sync — the source of truth is the
+     CONSULTATION_BOOKINGS sheet (populated by Zapier from eeasy webhook
+     events). On page load we ask GAS for the user's current booking
+     status and write it into localStorage so subsequent renders see the
+     same lock — and crucially, the lock survives across browsers /
+     incognito sessions. localStorage is kept as a synchronous cache. */
+  function syncFromServer() {
+    if (typeof Api === 'undefined' || !Api.getConsultationStatus) return;
+    Api.getConsultationStatus().then(function(res){
+      if (!res || !res.success) return;
+      if (res.locked && res.nextBookable) {
+        var nb = new Date(res.nextBookable);
+        if (!isNaN(nb.getTime())) {
+          localStorage.setItem(nextBookableKey, nb.toISOString());
+          render();
+        }
+      } else {
+        // Server says no active booking — clear any stale local cooldown.
+        // (Don't touch localStorage if the user just booked but the Zap
+        //  hasn't propagated yet — only clear when local mirror points
+        //  to a past date or matches a stale legacy key.)
+        var localNb = localStorage.getItem(nextBookableKey);
+        if (localNb) {
+          var d = new Date(localNb);
+          var todayMid = new Date(); todayMid.setHours(0,0,0,0);
+          // Only clear if the locally recorded "next bookable" is in the
+          // past AND server agrees user is unlocked. Otherwise keep the
+          // optimistic local lock for a few minutes (Zap propagation lag).
+          if (!isNaN(d.getTime()) && d.getTime() <= todayMid.getTime()) {
+            localStorage.removeItem(nextBookableKey);
+            localStorage.removeItem(legacyKey);
+            render();
+          }
+        }
+      }
+    }).catch(function(){
+      /* Network/auth error — silently fall back to localStorage-only mode. */
+    });
+  }
+
   function fmtYMD(d) {
     var y = d.getFullYear();
     var m = String(d.getMonth() + 1).padStart(2, '0');
@@ -332,6 +372,7 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
   }
 
   render();
+  syncFromServer();
 
   /* HubSpot form submit is the FIRST signal (form sent → user is going to the
      thanks page → eeasy CTA). Set an optimistic cooldown to first-of-next-month.
