@@ -236,15 +236,40 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
    different accounts on the same browser stay isolated.
    ============================================================ */
 (function(){
-  var COOLDOWN_DAYS = 30;
-  var COOLDOWN_MS = COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
-  var storageKey = 'tck_consult_last_booked_' + (u.userId || 'anon');
+  /* New scheme: lock booking until first day of (consultation_month + 1).
+     The consultation date is set by consultation-booked.html (eeasy's post-
+     booking redirect target) reading ?date=YYYY-MM-DD.
+     For backward compatibility we also read the legacy "last booked" key and
+     derive next-bookable from it. */
+  var nextBookableKey = 'tck_consult_next_bookable_' + (u.userId || 'anon');
+  var legacyKey       = 'tck_consult_last_booked_'  + (u.userId || 'anon');
 
-  function lastBookedAt() {
-    var raw = localStorage.getItem(storageKey);
-    if (!raw) return null;
-    var d = new Date(raw);
-    return isNaN(d.getTime()) ? null : d;
+  function firstOfNextMonth(d) {
+    return new Date(d.getFullYear(), d.getMonth() + 1, 1);
+  }
+
+  function nextBookableDate() {
+    /* Prefer explicit next-bookable date if recorded by the booked page. */
+    var raw = localStorage.getItem(nextBookableKey);
+    if (raw) {
+      var d = new Date(raw);
+      if (!isNaN(d.getTime())) return d;
+    }
+    /* Fall back to legacy "last booked" key — derive next-bookable as the
+       first of the month following the last_booked date. */
+    var legacy = localStorage.getItem(legacyKey);
+    if (legacy) {
+      var ld = new Date(legacy);
+      if (!isNaN(ld.getTime())) return firstOfNextMonth(ld);
+    }
+    return null;
+  }
+
+  function fmtYMD(d) {
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return y + '-' + m + '-' + day;
   }
 
   function render() {
@@ -252,33 +277,32 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
     var cooldownCard = document.getElementById('cooldownCard');
     var planStatus = document.getElementById('planStatus');
     var planIcon = document.getElementById('planIcon');
-    var last = lastBookedAt();
-    var now = Date.now();
+    var nextBookable = nextBookableDate();
+    var todayMidnight = new Date(); todayMidnight.setHours(0,0,0,0);
 
-    if (last && (now - last.getTime()) < COOLDOWN_MS) {
-      // In cooldown — hide form, show notice
-      var nextAvail = new Date(last.getTime() + COOLDOWN_MS);
-      var daysLeft = Math.ceil((nextAvail.getTime() - now) / (24 * 60 * 60 * 1000));
-      var lastStr  = last.toISOString().slice(0, 10);
-      var nextStr  = nextAvail.toISOString().slice(0, 10);
+    if (nextBookable && nextBookable.getTime() > todayMidnight.getTime()) {
+      // Locked — display when bookable
+      var daysLeft = Math.ceil((nextBookable.getTime() - todayMidnight.getTime()) / (24 * 60 * 60 * 1000));
+      var nextStr = fmtYMD(nextBookable);
 
       if (bookingCard) bookingCard.style.display = 'none';
       if (cooldownCard) cooldownCard.style.display = '';
       var cdText = document.getElementById('cooldownText');
       if (cdText) {
         cdText.innerHTML =
-          '<span class="jp">前回の予約日：<strong>' + lastStr + '</strong><br>次回ご予約可能日：<strong>' + nextStr + '</strong>（あと <strong>' + daysLeft + ' 日</strong>）</span>' +
-          '<span class="en">Last booked: <strong>' + lastStr + '</strong><br>Next available: <strong>' + nextStr + '</strong> (<strong>' + daysLeft + ' days</strong> to go)</span>';
+          '<span class="jp">次回ご予約可能日：<strong>' + nextStr + '</strong>（あと <strong>' + daysLeft + ' 日</strong>）<br>※ 学習相談は月 1 回までのサブスク特典です。</span>' +
+          '<span class="en">Next available: <strong>' + nextStr + '</strong> (<strong>' + daysLeft + ' days</strong> to go)<br>One consultation per calendar month is included with the subscription.</span>';
       }
       if (planIcon) planIcon.textContent = '⏳';
-      if (planInner = document.getElementById('planInner')) {
+      var planInner = document.getElementById('planInner');
+      if (planInner) {
         planInner.style.background = 'var(--paper)';
         planInner.style.borderColor = 'var(--gold)';
       }
       if (planStatus) {
         planStatus.innerHTML =
-          '<span class="jp"><strong>ご利用済み</strong>：' + lastStr + ' に予約済みです。次回は <strong>' + nextStr + '</strong>（あと <strong>' + daysLeft + ' 日</strong>）から。</span>' +
-          '<span class="en"><strong>Used this month</strong>: booked on ' + lastStr + '. Next booking opens on <strong>' + nextStr + '</strong> (<strong>' + daysLeft + ' days</strong> to go).</span>';
+          '<span class="jp"><strong>ご利用済み</strong>：今月分の学習相談はご予約済みです。次回は <strong>' + nextStr + '</strong>（あと <strong>' + daysLeft + ' 日</strong>）から。</span>' +
+          '<span class="en"><strong>Already booked</strong>: this month\'s consultation is reserved. Next booking opens on <strong>' + nextStr + '</strong> (<strong>' + daysLeft + ' days</strong> to go).</span>';
       }
     } else {
       // Available — show form
@@ -300,12 +324,17 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
 
   render();
 
-  // Listen for HubSpot form submission to start the cooldown
+  /* HubSpot form submit is the FIRST signal (form sent → user is going to the
+     thanks page → eeasy CTA). Set an optimistic cooldown to first-of-next-month.
+     consultation-booked.html (eeasy's post-booking redirect target) refines
+     this when the user actually completes the booking — using the actual
+     consultation date passed via ?date=YYYY-MM-DD. */
   window.addEventListener('message', function(e){
     try {
       var d = e.data;
       if (d && (d.type === 'hsFormCallback' || d.type === 'hs-form-callback') && (d.eventName === 'onFormSubmitted' || d.eventName === 'onFormSubmit')) {
-        localStorage.setItem(storageKey, new Date().toISOString());
+        var optimistic = firstOfNextMonth(new Date());
+        localStorage.setItem(nextBookableKey, optimistic.toISOString());
         // Small delay so the user sees the HubSpot thank-you state first
         setTimeout(render, 1800);
       }
@@ -320,7 +349,8 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
     if (!isStaff) resetBtn.style.display = 'none';
     resetBtn.addEventListener('click', function(){
       if (confirm('クールダウンをリセットしますか？（スタッフ操作）')) {
-        localStorage.removeItem(storageKey);
+        localStorage.removeItem(nextBookableKey);
+        localStorage.removeItem(legacyKey);
         render();
       }
     });
