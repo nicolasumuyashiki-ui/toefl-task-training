@@ -187,11 +187,24 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
     </p>
   </div>
 
-  <!-- Booking form (shown when not in cooldown) -->
-  <div id="bookingCard" class="form-card" style="display:none">
-    <!-- HubSpot booking form -->
-    <script src="https://js-na2.hsforms.net/forms/embed/242729130.js" defer></script>
-    <div class="hs-form-frame" data-region="na2" data-form-id="98867804-1260-44e6-a939-9cdb1cc02308" data-portal-id="242729130"></div>
+  <!-- Booking CTA (shown when not in cooldown) -->
+  <div id="bookingCard" class="form-card" style="display:none;text-align:center;padding:36px 28px">
+    <div style="font-family:var(--font-en);font-size:.78em;font-weight:800;color:var(--gold);letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px"><span class="jp">＼ 3 ステップで完了 ／</span><span class="en">＼ 3 STEPS ／</span></div>
+    <h3 style="font-family:var(--font-en),var(--font-jp);font-size:1.35em;font-weight:800;color:var(--green-deep);margin-bottom:12px">
+      <span class="jp">面談日程の調整に進む</span><span class="en">Schedule your consultation</span>
+    </h3>
+    <p style="font-size:.92em;color:var(--ink-500);margin-bottom:22px;line-height:1.7">
+      <span class="jp">無料・任意の月 1 回 45 分マンツーマン（Google Meet）。空き時間を選んでご予約ください。</span>
+      <span class="en">Free, optional 45-minute one-on-one (Google Meet). Pick an open slot below.</span>
+    </p>
+    <a id="consultationCta" href="https://tckwshop.eeasy.jp/repsconsultation" target="_blank" rel="noopener"
+       style="display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 32px;border-radius:999px;font-family:var(--font-en),var(--font-jp);font-size:1em;font-weight:800;letter-spacing:.02em;text-decoration:none;background:var(--green);color:var(--white);transition:all .18s">
+      <span class="jp">📅 日程調整に進む →</span><span class="en">📅 Continue to scheduling →</span>
+    </a>
+    <p style="font-size:.78em;color:var(--ink-500);margin-top:14px">
+      <span class="jp">ご自身のタイムゾーンでの時間表記に変更可能です。</span>
+      <span class="en">You can switch to your own time-zone display.</span>
+    </p>
   </div>
 </div>
 
@@ -292,25 +305,25 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
       }
       if (planStatus) {
         planStatus.innerHTML =
-          '<span class="jp"><strong>利用可能</strong>：今月分の学習相談はまだ利用していません。下のフォームから希望日時をお選びください。</span>' +
-          '<span class="en"><strong>Available</strong>: You have not used this month\'s consultation yet. Book your preferred time below.</span>';
+          '<span class="jp"><strong>利用可能</strong>：今月分の学習相談はまだ利用していません。下のボタンから希望日時をお選びください。</span>' +
+          '<span class="en"><strong>Available</strong>: You have not used this month\'s consultation yet. Use the button below to book your preferred time.</span>';
       }
     }
   }
 
   render();
 
-  // Listen for HubSpot form submission to start the cooldown
-  window.addEventListener('message', function(e){
-    try {
-      var d = e.data;
-      if (d && (d.type === 'hsFormCallback' || d.type === 'hs-form-callback') && (d.eventName === 'onFormSubmitted' || d.eventName === 'onFormSubmit')) {
-        localStorage.setItem(storageKey, new Date().toISOString());
-        // Small delay so the user sees the HubSpot thank-you state first
-        setTimeout(render, 1800);
-      }
-    } catch(_){}
-  });
+  // Start the cooldown when the user clicks the eeasy booking CTA.
+  // (We optimistically assume booking will be completed; if they don't,
+  //  the staff-reset button below can clear the cooldown.)
+  var consultationCta = document.getElementById('consultationCta');
+  if (consultationCta) {
+    consultationCta.addEventListener('click', function(){
+      localStorage.setItem(storageKey, new Date().toISOString());
+      // Re-render after a short delay so the user sees the new tab open first
+      setTimeout(render, 1800);
+    });
+  }
 
   // Staff-only reset (useful when a consultation is cancelled by admin)
   var resetBtn = document.getElementById('resetCooldownBtn');
