@@ -129,21 +129,29 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 .skill-tasks{display:flex;flex-wrap:wrap;gap:7px}
 .skill-task-pill{font-family:var(--font-en);font-size:.76em;font-weight:600;color:var(--ink-700);background:var(--cream);border:1px solid var(--paper);padding:5px 11px;border-radius:999px;letter-spacing:-0.005em}
 
-/* ===== Extras section (mock test, score prediction, recordings) ===== */
-.extras{padding:88px 32px;max-width:1160px;margin:0 auto}
-.extras-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-@media(max-width:900px){.extras-grid{grid-template-columns:1fr}}
-.extra-card{background:var(--white);border:1px solid var(--paper);border-radius:20px;padding:32px 28px;position:relative;transition:all .2s}
-.extra-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 14px 36px rgba(201,169,97,.12)}
-.extra-card .extra-icon{width:48px;height:48px;border-radius:12px;background:rgba(201,169,97,.14);display:flex;align-items:center;justify-content:center;font-size:1.4em;margin-bottom:18px}
-.extra-card.coaching .extra-icon{background:rgba(0,118,70,.1)}
-.extra-card.consultation .extra-icon{background:rgba(184,92,60,.1)}
-.extra-card .extra-eyebrow{font-family:var(--font-en);font-size:.66em;font-weight:800;color:var(--gold);letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px}
-.extra-card.coaching .extra-eyebrow{color:var(--green)}
-.extra-card.consultation .extra-eyebrow{color:var(--terracotta)}
-.extra-card h3{font-family:var(--font-serif-jp);font-size:1.18em;font-weight:600;color:var(--green-deep);line-height:1.4;margin-bottom:12px}
-.extra-card p{font-size:.9em;color:var(--ink-700);line-height:1.8}
-.extra-card .extra-meta{margin-top:16px;padding-top:14px;border-top:1px solid var(--paper);font-family:var(--font-en);font-size:.72em;color:var(--ink-500);font-weight:600;letter-spacing:.04em}
+/* ===== Compact features grid (replaces 4-card features + 3-card extras) ===== */
+.features-compact{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:48px}
+@media(max-width:980px){.features-compact{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.features-compact{grid-template-columns:1fr}}
+.fc-card{background:var(--white);border:1px solid var(--paper);border-radius:14px;padding:22px 20px;transition:all .2s;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden}
+.fc-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,118,70,.08)}
+.fc-card.highlight{background:var(--green-deep);color:var(--white);border-color:var(--green-deep)}
+.fc-card.highlight:hover{box-shadow:0 12px 28px rgba(0,40,23,.22)}
+.fc-card.gold{border-color:var(--gold);background:linear-gradient(135deg,#FFF8E6,var(--cream-warm))}
+.fc-card.gold:hover{box-shadow:0 12px 28px rgba(201,169,97,.18)}
+.fc-icon{font-size:1.7em;line-height:1;margin-bottom:2px}
+.fc-title{font-family:var(--font-jp);font-size:.96em;font-weight:800;color:var(--green-deep);line-height:1.45;letter-spacing:-0.005em}
+.fc-card.highlight .fc-title{color:var(--white)}
+.fc-emph{color:var(--terracotta);font-family:var(--font-en);font-weight:800;letter-spacing:-0.02em}
+.fc-card.highlight .fc-emph{color:var(--gold)}
+.fc-card.gold .fc-emph{color:var(--terracotta)}
+.fc-body{font-size:.82em;color:var(--ink-700);line-height:1.7}
+.fc-card.highlight .fc-body{color:rgba(255,255,255,.85)}
+.fc-card.gold .fc-body{color:var(--ink-800)}
+
+/* Score-bands visual mini-section */
+.extras{padding:60px 32px 88px;max-width:1160px;margin:0 auto}
+.extras .score-vis{margin-top:0}
 
 /* ===== Score band visual ===== */
 .score-vis{margin:48px auto 0;max-width:780px;background:var(--white);border:1.5px solid var(--paper);border-radius:18px;padding:30px 32px}
@@ -347,49 +355,61 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
   </div>
 </section>
 
-<!-- ===== 4 Features ===== -->
+<!-- ===== Compact features grid ===== -->
 <section class="solution">
   <div class="solution-head">
-    <span class="tag-pill">Core Features</span>
-    <h2>反復・解説・伴走・指導<br>独学を支える4つの柱。</h2>
-    <p>新形式 TOEFL のタスク特性に合わせ、量・質・併走を一体化した設計です。</p>
+    <span class="tag-pill">Features</span>
+    <h2>反復演習に、本番想定機能。<br>独学を支える 8 つの仕掛け。</h2>
+    <p>量・質・併走・本番感覚を、ひとつのプラットフォームに集約しました。</p>
   </div>
 
-  <div class="features">
-    <div class="feature-card">
-      <span class="feature-num">01 · Volume</span>
-      <h3 class="feature-title">全12タスク × 10セット<br>計120セットの反復演習。</h3>
-      <p class="feature-body">
-        新形式 TOEFL の全タスクを、それぞれ10セット収録。Reading・Listening・Speaking・Writing の、どのタスクでつまずいても、その領域だけを集中的に繰り返せます。各タスクには Harder Module も用意。
-      </p>
-      <div class="feature-meta">12 Tasks × 10 Sets · 計120セット使い放題</div>
+  <div class="features-compact">
+    <div class="fc-card highlight">
+      <div class="fc-icon">📚</div>
+      <div class="fc-title">全12タスク × 10セット<span class="fc-emph">‼</span></div>
+      <div class="fc-body">計 120 セットを、本サブスク使い放題。タスク単位で集中反復。</div>
     </div>
 
-    <div class="feature-card featured">
-      <span class="feature-num">02 · Clarity</span>
-      <h3 class="feature-title">日英両言語の<br>Tips付き詳細解説。</h3>
-      <p class="feature-body">
-        タスクごとに攻略の鉄則を明示し、解説は日本語と英語の両方で用意。各設問に、パラフレーズ・引っかけパターン・推論の根拠まで踏み込んだ解説を付しています。帰国子女のお子様の学習言語に合わせて切替可能。
-      </p>
-      <div class="feature-meta">JP / EN Switchable · 全問題に詳細解説</div>
+    <div class="fc-card gold">
+      <div class="fc-icon">📝</div>
+      <div class="fc-title">Full Length 模試<span class="fc-emph">‼</span></div>
+      <div class="fc-body">本番形式・時間配分で 3 回分を通し受験。今後継続追加予定。</div>
     </div>
 
-    <div class="feature-card">
-      <span class="feature-num">03 · Coaching</span>
-      <h3 class="feature-title">月1回の無料学習コンサル。</h3>
-      <p class="feature-body">
-        サブスク期間中は、正解率・演習履歴のデータをもとに、TCK の講師が次の1ヶ月の学習プランを一緒に設計します。45分のオンライン面談で、迷いを次の1手に変える時間です。
-      </p>
-      <div class="feature-meta">Free · Monthly · 45 min · Online</div>
+    <div class="fc-card">
+      <div class="fc-icon">📊</div>
+      <div class="fc-title">予想スコア</div>
+      <div class="fc-body">Band 1.0–6.0 + 旧 0–30 換算スコアを自動算出。</div>
     </div>
 
-    <div class="feature-card">
-      <span class="feature-num">04 · Tutoring</span>
-      <h3 class="feature-title">個別指導オプションで<br>Writing・Speaking を仕上げる。</h3>
-      <p class="feature-body">
-        Writing の添削や Speaking の評価など、独学では判断が難しい領域を、TCK の特別講師が1対1で指導。1セッション 60 分・¥11,000（税込）で、必要なときに必要なだけ追加可能です。
-      </p>
-      <div class="feature-meta">Optional · 60 min · ¥11,000 incl. tax</div>
+    <div class="fc-card highlight">
+      <div class="fc-icon">🎤</div>
+      <div class="fc-title">Speaking 録音<span class="fc-emph">‼</span></div>
+      <div class="fc-body">発話を保存。本人 / 講師の双方向で再生可能。</div>
+    </div>
+
+    <div class="fc-card gold">
+      <div class="fc-icon">💬</div>
+      <div class="fc-title">月1回の無料コンサル<span class="fc-emph">‼</span></div>
+      <div class="fc-body">TCK 講師と次月の学習プランを設計（45 分・オンライン）。</div>
+    </div>
+
+    <div class="fc-card">
+      <div class="fc-icon">🌐</div>
+      <div class="fc-title">日英両言語の詳細解説</div>
+      <div class="fc-body">帰国子女・国内生どちらにも対応。設問毎に深い解説。</div>
+    </div>
+
+    <div class="fc-card">
+      <div class="fc-icon">👥</div>
+      <div class="fc-title">個別指導オプション</div>
+      <div class="fc-body">60 分マンツーマン ¥11,000（税込）。最大 2 技能。</div>
+    </div>
+
+    <div class="fc-card">
+      <div class="fc-icon">🔥</div>
+      <div class="fc-title">Harder Module</div>
+      <div class="fc-body">各タスクに難化セット。本番超えの負荷で仕上げる。</div>
     </div>
   </div>
 
@@ -433,47 +453,8 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
   </div>
 </section>
 
-<!-- ===== Extras: Mock Test / Score Prediction / Recording ===== -->
+<!-- ===== Score band visual (standalone mini-section) ===== -->
 <section class="extras">
-  <div class="solution-head">
-    <span class="tag-pill" style="background:var(--gold);color:var(--green-deep)">Beyond the Reps</span>
-    <h2>反復だけじゃない。<br>本番想定の 3 つの追加機能。</h2>
-    <p>タスク別演習で身についた力を、本番のスコアに変換するための機能を揃えています。</p>
-  </div>
-
-  <div class="extras-grid">
-    <div class="extra-card">
-      <div class="extra-icon">📝</div>
-      <div class="extra-eyebrow">Full Length</div>
-      <h3>Full Length 模試<br>（現在 3 回分・継続追加予定）</h3>
-      <p>
-        新形式 TOEFL iBT と同形式・同時間配分で実施できる本番想定模試を 3 回分収録。Reading・Listening・Writing・Speaking の全セクションを通して受験できます。今後、回数を継続的に追加していく予定です。
-      </p>
-      <div class="extra-meta">Reading + Listening + Speaking + Writing 通し受験</div>
-    </div>
-
-    <div class="extra-card consultation">
-      <div class="extra-icon">📊</div>
-      <div class="extra-eyebrow">Predicted Score</div>
-      <h3>予想スコア（Band 1.0–6.0）<br>+ 旧 0–30 換算スコア</h3>
-      <p>
-        模試の結果から、ETS の raw → scaled 換算表に基づいて Band スコアを自動算出。新形式の Band 1.0–6.0 を主表記とし、馴染みのある旧 0–30 スコアも併記。Reading と Listening は信頼性の高い推定、Writing は Build a Sentence 正答率から概算します。
-      </p>
-      <div class="extra-meta">My Score ページで自動表示 · 受験毎の履歴も保存</div>
-    </div>
-
-    <div class="extra-card coaching">
-      <div class="extra-icon">🎤</div>
-      <div class="extra-eyebrow">Speaking</div>
-      <h3>Speaking 録音<br>本人・講師の双方向再生</h3>
-      <p>
-        Listen and Repeat / Take an Interview の発話をブラウザから録音、Drive に保存し、My Score ページで聴き返せます。録音は 2 回目以降「録音する/しない」を選択可能。担当講師も Admin から再生できるため、コンサル面談で具体的なフィードバックがもらえます。
-      </p>
-      <div class="extra-meta">録音保存 · 本人再生 · 講師再生</div>
-    </div>
-  </div>
-
-  <!-- Score band visual -->
   <div class="score-vis">
     <h3>Band スコアの目安（新形式 TOEFL iBT）</h3>
     <div class="score-bands">
