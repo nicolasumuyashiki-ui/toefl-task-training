@@ -270,7 +270,7 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
     setLoading(true);
     Api.requestCoaching(sel.join(','))
       .then(function(res){
-        if (res && res.ok) {
+        if (res && res.success) {
           // Hand off to the thanks page (skills shown there as pills)
           window.location.href = 'private-coaching-thanks.html?skills=' + encodeURIComponent(sel.join(','));
         } else {
