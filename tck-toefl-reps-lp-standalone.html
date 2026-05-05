@@ -63,8 +63,8 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 .btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:15px 26px;background:transparent;color:var(--green-dark);border:1.5px solid var(--green);border-radius:999px;text-decoration:none;font-weight:700;font-size:.96em;font-family:var(--font-jp);transition:all .2s;cursor:pointer}
 .btn-secondary:hover{background:var(--green);color:var(--white)}
 
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:920px;margin:0 auto}
-@media(max-width:640px){.hero-stats{grid-template-columns:repeat(2,1fr);gap:12px}}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:760px;margin:0 auto}
+@media(max-width:640px){.hero-stats{grid-template-columns:1fr;gap:12px}}
 .stat{background:var(--white);border:1.5px solid var(--paper);border-radius:16px;padding:24px 14px 22px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all .2s;position:relative;overflow:hidden}
 .stat:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,118,70,.08)}
 .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .3s}
@@ -277,6 +277,13 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 .final-cta-note{margin-top:24px;font-size:.82em;color:rgba(255,255,255,.5);font-family:var(--font-en)}
 
 /* ===== Footer ===== */
+/* Hero combo H1 — emphasizes the App × Coaching combination */
+.hero-combo-h1{font-family:var(--font-jp);font-size:clamp(1.95em,4.6vw,3em);font-weight:800;color:var(--green-deep);line-height:1.2;letter-spacing:-0.02em;margin-bottom:30px}
+.hero-combo-h1 .combo-eyebrow{display:block;font-family:var(--font-en);font-size:.32em;font-weight:800;letter-spacing:.16em;color:var(--terracotta);text-transform:uppercase;margin-bottom:18px}
+.hero-combo-h1 .combo-eyebrow::before{content:'★';margin-right:6px;color:var(--gold)}
+.hero-combo-h1 .x{display:inline-block;color:var(--terracotta);margin:0 .14em;font-family:var(--font-en);font-weight:900;transform:translateY(-0.04em)}
+.hero-combo-h1 .tail{display:block;font-family:var(--font-serif-jp);font-size:.62em;font-weight:600;color:var(--green);margin-top:14px;letter-spacing:0}
+
 .footer{background:var(--cream);padding:42px 32px 38px;border-top:1px solid var(--paper)}
 .footer-inner{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
 .footer-brand{display:flex;align-items:center;gap:10px}
@@ -321,13 +328,15 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
       <span class="hero-kicker-text"><strong>NEW</strong> &nbsp;·&nbsp; 2026年新形式 TOEFL iBT 対応</span>
     </div>
 
-    <h1>
-      新形式 TOEFL を、<br>
-      <span class="serif-word">タスク単位で反復攻略</span>。
+    <h1 class="hero-combo-h1">
+      <span class="combo-eyebrow">TCK Workshop ならではの組み合わせ</span>
+      アプリ <span class="x">×</span> 学習コンサル
+      <span class="tail">──独学を、伴走に変える。</span>
     </h1>
 
     <p class="hero-sub">
-      TCK TOEFL Reps は、新形式 TOEFL の全12タスクを 10セットずつ反復演習できるサブスク学習プラットフォーム。Full Length 模試・予想スコア・Speaking 録音・月1回の無料コンサル付き。
+      タスク別の反復演習プラットフォームに、TCK 講師の<strong>月1回・45分の無料コンサル</strong>が標準で付帯。
+      <strong>Full Length 模試</strong>・<strong>予想スコア</strong>まで一体化した、新形式 TOEFL 対策のための学習環境です。
     </p>
 
     <div class="hero-ctas">
@@ -337,24 +346,19 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 
     <div class="hero-stats">
       <div class="stat">
-        <span class="stat-label">タスク別演習</span>
-        <span class="stat-num">12 × 10</span>
-        <span class="stat-unit">Tasks × Sets</span>
-      </div>
-      <div class="stat">
         <span class="stat-label">Full Length 模試</span>
         <span class="stat-num">3+</span>
         <span class="stat-unit">Mock Tests</span>
       </div>
       <div class="stat">
+        <span class="stat-label">月1回 無料コンサル</span>
+        <span class="stat-num">¥0</span>
+        <span class="stat-unit">Monthly · Free</span>
+      </div>
+      <div class="stat">
         <span class="stat-label">予想スコア</span>
         <span class="stat-num">1.0 – 6.0</span>
         <span class="stat-unit">Band · 0.5 step</span>
-      </div>
-      <div class="stat">
-        <span class="stat-label">日英解説対応</span>
-        <span class="stat-num">JP / EN</span>
-        <span class="stat-unit">Bilingual</span>
       </div>
     </div>
   </div>
