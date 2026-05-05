@@ -149,28 +149,30 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
       <span class="step-title"><span class="jp">希望する技能を選ぶ（最大 2 つ）</span><span class="en">Pick your target skills (up to 2)</span></span>
     </div>
     <div class="step-body">
-      <p style="margin-bottom:14px"><span class="jp">1 セッション 60 分で <strong>最大 2 技能</strong>を扱えます。チェックボックスで選択し、「メールで送る」を押すと<strong>担当者宛</strong>に希望内容が送信されます。</span><span class="en">A single 60-min session can cover <strong>up to two skills</strong>. Check the boxes and click "Send by email" — your selection will be sent <strong>to your instructor</strong>.</span></p>
+      <p style="margin-bottom:14px"><span class="jp">1 セッション 60 分で <strong>最大 2 技能</strong>を扱えます。チェックボックスで選択し、下の「次へ進む」を押してください。</span><span class="en">A single 60-min session can cover <strong>up to two skills</strong>. Check the boxes and click "Continue" below.</span></p>
       <div class="skill-counter"><span class="jp">選択中: <strong id="cnt">0</strong> / 2</span><span class="en">Selected: <strong id="cntEn">0</strong> / 2</span></div>
-      <div class="skill-grid" id="skillGrid">
-        <label class="skill-opt" data-skill="Reading"><input type="checkbox" value="Reading"> <span class="jp">Reading</span><span class="en">Reading</span></label>
-        <label class="skill-opt" data-skill="Listening"><input type="checkbox" value="Listening"> <span class="jp">Listening</span><span class="en">Listening</span></label>
-        <label class="skill-opt" data-skill="Writing"><input type="checkbox" value="Writing"> <span class="jp">Writing</span><span class="en">Writing</span></label>
-        <label class="skill-opt" data-skill="Speaking"><input type="checkbox" value="Speaking"> <span class="jp">Speaking</span><span class="en">Speaking</span></label>
-      </div>
-      <button class="btn-primary" id="sendMailBtn" disabled onclick="sendSkillMail()"><span class="jp">📨 メールで送る</span><span class="en">📨 Send by email</span></button>
+      <form id="skillForm" action="private-coaching-thanks.html" method="GET" style="margin:0">
+        <div class="skill-grid" id="skillGrid">
+          <label class="skill-opt" data-skill="Reading"><input type="checkbox" value="Reading"> <span class="jp">Reading</span><span class="en">Reading</span></label>
+          <label class="skill-opt" data-skill="Listening"><input type="checkbox" value="Listening"> <span class="jp">Listening</span><span class="en">Listening</span></label>
+          <label class="skill-opt" data-skill="Writing"><input type="checkbox" value="Writing"> <span class="jp">Writing</span><span class="en">Writing</span></label>
+          <label class="skill-opt" data-skill="Speaking"><input type="checkbox" value="Speaking"> <span class="jp">Speaking</span><span class="en">Speaking</span></label>
+        </div>
+        <input type="hidden" name="skills" id="skillsInput" value="">
+        <button type="submit" class="btn-primary" id="sendMailBtn" disabled><span class="jp">次へ進む →</span><span class="en">Continue →</span></button>
+      </form>
     </div>
   </div>
 
-  <!-- STEP 2: Booking -->
+  <!-- STEP 2: Booking + Payment combined note (preview only — actual booking opens after Step 1) -->
   <div class="step-card">
     <div>
       <span class="step-num">2</span>
-      <span class="step-title"><span class="jp">授業を予約する（60 分）</span><span class="en">Book your session (60 min)</span></span>
+      <span class="step-title"><span class="jp">日程を予約する（60 分）</span><span class="en">Book your session (60 min)</span></span>
     </div>
     <div class="step-body">
       <div class="price-line">¥10,000<small><span class="jp">税込 ¥11,000</span><span class="en">¥11,000 incl. tax</span></small></div>
-      <p style="margin-bottom:14px"><span class="jp">下のリンクから空いている時間を選んで <strong>60 分セッション</strong>をご予約ください。Google Meet にて開催します。</span><span class="en">Pick an open slot via the link below to book your <strong>60-minute session</strong>. Sessions are held on Google Meet.</span></p>
-      <a class="btn-secondary" href="https://tckwshop.eeasy.jp/nicolas.umuyashiki/reps" target="_blank" rel="noopener"><span class="jp">📅 予約ページを開く</span><span class="en">📅 Open booking page</span></a>
+      <p style="margin-bottom:14px"><span class="jp">Step 1 完了後の画面に予約リンクをご案内します。Google Meet にて開催。</span><span class="en">The booking link appears after you complete Step 1. Sessions are held on Google Meet.</span></p>
     </div>
   </div>
 
@@ -212,10 +214,13 @@ var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
 if (u.userName) { document.getElementById('userName').textContent = u.userName; document.getElementById('avatarInit').textContent = u.userName.charAt(0).toUpperCase(); }
 function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='index.html';}
 
-/* Skill checkbox: max 2 selected, then enable Send button */
+/* Skill checkbox: max 2 selected, then enable Continue button.
+   On submit, the skills are passed to the thanks page via ?skills=Reading,Speaking. */
 (function(){
   var grid = document.getElementById('skillGrid');
   var btn = document.getElementById('sendMailBtn');
+  var form = document.getElementById('skillForm');
+  var skillsInput = document.getElementById('skillsInput');
   var cntJp = document.getElementById('cnt');
   var cntEn = document.getElementById('cntEn');
   function update(){
@@ -224,7 +229,6 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
     checks.forEach(function(c){ if(c.checked) sel.push(c.value); });
     cntJp.textContent = sel.length;
     cntEn.textContent = sel.length;
-    /* sync visual checked + disable when 2 reached */
     checks.forEach(function(c){
       var lbl = c.closest('.skill-opt');
       if(c.checked){ lbl.classList.add('checked'); lbl.classList.remove('disabled'); }
@@ -237,25 +241,14 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
       checks.forEach(function(c){ c.disabled = false; });
     }
     btn.disabled = sel.length === 0;
+    skillsInput.value = sel.join(',');
     return sel;
   }
   grid.addEventListener('change', update);
-  window.sendSkillMail = function(){
-    var sel = [];
-    grid.querySelectorAll('input[type=checkbox]:checked').forEach(function(c){ sel.push(c.value); });
-    if(sel.length === 0) return;
-    var name = (JSON.parse(sessionStorage.getItem('kickstart_user')||'{}')).userName || '';
-    var subject = 'TOEFL Reps 個別指導 希望技能のご連絡';
-    var body =
-      'TCK Workshop 様\n\n' +
-      'TOEFL Reps の個別指導セッションについて、希望する技能をご連絡します。\n\n' +
-      '【希望技能】\n' +
-      sel.map(function(s){ return '・' + s; }).join('\n') + '\n\n' +
-      '【お名前】\n' + name + '\n\n' +
-      '次のステップとして予約ページから 60 分セッションを予約します。\nどうぞよろしくお願いいたします。';
-    var url = 'mailto:nicolas.umuyashiki@tckworkshop.co.jp?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    window.location.href = url;
-  };
+  form.addEventListener('submit', function(e){
+    var sel = update();
+    if(sel.length === 0){ e.preventDefault(); }
+  });
   update();
 })();
 (function(){

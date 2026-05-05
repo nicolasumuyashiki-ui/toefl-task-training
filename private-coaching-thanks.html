@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="送信ありがとうございます · Private Coaching | TCK Workshop">
+<meta property="og:description" content="TOEFL Reps Private Coaching — booking & next steps.">
+<meta property="og:image" content="https://apps.tckworkshop.co.jp/toefl-task-training/assets/ogp-card.jpg">
+<meta property="og:site_name" content="TCK Workshop">
+
+<title>送信ありがとうございます · Private Coaching | TCK Workshop</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-height:100vh;color:var(--ink-900);-webkit-font-smoothing:antialiased;line-height:1.7}
+
+.header{background:var(--cream);border-bottom:1px solid var(--paper);padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+.header-left{display:flex;align-items:center;gap:14px}
+.header-right{display:flex;align-items:center;gap:12px}
+.back-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--white);border:1.5px solid var(--green);border-radius:999px;font-family:var(--font-en);font-size:.8em;font-weight:600;color:var(--green-dark);text-decoration:none;cursor:pointer;transition:all .15s}
+.back-pill:hover{background:var(--green);color:var(--white)}
+.lang-toggle{display:inline-flex;background:var(--white);border:1px solid var(--paper);border-radius:999px;padding:3px;font-family:var(--font-en);font-size:.72em;font-weight:600}
+.lang-toggle button{border:none;background:transparent;padding:5px 12px;border-radius:999px;cursor:pointer;color:var(--ink-500);font-family:inherit;font-weight:inherit;letter-spacing:.04em}
+.lang-toggle button.active{background:var(--green);color:var(--white)}
+.user-pill{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--paper);padding:5px 12px 5px 5px;border-radius:999px;font-size:.78em;font-weight:500}
+.avatar{width:24px;height:24px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:.72em;font-weight:700;font-family:var(--font-en)}
+.btn-logout{background:transparent;border:none;font-size:.74em;font-weight:500;color:var(--ink-500);cursor:pointer;font-family:var(--font-en);padding:6px 10px;border-radius:8px}
+.btn-logout:hover{background:var(--paper);color:var(--ink-900)}
+
+.hero{max-width:760px;margin:48px auto 24px;padding:0 28px;text-align:center}
+.hero .check-icon{width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:2em;font-weight:800}
+.hero h1{font-family:var(--font-en),var(--font-jp);font-size:2em;font-weight:800;color:var(--green-deep);line-height:1.25;letter-spacing:-0.01em;margin-bottom:14px}
+.hero .lead{font-size:1em;color:var(--ink-500);line-height:1.75;max-width:560px;margin:0 auto}
+
+.skill-summary{max-width:760px;margin:0 auto 24px;padding:18px 24px;background:var(--white);border:1px solid var(--paper);border-radius:14px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:.92em}
+.skill-summary .label{font-family:var(--font-en),var(--font-jp);font-weight:700;color:var(--green-deep)}
+.skill-summary .pill{display:inline-block;padding:4px 12px;background:#e8f5ee;color:var(--green-deep);border:1px solid var(--green);border-radius:999px;font-family:var(--font-en);font-size:.85em;font-weight:700}
+
+.section{max-width:760px;margin:0 auto 28px;padding:0 28px}
+.section h2{font-family:var(--font-en),var(--font-jp);font-size:1.3em;font-weight:800;color:var(--green-deep);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.section p{font-size:.95em;color:var(--ink-900);margin-bottom:10px}
+
+.warn-soft{background:#fff5e6;border-left:5px solid #d97706;padding:14px 18px;border-radius:0 10px 10px 0;margin:12px 0;font-size:.92em;color:#78350f;line-height:1.7}
+.warn-soft strong{color:#7c2d12}
+
+.cta-card{max-width:760px;margin:0 auto 32px;padding:32px 28px;background:var(--green);color:var(--white);border-radius:18px;text-align:center}
+.cta-card .ribbon{font-family:var(--font-en);font-size:.78em;font-weight:800;letter-spacing:.16em;text-transform:uppercase;opacity:.85;margin-bottom:8px}
+.cta-card h3{font-family:var(--font-en),var(--font-jp);font-size:1.5em;font-weight:800;line-height:1.3;margin-bottom:10px}
+.cta-card p{font-size:.92em;opacity:.92;margin-bottom:18px;line-height:1.7}
+.btn-cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 32px;border-radius:999px;font-family:var(--font-en),var(--font-jp);font-size:1em;font-weight:800;letter-spacing:.02em;text-decoration:none;background:var(--white);color:var(--green-dark);transition:all .18s;border:none;cursor:pointer}
+.btn-cta:hover{background:var(--cream);transform:translateY(-1px)}
+.cta-card .tz-note{display:block;margin-top:14px;font-size:.78em;opacity:.85}
+
+.note-card{max-width:760px;margin:0 auto 40px;padding:20px 24px;background:var(--white);border:1px dashed var(--paper);border-radius:12px;font-size:.88em;color:var(--ink-500);line-height:1.75}
+.note-card strong{color:var(--green-dark)}
+
+.alt-section{max-width:760px;margin:0 auto 40px;padding:0 28px;font-size:.86em;color:var(--ink-500);line-height:1.75}
+.alt-section a{color:var(--green-dark);font-weight:700}
+
+.footer{max-width:860px;margin:0 auto;padding:24px 28px 48px;border-top:1px solid var(--paper);color:var(--ink-500);font-size:.82em;font-family:var(--font-en);text-align:center}
+</style>
+<!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
+</head>
+<body data-lang="jp">
+
+<div class="header">
+  <div class="header-left">
+    <img class="brand-logo" src="assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto">
+    <a class="back-pill" href="menu.html">
+      <span>←</span>
+      <span class="jp">メニューに戻る</span><span class="en">Back to menu</span>
+    </a>
+  </div>
+  <div class="header-right">
+    <div class="lang-toggle">
+      <button data-lang-btn="jp">日本語</button>
+      <button data-lang-btn="en">EN</button>
+    </div>
+    <div class="user-pill"><span class="avatar" id="avatarInit">?</span><span id="userName">---</span></div>
+    <button class="btn-logout" onclick="doLogout()"><span class="jp">ログアウト</span><span class="en">Log out</span></button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="check-icon">✓</div>
+  <h1>
+    <span class="jp">送信ありがとうございます！</span>
+    <span class="en">Thank you for your request!</span>
+  </h1>
+  <p class="lead">
+    <span class="jp">下記より面談の日程を調整しましょう。<br><strong>事前に必ずお読みください。</strong></span>
+    <span class="en">Let's schedule your session below. <strong>Please read the notes carefully before booking.</strong></span>
+  </p>
+</div>
+
+<div class="skill-summary" id="skillSummary" style="display:none">
+  <span class="label"><span class="jp">ご希望技能：</span><span class="en">Selected skills:</span></span>
+  <span id="skillPills"></span>
+</div>
+
+<!-- Section: How to schedule -->
+<div class="section">
+  <h2>📅 <span class="jp">面談日程調整は 3 ステップで完了！</span><span class="en">Schedule in 3 steps</span></h2>
+  <p><span class="jp">下のボタンから空いている時間を選んで <strong>60 分セッション</strong>をご予約ください。</span><span class="en">Click the button below to pick an open slot for your <strong>60-minute session</strong>.</span></p>
+
+  <div class="warn-soft">
+    <span class="jp"><strong>⚠ 後から面談調整される方へ</strong>：面談可能な時間枠は、お申込みがある度に埋まっていきます。<strong>ご都合の良い時間がなくなる可能性</strong>もございますので、なるべく早く日程調整されることをおすすめいたします。</span>
+    <span class="en"><strong>⚠ If you plan to schedule later:</strong> available slots fill up as new requests come in. <strong>Your preferred time may no longer be open</strong> later — we recommend booking as soon as possible.</span>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-card">
+  <div class="ribbon"><span class="jp">＼ 3 ステップで完了 ／</span><span class="en">＼ 3 STEPS ／</span></div>
+  <h3><span class="jp">面談日程の調整に進む</span><span class="en">Schedule your session</span></h3>
+  <p><span class="jp">講師との 60 分マンツーマン（Google Meet）</span><span class="en">60-minute one-on-one session on Google Meet</span></p>
+  <a class="btn-cta" href="https://tckwshop.eeasy.jp/repsconsultation" target="_blank" rel="noopener">
+    <span class="jp">📅 日程調整に進む →</span><span class="en">📅 Continue to scheduling →</span>
+  </a>
+  <span class="tz-note"><span class="jp">ご自身のタイムゾーンでの時間表記に変更可能！</span><span class="en">You can switch to your own time-zone display.</span></span>
+</div>
+
+<!-- Section: Payment -->
+<div class="section">
+  <h2>💳 <span class="jp">受講料のお支払い</span><span class="en">Payment</span></h2>
+  <p><span class="jp">予約完了後、ご登録メール宛に<strong>自動で決済リンク</strong>が届きます。リンクから受講料 ¥11,000（税込）をお支払いください。</span><span class="en">After booking, a <strong>payment link is sent automatically</strong> to your registered email. Use the link to pay ¥11,000 (incl. tax).</span></p>
+  <div class="warn-soft">
+    <span class="jp"><strong>⚠ 支払い期限について</strong>：セッション<strong>前日 23:59 まで</strong>に支払いが完了しない場合、<strong>キャンセル扱い</strong>となり、自動的に枠が解放されます。お早めのお手続きをお願いいたします。</span>
+    <span class="en"><strong>⚠ Payment deadline:</strong> if payment is not completed by <strong>23:59 the day before</strong> the session, the booking is <strong>treated as canceled</strong> and the slot is released automatically. Please complete payment promptly.</span>
+  </div>
+</div>
+
+<!-- Section: What happens during the session -->
+<div class="note-card">
+  <strong><span class="jp">セッションについて</span><span class="en">About the session</span></strong><br>
+  <span class="jp">セッション中は、選択された技能の解説・添削・模範解答・実践練習を行います。お一人おひとりの学習状況に応じて、<strong>追加の個別指導や、ほかの学習ツールをご提案する場合</strong>もございます。</span>
+  <span class="en">During the session we'll provide explanation, feedback, model answers, and live practice for the skills you selected. Based on your learning situation, <strong>we may also suggest additional tutoring or other learning tools</strong> tailored to your needs.</span>
+</div>
+
+<!-- Section: Trouble / fallback -->
+<div class="section">
+  <h2>📭 <span class="jp">都合の良い日程がない場合 / メールで返信を希望される場合</span><span class="en">No suitable times / Prefer email reply</span></h2>
+  <p><span class="jp">空きが見つからない場合、またはサービスについて質問のみの方は、お手数ですが <a href="mailto:info@tckworkshop.co.jp" style="color:var(--green-dark);font-weight:700">info@tckworkshop.co.jp</a> までメールをお送りください。お名前とご質問内容をご記入いただければ、担当よりご連絡いたします。</span>
+    <span class="en">If you can't find a suitable slot, or you only have questions about the service, please email <a href="mailto:info@tckworkshop.co.jp" style="color:var(--green-dark);font-weight:700">info@tckworkshop.co.jp</a> with your name and question. Our team will get back to you.</span>
+  </p>
+  <p style="font-size:.86em;color:var(--ink-500)"><span class="jp">日本時間 土日にお問い合わせをいただいた場合は、翌週月曜日のご連絡となりますので、予めご了承ください。</span><span class="en">Inquiries received on Saturdays/Sundays (Japan time) will be answered the following Monday.</span></p>
+</div>
+
+<div class="alt-section">
+  <a href="private-coaching.html"><span class="jp">← 個別指導オプションのページに戻る</span><span class="en">← Back to Private Coaching</span></a>
+</div>
+
+<div class="footer">
+  © TCK Workshop
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+if (typeof Auth !== 'undefined') { Auth.require(); Auth.showBadge('userBadge'); }
+var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+if (u.userName) { document.getElementById('userName').textContent = u.userName; document.getElementById('avatarInit').textContent = u.userName.charAt(0).toUpperCase(); }
+function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='index.html';}
+
+/* Display selected skills from URL params */
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var raw = params.get('skills') || '';
+  var skills = raw.split(',').filter(function(s){ return s.trim().length > 0; });
+  if(skills.length === 0) return;
+  var summary = document.getElementById('skillSummary');
+  var pills = document.getElementById('skillPills');
+  pills.innerHTML = skills.map(function(s){ return '<span class="pill">' + s + '</span>'; }).join(' ');
+  summary.style.display = 'flex';
+})();
+
+/* Language toggle */
+(function(){
+  var stored = localStorage.getItem('tck_lang') || 'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){ b.addEventListener('click', function(){ setLang(b.getAttribute('data-lang-btn')); }); });
+  function setLang(l){ document.body.setAttribute('data-lang', l); document.documentElement.setAttribute('lang', l==='jp'?'ja':'en'); localStorage.setItem('tck_lang', l); document.querySelectorAll('[data-lang-btn]').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-lang-btn')===l); }); }
+})();
+</script>
+</body>
+</html>
