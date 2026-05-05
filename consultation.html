@@ -180,9 +180,18 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
       </p>
       <a href="mailto:info@tckworkshop.co.jp" style="font-family:var(--font-en);font-weight:700;color:var(--green-dark);text-decoration:none;font-size:1em">info@tckworkshop.co.jp</a>
     </div>
-    <p style="font-size:.78em;color:var(--ink-500);margin-top:18px">
-      <button type="button" id="resetCooldownBtn" style="background:none;border:none;color:var(--ink-500);font-size:.9em;text-decoration:underline;cursor:pointer;font-family:inherit">
-        <span class="jp">（担当者です — クールダウンをリセット）</span><span class="en">(Staff override — reset cooldown)</span>
+    <div style="margin-top:22px;padding-top:18px;border-top:1px dashed var(--paper);font-size:.86em;color:var(--ink-500);line-height:1.7">
+      <span class="jp"><strong>予約をキャンセルされた方へ</strong>：eeasy 上でキャンセルが完了している場合は、下のボタンをクリックすると再予約できるようになります。</span>
+      <span class="en"><strong>If you cancelled your booking</strong>: once the cancellation is complete on eeasy, click the button below to release the lock and rebook.</span>
+      <div style="margin-top:10px">
+        <button type="button" id="cancelledBtn" style="background:var(--white);border:1.5px solid var(--green);color:var(--green-dark);padding:10px 22px;border-radius:999px;font-size:.86em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .18s">
+          <span class="jp">↩ 予約をキャンセルしたのでロックを解除</span><span class="en">↩ I cancelled — release the lock</span>
+        </button>
+      </div>
+    </div>
+    <p style="font-size:.78em;color:var(--ink-500);margin-top:14px">
+      <button type="button" id="resetCooldownBtn" style="background:none;border:none;color:var(--ink-500);font-size:.84em;text-decoration:underline;cursor:pointer;font-family:inherit">
+        <span class="jp">（担当者専用 — 強制リセット）</span><span class="en">(Staff override — force reset)</span>
       </button>
     </p>
   </div>
@@ -341,14 +350,31 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
     } catch(_){}
   });
 
-  // Staff-only reset (useful when a consultation is cancelled by admin)
+  /* Self-service cancel: visible to everyone in the cooldown card.
+     Used when the user has cancelled the eeasy booking but the redirect to
+     consultation-cancelled.html didn't happen (e.g. cancelled from the
+     eeasy email link in a different browser/session). */
+  var cancelledBtn = document.getElementById('cancelledBtn');
+  if (cancelledBtn) {
+    cancelledBtn.addEventListener('click', function(){
+      var msg = '予約は eeasy 側で既にキャンセル済みですか？\nこの操作は再予約のロックを解除します。\n\nIs the eeasy booking already cancelled?\nThis will release the rebooking lock.';
+      if (confirm(msg)) {
+        localStorage.removeItem(nextBookableKey);
+        localStorage.removeItem(legacyKey);
+        render();
+      }
+    });
+  }
+
+  // Staff-only force reset — kept as a final fallback for edge cases
+  // (e.g. mistaken cooldowns from test runs). Visible only to
+  // @tckworkshop.co.jp accounts.
   var resetBtn = document.getElementById('resetCooldownBtn');
   if (resetBtn) {
-    // Only show the reset link for @tckworkshop.co.jp staff
     var isStaff = (u.email || '').toLowerCase().endsWith('@tckworkshop.co.jp');
     if (!isStaff) resetBtn.style.display = 'none';
     resetBtn.addEventListener('click', function(){
-      if (confirm('クールダウンをリセットしますか？（スタッフ操作）')) {
+      if (confirm('クールダウンを強制リセットしますか？（スタッフ操作）')) {
         localStorage.removeItem(nextBookableKey);
         localStorage.removeItem(legacyKey);
         render();
