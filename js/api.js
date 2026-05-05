@@ -234,5 +234,20 @@ var Api = {
     return _jsonpRequest(API_URL + '?action=createPortalSession'
       + '&id=' + encodeURIComponent(id || u.userId || '')
       + '&pass=' + encodeURIComponent(p));
+  },
+
+  /* Private Coaching request — submits selected skills, triggering a
+     bilingual auto-reply email to the user and a notification to the
+     instructor. Backed by handleRequestCoaching_ on the GAS side, which
+     also appends a row to the COACHING_REQUESTS sheet. */
+  requestCoaching: function(skills) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var lang = (typeof localStorage !== 'undefined' && localStorage.getItem('tck_lang')) || 'jp';
+    return _jsonpRequest(API_URL + '?action=requestCoaching'
+      + '&userId='   + encodeURIComponent(u.userId   || '')
+      + '&userName=' + encodeURIComponent(u.userName || '')
+      + '&email='    + encodeURIComponent(u.email    || '')
+      + '&skills='   + encodeURIComponent(skills)
+      + '&lang='     + encodeURIComponent(lang));
   }
 };

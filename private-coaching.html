@@ -149,17 +149,17 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
       <span class="step-title"><span class="jp">希望する技能を選ぶ（最大 2 つ）</span><span class="en">Pick your target skills (up to 2)</span></span>
     </div>
     <div class="step-body">
-      <p style="margin-bottom:14px"><span class="jp">1 セッション 60 分で <strong>最大 2 技能</strong>を扱えます。チェックボックスで選択し、下の「次へ進む」を押してください。</span><span class="en">A single 60-min session can cover <strong>up to two skills</strong>. Check the boxes and click "Continue" below.</span></p>
+      <p style="margin-bottom:14px"><span class="jp">1 セッション 60 分で <strong>最大 2 技能</strong>を扱えます。チェックボックスで選択し、下の「次へ進む」を押してください。お申込み確認メールが自動でお手元に届きます。</span><span class="en">A single 60-min session can cover <strong>up to two skills</strong>. Check the boxes and click "Continue" — a confirmation email will be sent to you automatically.</span></p>
       <div class="skill-counter"><span class="jp">選択中: <strong id="cnt">0</strong> / 2</span><span class="en">Selected: <strong id="cntEn">0</strong> / 2</span></div>
-      <form id="skillForm" action="private-coaching-thanks.html" method="GET" style="margin:0">
+      <form id="skillForm" style="margin:0">
         <div class="skill-grid" id="skillGrid">
           <label class="skill-opt" data-skill="Reading"><input type="checkbox" value="Reading"> <span class="jp">Reading</span><span class="en">Reading</span></label>
           <label class="skill-opt" data-skill="Listening"><input type="checkbox" value="Listening"> <span class="jp">Listening</span><span class="en">Listening</span></label>
           <label class="skill-opt" data-skill="Writing"><input type="checkbox" value="Writing"> <span class="jp">Writing</span><span class="en">Writing</span></label>
           <label class="skill-opt" data-skill="Speaking"><input type="checkbox" value="Speaking"> <span class="jp">Speaking</span><span class="en">Speaking</span></label>
         </div>
-        <input type="hidden" name="skills" id="skillsInput" value="">
         <button type="submit" class="btn-primary" id="sendMailBtn" disabled><span class="jp">次へ進む →</span><span class="en">Continue →</span></button>
+        <p id="submitErr" style="display:none;margin-top:10px;color:#9b2c2c;font-size:.85em"></p>
       </form>
     </div>
   </div>
@@ -215,12 +215,13 @@ if (u.userName) { document.getElementById('userName').textContent = u.userName; 
 function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='index.html';}
 
 /* Skill checkbox: max 2 selected, then enable Continue button.
-   On submit, the skills are passed to the thanks page via ?skills=Reading,Speaking. */
+   On submit: JSONP request to GAS (Api.requestCoaching) which emails both
+   the user (auto-reply) and the instructor, then redirect to the thanks page. */
 (function(){
   var grid = document.getElementById('skillGrid');
   var btn = document.getElementById('sendMailBtn');
   var form = document.getElementById('skillForm');
-  var skillsInput = document.getElementById('skillsInput');
+  var errEl = document.getElementById('submitErr');
   var cntJp = document.getElementById('cnt');
   var cntEn = document.getElementById('cntEn');
   function update(){
@@ -241,13 +242,52 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
       checks.forEach(function(c){ c.disabled = false; });
     }
     btn.disabled = sel.length === 0;
-    skillsInput.value = sel.join(',');
     return sel;
   }
+
+  function showError(msg){
+    errEl.textContent = msg;
+    errEl.style.display = '';
+  }
+  function clearError(){
+    errEl.style.display = 'none';
+    errEl.textContent = '';
+  }
+  function setLoading(loading){
+    btn.disabled = loading;
+    btn.innerHTML = loading
+      ? '<span class="jp">送信中…</span><span class="en">Sending…</span>'
+      : '<span class="jp">次へ進む →</span><span class="en">Continue →</span>';
+  }
+
   grid.addEventListener('change', update);
   form.addEventListener('submit', function(e){
+    e.preventDefault();
+    clearError();
     var sel = update();
-    if(sel.length === 0){ e.preventDefault(); }
+    if(sel.length === 0) return;
+
+    setLoading(true);
+    Api.requestCoaching(sel.join(','))
+      .then(function(res){
+        if (res && res.ok) {
+          // Hand off to the thanks page (skills shown there as pills)
+          window.location.href = 'private-coaching-thanks.html?skills=' + encodeURIComponent(sel.join(','));
+        } else {
+          var err = (res && res.error) || 'unknown error';
+          var jp = '送信に失敗しました（' + err + '）。お手数ですが下のメールアドレスからご連絡ください。';
+          var en = 'Failed to submit (' + err + '). Please contact us at the email address below.';
+          showError(document.body.getAttribute('data-lang') === 'en' ? en : jp);
+          setLoading(false);
+        }
+      })
+      .catch(function(err){
+        var msg = (err && err.message) ? err.message : 'network error';
+        var jp = '送信に失敗しました（' + msg + '）。お手数ですが下のメールアドレスからご連絡ください。';
+        var en = 'Failed to submit (' + msg + '). Please contact us at the email address below.';
+        showError(document.body.getAttribute('data-lang') === 'en' ? en : jp);
+        setLoading(false);
+      });
   });
   update();
 })();
