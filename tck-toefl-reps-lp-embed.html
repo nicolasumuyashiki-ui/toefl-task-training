@@ -103,6 +103,14 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 .chapter-body p{margin-bottom:1.5em}
 .chapter-body em{font-style:normal;color:var(--green-deep);font-weight:600;background:linear-gradient(transparent 65%,rgba(201,169,97,.28) 65%);padding:0 2px}
 
+/* Chapter visual hierarchy — emotional beats + pivot points */
+.chapter-body .lift{font-family:var(--font-serif-jp);font-size:1.2em;font-weight:700;color:var(--green-deep);letter-spacing:.005em}
+.chapter-body .pivot{font-family:var(--font-serif-jp);font-size:clamp(1.3em,2.6vw,1.6em);font-weight:700;color:var(--green-deep);line-height:1.55;text-align:center;letter-spacing:-0.005em;margin:2em 0 !important;padding:0 16px}
+.chapter-body .pivot::before,.chapter-body .pivot::after{content:'';display:block;width:48px;height:1px;background:var(--gold);margin:20px auto}
+.chapter-body .pivot strong{color:var(--terracotta);font-weight:800;background:linear-gradient(transparent 62%,rgba(184,92,60,.22) 62%);padding:0 4px;font-style:normal}
+.chapter-body .punch{font-family:var(--font-serif-jp);font-size:1.14em;color:var(--terracotta);font-weight:700;letter-spacing:.005em;background:linear-gradient(transparent 62%,rgba(184,92,60,.18) 62%);padding:0 4px}
+.chapter-body .quote{display:block;font-family:var(--font-serif-jp);font-size:1.08em;font-weight:600;color:var(--green-deep);line-height:1.7;padding:6px 0 6px 22px;border-left:3px solid var(--gold);margin:1em 0 1.4em;letter-spacing:.005em}
+
 /* ===== Product name logo block ===== */
 .product-name-logo{
   margin:40px 0;
@@ -113,10 +121,14 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:10px;
+  gap:14px;
   position:relative;
   overflow:hidden;
 }
+.pnl-mark{display:flex;align-items:center;justify-content:center;gap:14px;line-height:1}
+.pnl-chip{font-family:var(--font-en);font-size:1em;font-weight:900;letter-spacing:.14em;color:#fff;background:var(--green-deep);padding:8px 14px 6px;border-radius:5px;line-height:1}
+.pnl-mark-name{font-family:var(--font-jp,var(--font-en));font-size:clamp(2em,4.6vw,2.8em);font-weight:800;color:var(--green-deep);letter-spacing:-0.025em;line-height:1}
+.pnl-mark-name .dot{color:var(--green);margin-left:2px}
 .product-name-logo::before{
   content:'';
   position:absolute;
@@ -502,19 +514,19 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 
     <p>TOEFL の Writing、Academic Discussion というタスクらしい。開いてみると、100語ちょっとの英文。文法は合っているように見える。主張と理由もある。でも、それが TOEFL の採点基準で良い答案なのか、<em>親の私には判断がつかなかった</em>。</p>
 
-    <p>「内容は分かるけど、これがいい答案かは、私には分からない」そう答えるのが精一杯だった。子どもは「そうだよね」と笑って答案を持って部屋に戻った。別に落ち込んだ様子ではない。ただ、その夜、答案用紙がそのままリビングのテーブルに置かれていて、私は少し遠くからそれを眺めた。</p>
+    <p><span class="quote">「内容は分かるけど、これがいい答案かは、私には分からない」</span>そう答えるのが精一杯だった。子どもは「そうだよね」と笑って答案を持って部屋に戻った。別に落ち込んだ様子ではない。ただ、その夜、答案用紙がそのままリビングのテーブルに置かれていて、<em>私は少し遠くからそれを眺めた</em>。</p>
 
     <div class="chapter-divider">
       <span class="chapter-divider-dot"></span>
     </div>
 
-    <p>TOEFL iBT は2026年1月に新形式に変わった。それから数ヶ月経って、対策本は少しずつ書店に並び始めている。子どもも2冊買ってきて、どちらも読んでいた。情報は、たぶん足りている。</p>
+    <p>TOEFL iBT は2026年1月に新形式に変わった。それから数ヶ月経って、対策本は少しずつ書店に並び始めている。子どもも2冊買ってきて、どちらも読んでいた。<span class="lift">情報は、たぶん足りている。</span></p>
 
-    <p>足りないのは、書いたものを見て「ここはこう直すと点が取れる」と具体的に教えてくれる誰かだ。</p>
+    <p class="pivot">足りないのは、書いたものを見て「ここはこう直すと点が取れる」と<strong>具体的に教えてくれる誰か</strong>だ。</p>
 
     <p>学校の先生にも聞いてみたらしい。「海外経験があるなら大丈夫じゃない？」という優しい返事だったそうだ。悪い先生ではない。ただ、新形式の TOEFL Writing について詳しい人ではなかった、ということだろう。</p>
 
-    <p>最近、子どもが AI に添削を頼み始めた。「でも、AI の言うこと信じていいのかな」と小さく呟いていた。──私には、答えられない。</p>
+    <p>最近、子どもが AI に添削を頼み始めた。「でも、AI の言うこと信じていいのかな」と小さく呟いていた。<span class="punch">──私には、答えられない。</span></p>
 
     <p>親にできることは、<em>新形式の Writing を正しく見てくれる人を、探して差し出すこと</em>だと思う。そして、子どもが日々向き合っている出題の難しさを、まずは親の目でも確かめておくことだ。</p>
 
@@ -632,7 +644,10 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 
       <div class="product-name-logo">
         <span class="pnl-label">TCK Workshop</span>
-        <span class="pnl-main">TOEFL Reps</span>
+        <div class="pnl-mark">
+          <span class="pnl-chip">TOEFL</span>
+          <span class="pnl-mark-name">Reps<span class="dot">.</span></span>
+        </div>
       </div>
 
       <p>「Reps」は、反復、繰り返しという意味です。新形式 TOEFL は、ひとつひとつのタスクが小さく、<em>反復で身につく性質</em>を持っています。その性質に合わせて、全12タスクを、タスク単位で、10セットずつ繰り返し練習できる設計にしました。</p>
