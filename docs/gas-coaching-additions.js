@@ -122,13 +122,15 @@ function sendCoachingConfirmationToUser_(email, userName, skills, lang) {
       '── Your request ──\n' +
       'Skills: ' + skillsPlus + '\n\n' +
       '── Next steps ──\n' +
-      '1. BOOK YOUR SESSION (60 min · ¥11,000 incl. tax)\n' +
+      '1. BOOK YOUR SESSION (60 min · ¥11,000 incl. tax / ¥10,000 if overseas)\n' +
       '   Open the booking page:\n' +
       '   https://tckwshop.eeasy.jp/nicolas.umuyashiki/reps\n\n' +
       '2. PAY AFTER BOOKING\n' +
       '   A payment link will be sent to this email automatically after\n' +
-      '   booking. ⚠ If payment is not completed by 23:59 the day before the\n' +
-      '   session, the booking is treated as canceled and the slot is released.\n\n' +
+      '   booking. The fee is ¥11,000 (incl. tax) for residents in Japan,\n' +
+      '   or ¥10,000 (tax-exempt) for overseas residents.\n' +
+      '   ⚠ If payment is not completed by 23:59 the day before the session,\n' +
+      '   the booking is treated as canceled and the slot is released.\n\n' +
       '── About the session ──\n' +
       'The 60-minute session focuses entirely on the skills you selected:\n' +
       'explanation, feedback, model answers, and live practice. Held on\n' +
@@ -143,11 +145,13 @@ function sendCoachingConfirmationToUser_(email, userName, skills, lang) {
       '── お申込み内容 ──\n' +
       '希望技能：\n' + skillsBullet + '\n\n' +
       '── 次のステップ ──\n' +
-      '1. セッションを予約する（60 分・¥11,000 税込）\n' +
+      '1. セッションを予約する（60 分・¥11,000 税込／海外在住は ¥10,000）\n' +
       '   下記の予約ページから空いている時間をお選びください：\n' +
       '   https://tckwshop.eeasy.jp/nicolas.umuyashiki/reps\n\n' +
       '2. 予約完了後、自動的に決済リンクが届きます\n' +
-      '   決済リンクから受講料 ¥11,000（税込）をお支払いください。\n' +
+      '   決済リンクから受講料をお支払いください。\n' +
+      '   ・国内在住の方： ¥11,000（税込）\n' +
+      '   ・海外在住の方： ¥10,000（税抜）\n' +
       '   ⚠ セッション前日 23:59 までに支払いが完了しない場合、\n' +
       '   キャンセル扱いとなり、自動的に枠が解放されます。\n' +
       '   お早めのお手続きをお願いいたします。\n\n' +
