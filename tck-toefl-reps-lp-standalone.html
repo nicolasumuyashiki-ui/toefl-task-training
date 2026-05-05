@@ -65,13 +65,13 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 
 .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:920px;margin:0 auto}
 @media(max-width:640px){.hero-stats{grid-template-columns:repeat(2,1fr);gap:12px}}
-.stat{background:var(--white);border:1.5px solid var(--paper);border-radius:16px;padding:22px 14px;display:flex;flex-direction:column;align-items:center;gap:6px;transition:all .2s;position:relative;overflow:hidden}
+.stat{background:var(--white);border:1.5px solid var(--paper);border-radius:16px;padding:24px 14px 22px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all .2s;position:relative;overflow:hidden}
 .stat:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,118,70,.08)}
 .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .3s}
 .stat:hover::before{transform:scaleX(1)}
-.stat-num{font-family:var(--font-en);font-size:1.95em;font-weight:800;color:var(--green-deep);letter-spacing:-0.03em;line-height:1}
-.stat-label{font-size:.78em;color:var(--ink-500);font-weight:600;text-align:center}
-.stat-unit{font-family:var(--font-en);font-size:.58em;color:var(--ink-500);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-top:-3px}
+.stat-label{font-family:var(--font-jp);font-size:1em;font-weight:800;color:var(--green-deep);text-align:center;line-height:1.3;letter-spacing:-0.005em}
+.stat-num{font-family:var(--font-en);font-size:1.4em;font-weight:800;color:var(--green);letter-spacing:-0.02em;line-height:1;margin-top:2px}
+.stat-unit{font-family:var(--font-en);font-size:.6em;color:var(--ink-500);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-top:-3px}
 
 .hero-deco{position:absolute;top:-120px;right:-160px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,var(--paper) 0%,transparent 70%);z-index:1;opacity:.7}
 .hero-deco-2{position:absolute;bottom:-80px;left:-80px;width:220px;height:220px;border-radius:50%;border:1px dashed var(--green);opacity:.25;z-index:1}
@@ -129,23 +129,29 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 .skill-tasks{display:flex;flex-wrap:wrap;gap:7px}
 .skill-task-pill{font-family:var(--font-en);font-size:.76em;font-weight:600;color:var(--ink-700);background:var(--cream);border:1px solid var(--paper);padding:5px 11px;border-radius:999px;letter-spacing:-0.005em}
 
-/* ===== Compact features grid (replaces 4-card features + 3-card extras) ===== */
-.features-compact{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:48px}
-@media(max-width:980px){.features-compact{grid-template-columns:repeat(2,1fr)}}
+/* ===== Compact features grid (text-only, no icons) ===== */
+.features-compact{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px}
+@media(max-width:880px){.features-compact{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.features-compact{grid-template-columns:1fr}}
-.fc-card{background:var(--white);border:1px solid var(--paper);border-radius:14px;padding:22px 20px;transition:all .2s;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden}
+.fc-card{background:var(--white);border:1px solid var(--paper);border-radius:14px;padding:26px 24px;transition:all .2s;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
+.fc-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--paper);transition:background .2s}
 .fc-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,118,70,.08)}
+.fc-card:hover::before{background:var(--green)}
 .fc-card.highlight{background:var(--green-deep);color:var(--white);border-color:var(--green-deep)}
+.fc-card.highlight::before{background:var(--gold)}
 .fc-card.highlight:hover{box-shadow:0 12px 28px rgba(0,40,23,.22)}
 .fc-card.gold{border-color:var(--gold);background:linear-gradient(135deg,#FFF8E6,var(--cream-warm))}
+.fc-card.gold::before{background:var(--gold)}
 .fc-card.gold:hover{box-shadow:0 12px 28px rgba(201,169,97,.18)}
-.fc-icon{font-size:1.7em;line-height:1;margin-bottom:2px}
-.fc-title{font-family:var(--font-jp);font-size:.96em;font-weight:800;color:var(--green-deep);line-height:1.45;letter-spacing:-0.005em}
+.fc-eyebrow{font-family:var(--font-en);font-size:.66em;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin-bottom:2px}
+.fc-card.highlight .fc-eyebrow{color:var(--gold)}
+.fc-card.gold .fc-eyebrow{color:#8A6D2A}
+.fc-title{font-family:var(--font-jp);font-size:1.05em;font-weight:800;color:var(--green-deep);line-height:1.45;letter-spacing:-0.005em}
 .fc-card.highlight .fc-title{color:var(--white)}
-.fc-emph{color:var(--terracotta);font-family:var(--font-en);font-weight:800;letter-spacing:-0.02em}
+.fc-emph{color:var(--terracotta);font-family:var(--font-en);font-weight:800;letter-spacing:-0.02em;margin-left:2px}
 .fc-card.highlight .fc-emph{color:var(--gold)}
 .fc-card.gold .fc-emph{color:var(--terracotta)}
-.fc-body{font-size:.82em;color:var(--ink-700);line-height:1.7}
+.fc-body{font-size:.86em;color:var(--ink-700);line-height:1.75}
 .fc-card.highlight .fc-body{color:rgba(255,255,255,.85)}
 .fc-card.gold .fc-body{color:var(--ink-800)}
 
@@ -154,11 +160,33 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 .extras .score-vis{margin-top:0}
 
 /* ===== Score band visual ===== */
-.score-vis{margin:48px auto 0;max-width:780px;background:var(--white);border:1.5px solid var(--paper);border-radius:18px;padding:30px 32px}
-.score-vis h3{font-family:var(--font-serif-jp);font-size:1.15em;font-weight:600;color:var(--green-deep);margin-bottom:18px;text-align:center}
-.score-bands{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px}
-@media(max-width:640px){.score-bands{grid-template-columns:repeat(3,1fr)}}
-.score-band{background:var(--cream-warm);border:1px solid var(--paper);border-radius:10px;padding:14px 8px;text-align:center;transition:all .2s}
+.score-vis{margin:48px auto 0;max-width:880px;background:var(--white);border:1.5px solid var(--paper);border-radius:18px;padding:34px 36px}
+.score-vis h3{font-family:var(--font-serif-jp);font-size:1.15em;font-weight:600;color:var(--green-deep);margin-bottom:8px;text-align:center}
+.score-vis-sub{text-align:center;font-size:.85em;color:var(--ink-500);margin-bottom:24px;line-height:1.6}
+.score-vis-sub strong{color:var(--terracotta);font-weight:800}
+
+/* Horizontal gradient bar with 0.5-step tick marks */
+.score-bar-wrap{position:relative;padding:0 4px;margin:8px 0 14px}
+.score-bar{height:14px;border-radius:999px;background:linear-gradient(90deg,var(--paper) 0%,#E5DFC8 18%,#C8DDC9 36%,#9BC4A2 54%,var(--green) 75%,var(--green-deep) 100%);position:relative}
+.score-ticks{display:flex;justify-content:space-between;margin-top:10px;padding:0 2px}
+.score-tick{font-family:var(--font-en);font-size:.74em;font-weight:700;color:var(--ink-500);letter-spacing:-0.01em;text-align:center;flex:1;position:relative}
+.score-tick::before{content:'';position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:1px;height:6px;background:var(--ink-300);opacity:.6}
+.score-tick.major{color:var(--green-deep);font-size:.82em;font-weight:800}
+.score-tick.major::before{height:10px;width:2px;background:var(--green);opacity:1;top:-14px}
+
+.score-tier-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+@media(max-width:640px){.score-tier-row{grid-template-columns:1fr}}
+.score-tier{background:var(--cream-warm);border:1px solid var(--paper);border-radius:10px;padding:12px 14px;text-align:center}
+.score-tier.tier-low{background:rgba(0,118,70,.06);border-color:rgba(0,118,70,.16)}
+.score-tier.tier-mid{background:rgba(0,118,70,.14);border-color:rgba(0,118,70,.3)}
+.score-tier.tier-high{background:var(--green-deep);color:var(--white);border-color:var(--green-deep)}
+.score-tier-range{font-family:var(--font-en);font-size:.95em;font-weight:800;color:var(--green-deep);letter-spacing:-0.02em;display:block}
+.score-tier.tier-high .score-tier-range{color:var(--white)}
+.score-tier-label{font-family:var(--font-en);font-size:.66em;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:2px;display:block;opacity:.78}
+
+/* Legacy classes kept for fallback */
+.score-bands{display:none}
+.score-band{display:none}
 .score-band.b6{background:var(--green-deep);color:var(--white);border-color:var(--green-deep)}
 .score-band.b5{background:var(--green);color:var(--white);border-color:var(--green)}
 .score-band.b4{background:rgba(0,118,70,.18);color:var(--green-deep);border-color:rgba(0,118,70,.3)}
@@ -297,24 +325,24 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 
     <div class="hero-stats">
       <div class="stat">
+        <span class="stat-label">タスク別演習</span>
         <span class="stat-num">12 × 10</span>
         <span class="stat-unit">Tasks × Sets</span>
-        <span class="stat-label">タスク別演習</span>
       </div>
       <div class="stat">
+        <span class="stat-label">Full Length 模試</span>
         <span class="stat-num">3+</span>
         <span class="stat-unit">Mock Tests</span>
-        <span class="stat-label">Full Length 模試</span>
       </div>
       <div class="stat">
-        <span class="stat-num">Band</span>
-        <span class="stat-unit">1.0 – 6.0</span>
         <span class="stat-label">予想スコア</span>
+        <span class="stat-num">1.0 – 6.0</span>
+        <span class="stat-unit">Band · 0.5 step</span>
       </div>
       <div class="stat">
+        <span class="stat-label">日英解説対応</span>
         <span class="stat-num">JP / EN</span>
         <span class="stat-unit">Bilingual</span>
-        <span class="stat-label">日英解説対応</span>
       </div>
     </div>
   </div>
@@ -327,11 +355,23 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
   </div>
   <div class="chapter-body">
     <p>先週、子どもが書いたライティング答案を「見てくれない?」と言われた。</p>
+
     <p>TOEFL の Writing、Academic Discussion というタスクらしい。開いてみると、100語ちょっとの英文。文法は合っているように見える。主張と理由もある。でも、それが TOEFL の採点基準で良い答案なのか、<em>親の私には判断がつかなかった</em>。</p>
-    <p>TOEFL iBT は2026年1月に新形式に変わった。情報は、たぶん足りている。足りないのは、書いたものを見て「ここはこう直すと点が取れる」と具体的に教えてくれる誰かだ。</p>
+
+    <p>「内容は分かるけど、これがいい答案かは、私には分からない」そう答えるのが精一杯だった。子どもは「そうだよね」と笑って答案を持って部屋に戻った。別に落ち込んだ様子ではない。ただ、その夜、答案用紙がそのままリビングのテーブルに置かれていて、私は少し遠くからそれを眺めた。</p>
+
     <div class="chapter-divider">
       <span class="chapter-divider-dot"></span>
     </div>
+
+    <p>TOEFL iBT は2026年1月に新形式に変わった。それから数ヶ月経って、対策本は少しずつ書店に並び始めている。子どもも2冊買ってきて、どちらも読んでいた。情報は、たぶん足りている。</p>
+
+    <p>足りないのは、書いたものを見て「ここはこう直すと点が取れる」と具体的に教えてくれる誰かだ。</p>
+
+    <p>学校の先生にも聞いてみたらしい。「海外経験があるなら大丈夫じゃない？」という優しい返事だったそうだ。悪い先生ではない。ただ、新形式の TOEFL Writing について詳しい人ではなかった、ということだろう。</p>
+
+    <p>最近、子どもが AI に添削を頼み始めた。「でも、AI の言うこと信じていいのかな」と小さく呟いていた。──私には、答えられない。</p>
+
     <p>親にできることは、<em>新形式の Writing を正しく見てくれる人を、探して差し出すこと</em>だと思う。そして、子どもが日々向き合っている出題の難しさを、まずは親の目でも確かめておくことだ。</p>
   </div>
 </section>
@@ -359,57 +399,45 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 <section class="solution">
   <div class="solution-head">
     <span class="tag-pill">Features</span>
-    <h2>反復演習に、本番想定機能。<br>独学を支える 8 つの仕掛け。</h2>
+    <h2>反復演習に、本番想定機能。<br>独学を支える 6 つの仕掛け。</h2>
     <p>量・質・併走・本番感覚を、ひとつのプラットフォームに集約しました。</p>
   </div>
 
   <div class="features-compact">
     <div class="fc-card highlight">
-      <div class="fc-icon">📚</div>
+      <div class="fc-eyebrow">01 · Volume</div>
       <div class="fc-title">全12タスク × 10セット<span class="fc-emph">‼</span></div>
-      <div class="fc-body">計 120 セットを、本サブスク使い放題。タスク単位で集中反復。</div>
+      <div class="fc-body">計 120 セットを、本サブスク使い放題。タスク単位で集中反復できる設計。</div>
     </div>
 
     <div class="fc-card gold">
-      <div class="fc-icon">📝</div>
+      <div class="fc-eyebrow">02 · Mock Test</div>
       <div class="fc-title">Full Length 模試<span class="fc-emph">‼</span></div>
       <div class="fc-body">本番形式・時間配分で 3 回分を通し受験。今後継続追加予定。</div>
     </div>
 
     <div class="fc-card">
-      <div class="fc-icon">📊</div>
-      <div class="fc-title">予想スコア</div>
-      <div class="fc-body">Band 1.0–6.0 + 旧 0–30 換算スコアを自動算出。</div>
-    </div>
-
-    <div class="fc-card highlight">
-      <div class="fc-icon">🎤</div>
-      <div class="fc-title">Speaking 録音<span class="fc-emph">‼</span></div>
-      <div class="fc-body">発話を保存。本人 / 講師の双方向で再生可能。</div>
+      <div class="fc-eyebrow">03 · Predicted Score</div>
+      <div class="fc-title">予想スコアを自動算出</div>
+      <div class="fc-body">Band 1.0–6.0（0.5 刻み）+ 旧 0–30 換算。受験毎に履歴を保存。</div>
     </div>
 
     <div class="fc-card gold">
-      <div class="fc-icon">💬</div>
+      <div class="fc-eyebrow">04 · Coaching</div>
       <div class="fc-title">月1回の無料コンサル<span class="fc-emph">‼</span></div>
       <div class="fc-body">TCK 講師と次月の学習プランを設計（45 分・オンライン）。</div>
     </div>
 
     <div class="fc-card">
-      <div class="fc-icon">🌐</div>
+      <div class="fc-eyebrow">05 · Clarity</div>
       <div class="fc-title">日英両言語の詳細解説</div>
-      <div class="fc-body">帰国子女・国内生どちらにも対応。設問毎に深い解説。</div>
+      <div class="fc-body">帰国子女・国内生どちらにも対応。設問毎に深い解説を用意。</div>
     </div>
 
     <div class="fc-card">
-      <div class="fc-icon">👥</div>
+      <div class="fc-eyebrow">06 · Tutoring</div>
       <div class="fc-title">個別指導オプション</div>
-      <div class="fc-body">60 分マンツーマン ¥11,000（税込）。最大 2 技能。</div>
-    </div>
-
-    <div class="fc-card">
-      <div class="fc-icon">🔥</div>
-      <div class="fc-title">Harder Module</div>
-      <div class="fc-body">各タスクに難化セット。本番超えの負荷で仕上げる。</div>
+      <div class="fc-body">60 分マンツーマン ¥11,000（税込）。最大 2 技能まで指定可能。</div>
     </div>
   </div>
 
@@ -456,34 +484,42 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 <!-- ===== Score band visual (standalone mini-section) ===== -->
 <section class="extras">
   <div class="score-vis">
-    <h3>Band スコアの目安（新形式 TOEFL iBT）</h3>
-    <div class="score-bands">
-      <div class="score-band">
-        <span class="score-band-num">1.0</span>
-        <span class="score-band-label">Beginner</span>
-      </div>
-      <div class="score-band">
-        <span class="score-band-num">2.0</span>
-        <span class="score-band-label">Basic</span>
-      </div>
-      <div class="score-band">
-        <span class="score-band-num">3.0</span>
-        <span class="score-band-label">Lower-Int</span>
-      </div>
-      <div class="score-band b4">
-        <span class="score-band-num">4.0</span>
-        <span class="score-band-label">Upper-Int</span>
-      </div>
-      <div class="score-band b5">
-        <span class="score-band-num">5.0</span>
-        <span class="score-band-label">Advanced</span>
-      </div>
-      <div class="score-band b6">
-        <span class="score-band-num">6.0</span>
-        <span class="score-band-label">Expert</span>
+    <h3>Band スコア（新形式 TOEFL iBT）</h3>
+    <p class="score-vis-sub">スコアは <strong>0.5 刻み</strong>（1.0 / 1.5 / 2.0 … 6.0）で算出されます。</p>
+
+    <div class="score-bar-wrap">
+      <div class="score-bar"></div>
+      <div class="score-ticks">
+        <span class="score-tick major">1.0</span>
+        <span class="score-tick">1.5</span>
+        <span class="score-tick">2.0</span>
+        <span class="score-tick">2.5</span>
+        <span class="score-tick">3.0</span>
+        <span class="score-tick">3.5</span>
+        <span class="score-tick">4.0</span>
+        <span class="score-tick">4.5</span>
+        <span class="score-tick">5.0</span>
+        <span class="score-tick">5.5</span>
+        <span class="score-tick major">6.0</span>
       </div>
     </div>
-    <p class="score-vis-note">サブスク登録後、模試受験のたびに Band と旧 0–30 換算が自動更新されます</p>
+
+    <div class="score-tier-row">
+      <div class="score-tier tier-low">
+        <span class="score-tier-range">1.0 – 2.5</span>
+        <span class="score-tier-label">Beginner – Basic</span>
+      </div>
+      <div class="score-tier tier-mid">
+        <span class="score-tier-range">3.0 – 4.5</span>
+        <span class="score-tier-label">Intermediate</span>
+      </div>
+      <div class="score-tier tier-high">
+        <span class="score-tier-range">5.0 – 6.0</span>
+        <span class="score-tier-label">Advanced</span>
+      </div>
+    </div>
+
+    <p class="score-vis-note" style="margin-top:18px">サブスク登録後、模試受験のたびに Band と旧 0–30 換算が自動更新されます</p>
   </div>
 </section>
 
@@ -586,7 +622,7 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
     <details class="faq-item">
       <summary>Speaking の録音はどのように使えますか?<span class="faq-icon">+</span></summary>
       <div class="faq-body">
-        Listen and Repeat と Take an Interview の発話をブラウザから録音、Google Drive に保存され、My Score ページから本人がいつでも聴き返せます。担当講師も Admin から再生できるので、月1回の学習コンサルや個別指導で具体的なフィードバックがもらえます。録音は 2 回目以降「録音する/しない」を任意で選択可能です。
+        Listen and Repeat と Take an Interview の発話をブラウザから録音し、アプリ内（My Score ページ）でいつでも聴き返せます。担当講師側でも再生できるため、月1回の学習コンサルや個別指導で具体的なフィードバックがもらえます。録音は 2 回目以降「録音する/しない」を任意で選択可能です。
       </div>
     </details>
     <details class="faq-item">
@@ -640,7 +676,6 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
       <a href="https://share-na2.hsforms.com/2CSgnwwuPR96yz3TnXGgldA40iizu" class="btn-primary" target="_blank" rel="noopener">お申込みに進む <span class="arrow">→</span></a>
       <a href="https://apps.tckworkshop.co.jp/toefl-reps-demo/" class="btn-secondary" target="_blank" rel="noopener">まずは無料体験から</a>
     </div>
-    <p class="final-cta-note">TCK Workshop · TOEFL Reps · 月額サブスクリプション</p>
   </div>
 </section>
 
