@@ -130,10 +130,9 @@ function sendCoachingConfirmationToUser_(email, userName, skills, lang) {
       '   booking. ⚠ If payment is not completed by 23:59 the day before the\n' +
       '   session, the booking is treated as canceled and the slot is released.\n\n' +
       '── About the session ──\n' +
-      'During the 60-minute session your coach will provide explanation,\n' +
-      'feedback, model answers, and live practice for the skills you\n' +
-      'selected. Based on your situation we may also propose additional\n' +
-      'tutoring or other learning tools.\n\n' +
+      'The 60-minute session focuses entirely on the skills you selected:\n' +
+      'explanation, feedback, model answers, and live practice. Held on\n' +
+      'Google Meet.\n\n' +
       'Questions? Reply to this email or contact info@tckworkshop.co.jp.\n\n' +
       '— TCK Workshop / TOEFL Reps';
   } else {
@@ -153,9 +152,8 @@ function sendCoachingConfirmationToUser_(email, userName, skills, lang) {
       '   キャンセル扱いとなり、自動的に枠が解放されます。\n' +
       '   お早めのお手続きをお願いいたします。\n\n' +
       '── セッションについて ──\n' +
-      'セッションでは、選択された技能の解説・添削・模範解答・実践練習を\n' +
-      '行います。お一人おひとりの学習状況に応じて、追加の個別指導や、\n' +
-      'ほかの学習ツールをご提案する場合もございます。\n\n' +
+      'セッションでは、選択された技能に絞って、解説・添削・模範解答の提示・\n' +
+      '実践練習を行います。1 セッション 60 分、Google Meet にて開催します。\n\n' +
       'ご質問はこのメールに返信、または info@tckworkshop.co.jp まで\n' +
       'ご連絡ください。\n\n' +
       '— TCK Workshop / TOEFL Reps';
