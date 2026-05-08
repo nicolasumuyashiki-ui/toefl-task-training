@@ -628,3 +628,34 @@ if (typeof window !== 'undefined') {
     watchMutations();
   }
 })();
+
+/* ============================================================
+   Admin overlay loader — when an admin opens an answer page with
+   ?fromAdmin=1, lazily inject js/admin-answer-overlay.js so the
+   student's saved submission is fetched and rendered on top of
+   the answer key. The overlay script itself decides whether to do
+   anything (it checks the URL params and the page DOM).
+
+   We resolve the path relative to *this* auth.js file so the
+   include works no matter how deep the page lives in the tree
+   (e.g. /writing/email/practice-3-answers.html → ../../js/...).
+   ============================================================ */
+(function(){
+  if (typeof location === 'undefined') return;
+  if (location.search.indexOf('fromAdmin=1') === -1) return;
+  var here = (document.currentScript && document.currentScript.src) || '';
+  if (!here) {
+    // Fallback: scan all script tags for one ending in /auth.js.
+    var scripts = document.getElementsByTagName('script');
+    for (var i = 0; i < scripts.length; i++) {
+      var s = scripts[i].src || '';
+      if (/\/auth\.js(\?|$)/.test(s)) { here = s; break; }
+    }
+  }
+  if (!here) return;
+  var overlaySrc = here.replace(/\/auth\.js(\?[^#]*)?(\#.*)?$/, '/admin-answer-overlay.js');
+  var tag = document.createElement('script');
+  tag.src = overlaySrc;
+  tag.defer = true;
+  document.head.appendChild(tag);
+})();

@@ -212,6 +212,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
     <button class="tab" data-panel="karte" type="button">個人カルテ</button>
     <button class="tab" data-panel="progress" type="button">進捗状況</button>
     <button class="tab" data-panel="recordings" type="button">録音</button>
+    <button class="tab" data-panel="writing" type="button">ライティング</button>
   </nav>
 
   <!-- ========== 一覧 ========== -->
@@ -370,57 +371,33 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   <section class="panel" id="panel-recordings">
     <div class="toolbar">
       <div class="filter-group">
-        <input type="search" id="searchRec" class="input" placeholder="ユーザー名・IDで検索…">
-        <select id="filterRecTask" class="select">
-          <option value="">全タスク</option>
-          <option value="lr">Listen &amp; Repeat (LR)</option>
-          <option value="ti">Take an Interview (TI)</option>
-        </select>
-        <select id="filterRecSet" class="select">
-          <option value="">全 Practice Set</option>
-          <optgroup label="Task Training">
-            <option value="tt-1">TT Set 1</option>
-            <option value="tt-2">TT Set 2</option>
-            <option value="tt-3">TT Set 3</option>
-            <option value="tt-4">TT Set 4</option>
-            <option value="tt-5">TT Set 5</option>
-            <option value="tt-6">TT Set 6</option>
-            <option value="tt-7">TT Set 7</option>
-            <option value="tt-8">TT Set 8</option>
-            <option value="tt-9">TT Set 9</option>
-            <option value="tt-10">TT Set 10</option>
-          </optgroup>
-          <optgroup label="Mock Test">
-            <option value="pt-1">Mock Set 1</option>
-            <option value="pt-2">Mock Set 2</option>
-            <option value="pt-3">Mock Set 3</option>
-          </optgroup>
-        </select>
+        <input type="search" id="searchRec" class="input" placeholder="ユーザーを検索…" oninput="renderRecUserList()">
       </div>
-      <span class="count-badge"><strong id="recCount">0</strong> 件</span>
+      <span class="count-badge"><strong id="recCount">0</strong> 人</span>
       <button class="btn btn-primary" onclick="loadRecordings()">
         <span>↻</span> 再読み込み
       </button>
     </div>
-    <div class="table-wrap">
-      <div class="table-scroll">
-        <table id="recTable">
-          <thead>
-            <tr>
-              <th style="white-space:nowrap">日時</th>
-              <th style="min-width:180px;white-space:nowrap">ユーザー</th>
-              <th>タスク</th>
-              <th>Set</th>
-              <th>Q</th>
-              <th>長さ</th>
-              <th style="min-width:300px;max-width:440px">対象テキスト</th>
-              <th style="min-width:320px;width:340px">プレイヤー</th>
-            </tr>
-          </thead>
-          <tbody id="recBody">
-            <tr><td colspan="8" style="text-align:center;color:var(--ink-500);padding:32px">読み込み中…</td></tr>
-          </tbody>
-        </table>
+    <div class="karte-layout">
+      <div class="karte-user-list" id="recUserList"></div>
+      <div class="karte-detail" id="recDetail">
+        <p style="color:var(--ink-500)">左のリストからユーザーを選択してください。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ライティング ========== -->
+  <section class="panel" id="panel-writing">
+    <div class="toolbar">
+      <div class="filter-group">
+        <input type="search" id="searchWriting" class="input" placeholder="ユーザーを検索…" oninput="renderWritingUserList()">
+      </div>
+      <span class="count-badge"><strong id="writingCount">0</strong> 人</span>
+    </div>
+    <div class="karte-layout">
+      <div class="karte-user-list" id="writingUserList"></div>
+      <div class="karte-detail" id="writingDetail">
+        <p style="color:var(--ink-500)">左のリストからユーザーを選択してください。</p>
       </div>
     </div>
   </section>
@@ -429,7 +406,6 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
 
 <script src="../js/auth.js"></script>
 <script src="../js/api.js"></script>
-<script src="../js/speaking-scripts.js"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -438,33 +414,14 @@ function getCurrentUser() {
   try { return JSON.parse(sessionStorage.getItem('kickstart_user') || 'null'); } catch(e) { return null; }
 }
 function isAdmin(user) {
+  if (location.search.indexOf('preview=1') !== -1) return true; // dev
   if (!user) return false;
-  if (typeof window.tckIsStaff === 'function') return window.tckIsStaff(user.email, user.userId);
+  if (typeof window.tckIsStaff === 'function') return window.tckIsStaff(user.email);
   return (user.email || '').toLowerCase().endsWith('@tckworkshop.co.jp');
 }
 function doLogout() {
   sessionStorage.removeItem('kickstart_user');
   location.href = 'login.html';
-}
-
-/* Staff password handling (moved out of sessionStorage)
-   On login.html → index.html navigation, the password lands briefly in
-   sessionStorage.kickstart_staff_pass. We capture it into a module-scope
-   closure variable here, then immediately delete the sessionStorage entry
-   so it is no longer readable by any later-loaded same-origin script.
-   Page reload will result in __staffPass = '' → redirect to login. */
-var __staffPass = (function(){
-  var p = sessionStorage.getItem('kickstart_staff_pass') || '';
-  try { sessionStorage.removeItem('kickstart_staff_pass'); } catch(e){}
-  return p;
-})();
-function getStaffPass() { return __staffPass; }
-function requireStaffPass() {
-  if (!__staffPass) {
-    location.href = 'login.html';
-    return false;
-  }
-  return true;
 }
 
 // Gate evaluation is deferred until after data declarations below.
@@ -768,9 +725,7 @@ function mapLiveAttempts(rawAttempts, users) {
 function loadLiveData() {
   const banner = document.getElementById('devBanner');
   const msg = document.getElementById('bannerMsg');
-  if (!requireStaffPass()) return;
-  var __u = getCurrentUser() || {};
-  Promise.all([Api.listUsers(__u.userId, __staffPass), Api.listAttempts(__u.userId, __staffPass)]).then(function(results){
+  Promise.all([Api.listUsers(), Api.listAttempts()]).then(function(results){
     const ures = results[0], ares = results[1];
     if (!ures || !ures.success) throw new Error(ures && ures.error || 'listUsers failed');
     if (!ares || !ares.success) throw new Error(ares && ares.error || 'listAttempts failed');
@@ -826,14 +781,11 @@ function boot() {
       if (btn.dataset.panel === 'recordings' && !window.__recordingsLoaded) {
         loadRecordings();
       }
+      // Render the writing user list whenever the tab opens (cheap — uses ATTEMPTS in memory).
+      if (btn.dataset.panel === 'writing') {
+        renderWritingUserList();
+      }
     });
-  });
-
-  // Recordings filter bindings (recordings tab is lazy-loaded but the
-  // controls exist in DOM from boot, so wire them now).
-  ['searchRec','filterRecTask','filterRecSet'].forEach(id => {
-    var el = document.getElementById(id);
-    if (el) el.addEventListener('input', renderRecordings);
   });
 
   // Bind filters
@@ -1067,10 +1019,8 @@ function renderKarteDetail() {
     if (auto.length || nonAuto.length) {
       const accStr = auto.length ? Math.round(auto.reduce((s, i) => s + i.score, 0) / auto.length) + '% · ' : '';
       const countStr = (auto.length + nonAuto.length) + ' ' + (nonAuto.length && !auto.length ? '提出' : 'attempts');
-      // Display Band (new scoring scale) prominently and the legacy /30
-      // scaled score below as small secondary metadata.
-      var legacyStr = scaled !== null ? '<div style="font-family:var(--font-en);font-size:.62em;color:var(--ink-500);font-weight:600;margin-top:2px;letter-spacing:.02em">' + scaled + ' <span style="opacity:.7">/ 30 旧スコア</span></div>' : '';
-      const scaledStr = scaled !== null ? '<div class="skill-score-val">Band ' + formatBand(sectionToBand(scaled)) + '<span style="font-size:.42em;color:var(--ink-500);font-weight:500;margin-left:3px">/ 6.0</span>' + estTag + '</div>' + legacyStr : '<div class="skill-score-val">—</div>';
+      var bandStr = scaled !== null ? '<div style="font-family:var(--font-en);font-size:.55em;color:var(--ink-500);font-weight:600;margin-top:2px;letter-spacing:.02em">Band ' + formatBand(sectionToBand(scaled)) + '</div>' : '';
+      const scaledStr = scaled !== null ? '<div class="skill-score-val">' + scaled + '<span style="font-size:.42em;color:var(--ink-500);font-weight:500;margin-left:3px">/30</span>' + estTag + '</div>' + bandStr : '<div class="skill-score-val">—</div>';
       return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div>' + scaledStr + '<div class="skill-score-sub">' + accStr + countStr + '</div></div>';
     }
     return '<div class="skill-score"><div class="skill-score-label">' + sec + '</div><div class="skill-score-val">—</div><div class="skill-score-sub">まだ未受験</div></div>';
@@ -1088,7 +1038,8 @@ function renderKarteDetail() {
   const activityRows = recent.map(a => {
     const status = '<span class="pill ' + a.status + '">' + (GRADE_LABELS[a.status] || a.status) + '</span>';
     const score = (a.status === 'inprog' || !a.autoGraded) ? '—' : (a.score + '%');
-    return '<tr><td class="muted">' + a.updatedAt + '</td><td><span class="task-tag">' + a.taskLabel + '</span></td><td>P' + a.practice + '</td><td class="num">' + score + '</td><td>' + status + '</td></tr>';
+    const viewBtn = '<button class="link-btn" onclick="viewStudentAnswers(\'' + a.userId + '\',\'' + a.task + '\',' + a.practice + ',\'' + (a.set || '') + '\')">回答を見る</button>';
+    return '<tr><td class="muted">' + a.updatedAt + '</td><td><span class="task-tag">' + a.taskLabel + '</span></td><td>P' + a.practice + '</td><td class="num">' + score + '</td><td>' + status + '</td><td>' + viewBtn + '</td></tr>';
   }).join('');
   /* Active-now badge: green dot if last_seen within 5 min, soft tag
      for last login time. Both flow from the GAS USERS sheet (live
@@ -1100,7 +1051,7 @@ function renderKarteDetail() {
   el.innerHTML = '<div class="karte-head"><h3>' + escapeHtml(u.userName) + ' <span style="color:var(--ink-500);font-weight:500;font-size:.7em">(' + u.displayName + ')</span>' + activeDot + '</h3><div class="kmeta">' + u.userId + ' · ' + escapeHtml(u.email) + ' · 登録 ' + u.joined + loginTag + '</div></div>'
     + totalPredBlock
     + '<div class="skill-scores">' + sectionBlocks + '</div>'
-    + '<div class="karte-activity"><h4>Recent activity · 最新の学習履歴</h4><table class="atable"><thead><tr><th>日付</th><th>タスク</th><th>Practice</th><th class="num">スコア</th><th>評価</th></tr></thead><tbody>' + activityRows + '</tbody></table></div>';
+    + '<div class="karte-activity"><h4>Recent activity · 最新の学習履歴</h4><table class="atable"><thead><tr><th>日付</th><th>タスク</th><th>Practice</th><th class="num">スコア</th><th>評価</th><th>回答</th></tr></thead><tbody>' + activityRows + '</tbody></table></div>';
 }
 
 /* ============================================================
@@ -1245,6 +1196,36 @@ function showDetail(userId, task, practice) {
         (a ? ('スコア: ' + (a.score ?? '—') + '%  合否: ' + a.status + '\n最終更新: ' + a.updatedAt) : ''));
 }
 
+/* Map task key → site folder so we can deep-link from the karte to the
+   per-practice answer page. Folders mirror the project layout in CLAUDE.md. */
+const TASK_FOLDER = {
+  ctw:'reading/ctw', rdl:'reading/rdl', academic:'reading/academic',
+  lcr:'listening/lcr', conv:'listening/conv', announce:'listening/announce', talk:'listening/talk',
+  sentence:'writing/sentence', email:'writing/email', discussion:'writing/discussion',
+  lr:'speaking/lr', ti:'speaking/ti'
+};
+
+/* Open the student-answer view in a new tab. We append userId / userName /
+   set / fromAdmin so the answer page can later overlay the student's
+   submission. For now the page renders the answer key — admin can compare
+   visually. Falls back to an alert if the task→folder mapping is unknown. */
+function viewStudentAnswers(userId, task, practice, set) {
+  const folder = TASK_FOLDER[task];
+  if (!folder) {
+    alert('回答ページが未対応のタスクです: ' + task);
+    return;
+  }
+  const u = MOCK_USERS.find(x => x.userId === userId);
+  const params = new URLSearchParams({
+    userId: userId,
+    userName: u ? u.userName : '',
+    fromAdmin: '1'
+  });
+  if (set) params.set('set', set);
+  const url = '../' + folder + '/practice-' + practice + '-answers.html?' + params.toString();
+  window.open(url, '_blank', 'noopener');
+}
+
 /* ============================================================
    Recordings tab — Speaking LR/TI playback
    ============================================================ */
@@ -1252,125 +1233,183 @@ window.__recordings = [];
 window.__recordingsLoaded = false;
 
 function loadRecordings() {
-  var body = document.getElementById('recBody');
-  body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--ink-500);padding:32px">読み込み中…</td></tr>';
-  if (!requireStaffPass()) return;
-  var __u = getCurrentUser() || {};
-  Api.listRecordings(__u.userId, __staffPass).then(function(r){
+  Api.listRecordings().then(function(r){
     if (!r || !r.success) {
-      body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--terracotta);padding:32px">読み込みに失敗しました（' + (r && r.error || 'unknown') + '）</td></tr>';
+      document.getElementById('recDetail').innerHTML =
+        '<p style="color:var(--terracotta)">読み込みに失敗しました（' + (r && r.error || 'unknown') + '）</p>';
       return;
     }
     window.__recordings = r.recordings || [];
     window.__recordingsLoaded = true;
-    // Set filter is now a static dropdown (TT 1-10 + Mock 1-3) — see the
-    // <select id="filterRecSet"> markup. We don't repopulate from data
-    // anymore so the user can target sets that have no recordings yet.
-    renderRecordings();
+    renderRecUserList();
+    if (selectedRecUser) renderRecDetail();
   }).catch(function(err){
-    body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--terracotta);padding:32px">通信エラー：' + String(err && err.message || err) + '</td></tr>';
+    document.getElementById('recDetail').innerHTML =
+      '<p style="color:var(--terracotta)">通信エラー：' + escapeHtml(String(err && err.message || err)) + '</p>';
   });
 }
 
-function renderRecordings() {
-  var body = document.getElementById('recBody');
-  var q  = (document.getElementById('searchRec').value || '').trim().toLowerCase();
-  var ft = document.getElementById('filterRecTask').value;
-  var fs = document.getElementById('filterRecSet').value;
+/* ============================================================
+   録音タブ — 生徒選択 → そのユーザーの全録音を再生 (split-pane)
+   ============================================================ */
+let selectedRecUser = null;
 
-  // Set filter values are encoded as "<source>-<setNum>" (e.g. "tt-3",
-  // "pt-1") so a single dropdown can distinguish Task Training from
-  // Mock Test recordings even when the practice number overlaps.
-  var fsSource = '';
-  var fsNum = '';
-  if (fs) {
-    var dash = fs.indexOf('-');
-    fsSource = dash >= 0 ? fs.slice(0, dash) : '';
-    fsNum    = dash >= 0 ? fs.slice(dash + 1) : fs;
-  }
-
-  var rows = (window.__recordings || []).filter(function(r){
-    if (ft && r.task !== ft) return false;
-    if (fs) {
-      if (fsSource && (r.source || 'tt') !== fsSource) return false;
-      if (String(r.practiceSet) !== String(fsNum)) return false;
-    }
-    if (q) {
-      var hay = (r.userId + ' ' + r.userName).toLowerCase();
-      if (hay.indexOf(q) === -1) return false;
-    }
-    return true;
+function renderRecUserList() {
+  const recs = window.__recordings || [];
+  const q = (document.getElementById('searchRec').value || '').toLowerCase().trim();
+  // Aggregate per user (count attempts + most recent timestamp).
+  const byUser = {};
+  recs.forEach(r => {
+    if (!r.userId) return;
+    if (!byUser[r.userId]) byUser[r.userId] = { userId:r.userId, userName:r.userName || '—', count:0, latest:'' };
+    byUser[r.userId].count++;
+    if ((r.timestamp || '') > byUser[r.userId].latest) byUser[r.userId].latest = r.timestamp || '';
   });
-  // newest first
-  rows.sort(function(a,b){ return (b.timestamp || '').localeCompare(a.timestamp || ''); });
+  let users = Object.values(byUser);
+  if (q) users = users.filter(u => (u.userName + ' ' + u.userId).toLowerCase().indexOf(q) !== -1);
+  users.sort((a,b) => (b.latest || '').localeCompare(a.latest || ''));
 
-  document.getElementById('recCount').textContent = rows.length;
-  if (!rows.length) {
-    body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--ink-500);padding:32px">該当する録音はありません。</td></tr>';
-    return;
+  document.getElementById('recCount').textContent = users.length;
+  const list = document.getElementById('recUserList');
+  list.innerHTML = users.map(u => {
+    const act = selectedRecUser === u.userId ? ' active' : '';
+    return '<div class="karte-user' + act + '" onclick="selectRecUser(\'' + u.userId + '\')">' +
+      '<div class="karte-user-name">' + escapeHtml(u.userName) + '</div>' +
+      '<div class="karte-user-meta">' + escapeHtml(u.userId) + ' · ' + u.count + ' 件</div>' +
+    '</div>';
+  }).join('') || '<div class="empty" style="padding:18px;color:var(--ink-500);font-size:.9em">該当ユーザーなし</div>';
+}
+
+function selectRecUser(userId) {
+  selectedRecUser = userId;
+  renderRecUserList();
+  renderRecDetail();
+}
+
+function renderRecDetail() {
+  const el = document.getElementById('recDetail');
+  const userId = selectedRecUser;
+  if (!userId) { el.innerHTML = '<p style="color:var(--ink-500)">左のリストからユーザーを選択してください。</p>'; return; }
+  const recs = (window.__recordings || []).filter(r => r.userId === userId);
+  if (!recs.length) { el.innerHTML = '<p style="color:var(--ink-500)">このユーザーの録音はまだありません。</p>'; return; }
+  recs.sort((a,b) => (b.timestamp || '').localeCompare(a.timestamp || ''));
+
+  // Group by task / set so the panel reads like a per-user portfolio.
+  const groups = {};
+  recs.forEach(r => {
+    const k = (r.task || '?') + ' · Set ' + (r.practiceSet || '?');
+    (groups[k] = groups[k] || []).push(r);
+  });
+
+  const u = MOCK_USERS.find(x => x.userId === userId);
+  const head = '<div class="karte-head"><h3>' + escapeHtml((u && u.userName) || recs[0].userName || userId) +
+    ' <span style="color:var(--ink-500);font-weight:500;font-size:.7em">(' + escapeHtml(userId) + ')</span></h3>' +
+    '<div class="kmeta">録音 ' + recs.length + ' 件</div></div>';
+
+  const sections = Object.keys(groups).map(k => {
+    const rows = groups[k].map(r => {
+      const dt = r.timestamp ? new Date(r.timestamp).toLocaleString('ja-JP', { hour12:false }) : '—';
+      const dur = r.durationSec ? (Math.floor(r.durationSec/60) + ':' + String(r.durationSec%60).padStart(2,'0')) : '—';
+      const streamUrl = r.fileId ? ('https://drive.google.com/uc?export=download&id=' + r.fileId) : '';
+      const player = streamUrl
+        ? '<audio controls preload="none" style="width:100%;max-width:300px"><source src="' + streamUrl + '" type="' + (r.mime || 'audio/webm') + '"></audio>'
+        : '<span style="color:var(--ink-500)">—</span>';
+      const driveLink = r.fileUrl
+        ? ' <a href="' + r.fileUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.82em;margin-left:8px">Drive →</a>'
+        : '';
+      return '<tr>' +
+        '<td style="white-space:nowrap;font-size:.82em">' + dt + '</td>' +
+        '<td style="text-align:center">Q' + r.questionIndex + '</td>' +
+        '<td style="white-space:nowrap;font-family:var(--font-en);font-size:.85em">' + dur + '</td>' +
+        '<td>' + player + driveLink + '</td>' +
+      '</tr>';
+    }).join('');
+    return '<h4 style="font-family:var(--font-en),var(--font-jp);font-size:1em;color:var(--green-deep);margin:18px 0 8px">' + escapeHtml(k) + '</h4>' +
+      '<table class="atable"><thead><tr><th>日時</th><th>Q</th><th>長さ</th><th>プレイヤー</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  }).join('');
+
+  el.innerHTML = head + sections;
+}
+
+/* ============================================================
+   ライティングタブ — 生徒選択 → Email / Discussion 提出一覧
+   ============================================================
+   Pulls from ATTEMPTS where task ∈ {email, discussion}. The submission
+   summary (date / practice / status / score) is rendered immediately;
+   the actual essay text lives in the per-attempt `answers` JSON in the
+   GAS sheet, so the "本文を見る" button opens the practice answer page
+   with userId param so a future enhancement can overlay the student's
+   submission against the rubric. */
+let selectedWritingUser = null;
+
+function writingAttemptsAll() {
+  return (typeof ATTEMPTS !== 'undefined' ? ATTEMPTS : []).filter(a => a.task === 'email' || a.task === 'discussion');
+}
+
+function renderWritingUserList() {
+  const all = writingAttemptsAll();
+  const q = (document.getElementById('searchWriting').value || '').toLowerCase().trim();
+  const byUser = {};
+  all.forEach(a => {
+    if (!a.userId) return;
+    if (!byUser[a.userId]) byUser[a.userId] = { userId:a.userId, userName:a.userName || '—', count:0, latest:'' };
+    byUser[a.userId].count++;
+    if ((a.updatedAt || '') > byUser[a.userId].latest) byUser[a.userId].latest = a.updatedAt || '';
+  });
+  let users = Object.values(byUser);
+  if (q) users = users.filter(u => (u.userName + ' ' + u.userId).toLowerCase().indexOf(q) !== -1);
+  users.sort((a,b) => (b.latest || '').localeCompare(a.latest || ''));
+
+  document.getElementById('writingCount').textContent = users.length;
+  const list = document.getElementById('writingUserList');
+  list.innerHTML = users.map(u => {
+    const act = selectedWritingUser === u.userId ? ' active' : '';
+    return '<div class="karte-user' + act + '" onclick="selectWritingUser(\'' + u.userId + '\')">' +
+      '<div class="karte-user-name">' + escapeHtml(u.userName) + '</div>' +
+      '<div class="karte-user-meta">' + escapeHtml(u.userId) + ' · ' + u.count + ' 件</div>' +
+    '</div>';
+  }).join('') || '<div class="empty" style="padding:18px;color:var(--ink-500);font-size:.9em">該当ユーザーなし</div>';
+}
+
+function selectWritingUser(userId) {
+  selectedWritingUser = userId;
+  renderWritingUserList();
+  renderWritingDetail();
+}
+
+function renderWritingDetail() {
+  const el = document.getElementById('writingDetail');
+  const userId = selectedWritingUser;
+  if (!userId) { el.innerHTML = '<p style="color:var(--ink-500)">左のリストからユーザーを選択してください。</p>'; return; }
+  const items = writingAttemptsAll().filter(a => a.userId === userId);
+  if (!items.length) { el.innerHTML = '<p style="color:var(--ink-500)">このユーザーのライティング提出はまだありません。</p>'; return; }
+  items.sort((a,b) => (b.updatedAt || '').localeCompare(a.updatedAt || ''));
+
+  // Split into Email vs Discussion sections so admin can scan one task at a time.
+  const u = MOCK_USERS.find(x => x.userId === userId) || { userName:items[0].userName, email:'', userId:userId };
+  const groups = { email:[], discussion:[] };
+  items.forEach(a => groups[a.task].push(a));
+
+  const head = '<div class="karte-head"><h3>' + escapeHtml(u.userName || userId) +
+    ' <span style="color:var(--ink-500);font-weight:500;font-size:.7em">(' + escapeHtml(userId) + ')</span></h3>' +
+    '<div class="kmeta">' + escapeHtml(u.email || '') + ' · ライティング ' + items.length + ' 件</div></div>';
+
+  function renderTaskBlock(taskKey, label) {
+    const list = groups[taskKey];
+    if (!list.length) return '';
+    const rows = list.map(a => {
+      const dt = a.updatedAt || '—';
+      const status = '<span class="pill ' + a.status + '">' + (GRADE_LABELS[a.status] || a.status) + '</span>';
+      const viewBtn = '<button class="link-btn" onclick="viewStudentAnswers(\'' + a.userId + '\',\'' + a.task + '\',' + a.practice + ',\'' + (a.set || '') + '\')">本文を見る</button>';
+      return '<tr><td class="muted">' + dt + '</td><td>P' + a.practice + '</td><td>' + status + '</td><td>' + viewBtn + '</td></tr>';
+    }).join('');
+    return '<h4 style="font-family:var(--font-en),var(--font-jp);font-size:1em;color:var(--green-deep);margin:18px 0 8px">' + label + '（' + list.length + '）</h4>' +
+      '<table class="atable"><thead><tr><th>日時</th><th>Practice</th><th>状態</th><th>回答</th></tr></thead><tbody>' + rows + '</tbody></table>';
   }
 
-  body.innerHTML = rows.map(function(r){
-    var dt = r.timestamp ? new Date(r.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
-    var taskLabel = r.task === 'lr' ? 'LR' : (r.task === 'ti' ? 'TI' : r.task);
-    var dur = r.durationSec ? (Math.floor(r.durationSec/60) + ':' + String(r.durationSec%60).padStart(2,'0')) : '—';
-    // Drive's uc?export=download URL returns an HTML wrapper for many
-    // file types and won't stream into <audio>, so we embed Drive's own
-    // preview iframe instead. Works for any "anyone with link" file.
-    var previewUrl = r.fileId ? ('https://drive.google.com/file/d/' + r.fileId + '/preview') : '';
-    var player = previewUrl
-      ? '<iframe src="' + previewUrl + '" allow="autoplay" style="width:300px;height:46px;border:0;border-radius:6px;background:var(--cream)" loading="lazy"></iframe>'
-      : '<span style="color:var(--ink-500)">—</span>';
-    var driveLink = r.fileUrl
-      ? '<a href="' + r.fileUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.85em">開く →</a>'
-      : '';
-
-    // Look up the question/sentence text from the bundled speaking-scripts
-    // data so reviewers see what the student was answering or repeating
-    // alongside the audio. Falls back to a "no script" placeholder for
-    // tasks we don't have script data for (currently only LR + TI). Note
-    // that Mock Test (source=pt) recordings use a different practice URL
-    // pattern (practice-test/speaking-{task}.html), so we branch on source.
-    var scriptCell = '<span style="color:var(--ink-500);font-size:.82em">—</span>';
-    var scripts = window.TCK_SPEAKING_SCRIPTS;
-    var src = r.source || 'tt';
-    if (scripts && (r.task === 'lr' || r.task === 'ti')) {
-      var practiceData = scripts[r.task] && scripts[r.task][String(r.practiceSet)];
-      if (practiceData) {
-        var item = (practiceData.items || []).find(function(it){ return it.q === Number(r.questionIndex); });
-        if (item) {
-          var theme = practiceData.theme || '';
-          var itemMeta = '';
-          if (r.task === 'lr' && item.words) {
-            itemMeta = '<span style="font-family:var(--font-en);font-size:.74em;color:var(--ink-500);font-weight:600">'
-              + item.words + ' words · ' + item.time + 's · ★' + item.difficulty + '</span>';
-          }
-          var practiceUrl = src === 'pt'
-            ? '../practice-test/speaking-' + r.task + '.html'
-            : '../speaking/' + r.task + '/practice-' + r.practiceSet + '.html';
-          scriptCell =
-            (theme ? '<div style="font-size:.74em;color:var(--green-dark);font-weight:700;margin-bottom:3px;letter-spacing:.04em">' + escapeHtml(theme) + '</div>' : '')
-            + '<div style="font-size:.85em;line-height:1.5;color:var(--ink-900);max-width:520px">' + escapeHtml(item.text) + '</div>'
-            + (itemMeta ? '<div style="margin-top:3px">' + itemMeta + '</div>' : '')
-            + '<div style="margin-top:6px"><a href="' + practiceUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.78em;font-weight:600">問題ページを開く →</a></div>';
-        }
-      }
-    }
-    var srcBadge = src === 'pt'
-      ? '<span style="display:inline-block;background:#B85C3C;color:#fff;font-family:var(--font-en);font-size:.62em;font-weight:800;padding:1px 6px;border-radius:4px;letter-spacing:.06em;margin-left:4px">MOCK</span>'
-      : '<span style="display:inline-block;background:var(--green);color:#fff;font-family:var(--font-en);font-size:.62em;font-weight:800;padding:1px 6px;border-radius:4px;letter-spacing:.06em;margin-left:4px">TT</span>';
-
-    return '<tr>' +
-      '<td style="white-space:nowrap;font-size:.82em">' + dt + '</td>' +
-      '<td style="min-width:180px;white-space:nowrap"><div style="font-weight:600">' + escapeHtml(r.userName || '—') + '</div><div style="font-size:.78em;color:var(--ink-500)">' + escapeHtml(r.userId) + '</div></td>' +
-      '<td><span style="font-family:var(--font-en);font-weight:700;color:var(--green-dark)">' + taskLabel + '</span></td>' +
-      '<td style="text-align:center;white-space:nowrap">' + r.practiceSet + srcBadge + '</td>' +
-      '<td style="text-align:center">' + r.questionIndex + '</td>' +
-      '<td style="white-space:nowrap;font-family:var(--font-en);font-size:.85em">' + dur + '</td>' +
-      '<td style="vertical-align:top;padding-top:10px">' + scriptCell + '</td>' +
-      '<td style="vertical-align:middle;white-space:nowrap;padding-left:16px">' + player + (driveLink ? '<div style="margin-top:4px">' + driveLink + '</div>' : '') + '</td>' +
-    '</tr>';
-  }).join('');
+  el.innerHTML = head +
+    renderTaskBlock('email', 'Write an Email') +
+    renderTaskBlock('discussion', 'Academic Discussion');
 }
 
 /* ============================================================
