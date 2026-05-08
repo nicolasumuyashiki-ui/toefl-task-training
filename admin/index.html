@@ -211,7 +211,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
     <button class="tab" data-panel="report" type="button">レポート</button>
     <button class="tab" data-panel="karte" type="button">個人カルテ</button>
     <button class="tab" data-panel="progress" type="button">進捗状況</button>
-    <button class="tab" data-panel="recordings" type="button">録音</button>
+    <button class="tab" data-panel="recordings" type="button">スピーキング</button>
     <button class="tab" data-panel="writing" type="button">ライティング</button>
   </nav>
 
@@ -1222,7 +1222,11 @@ function viewStudentAnswers(userId, task, practice, set) {
     fromAdmin: '1'
   });
   if (set) params.set('set', set);
-  const url = '../' + folder + '/practice-' + practice + '-answers.html?' + params.toString();
+  // Speaking has no `-answers.html` (LR/TI aren't auto-graded). Send the
+  // admin to the `-tips.html` page instead — the overlay script will
+  // inject the student's recordings on top of it.
+  const fileSuffix = (task === 'lr' || task === 'ti') ? '-tips.html' : '-answers.html';
+  const url = '../' + folder + '/practice-' + practice + fileSuffix + '?' + params.toString();
   // NOTE: do NOT pass 'noopener' — the answer page's auth.js calls
   // Auth.require() which reads sessionStorage. Browsers only copy the
   // opener's sessionStorage to a new tab when the opener relationship
@@ -1322,15 +1326,17 @@ function renderRecDetail() {
       const driveLink = r.fileUrl
         ? ' <a href="' + r.fileUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.82em;margin-left:8px">Drive →</a>'
         : '';
+      const tipsBtn = '<button class="link-btn" onclick="viewStudentAnswers(\'' + r.userId + '\',\'' + r.task + '\',' + r.practiceSet + ',\'\')">問題を見る</button>';
       return '<tr>' +
         '<td style="white-space:nowrap;font-size:.82em">' + dt + '</td>' +
         '<td style="text-align:center">Q' + r.questionIndex + '</td>' +
         '<td style="white-space:nowrap;font-family:var(--font-en);font-size:.85em">' + dur + '</td>' +
         '<td>' + player + driveLink + '</td>' +
+        '<td>' + tipsBtn + '</td>' +
       '</tr>';
     }).join('');
     return '<h4 style="font-family:var(--font-en),var(--font-jp);font-size:1em;color:var(--green-deep);margin:18px 0 8px">' + escapeHtml(k) + '</h4>' +
-      '<table class="atable"><thead><tr><th>日時</th><th>Q</th><th>長さ</th><th>プレイヤー</th></tr></thead><tbody>' + rows + '</tbody></table>';
+      '<table class="atable"><thead><tr><th>日時</th><th>Q</th><th>長さ</th><th>プレイヤー</th><th>問題</th></tr></thead><tbody>' + rows + '</tbody></table>';
   }).join('');
 
   el.innerHTML = head + sections;

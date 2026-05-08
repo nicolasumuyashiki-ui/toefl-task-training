@@ -85,6 +85,68 @@
     }
   };
 
+  /* Speaking (LR / TI) — recordings live in the RECORDINGS sheet, not
+     ANSWERS. Pull them via Api.listRecordings (admin auth, returns all)
+     and inject a player panel at the top of the tips page. */
+  function renderSpeakingRecordings() {
+    if (!Api.listRecordings) {
+      showError('Api.listRecordings is unavailable.');
+      return;
+    }
+    Api.listRecordings().then(function(r){
+      if (!r || !r.success) {
+        showError('録音の取得に失敗しました（' + ((r && r.error) || 'unknown') + '）');
+        return;
+      }
+      var recs = (r.recordings || []).filter(function(x){
+        return String(x.userId) === String(userId)
+            && String(x.task) === String(task)
+            && String(x.practiceSet) === String(practice);
+      });
+
+      // Always inject a banner first so admin sees they're in admin view
+      // even when there are no recordings to show.
+      injectBanner(recs.length ? recs : [{ timestamp: '', set: task.toUpperCase() + ' P' + practice }]);
+      hideStudentControls();
+
+      if (!recs.length) {
+        showError(escapeHtml(userName || userId) + ' の ' + task.toUpperCase() + ' P' + practice + ' の録音は見つかりませんでした。');
+        return;
+      }
+
+      recs.sort(function(a,b){ return Number(a.questionIndex) - Number(b.questionIndex); });
+
+      var panel = document.createElement('div');
+      panel.id = 'tckAdminRecPanel';
+      panel.style.cssText = 'background:#fff;border:2px solid #007646;border-radius:14px;padding:20px 24px;margin:18px auto;max-width:900px;box-shadow:0 4px 14px rgba(0,0,0,.08);font-family:Manrope,"Noto Sans JP",sans-serif';
+      var html = '<div style="font-weight:800;color:#005434;font-size:1em;letter-spacing:.04em;margin-bottom:14px">🎤 生徒の録音 <span style="color:#5A6861;font-weight:600">(' + recs.length + ' 件)</span></div>';
+      html += recs.map(function(rc){
+        var streamUrl = rc.fileId ? 'https://drive.google.com/uc?export=download&id=' + rc.fileId : '';
+        var dur = rc.durationSec ? (Math.floor(rc.durationSec/60) + ':' + String(rc.durationSec%60).padStart(2,'0')) : '—';
+        var dt = rc.timestamp ? new Date(rc.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
+        var driveLink = rc.fileUrl ? '<a href="' + rc.fileUrl + '" target="_blank" rel="noopener" style="color:#005434;font-size:.82em;margin-left:8px">Drive →</a>' : '';
+        return '<div style="border-top:1px solid #F5E9D3;padding:14px 0;display:flex;align-items:center;gap:14px;flex-wrap:wrap">' +
+          '<div style="font-weight:800;color:#005434;font-size:.95em;min-width:48px">Q' + rc.questionIndex + '</div>' +
+          '<div style="font-size:.78em;color:#5A6861;min-width:140px">' + escapeHtml(dt) + '<br>長さ ' + escapeHtml(dur) + '</div>' +
+          (streamUrl
+            ? '<audio controls preload="none" style="flex:1;min-width:240px"><source src="' + streamUrl + '" type="' + escapeHtml(rc.mime || 'audio/webm') + '"></audio>'
+            : '<span style="color:#5A6861">音声ファイルなし</span>') +
+          driveLink +
+        '</div>';
+      }).join('');
+      panel.innerHTML = html;
+
+      var banner = document.getElementById('tckAdminBanner');
+      if (banner && banner.parentNode) {
+        banner.parentNode.insertBefore(panel, banner.nextSibling);
+      } else {
+        document.body.insertBefore(panel, document.body.firstChild);
+      }
+    }).catch(function(err){
+      showError('録音取得時の通信エラー：' + (err && err.message || err));
+    });
+  }
+
   // Hide controls that could mutate student state if admin clicks them by
   // accident: "もう一度解く" (resets attempt → re-submission), "メニューに戻る"
   // (goes to the *student's* menu under the admin's session). Match by
@@ -139,6 +201,12 @@
   }
 
   ensureApiLoaded(function(){
+    // Speaking (LR / TI) lives in the RECORDINGS sheet, not ANSWERS — go
+    // straight to the recordings path.
+    if (task === 'lr' || task === 'ti') {
+      renderSpeakingRecordings();
+      return;
+    }
     Api.getAttemptAnswers(userId, task, practice, setParam).then(function(res){
       if (!res || !res.success) {
         showError('回答の取得に失敗しました（' + ((res && res.error) || 'unknown') + '）');
