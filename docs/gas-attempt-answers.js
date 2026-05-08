@@ -42,19 +42,17 @@
      { success: true, attempts: [ { timestamp, set, score, status,
                                     answers (parsed JSON) }, ... ] }
    ============================================================ */
-function handleGetAttemptAnswers_(e) {
+function handleGetAttemptAnswers_(e, callback) {
   try {
-    var staffId = e.parameter.id || '';
-    var staffPass = e.parameter.pass || '';
-    if (typeof isStaff_ === 'function') {
-      if (!isStaff_(staffId, staffPass)) return { success:false, error:'unauthorized' };
+    if (!verifyStaff_(e.parameter.id, e.parameter.pass)) {
+      return jsonpResponse_(callback, { success: false, error: 'auth_failed' });
     }
 
     var userId   = e.parameter.userId   || '';
     var task     = (e.parameter.task    || '').toLowerCase();
     var practice = String(e.parameter.practice || '');
     var setNum   = String(e.parameter.set      || '');
-    if (!userId || !task || !practice) return { success:false, error:'missing_params' };
+    if (!userId || !task || !practice) return jsonpResponse_(callback, { success:false, error:'missing_params' });
 
     // Map task key → setName prefix used on saveAnswers.
     // These prefixes mirror the calls scattered through the practice pages.
@@ -65,16 +63,16 @@ function handleGetAttemptAnswers_(e) {
       lr:'LR', ti:'TI'
     };
     var label = TASK_LABELS[task];
-    if (!label) return { success:false, error:'unknown_task' };
+    if (!label) return jsonpResponse_(callback, { success:false, error:'unknown_task' });
 
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     // The live sheet is named ANSWERS. Fall back to ATTEMPTS in case a
     // future deployment renames it.
     var sheet = ss.getSheetByName('ANSWERS') || ss.getSheetByName('ATTEMPTS');
-    if (!sheet) return { success:false, error:'no_sheet' };
+    if (!sheet) return jsonpResponse_(callback, { success:false, error:'no_sheet' });
 
     var data = sheet.getDataRange().getValues();
-    if (!data.length) return { success:true, attempts:[] };
+    if (!data.length) return jsonpResponse_(callback, { success:true, attempts:[] });
 
     var headers = data[0];
     var col = {};
@@ -91,7 +89,7 @@ function handleGetAttemptAnswers_(e) {
     var iTs = pick('timestamp','updatedAt','updated_at','time','date');
     if (iTs < 0) iTs = 0;
 
-    if (iUser < 0 || iSet < 0) return { success:false, error:'sheet_missing_columns' };
+    if (iUser < 0 || iSet < 0) return jsonpResponse_(callback, { success:false, error:'sheet_missing_columns' });
 
     // The setName format from practice pages (verified):
     //   "<Label> P<N>"             — e.g. "Email P3", "Discussion P1"
@@ -141,8 +139,8 @@ function handleGetAttemptAnswers_(e) {
     // Newest first (timestamp is ISO-ish so lexical compare works).
     matches.sort(function(a,b){ return (b.timestamp || '').localeCompare(a.timestamp || ''); });
 
-    return { success:true, attempts: matches };
+    return jsonpResponse_(callback, { success:true, attempts: matches });
   } catch (err) {
-    return { success:false, error: String(err && err.message ? err.message : err) };
+    return jsonpResponse_(callback, { success:false, error: String(err && err.message ? err.message : err) });
   }
 }
