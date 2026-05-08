@@ -153,16 +153,23 @@
   // visible label so we don't depend on a class that might drift across
   // task types.
   function hideStudentControls() {
+    // Plain-string labels we want to suppress wholesale.
     var killText = ['もう一度解く', 'Try again', 'メニューに戻る', 'Back to menu'];
+    // Patterns that include practice-number text (Speaking tips pages).
+    var killPatterns = [/Practice\s*\d+\s*に戻る/, /Back to Practice\s*\d+/i];
     var anchors = document.querySelectorAll('a, button');
     for (var i = 0; i < anchors.length; i++) {
       var t = (anchors[i].textContent || '').trim();
+      var hit = false;
       for (var j = 0; j < killText.length; j++) {
-        if (t.indexOf(killText[j]) !== -1) {
-          anchors[i].style.display = 'none';
-          break;
+        if (t.indexOf(killText[j]) !== -1) { hit = true; break; }
+      }
+      if (!hit) {
+        for (var k = 0; k < killPatterns.length; k++) {
+          if (killPatterns[k].test(t)) { hit = true; break; }
         }
       }
+      if (hit) anchors[i].style.display = 'none';
     }
   }
 
