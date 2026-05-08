@@ -1223,7 +1223,12 @@ function viewStudentAnswers(userId, task, practice, set) {
   });
   if (set) params.set('set', set);
   const url = '../' + folder + '/practice-' + practice + '-answers.html?' + params.toString();
-  window.open(url, '_blank', 'noopener');
+  // NOTE: do NOT pass 'noopener' — the answer page's auth.js calls
+  // Auth.require() which reads sessionStorage. Browsers only copy the
+  // opener's sessionStorage to a new tab when the opener relationship
+  // is preserved, so 'noopener' here would log the admin out in the
+  // new tab and bounce them to /index.html. Same-origin so safe.
+  window.open(url, '_blank');
 }
 
 /* ============================================================
