@@ -85,6 +85,25 @@
     }
   };
 
+  // Hide controls that could mutate student state if admin clicks them by
+  // accident: "もう一度解く" (resets attempt → re-submission), "メニューに戻る"
+  // (goes to the *student's* menu under the admin's session). Match by
+  // visible label so we don't depend on a class that might drift across
+  // task types.
+  function hideStudentControls() {
+    var killText = ['もう一度解く', 'Try again', 'メニューに戻る', 'Back to menu'];
+    var anchors = document.querySelectorAll('a, button');
+    for (var i = 0; i < anchors.length; i++) {
+      var t = (anchors[i].textContent || '').trim();
+      for (var j = 0; j < killText.length; j++) {
+        if (t.indexOf(killText[j]) !== -1) {
+          anchors[i].style.display = 'none';
+          break;
+        }
+      }
+    }
+  }
+
   function injectBanner(attempts) {
     var banner = document.createElement('div');
     banner.id = 'tckAdminBanner';
@@ -136,6 +155,7 @@
         return;
       }
       injectBanner(atts);
+      hideStudentControls();
       renderer(atts[0]); // newest
     }).catch(function(err){
       showError('通信エラー：' + (err && err.message || err));
