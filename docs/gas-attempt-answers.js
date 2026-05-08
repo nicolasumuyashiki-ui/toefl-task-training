@@ -13,14 +13,17 @@
  *   3. Save (Ctrl+S) → Deploy → Manage deployments → 鉛筆 → New version → Deploy.
  *      (Same deployment URL — no need to update js/api.js.)
  *
- * Sheet assumption:
- *   The ATTEMPTS sheet has columns including (header names matter):
- *     timestamp, userId, userName, set, answers, score, status, ...
- *   `answers` is a JSON string, exactly as stored by saveAnswers().
+ * Sheet assumption (verified against the live "TOEFL Reps Database" book):
+ *   Sheet name: ANSWERS
+ *   Columns:    A=timestamp | B=userId | C=userName | D=set
+ *               E=answers   | F=score  | G=harder_correct | H=harder_total
+ *               I=attempt_number
+ *   `answers` is a JSON string written by saveAnswers().
  *   The `set` column holds the setName like "Email P1", "Discussion P3",
  *   "CTW P1 Set 1", "LCR P3", etc.
  *
- *   If your column headers differ, adjust HEADER_KEYS below.
+ *   Header detection is tolerant — if the timestamp column has no header
+ *   it falls back to column index 0. Column-name variants are accepted.
  */
 
 /* ============================================================
@@ -65,7 +68,9 @@ function handleGetAttemptAnswers_(e) {
     if (!label) return { success:false, error:'unknown_task' };
 
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getSheetByName('ATTEMPTS');
+    // The live sheet is named ANSWERS. Fall back to ATTEMPTS in case a
+    // future deployment renames it.
+    var sheet = ss.getSheetByName('ANSWERS') || ss.getSheetByName('ATTEMPTS');
     if (!sheet) return { success:false, error:'no_sheet' };
 
     var data = sheet.getDataRange().getValues();
@@ -80,8 +85,11 @@ function handleGetAttemptAnswers_(e) {
     var iSet     = pick('set','setName','set_name');
     var iAns     = pick('answers','answersJson','answers_json');
     var iScore   = pick('score');
-    var iStatus  = pick('status');
-    var iTs      = pick('timestamp','updatedAt','updated_at','time');
+    var iStatus  = pick('status'); // optional — ANSWERS sheet does not have this column
+    // Timestamp column: live sheet has it in col A but the header cell may
+    // be blank. Try named columns first, then fall back to column 0.
+    var iTs = pick('timestamp','updatedAt','updated_at','time','date');
+    if (iTs < 0) iTs = 0;
 
     if (iUser < 0 || iSet < 0) return { success:false, error:'sheet_missing_columns' };
 
@@ -113,8 +121,16 @@ function handleGetAttemptAnswers_(e) {
       try { parsed = (typeof rawAnswers === 'string' && rawAnswers) ? JSON.parse(rawAnswers) : rawAnswers; }
       catch (err) { parsed = String(rawAnswers); }
 
+      // Timestamp column may hold a Date object — normalise to ISO string.
+      var tsRaw = iTs >= 0 ? row[iTs] : '';
+      var tsStr = '';
+      if (tsRaw instanceof Date) {
+        tsStr = tsRaw.toISOString();
+      } else {
+        tsStr = String(tsRaw || '');
+      }
       matches.push({
-        timestamp: iTs    >= 0 ? String(row[iTs]    || '') : '',
+        timestamp: tsStr,
         set:       setName,
         score:     iScore >= 0 ? row[iScore] : null,
         status:    iStatus>= 0 ? String(row[iStatus] || '') : '',
