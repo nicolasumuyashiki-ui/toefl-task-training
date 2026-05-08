@@ -1319,9 +1319,12 @@ function renderRecDetail() {
     const rows = groups[k].map(r => {
       const dt = r.timestamp ? new Date(r.timestamp).toLocaleString('ja-JP', { hour12:false }) : '—';
       const dur = r.durationSec ? (Math.floor(r.durationSec/60) + ':' + String(r.durationSec%60).padStart(2,'0')) : '—';
-      const streamUrl = r.fileId ? ('https://drive.google.com/uc?export=download&id=' + r.fileId) : '';
-      const player = streamUrl
-        ? '<audio controls preload="none" style="width:100%;max-width:300px"><source src="' + streamUrl + '" type="' + (r.mime || 'audio/webm') + '"></audio>'
+      // Drive's `uc?export=download` URLs no longer stream to <audio>
+      // tags reliably (virus-scan interstitial / CORS). Use the official
+      // /preview iframe — it embeds Drive's own player.
+      const previewUrl = r.fileId ? ('https://drive.google.com/file/d/' + r.fileId + '/preview') : '';
+      const player = previewUrl
+        ? '<iframe src="' + previewUrl + '" style="width:100%;max-width:300px;height:80px;border:0;border-radius:6px" allow="autoplay"></iframe>'
         : '<span style="color:var(--ink-500)">—</span>';
       const driveLink = r.fileUrl
         ? ' <a href="' + r.fileUrl + '" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:.82em;margin-left:8px">Drive →</a>'
