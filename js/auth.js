@@ -659,3 +659,29 @@ if (typeof window !== 'undefined') {
   tag.defer = true;
   document.head.appendChild(tag);
 })();
+
+/* ============================================================
+   Student-history loader — on answer / tips pages (NOT in admin
+   mode), inject js/student-history.js so the logged-in student
+   can review their past attempts. Symmetric to the admin loader
+   above; same path-resolution trick relative to auth.js.
+   ============================================================ */
+(function(){
+  if (typeof location === 'undefined') return;
+  if (location.search.indexOf('fromAdmin=1') !== -1) return; // admin path handles this
+  if (!/practice-\d+(?:-set-\d+)?(?:-answers|-tips)\.html(?:[?#]|$)/.test(location.pathname + location.search)) return;
+  var here = (document.currentScript && document.currentScript.src) || '';
+  if (!here) {
+    var scripts = document.getElementsByTagName('script');
+    for (var i = 0; i < scripts.length; i++) {
+      var s = scripts[i].src || '';
+      if (/\/auth\.js(\?|$)/.test(s)) { here = s; break; }
+    }
+  }
+  if (!here) return;
+  var historySrc = here.replace(/\/auth\.js(\?[^#]*)?(\#.*)?$/, '/student-history.js');
+  var tag = document.createElement('script');
+  tag.src = historySrc;
+  tag.defer = true;
+  document.head.appendChild(tag);
+})();

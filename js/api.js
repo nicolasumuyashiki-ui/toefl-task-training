@@ -125,6 +125,21 @@ var Api = {
       + '&pass=' + encodeURIComponent(p));
   },
 
+  /* Student-side: fetch the logged-in user's own past attempts for a
+     specific (task, practice [, set]). GAS forces userId == verified
+     user so callers can't read someone else's data. Used by
+     js/student-history.js on each answer / tips page. */
+  getMyAnswers: function(task, practice, set, id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=getMyAnswers'
+      + '&id='       + encodeURIComponent(id || u.userId || '')
+      + '&pass='     + encodeURIComponent(p)
+      + '&task='     + encodeURIComponent(task)
+      + '&practice=' + encodeURIComponent(practice)
+      + '&set='      + encodeURIComponent(set || ''));
+  },
+
   /* Fetch the saved `answers` JSON for a specific attempt (admin only).
      Used by the answer pages when opened with ?fromAdmin=1 to overlay
      the student's actual submission on top of the answer key. */
