@@ -90,6 +90,56 @@
     insertAfterUserPreview(box);
   }
 
+  // Auto-graded tasks (CTW/RDL/Academic/LCR/Conv/Announce/Talk/Sentence).
+  // For each attempt: date, score, total, percentage, set label (CTW only).
+  // Total is derived from answers array length.
+  function renderAutoGraded(attempts){
+    if (!attempts.length) return;
+    var box = document.createElement('div');
+    box.id = 'tckMyHistory';
+    box.style.cssText = 'background:#FBF6EC;border:1px solid #F5E9D3;border-radius:14px;padding:18px 22px;margin:22px auto;max-width:840px;font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif';
+    var header = '<div style="font-weight:800;color:#005434;font-size:1em;margin-bottom:12px"><span class="jp">📊 これまでのあなたの記録（' + attempts.length + ' 回）</span><span class="en">📊 Your past attempts (' + attempts.length + ')</span></div>';
+    var rows = attempts.map(function(att, i){
+      var dt = att.timestamp ? new Date(att.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
+      var sc = (att.score === null || att.score === undefined || att.score === '') ? null : Number(att.score);
+      var ans = att.answers;
+      var total = Array.isArray(ans) ? ans.length : 0;
+      var pct = (sc !== null && total > 0) ? Math.round(sc / total * 100) : null;
+      // Performance colour code so trends are scannable at a glance.
+      var color = (pct === null) ? '#5A6861'
+                : (pct >= 80) ? '#005434'
+                : (pct >= 50) ? '#A47A1F'
+                : '#9C3D1F';
+      var icon  = (pct === null) ? '○'
+                : (pct >= 80) ? '🌟'
+                : (pct >= 50) ? '✓'
+                : '↻';
+      // CTW stores "CTW P1 Set 1" — surface the Set number when present.
+      var setLabel = '';
+      var setMatch = String(att.set || '').match(/Set\s+(\d+)/);
+      if (setMatch) setLabel = '<span style="color:#5A6861;font-family:Manrope,sans-serif;font-size:.78em;background:#F5E9D3;padding:2px 8px;border-radius:999px">Set ' + setMatch[1] + '</span>';
+      var label = (i === 0 ? '🆕 ' : '#' + (attempts.length - i) + '  ');
+      return '<div style="border-top:1px solid #F5E9D3;padding:12px 0;display:flex;align-items:center;gap:14px;flex-wrap:wrap">' +
+        '<div style="font-family:Manrope,sans-serif;font-size:.82em;color:#5A6861;min-width:170px">' + escapeHtml(label + dt) + '</div>' +
+        setLabel +
+        '<div style="font-family:Manrope,sans-serif;font-weight:800;color:' + color + ';font-size:1.05em;margin-left:auto">' +
+          icon + ' ' +
+          (sc !== null ? sc + (total > 0 ? ' / ' + total : '') : '—') +
+          (pct !== null ? '<span style="font-size:.82em;font-weight:600;margin-left:6px;color:#5A6861">(' + pct + '%)</span>' : '') +
+        '</div>' +
+      '</div>';
+    }).join('');
+    box.innerHTML = header + rows;
+    // Insert just below the existing score summary card if it exists,
+    // otherwise append at end of body.
+    var ss = document.getElementById('scoreSummary') || document.querySelector('.score-summary');
+    if (ss && ss.parentNode) {
+      ss.parentNode.insertBefore(box, ss.nextSibling);
+    } else {
+      document.body.appendChild(box);
+    }
+  }
+
   function renderSpeaking(recordings){
     if (!recordings.length) return;
     recordings.sort(function(a,b){
@@ -151,9 +201,14 @@
         if (!r || !r.success) return;
         renderWriting(r.attempts || []);
       }).catch(function(){});
+    } else {
+      // Auto-graded tasks (CTW/RDL/Academic/LCR/Conv/Announce/Talk/Sentence).
+      // For CTW we deliberately do NOT pass setNum so the panel shows
+      // every set the student has tried for this practice.
+      Api.getMyAnswers(task, practice, setNum).then(function(r){
+        if (!r || !r.success) return;
+        renderAutoGraded(r.attempts || []);
+      }).catch(function(){});
     }
-    // Auto-graded tasks (CTW/RDL/Academic/LCR/Conv/Announce/Talk/Sentence)
-    // are intentionally skipped today — they already show scoring on
-    // the page and history view is a future enhancement.
   });
 })();
