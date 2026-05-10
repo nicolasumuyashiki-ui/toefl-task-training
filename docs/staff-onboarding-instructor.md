@@ -28,7 +28,7 @@ TCK Workshop の TOEFL 学習アプリ「TOEFL Reps」をご利用中の生徒�
 - **時間**: 60 分（Google Meet）
 - **内容**: 1 セッションあたり**最大 2 技能**まで生徒さんがリクエスト可能
   - 例：Speaking + Writing、Reading + Listening、Writing 単体 など
-- **申し込み**: 生徒さんが `private-coaching.html` から `info@tckworkshop.co.jp` にメール → 事務局経由で先生にお繋ぎ
+- **申し込み**: 生徒さんが `private-coaching.html` から `TOEFL-Reps-tfpif@tckworkshop.co.jp` にメール → 事務局経由で先生にお繋ぎ
 - **事前情報**: メール本文に「希望日時／対象技能／取り上げたい問題」が記載されているはずです
 
 ## 4. セッション中によく扱う内容
@@ -71,6 +71,6 @@ TCK Workshop の TOEFL 学習アプリ「TOEFL Reps」をご利用中の生徒�
 ## 7. 質問・相談先
 
 - 仕様の詳細・改善要望: Nicolas（プロダクト担当）
-- 生徒さんとの調整・スケジューリング: 事務局（info@tckworkshop.co.jp）
+- 生徒さんとの調整・スケジューリング: 事務局（TOEFL-Reps-tfpif@tckworkshop.co.jp）
 
 ご不明点があればお気軽にお声がけください！
