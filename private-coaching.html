@@ -268,7 +268,13 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
     if(sel.length === 0) return;
 
     setLoading(true);
-    Api.requestCoaching(sel.join(','))
+    Promise.resolve()
+      .then(function(){
+        if (typeof Api === 'undefined' || typeof Api.requestCoaching !== 'function') {
+          throw new Error('client out of date — please reload');
+        }
+        return Api.requestCoaching(sel.join(','));
+      })
       .then(function(res){
         if (res && res.success) {
           // Hand off to the thanks page (skills shown there as pills)
