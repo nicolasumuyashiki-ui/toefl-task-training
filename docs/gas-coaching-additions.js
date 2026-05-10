@@ -122,19 +122,25 @@ function sendCoachingConfirmationToUser_(email, userName, skills, lang) {
       '── Your request ──\n' +
       'Skills: ' + skillsPlus + '\n\n' +
       '── Next steps ──\n' +
-      '1. BOOK YOUR SESSION (60 min · ¥11,000 incl. tax / ¥10,000 if overseas)\n' +
-      '   Open the booking page:\n' +
+      '1. BOOK YOUR SESSION (60 min)\n' +
+      '   Pick an available slot on the booking page below. The Google Meet\n' +
+      '   URL is auto-issued at booking and arrives in eeasy\'s confirmation\n' +
+      '   email.\n\n' +
+      '   ▶ Booking page:\n' +
       '   https://tckwshop.eeasy.jp/nicolas.umuyashiki/reps\n\n' +
-      '2. PAY AFTER BOOKING\n' +
-      '   A payment link will be sent to this email automatically after\n' +
-      '   booking. The fee is ¥11,000 (incl. tax) for residents in Japan,\n' +
-      '   or ¥10,000 (tax-exempt) for overseas residents.\n' +
-      '   ⚠ If payment is not completed by 23:59 the day before the session,\n' +
-      '   the booking is treated as canceled and the slot is released.\n\n' +
+      '2. PAY VIA THE LINK BELOW (¥11,000 incl. JCT for Japan / ¥10,000\n' +
+      '   tax-exempt for overseas)\n' +
+      '   Stripe auto-detects your country from the billing address you\n' +
+      '   enter and adjusts the tax accordingly. Receipt PDF is sent\n' +
+      '   automatically after payment.\n\n' +
+      '   ▶ Payment link:\n' +
+      '   https://buy.stripe.com/cNi00j7q3eHibVW7Vj1kA3x\n\n' +
+      '   ⚠ If payment is not completed by 23:59 JST the day before the\n' +
+      '   session, the booking is treated as canceled and the slot is\n' +
+      '   released automatically.\n\n' +
       '── About the session ──\n' +
       'The 60-minute session focuses entirely on the skills you selected:\n' +
-      'explanation, feedback, model answers, and live practice. Held on\n' +
-      'Google Meet.\n\n' +
+      'explanation, feedback, and hands-on practice. Held on Google Meet.\n\n' +
       'Questions? Reply to this email or contact TOEFL-Reps-tfpif@tckworkshop.co.jp.\n\n' +
       '— TCK Workshop / TOEFL Reps';
   } else {
@@ -145,19 +151,24 @@ function sendCoachingConfirmationToUser_(email, userName, skills, lang) {
       '── お申込み内容 ──\n' +
       '希望技能：\n' + skillsBullet + '\n\n' +
       '── 次のステップ ──\n' +
-      '1. セッションを予約する（60 分・¥11,000 税込／海外在住は ¥10,000）\n' +
-      '   下記の予約ページから空いている時間をお選びください：\n' +
+      '1. セッションを予約する（60 分）\n' +
+      '   下記の予約ページから空いている時間をお選びください。\n' +
+      '   予約確定時に Google Meet の URL が自動で発行され、eeasy からの\n' +
+      '   予約確定メールに同梱されます。\n\n' +
+      '   ▶ 予約ページ：\n' +
       '   https://tckwshop.eeasy.jp/nicolas.umuyashiki/reps\n\n' +
-      '2. 予約完了後、自動的に決済リンクが届きます\n' +
-      '   決済リンクから受講料をお支払いください。\n' +
-      '   ・国内在住の方： ¥11,000（税込）\n' +
-      '   ・海外在住の方： ¥10,000（税抜）\n' +
+      '2. 受講料をお支払い（国内在住 ¥11,000 税込 / 海外在住 ¥10,000 税抜）\n' +
+      '   下記の決済リンクからお支払いください。請求先住所で国内 / 海外を\n' +
+      '   自動判定し、税込・税抜を切り替えます。決済完了後、Stripe から\n' +
+      '   領収書 PDF が自動でメール送信されます。\n\n' +
+      '   ▶ 決済リンク：\n' +
+      '   https://buy.stripe.com/cNi00j7q3eHibVW7Vj1kA3x\n\n' +
       '   ⚠ セッション前日 23:59 までに支払いが完了しない場合、\n' +
       '   キャンセル扱いとなり、自動的に枠が解放されます。\n' +
       '   お早めのお手続きをお願いいたします。\n\n' +
       '── セッションについて ──\n' +
-      'セッションでは、選択された技能に絞って、解説・添削・模範解答の提示・\n' +
-      '実践練習を行います。1 セッション 60 分、Google Meet にて開催します。\n\n' +
+      'セッションでは、選択された技能に絞って、解説・添削・実践演習を行います。\n' +
+      '1 セッション 60 分、Google Meet にて開催します。\n\n' +
       'ご質問はこのメールに返信、または TOEFL-Reps-tfpif@tckworkshop.co.jp まで\n' +
       'ご連絡ください。\n\n' +
       '— TCK Workshop / TOEFL Reps';

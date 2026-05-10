@@ -149,7 +149,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
       <span class="step-title"><span class="jp">希望する技能を選ぶ（最大 2 つ）</span><span class="en">Pick your target skills (up to 2)</span></span>
     </div>
     <div class="step-body">
-      <p style="margin-bottom:14px"><span class="jp">1 セッション 60 分で <strong>最大 2 技能</strong>を扱えます。チェックボックスで選択し、下の「次へ進む」を押してください。お申込み確認メールが自動でお手元に届きます。</span><span class="en">A single 60-min session can cover <strong>up to two skills</strong>. Check the boxes and click "Continue" — a confirmation email will be sent to you automatically.</span></p>
+      <p style="margin-bottom:14px"><span class="jp">1 セッション 60 分で <strong>最大 2 技能</strong>を扱えます。チェックボックスで選択し、下の「次へ進む」を押してください。<strong>予約リンクと決済リンクを同梱した確認メール</strong>が自動で届きます。</span><span class="en">A single 60-min session can cover <strong>up to two skills</strong>. Check the boxes and click "Continue" — a confirmation email with <strong>both the booking link and the payment link</strong> will be sent to you automatically.</span></p>
       <div class="skill-counter"><span class="jp">選択中: <strong id="cnt">0</strong> / 2</span><span class="en">Selected: <strong id="cntEn">0</strong> / 2</span></div>
       <form id="skillForm" style="margin:0">
         <div class="skill-grid" id="skillGrid">
@@ -172,7 +172,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
     </div>
     <div class="step-body">
       <div class="price-line">¥10,000<small><span class="jp">税込 ¥11,000 ／ 海外在住は ¥10,000（税抜）</span><span class="en">¥11,000 incl. tax / ¥10,000 if overseas</span></small></div>
-      <p style="margin-bottom:14px"><span class="jp">Step 1 完了後の画面に予約リンクをご案内します。Google Meet にて開催。</span><span class="en">The booking link appears after you complete Step 1. Sessions are held on Google Meet.</span></p>
+      <p style="margin-bottom:14px"><span class="jp">確認メール内の予約リンクから空いている枠を選択してください。<strong>予約確定時に Google Meet URL が自動発行</strong>され、eeasy からの予約確定メールに同梱されます。</span><span class="en">Use the booking link in your confirmation email to pick an available slot. <strong>The Google Meet URL is auto-issued at booking</strong> and arrives in eeasy's confirmation email.</span></p>
     </div>
   </div>
 
@@ -183,7 +183,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
       <span class="step-title"><span class="jp">受講料をお支払い</span><span class="en">Complete payment</span></span>
     </div>
     <div class="step-body">
-      <p><span class="jp">予約完了後、ご登録メール宛に<strong>自動で決済リンク</strong>が届きます。リンクから受講料 ¥11,000（税込）をお支払いください。</span><span class="en">After booking, a <strong>payment link is sent automatically</strong> to your registered email. Use the link to pay ¥11,000 (incl. tax).</span></p>
+      <p><span class="jp">最初の確認メールに同梱された<strong>決済リンク</strong>からお支払いください。住所で自動判定し、<strong>国内在住は ¥11,000（税込）</strong>、<strong>海外在住は ¥10,000（税抜）</strong>。決済完了後、Stripe から領収書 PDF が自動送信されます。</span><span class="en">Use the <strong>payment link</strong> included in your first confirmation email. Stripe auto-detects your country from the billing address — <strong>¥11,000 (incl. JCT) for Japan residents</strong>, <strong>¥10,000 (tax-exempt) for overseas</strong>. The receipt PDF is sent automatically after payment.</span></p>
       <div class="warn-box">
         <div class="warn-title">⚠️ <span class="jp">支払い期限について</span><span class="en">Payment deadline</span></div>
         <div class="warn-body">
