@@ -125,6 +125,18 @@ var Api = {
       + '&pass=' + encodeURIComponent(p));
   },
 
+  /* Student self-recordings — returns ONLY the caller's own LR/TI
+     recordings, authenticated with the student pass. Used by my-score.html
+     and student-history.js so learners can review their own audio without
+     staff privileges. */
+  listMyRecordings: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_pass') || '';
+    return _jsonpRequest(API_URL + '?action=listMyRecordings'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
+  },
+
   /* Student-side: fetch the logged-in user's own past attempts for a
      specific (task, practice [, set]). GAS forces userId == verified
      user so callers can't read someone else's data. Used by
@@ -249,6 +261,33 @@ var Api = {
     var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
     return _jsonpRequest(API_URL + '?action=createPortalSession'
       + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
+  },
+
+  /* Private Coaching request — submits selected skills, triggering a
+     bilingual auto-reply email to the user and a notification to the
+     instructor. Backed by handleRequestCoaching_ on the GAS side, which
+     also appends a row to the COACHING_REQUESTS sheet. */
+  requestCoaching: function(skills) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var lang = (typeof localStorage !== 'undefined' && localStorage.getItem('tck_lang')) || 'jp';
+    return _jsonpRequest(API_URL + '?action=requestCoaching'
+      + '&userId='   + encodeURIComponent(u.userId   || '')
+      + '&userName=' + encodeURIComponent(u.userName || '')
+      + '&email='    + encodeURIComponent(u.email    || '')
+      + '&skills='   + encodeURIComponent(skills)
+      + '&lang='     + encodeURIComponent(lang));
+  },
+
+  /* Consultation booking status — reads CONSULTATION_BOOKINGS sheet (which
+     Zapier populates from eeasy webhook events) and returns whether the
+     user is currently locked out (already booked this calendar month).
+     Backed by handleGetConsultationStatus_ on the GAS side. */
+  getConsultationStatus: function() {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=getConsultationStatus'
+      + '&id='   + encodeURIComponent(u.userId || '')
       + '&pass=' + encodeURIComponent(p));
   }
 };
