@@ -39,7 +39,7 @@ speaking/ti/practice-{N}.html              — Take an Interview
 | Conversation | 2会話×2問 | |
 | Announcement | 2題×2問 | |
 | Academic Talk | 2題×4問 | 後半1題がHarder Module |
-| Build a Sentence | 16問 | |
+| Build a Sentence | 10問 | 約7分制限、各1点（ETS 2026 仕様） |
 | Write an Email | 1問 | 7分制限 |
 | Academic Discussion | 1問 | 10分制限 |
 | Listen & Repeat | 7文 | 段階的に長くなる |
