@@ -72,6 +72,42 @@ iframe[id^="hs-web-interactives-"]:not([id*="form"]) {
 .brand-logo--xs{height:22px}
 .brand-logo--xl{height:72px}
 
+/* ============================================================
+   Mobile / iPad responsiveness — added 2026-05
+   Practice pages were originally authored with desktop-first
+   flex/grid layouts and have their own inline <style> blocks
+   (which override common.css on equal specificity). The
+   `!important` flags here are deliberate: they let media
+   queries beat per-page styles for layout-only properties so
+   we don't have to edit ~120 practice files individually.
+   Touch only layout (flex-direction, padding, wrap, dimensions)
+   — never color/font.
+   ============================================================ */
+
+/* Split-pane Reading layouts (RDL, Academic Passage) — stack panels on phones */
+@media (max-width: 768px) {
+  .split-main { flex-direction: column !important; overflow: auto !important; }
+  .passage-panel { border-right: none !important; border-bottom: 1px solid var(--paper); max-height: 50vh !important; flex: 0 0 auto !important; }
+  .question-panel { flex: 1 1 auto !important; }
+}
+
+/* Top-nav (timer + review + user pill) — wrap on phones to prevent overflow */
+@media (max-width: 600px) {
+  .top-nav { flex-wrap: wrap !important; padding: 8px 12px !important; gap: 8px !important; row-gap: 6px !important; }
+  .top-nav-left, .top-nav-right { gap: 8px !important; flex-wrap: wrap !important; }
+}
+
+/* CTW input cells scale down on very narrow phones to avoid horizontal scroll */
+@media (max-width: 480px) {
+  .bx { width: 1.25em !important; height: 1.7em !important; }
+  .passage { font-size: .9em !important; line-height: 2 !important; }
+}
+
+/* Start cards / instruction cards — shrink padding on narrow phones */
+@media (max-width: 480px) {
+  .start-card, .instruction-card { padding: 28px 20px !important; }
+}
+
 /* Print styles — keep the logo and clean up chrome on printed reports */
 @media print{
   .brand-logo{height:36px!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}

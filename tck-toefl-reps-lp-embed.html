@@ -427,6 +427,27 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 .final-cta .btn-secondary:hover{background:var(--white);color:var(--green-deep);border-color:var(--white)}
 .final-cta-note{margin-top:26px;font-size:.82em;color:rgba(255,255,255,.5);font-family:var(--font-en)}
 
+/* trio diagram (final CTA) */
+.trio{margin:0 auto 36px;width:100%;max-width:360px;aspect-ratio:1/0.9;position:relative}
+.trio-fill{position:absolute;inset:0;background:#fff;clip-path:polygon(50% 15.56%,14% 93.33%,86% 93.33%);z-index:1;filter:drop-shadow(0 6px 20px rgba(0,0,0,.18))}
+.trio-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:3;pointer-events:none}
+.trio-svg line{stroke:var(--gold);stroke-width:2.5;stroke-linecap:round;opacity:.95}
+.trio-node{position:absolute;width:104px;height:104px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-jp);font-weight:700;font-size:1.05em;color:var(--green-deep);box-shadow:0 6px 22px rgba(0,0,0,.18);transform:translate(-50%,-50%);z-index:4}
+.trio-node.n-top{left:50%;top:14%;background:radial-gradient(circle at 35% 30%,#FBE3E8 0%,#F4B8C2 60%,#E89AAB 100%)}
+.trio-node.n-bl{left:14%;top:84%;background:radial-gradient(circle at 35% 30%,#FCE4D5 0%,#F4C0A2 60%,#E9A483 100%)}
+.trio-node.n-br{left:86%;top:84%;background:radial-gradient(circle at 35% 30%,#DDEEF7 0%,#A8D2E5 60%,#86BCD4 100%);flex-direction:column;gap:3px;line-height:1}
+.trio-node .reps-tag{display:inline-block;font-family:var(--font-en);font-size:.5em;font-weight:800;letter-spacing:.12em;color:var(--white);background:var(--green-deep);padding:2px 6px;border-radius:4px}
+.trio-node .reps-word{font-family:var(--font-en);font-size:.92em;font-weight:800;letter-spacing:.01em;color:var(--green-deep)}
+.trio-center{position:absolute;left:50%;top:68%;transform:translate(-50%,-50%);width:118px;max-width:32%;display:flex;align-items:center;justify-content:center;z-index:2}
+.trio-center img{width:100%;height:auto;display:block}
+@media (max-width:520px){
+  .trio{max-width:300px}
+  .trio-node{width:84px;height:84px;font-size:.95em}
+  .trio-node .reps-tag{font-size:.46em;padding:1.5px 5px}
+  .trio-node .reps-word{font-size:.82em}
+  .trio-center{width:96px}
+}
+
 /* ===== Footer ===== */
 .footer{background:var(--cream);padding:44px 32px 40px;border-top:1px solid var(--paper)}
 .footer-inner{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
@@ -478,7 +499,7 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 
     <h1 class="hero-combo-h1">
       アプリ <span class="x">×</span> 学習コンサル
-      <span class="tail">独学では届かない、<strong>半歩先</strong>の Band へ。</span>
+      <span class="tail">独学では届かない、<strong>次の Band</strong> へ。</span>
     </h1>
 
     <p class="hero-sub">
@@ -807,7 +828,7 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
       <div class="pricing-plan-name">Monthly Subscription</div>
 
       <div class="pricing-amount">
-        <span class="currency">¥</span><span class="price">3,980</span><span class="period">/ 月(税込)</span>
+        <span class="currency">¥</span><span class="price">3,980</span><span class="period">/ 月（税込 ¥4,378）</span>
       </div>
 
       <div class="pricing-subscription-note">
@@ -872,12 +893,23 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 <!-- ===== Final CTA ===== -->
 <section class="final-cta">
   <div class="final-cta-inner">
-    <h2>この子の隣に、<br>誰かがいる。</h2>
-    <p>
-      新形式 TOEFL 対策の「次の一手」を、今日から。<br>
-      月額 ¥3,980、いつでも解約可能です。
-    </p>
+    <h2>親も、講師も、アプリも。<br>全部つながる学習へ。</h2>
 
+    <div class="trio" aria-hidden="true">
+      <div class="trio-fill"></div>
+      <svg class="trio-svg" viewBox="0 0 100 90" preserveAspectRatio="none">
+        <line x1="50" y1="14" x2="14" y2="84"/>
+        <line x1="50" y1="14" x2="86" y2="84"/>
+        <line x1="14" y1="84" x2="86" y2="84"/>
+      </svg>
+      <div class="trio-center"><img src="https://apps.tckworkshop.co.jp/toefl-task-training/assets/tck-logo.png" alt="TCK Workshop"></div>
+      <div class="trio-node n-top">講師</div>
+      <div class="trio-node n-bl">親</div>
+      <div class="trio-node n-br">
+        <span class="reps-tag">TOEFL</span>
+        <span class="reps-word">Reps.</span>
+      </div>
+    </div>
     <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
       <a href="https://apps.tckworkshop.co.jp/toefl-reps-demo/" class="btn-primary" target="_blank" rel="noopener">無料体験から始める <span class="arrow">→</span></a>
       <a href="#pricing" class="btn-secondary">本サブスクの詳細</a>

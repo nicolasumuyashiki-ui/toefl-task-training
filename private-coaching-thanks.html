@@ -60,6 +60,23 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 .note-card{max-width:760px;margin:0 auto 40px;padding:20px 24px;background:var(--white);border:1px dashed var(--paper);border-radius:12px;font-size:.88em;color:var(--ink-500);line-height:1.75}
 .note-card strong{color:var(--green-dark)}
 
+.howto{max-width:760px;margin:0 auto 28px;padding:0 28px}
+.howto details{background:var(--white);border:1px solid var(--paper);border-radius:14px;padding:0;overflow:hidden}
+.howto summary{cursor:pointer;padding:16px 22px;font-family:var(--font-en),var(--font-jp);font-weight:700;font-size:.98em;color:var(--green-deep);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.howto summary::-webkit-details-marker{display:none}
+.howto summary::after{content:'＋';font-size:1.2em;color:var(--green);font-weight:600}
+.howto details[open] summary::after{content:'−'}
+.howto .howto-body{padding:6px 22px 20px;font-size:.92em;line-height:1.85;color:var(--ink-900);border-top:1px dashed var(--paper)}
+.howto ol{margin:8px 0 8px 20px}
+.howto ol li{margin-bottom:8px}
+.howto .field-list{margin:6px 0 6px 8px;padding-left:14px;border-left:2px solid var(--paper);font-size:.95em}
+.howto .field-list div{margin:3px 0}
+.howto .tip{margin-top:10px;padding:10px 14px;background:#f0f7ff;border-left:3px solid #2563eb;border-radius:0 8px 8px 0;font-size:.9em;color:#1e3a8a}
+.howto .legend{display:inline-block;width:1.2em;text-align:center;font-weight:800}
+.howto .legend.ok{color:#16a34a}
+.howto .legend.lim{color:#d97706}
+.howto .legend.no{color:#9ca3af}
+
 .alt-section{max-width:760px;margin:0 auto 40px;padding:0 28px;font-size:.86em;color:var(--ink-500);line-height:1.75}
 .alt-section a{color:var(--green-dark);font-weight:700}
 
@@ -113,6 +130,56 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
     <span class="jp"><strong>⚠ 後から面談調整される方へ</strong>：面談可能な時間枠は、お申込みがある度に埋まっていきます。<strong>ご都合の良い時間がなくなる可能性</strong>もございますので、なるべく早く日程調整されることをおすすめいたします。</span>
     <span class="en"><strong>⚠ If you plan to schedule later:</strong> available slots fill up as new requests come in. <strong>Your preferred time may no longer be open</strong> later — we recommend booking as soon as possible.</span>
   </div>
+</div>
+
+<!-- How to book on eeasy (Japanese-only interface) -->
+<div class="howto">
+  <details>
+    <summary>
+      <span class="jp">📖 予約ページの使い方（ご参考）</span>
+      <span class="en">📖 How to book on the Japanese booking page (eeasy)</span>
+    </summary>
+    <div class="howto-body">
+      <!-- JP: brief, Japanese users can read eeasy directly -->
+      <div class="jp">
+        <p>予約ページ（eeasy）は日本語表示です。基本的には次の流れでお進みください。</p>
+        <ol>
+          <li>カレンダーから空き枠（<span class="legend ok">○</span> または <span class="legend lim">△</span>）の日付をクリック</li>
+          <li>表示された時間帯から希望の時間を選択（時刻は日本時間 JST）</li>
+          <li>お名前・メールアドレス（このメールと同じものをご利用ください）等を入力</li>
+          <li><strong>「予約を確定する」</strong>ボタンを押して完了。確認メールが eeasy から届きます。</li>
+        </ol>
+      </div>
+
+      <!-- EN: detailed step-by-step since eeasy is Japanese-only -->
+      <div class="en">
+        <p>The booking page (eeasy) is in <strong>Japanese only</strong>. Here is a step-by-step walkthrough so you can navigate it confidently.</p>
+        <ol>
+          <li><strong>Open the calendar.</strong> You'll see a monthly calendar grid. Each date shows one of these marks:
+            <div class="field-list">
+              <div><span class="legend ok">○</span> = open slots available</div>
+              <div><span class="legend lim">△</span> = limited availability</div>
+              <div><span class="legend no">×</span> or blank = fully booked / unavailable</div>
+            </div>
+            Click any date marked <span class="legend ok">○</span> or <span class="legend lim">△</span>.
+          </li>
+          <li><strong>Move between months</strong> using the arrows at the top of the calendar (「<」「>」or 「前月」/「翌月」).</li>
+          <li><strong>Choose a time slot.</strong> After picking a date, a list of available start times appears. Times are shown in <strong>Japan Standard Time (JST / UTC+9)</strong>. You can switch the display to your own time-zone if the option appears. Click the time you want.</li>
+          <li><strong>Fill in the form.</strong> A short form opens. The fields are:
+            <div class="field-list">
+              <div>・<strong>お名前 (Name)</strong> → your full name</div>
+              <div>・<strong>メールアドレス (Email)</strong> → use the SAME email address as this page</div>
+              <div>・<strong>電話番号 (Phone)</strong> → optional; you can leave blank or enter "0000000000"</div>
+              <div>・<strong>ご質問・ご要望 (Notes / requests)</strong> → optional; you may write in English</div>
+            </div>
+          </li>
+          <li><strong>Agree & confirm.</strong> If a checkbox labeled 「同意する」(I agree) appears, tick it. Then click the green button labeled 「予約を確定する」or 「確定」(Confirm booking).</li>
+          <li><strong>Done.</strong> You'll see a 「予約完了」(Booking complete) screen and receive a confirmation email from eeasy in Japanese. A separate payment link will arrive shortly afterward.</li>
+        </ol>
+        <div class="tip">💡 <strong>Tip:</strong> In Google Chrome, right-click anywhere on the page and choose <em>"Translate to English"</em>. The whole interface becomes readable in English while you book.</div>
+      </div>
+    </div>
+  </details>
 </div>
 
 <!-- CTA -->
