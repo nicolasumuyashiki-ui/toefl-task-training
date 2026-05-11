@@ -32,13 +32,13 @@ speaking/ti/practice-{N}.html              — Take an Interview
 ## 各Practice内の問題数
 | タスク | 問題数/Practice | 備考 |
 |--------|----------------|------|
-| CTW | 3問 | 最後の1問がHarder Module |
-| RDL | 2問 | 1問目が短め、2問目が長め |
-| Academic Passage | 2問 | 後半1問がHarder Module |
+| CTW | 2セット×10 blanks | セットごとに別パッセージ。Harder Module ラベルは付けない（ETS 仕様：Harder は section adaptive レベルで、個別 task 単位では指定なし） |
+| RDL | 2パッセージ×計4〜6問 | パッセージあたり 2〜3問。ETS は per-task 件数を固定していないので、4〜6問の幅で OK |
+| Academic Passage | 2問 | 後半1問がHarder Module（プロジェクト内の擬似 Harder 慣習） |
 | LCR | 8問 | Q1-2:B1, Q3-5:B1-B2, Q6-8:B2 |
 | Conversation | 2会話×2問 | |
 | Announcement | 2題×2問 | |
-| Academic Talk | 2題×4問 | 後半1題がHarder Module |
+| Academic Talk | 2題×4問 = 計8問 | 1 talk あたり4問（ETS 仕様）。後半1題が Harder Module（プロジェクト内の擬似 Harder 慣習） |
 | Build a Sentence | 10問 | 約7分制限、各1点（ETS 2026 仕様） |
 | Write an Email | 1問 | 7分制限 |
 | Academic Discussion | 1問 | 10分制限 |
