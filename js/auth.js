@@ -10,25 +10,14 @@ var TCK_ALLOWLIST = [
   // External beta emails go here (lowercase).
   // 'beta@example.com',
 ];
-/* Monitor / comp-tier accounts — these emails get full subscription
-   access without going through Stripe billing. Used for unpaid
-   monitors / pilot testers whose feedback we want before public
-   launch. Lowercase. Add or remove as the monitor pool changes. */
-var TCK_MONITOR_ALLOWLIST = [
-  'saekadowaki322@gmail.com',
-  'bellsince2004@gmail.com',
-  'mkusunoki0811@gmail.com',
-  'soccerzurdo1@gmail.com'
-];
+/* Monitor / comp-tier allowlist used to live here. Moved server-side
+   (GAS handleGetSubscription_ short-circuits to status=active for
+   listed emails) so the list isn't visible in client source / Git
+   history. See docs/gas-monitor-allowlist.js for the GAS-side code. */
 /* Staff login IDs — emergency bypass for users whose email cannot be
    validated. Empty by default now that GAS returns the email field.
    Add entries here only as a short-term override. */
 var TCK_STAFF_ID_ALLOWLIST = [];
-
-function tckIsMonitor(email) {
-  if (!email || typeof email !== 'string') return false;
-  return TCK_MONITOR_ALLOWLIST.indexOf(email.toLowerCase()) !== -1;
-}
 
 function tckIsAllowed(email, userId) {
   if (userId && TCK_STAFF_ID_ALLOWLIST.indexOf(userId) !== -1) return true;
@@ -119,8 +108,9 @@ var Auth = {
     if (!user) return;
     // Staff bypass — TCK domain users always have access.
     if (tckIsStaff(user.email, user.userId)) return;
-    // Monitor / comp-tier bypass — unpaid pilot users on the allowlist.
-    if (tckIsMonitor(user.email)) return;
+    // (Monitor / comp-tier bypass moved server-side — GAS returns
+    // status=active for those emails, so the standard subscription
+    // check below handles them transparently.)
     // Grandfather bypass — sessions from before GAS started returning the
     // email field have no email at all. Such users have already passed
     // tckIsAllowed (which fails-open when email is missing), so we can't
@@ -199,7 +189,6 @@ var Auth = {
 if (typeof window !== 'undefined') {
   window.tckIsAllowed = tckIsAllowed;
   window.tckIsStaff = tckIsStaff;
-  window.tckIsMonitor = tckIsMonitor;
 }
 
 /* ============================================================
@@ -227,7 +216,8 @@ if (typeof window !== 'undefined') {
     var u; try { u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}'); } catch (e) { u = {}; }
     if (!u.userId) return;
     if (typeof tckIsStaff === 'function' && tckIsStaff(u.email, u.userId)) return; // Staff bypass
-    if (typeof tckIsMonitor === 'function' && tckIsMonitor(u.email)) return; // Monitor bypass
+    // (Monitor / comp-tier bypass moved server-side — GAS will return
+    // status=active for those emails so applyLockedState never fires.)
     // Grandfather bypass — same logic as Auth._enforceSubscriptionGate.
     // Sessions saved before GAS started returning the email field have
     // u.email === '' (or undefined). We can't distinguish a TCK staffer
