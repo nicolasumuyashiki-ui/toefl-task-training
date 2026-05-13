@@ -74,16 +74,12 @@ var Auth = {
       window.location.href = tckRootPrefix() + 'index.html';
       return false;
     }
-    // 2. Enforce domain gate (skip in ?preview=1 mode)
+    // 2. Domain-whitelist gate removed (post-public-launch). Anyone
+    //    with a USERS row can navigate; the subscription gate below
+    //    is the real content-access control. To re-enable a domain
+    //    block, restore: if (u && u.email && !tckIsAllowed(...)) {…}.
     if (location.search.indexOf('preview=1') === -1) {
       var u = this.getUser();
-      // If no email is present in the session (GAS may omit it), fall
-      // back to userId allowlist. Only reject if email exists AND fails.
-      if (u && u.email && !tckIsAllowed(u.email, u.userId)) {
-        sessionStorage.removeItem(this.SESSION_KEY);
-        window.location.href = tckRootPrefix() + 'index.html?gate=denied';
-        return false;
-      }
       // 3. Subscription gate — TCK staff bypass; everyone else needs an
       //    active subscription. Runs in the background so the page paints
       //    immediately; if the check fails, redirects to billing.html.

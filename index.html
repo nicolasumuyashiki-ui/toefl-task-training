@@ -249,15 +249,13 @@ function doLogin() {
   setLoading('btnLogin','spinLogin',true);
   Api.login(id,pass).then(function(r){
     if(r.success){
-      // If GAS returns an email, verify it. If email is missing (legacy
-      // backend), fall back to userId allowlist inside tckIsAllowed.
-      // GAS may flag the user as a monitor (server-side allowlist) — in
-      // that case skip the client-side domain check.
-      if(typeof tckIsAllowed==='function' && r.email && !r.isMonitor && !tckIsAllowed(r.email, r.userId)){
-        err.textContent=tMsg('このアプリは TCK Workshop 会員のみご利用いただけます。','This app is for TCK Workshop members only.');
-        setLoading('btnLogin','spinLogin',false);
-        return;
-      }
+      // Login no longer enforces a domain whitelist. Anyone with a
+      // USERS row can sign in; access to actual TOEFL Reps content
+      // is gated by Auth._enforceSubscriptionGate (subscription
+      // active OR staff bypass OR server-side monitor flag), which
+      // redirects unpaid users to billing.html. This way new
+      // subscribers can log in, see the billing screen, pay, and
+      // return — instead of getting stuck before reaching payment.
       saveAndGo(r, pass);
     }
     else if (r.error === 'temp_password_expired') {
@@ -280,10 +278,10 @@ function doRegister() {
       err=document.getElementById('errReg'), succ=document.getElementById('succReg');
   err.textContent=''; succ.textContent='';
   if(!name||!id||!pass||!email){err.textContent=tMsg('すべての項目を入力してください','Please fill in every field.');return;}
-  if(typeof tckIsAllowed==='function' && !tckIsAllowed(email)){
-    err.textContent=tMsg('TCK Workshop のメールアドレス（@tckworkshop.co.jp）でのみ登録できます。例外が必要な場合はお問い合わせください。','You can only register with a TCK Workshop email (@tckworkshop.co.jp). Contact us for an exception.');
-    return;
-  }
+  // Registration is open to any email — the subscription gate in
+  // Auth._enforceSubscriptionGate is what actually grants content
+  // access, so unpaid signups can register here but won't see any
+  // tasks until they complete Stripe checkout.
   setLoading('btnRegister','spinReg',true);
   Api.register(id,pass,name,email).then(function(r){
     if(r.success){succ.textContent=tMsg('登録完了！','Registered — taking you in…');setTimeout(function(){saveAndGo(r, pass);},400);}
