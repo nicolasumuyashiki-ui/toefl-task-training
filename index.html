@@ -251,7 +251,9 @@ function doLogin() {
     if(r.success){
       // If GAS returns an email, verify it. If email is missing (legacy
       // backend), fall back to userId allowlist inside tckIsAllowed.
-      if(typeof tckIsAllowed==='function' && r.email && !tckIsAllowed(r.email, r.userId)){
+      // GAS may flag the user as a monitor (server-side allowlist) — in
+      // that case skip the client-side domain check.
+      if(typeof tckIsAllowed==='function' && r.email && !r.isMonitor && !tckIsAllowed(r.email, r.userId)){
         err.textContent=tMsg('このアプリは TCK Workshop 会員のみご利用いただけます。','This app is for TCK Workshop members only.');
         setLoading('btnLogin','spinLogin',false);
         return;

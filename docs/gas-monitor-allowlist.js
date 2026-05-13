@@ -17,7 +17,10 @@
  *   2. REPLACE your existing `handleGetSubscription_` function with
  *      the new version below (block 2). The only diff is a 4-line
  *      monitor short-circuit at the top.
- *   3. Save (Ctrl+S) → Deploy → Manage deployments → 鉛筆 →
+ *   3. ALSO patch `handleLogin_` to return `isMonitor` (block 3).
+ *      The index.html login flow uses this flag to skip the
+ *      domain whitelist check so monitor gmail addresses can sign in.
+ *   4. Save (Ctrl+S) → Deploy → Manage deployments → 鉛筆 →
  *      New version → Deploy.
  *
  * To add / remove monitors later: edit MONITOR_EMAILS, save, redeploy.
@@ -87,3 +90,31 @@ function handleGetSubscription_(e, callback) {
                 .sort(function(a,b){ return (b.updated_at || '').localeCompare(a.updated_at || ''); })[0];
   return jsonpResponse_(callback, { success: true, subscription: sub || null });
 }
+
+
+// =============================================================
+// BLOCK 3 — patch handleLogin_ to surface isMonitor flag
+// =============================================================
+// In your existing handleLogin_, the success return looks like:
+//
+//   return jsonpResponse_(callback, {
+//     success: true,
+//     userId: String(d[i][0]),
+//     userName: String(d[i][2] || ''),
+//     email: String(d[i][3] || ''),
+//     mustChangePassword: mustChange
+//   });
+//
+// ADD ONE LINE so it becomes:
+//
+//   return jsonpResponse_(callback, {
+//     success: true,
+//     userId: String(d[i][0]),
+//     userName: String(d[i][2] || ''),
+//     email: String(d[i][3] || ''),
+//     mustChangePassword: mustChange,
+//     isMonitor: isMonitorEmail_(String(d[i][3] || ''))   // <-- ADD THIS
+//   });
+//
+// That's the only diff. index.html consumes `isMonitor` to skip the
+// TCK-domain check for comp-tier accounts.
