@@ -8,7 +8,7 @@ GitHub Pages でデプロイ: nicolasumuyashiki-ui/toefl-task-training
 
 ## ファイル構造
 ```
-reading/ctw/practice-{N}-set-{1,2,3}.html  — Complete the Words（1セット1ファイル）
+reading/ctw/practice-{N}-set-{1,2}.html  — Complete the Words（1セット1ファイル）
 reading/rdl/practice-{N}.html              — Read in Daily Life
 reading/academic/practice-{N}.html         — Read an Academic Passage
 listening/lcr/practice-{N}.html            — Listen and Choose a Response
@@ -76,7 +76,7 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - **Listening (LCR/Conv/Announce/Talk)**: スタートオーバーレイ→音声再生→1問ずつ表示→タイマー→自動進行→結果画面
 - **Speaking (LR/TI)**: Instructionページ→音声再生→カウントダウンの逐次進行
 - **Writing (Discussion/Email/Sentence)**: Instructionページ→タイマー付きライティング→完了画面
-- **Reading (CTW)**: 1セット1ファイル（`practice-{N}-set-{1,2,3}.html`）、セット間はNext→ファイル遷移
+- **Reading (CTW)**: 1セット1ファイル（`practice-{N}-set-{1,2}.html`）、セット間はNext→ファイル遷移
 - **Reading (Academic/RDL)**: Split layout、1問ずつ表示
 
 ## Build a Sentence 複数正解対応

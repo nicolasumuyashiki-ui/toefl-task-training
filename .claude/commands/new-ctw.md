@@ -3,24 +3,23 @@ Complete the Words (CTW) の新しい問題セットを作成してください�
 ## 事前準備（自動実行）
 1. `docs/topic-history.md` を読み、CTWセクションの使用済みトピックを確認する
 2. `reading/ctw/` フォルダ内の既存ファイルを確認し、次のPractice番号を特定する
-3. 使用済みトピックと重複しないテーマを3つ選定する（Set 1, 2, 3）
+3. 使用済みトピックと重複しないテーマを2つ選定する（Set 1, 2）
 4. 既存の `reading/ctw/practice-1-set-1.html` を読み、HTML/CSS/JS構造を踏襲する
 
 ## 指定
 $ARGUMENTS
-- 例: `volcanoes, sleep science, ancient rome` → Set 1/2/3のトピック指定
+- 例: `volcanoes, sleep science` → Set 1/2のトピック指定
 - 例: `random` or 空 → 全てランダム生成
 
 ## 出力ファイル
 1. `reading/ctw/practice-{N}-set-1.html` — Set 1 HTML
 2. `reading/ctw/practice-{N}-set-2.html` — Set 2 HTML
-3. `reading/ctw/practice-{N}-set-3.html` — Set 3 HTML（Harder Module）
-4. `reading/ctw/practice-{N}-answers.html` — 3セット分の解答解説ページ
+3. `reading/ctw/practice-{N}-answers.html` — 2セット分の解答解説ページ
 
 ## CTW 問題仕様
 
 ### 概要
-- 1 Practice = 3セット（Set 1, 2: Module 1 / Set 3: Harder Module）
+- 1 Practice = 2セット（いずれも Module 1 相当）
 - 各セット: アカデミックパッセージの空欄に欠けた文字を入力
 - 1セットあたりターゲットワード20語、うち10語がユーザー入力（残り10は表示のみ）
 - 制限時間: 各セット10分（メインアプリ実装に合わせる）
@@ -34,11 +33,6 @@ $ARGUMENTS
   - 日常的な学術トピック（教育、健康、環境など）
   - 基本的な学術語彙（significant, demonstrate, environment 等）
   - 接頭辞は3-4文字表示（残り2-4文字入力）
-- Set 3: CEFR B2-C1（Harder Module — やや難しい語彙・構文）
-  - より専門的なトピック（生態学、経済理論、神経科学など）
-  - 高度な学術語彙（hypothesis, synthesize, unprecedented 等）
-  - 接頭辞は2-3文字表示（残り4-6文字入力）— Set 1-2 より短いヒント
-  - 複雑な文構造（関係代名詞の入れ子、分詞構文など）
 
 ### ターゲットワード選定ルール
 - 20語のうち10語をユーザー入力（`a` フィールドに欠けた文字を指定）
@@ -72,7 +66,7 @@ var D = {
 - 接頭部分だけで単語が一意に特定できる場合は避ける
 
 ### HTML構造（既存踏襲 — 必ず practice-1-set-1.html を参照）
-- トップナビ: `Set X of 3` / タイトル / タイマー / Review / ユーザーバッジ
+- トップナビ: `Set X of 2` / タイトル / タイマー / Review / ユーザーバッジ
 - プログレスバー
 - メインコンテンツ: 中央配置（max-width: 660px）
   - set-label → direction → passage（intro + targets + conclusion）
@@ -83,8 +77,8 @@ var D = {
 
 ### JS変数（セットごとに変更）
 ```javascript
-var SET_NUM = 1;  // 1, 2, or 3
-var NEXT_PAGE = "practice-{N}-set-2.html";  // Set3は answers ページ
+var SET_NUM = 1;  // 1 or 2
+var NEXT_PAGE = "practice-{N}-set-2.html";  // Set2は answers ページ
 ```
 
 ### セッションストレージ
@@ -93,7 +87,7 @@ var NEXT_PAGE = "practice-{N}-set-2.html";  // Set3は answers ページ
 
 ### 解答ページ（practice-{N}-answers.html）
 - 既存の practice-1-answers.html の構造を完全に踏襲
-- 3セット分のスコアサマリー + 個別スコアカード
+- 2セット分のスコアサマリー + 個別スコアカード
 - Tips セクション（品詞特定、頻出パターン、推測の重要性）
 - 各セットのタブ切替
 - 各問題カード: 問題番号（正誤色分け）、表示部 + 正解 + 完全な単語、難易度タグ（MOD/HARD）、品詞、解説（日本語）
@@ -113,11 +107,10 @@ var NEXT_PAGE = "practice-{N}-set-2.html";  // Set3は answers ページ
 - [ ] `p`（句読点）が正確（コード検証）
 - [ ] passage表示文字列のアンダースコア数 = 各answerの文字数（コード検証、目視禁止）
 - [ ] passage表示文字列のshown部分 = データの`s`（コード検証）
-- [ ] Set 3 が Harder Module 相当の難易度
 - [ ] 過去セットとトピックが重複していない
 
 ## 作成後
-1. 3つのHTMLファイル + 解答ページを作成
+1. 2つのHTMLファイル + 解答ページを作成
 2. `docs/topic-history.md` のCTWセクションに使用したトピックを追記
 3. 検証サマリーを表示:
    - 各パッセージ語数
