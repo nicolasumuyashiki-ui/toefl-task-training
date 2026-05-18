@@ -115,18 +115,18 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
 </head>
 <body>
-<div class="tck-instruction-overlay" id="tckInstructionOverlay"><div class="tck-instruction-card" role="dialog" aria-modal="true"><h2 class="tck-instruction-title">Read an Academic Passage</h2><p class="tck-instruction-intro"><span class="jp">学術的な長文を読み、各設問に答えます。語彙・推論・要約・挿入など複数タイプの設問があります。</span><span class="en">Read an academic passage and answer the questions. Types include vocabulary, inference, summary, and insertion.</span></p><ul class="tck-instruction-points"><li><span class="jp">各パッセージの主張・サポートを把握してから設問に進むと効率的。</span><span class="en">Grasp the main idea and supports first, then tackle the questions.</span></li><li><span class="jp">語彙問題は前後の文脈から意味を推測。</span><span class="en">For vocabulary, infer from the surrounding context.</span></li><li><span class="jp">挿入問題は前後の論理関係（discourse markers）に注目。</span><span class="en">For insertion, focus on discourse markers linking sentences.</span></li></ul><div class="tck-instruction-notice">⏱ <span class="jp">制限時間 36 分。「はじめる」をクリックするとタイマーがスタートします。</span><span class="en">Time limit: 36 minutes. The timer starts when you click Start.</span></div><button class="tck-instruction-start" type="button" onclick="tckStartTask()"><span class="jp">はじめる</span><span class="en">Start</span></button></div></div>
+<div class="tck-instruction-overlay" id="tckInstructionOverlay"><div class="tck-instruction-card" role="dialog" aria-modal="true"><h2 class="tck-instruction-title">Read an Academic Passage</h2><p class="tck-instruction-intro"><span class="jp">学術的な長文を読み、各設問に答えます。語彙・推論・要約・挿入など複数タイプの設問があります。</span><span class="en">Read an academic passage and answer the questions. Types include vocabulary, inference, summary, and insertion.</span></p><ul class="tck-instruction-points"><li><span class="jp">各パッセージの主張・サポートを把握してから設問に進むと効率的。</span><span class="en">Grasp the main idea and supports first, then tackle the questions.</span></li><li><span class="jp">語彙問題は前後の文脈から意味を推測。</span><span class="en">For vocabulary, infer from the surrounding context.</span></li><li><span class="jp">挿入問題は前後の論理関係（discourse markers）に注目。</span><span class="en">For insertion, focus on discourse markers linking sentences.</span></li></ul><div class="tck-instruction-notice">⏱ <span class="jp">制限時間 25 分。「はじめる」をクリックするとタイマーがスタートします。</span><span class="en">Time limit: 25 minutes. The timer starts when you click Start.</span></div><button class="tck-instruction-start" type="button" onclick="tckStartTask()"><span class="jp">はじめる</span><span class="en">Start</span></button></div></div>
 
 <!-- TOP NAV -->
 <div class="top-nav">
   <div class="top-nav-left">
-    <img class="brand-logo" src="../../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px"><span>Question <span id="qLabel"><strong>1</strong></span> of 6</span>
+    <img class="brand-logo" src="../../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px"><span>Question <span id="qLabel"><strong>1</strong></span> of 10</span>
     <span>|</span>
     <span>Academic Reading</span>
   </div>
   <div class="top-nav-right">
     <button class="timer-btn" onclick="toggleTimer()">Hide Time</button>
-    <span class="timer-display" id="timerDisplay">20:00</span>
+    <span class="timer-display" id="timerDisplay">25:00</span>
     <button class="review-btn" onclick="openReview()">Review</button>
     <span class="user-badge" id="userBadge"></span>
   </div>
@@ -234,6 +234,64 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
         </div>
       </div>
     </div>
+
+    <!-- Q4: Rhetorical Purpose -->
+    <div class="question-page" id="page4">
+      <div class="question-text">
+        <span class="question-number">4.</span>Why does the author mention Buddhism and Islam in paragraph 2?
+      </div>
+      <div class="options">
+        <div class="option" data-q="4" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">To illustrate how religious beliefs traveled along the Silk Road</span>
+        </div>
+        <div class="option" data-q="4" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">To argue that religion was more important than commercial trade</span>
+        </div>
+        <div class="option" data-q="4" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">To compare the core doctrines of two major world religions</span>
+        </div>
+        <div class="option" data-q="4" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">To explain why these religions remain popular in Asia today</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Factual -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>According to the passage, what was one major effect of papermaking technology reaching new regions?
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">It led to the creation of entirely new languages across Europe</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">It transformed the way information was recorded and shared</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">It allowed European scholars to study directly with Chinese teachers</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">It made earlier writing materials too costly to continue producing</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -251,72 +309,130 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
   </div>
 
   <div class="question-panel">
-    <!-- Q4: Rhetorical Purpose -->
-    <div class="question-page active" id="page4">
+    <!-- Q6: Rhetorical Purpose -->
+    <div class="question-page active" id="page6">
       <div class="question-text">
-        <span class="question-number">4.</span>Why does the author mention cacti and tropical rainforest plants in paragraph 3?
+        <span class="question-number">6.</span>Why does the author mention cacti and tropical rainforest plants in paragraph 3?
       </div>
       <div class="options">
-        <div class="option" data-q="4" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="A">
+        <div class="option" data-q="6" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="A">
           <span class="option-label">A</span>
           <span class="option-text">To show that photosynthesis occurs only in extreme environments</span>
         </div>
-        <div class="option" data-q="4" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="B">
+        <div class="option" data-q="6" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="B">
           <span class="option-label">B</span>
           <span class="option-text">To explain why chlorophyll reflects green light</span>
         </div>
-        <div class="option" data-q="4" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="C">
+        <div class="option" data-q="6" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="C">
           <span class="option-label">C</span>
           <span class="option-text">To argue that desert plants are more efficient at photosynthesis than rainforest plants</span>
         </div>
-        <div class="option" data-q="4" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="D">
+        <div class="option" data-q="6" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="D">
           <span class="option-label">D</span>
           <span class="option-text">To illustrate how different plants have adapted their photosynthetic strategies to suit their environments</span>
         </div>
       </div>
     </div>
 
-    <!-- Q5: Vocabulary in Context -->
-    <div class="question-page" id="page5">
+    <!-- Q7: Vocabulary in Context -->
+    <div class="question-page" id="page7">
       <div class="question-text">
-        <span class="question-number">5.</span>The word "<span style="background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:700">remarkable</span>" in paragraph 3 is closest in meaning to
+        <span class="question-number">7.</span>The word "<span style="background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:700">remarkable</span>" in paragraph 3 is closest in meaning to
       </div>
       <div class="options">
-        <div class="option" data-q="5" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="A">
+        <div class="option" data-q="7" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="A">
           <span class="option-label">A</span>
           <span class="option-text">ordinary</span>
         </div>
-        <div class="option" data-q="5" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="B">
+        <div class="option" data-q="7" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="B">
           <span class="option-label">B</span>
           <span class="option-text">risky</span>
         </div>
-        <div class="option" data-q="5" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="C">
+        <div class="option" data-q="7" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="C">
           <span class="option-label">C</span>
           <span class="option-text">notable</span>
         </div>
-        <div class="option" data-q="5" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="D">
+        <div class="option" data-q="7" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="D">
           <span class="option-label">D</span>
           <span class="option-text">recent</span>
         </div>
       </div>
     </div>
 
-    <!-- Q6: Sentence Insertion -->
-    <div class="question-page" id="page6">
+    <!-- Q8: Sentence Insertion -->
+    <div class="question-page" id="page8">
       <div class="question-text">
-        <span class="question-number">6.</span>Look at the four squares [<span style="display:inline-block;width:16px;height:16px;background:#007646;color:white;font-size:.6rem;font-weight:700;text-align:center;line-height:16px;border-radius:3px;vertical-align:middle">&#9632;</span>] that indicate where the following sentence could be added to the passage.
+        <span class="question-number">8.</span>Look at the four squares [<span style="display:inline-block;width:16px;height:16px;background:#007646;color:white;font-size:.6rem;font-weight:700;text-align:center;line-height:16px;border-radius:3px;vertical-align:middle">&#9632;</span>] that indicate where the following sentence could be added to the passage.
       </div>
       <div class="insertion-sentence-display">Furthermore, these improved crops would be especially valuable in tropical regions, where rising temperatures already threaten staple food production.</div>
       <div class="insertion-instruction">Click on a square [<span style="display:inline-block;width:16px;height:16px;background:#007646;color:white;font-size:.6rem;font-weight:700;text-align:center;line-height:16px;border-radius:3px;vertical-align:middle">&#9632;</span>] to add the sentence to the passage. You can click a different square to change your selection.</div>
       <div class="selection-status none" id="insertionStatus">Click a square in the passage to place the sentence.</div>
+    </div>
+
+    <!-- Q9: Factual -->
+    <div class="question-page" id="page9">
+      <div class="question-text">
+        <span class="question-number">9.</span>According to the passage, what is one way that tropical rainforest plants adapt to their environment?
+      </div>
+      <div class="options">
+        <div class="option" data-q="9" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">They open their stomata only at night to conserve water</span>
+        </div>
+        <div class="option" data-q="9" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">They develop very deep root systems to reach groundwater</span>
+        </div>
+        <div class="option" data-q="9" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">They grow broad, thin leaves to maximize light absorption</span>
+        </div>
+        <div class="option" data-q="9" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">They produce thicker bark to protect against constant humidity</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10: Inference -->
+    <div class="question-page" id="page10">
+      <div class="question-text">
+        <span class="question-number">10.</span>What can be inferred about the practical importance of photosynthesis research mentioned in paragraph 4?
+      </div>
+      <div class="options">
+        <div class="option" data-q="10" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">It will primarily benefit scientists working in non-tropical regions</span>
+        </div>
+        <div class="option" data-q="10" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">It is expected to replace traditional plant breeding as the main tool</span>
+        </div>
+        <div class="option" data-q="10" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">It is mainly useful for studying past climates rather than future ones</span>
+        </div>
+        <div class="option" data-q="10" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">It could contribute to food security as climate conditions change</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -338,10 +454,10 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 
 <script>
 var currentQ = 1;
-var totalQ = 6;
+var totalQ = 10;
 var userAnswers = {};
 var timerVisible = true;
-var timeLeft = 1200; // 20 minutes
+var timeLeft = 1500; // 25 minutes
 var timerInterval;
 var storageKey = 'training_academic_p4_answers';
 var timerKey = 'training_academic_p4_timer';
@@ -365,7 +481,7 @@ function restoreState(saved){
   }
   if(saved.selectedInsertionPoint){
     selectedInsertionPoint = saved.selectedInsertionPoint;
-    userAnswers['6'] = selectedInsertionPoint;
+    userAnswers['8'] = selectedInsertionPoint;
     sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
   }
 
@@ -378,11 +494,11 @@ function restoreState(saved){
 }
 function tckSave(){ if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState()); }
 
-// Passage page mapping: questions 1-3 = passage 1, questions 4-6 = passage 2
-function getPassagePage(q){ return q <= 3 ? 1 : 2; }
+// Passage page mapping: questions 1-5 = passage 1, questions 6-10 = passage 2
+function getPassagePage(q){ return q <= 5 ? 1 : 2; }
 
 // Track which question is "active" within each passage page
-function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 4; }
+function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 6; }
 
 function selectOption(el){
   var q = el.getAttribute('data-q');
@@ -401,12 +517,12 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'A','2':'C','3':'B','4':'D','5':'C','6':'B'};
+    var ca={'1':'A','2':'C','3':'B','4':'A','5':'B','6':'D','7':'C','8':'B','9':'C','10':'D'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    var harderCorrect=0,harderTotal=0;['4','5','6'].forEach(function(k){harderTotal++;if(ans[k]===ca[k])harderCorrect++;});
+    var harderCorrect=0,harderTotal=0;['6','7','8','9','10'].forEach(function(k){harderTotal++;if(ans[k]===ca[k])harderCorrect++;});
     if(insertionPara) insertionPara.innerHTML = normalParagraphHTML;
-    sessionStorage.setItem('training_score_academic_p4',JSON.stringify({correct:sc,total:6,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));
+    sessionStorage.setItem('training_score_academic_p4',JSON.stringify({correct:sc,total:10,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-4-answers.html';
     return;
@@ -421,13 +537,13 @@ function navigate(dir){
     document.getElementById('passagePage'+newPassage).style.display = 'flex';
     // Deactivate all question pages in old passage
     var oldStart = getLocalFirst(oldPassage);
-    var oldEnd = oldPassage === 1 ? 3 : 6;
+    var oldEnd = oldPassage === 1 ? 5 : 10;
     for(var i = oldStart; i <= oldEnd; i++){
       document.getElementById('page'+i).classList.remove('active');
     }
   }
   currentQ = next;
-  if(window.TCKDifficulty)TCKDifficulty.setForIndex(currentQ-1,[3,4,5]);
+  if(window.TCKDifficulty)TCKDifficulty.setForIndex(currentQ-1,[5,6,7,8,9]);
   document.getElementById('page'+currentQ).classList.add('active');
   document.getElementById('qLabel').innerHTML = '<strong>'+currentQ+'</strong>';
   document.getElementById('btnBack').disabled = (currentQ === 1);
@@ -494,7 +610,7 @@ var normalParagraphHTML = 'Scientists continue to study photosynthetic adaptatio
 var insertionParagraphHTML = 'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. <span class="insert-square" data-insert="A">\u25A0</span> Understanding how plants adjust their photosynthetic processes in response to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties that are more resilient to environmental stress. <span class="insert-square" data-insert="B">\u25A0</span> In this way, research into photosynthesis has implications that extend well beyond basic biology and into the fields of agriculture and food security. <span class="insert-square" data-insert="C">\u25A0</span>';
 var insertSentenceText = "Furthermore, these improved crops would be especially valuable in tropical regions, where rising temperatures already threaten staple food production.";
 var correctInsertion = "B";
-var insertionQuestionPage = 6;
+var insertionQuestionPage = 8;
 var selectedInsertionPoint = null;
 var insertionPara = document.getElementById('insertionParagraph');
 
@@ -520,7 +636,7 @@ function bindSquareClicks(){
       rebuildParagraphWithInsertion(selectedInsertionPoint);
       document.getElementById('insertionStatus').className = 'selection-status chosen';
       document.getElementById('insertionStatus').textContent = 'You selected position ' + selectedInsertionPoint + '.';
-      userAnswers['6'] = selectedInsertionPoint;
+      userAnswers['8'] = selectedInsertionPoint;
       sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
       tckSave();
       sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
@@ -562,8 +678,8 @@ function rebuildParagraphWithInsertion(position){
         opts[0].querySelector('input').checked = true;
       }
     }
-    if(parsed['6'] && insertionPara){
-      selectedInsertionPoint = parsed['6'];
+    if(parsed['8'] && insertionPara){
+      selectedInsertionPoint = parsed['8'];
     }
   }
 })();
