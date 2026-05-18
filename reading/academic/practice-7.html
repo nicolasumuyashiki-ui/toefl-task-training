@@ -104,18 +104,18 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
 </head>
 <body>
-<div class="tck-instruction-overlay" id="tckInstructionOverlay"><div class="tck-instruction-card" role="dialog" aria-modal="true"><h2 class="tck-instruction-title">Read an Academic Passage</h2><p class="tck-instruction-intro"><span class="jp">学術的な長文を読み、各設問に答えます。語彙・推論・要約・挿入など複数タイプの設問があります。</span><span class="en">Read an academic passage and answer the questions. Types include vocabulary, inference, summary, and insertion.</span></p><ul class="tck-instruction-points"><li><span class="jp">各パッセージの主張・サポートを把握してから設問に進むと効率的。</span><span class="en">Grasp the main idea and supports first, then tackle the questions.</span></li><li><span class="jp">語彙問題は前後の文脈から意味を推測。</span><span class="en">For vocabulary, infer from the surrounding context.</span></li><li><span class="jp">挿入問題は前後の論理関係（discourse markers）に注目。</span><span class="en">For insertion, focus on discourse markers linking sentences.</span></li></ul><div class="tck-instruction-notice">⏱ <span class="jp">制限時間 36 分。「はじめる」をクリックするとタイマーがスタートします。</span><span class="en">Time limit: 36 minutes. The timer starts when you click Start.</span></div><button class="tck-instruction-start" type="button" onclick="tckStartTask()"><span class="jp">はじめる</span><span class="en">Start</span></button></div></div>
+<div class="tck-instruction-overlay" id="tckInstructionOverlay"><div class="tck-instruction-card" role="dialog" aria-modal="true"><h2 class="tck-instruction-title">Read an Academic Passage</h2><p class="tck-instruction-intro"><span class="jp">学術的な長文を読み、各設問に答えます。語彙・推論・要約・挿入など複数タイプの設問があります。</span><span class="en">Read an academic passage and answer the questions. Types include vocabulary, inference, summary, and insertion.</span></p><ul class="tck-instruction-points"><li><span class="jp">各パッセージの主張・サポートを把握してから設問に進むと効率的。</span><span class="en">Grasp the main idea and supports first, then tackle the questions.</span></li><li><span class="jp">語彙問題は前後の文脈から意味を推測。</span><span class="en">For vocabulary, infer from the surrounding context.</span></li><li><span class="jp">挿入問題は前後の論理関係（discourse markers）に注目。</span><span class="en">For insertion, focus on discourse markers linking sentences.</span></li></ul><div class="tck-instruction-notice">⏱ <span class="jp">制限時間 25 分。「はじめる」をクリックするとタイマーがスタートします。</span><span class="en">Time limit: 25 minutes. The timer starts when you click Start.</span></div><button class="tck-instruction-start" type="button" onclick="tckStartTask()"><span class="jp">はじめる</span><span class="en">Start</span></button></div></div>
 
 <!-- TOP NAV -->
 <div class="top-nav">
   <div class="top-nav-left">
-    <img class="brand-logo" src="../../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px"><span>Question <span id="qLabel"><strong>1</strong></span> of 6</span>
+    <img class="brand-logo" src="../../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px"><span>Question <span id="qLabel"><strong>1</strong></span> of 10</span>
     <span>|</span>
     <span>Academic Reading</span>
   </div>
   <div class="top-nav-right">
     <button class="timer-btn" onclick="toggleTimer()">Hide Time</button>
-    <span class="timer-display" id="timerDisplay">20:00</span>
+    <span class="timer-display" id="timerDisplay">25:00</span>
     <button class="review-btn" onclick="openReview()">Review</button>
     <span class="user-badge" id="userBadge"></span>
   </div>
@@ -132,7 +132,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     <div class="passage-content">
       <p>The Roman Republic, established around 509 BCE, represented a dramatic shift in governance from monarchy to a system in which elected officials shared power. The Republic was led by two consuls who served one-year terms and were advised by the Senate, a body of wealthy and influential citizens. This structure was designed to prevent any single individual from gaining too much control over the state.</p>
       <p>For several centuries, the Republic expanded its territory through military conquest and strategic alliances. Roman armies conquered much of the Mediterranean region, bringing enormous wealth and resources back to Rome. However, this rapid expansion also created serious <span class="highlight-word">tensions</span> within Roman society. Wealthy generals began to build personal armies loyal to them rather than to the Republic, and political rivalries grew increasingly violent.</p>
-      <p>By the first century BCE, a series of civil wars had weakened the Republic beyond repair. Powerful leaders such as Julius Caesar challenged the authority of the Senate and concentrated power in their own hands. After Caesar's assassination in 44 BCE, further conflict eventually led to the rise of Augustus, who became the first emperor of Rome in 27 BCE. The transition from Republic to Empire marked the end of a political experiment that had lasted nearly five hundred years and profoundly influenced the development of democratic institutions in the Western world.</p>
+      <p>By the first century BCE, a series of civil wars had weakened the Republic beyond repair. Powerful leaders such as Julius Caesar challenged the authority of the Senate and <span class="highlight-word">concentrated</span> power in their own hands. After Caesar's assassination in 44 BCE, further conflict eventually led to the rise of Augustus, who became the first emperor of Rome in 27 BCE. The transition from Republic to Empire marked the end of a political experiment that had lasted nearly five hundred years and profoundly influenced the development of democratic institutions in the Western world.</p>
     </div>
   </div>
 
@@ -223,6 +223,64 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
         </div>
       </div>
     </div>
+
+    <!-- Q4: Vocabulary in Context -->
+    <div class="question-page" id="page4">
+      <div class="question-text">
+        <span class="question-number">4.</span>The word "<span style="background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:700">concentrated</span>" in paragraph 3 is closest in meaning to
+      </div>
+      <div class="options">
+        <div class="option" data-q="4" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">divided</span>
+        </div>
+        <div class="option" data-q="4" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">weakened</span>
+        </div>
+        <div class="option" data-q="4" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">surrendered</span>
+        </div>
+        <div class="option" data-q="4" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">gathered</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Inference -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>What can be inferred from the passage about Roman generals during the later years of the Republic?
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">Their personal ambitions often outweighed their commitment to the Republic.</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">They generally refused to lead military campaigns outside Italy.</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">They consistently followed the directions of the Senate without question.</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">They received most of their funding from foreign governments.</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -240,89 +298,147 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
   </div>
 
   <div class="question-panel">
-    <!-- Q4: Purpose -->
-    <div class="question-page active" id="page4">
+    <!-- Q6: Purpose -->
+    <div class="question-page active" id="page6">
       <div class="question-text">
-        <span class="question-number">4.</span>Why does the author mention neutrophils and macrophages in paragraph 2?
+        <span class="question-number">6.</span>Why does the author mention neutrophils and macrophages in paragraph 2?
       </div>
       <div class="options">
-        <div class="option" data-q="4" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="A">
+        <div class="option" data-q="6" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="A">
           <span class="option-label">A</span>
           <span class="option-text">To give examples of cells involved in the body's immediate defense</span>
         </div>
-        <div class="option" data-q="4" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="B">
+        <div class="option" data-q="6" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="B">
           <span class="option-label">B</span>
           <span class="option-text">To explain how vaccines stimulate the immune system</span>
         </div>
-        <div class="option" data-q="4" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="C">
+        <div class="option" data-q="6" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="C">
           <span class="option-label">C</span>
           <span class="option-text">To contrast the functions of B lymphocytes and T lymphocytes</span>
         </div>
-        <div class="option" data-q="4" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="D">
+        <div class="option" data-q="6" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="D">
           <span class="option-label">D</span>
           <span class="option-text">To argue that innate immunity is more important than adaptive immunity</span>
         </div>
       </div>
     </div>
 
-    <!-- Q5: Vocabulary in Context -->
-    <div class="question-page" id="page5">
+    <!-- Q7: Vocabulary in Context -->
+    <div class="question-page" id="page7">
       <div class="question-text">
-        <span class="question-number">5.</span>The word "<span style="background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:700">mobilize</span>" in paragraph 2 is closest in meaning to
+        <span class="question-number">7.</span>The word "<span style="background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:700">mobilize</span>" in paragraph 2 is closest in meaning to
       </div>
       <div class="options">
-        <div class="option" data-q="5" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="A">
+        <div class="option" data-q="7" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="A">
           <span class="option-label">A</span>
           <span class="option-text">disappear</span>
         </div>
-        <div class="option" data-q="5" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="B">
+        <div class="option" data-q="7" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="B">
           <span class="option-label">B</span>
           <span class="option-text">divide</span>
         </div>
-        <div class="option" data-q="5" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="C">
+        <div class="option" data-q="7" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="C">
           <span class="option-label">C</span>
           <span class="option-text">activate</span>
         </div>
-        <div class="option" data-q="5" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="D">
+        <div class="option" data-q="7" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="D">
           <span class="option-label">D</span>
           <span class="option-text">weaken</span>
         </div>
       </div>
     </div>
 
-    <!-- Q6: Inference -->
-    <div class="question-page" id="page6">
+    <!-- Q8: Inference -->
+    <div class="question-page" id="page8">
       <div class="question-text">
-        <span class="question-number">6.</span>Based on the passage, what can be inferred about a person who has recovered from a particular viral infection?
+        <span class="question-number">8.</span>Based on the passage, what can be inferred about a person who has recovered from a particular viral infection?
       </div>
       <div class="options">
-        <div class="option" data-q="6" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q6" value="A">
+        <div class="option" data-q="8" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q8" value="A">
           <span class="option-label">A</span>
           <span class="option-text">They will never be exposed to that virus again.</span>
         </div>
-        <div class="option" data-q="6" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q6" value="B">
+        <div class="option" data-q="8" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q8" value="B">
           <span class="option-label">B</span>
           <span class="option-text">Receiving a vaccine against a disease they have already recovered from would provide limited additional benefit.</span>
         </div>
-        <div class="option" data-q="6" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q6" value="C">
+        <div class="option" data-q="8" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q8" value="C">
           <span class="option-label">C</span>
           <span class="option-text">Their innate immune system will become permanently stronger.</span>
         </div>
-        <div class="option" data-q="6" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q6" value="D">
+        <div class="option" data-q="8" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q8" value="D">
           <span class="option-label">D</span>
           <span class="option-text">They no longer need physical barriers such as skin to protect them.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9: Factual Detail -->
+    <div class="question-page" id="page9">
+      <div class="question-text">
+        <span class="question-number">9.</span>According to the passage, what role do B lymphocytes play in the adaptive immune response?
+      </div>
+      <div class="options">
+        <div class="option" data-q="9" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">They form physical barriers similar to the skin and mucous membranes.</span>
+        </div>
+        <div class="option" data-q="9" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">They produce antibodies that attach to pathogens and mark them for destruction.</span>
+        </div>
+        <div class="option" data-q="9" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">They directly attack and destroy infected cells in the body.</span>
+        </div>
+        <div class="option" data-q="9" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">They release weakened pathogens to stimulate future immune responses.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10: Inference -->
+    <div class="question-page" id="page10">
+      <div class="question-text">
+        <span class="question-number">10.</span>What can be inferred about why vaccines are an effective method of disease prevention?
+      </div>
+      <div class="options">
+        <div class="option" data-q="10" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">They permanently strengthen the body's physical barriers against infection.</span>
+        </div>
+        <div class="option" data-q="10" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">They replace innate immunity with a stronger, faster defense system.</span>
+        </div>
+        <div class="option" data-q="10" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">They eliminate all existing pathogens currently present in the body.</span>
+        </div>
+        <div class="option" data-q="10" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">They create memory cells that allow a faster response without causing illness.</span>
         </div>
       </div>
     </div>
@@ -346,10 +462,10 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 
 <script>
 var currentQ = 1;
-var totalQ = 6;
+var totalQ = 10;
 var userAnswers = {};
 var timerVisible = true;
-var timeLeft = 1200; // 20 minutes
+var timeLeft = 1500; // 25 minutes
 var timerInterval;
 var storageKey = 'training_academic_p7_answers';
 var timerKey = 'training_academic_p7_timer';
@@ -380,11 +496,11 @@ function restoreState(saved){
 }
 function tckSave(){ if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState()); }
 
-// Passage page mapping: questions 1-3 = passage 1, questions 4-6 = passage 2
-function getPassagePage(q){ return q <= 3 ? 1 : 2; }
+// Passage page mapping: questions 1-5 = passage 1, questions 6-10 = passage 2
+function getPassagePage(q){ return q <= 5 ? 1 : 2; }
 
 // Track which question is "active" within each passage page
-function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 4; }
+function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 6; }
 
 function selectOption(el){
   var q = el.getAttribute('data-q');
@@ -403,11 +519,11 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'A','2':'B','3':'C','4':'A','5':'C','6':'B'};
+    var ca={'1':'A','2':'B','3':'C','4':'D','5':'A','6':'A','7':'C','8':'B','9':'B','10':'D'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    var harderCorrect=0,harderTotal=0;['4','5','6'].forEach(function(k){harderTotal++;if(ans[k]===ca[k])harderCorrect++;});
-    sessionStorage.setItem('training_score_academic_p7',JSON.stringify({correct:sc,total:6,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));
+    var harderCorrect=0,harderTotal=0;['6','7','8','9','10'].forEach(function(k){harderTotal++;if(ans[k]===ca[k])harderCorrect++;});
+    sessionStorage.setItem('training_score_academic_p7',JSON.stringify({correct:sc,total:10,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-7-answers.html';
     return;
@@ -422,13 +538,13 @@ function navigate(dir){
     document.getElementById('passagePage'+newPassage).style.display = 'flex';
     // Deactivate all question pages in old passage
     var oldStart = getLocalFirst(oldPassage);
-    var oldEnd = oldPassage === 1 ? 3 : 6;
+    var oldEnd = oldPassage === 1 ? 5 : 10;
     for(var i = oldStart; i <= oldEnd; i++){
       document.getElementById('page'+i).classList.remove('active');
     }
   }
   currentQ = next;
-  if(window.TCKDifficulty)TCKDifficulty.setForIndex(currentQ-1,[3,4,5]);
+  if(window.TCKDifficulty)TCKDifficulty.setForIndex(currentQ-1,[5,6,7,8,9]);
   document.getElementById('page'+currentQ).classList.add('active');
   document.getElementById('qLabel').innerHTML = '<strong>'+currentQ+'</strong>';
   document.getElementById('btnBack').disabled = (currentQ === 1);

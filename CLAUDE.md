@@ -8,7 +8,7 @@ GitHub Pages でデプロイ: nicolasumuyashiki-ui/toefl-task-training
 
 ## ファイル構造
 ```
-reading/ctw/practice-{N}-set-{1,2,3}.html  — Complete the Words（1セット1ファイル）
+reading/ctw/practice-{N}-set-{1,2}.html    — Complete the Words（1セット1ファイル）
 reading/rdl/practice-{N}.html              — Read in Daily Life
 reading/academic/practice-{N}.html         — Read an Academic Passage
 listening/lcr/practice-{N}.html            — Listen and Choose a Response
@@ -32,9 +32,9 @@ speaking/ti/practice-{N}.html              — Take an Interview
 ## 各Practice内の問題数
 | タスク | 問題数/Practice | 備考 |
 |--------|----------------|------|
-| CTW | 2セット×10 blanks | セットごとに別パッセージ。Harder Module ラベルは付けない（ETS 仕様：Harder は section adaptive レベルで、個別 task 単位では指定なし） |
+| CTW | 2セット×10 blanks | Set 1: Module 1/Easier（CEFR B1-B2、接頭辞3-5文字表示）。Set 2: Harder Module（CEFR B2-C1、接頭辞1-3文字表示、HARDERバッジ表示）。セットごとに別パッセージ |
 | RDL | 2パッセージ×計4〜6問 | パッセージあたり 2〜3問。ETS は per-task 件数を固定していないので、4〜6問の幅で OK |
-| Academic Passage | 2問 | 後半1問がHarder Module（プロジェクト内の擬似 Harder 慣習） |
+| Academic Passage | 2パッセージ×5問 = 計10問 | 後半パッセージ（Q6-Q10）が Harder Module（プロジェクト内の擬似 Harder 慣習）。制限時間 25 分 |
 | LCR | 8問 | Q1-2:B1, Q3-5:B1-B2, Q6-8:B2 |
 | Conversation | 2会話×2問 | |
 | Announcement | 2題×2問 | |
@@ -76,7 +76,7 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - **Listening (LCR/Conv/Announce/Talk)**: スタートオーバーレイ→音声再生→1問ずつ表示→タイマー→自動進行→結果画面
 - **Speaking (LR/TI)**: Instructionページ→音声再生→カウントダウンの逐次進行
 - **Writing (Discussion/Email/Sentence)**: Instructionページ→タイマー付きライティング→完了画面
-- **Reading (CTW)**: 1セット1ファイル（`practice-{N}-set-{1,2,3}.html`）、セット間はNext→ファイル遷移
+- **Reading (CTW)**: 1セット1ファイル（`practice-{N}-set-{1,2}.html`）、セット間はNext→ファイル遷移
 - **Reading (Academic/RDL)**: Split layout、1問ずつ表示
 
 ## Build a Sentence 複数正解対応

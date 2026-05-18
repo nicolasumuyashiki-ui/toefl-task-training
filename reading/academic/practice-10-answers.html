@@ -114,8 +114,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/6</div>
-  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q6)</span><span class="en">Your Score (Q1&ndash;Q6)</span></div>
+  <div class="score-big" id="scoreDisplay">&ndash;/10</div>
+  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q10)</span><span class="en">Your Score (Q1&ndash;Q10)</span></div>
 </div>
 
 <div class="answers-body">
@@ -176,7 +176,7 @@ body[data-lang="en"] .jp{display:none}
 
     <!-- Q1 -->
     <div class="q-card" id="card1">
-      <div class="q-num">Question 1 &mdash; Main Idea</div>
+      <div class="q-num"><span class="jp">設問 1 — 主旨</span><span class="en">Question 1 — Main Idea</span></div>
       <div class="q-text"><span class="jp">パッセージは主に何についてのものか。</span><span class="en">What is the passage mainly about?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
@@ -197,7 +197,7 @@ body[data-lang="en"] .jp{display:none}
 
     <!-- Q2 -->
     <div class="q-card" id="card2">
-      <div class="q-num">Question 2 &mdash; Vocabulary in Context</div>
+      <div class="q-num"><span class="jp">設問 2 — 文脈語彙</span><span class="en">Question 2 — Vocabulary in Context</span></div>
       <div class="q-text"><span class="jp">第2段落の「profound」に最も近い意味は何か。</span><span class="en">The word "profound" in paragraph 2 is closest in meaning to</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
@@ -218,7 +218,7 @@ body[data-lang="en"] .jp{display:none}
 
     <!-- Q3 -->
     <div class="q-card" id="card3">
-      <div class="q-num">Question 3 &mdash; Rhetorical Purpose</div>
+      <div class="q-num"><span class="jp">設問 3 — 修辞目的</span><span class="en">Question 3 — Rhetorical Purpose</span></div>
       <div class="q-text"><span class="jp">なぜ著者は第2段落で「過密な生活状態、不衛生、疾病拡大」に言及するのか。</span><span class="en">Why does the author mention "overcrowded living conditions, poor sanitation, and the spread of disease" in paragraph 2?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
@@ -236,74 +236,175 @@ body[data-lang="en"] .jp{display:none}
         B uses "always," which is too extreme and not the author's point. C discusses factory owners' wealth, which is a separate topic. D mentions a comparison between countries, which the passage never makes.</span>
       </div>
     </div>
-  </div>
-
-  <!-- Passage 2 -->
-  <div class="passage-block">
-    <div class="passage-title-bar">The Role of Enzymes in Biological Processes <span class="passage-type-badge"><span class="jp">生命科学</span><span class="en">Life Science</span></span></div>
 
     <!-- Q4 -->
     <div class="q-card" id="card4">
-      <div class="q-num">Question 4 &mdash; Factual Detail</div>
-      <div class="q-text"><span class="jp">パッセージによれば、基質が酵素の活性部位に入るとどうなるか。</span><span class="en">According to the passage, what happens when a substrate enters an enzyme's active site?</span></div>
+      <div class="q-num"><span class="jp">設問 4 — 推論</span><span class="en">Question 4 — Inference</span></div>
+      <div class="q-text"><span class="jp">農村から工業都市に移住した労働者について何が推論できるか。</span><span class="en">What can be inferred about the workers who migrated from the countryside to industrial cities?</span></div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
+        <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
         <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> <span class="jp">酵素は永久に異なるタイプのタンパク質に変化する。</span><span class="en">The enzyme permanently changes into a different type of protein.</span></div>
-        <div class="option-review is-correct" id="opt4B"><span class="label">B</span> <span class="jp">タンパク質は短期的構造変化を起こし、対象分子をより安全に把握できるようになる。 &#10003;</span><span class="en">The protein undergoes a brief structural modification that allows it to grip the target molecule more securely. &#10003;</span></div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">基質はただちに小さな分子に分解され、酵素には変化なし。</span><span class="en">The substrate is immediately broken down into smaller molecules without any change in the enzyme.</span></div>
-        <div class="option-review" id="opt4D"><span class="label">D</span> <span class="jp">活性部位は周囲の細胞の温度を上げるエネルギーを放出する。</span><span class="en">The active site releases energy that raises the temperature of the surrounding cells.</span></div>
+        <div class="option-review" id="opt4A"><span class="label">A</span> <span class="jp">彼らはすぐに工場主や専門職の新中流階級に加わった。</span><span class="en">They quickly joined the new middle class of factory owners and professionals.</span></div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">大半は最終的に農村の農業労働に戻った。</span><span class="en">Most of them eventually returned to agricultural work in the countryside.</span></div>
+        <div class="option-review is-correct" id="opt4C"><span class="label">C</span> <span class="jp">工場の仕事を得た後でも、しばしば困難な生活環境に直面した。 &#10003;</span><span class="en">They often faced difficult living conditions even after finding factory employment. &#10003;</span></div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> <span class="jp">他の工場労働より炭鉱の仕事を好んだ。</span><span class="en">They preferred coal-mining jobs to other forms of factory labor.</span></div>
       </div>
       <div class="explanation">
-        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong> Paragraph 2 states: "the enzyme temporarily changes shape to fit around it more tightly, a process scientists describe as induced fit." This directly matches B.<br><br>
-        A says "permanently," but the passage says "temporarily." C claims no change occurs in the enzyme, which contradicts the shape change described. D mentions releasing energy to raise temperature, which is not stated anywhere in the passage.
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第2段落は労働者が「in search of employment（仕事を求めて）」都市に移動したと述べる一方、すぐ後に「This mass movement of people led to overcrowded living conditions, poor sanitation, and the spread of disease（この大規模な人の移動は過密な生活環境、不衛生、疾病の蔓延をもたらした）」と続く。さらに第3段落は「Despite the harsh conditions faced by many early factory workers（多くの初期工場労働者が直面した厳しい環境にもかかわらず）」と明示する。仕事は見つけたが生活環境は厳しかった = C。<br><br>A は誤り。中流階級は「工場主、商人、専門職」であり、移住労働者ではない。B は本文に記述なし。D も本文に根拠なし。炭鉱と他の労働の比較はパッセージでされていない。</span>
+        <span class="en">Paragraph 2 says workers migrated "in search of employment" but then notes that "this mass movement of people led to overcrowded living conditions, poor sanitation, and the spread of disease." Paragraph 3 reinforces this by referring to "the harsh conditions faced by many early factory workers." So workers found jobs but faced difficult living conditions = C.<br><br>
+        A is wrong because the middle class consisted of "factory owners, merchants, and professionals," not the migrating workers. B is unsupported &mdash; nothing in the passage describes a return migration. D is unsupported &mdash; the passage never compares coal mining with other factory work.</span>
         <div class="paraphrase-box">
-          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "temporarily changes shape to fit around it more tightly" &rarr; B: "temporarily adjusts its shape to fit more closely around the substrate"
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "the harsh conditions faced by many early factory workers" &rarr; C: "often faced difficult living conditions even after finding factory employment"
         </div>
       </div>
     </div>
 
     <!-- Q5 -->
     <div class="q-card" id="card5">
-      <div class="q-num">Question 5 &mdash; Vocabulary in Context</div>
-      <div class="q-text"><span class="jp">第2段落の「induced」に最も近い意味は何か。</span><span class="en">The word "induced" in paragraph 2 is closest in meaning to</span></div>
+      <div class="q-num"><span class="jp">設問 5 — 修辞目的</span><span class="en">Question 5 — Rhetorical Purpose</span></div>
+      <div class="q-text"><span class="jp">なぜ著者は第3段落で「より短い労働時間、より安全な労働環境、最終的な労働者権利運動の台頭」に言及するのか。</span><span class="en">Why does the author mention "shorter working hours, safer conditions, and the eventual rise of workers' rights movements" in paragraph 3?</span></div>
       <div class="answer-row">
-        <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
+        <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
         <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">防がれる</span><span class="en">prevented</span></div>
-        <div class="option-review" id="opt5B"><span class="label">B</span> <span class="jp">ランダムな</span><span class="en">random</span></div>
-        <div class="option-review is-correct" id="opt5C"><span class="label">C</span> <span class="jp">引き起こされた &#10003;</span><span class="en">caused &#10003;</span></div>
-        <div class="option-review" id="opt5D"><span class="label">D</span> <span class="jp">遺伝的な</span><span class="en">inherited</span></div>
+        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">工場労働者が産業化の初期から概ね満足していたと示唆するため</span><span class="en">To suggest that factory workers were generally satisfied from the beginning of industrialization</span></div>
+        <div class="option-review" id="opt5B"><span class="label">B</span> <span class="jp">政府規制がこの時期の経済成長を遅らせたと論じるため</span><span class="en">To argue that government regulations slowed economic growth during this period</span></div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> <span class="jp">ヨーロッパと北米の労働環境を比較するため</span><span class="en">To compare labor conditions in Europe with those in North America</span></div>
+        <div class="option-review is-correct" id="opt5D"><span class="label">D</span> <span class="jp">改革が工場制度の最悪の弊害を徐々に是正した例を示すため &#10003;</span><span class="en">To give examples of how reforms gradually fixed the worst abuses of the factory system &#10003;</span></div>
       </div>
-      <div class="explanation"><strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
-        <span class="jp">第2段落には「the enzyme temporarily changes shape to fit around it more tightly, a process scientists describe as induced fit」とある。これは直接 B に一致。<br><br>A は「permanently」と言うが、パッセージは「temporarily」と言う。C は酵素に変化が起こらないと主張するが、描かれた形状変化と矛盾。D は温度を上げるエネルギー放出に言及するが、パッセージにはどこにも記載なし。</span>
-        <span class="en">The passage describes how the substrate entering the active site causes the enzyme to change shape &mdash; this is called "induced fit." The fit is <em>brought about</em> by the substrate's presence = C.<br><br>
-        Substituting: "[brought about] fit" reads naturally, meaning the fit is caused by the substrate. A (prevented) is the opposite. B (random) contradicts the specific, substrate-triggered nature of the process. D (inherited) refers to genetic traits, not a chemical interaction.</span>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第3段落のリスト直前の文は「Over time, labor reforms and government regulations addressed some of the worst abuses of the factory system, leading to...（時を経て、労働改革と政府規制が工場制度の最悪の弊害に対処し、...につながった）」と述べる。「shorter working hours, safer conditions, and the eventual rise of workers' rights movements」はその改革がもたらした具体的成果として挙げられている = D。<br><br>A は逆。本文は「Despite the harsh conditions faced by many early factory workers（多くの初期工場労働者が直面した厳しい環境にもかかわらず）」と明示。B は政府規制を経済成長と関連づけるが、本文は規制を労働環境改善と関連づけている。C はヨーロッパと北米の比較に言及するが、両地域は併記されているだけで比較されていない。</span>
+        <span class="en">The sentence immediately before the list states: "Over time, labor reforms and government regulations addressed some of the worst abuses of the factory system, leading to..." The author then lists shorter hours, safer conditions, and workers' rights movements as concrete examples of those reforms = D.<br><br>
+        A is the opposite of what the passage says ("Despite the harsh conditions faced by many early factory workers"). B links regulation to economic growth, but the passage links it to improved labor conditions. C frames Europe and North America as being compared, but the passage merely lists them together.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "labor reforms and government regulations addressed some of the worst abuses" &rarr; D: "reforms gradually corrected some of the worst abuses of the factory system"
+        </div>
       </div>
     </div>
+  </div>
+
+  <!-- Passage 2 -->
+  <div class="passage-block">
+    <div class="passage-title-bar">The Role of Enzymes in Biological Processes <span class="passage-type-badge"><span class="jp">生命科学</span><span class="en">Life Science</span></span></div>
 
     <!-- Q6 -->
     <div class="q-card" id="card6">
-      <div class="q-num">Question 6 &mdash; Sentence Insertion</div>
-      <div class="q-text">Look at the four squares in paragraph 3 that indicate where the following sentence could be added:<br><br><em>"Maintaining this precise balance of temperature and pH is essential because the enzyme&rsquo;s three-dimensional shape depends on weak chemical bonds that are easily disrupted."</em></div>
+      <div class="q-num"><span class="jp">設問 6 — 事実問題（情報詳細）</span><span class="en">Question 6 — Factual Detail</span></div>
+      <div class="q-text"><span class="jp">パッセージによれば、基質が酵素の活性部位に入るとどうなるか。</span><span class="en">According to the passage, what happens when a substrate enters an enzyme's active site?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
         <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt6A"><span class="label">A</span> <span class="jp">文1の後（「…enzyme activity.」の後）</span><span class="en">After sentence 1 (after "...enzyme activity.")</span></div>
-        <div class="option-review is-correct" id="opt6B"><span class="label">B</span> <span class="jp">文2の後（「…and at a neutral pH level.」の後） &#10003;</span><span class="en">After sentence 2 (after "...and at a neutral pH level.") &#10003;</span></div>
-        <div class="option-review" id="opt6C"><span class="label">C</span> <span class="jp">文3の後（「…a process known as denaturation.」の後）</span><span class="en">After sentence 3 (after "...a process known as denaturation.")</span></div>
-        <div class="option-review" id="opt6D"><span class="label">D</span> <span class="jp">文4の後（「…loses its catalytic function entirely.」の後）</span><span class="en">After sentence 4 (after "...loses its catalytic function entirely.")</span></div>
+        <div class="option-review" id="opt6A"><span class="label">A</span> <span class="jp">酵素は永久に異なるタイプのタンパク質に変化する。</span><span class="en">The enzyme permanently changes into a different type of protein.</span></div>
+        <div class="option-review is-correct" id="opt6B"><span class="label">B</span> <span class="jp">タンパク質は短期的構造変化を起こし、対象分子をより安全に把握できるようになる。 &#10003;</span><span class="en">The protein undergoes a brief structural modification that allows it to grip the target molecule more securely. &#10003;</span></div>
+        <div class="option-review" id="opt6C"><span class="label">C</span> <span class="jp">基質はただちに小さな分子に分解され、酵素には変化なし。</span><span class="en">The substrate is immediately broken down into smaller molecules without any change in the enzyme.</span></div>
+        <div class="option-review" id="opt6D"><span class="label">D</span> <span class="jp">活性部位は周囲の細胞の温度を上げるエネルギーを放出する。</span><span class="en">The active site releases energy that raises the temperature of the surrounding cells.</span></div>
       </div>
-      <div class="explanation"><strong>Why B is correct (no discourse marker &mdash; content reasoning required):</strong>
-        <span class="jp">パッセージは基質が活性部位に入ると酵素が形状を変えることを描き、これが「induced fit」と呼ばれる。フィットは基質の存在によって<em>引き起こされる</em> = C。<br><br>代入：「[引き起こされた]フィット」自然に読め、フィットが基質によって引き起こされることを意味する。A（防がれる）は逆。B（ランダム）はプロセスの基質誘発的な性質と矛盾。D（遺伝的）は遺伝的形質を指し、化学的相互作用ではない。</span>
-        <span class="en">The insertion sentence mentions "this precise balance of temperature and pH." The demonstrative "this" requires a clear referent. Sentence 2 is the only sentence that specifies <strong>both</strong> the precise temperature (37&deg;C) and the precise pH level (neutral). After sentence 2, "this precise balance" has a clear referent = B.<br><br>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第2段落に「the enzyme temporarily changes shape to fit around it more tightly, a process scientists describe as induced fit（酵素は基質の周りにより密接に合うよう一時的に形を変える。これを科学者は『誘導適合（induced fit）』と呼ぶ）」とある。これは B に直接一致。<br><br>A は「permanently（永久に）」と言うが、パッセージは「temporarily（一時的に）」と述べる。C は酵素に変化が起こらないと主張するが、描かれた形状変化と矛盾。D は温度を上げるエネルギー放出に言及するが、パッセージにはどこにも記載なし。</span>
+        <span class="en">Paragraph 2 states: "the enzyme temporarily changes shape to fit around it more tightly, a process scientists describe as induced fit." This directly matches B.<br><br>
+        A says "permanently," but the passage says "temporarily." C claims no change occurs in the enzyme, which contradicts the shape change described. D mentions releasing energy to raise temperature, which is not stated anywhere in the passage.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "temporarily changes shape to fit around it more tightly" &rarr; B: "undergoes a brief structural modification that allows it to grip the target molecule more securely"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" id="card7">
+      <div class="q-num"><span class="jp">設問 7 — 文脈語彙</span><span class="en">Question 7 — Vocabulary in Context</span></div>
+      <div class="q-text"><span class="jp">第2段落の「induced」に最も近い意味は何か。</span><span class="en">The word "induced" in paragraph 2 is closest in meaning to</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
+        <span class="answer-tag" id="yours7"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt7A"><span class="label">A</span> <span class="jp">防がれる</span><span class="en">prevented</span></div>
+        <div class="option-review" id="opt7B"><span class="label">B</span> <span class="jp">ランダムな</span><span class="en">random</span></div>
+        <div class="option-review is-correct" id="opt7C"><span class="label">C</span> <span class="jp">引き起こされた &#10003;</span><span class="en">caused &#10003;</span></div>
+        <div class="option-review" id="opt7D"><span class="label">D</span> <span class="jp">遺伝的な</span><span class="en">inherited</span></div>
+      </div>
+      <div class="explanation"><strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
+        <span class="jp">第2段落には「the enzyme temporarily changes shape to fit around it more tightly, a process scientists describe as induced fit（酵素は基質の周りにより密接に合うよう一時的に形を変える。これを科学者は『誘導適合』と呼ぶ）」とある。「induced（引き起こされた）」のフィットは基質の存在によって<em>引き起こされる</em>ものなので、最も近い意味は「caused（引き起こされた）」 = C。<br><br>代入確認：「[caused] fit」は自然に読め、フィットが基質によって引き起こされることを意味する。A（prevented 防がれる）は逆の意味。B（random ランダム）はプロセスの基質誘発的な性質と矛盾。D（inherited 遺伝的）は遺伝形質を指し、化学的相互作用ではない。</span>
+        <span class="en">The passage describes how the substrate entering the active site causes the enzyme to change shape &mdash; this is called "induced fit." The fit is <em>brought about</em> by the substrate's presence = C.<br><br>
+        Substituting: "[caused] fit" reads naturally, meaning the fit is caused by the substrate. A (prevented) is the opposite. B (random) contradicts the specific, substrate-triggered nature of the process. D (inherited) refers to genetic traits, not a chemical interaction.</span>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" id="card8">
+      <div class="q-num"><span class="jp">設問 8 — 文挿入</span><span class="en">Question 8 — Sentence Insertion</span></div>
+      <div class="q-text">Look at the four squares in paragraph 3 that indicate where the following sentence could be added:<br><br><em>"Maintaining this precise balance of temperature and pH is essential because the enzyme&rsquo;s three-dimensional shape depends on weak chemical bonds that are easily disrupted."</em></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
+        <span class="answer-tag" id="yours8"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt8A"><span class="label">A</span> <span class="jp">文1の後（「…enzyme activity.」の後）</span><span class="en">After sentence 1 (after "...enzyme activity.")</span></div>
+        <div class="option-review is-correct" id="opt8B"><span class="label">B</span> <span class="jp">文2の後（「…and at a neutral pH level.」の後） &#10003;</span><span class="en">After sentence 2 (after "...and at a neutral pH level.") &#10003;</span></div>
+        <div class="option-review" id="opt8C"><span class="label">C</span> <span class="jp">文3の後（「…a process known as denaturation.」の後）</span><span class="en">After sentence 3 (after "...a process known as denaturation.")</span></div>
+        <div class="option-review" id="opt8D"><span class="label">D</span> <span class="jp">文4の後（「…loses its catalytic function entirely.」の後）</span><span class="en">After sentence 4 (after "...loses its catalytic function entirely.")</span></div>
+      </div>
+      <div class="explanation"><strong><span class="jp">B が正解の理由（ディスコースマーカーなし — 内容に基づく推論が必要）:</span><span class="en">Why B is correct (no discourse marker &mdash; content reasoning required):</span></strong>
+        <span class="jp">挿入文は「this precise balance of temperature and pH（この正確な温度と pH のバランス）」に言及する。指示詞「this（この）」は明確な指示対象を必要とする。文2は<strong>両方</strong>の具体的な温度（約37℃）と pH レベル（中性）を明示する唯一の文。文2の後では「this precise balance」が明確な指示対象を持つ = B。<br><br>A は誤り。文1は環境条件についての一般的記述で、具体的な温度や pH 値はまだ示されていないため、「this precise balance」の指示対象がない。C は誤り。文3で段落はすでに条件が<em>逸脱</em>した場合（変性）に話題が移っており、損傷がすでに描かれた後にバランス維持の文を挿入するのは非論理的。D も同じ理由で誤り。酵素はすでに機能を失っており、バランス維持の文を入れるには時系列が遅すぎる。</span>
+        <span class="en">The insertion sentence mentions "this precise balance of temperature and pH." The demonstrative "this" requires a clear referent. Sentence 2 is the only sentence that specifies <strong>both</strong> the precise temperature (around 37&deg;C) and the precise pH level (neutral). After sentence 2, "this precise balance" has a clear referent = B.<br><br>
         A is incorrect because sentence 1 is a general statement about environmental conditions; no specific temperature or pH values have been stated yet, so "this precise balance" has no referent. C is incorrect because by sentence 3, the paragraph has already moved to what happens when conditions <em>deviate</em> (denaturation); inserting a sentence about maintaining balance after the damage is already described would be illogical. D is incorrect for the same reason &mdash; the enzyme has already lost function, making a sentence about maintaining balance too late in the sequence.</span>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" id="card9">
+      <div class="q-num"><span class="jp">設問 9 — 事実問題（情報詳細）</span><span class="en">Question 9 — Factual Detail</span></div>
+      <div class="q-text"><span class="jp">パッセージによれば、酵素が変性した後に何が起こるか。</span><span class="en">According to the passage, what happens to an enzyme after it has been denatured?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
+        <span class="answer-tag" id="yours9"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt9A"><span class="label">A</span> <span class="jp">通常の体温時より速く機能しはじめる。</span><span class="en">It begins to function more rapidly than it did at normal body temperature.</span></div>
+        <div class="option-review" id="opt9B"><span class="label">B</span> <span class="jp">通常の温度が戻れば元の形に戻る。</span><span class="en">It returns to its original shape once normal temperature is restored.</span></div>
+        <div class="option-review is-correct" id="opt9C"><span class="label">C</span> <span class="jp">もはや基質に結合できず、触媒の役割を果たすのをやめる。 &#10003;</span><span class="en">It can no longer attach to its substrate and stops performing its catalytic role. &#10003;</span></div>
+        <div class="option-review" id="opt9D"><span class="label">D</span> <span class="jp">他の酵素が分解できる基質に変形する。</span><span class="en">It transforms into a substrate that other enzymes can break down.</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第3段落に「Once denatured, an enzyme can no longer bind to its substrate and loses its catalytic function entirely（一度変性すると、酵素はもはや基質に結合できず、触媒機能を完全に失う）」と明記 = C。<br><br>A は逆。本文は速度の上昇ではなく機能喪失と述べる。B は誤り。本文は「permanently distorted（永久に歪む）」と言い、回復には触れていない。D は本文に根拠なし。酵素自身が基質になるという記述はない。</span>
+        <span class="en">Paragraph 3 explicitly states: "Once denatured, an enzyme can no longer bind to its substrate and loses its catalytic function entirely" = C.<br><br>A is the opposite of what the passage says &mdash; the enzyme loses function, not gains speed. B is wrong because the passage describes the shape as "permanently distorted" and never says it can recover. D is unsupported &mdash; nothing in the passage describes a denatured enzyme becoming a substrate.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "can no longer bind to its substrate and loses its catalytic function entirely" &rarr; C: "can no longer attach to its substrate and stops performing its catalytic role"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" id="card10">
+      <div class="q-num"><span class="jp">設問 10 — 推論</span><span class="en">Question 10 — Inference</span></div>
+      <div class="q-text"><span class="jp">なぜ高熱が人間の健康に深刻なリスクをもたらしうるかについて、パッセージから何が推論できるか。</span><span class="en">What can be inferred from the passage about why a high fever can pose a serious risk to human health?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
+        <span class="answer-tag" id="yours10"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt10A"><span class="label">A</span> <span class="jp">体が一度に新しい酵素を作りすぎる原因となる。</span><span class="en">It causes the body to produce too many new enzymes at once.</span></div>
+        <div class="option-review" id="opt10B"><span class="label">B</span> <span class="jp">体の pH がすでに危険なほど酸性になったというサイン。</span><span class="en">It signals that the body's pH has already become dangerously acidic.</span></div>
+        <div class="option-review" id="opt10C"><span class="label">C</span> <span class="jp">各細胞内の基質数を永久に増やす。</span><span class="en">It permanently increases the number of substrates inside each cell.</span></div>
+        <div class="option-review is-correct" id="opt10D"><span class="label">D</span> <span class="jp">酵素の形を歪め、細胞が依存する化学反応を中断させうる。 &#10003;</span><span class="en">It can distort the shape of enzymes and interrupt the chemical reactions cells depend on. &#10003;</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第3段落は「When temperatures rise significantly above this range... the enzyme's shape can become permanently distorted（温度がこの範囲を大幅に超えると... 酵素の形は永久に歪みうる）」と述べ、さらに最終文で「fever and extreme changes in blood pH can be dangerous to human health, as they may disrupt the enzyme-driven reactions that cells depend on to survive（発熱と血液 pH の極端な変化は、細胞が生存に依存する酵素駆動反応を阻害しうるため、人間の健康に危険でありうる）」と明示する。よって高熱は酵素の形を歪め反応を阻害する = D。<br><br>A は本文に根拠なし。本文は酵素の生成過剰ではなく、既存酵素の損傷を述べる。B は誤り。本文は発熱と pH 変化を別々のリスクとして並列し、一方が他方を引き起こすとは言わない。C も根拠なし。本文は基質数の永久増加に触れていない。</span>
+        <span class="en">Paragraph 3 says: "When temperatures rise significantly above this range... the enzyme's shape can become permanently distorted," and the final sentence adds that "fever and extreme changes in blood pH can be dangerous to human health, as they may disrupt the enzyme-driven reactions that cells depend on to survive." Together, these sentences support the inference that a high fever can distort enzyme shape and interrupt the chemical reactions cells need = D.<br><br>
+        A is not supported &mdash; the passage discusses damage to existing enzymes, not overproduction of new ones. B is wrong because the passage treats fever and pH changes as parallel risks, not one causing the other. C is unsupported &mdash; the passage never mentions a permanent increase in substrates.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "shape can become permanently distorted... may disrupt the enzyme-driven reactions that cells depend on" &rarr; D: "distort the shape of enzymes and interrupt the chemical reactions cells depend on"
+        </div>
       </div>
     </div>
   </div>
@@ -332,7 +433,7 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <script>
-var correctAnswers = {'1':'A','2':'B','3':'A','4':'B','5':'C','6':'B'};
+var correctAnswers = {'1':'A','2':'B','3':'A','4':'C','5':'D','6':'B','7':'C','8':'B','9':'C','10':'D'};
 (function(){
   var saved = sessionStorage.getItem('training_academic_p10_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -353,7 +454,7 @@ var correctAnswers = {'1':'A','2':'B','3':'A','4':'B','5':'C','6':'B'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/6';
+  document.getElementById('scoreDisplay').textContent = score+'/10';
 })();
 </script>
 <script src="../../js/auth.js"></script>

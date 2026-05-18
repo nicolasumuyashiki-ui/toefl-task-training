@@ -19,7 +19,7 @@ $ARGUMENTS
 
 ### 概要
 - 1 Practice = 2つのアカデミックパッセージ（Standard + Harder Module）
-- 各パッセージ2問 = 計4問
+- 各パッセージ5問 = 計10問
 - Split layout: 左パネル（パッセージ）+ 右パネル（問題1問ずつ）
 - 制限時間: 25分（全問共有タイマー、sessionStorageで永続化）
 
@@ -29,12 +29,13 @@ $ARGUMENTS
 - 3-4段落構成（導入→詳細→展開→結論）
 - 各段落に `<p>` タグ、最後のパッセージの段落に `id="insertionParagraph"`（Sentence Insertion用）
 
-### 問題タイプ（4問で以下から選択、重複最小限に）
+### 問題タイプ（10問で以下から選択、各パッセージで最低3種類を混在）
 - **Main Idea**: パッセージ全体の主旨を問う
 - **Factual Information**: パッセージ中の具体的事実を問う
 - **Vocabulary in Context**: 文脈中の語の意味を問う（ターゲット語は `.highlight-word` でハイライト）
 - **Inference**: パッセージから推測できることを問う
-- **Sentence Insertion**: パッセージ内の適切な位置に文を挿入する（特殊UIあり）
+- **Rhetorical Purpose**: 著者がなぜ特定の例・情報を挙げたかを問う
+- **Sentence Insertion**: パッセージ内の適切な位置に文を挿入する（特殊UIあり、偶数番 practice で採用例あり）
 
 ### Sentence Insertion 問題の仕様（使用する場合）
 - パッセージ内に4つの挿入候補位置（A/B/C/D）を `<span class="insert-square" data-insert="X">&#9632;</span>` で表示
@@ -92,7 +93,9 @@ $ARGUMENTS
 ### 検証チェックリスト
 - [ ] Passage 1: 300-350語、Standard難易度
 - [ ] Passage 2: 350-400語、Harder Module難易度
-- [ ] 4問が異なる問題タイプ（最低3種類）
+- [ ] 各パッセージ 5 問、計 10 問
+- [ ] 各パッセージで最低 3 種類の問題タイプを混在
+- [ ] 正解分布が A/B/C/D 各 2-3 個でバランス
 - [ ] Sentence Insertion使用時: 正解位置が一意（discourse markers/代名詞で特定可能）
 - [ ] Vocabulary問題使用時: ターゲット語が `.highlight-word` でハイライト
 - [ ] **Vocabulary問題の選択肢は単語1語形式（フレーズ型は ≦10% / 1セット最大1問）**
