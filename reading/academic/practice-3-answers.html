@@ -114,8 +114,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/6</div>
-  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q6)</span><span class="en">Your Score (Q1&ndash;Q6)</span></div>
+  <div class="score-big" id="scoreDisplay">&ndash;/10</div>
+  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q10)</span><span class="en">Your Score (Q1&ndash;Q10)</span></div>
 </div>
 
 <div class="answers-body">
@@ -240,73 +240,170 @@ body[data-lang="en"] .jp{display:none}
         </div>
       </div>
     </div>
+
+    <!-- Q4 -->
+    <div class="q-card" id="card4">
+      <div class="q-num"><span class="jp">設問 4 — 文脈語彙</span><span class="en">Question 4 — Vocabulary in Context</span></div>
+      <div class="q-text"><span class="jp">第3段落の「disproportionate」に最も近い意味は何か。</span><span class="en">The word "disproportionate" in paragraph 3 is closest in meaning to</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
+        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt4A"><span class="label">A</span> <span class="jp">過剰な &#10003;</span><span class="en">excessive &#10003;</span></div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">永続する</span><span class="en">lasting</span></div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">同等の</span><span class="en">equal</span></div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> <span class="jp">限られた</span><span class="en">limited</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
+        <span class="jp">本文は「the brain gives disproportionate weight to the earliest pieces of information（脳は最初に受け取った情報に不釣り合いな重みを与える）」と述べる。これは「期待される量を超えて多すぎる重み」を意味し、＝excessive（過剰な）。代入確認：「the brain gives <em>excessive</em> weight to the earliest pieces of information」は自然に読める = A。<br><br>B（lasting 永続する）は時間の継続を示すが、文脈は量の不均衡。C（equal 同等の）は逆の意味。D（limited 限られた）も逆方向。</span>
+        <span class="en">The passage says "the brain gives disproportionate weight to the earliest pieces of information." Disproportionate weight means weight greater than what is balanced or expected = excessive. Substitution check: "the brain gives <em>excessive</em> weight to the earliest pieces of information" reads naturally = A.<br><br>B (lasting) refers to time, not amount. C (equal) is the opposite. D (limited) is also the opposite direction.</span>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" id="card5">
+      <div class="q-num"><span class="jp">設問 5 — 推論</span><span class="en">Question 5 — Inference</span></div>
+      <div class="q-text"><span class="jp">パッセージから、後に第一印象と矛盾する情報を受け取った人について何が推論できるか。</span><span class="en">What can be inferred from the passage about people who later receive information contradicting their first impression?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
+        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">通常、最初の意見を修正する意思がある</span><span class="en">They are usually willing to revise their initial view</span></div>
+        <div class="option-review is-correct" id="opt5B"><span class="label">B</span> <span class="jp">通常、最初の印象に頼り続ける &#10003;</span><span class="en">They typically continue to rely on the original impression &#10003;</span></div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> <span class="jp">時間とともに他人を判断する精度が上がる</span><span class="en">They generally become more accurate judges of others over time</span></div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> <span class="jp">最初の印象を完全に忘れる傾向がある</span><span class="en">They tend to forget the original impression entirely</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第3段落に「even when people are presented with new information that contradicts their initial judgment, they tend to hold on to their original opinion（人は最初の判断と矛盾する新情報を提示されても、当初の意見を維持する傾向がある）」と明記。これは「anchoring（アンカリング）」現象として説明される = B。<br><br>A は逆。修正する意思があれば「hold on to」は不自然。C（精度向上）は本文に根拠なし。D（完全に忘れる）も逆で本文と矛盾。</span>
+        <span class="en">Paragraph 3 explicitly states: "even when people are presented with new information that contradicts their initial judgment, they tend to hold on to their original opinion." This describes the anchoring phenomenon = B.<br><br>A is the opposite &mdash; willingness to revise contradicts "hold on to." C (greater accuracy over time) has no support. D (forgetting entirely) also contradicts the passage.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "tend to hold on to their original opinion" &rarr; B: "typically continue to rely on the original impression"
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
     <div class="passage-title-bar">The Formation and Classification of Rocks <span class="passage-type-badge"><span class="jp">Physical Science</span><span class="en">Physical Science</span></span></div>
 
-    <!-- Q4 -->
-    <div class="q-card" id="card4">
-      <div class="q-num"><span class="jp">設問 4 — 修辞目的</span><span class="en">Question 4 — Rhetorical Purpose</span></div>
+    <!-- Q6 -->
+    <div class="q-card" id="card6">
+      <div class="q-num"><span class="jp">設問 6 — 修辞目的</span><span class="en">Question 6 — Rhetorical Purpose</span></div>
       <div class="q-text"><span class="jp">なぜ著者は第2段落で花崗岩と玄武岩に言及するのか。</span><span class="en">Why does the author mention granite and basalt in paragraph 2?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
-        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review is-correct" id="opt4A"><span class="label">A</span> <span class="jp">異なる冷却速度がどう異なる火成岩を生むかを示すため &#10003;</span><span class="en">To illustrate how different cooling speeds produce different igneous rocks &#10003;</span></div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">火成岩が堆積岩より有用だと論じるため</span><span class="en">To argue that igneous rocks are more useful than sedimentary rocks</span></div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">火山噴火が減っている理由を説明するため</span><span class="en">To explain why volcanic eruptions are becoming less frequent</span></div>
-        <div class="option-review" id="opt4D"><span class="label">D</span> <span class="jp">火成岩と変成岩を比較するため</span><span class="en">To compare igneous rocks with metamorphic rocks</span></div>
+        <div class="option-review is-correct" id="opt6A"><span class="label">A</span> <span class="jp">異なる冷却速度がどう異なる火成岩を生むかを示すため &#10003;</span><span class="en">To illustrate how different cooling speeds produce different igneous rocks &#10003;</span></div>
+        <div class="option-review" id="opt6B"><span class="label">B</span> <span class="jp">火成岩が堆積岩より有用だと論じるため</span><span class="en">To argue that igneous rocks are more useful than sedimentary rocks</span></div>
+        <div class="option-review" id="opt6C"><span class="label">C</span> <span class="jp">火山噴火が減っている理由を説明するため</span><span class="en">To explain why volcanic eruptions are becoming less frequent</span></div>
+        <div class="option-review" id="opt6D"><span class="label">D</span> <span class="jp">火成岩と変成岩を比較するため</span><span class="en">To compare igneous rocks with metamorphic rocks</span></div>
       </div>
-      <div class="explanation"><strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
-        <span class="jp">第2段落はハロー効果が一つの特性に基づき「assume that the person also possesses other positive qualities」と仮定させ、就職面接や法廷で「appearance may unfairly influence outcomes」と述べる = D。<br><br>A はパッセージと矛盾。第一印象は数秒で起きる。B は極端な「always」を使い、パッセージは印象が正確とは主張しない。C はパッセージと逆。ハロー効果は<strong>不公平な</strong>結果につながり、より良い決定にはつながらない。</span>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第2段落は火成岩が冷却によって形成される仕組みを論じる。花崗岩はゆっくり冷却した例（大きな結晶）として、玄武岩は急速に冷却した例（細粒）として導入される。二つの例は<strong>異なる冷却速度が異なる火成岩を生む</strong>ことを示すために使われている = A。<br><br>B は本文にない比較主張。C（噴火頻度）は本文で言及されていない。D は誤り。変成岩は別段落で論じられ、ここでは比較されていない。</span>
         <span class="en">Paragraph 2 discusses how igneous rocks form through cooling. Granite is introduced as an example of slow cooling (large crystals), while basalt is an example of rapid cooling (fine-grained). The two examples serve to illustrate how different cooling speeds produce different types of igneous rock = A.<br><br>
         B makes a comparative claim not found in the passage. C discusses eruption frequency, which is not mentioned. D is wrong because metamorphic rocks are discussed in a separate paragraph, not compared here.</span>
       </div>
     </div>
 
-    <!-- Q5 -->
-    <div class="q-card" id="card5">
-      <div class="q-num"><span class="jp">設問 5 — 文脈語彙</span><span class="en">Question 5 — Vocabulary in Context</span></div>
+    <!-- Q7 -->
+    <div class="q-card" id="card7">
+      <div class="q-num"><span class="jp">設問 7 — 文脈語彙</span><span class="en">Question 7 — Vocabulary in Context</span></div>
       <div class="q-text"><span class="jp">第4段落の「subjected」に最も近い意味は何か。</span><span class="en">The word "subjected" in paragraph 4 is closest in meaning to</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
-        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours7"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">抵抗する</span><span class="en">resistant</span></div>
-        <div class="option-review is-correct" id="opt5B"><span class="label">B</span> <span class="jp">さらされた &#10003;</span><span class="en">exposed &#10003;</span></div>
-        <div class="option-review" id="opt5C"><span class="label">C</span> <span class="jp">保護される</span><span class="en">protected</span></div>
-        <div class="option-review" id="opt5D"><span class="label">D</span> <span class="jp">引きつけられた</span><span class="en">attracted</span></div>
+        <div class="option-review" id="opt7A"><span class="label">A</span> <span class="jp">抵抗する</span><span class="en">resistant</span></div>
+        <div class="option-review is-correct" id="opt7B"><span class="label">B</span> <span class="jp">さらされた &#10003;</span><span class="en">exposed &#10003;</span></div>
+        <div class="option-review" id="opt7C"><span class="label">C</span> <span class="jp">保護される</span><span class="en">protected</span></div>
+        <div class="option-review" id="opt7D"><span class="label">D</span> <span class="jp">引きつけられた</span><span class="en">attracted</span></div>
       </div>
-      <div class="explanation"><strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
-        <span class="jp">第2段落は火成岩が冷却で形成される仕組みを論じる。花崗岩は緩やかな冷却（大きな結晶）の例、玄武岩は急速な冷却（細粒）の例として導入される。二つの例は異なる冷却速度がどう異なる火成岩を生むかを示すために役立つ = A。<br><br>B はパッセージにない比較主張をする。C は噴火頻度を論じるが言及されていない。D は誤り。変成岩は別段落で論じられ、ここでは比較されていない。</span>
-        <span class="en">The sentence reads "existing rocks are subjected to extreme heat, pressure, or chemical processes." The next sentence explains that "these conditions cause the minerals... to reorganize." Being "subjected to" something means being forced to experience it, which is equivalent to being "exposed" it = B.<br><br>
+      <div class="explanation">
+        <strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
+        <span class="jp">本文は「existing rocks are subjected to extreme heat, pressure, or chemical processes（既存の岩石が極度の熱、圧力、または化学的プロセスにさらされる）」と述べる。次の文で「these conditions cause the minerals... to reorganize」と説明。「subjected to」は何かを受けさせられること＝「exposed（さらされる）」と等価 = B。<br><br>A（resistant 抵抗する）は逆で「耐える」意味。C（protected 保護される）も避けるの意味で逆。D（attracted 引きつけられる）は引力で文脈に合わない。</span>
+        <span class="en">The sentence reads "existing rocks are subjected to extreme heat, pressure, or chemical processes." The next sentence explains that "these conditions cause the minerals... to reorganize." Being "subjected to" something means being forced to experience it, which is equivalent to being "exposed" to it = B.<br><br>
         A (resistant) means the opposite &mdash; able to withstand rather than undergo. C (protected) also implies avoidance rather than experience. D (attracted) implies a pulling force that does not fit the context.</span>
       </div>
     </div>
 
-    <!-- Q6 -->
-    <div class="q-card" id="card6">
-      <div class="q-num"><span class="jp">設問 6 — 推論</span><span class="en">Question 6 — Inference</span></div>
+    <!-- Q8 -->
+    <div class="q-card" id="card8">
+      <div class="q-num"><span class="jp">設問 8 — 推論</span><span class="en">Question 8 — Inference</span></div>
       <div class="q-text"><span class="jp">パッセージに基づくと、堆積岩について何が推論できるか。</span><span class="en">Based on the passage, what can be inferred about sedimentary rocks?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
-        <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours8"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt6A"><span class="label">A</span> <span class="jp">火成岩や変成岩より速く形成される。</span><span class="en">They form more quickly than igneous or metamorphic rocks.</span></div>
-        <div class="option-review" id="opt6B"><span class="label">B</span> <span class="jp">最も硬く耐久性のある岩石である。</span><span class="en">They are the hardest and most durable type of rock.</span></div>
-        <div class="option-review is-correct" id="opt6C"><span class="label">C</span> <span class="jp">化石を含む岩層を研究する地質学者は、それらの層が火山活動で形成されたものでないと結論できる。 &#10003;</span><span class="en">A geologist studying rock layers with fossils can conclude those layers were likely not formed by volcanic activity. &#10003;</span></div>
-        <div class="option-review" id="opt6D"><span class="label">D</span> <span class="jp">川や海の近くにのみ見られる。</span><span class="en">They are only found near rivers and oceans.</span></div>
+        <div class="option-review" id="opt8A"><span class="label">A</span> <span class="jp">火成岩や変成岩より速く形成される。</span><span class="en">They form more quickly than igneous or metamorphic rocks.</span></div>
+        <div class="option-review" id="opt8B"><span class="label">B</span> <span class="jp">最も硬く耐久性のある岩石である。</span><span class="en">They are the hardest and most durable type of rock.</span></div>
+        <div class="option-review is-correct" id="opt8C"><span class="label">C</span> <span class="jp">化石を含む岩層を研究する地質学者は、それらの層が火山活動で形成されたものでないと結論できる。 &#10003;</span><span class="en">A geologist studying rock layers with fossils can conclude those layers were likely not formed by volcanic activity. &#10003;</span></div>
+        <div class="option-review" id="opt8D"><span class="label">D</span> <span class="jp">川や海の近くにのみ見られる。</span><span class="en">They are only found near rivers and oceans.</span></div>
       </div>
       <div class="explanation">
-        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong> Paragraph 3 states that "sedimentary rocks often contain fossils" and that they are "particularly valuable for studying the history of life on Earth." Fossils are preserved remains of organisms that lived in the past. Therefore, sedimentary rocks can provide evidence of past life = C.<br><br>
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第3段落は「sedimentary rocks often contain fossils（堆積岩はしばしば化石を含む）」と述べる。一方、第2段落で火成岩は火山活動（マグマ・溶岩）で形成されると説明。火山活動で形成された岩石は溶融プロセスを経るので、化石は含まれない。したがって化石を含む岩層は<strong>火山活動で形成されていない</strong>と推論できる = C。<br><br>A は本文に矛盾。形成には「thousands or millions of years」かかると述べられる。B（最も硬い）は本文に根拠なし。D（川や海の近くにのみ）は誤り。本文は「wind, water, or ice」で堆積するとあり、氷も含まれる。</span>
+        <span class="en">Paragraph 3 states that "sedimentary rocks often contain fossils." Paragraph 2 explains that igneous rocks form from molten material (volcanic activity), which would destroy fossils. So rock layers containing fossils were likely <strong>not</strong> formed by volcanic activity = C.<br><br>
         A directly contradicts the passage &mdash; the process takes "thousands or millions of years." B has no support in the text. D is wrong because the passage says materials are deposited by "wind, water, or ice," not exclusively near rivers and oceans.
         <div class="paraphrase-box">
-          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "often contain fossils... valuable for studying the history of life" &rarr; C: "can provide evidence of organisms that lived in the past" &mdash; "fossils" is paraphrased as "evidence of organisms"
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Combines two pieces of info: "sedimentary rocks often contain fossils" + "igneous rocks form from molten material" &rarr; C: layers with fossils were not formed by volcanic activity
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" id="card9">
+      <div class="q-num"><span class="jp">設問 9 — 事実問題（情報詳細）</span><span class="en">Question 9 — Factual Detail</span></div>
+      <div class="q-text"><span class="jp">パッセージによれば、変成岩はどのように形成されるか。</span><span class="en">According to the passage, how do metamorphic rocks form?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
+        <span class="answer-tag" id="yours9"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt9A"><span class="label">A</span> <span class="jp">長期にわたる堆積物の段階的な蓄積によって</span><span class="en">Through the gradual deposition of sediment layers over long periods of time</span></div>
+        <div class="option-review" id="opt9B"><span class="label">B</span> <span class="jp">溶融した物質が地下または地表で冷却して</span><span class="en">When molten material cools either underground or on the Earth's surface</span></div>
+        <div class="option-review" id="opt9C"><span class="label">C</span> <span class="jp">古い岩石が風と水によって地表で徐々に分解されて</span><span class="en">Through the slow breakdown of older rocks by wind and water at the surface</span></div>
+        <div class="option-review is-correct" id="opt9D"><span class="label">D</span> <span class="jp">既存の岩石が極度の熱・圧力・化学プロセスにさらされて &#10003;</span><span class="en">When existing rocks are exposed to extreme heat, pressure, or chemical processes &#10003;</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第4段落に「Metamorphic rocks are created when existing rocks are subjected to extreme heat, pressure, or chemical processes deep within the Earth（変成岩は既存の岩石が地球内部で極度の熱・圧力・化学的プロセスにさらされたときに作られる）」と明記 = D。<br><br>A（堆積物の蓄積）は堆積岩の特徴。B（溶融物質の冷却）は火成岩の特徴。C（風水での分解）は本文に記述なし。</span>
+        <span class="en">Paragraph 4 explicitly states: "Metamorphic rocks are created when existing rocks are subjected to extreme heat, pressure, or chemical processes deep within the Earth" = D.<br><br>A (gradual deposition) is the process for <em>sedimentary</em> rocks. B (cooling molten material) is the process for <em>igneous</em> rocks. C (breakdown by wind/water) is not described in the passage.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "subjected to extreme heat, pressure, or chemical processes" &rarr; D: "exposed to extreme heat, pressure, or chemical processes"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" id="card10">
+      <div class="q-num"><span class="jp">設問 10 — 推論</span><span class="en">Question 10 — Inference</span></div>
+      <div class="q-text"><span class="jp">化石が堆積岩を科学者にとって価値あるものにする理由について、何が推論できるか。</span><span class="en">What can be inferred about why fossils make sedimentary rocks valuable to scientists?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
+        <span class="answer-tag" id="yours10"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt10A"><span class="label">A</span> <span class="jp">地球史の古い時代の生物の証拠を保存しているから &#10003;</span><span class="en">They preserve evidence of organisms from earlier periods of Earth's history &#10003;</span></div>
+        <div class="option-review" id="opt10B"><span class="label">B</span> <span class="jp">最近の火山噴火を正確に年代測定できるから</span><span class="en">They allow scientists to date the most recent volcanic eruptions accurately</span></div>
+        <div class="option-review" id="opt10C"><span class="label">C</span> <span class="jp">近くの変成岩の鉱物組成を正確に明らかにするから</span><span class="en">They reveal the precise mineral composition of nearby metamorphic rocks</span></div>
+        <div class="option-review" id="opt10D"><span class="label">D</span> <span class="jp">同じ場所でかつて火成活動があったことを示すから</span><span class="en">They show that igneous activity once occurred at the same location</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第3段落に「sedimentary rocks often contain fossils, they are particularly valuable for studying the history of life on Earth（堆積岩はしばしば化石を含み、地球上の生命の歴史を研究するのに特に価値がある）」と明記。化石は過去の生物の保存された痕跡であり、過去の生命の証拠を提供する = A。<br><br>B（火山噴火の年代測定）は本文に記述なく、火山活動とは関係ない。C（変成岩の鉱物）は無関係。D（火成活動の証拠）も逆方向で誤り。</span>
+        <span class="en">Paragraph 3 explicitly states: "sedimentary rocks often contain fossils, they are particularly valuable for studying the history of life on Earth." Fossils are preserved remains of organisms from the past, so they provide evidence of past life = A.<br><br>B (dating volcanic eruptions) is not supported and unrelated to fossils. C (mineral composition of metamorphic rocks) is unrelated. D (evidence of igneous activity) is the opposite of what fossils would suggest.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "valuable for studying the history of life on Earth" &rarr; A: "preserve evidence of organisms from earlier periods of Earth's history"
         </div>
       </div>
     </div>
@@ -334,7 +431,7 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <script>
-var correctAnswers = {'1':'B','2':'C','3':'D','4':'A','5':'B','6':'C'};
+var correctAnswers = {'1':'B','2':'C','3':'D','4':'A','5':'B','6':'A','7':'B','8':'C','9':'D','10':'A'};
 (function(){
   var saved = sessionStorage.getItem('training_academic_p3_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -355,7 +452,7 @@ var correctAnswers = {'1':'B','2':'C','3':'D','4':'A','5':'B','6':'C'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/6';
+  document.getElementById('scoreDisplay').textContent = score+'/10';
 })();
 </script>
 <script src="../../js/auth.js"></script>
