@@ -70,6 +70,10 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - **基底 CSS の前提**: `css/common.css` は design tokens + i18n primitive のみ。`.header` `.back-pill` `.user-pill` 等のページ chrome は各 HTML の inline `<style>` で持つこと。
 - **CTW 入力欄スペーシング**: `.sh{margin-right:.22em}` `.word-blank{margin-right:.45em}` を必ず適用（短すぎると「a m■■don't」が「am◆◆don't」と詰まって読みづらい）。
 - **Build a Sentence ピリオド**: 文末の `.` `!` `?` を word bank の最後の piece に含めない（最後の piece が一目で判別できてしまうため）。`fixedEnd` に移動。
+- **lang-toggle handler 欠落（解説・tips ページ）**: `data-lang-btn="jp"` `data-lang-btn="en"` のボタンを top-nav に置く HTML には、対応する click handler の inline JS（`setLang()` 関数 + `body.setAttribute('data-lang', l)` + `localStorage.setItem('tck_lang', l)`）を `</body>` 直前に**必ず**含めること。`progress.js` の handler は練習ページの floating cluster 用で、静的 top-nav ボタンには attach されない。検出grep: `grep -L 'setLang(b.getAttribute' $(grep -l 'data-lang-btn' …)`
+- **練習ページの script 読み込み順**: `<script src="../../js/progress.js">` は inline `<script>` より**前に**置くこと。後ろに置くと inline script 内の `if(window.TCKProgress) TCKProgress.mountExitButton(...)` が undefined チェックに引っかかり、フローティング言語トグル・終了ボタン・再開プロンプトが表示されない。同様に `auth.js` `difficulty-badge.js` も依存される箇所より先に置く（auth.js は DOMContentLoaded 自動初期化があるので致命的ではないが、原則先に置く）。
+- **重複 `id` 属性**: 解説ページで既存問題を renumber する際、新規追加 card と旧 card で `id="card4"` 等が重複しないか確認すること。`grep -o 'id="card[0-9]*"' file | sort -u | wc -l` で件数チェック。
+- **解説の jp/en 内容ズレ**: 既存解説の翻訳作業で `<span class="jp">…</span>` 内に他問の解説テキストが混入する事故が過去発生（practice-1, 2, 3, 4 academic answers の旧 Q4-Q6 で発覚）。renumber や追加時は必ず両言語の内容が同じ設問について述べているか確認。
 
 ## kickstart HW形式への準拠（重要）
 すべてのタスクはTOEFL kickstart HWの形式を踏襲する。参照先: `toefl-kickstart-hw` リポジトリ。
