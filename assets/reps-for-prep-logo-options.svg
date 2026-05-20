@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 760" width="1100" height="760" role="img" aria-label="Reps for Prep logo options">
+  <rect x="0" y="0" width="1100" height="760" fill="#FBF6EC"/>
+  <text x="50" y="55" font-family="Manrope,Arial,sans-serif" font-size="30" font-weight="800" letter-spacing="6" fill="#007646">REPS FOR PREP — LOGO OPTIONS</text>
+
+  <!-- guides -->
+  <g stroke="#E8E4D8" stroke-width="1">
+    <line x1="50" y1="90" x2="1050" y2="90"/>
+    <line x1="50" y1="200" x2="1050" y2="200"/>
+    <line x1="50" y1="310" x2="1050" y2="310"/>
+    <line x1="50" y1="420" x2="1050" y2="420"/>
+    <line x1="50" y1="530" x2="1050" y2="530"/>
+    <line x1="50" y1="640" x2="1050" y2="640"/>
+    <line x1="50" y1="750" x2="1050" y2="750"/>
+  </g>
+  <g font-family="Manrope,Arial,sans-serif" font-size="34" font-weight="800" fill="#C9A961">
+    <text x="60" y="160">1</text><text x="60" y="270">2</text><text x="60" y="380">3</text>
+    <text x="60" y="490">4</text><text x="60" y="600">5</text><text x="60" y="710">6</text>
+  </g>
+
+  <!-- 1: same weight, gold italic connector, accent dot -->
+  <text x="150" y="165" font-family="Manrope,Arial,sans-serif" font-size="68">
+    <tspan font-weight="800" fill="#002817">Reps</tspan><tspan font-size="40" font-style="italic" font-weight="600" fill="#C9A961"> for </tspan><tspan font-weight="800" fill="#002817">Prep</tspan><tspan font-weight="800" fill="#007646">.</tspan></text>
+
+  <!-- 2: REPS chip + Prep word (echoes old TOEFL chip) -->
+  <rect x="150" y="218" width="156" height="74" rx="12" fill="#002817"/>
+  <text x="228" y="270" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-size="46" font-weight="900" letter-spacing="4" fill="#ffffff">REPS</text>
+  <text x="324" y="275" font-family="Manrope,Arial,sans-serif" font-size="68" font-weight="800" fill="#002817">Prep<tspan fill="#007646">.</tspan></text>
+  <text x="500" y="275" font-family="Manrope,Arial,sans-serif" font-size="30" font-style="italic" font-weight="500" fill="#9AA39C">for</text>
+
+  <!-- 3: weight + case contrast (light lower + heavy upper) -->
+  <text x="150" y="385" font-family="Manrope,Arial,sans-serif" font-size="68">
+    <tspan font-weight="300" fill="#5B6660">reps</tspan><tspan font-size="34" font-weight="600" fill="#C9A961"> FOR </tspan><tspan font-weight="900" letter-spacing="3" fill="#002817">PREP</tspan><tspan font-weight="900" fill="#007646">.</tspan></text>
+
+  <!-- 4: all-caps heavy + lowercase green tail -->
+  <text x="150" y="495" font-family="Manrope,Arial,sans-serif" font-size="68">
+    <tspan font-weight="900" letter-spacing="4" fill="#002817">REPS</tspan><tspan font-size="32" font-weight="700" fill="#C9A961"> · for · </tspan><tspan font-weight="400" fill="#007646">prep</tspan></text>
+
+  <!-- 5: two chips REPS / PREP -->
+  <rect x="150" y="548" width="150" height="72" rx="12" fill="#002817"/>
+  <text x="225" y="599" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-size="44" font-weight="900" letter-spacing="3" fill="#ffffff">REPS</text>
+  <text x="320" y="599" font-family="Manrope,Arial,sans-serif" font-size="34" font-style="italic" fill="#9AA39C">for</text>
+  <rect x="408" y="548" width="150" height="72" rx="12" fill="#007646"/>
+  <text x="483" y="599" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-size="44" font-weight="900" letter-spacing="3" fill="#ffffff">PREP</text>
+
+  <!-- 6: fill + outline contrast -->
+  <text x="150" y="605" font-family="Manrope,Arial,sans-serif" font-size="68">
+    <tspan font-weight="800" fill="#002817">Reps</tspan><tspan font-size="38" font-weight="600" fill="#C9A961"> for </tspan></text>
+  <text x="402" y="605" font-family="Manrope,Arial,sans-serif" font-size="68" font-weight="800" fill="none" stroke="#002817" stroke-width="2">Prep<tspan fill="#007646" stroke="#007646">.</tspan></text>
+</svg>
