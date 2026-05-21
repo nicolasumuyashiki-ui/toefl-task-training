@@ -11,13 +11,13 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="TCK Workshop — Sign in">
-<meta property="og:description" content="TCK Workshop Reps for Prep — task-by-task TOEFL iBT® practice.">
+<meta property="og:description" content="TCK Reps — task-by-task TOEFL iBT® practice.">
 <meta property="og:image" content="https://apps.tckworkshop.co.jp/toefl-task-training/assets/ogp-card.jpg">
 <meta property="og:site_name" content="TCK Workshop">
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="TCK Workshop — Sign in">
-<meta name="twitter:description" content="TCK Workshop Reps for Prep — task-by-task TOEFL iBT® practice.">
+<meta name="twitter:description" content="TCK Reps — task-by-task TOEFL iBT® practice.">
 <meta name="twitter:image" content="https://apps.tckworkshop.co.jp/toefl-task-training/assets/ogp-card.jpg">
 
   <title>TCK Workshop — Sign in</title>
@@ -34,13 +34,12 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 .brand{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px}
 .brand-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
 .brand-name{font-family:var(--font-en);font-size:.74em;font-weight:800;color:var(--green);letter-spacing:.16em;text-transform:uppercase}
-/* Product wordmark — sits between the brand pill and the greeting so
-   the product has a clear visual identity distinct from the parent
-   brand (TCK Workshop). Two-tone treatment: "TOEFL®" as filled brand
-   chip, "Reps" as the signature word in serif-ish display weight. */
-.product-logo{display:flex;align-items:center;justify-content:center;margin:-6px 0 8px;user-select:none}
-.product-logo .pl-name{font-family:var(--font-en);font-size:1.55em;font-weight:800;color:var(--green-deep);letter-spacing:-0.015em;line-height:1}
-.product-logo .pl-for{font-weight:600;color:var(--green);font-size:.7em}
+/* Product wordmark — the parent brand "TCK" set as a filled chip next
+   to "Reps." in display weight, giving the product a mark distinct from
+   the TCK Workshop pill above it. */
+.product-logo{display:flex;align-items:center;justify-content:center;gap:9px;margin:-4px 0 8px;user-select:none}
+.product-logo .pl-chip{font-family:var(--font-en);font-size:.82em;font-weight:900;letter-spacing:.13em;color:#fff;background:var(--green-deep);padding:4px 10px 3px;border-radius:5px;line-height:1}
+.product-logo .pl-name{font-family:var(--font-en);font-size:1.7em;font-weight:800;color:var(--green-deep);letter-spacing:-0.015em;line-height:1}
 .product-logo .pl-name .dot{color:var(--green);margin-left:1px}
 .product-tagline{text-align:center;font-size:.74em;color:var(--ink-500);margin:0 0 20px;font-weight:600;letter-spacing:.01em}
 
@@ -99,8 +98,9 @@ h1{font-family:var(--font-en);font-size:1.85em;font-weight:800;color:var(--green
     <img class="brand-logo" src="assets/tck-logo.png" alt="TCK Workshop" title="TCK Workshop ホームページへ" onclick="if(confirm('TCK Workshop のホームページへ移動しますか？')) window.open('https://www.tckwshop.com/','_blank');" style="cursor:pointer;height:28px;width:auto">
   </div>
 
-  <div class="product-logo" aria-label="Reps for Prep">
-    <span class="pl-name">Reps <span class="pl-for">for</span> Prep<span class="dot">.</span></span>
+  <div class="product-logo" aria-label="TCK Reps">
+    <span class="pl-chip">TCK</span>
+    <span class="pl-name">Reps<span class="dot">.</span></span>
   </div>
   <div class="product-tagline"><span class="jp">TOEFL iBT® 対策タスクトレーニング</span><span class="en">Task-based practice for the TOEFL iBT® test</span></div>
 
@@ -278,7 +278,7 @@ function doLogin() {
   Api.login(id,pass).then(function(r){
     if(r.success){
       // Login no longer enforces a domain whitelist. Anyone with a
-      // USERS row can sign in; access to actual Reps for Prep content
+      // USERS row can sign in; access to actual TCK Reps content
       // is gated by Auth._enforceSubscriptionGate (subscription
       // active OR staff bypass OR server-side monitor flag), which
       // redirects unpaid users to billing.html. This way new

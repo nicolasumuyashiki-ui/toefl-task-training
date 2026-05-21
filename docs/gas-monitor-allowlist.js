@@ -66,7 +66,7 @@ function handleGetSubscription_(e, callback) {
       subscription: {
         status: 'active',
         plan_id: 'monitor_comp',
-        plan_name: 'TOEFL Reps · Monitor',
+        plan_name: 'TCK Reps · Monitor',
         amount: 0,
         currency: 'jpy',
         current_period_start: '',

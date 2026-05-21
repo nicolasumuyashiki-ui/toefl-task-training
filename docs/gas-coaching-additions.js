@@ -1,7 +1,7 @@
 /**
  * gas-coaching-additions.js
  *
- * Paste-in code for the existing TOEFL Reps GAS backend to add the
+ * Paste-in code for the existing TCK Reps GAS backend to add the
  * Private Coaching auto-reply flow. Drop these functions into the
  * same Apps Script file that already contains handleLogin_, handleRegister_,
  * etc. — then add ONE new case to the doGet() switch statement.
@@ -118,7 +118,7 @@ function sendCoachingConfirmationToUser_(email, userName, skills, lang) {
     subject = 'Thank you for your Private Coaching request — TCK Workshop';
     body =
       'Hi ' + (userName || 'there') + ',\n\n' +
-      'Thank you for requesting a TOEFL Reps Private Coaching session.\n\n' +
+      'Thank you for requesting a TCK Reps Private Coaching session.\n\n' +
       '── Your request ──\n' +
       'Skills: ' + skillsPlus + '\n\n' +
       '── Next steps ──\n' +
@@ -142,12 +142,12 @@ function sendCoachingConfirmationToUser_(email, userName, skills, lang) {
       'The 60-minute session focuses entirely on the skills you selected:\n' +
       'explanation, feedback, and hands-on practice. Held on Google Meet.\n\n' +
       'Questions? Reply to this email or contact TOEFL-Reps-tfpif@tckworkshop.co.jp.\n\n' +
-      '— TCK Workshop / TOEFL Reps';
+      '— TCK Workshop / TCK Reps';
   } else {
     subject = '個別指導のお申込みありがとうございます — TCK Workshop';
     body =
       (userName ? userName + ' 様\n\n' : 'こんにちは。\n\n') +
-      'TOEFL Reps の個別指導をお申込みいただき、ありがとうございます。\n\n' +
+      'TCK Reps の個別指導をお申込みいただき、ありがとうございます。\n\n' +
       '── お申込み内容 ──\n' +
       '希望技能：\n' + skillsBullet + '\n\n' +
       '── 次のステップ ──\n' +
@@ -171,14 +171,14 @@ function sendCoachingConfirmationToUser_(email, userName, skills, lang) {
       '1 セッション 60 分、Google Meet にて開催します。\n\n' +
       'ご質問はこのメールに返信、または TOEFL-Reps-tfpif@tckworkshop.co.jp まで\n' +
       'ご連絡ください。\n\n' +
-      '— TCK Workshop / TOEFL Reps';
+      '— TCK Workshop / TCK Reps';
   }
 
   MailApp.sendEmail({
     to: email,
     subject: subject,
     body: body,
-    name: 'TCK Workshop · TOEFL Reps'
+    name: 'TCK Workshop · TCK Reps'
   });
 }
 
@@ -189,9 +189,9 @@ function sendCoachingNotificationToInstructor_(userId, userName, email, skills, 
   var skillsBullet = skills.split(',').map(function(s){ return '・' + s.trim(); }).join('\n');
   var dateStr = Utilities.formatDate(ts, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm');
 
-  var subject = '【TOEFL Reps】個別指導お申込み: ' + (userName || email);
+  var subject = '【TCK Reps】個別指導お申込み: ' + (userName || email);
   var body =
-    'TOEFL Reps の個別指導お申込みがありました。\n\n' +
+    'TCK Reps の個別指導お申込みがありました。\n\n' +
     '── 申込者 ──\n' +
     'お名前：' + (userName || '未設定') + '\n' +
     'Email：' + email + '\n' +
