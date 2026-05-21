@@ -40,7 +40,8 @@ var MONITOR_EMAILS = [
   'saekadowaki322@gmail.com',
   'bellsince2004@gmail.com',
   'mkusunoki0811@gmail.com',
-  'soccerzurdo1@gmail.com'
+  'soccerzurdo1@gmail.com',
+  'nanasey103@gmail.com'
 ];
 
 function isMonitorEmail_(email) {
