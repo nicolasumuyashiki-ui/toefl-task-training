@@ -229,6 +229,24 @@ if (location.search.indexOf('gate=denied') !== -1) {
   document.getElementById('gateNotice').style.display = 'block';
 }
 
+/* Prefill + lock the registration email from ?email= (set by the
+   onboarding email's STEP 2 link). The subscription gate falls back to
+   matching the Stripe-checkout email against the app-account email, so
+   forcing them identical here is what unlocks paid users automatically. */
+(function(){
+  var m = location.search.match(/[?&]email=([^&]+)/);
+  if (!m) return;
+  var email = '';
+  try { email = decodeURIComponent(m[1].replace(/\+/g, '%2B')); } catch (e) { email = ''; }
+  email = email.trim();
+  if (!email) return;
+  var re = document.getElementById('regEmail');
+  if (re) { re.value = email; re.readOnly = true; re.style.background = 'var(--paper)'; re.style.cursor = 'not-allowed'; }
+  var rc = document.getElementById('recoverEmail');
+  if (rc) rc.value = email;
+  showView('viewRegister');
+})();
+
 function showView(id) {
   document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
