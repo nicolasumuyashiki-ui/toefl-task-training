@@ -185,5 +185,6 @@ document.getElementById('qList').innerHTML=html;
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
+<script defer src="../../js/tm-footer.js"></script>
 </body>
 </html>
