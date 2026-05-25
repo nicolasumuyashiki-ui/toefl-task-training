@@ -8,35 +8,25 @@
 | Practice | Set | Module | Topic |
 |----------|-----|--------|-------|
 | 1 | 1 | M1 | The History of Chocolate |
-| 1 | 2 | M1 | Urban Gardens and Community Health |
-| 1 | 3 | M2H | The Role of Microorganisms in Soil Ecology |
-| 2 | 1 | — | The Development of Modern Zoos |
-| 2 | 2 | — | How Music Affects Concentration |
-| 2 | 3 | — | Volcanic Activity and Climate Change |
-| 3 | 1 | — | The Origins of the Olympic Games |
-| 3 | 2 | — | How Coral Reefs Support Marine Life |
-| 3 | 3 | — | The Science Behind Earthquake Prediction |
-| 4 | 1 | — | The Invention of the Printing Press |
-| 4 | 2 | — | Why Animals Migrate |
-| 4 | 3 | — | Advances in Renewable Energy Technology |
-| 5 | 1 | — | The History of Coffee |
-| 5 | 2 | — | How Rivers Shape Landscapes |
-| 5 | 3 | M2H | Bioluminescence in Marine Life |
-| 6 | 1 | — | The History of Vaccination |
-| 6 | 2 | M1 | How Mountains Form |
-| 6 | 3 | — | The Chemistry of Cooking |
-| 7 | 1 | — | The Role of Bees in Agriculture |
-| 7 | 2 | — | How Maps Changed Exploration |
-| 7 | 3 | M2H | Dark Matter in Modern Cosmology |
-| 8 | 1 | — | The History of Paper and Printing |
-| 8 | 2 | — | Why Forests Are Important for the Planet |
-| 8 | 3 | — | The Science of Nutrition and Metabolism |
-| 9 | 1 | — | The Discovery of Antibiotics |
-| 9 | 2 | — | How Oceans Regulate Climate |
-| 9 | 3 | — | The Neuroscience of Language Learning |
-| 10 | 1 | — | The Science of Sleep |
-| 10 | 2 | — | How Bridges Are Built |
-| 10 | 3 | — | The Economics of International Trade |
+| 1 | 2 | M2H | The Role of Microorganisms in Soil Ecology |
+| 2 | 1 | M1 | The Development of Modern Zoos |
+| 2 | 2 | M2H | Volcanic Activity and Climate Change |
+| 3 | 1 | M1 | The Origins of the Olympic Games |
+| 3 | 2 | M2H | The Science Behind Earthquake Prediction |
+| 4 | 1 | M1 | The Invention of the Printing Press |
+| 4 | 2 | M2H | Advances in Renewable Energy Technology |
+| 5 | 1 | M1 | The History of Coffee |
+| 5 | 2 | M2H | Bioluminescence in Marine Life |
+| 6 | 1 | M1 | The History of Vaccination |
+| 6 | 2 | M2H | The Chemistry of Cooking |
+| 7 | 1 | M1 | The Role of Bees in Agriculture |
+| 7 | 2 | M2H | Dark Matter in Modern Cosmology |
+| 8 | 1 | M1 | The History of Paper and Printing |
+| 8 | 2 | M2H | The Science of Nutrition and Metabolism |
+| 9 | 1 | M1 | The Discovery of Antibiotics |
+| 9 | 2 | M2H | The Neuroscience of Language Learning |
+| 10 | 1 | M1 | The Science of Sleep |
+| 10 | 2 | M2H | The Economics of International Trade |
 
 ### Read in Daily Life (RDL)
 | Practice | # | Topic |
@@ -92,6 +82,15 @@
 | Practice | Topics |
 |----------|--------|
 | 1 | Library hours, registration office, lunch plans, bookstore, deadline, major switch, borrowing notes, campus shuttle |
+| 2 | Lab coat purchase, study abroad application, noisy roommate, career center / resume, calculus tutoring, parking ticket appeal, campus gym membership, meal plan upgrade |
+| 3 | Campus shuttle (weekends), financial aid / tuition, internship fair, organic chemistry study group, professor office hours, dorm heating maintenance, campus newspaper / dining hall, graduation ceremony guest limit |
+| 4 | Welcome festival, dorm heating problem, dining hall salad bar, exchange program (Spain), job interview attire, organic chemistry, rec center pool renovation, student government election |
+| 5 | Campus mailroom / packages, language exchange program, student union election, lab equipment worry, orientation week events, campus radio station DJ, alumni networking event, study focus tips |
+| 6 | Campus bookstore notebook return, library study group location, library fine, community garden volunteer, econ class registration (full), apartment search, lost umbrella, outdoor music festival cancellation |
+| 7 | Campus shuttle hours, calculus homework help, lost student ID, lab safety training deadline, course evaluation, campus store closed / art supplies, fire alarm drill, group project location |
+| 8 | Printing account top-up, study abroad application deadline, broken washing machines, professor's office location, transfer student lost on campus, student bookstore discounts, weather alert / thunderstorm, photography club meeting |
+| 9 | Homecoming concert tickets, noisy roommate / sleep, library card renewal, recommendation letter request, campus shuttle pass, computer lab hours, student health insurance bill, graduation rehearsal change |
+| 10 | Meal plan balance, locked out of dorm, textbook return (highlighted), calculus homework help, financial aid application deadline, study abroad credit transfer, research assistant application / faculty reference, parking ticket dispute |
 
 ### Listen to a Conversation
 | Practice | Topic 1 | Topic 2 |
