@@ -574,7 +574,6 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
         <div>
           <div class="exercise-task-name">Complete the Words<span>Reading · CTW · Module 2 (Harder)</span></div>
         </div>
-        <span class="exercise-difficulty"><span class="dot"></span>CEFR B2 – C1</span>
       </div>
 
       <div class="exercise-prompt">
@@ -605,7 +604,6 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
         <div>
           <div class="exercise-task-name">Build a Sentence<span>Writing · Advanced (7 blanks)</span></div>
         </div>
-        <span class="exercise-difficulty"><span class="dot"></span>Relative Clause</span>
       </div>
 
       <div class="bas-prompt-speaker">
@@ -1207,6 +1205,28 @@ function resetBAS(){
 
 renderBAS();
 updateBASHasFixed();
+</script>
+<script>
+/* iframe auto-height: when this page is embedded in an <iframe> (e.g. on
+   WordPress), report content height to the parent so it can resize the
+   iframe seamlessly. Dormant when opened directly (not framed). */
+(function () {
+  if (window.parent === window) return;
+  function postHeight() {
+    var h = Math.max(
+      document.documentElement.scrollHeight,
+      document.body ? document.body.scrollHeight : 0
+    );
+    window.parent.postMessage({ tckEmbedHeight: h }, '*');
+  }
+  window.addEventListener('load', postHeight);
+  window.addEventListener('resize', postHeight);
+  if (window.ResizeObserver && document.body) {
+    new ResizeObserver(postHeight).observe(document.body);
+  }
+  setTimeout(postHeight, 300);
+  setTimeout(postHeight, 1500);
+})();
 </script>
 <script defer src="js/tm-footer.js"></script>
 </body>
