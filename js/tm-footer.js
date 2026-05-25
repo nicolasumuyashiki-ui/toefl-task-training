@@ -6,9 +6,9 @@
  * Centralised here so the wording lives in exactly one place.
  *
  * NOTE (English wording): the JP text below is verbatim from the legal
- * department / toefl-ibt.jp site policy. The EN line is the standard
- * ETS wording and is pending final confirmation against the site
- * policy — update this one string if legal supplies different text.
+ * department / toefl-ibt.jp site policy. The EN line is the standard ETS
+ * trademark disclaimer ("not endorsed or approved by ETS"). If legal
+ * supplies exact licensed wording, update this one string.
  */
 (function () {
   if (typeof document === 'undefined') return;
@@ -27,7 +27,7 @@
     el.innerHTML =
       'TOEFLはETSの登録商標です。このウェブサイトはETSの検討を受けまたはその承認を得たものではありません。'
       + '<br>'
-      + 'TOEFL is a registered trademark of ETS. This website is neither reviewed nor endorsed by ETS.';
+      + 'TOEFL is a registered trademark of Educational Testing Service (ETS). This website is not endorsed or approved by ETS.';
     document.body.appendChild(el);
   }
 
