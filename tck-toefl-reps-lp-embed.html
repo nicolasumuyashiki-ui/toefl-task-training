@@ -591,8 +591,8 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
       </p>
 
       <div class="exercise-actions">
-        <button class="btn-check" onclick="checkCTW()">答え合わせ</button>
-        <button class="btn-reset" onclick="resetCTW()">リセット</button>
+        <button class="btn-check" id="ctwCheck">答え合わせ</button>
+        <button class="btn-reset" id="ctwReset">リセット</button>
       </div>
 
       <div class="exercise-feedback" id="ctw-feedback"></div>
@@ -625,9 +625,9 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
       </div>
 
       <div class="exercise-actions">
-        <button class="btn-check" onclick="checkBAS()">答え合わせ</button>
-        <button class="btn-reset" onclick="resetBAS()">リセット</button>
-        <button class="btn-reveal" onclick="showBASAnswer()">正解を見る</button>
+        <button class="btn-check" id="basCheck">答え合わせ</button>
+        <button class="btn-reset" id="basReset">リセット</button>
+        <button class="btn-reveal" id="basReveal">正解を見る</button>
       </div>
 
       <div class="exercise-feedback" id="bas-feedback"></div>
@@ -1204,29 +1204,27 @@ function resetBAS(){
 }
 
 renderBAS();
-updateBASHasFixed();
-</script>
-<script>
-/* iframe auto-height: when this page is embedded in an <iframe> (e.g. on
-   WordPress), report content height to the parent so it can resize the
-   iframe seamlessly. Dormant when opened directly (not framed). */
+
+/* Bind static demo buttons in JS. Some WordPress setups (KSES / security
+   or optimizer plugins) strip inline on* attributes from Custom HTML block
+   content, leaving the buttons inert; binding here keeps them working as
+   long as this script runs. */
 (function () {
-  if (window.parent === window) return;
-  function postHeight() {
-    var h = Math.max(
-      document.documentElement.scrollHeight,
-      document.body ? document.body.scrollHeight : 0
-    );
-    window.parent.postMessage({ tckEmbedHeight: h }, '*');
+  function bind() {
+    [['ctwCheck', checkCTW], ['ctwReset', resetCTW],
+     ['basCheck', checkBAS], ['basReset', resetBAS],
+     ['basReveal', showBASAnswer]].forEach(function (p) {
+      var el = document.getElementById(p[0]);
+      if (el) el.addEventListener('click', p[1]);
+    });
   }
-  window.addEventListener('load', postHeight);
-  window.addEventListener('resize', postHeight);
-  if (window.ResizeObserver && document.body) {
-    new ResizeObserver(postHeight).observe(document.body);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
   }
-  setTimeout(postHeight, 300);
-  setTimeout(postHeight, 1500);
 })();
+updateBASHasFixed();
 </script>
 <script defer src="js/tm-footer.js"></script>
 </body>
