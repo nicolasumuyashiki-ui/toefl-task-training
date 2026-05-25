@@ -10,17 +10,17 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon-180.png">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="TOEFL iBT - Microphone Check">
-<meta property="og:description" content="Complete TOEFL iBT Practice Test covering Reading, Listening, Writing, and Speaking — by TCK Workshop.">
+<meta property="og:title" content="TOEFL iBT® - Microphone Check">
+<meta property="og:description" content="Complete TOEFL iBT® Practice Test covering Reading, Listening, Writing, and Speaking — by TCK Workshop.">
 <meta property="og:image" content="https://apps.tckworkshop.co.jp/toefl-practice/assets/ogp-card.jpg">
 <meta property="og:site_name" content="TCK Workshop">
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TOEFL iBT - Microphone Check">
-<meta name="twitter:description" content="Complete TOEFL iBT Practice Test covering Reading, Listening, Writing, and Speaking — by TCK Workshop.">
+<meta name="twitter:title" content="TOEFL iBT® - Microphone Check">
+<meta name="twitter:description" content="Complete TOEFL iBT® Practice Test covering Reading, Listening, Writing, and Speaking — by TCK Workshop.">
 <meta name="twitter:image" content="https://apps.tckworkshop.co.jp/toefl-practice/assets/ogp-card.jpg">
 
-<title>TOEFL iBT - Microphone Check</title>
+<title>TOEFL iBT® - Microphone Check</title>
 <link rel="stylesheet" href="../css/common.css">
 <style>
 .mic-icon-circle{width:52px;height:52px;background:#007646;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -62,7 +62,7 @@
 <div class="top-bar">
  <div class="top-bar-title" style="display:flex;align-items:center;gap:12px">
   <img class="brand-logo" src="../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto">
-  <span style="border-left:1px solid var(--paper);padding-left:12px">TOEFL iBT&reg; Practice Test</span>
+  <span style="border-left:1px solid var(--paper);padding-left:12px">TOEFL iBT®&reg; Practice Test</span>
  </div>
  <div class="top-bar-right" id="userBadge">Setup</div>
 </div>
@@ -148,5 +148,6 @@ window.playAudio=function(){var audio=document.getElementById("promptAudio"),btn
 function cleanupMic(){micLive=false;if(animId){cancelAnimationFrame(animId);animId=null;}if(micStream){micStream.getTracks().forEach(function(t){t.stop();});micStream=null;}if(micSource){try{micSource.disconnect();}catch(e){}micSource=null;}if(audioCtx){try{audioCtx.close();}catch(e){}audioCtx=null;}analyser=null;}
 function cleanupAll(){cleanupMic();if(simId){cancelAnimationFrame(simId);simId=null;}document.getElementById("recBadge").classList.remove("active");if(window.speechSynthesis)window.speechSynthesis.cancel();}
 </script>
+<script defer src="../../js/tm-footer.js"></script>
 </body>
 </html>

@@ -40,7 +40,8 @@ var MONITOR_EMAILS = [
   'saekadowaki322@gmail.com',
   'bellsince2004@gmail.com',
   'mkusunoki0811@gmail.com',
-  'soccerzurdo1@gmail.com'
+  'soccerzurdo1@gmail.com',
+  'nanasey103@gmail.com'
 ];
 
 function isMonitorEmail_(email) {
@@ -65,7 +66,7 @@ function handleGetSubscription_(e, callback) {
       subscription: {
         status: 'active',
         plan_id: 'monitor_comp',
-        plan_name: 'TOEFL Reps · Monitor',
+        plan_name: 'TCK Reps · Monitor',
         amount: 0,
         currency: 'jpy',
         current_period_start: '',

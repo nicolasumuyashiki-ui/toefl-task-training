@@ -1,7 +1,7 @@
 /**
  * gas-consultation-additions.js
  *
- * Paste-in code for the existing TOEFL Reps GAS backend to add the
+ * Paste-in code for the existing TCK Reps GAS backend to add the
  * server-side consultation cooldown sync, backed by the CONSULTATION_BOOKINGS
  * sheet (populated by Zapier from eeasy webhook events).
  *

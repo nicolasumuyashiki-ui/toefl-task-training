@@ -456,7 +456,7 @@ function gradeFor(score) {
 const GRADE_LABELS = { perfect:'Perfect', great:'Great', good:'Good', keep:'Keep Going', inprog:'中断中', submitted:'提出済み' };
 
 /* ============================================================
-   TOEFL iBT raw→scaled conversion (ETS official tables)
+   TOEFL iBT® raw→scaled conversion (ETS official tables)
    ============================================================ */
 const READING_TABLE = [{raw:20,scaled:30},{raw:19,scaled:29},{raw:18,scaled:27},{raw:17,scaled:26},{raw:16,scaled:25},{raw:15,scaled:23},{raw:14,scaled:22},{raw:13,scaled:21},{raw:12,scaled:19},{raw:11,scaled:18},{raw:10,scaled:17},{raw:9,scaled:15},{raw:8,scaled:14},{raw:7,scaled:13},{raw:6,scaled:11},{raw:5,scaled:9},{raw:4,scaled:7},{raw:3,scaled:5},{raw:2,scaled:3},{raw:1,scaled:1},{raw:0,scaled:0}];
 const LISTENING_TABLE = [{raw:28,scaled:30},{raw:27,scaled:29},{raw:26,scaled:27},{raw:25,scaled:26},{raw:24,scaled:25},{raw:23,scaled:23},{raw:22,scaled:22},{raw:21,scaled:21},{raw:20,scaled:19},{raw:19,scaled:17},{raw:18,scaled:16},{raw:17,scaled:14},{raw:16,scaled:13},{raw:15,scaled:11},{raw:14,scaled:10},{raw:13,scaled:8},{raw:12,scaled:7},{raw:11,scaled:6},{raw:10,scaled:5},{raw:9,scaled:4},{raw:8,scaled:3},{raw:7,scaled:2},{raw:6,scaled:2},{raw:5,scaled:1},{raw:4,scaled:0},{raw:3,scaled:0},{raw:2,scaled:0},{raw:1,scaled:0},{raw:0,scaled:0}];
@@ -519,7 +519,7 @@ function formatBand(b) {
 }
 
 function predictScoresForUser(userAttempts) {
-  /* First-attempt only: TOEFL is a one-shot test, so the predictor
+  /* First-attempt only: TOEFL® is a one-shot test, so the predictor
      should reflect cold performance, not memorization through retries.
      Dedupe by (task + practice + set) keeping the earliest timestamp.
      If an attempt has answeredCount of 0 (immediate abandonment), it's
@@ -547,7 +547,7 @@ function predictScoresForUser(userAttempts) {
   const firstScored = pickFirstAttempts(allScored);
 
   const scored = s => firstScored.filter(a => a.section === s);
-  /* Weighted accuracy with 1.5× boost for TOEFL Harder Module items.
+  /* Weighted accuracy with 1.5× boost for TOEFL® Harder Module items.
      Falls back gracefully when an attempt has no Harder breakdown
      fields (older mock rows / pre-rollout attempts). */
   function avgPct(items) {
@@ -1032,7 +1032,7 @@ function renderKarteDetail() {
   const total120Proj = pred.total > 0 ? Math.round(pred.total * 4 / 3) : 0;
   const totalBandStr = pred.total > 0 ? formatBand(totalToBand(total120Proj)) : '—';
   const totalPredBlock = pred.total > 0
-    ? '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-dark));color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase">Predicted TOEFL Total</div><div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.55);margin-top:2px">R+L+W のみ（Speaking 採点なし）／ Band は 120 換算</div></div><div style="text-align:right"><div style="font-family:var(--font-en);font-size:2.2em;font-weight:800;letter-spacing:-0.02em;line-height:1"><span>' + pred.total + '</span><span style="font-size:.4em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 90</span></div><div style="font-family:var(--font-en);font-size:1em;font-weight:700;color:var(--gold);margin-top:4px">Band ' + totalBandStr + '<span style="font-size:.6em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 6.0</span></div></div></div>'
+    ? '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-dark));color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase">Predicted TOEFL® Total</div><div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.55);margin-top:2px">R+L+W のみ（Speaking 採点なし）／ Band は 120 換算</div></div><div style="text-align:right"><div style="font-family:var(--font-en);font-size:2.2em;font-weight:800;letter-spacing:-0.02em;line-height:1"><span>' + pred.total + '</span><span style="font-size:.4em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 90</span></div><div style="font-family:var(--font-en);font-size:1em;font-weight:700;color:var(--gold);margin-top:4px">Band ' + totalBandStr + '<span style="font-size:.6em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 6.0</span></div></div></div>'
     : '';
   const recent = attempts.slice().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, 12);
   const activityRows = recent.map(a => {
@@ -1440,5 +1440,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
+<script defer src="../js/tm-footer.js"></script>
 </body>
 </html>

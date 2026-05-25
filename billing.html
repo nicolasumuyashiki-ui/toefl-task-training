@@ -11,13 +11,13 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Billing — TCK Workshop">
-<meta property="og:description" content="TCK Workshop TOEFL Reps — task-by-task TOEFL iBT practice.">
+<meta property="og:description" content="TCK Reps — task-by-task TOEFL iBT® practice.">
 <meta property="og:image" content="https://apps.tckworkshop.co.jp/toefl-task-training/assets/ogp-card.jpg">
 <meta property="og:site_name" content="TCK Workshop">
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Billing — TCK Workshop">
-<meta name="twitter:description" content="TCK Workshop TOEFL Reps — task-by-task TOEFL iBT practice.">
+<meta name="twitter:description" content="TCK Reps — task-by-task TOEFL iBT® practice.">
 <meta name="twitter:image" content="https://apps.tckworkshop.co.jp/toefl-task-training/assets/ogp-card.jpg">
 
 <title>Billing — TCK Workshop</title>
@@ -176,7 +176,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
     <div class="plan-head">
       <div class="plan-name-block">
         <div class="label">Current Plan</div>
-        <h2 id="planName">TOEFL Reps · Standard</h2>
+        <h2 id="planName">TCK Reps · Standard</h2>
         <div class="desc">
           <span class="jp">タスク別トレーニング・全 4 技能 + 月 1 回の学習相談つき</span>
           <span class="en">Task-based training across all 4 skills + monthly coaching</span>
@@ -348,7 +348,7 @@ function isoDate(offsetDays) {
 function newSubscriptionMock() {
   return {
     status: 'active',
-    plan: 'TOEFL Reps · Standard',
+    plan: 'TCK Reps · Standard',
     amount: 3980,
     currency: 'jpy',
     started: isoDate(0),
@@ -358,7 +358,7 @@ function newSubscriptionMock() {
     invoices: [
       {
         date: isoDate(0),
-        description: 'TOEFL Reps · 月額プラン',
+        description: 'TCK Reps · 月額プラン',
         amount: 3980,
         status: 'paid',
         receiptUrl: 'https://dashboard.stripe.com/test/payments?receipt=demo'
@@ -388,7 +388,7 @@ function newSubscriptionMock() {
   if (qs.get('gate') === 'subscribe') {
     banner.style.display = 'block';
     inner.className = 'status-inner canceled';
-    inner.innerHTML = '<span class="icon">🔒</span><div><strong><span class="jp">サブスクリプションが必要です</span><span class="en">Subscription required</span></strong><br><span class="jp">TOEFL Reps の各タスクをご利用いただくには、月額プランへのご登録が必要です。下の「サブスクを開始」からお手続きください。</span><span class="en">An active subscription is required to use TOEFL Reps tasks. Tap "Start subscription" below to sign up.</span></div>';
+    inner.innerHTML = '<span class="icon">🔒</span><div><strong><span class="jp">サブスクリプションが必要です</span><span class="en">Subscription required</span></strong><br><span class="jp">TCK Reps の各タスクをご利用いただくには、月額プランへのご登録が必要です。下の「サブスクを開始」からお手続きください。</span><span class="en">An active subscription is required to use TCK Reps tasks. Tap "Start subscription" below to sign up.</span></div>';
   }
 })();
 
@@ -576,5 +576,6 @@ document.getElementById('cancelBtn').addEventListener('click', function(){
   openCustomerPortal(this);
 });
 </script>
+<script defer src="js/tm-footer.js"></script>
 </body>
 </html>
