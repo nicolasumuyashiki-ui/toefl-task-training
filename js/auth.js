@@ -304,8 +304,8 @@ if (typeof window !== 'undefined') {
           '<div class="ti"><span class="jp">サブスクリプションが必要です</span><span class="en">Subscription required</span></div>' +
         '</div>' +
         '<div class="b">' +
-          '<p><span class="jp">TOEFL Reps の各タスクをご利用いただくには、月額プラン <strong>¥3,980 / 月</strong>（税込 ¥4,378）へのご登録が必要です。</span>' +
-          '<span class="en">An active subscription is required to use TOEFL Reps tasks. The plan is <strong>¥3,980/month</strong> (¥4,378 tax incl.).</span></p>' +
+          '<p><span class="jp">TCK Reps の各タスクをご利用いただくには、月額プラン <strong>¥3,980 / 月</strong>（税込 ¥4,378）へのご登録が必要です。</span>' +
+          '<span class="en">An active subscription is required to use TCK Reps tasks. The plan is <strong>¥3,980/month</strong> (¥4,378 tax incl.).</span></p>' +
           '<p><span class="jp">登録後すぐに全タスクが解放されます。いつでもキャンセル可能です。</span>' +
           '<span class="en">All tasks unlock immediately after sign-up. Cancel anytime.</span></p>' +
         '</div>' +
