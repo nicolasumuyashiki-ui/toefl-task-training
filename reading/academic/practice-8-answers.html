@@ -114,8 +114,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/6</div>
-  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q6)</span><span class="en">Your Score (Q1&ndash;Q6)</span></div>
+  <div class="score-big" id="scoreDisplay">&ndash;/10</div>
+  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q10)</span><span class="en">Your Score (Q1&ndash;Q10)</span></div>
 </div>
 
 <div class="answers-body">
@@ -161,7 +161,7 @@ body[data-lang="en"] .jp{display:none}
       <div class="tip-card-body">
         <strong>When there are no discourse markers</strong> (like "Furthermore" or "In contrast"), look for <strong>pronoun references</strong> and <strong>vocabulary echoes</strong> that connect the new sentence to a specific preceding sentence.
         <div class="tip-example">
-          <strong>Q6 example:</strong> "the range" and "the two plates" in the insertion sentence can only refer to the Himalayas and the Indian/Eurasian Plates mentioned in sentence 3. This tells you the sentence must go at position C.
+          <strong>Q8 example:</strong> "this ongoing collision" and "the two plates" in the insertion sentence can only refer to the Himalayas and the Indian/Eurasian Plates mentioned in sentence 3. This tells you the sentence must go at position C.
         </div>
         <div class="tip-warn">
           <strong>Common mistake:</strong> Choosing a position where the sentence "sounds okay" without checking whether the pronoun references and vocabulary actually match. Always ask: <em>What does "the range" / "these findings" / "such behavior" refer to?</em> The referent must appear <strong>before</strong> the insertion point.
@@ -240,67 +240,117 @@ body[data-lang="en"] .jp{display:none}
         </div>
       </div>
     </div>
+
+    <!-- Q4 -->
+    <div class="q-card" id="card4">
+      <div class="q-num"><span class="jp">設問 4 — 修辞目的</span><span class="en">Question 4 — Rhetorical Purpose</span></div>
+      <div class="q-text"><span class="jp">なぜ著者は第2段落で国連の実験を描写するのか。</span><span class="en">Why does the author describe the United Nations experiment in paragraph 2?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
+        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt4A"><span class="label">A</span> <span class="jp">アンカーがその後の推定にどう影響するかを示す具体例を提示するため &#10003;</span><span class="en">To provide a concrete example showing how an anchor influences subsequent estimates &#10003;</span></div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">研究参加者が地理の知識を欠いていたことを示唆するため</span><span class="en">To suggest that participants in the study lacked knowledge of geography</span></div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">心理学研究におけるランダムな手法を批判するため</span><span class="en">To criticize the use of random methods in psychological research</span></div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> <span class="jp">アフリカ諸国数の推定がしばしば不正確であることを示すため</span><span class="en">To demonstrate that estimates of African nations are often inaccurate</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第2段落はまずアンカリング効果の一般的主張を述べる：「subsequent estimates tend to stay close to that anchor even when it is completely arbitrary（その後の推定は完全に恣意的な場合でもそのアンカーに近づく傾向がある）」。次に「For example」で国連実験を導入し、ホイールの数字（10 または 65）が参加者の推定を実際にずらした結果を提示する。この実験は主張の具体例 = A。<br><br>B は実験の目的ではない。参加者の地理知識は議論されていない。C は誤り。著者は手法を批判していない。むしろ手法はアンカリング効果を示すために設計された。D は誤り。重要なのは「アフリカ諸国の正確な数」ではなく、推定がアンカーに引き寄せられるという事実。</span>
+        <span class="en">Paragraph 2 first states the general claim about the anchoring effect: "subsequent estimates tend to stay close to that anchor even when it is completely arbitrary." It then introduces the United Nations experiment with "For example," presenting the result that the wheel number (10 or 65) actually shifted participants' estimates. The experiment is a concrete illustration of the claim = A.<br><br>B is not the purpose &mdash; participants' geographic knowledge is not discussed. C is wrong; the author does not criticize the method but uses it to demonstrate anchoring. D misses the point &mdash; what matters is not the accurate number of African nations but that estimates were pulled toward the anchor.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: introduces the experiment with "For example" after stating the anchoring claim &rarr; A: "a concrete example showing how an anchor influences subsequent estimates"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" id="card5">
+      <div class="q-num"><span class="jp">設問 5 — 推論</span><span class="en">Question 5 — Inference</span></div>
+      <div class="q-text"><span class="jp">第3段落から、人々が一般にリスクの可能性をどのように判断しているかについて何が推論できるか。</span><span class="en">What can be inferred from paragraph 3 about how people commonly judge the likelihood of risk?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
+        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">旅行を決める前に専門の統計家に相談する</span><span class="en">They consult professional statisticians before making travel decisions</span></div>
+        <div class="option-review" id="opt5B"><span class="label">B</span> <span class="jp">データと個人的経験に概ね同等の重みを置く</span><span class="en">They generally give equal weight to data and personal experience</span></div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> <span class="jp">メディア報道が判断を歪めるときに気づくのが普通である</span><span class="en">They typically recognize when media coverage distorts their judgments</span></div>
+        <div class="option-review is-correct" id="opt5D"><span class="label">D</span> <span class="jp">統計的証拠よりも鮮明な記憶に頼ることが多い &#10003;</span><span class="en">They often rely on vivid memories rather than on statistical evidence &#10003;</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第3段落は利用可能性ヒューリスティックを描く：「people overestimate the likelihood of events that are easily recalled from memory（思い出しやすい出来事の可能性を過大評価する）」。続けて、飛行機事故が大きく報じられるため鮮明な記憶として残り、人々は航空旅行が運転より危険だと信じる &mdash; ただし「statistics show the opposite（統計は逆を示す）」と明記される。したがって人々は鮮明な記憶にしたがい統計的証拠を退ける = D。<br><br>A は本文に根拠なし。専門家への相談は描かれていない。B も誤り。データを記憶と同等に扱うなら統計とは「逆」の結論には至らない。C は本文と矛盾。歪みに気づくなら誤った判断はしないはず。</span>
+        <span class="en">Paragraph 3 describes the availability heuristic: "people overestimate the likelihood of events that are easily recalled from memory." It then says plane crashes receive extensive media coverage and become vivid memories, leading people to believe air travel is more dangerous &mdash; even though "statistics show the opposite." So people follow vivid memories instead of statistical evidence = D.<br><br>A has no support &mdash; consulting statisticians is not mentioned. B is wrong; if data and memory were weighted equally, judgments would not run "opposite" to statistics. C contradicts the passage &mdash; if people recognized the distortion, they would not hold the false belief.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "easily recalled from memory" + "statistics show the opposite" &rarr; D: "rely on vivid memories rather than on statistical evidence"
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
     <div class="passage-title-bar">Plate Tectonics and Mountain Formation <span class="passage-type-badge"><span class="jp">Physical Science</span><span class="en">Physical Science</span></span></div>
 
-    <!-- Q4 -->
-    <div class="q-card" id="card4">
-      <div class="q-num"><span class="jp">設問 4 — 修辞目的</span><span class="en">Question 4 — Rhetorical Purpose</span></div>
+    <!-- Q6 -->
+    <div class="q-card" id="card6">
+      <div class="q-num"><span class="jp">設問 6 — 修辞目的</span><span class="en">Question 6 — Rhetorical Purpose</span></div>
       <div class="q-text"><span class="jp">なぜ著者は第2段落でヒマラヤ山脈に言及するのか。</span><span class="en">Why does the author mention the Himalayas in paragraph 2?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
-        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> <span class="jp">インドプレートが地球で最速移動するプレートである理由を説明するため</span><span class="en">To explain why the Indian Plate is the fastest-moving plate on Earth</span></div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">ヒマラヤを富士山のような火山と比較するため</span><span class="en">To compare the Himalayas with volcanic mountains like Mount Fuji</span></div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">山形成が時間とともに減速したと論じるため</span><span class="en">To argue that mountain formation has slowed down over time</span></div>
-        <div class="option-review is-correct" id="opt4D"><span class="label">D</span> <span class="jp">プレート衝突で形成された山の具体例を提供するため &#10003;</span><span class="en">To provide a specific example of mountains formed by plate collision &#10003;</span></div>
+        <div class="option-review" id="opt6A"><span class="label">A</span> <span class="jp">インドプレートが地球で最速移動するプレートである理由を説明するため</span><span class="en">To explain why the Indian Plate is the fastest-moving plate on Earth</span></div>
+        <div class="option-review" id="opt6B"><span class="label">B</span> <span class="jp">ヒマラヤを富士山のような火山と比較するため</span><span class="en">To compare the Himalayas with volcanic mountains like Mount Fuji</span></div>
+        <div class="option-review" id="opt6C"><span class="label">C</span> <span class="jp">山形成が時間とともに減速したと論じるため</span><span class="en">To argue that mountain formation has slowed down over time</span></div>
+        <div class="option-review is-correct" id="opt6D"><span class="label">D</span> <span class="jp">プレート衝突で形成された山の具体例を提供するため &#10003;</span><span class="en">To provide a specific example of mountains formed by plate collision &#10003;</span></div>
       </div>
-      <div class="explanation"><strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
-        <span class="jp">パッセージはアンカーが「even when it is completely arbitrary」推定に影響すると述べる。次の文は数字が「randomly generated」（ホイール回転による）例で確認。つまり「arbitrary」=ランダムで論理的根拠のない = C。<br><br>A（計算された）は意味の<strong>逆</strong>。B（証明された）はランダムな数という考えと矛盾。D（認識された）はランダムな数の文脈に合わない。</span>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第2段落はまず一般的主張で始まる：「When two tectonic plates collide... creating mountain ranges（2つのプレートが衝突すると…山脈を作る）」。続いて「for instance」でヒマラヤが導入され、これは衝突プロセスの具体例であることが明確に示される = D。<br><br>A は誤り。本文はどのプレートが最速かを論じない。B も誤り。富士山との比較は第3段落であって、第2段落ではない。C はパッセージと矛盾する。「are still rising（今も上昇中）」と明記される。</span>
         <span class="en">Paragraph 2 opens with a general claim: "When two tectonic plates collide... creating mountain ranges." It then introduces the Himalayas with "for instance," clearly signaling that this is an example of the collision process = D.<br><br>
         A is wrong &mdash; the passage never discusses which plate is fastest. B is wrong because the comparison with Mount Fuji occurs in paragraph 3, not paragraph 2. C directly contradicts the passage, which says the Himalayas "are still rising."</span>
       </div>
     </div>
 
-    <!-- Q5 -->
-    <div class="q-card" id="card5">
-      <div class="q-num"><span class="jp">設問 5 — 文脈語彙</span><span class="en">Question 5 — Vocabulary in Context</span></div>
+    <!-- Q7 -->
+    <div class="q-card" id="card7">
+      <div class="q-num"><span class="jp">設問 7 — 文脈語彙</span><span class="en">Question 7 — Vocabulary in Context</span></div>
       <div class="q-text"><span class="jp">第2段落の「prominent」に最も近い意味は何か。</span><span class="en">The word "prominent" in paragraph 2 is closest in meaning to</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
-        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours7"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">古い</span><span class="en">ancient</span></div>
-        <div class="option-review is-correct" id="opt5B"><span class="label">B</span> <span class="jp">注目される &#10003;</span><span class="en">notable &#10003;</span></div>
-        <div class="option-review" id="opt5C"><span class="label">C</span> <span class="jp">近づきにくい</span><span class="en">inaccessible</span></div>
-        <div class="option-review" id="opt5D"><span class="label">D</span> <span class="jp">最近の</span><span class="en">recent</span></div>
+        <div class="option-review" id="opt7A"><span class="label">A</span> <span class="jp">古い</span><span class="en">ancient</span></div>
+        <div class="option-review is-correct" id="opt7B"><span class="label">B</span> <span class="jp">注目される &#10003;</span><span class="en">notable &#10003;</span></div>
+        <div class="option-review" id="opt7C"><span class="label">C</span> <span class="jp">近づきにくい</span><span class="en">inaccessible</span></div>
+        <div class="option-review" id="opt7D"><span class="label">D</span> <span class="jp">最近の</span><span class="en">recent</span></div>
       </div>
-      <div class="explanation"><strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
-        <span class="jp">第3段落は利用可能性ヒューリスティックを説明する：人々は「easily recalled from memory」イベントの可能性を過大評価する。次に「dramatic events such as plane crashes receive extensive media coverage」が誤った信念を引き起こすと述べる = A。<br><br>B は言及されていない。パッセージは公的統計アクセスを論じない。C はパッセージと直接<strong>矛盾</strong>。「statistics show the opposite」とある。D は根拠なし。飛行の個人体験は議論されていない。</span>
+      <div class="explanation">
+        <strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
+        <span class="jp">本文は「is responsible for the formation of some of the world's most prominent mountain chains（世界で最も prominent な山脈の形成の原因である）」と述べ、続いてヒマラヤを例として挙げる。「prominent」は注目される・著名な・重要なという意味 = B。代入確認：「most <em>notable</em> mountain chains（最も注目される山脈）」は自然に読める。<br><br>A（古い）は山脈の年代を表すが本文の論点ではない。C（近づきにくい）は文脈に無関係。D（最近の）は確立された山脈という事実と矛盾する。</span>
         <span class="en">The passage says orogeny "is responsible for the formation of some of the world's most prominent mountain chains." The Himalayas are then given as an example. "Prominent" here means notable, well-known, and significant = B. Substituting: "most <em>notable</em> mountain chains" reads naturally.<br><br>
         A (ancient) describes age, not fame or importance. C (inaccessible) is unrelated to the context. D (recent) contradicts the fact that these are well-established mountain ranges.</span>
       </div>
     </div>
 
-    <!-- Q6 -->
-    <div class="q-card" id="card6">
-      <div class="q-num"><span class="jp">設問 6 — 文挿入</span><span class="en">Question 6 — Sentence Insertion</span></div>
+    <!-- Q8 -->
+    <div class="q-card" id="card8">
+      <div class="q-num"><span class="jp">設問 8 — 文挿入</span><span class="en">Question 8 — Sentence Insertion</span></div>
       <div class="q-text">Where would the following sentence best fit in the passage?<br><em>"Indeed, precise satellite measurements have confirmed that this ongoing collision continues to push the two plates toward each other at a measurable rate."</em></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
-        <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours8"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt6A"><span class="label">A</span> <span class="jp">文1の後（プレート衝突と山脈形成について）</span><span class="en">After sentence 1 (about plates colliding and creating mountain ranges)</span></div>
-        <div class="option-review" id="opt6B"><span class="label">B</span> <span class="jp">文2の後（造山運動と顕著な山脈について）</span><span class="en">After sentence 2 (about orogeny and prominent mountain chains)</span></div>
-        <div class="option-review is-correct" id="opt6C"><span class="label">C</span> <span class="jp">文3の後（ヒマラヤとインド/ユーラシアプレート衝突について） &#10003;</span><span class="en">After sentence 3 (about the Himalayas and the Indian/Eurasian Plate collision) &#10003;</span></div>
-        <div class="option-review" id="opt6D"><span class="label">D</span> <span class="jp">文4の後（ヒマラヤが年5mm上昇することについて）</span><span class="en">After sentence 4 (about the Himalayas rising 5 mm per year)</span></div>
+        <div class="option-review" id="opt8A"><span class="label">A</span> <span class="jp">文1の後（プレート衝突と山脈形成について）</span><span class="en">After sentence 1 (about plates colliding and creating mountain ranges)</span></div>
+        <div class="option-review" id="opt8B"><span class="label">B</span> <span class="jp">文2の後（造山運動と顕著な山脈について）</span><span class="en">After sentence 2 (about orogeny and prominent mountain chains)</span></div>
+        <div class="option-review is-correct" id="opt8C"><span class="label">C</span> <span class="jp">文3の後（ヒマラヤとインド/ユーラシアプレート衝突について） &#10003;</span><span class="en">After sentence 3 (about the Himalayas and the Indian/Eurasian Plate collision) &#10003;</span></div>
+        <div class="option-review" id="opt8D"><span class="label">D</span> <span class="jp">文4の後（ヒマラヤが年5mm上昇することについて）</span><span class="en">After sentence 4 (about the Himalayas rising 5 mm per year)</span></div>
       </div>
       <div class="explanation"><strong><span class="jp">なぜ C が正解か：</span><span class="en">Why C is correct:</span></strong>
         <span class="jp">挿入文には2つの手がかりがある：ディスコースマーカー「Indeed」（直前の主張を補強する）と、指示句「this ongoing collision」（直前に「進行中の衝突」への言及が必要）。両方が一致して指し示すのは位置 C：直前の文が「…the ongoing collision between the Indian Plate and the Eurasian Plate, a process that began approximately 50 million years ago and continues to this day.」で終わっている。挿入文が観測データでこの主張を裏付け、続く「As a result, the Himalayas are still rising...」が結果として続く。<br><br>
@@ -316,6 +366,53 @@ body[data-lang="en"] .jp{display:none}
           <strong>Insertion strategy:</strong> Use <strong>discourse markers</strong> ("Indeed," "Furthermore") and <strong>deictic references</strong> ("this ongoing collision") together. The marker tells you the sentence reinforces a recent claim; the deictic tells you exactly which claim. Both must point to the same position.
         </div></span>
       </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" id="card9">
+      <div class="q-num"><span class="jp">設問 9 — 事実問題（情報詳細）</span><span class="en">Question 9 — Factual Detail</span></div>
+      <div class="q-text"><span class="jp">パッセージによれば、富士山のような火山はどのような場所で形成されるか。</span><span class="en">According to the passage, where do volcanic mountains such as Mount Fuji typically form?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
+        <span class="answer-tag" id="yours9"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt9A"><span class="label">A</span> <span class="jp">プレートが離れる場所、または一方のプレートが他方の下に沈み込む場所 &#10003;</span><span class="en">In areas where plates pull apart or where one plate slides beneath another &#10003;</span></div>
+        <div class="option-review" id="opt9B"><span class="label">B</span> <span class="jp">大陸プレート同士が正面から衝突する境界のみ</span><span class="en">Only at the boundaries where two continental plates collide head-on</span></div>
+        <div class="option-review" id="opt9C"><span class="label">C</span> <span class="jp">対流が完全に止まった地域</span><span class="en">In regions where convection currents have stopped moving entirely</span></div>
+        <div class="option-review" id="opt9D"><span class="label">D</span> <span class="jp">プレート境界からはるかに離れた場所</span><span class="en">At locations far away from any tectonic plate boundary</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第3段落に「Volcanic mountains, such as Mount Fuji in Japan, form when magma from deep within the Earth erupts through the surface at locations where plates are pulling apart or where one plate slides beneath another（富士山のような火山は…プレートが離れている場所、あるいは一方のプレートが他方の下に滑り込む場所でマグマが地表に噴出して形成される）」と明記されている = A。<br><br>B は誤り。「only」と「head-on collision」が本文を狭めすぎている。本文はむしろ衝突ではなく拡張・沈み込みを述べる。C は誤り。対流停止についての言及はなく、第1段落では対流が運動の原動力と説明される。D も誤り。本文では境界付近で形成されると示されている。</span>
+        <span class="en">Paragraph 3 explicitly states: "Volcanic mountains, such as Mount Fuji in Japan, form when magma from deep within the Earth erupts through the surface at locations where plates are pulling apart or where one plate slides beneath another" = A.<br><br>B is wrong because of "only" and "head-on collision," which narrow the claim too much; the passage describes pulling apart or subduction, not collision. C is unsupported &mdash; convection stopping is never mentioned; paragraph 1 describes convection as the driver of plate motion. D contradicts the passage, which locates volcanic activity at plate boundaries.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "where plates are pulling apart or where one plate slides beneath another" &rarr; A: "where plates pull apart or where one plate slides beneath another"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" id="card10">
+      <div class="q-num"><span class="jp">設問 10 — 推論</span><span class="en">Question 10 — Inference</span></div>
+      <div class="q-text"><span class="jp">第3段落で述べられているプレートテクトニクス理論の価値について、何が推論できるか。</span><span class="en">What can be inferred about the value of plate tectonic theory as described in paragraph 3?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
+        <span class="answer-tag" id="yours10"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt10A"><span class="label">A</span> <span class="jp">現代の地質研究で野外調査の必要性を取って代わった</span><span class="en">It has replaced the need for fieldwork in modern geological research</span></div>
+        <div class="option-review is-correct" id="opt10B"><span class="label">B</span> <span class="jp">これまで別々に説明されていた複数の地質現象を結びつける &#10003;</span><span class="en">It connects several geological phenomena that were previously explained separately &#10003;</span></div>
+        <div class="option-review" id="opt10C"><span class="label">C</span> <span class="jp">地震に関する以前の理論を完全に無関係にした</span><span class="en">It has made earlier theories about earthquakes completely irrelevant</span></div>
+        <div class="option-review" id="opt10D"><span class="label">D</span> <span class="jp">主に陸上の地質に当てはまり、海洋下のプロセスには適用されない</span><span class="en">It applies mainly to land geology and not to processes beneath the ocean</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第3段落の末尾に「The study of plate tectonics has fundamentally transformed our understanding of geological processes, providing a unified framework that explains not only mountain building but also earthquakes, volcanic eruptions, and the distribution of fossils across continents（プレートテクトニクスの研究は…山形成だけでなく、地震、火山噴火、大陸全体の化石分布も説明する統一的な枠組みを提供している）」とある。「unified framework」と複数現象の列挙から、以前は別々に扱われていた現象を一つの理論で結びつける、と推論できる = B。<br><br>A は本文に根拠なし。野外調査の置き換えは述べられていない。C は強すぎる断定。「無関係にした」とは本文に書かれていない。D は本文と矛盾。化石の「distribution across continents」を説明することは、海洋を越えた説明力を示唆する。</span>
+        <span class="en">Paragraph 3 ends: "The study of plate tectonics has fundamentally transformed our understanding of geological processes, providing a unified framework that explains not only mountain building but also earthquakes, volcanic eruptions, and the distribution of fossils across continents." The phrase "unified framework" plus the list of phenomena implies that several previously separate explanations are now linked by one theory = B.<br><br>A is unsupported &mdash; replacing fieldwork is not discussed. C is too strong; the passage does not say earlier theories became irrelevant. D contradicts the passage &mdash; explaining "the distribution of fossils across continents" suggests reach beyond just land.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "a unified framework that explains not only mountain building but also earthquakes, volcanic eruptions, and the distribution of fossils" &rarr; B: "connects several geological phenomena that were previously explained separately"
+        </div>
       </div>
     </div>
   </div>
@@ -342,7 +439,7 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <script>
-var correctAnswers = {'1':'B','2':'C','3':'A','4':'D','5':'B','6':'C'};
+var correctAnswers = {'1':'B','2':'C','3':'A','4':'A','5':'D','6':'D','7':'B','8':'C','9':'A','10':'B'};
 (function(){
   var saved = sessionStorage.getItem('training_academic_p8_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -363,10 +460,18 @@ var correctAnswers = {'1':'B','2':'C','3':'A','4':'D','5':'B','6':'C'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/6';
+  document.getElementById('scoreDisplay').textContent = score+'/10';
 })();
 </script>
 <script src="../../js/auth.js"></script>
+<script>
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
+</script>
 <script defer src="../../js/tm-footer.js"></script>
 </body>
 </html>

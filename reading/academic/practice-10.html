@@ -114,18 +114,18 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
 </head>
 <body>
-<div class="tck-instruction-overlay" id="tckInstructionOverlay"><div class="tck-instruction-card" role="dialog" aria-modal="true"><h2 class="tck-instruction-title">Read an Academic Passage</h2><p class="tck-instruction-intro"><span class="jp">学術的な長文を読み、各設問に答えます。語彙・推論・要約・挿入など複数タイプの設問があります。</span><span class="en">Read an academic passage and answer the questions. Types include vocabulary, inference, summary, and insertion.</span></p><ul class="tck-instruction-points"><li><span class="jp">各パッセージの主張・サポートを把握してから設問に進むと効率的。</span><span class="en">Grasp the main idea and supports first, then tackle the questions.</span></li><li><span class="jp">語彙問題は前後の文脈から意味を推測。</span><span class="en">For vocabulary, infer from the surrounding context.</span></li><li><span class="jp">挿入問題は前後の論理関係（discourse markers）に注目。</span><span class="en">For insertion, focus on discourse markers linking sentences.</span></li></ul><div class="tck-instruction-notice">⏱ <span class="jp">制限時間 36 分。「はじめる」をクリックするとタイマーがスタートします。</span><span class="en">Time limit: 36 minutes. The timer starts when you click Start.</span></div><button class="tck-instruction-start" type="button" onclick="tckStartTask()"><span class="jp">はじめる</span><span class="en">Start</span></button></div></div>
+<div class="tck-instruction-overlay" id="tckInstructionOverlay"><div class="tck-instruction-card" role="dialog" aria-modal="true"><h2 class="tck-instruction-title">Read an Academic Passage</h2><p class="tck-instruction-intro"><span class="jp">学術的な長文を読み、各設問に答えます。語彙・推論・要約・挿入など複数タイプの設問があります。</span><span class="en">Read an academic passage and answer the questions. Types include vocabulary, inference, summary, and insertion.</span></p><ul class="tck-instruction-points"><li><span class="jp">各パッセージの主張・サポートを把握してから設問に進むと効率的。</span><span class="en">Grasp the main idea and supports first, then tackle the questions.</span></li><li><span class="jp">語彙問題は前後の文脈から意味を推測。</span><span class="en">For vocabulary, infer from the surrounding context.</span></li><li><span class="jp">挿入問題は前後の論理関係（discourse markers）に注目。</span><span class="en">For insertion, focus on discourse markers linking sentences.</span></li></ul><div class="tck-instruction-notice">⏱ <span class="jp">制限時間 25 分。「はじめる」をクリックするとタイマーがスタートします。</span><span class="en">Time limit: 25 minutes. The timer starts when you click Start.</span></div><button class="tck-instruction-start" type="button" onclick="tckStartTask()"><span class="jp">はじめる</span><span class="en">Start</span></button></div></div>
 
 <!-- TOP NAV -->
 <div class="top-nav">
   <div class="top-nav-left">
-    <img class="brand-logo" src="../../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px"><span>Question <span id="qLabel"><strong>1</strong></span> of 6</span>
+    <img class="brand-logo" src="../../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px"><span>Question <span id="qLabel"><strong>1</strong></span> of 10</span>
     <span>|</span>
     <span>Academic Reading</span>
   </div>
   <div class="top-nav-right">
     <button class="timer-btn" onclick="toggleTimer()">Hide Time</button>
-    <span class="timer-display" id="timerDisplay">20:00</span>
+    <span class="timer-display" id="timerDisplay">25:00</span>
     <button class="review-btn" onclick="openReview()">Review</button>
     <span class="user-badge" id="userBadge"></span>
   </div>
@@ -233,6 +233,64 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
         </div>
       </div>
     </div>
+
+    <!-- Q4: Inference -->
+    <div class="question-page" id="page4">
+      <div class="question-text">
+        <span class="question-number">4.</span>What can be inferred about the workers who migrated from the countryside to industrial cities?
+      </div>
+      <div class="options">
+        <div class="option" data-q="4" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">They quickly joined the new middle class of factory owners and professionals.</span>
+        </div>
+        <div class="option" data-q="4" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">Most of them eventually returned to agricultural work in the countryside.</span>
+        </div>
+        <div class="option" data-q="4" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">They often faced difficult living conditions even after finding factory employment.</span>
+        </div>
+        <div class="option" data-q="4" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q4" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">They preferred coal-mining jobs to other forms of factory labor.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Rhetorical Purpose -->
+    <div class="question-page" id="page5">
+      <div class="question-text">
+        <span class="question-number">5.</span>Why does the author mention "shorter working hours, safer conditions, and the eventual rise of workers' rights movements" in paragraph 3?
+      </div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">To suggest that factory workers were generally satisfied from the beginning of industrialization</span>
+        </div>
+        <div class="option" data-q="5" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">To argue that government regulations slowed economic growth during this period</span>
+        </div>
+        <div class="option" data-q="5" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">To compare labor conditions in Europe with those in North America</span>
+        </div>
+        <div class="option" data-q="5" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q5" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">To give examples of how reforms gradually fixed the worst abuses of the factory system</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -249,68 +307,68 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
   </div>
 
   <div class="question-panel">
-    <!-- Q4: Factual Detail -->
-    <div class="question-page active" id="page4">
+    <!-- Q6: Factual Detail -->
+    <div class="question-page active" id="page6">
       <div class="question-text">
-        <span class="question-number">4.</span>According to the passage, what happens when a substrate enters an enzyme's active site?
+        <span class="question-number">6.</span>According to the passage, what happens when a substrate enters an enzyme's active site?
       </div>
       <div class="options">
-        <div class="option" data-q="4" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="A">
+        <div class="option" data-q="6" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="A">
           <span class="option-label">A</span>
           <span class="option-text">The enzyme permanently changes into a different type of protein.</span>
         </div>
-        <div class="option" data-q="4" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="B">
+        <div class="option" data-q="6" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="B">
           <span class="option-label">B</span>
           <span class="option-text">The protein undergoes a brief structural modification that allows it to grip the target molecule more securely.</span>
         </div>
-        <div class="option" data-q="4" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="C">
+        <div class="option" data-q="6" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="C">
           <span class="option-label">C</span>
           <span class="option-text">The substrate is immediately broken down into smaller molecules without any change in the enzyme.</span>
         </div>
-        <div class="option" data-q="4" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q4" value="D">
+        <div class="option" data-q="6" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q6" value="D">
           <span class="option-label">D</span>
           <span class="option-text">The active site releases energy that raises the temperature of the surrounding cells.</span>
         </div>
       </div>
     </div>
 
-    <!-- Q5: Vocabulary in Context -->
-    <div class="question-page" id="page5">
+    <!-- Q7: Vocabulary in Context -->
+    <div class="question-page" id="page7">
       <div class="question-text">
-        <span class="question-number">5.</span>The word "<span style="background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:700">induced</span>" in paragraph 2 is closest in meaning to
+        <span class="question-number">7.</span>The word "<span style="background:#fefcbf;padding:1px 4px;border-radius:3px;font-weight:700">induced</span>" in paragraph 2 is closest in meaning to
       </div>
       <div class="options">
-        <div class="option" data-q="5" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="A">
+        <div class="option" data-q="7" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="A">
           <span class="option-label">A</span>
           <span class="option-text">prevented</span>
         </div>
-        <div class="option" data-q="5" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="B">
+        <div class="option" data-q="7" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="B">
           <span class="option-label">B</span>
           <span class="option-text">random</span>
         </div>
-        <div class="option" data-q="5" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="C">
+        <div class="option" data-q="7" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="C">
           <span class="option-label">C</span>
           <span class="option-text">caused</span>
         </div>
-        <div class="option" data-q="5" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
-          <input type="radio" name="q5" value="D">
+        <div class="option" data-q="7" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q7" value="D">
           <span class="option-label">D</span>
           <span class="option-text">inherited</span>
         </div>
       </div>
     </div>
 
-    <!-- Q6: Sentence Insertion -->
-    <div class="question-page" id="page6">
+    <!-- Q8: Sentence Insertion -->
+    <div class="question-page" id="page8">
       <div class="question-text">
-        <span class="question-number">6.</span>Look at the four squares [&#9632;] in the highlighted paragraph that indicate where the following sentence could be added to the passage.
+        <span class="question-number">8.</span>Look at the four squares [&#9632;] in the highlighted paragraph that indicate where the following sentence could be added to the passage.
       </div>
       <p class="insertion-sentence-display">Maintaining this precise balance of temperature and pH is essential because the enzyme's three-dimensional shape depends on weak chemical bonds that are easily disrupted.</p>
       <div class="insertion-instruction">
@@ -318,6 +376,64 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
       </div>
       <div class="selection-status none" id="insertionStatus">
         No position selected yet. Click a &#9632; in the passage.
+      </div>
+    </div>
+
+    <!-- Q9: Factual Detail -->
+    <div class="question-page" id="page9">
+      <div class="question-text">
+        <span class="question-number">9.</span>According to the passage, what happens to an enzyme after it has been denatured?
+      </div>
+      <div class="options">
+        <div class="option" data-q="9" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">It begins to function more rapidly than it did at normal body temperature.</span>
+        </div>
+        <div class="option" data-q="9" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">It returns to its original shape once normal temperature is restored.</span>
+        </div>
+        <div class="option" data-q="9" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">It can no longer attach to its substrate and stops performing its catalytic role.</span>
+        </div>
+        <div class="option" data-q="9" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q9" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">It transforms into a substrate that other enzymes can break down.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10: Inference -->
+    <div class="question-page" id="page10">
+      <div class="question-text">
+        <span class="question-number">10.</span>What can be inferred from the passage about why a high fever can pose a serious risk to human health?
+      </div>
+      <div class="options">
+        <div class="option" data-q="10" data-v="A" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="A">
+          <span class="option-label">A</span>
+          <span class="option-text">It causes the body to produce too many new enzymes at once.</span>
+        </div>
+        <div class="option" data-q="10" data-v="B" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="B">
+          <span class="option-label">B</span>
+          <span class="option-text">It signals that the body's pH has already become dangerously acidic.</span>
+        </div>
+        <div class="option" data-q="10" data-v="C" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="C">
+          <span class="option-label">C</span>
+          <span class="option-text">It permanently increases the number of substrates inside each cell.</span>
+        </div>
+        <div class="option" data-q="10" data-v="D" role="button" tabindex="0" onclick="selectOption(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectOption(this)}">
+          <input type="radio" name="q10" value="D">
+          <span class="option-label">D</span>
+          <span class="option-text">It can distort the shape of enzymes and interrupt the chemical reactions cells depend on.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -338,12 +454,13 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
   </div>
 </div>
 
+<script src="../../js/progress.js"></script>
 <script>
 var currentQ = 1;
-var totalQ = 6;
+var totalQ = 10;
 var userAnswers = {};
 var timerVisible = true;
-var timeLeft = 1200; // 20 minutes
+var timeLeft = 1500; // 25 minutes
 var timerInterval;
 var storageKey = 'training_academic_p10_answers';
 var timerKey = 'training_academic_p10_timer';
@@ -367,7 +484,7 @@ function restoreState(saved){
   }
   if(saved.selectedInsertionPoint){
     selectedInsertionPoint = saved.selectedInsertionPoint;
-    userAnswers['6'] = selectedInsertionPoint;
+    userAnswers['8'] = selectedInsertionPoint;
     sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
   }
 
@@ -380,17 +497,17 @@ function restoreState(saved){
 }
 function tckSave(){ if(window.TCKProgress) TCKProgress.save(TCK_TASK, TCK_PRACTICE, snapshotState()); }
 
-// Passage page mapping: questions 1-3 = passage 1, questions 4-6 = passage 2
-function getPassagePage(q){ return q <= 3 ? 1 : 2; }
+// Passage page mapping: questions 1-5 = passage 1, questions 6-10 = passage 2
+function getPassagePage(q){ return q <= 5 ? 1 : 2; }
 
-function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 4; }
+function getLocalFirst(passagePage){ return passagePage === 1 ? 1 : 6; }
 
 /* ===== SENTENCE INSERTION SETUP ===== */
 var normalParagraphHTML = 'Environmental conditions strongly influence enzyme activity. Most human enzymes function optimally at body temperature, around thirty-seven degrees Celsius, and at a neutral pH level. When temperatures rise significantly above this range or the pH becomes too acidic or too alkaline, the enzyme\u2019s shape can become permanently distorted, a process known as denaturation. Once denatured, an enzyme can no longer bind to its substrate and loses its catalytic function entirely. This sensitivity to environmental conditions explains why fever and extreme changes in blood pH can be dangerous to human health, as they may disrupt the enzyme-driven reactions that cells depend on to survive.';
 var insertionParagraphHTML = 'Environmental conditions strongly influence enzyme activity. <span class="insert-square" data-insert="A">\u25A0</span> Most human enzymes function optimally at body temperature, around thirty-seven degrees Celsius, and at a neutral pH level. <span class="insert-square" data-insert="B">\u25A0</span> When temperatures rise significantly above this range or the pH becomes too acidic or too alkaline, the enzyme\u2019s shape can become permanently distorted, a process known as denaturation. <span class="insert-square" data-insert="C">\u25A0</span> Once denatured, an enzyme can no longer bind to its substrate and loses its catalytic function entirely. <span class="insert-square" data-insert="D">\u25A0</span> This sensitivity to environmental conditions explains why fever and extreme changes in blood pH can be dangerous to human health, as they may disrupt the enzyme-driven reactions that cells depend on to survive.';
 var insertSentenceText = "Maintaining this precise balance of temperature and pH is essential because the enzyme\u2019s three-dimensional shape depends on weak chemical bonds that are easily disrupted.";
 var correctInsertion = "B";
-var insertionQuestionPage = 6;
+var insertionQuestionPage = 8;
 var selectedInsertionPoint = null;
 var insertionPara = document.getElementById('insertionParagraph');
 
@@ -416,7 +533,7 @@ function bindSquareClicks(){
       rebuildParagraphWithInsertion(selectedInsertionPoint);
       document.getElementById('insertionStatus').className = 'selection-status chosen';
       document.getElementById('insertionStatus').textContent = 'You selected position ' + selectedInsertionPoint + '.';
-      userAnswers['6'] = selectedInsertionPoint;
+      userAnswers['8'] = selectedInsertionPoint;
       sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
       tckSave();
       sessionStorage.setItem(storageKey, JSON.stringify(userAnswers));
@@ -466,11 +583,12 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'A','2':'B','3':'A','4':'B','5':'C','6':'B'};
+    var ca={'1':'A','2':'B','3':'A','4':'C','5':'D','6':'B','7':'C','8':'B','9':'C','10':'D'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
-    var harderCorrect=0,harderTotal=0;['4','5','6'].forEach(function(k){harderTotal++;if(ans[k]===ca[k])harderCorrect++;});
-    sessionStorage.setItem('training_score_academic_p10',JSON.stringify({correct:sc,total:6,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));
+    var harderCorrect=0,harderTotal=0;['6','7','8','9','10'].forEach(function(k){harderTotal++;if(ans[k]===ca[k])harderCorrect++;});
+    if(insertionPara) insertionPara.innerHTML = normalParagraphHTML;
+    sessionStorage.setItem('training_score_academic_p10',JSON.stringify({correct:sc,total:10,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-10-answers.html';
     return;
@@ -484,13 +602,13 @@ function navigate(dir){
     document.getElementById('passagePage'+oldPassage).style.display = 'none';
     document.getElementById('passagePage'+newPassage).style.display = 'flex';
     var oldStart = getLocalFirst(oldPassage);
-    var oldEnd = oldPassage === 1 ? 3 : 6;
+    var oldEnd = oldPassage === 1 ? 5 : 10;
     for(var i = oldStart; i <= oldEnd; i++){
       document.getElementById('page'+i).classList.remove('active');
     }
   }
   currentQ = next;
-  if(window.TCKDifficulty)TCKDifficulty.setForIndex(currentQ-1,[3,4,5]);
+  if(window.TCKDifficulty)TCKDifficulty.setForIndex(currentQ-1,[5,6,7,8,9]);
   document.getElementById('page'+currentQ).classList.add('active');
   document.getElementById('qLabel').innerHTML = '<strong>'+currentQ+'</strong>';
   document.getElementById('btnBack').disabled = (currentQ === 1);
@@ -565,7 +683,7 @@ function closeReview(){
         opts[0].querySelector('input').checked = true;
       }
     }
-    if(parsed['6'] && insertionPara){ selectedInsertionPoint = parsed['6']; }
+    if(parsed['8'] && insertionPara){ selectedInsertionPoint = parsed['8']; }
   }
 })();
 
@@ -588,7 +706,6 @@ if(typeof Auth !== 'undefined'){
 }
 </script>
 <script src="../../js/auth.js"></script><script src="../../js/difficulty-badge.js"></script>
-<script src="../../js/progress.js"></script>
 <script>function tckStartTask(){var ov=document.getElementById('tckInstructionOverlay');if(ov&&ov.parentNode){ov.parentNode.removeChild(ov);}if(typeof __tckOnStart==='function'){try{__tckOnStart();}catch(e){}}}</script>
 <script defer src="../../js/tm-footer.js"></script>
 </body>

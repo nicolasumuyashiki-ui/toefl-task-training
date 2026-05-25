@@ -114,8 +114,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/6</div>
-  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q6)</span><span class="en">Your Score (Q1&ndash;Q6)</span></div>
+  <div class="score-big" id="scoreDisplay">&ndash;/10</div>
+  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q10)</span><span class="en">Your Score (Q1&ndash;Q10)</span></div>
 </div>
 
 <div class="answers-body">
@@ -238,73 +238,171 @@ body[data-lang="en"] .jp{display:none}
         </div>
       </div>
     </div>
+
+    <!-- Q4 -->
+    <div class="q-card" id="card4">
+      <div class="q-num"><span class="jp">設問 4 — 文脈語彙</span><span class="en">Question 4 — Vocabulary in Context</span></div>
+      <div class="q-text"><span class="jp">第3段落の「concentrated」に最も近い意味は何か。</span><span class="en">The word "concentrated" in paragraph 3 is closest in meaning to</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
+        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt4A"><span class="label">A</span> <span class="jp">分けた</span><span class="en">divided</span></div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">弱めた</span><span class="en">weakened</span></div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">手放した</span><span class="en">surrendered</span></div>
+        <div class="option-review is-correct" id="opt4D"><span class="label">D</span> <span class="jp">集めた &#10003;</span><span class="en">gathered &#10003;</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
+        <span class="jp">本文は「Powerful leaders such as Julius Caesar challenged the authority of the Senate and concentrated power in their own hands（カエサルのような強力な指導者が元老院の権威に挑戦し、権力を自らの手に集中させた）」と述べる。「concentrate power in one's hands」とは権力を一箇所に集めて支配することを意味し、＝gathered（集めた）。代入確認：「<em>gathered</em> power in their own hands」は自然に読める = D。<br><br>A（divided 分けた）は逆。権力を分散させる意味で、集中の反対。B（weakened 弱めた）も逆。指導者が権力を弱めるのではなく、強化している。C（surrendered 手放した）も逆。挑戦して権力を獲得する文脈と矛盾。</span>
+        <span class="en">The passage reads "challenged the authority of the Senate and concentrated power in their own hands." To concentrate power in one's hands means to gather it together into a single location of control = gathered. Substitution check: "<em>gathered</em> power in their own hands" reads naturally = D.<br><br>A (divided) is the opposite — concentrating means gathering, not splitting. B (weakened) contradicts the context of leaders acquiring power. C (surrendered) is also the opposite — they were seizing, not giving up, power.</span>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" id="card5">
+      <div class="q-num"><span class="jp">設問 5 — 推論</span><span class="en">Question 5 — Inference</span></div>
+      <div class="q-text"><span class="jp">パッセージから、共和国末期のローマの将軍について何が推論できるか。</span><span class="en">What can be inferred from the passage about Roman generals during the later years of the Republic?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
+        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt5A"><span class="label">A</span> <span class="jp">個人的野心が共和国への忠誠を上回ることが多かった。 &#10003;</span><span class="en">Their personal ambitions often outweighed their commitment to the Republic. &#10003;</span></div>
+        <div class="option-review" id="opt5B"><span class="label">B</span> <span class="jp">イタリア国外での軍事作戦を率いることを概ね拒否した。</span><span class="en">They generally refused to lead military campaigns outside Italy.</span></div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> <span class="jp">元老院の指示を疑問なく一貫して従った。</span><span class="en">They consistently followed the directions of the Senate without question.</span></div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> <span class="jp">資金の大半を外国政府から受け取っていた。</span><span class="en">They received most of their funding from foreign governments.</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第2段落に「Wealthy generals began to build personal armies loyal to them rather than to the Republic（裕福な将軍たちは共和国にではなく自分自身に忠誠を誓う個人軍を作り始めた）」とあり、第3段落では「Powerful leaders such as Julius Caesar challenged the authority of the Senate（カエサルのような強力な指導者が元老院の権威に挑戦した）」と続く。これらは将軍が国家より自己の権力拡大を優先したことを示す = A。<br><br>B（イタリア国外での作戦を拒否）はパッセージと矛盾。第2段落で地中海全域を征服したと明記。C（元老院に忠実に従った）も逆。パッセージは元老院への挑戦と権力集中を明示する。D（外国政府からの資金）は本文に根拠なし。</span>
+        <span class="en">Paragraph 2 says "Wealthy generals began to build personal armies loyal to them rather than to the Republic." Paragraph 3 continues that "Powerful leaders such as Julius Caesar challenged the authority of the Senate." Together these statements show generals prioritizing personal power over loyalty to the state = A.<br><br>B (refusing campaigns abroad) contradicts paragraph 2, which explicitly says Rome conquered much of the Mediterranean. C (consistently following the Senate) is the opposite of the passage, which describes generals challenging Senate authority. D (foreign funding) has no support in the text.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "personal armies loyal to them rather than to the Republic" &rarr; A: "personal ambitions often outweighed their commitment to the Republic"
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
     <div class="passage-title-bar">How the Human Immune System Fights Disease <span class="passage-type-badge"><span class="jp">生命科学</span><span class="en">Life Science</span></span></div>
 
-    <!-- Q4 -->
-    <div class="q-card" id="card4">
-      <div class="q-num"><span class="jp">設問 4 — 修辞目的</span><span class="en">Question 4 — Rhetorical Purpose</span></div>
+    <!-- Q6 -->
+    <div class="q-card" id="card6">
+      <div class="q-num"><span class="jp">設問 6 — 修辞目的</span><span class="en">Question 6 — Rhetorical Purpose</span></div>
       <div class="q-text"><span class="jp">なぜ著者は第2段落で好中球とマクロファージに言及するのか。</span><span class="en">Why does the author mention neutrophils and macrophages in paragraph 2?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
-        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review is-correct" id="opt4A"><span class="label">A</span> <span class="jp">体の即時防衛に関わる細胞の例を示すため &#10003;</span><span class="en">To give examples of cells involved in the body's immediate defense &#10003;</span></div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">ワクチンがどう免疫系を刺激するかを説明するため</span><span class="en">To explain how vaccines stimulate the immune system</span></div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">Bリンパ球とTリンパ球の機能を対比するため</span><span class="en">To contrast the functions of B lymphocytes and T lymphocytes</span></div>
-        <div class="option-review" id="opt4D"><span class="label">D</span> <span class="jp">自然免疫が獲得免疫より重要だと論じるため</span><span class="en">To argue that innate immunity is more important than adaptive immunity</span></div>
+        <div class="option-review is-correct" id="opt6A"><span class="label">A</span> <span class="jp">体の即時防衛に関わる細胞の例を示すため &#10003;</span><span class="en">To give examples of cells involved in the body's immediate defense &#10003;</span></div>
+        <div class="option-review" id="opt6B"><span class="label">B</span> <span class="jp">ワクチンがどう免疫系を刺激するかを説明するため</span><span class="en">To explain how vaccines stimulate the immune system</span></div>
+        <div class="option-review" id="opt6C"><span class="label">C</span> <span class="jp">Bリンパ球とTリンパ球の機能を対比するため</span><span class="en">To contrast the functions of B lymphocytes and T lymphocytes</span></div>
+        <div class="option-review" id="opt6D"><span class="label">D</span> <span class="jp">自然免疫が獲得免疫より重要だと論じるため</span><span class="en">To argue that innate immunity is more important than adaptive immunity</span></div>
       </div>
-      <div class="explanation"><strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
-        <span class="jp">第1段落には「This structure was designed to prevent any single individual from gaining too much control over the state」とある = C。<br><br>A は直接民主主義を描くが言及されていない。B は根拠なし。軍事成功は理由として与えられない。D は富裕層と貧困層の代表に言及するが、パッセージは元老院が「wealthy and influential citizens」からなると言い、平等な代表ではない。</span>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第2段落は自然免疫を「the body's first line of defense（体の第一防衛線）」と論じ、「general-purpose immune cells that respond quickly to any foreign substance（あらゆる異物に素早く反応する汎用免疫細胞）」と言及する。好中球とマクロファージはこれらの細胞の例として導入されている = A。<br><br>B（ワクチンの説明）は第4段落の内容で、第2段落ではない。C（BとTリンパ球の対比）は第3段落の内容。D（重要性の順位付け）はパッセージが支持しない比較主張で、自然免疫と獲得免疫のランキングは与えられていない。</span>
         <span class="en">Paragraph 2 discusses innate immunity as "the body's first line of defense" and mentions "general-purpose immune cells that respond quickly." Neutrophils and macrophages are given as examples of these cells = A.<br><br>
         B discusses vaccines, which appear in paragraph 4, not paragraph 2. C mentions B and T lymphocytes, which are in paragraph 3. D makes a comparison claim that the passage never supports — no ranking of importance is given.</span>
       </div>
     </div>
 
-    <!-- Q5 -->
-    <div class="q-card" id="card5">
-      <div class="q-num"><span class="jp">設問 5 — 文脈語彙</span><span class="en">Question 5 — Vocabulary in Context</span></div>
+    <!-- Q7 -->
+    <div class="q-card" id="card7">
+      <div class="q-num"><span class="jp">設問 7 — 文脈語彙</span><span class="en">Question 7 — Vocabulary in Context</span></div>
       <div class="q-text"><span class="jp">第2段落の「mobilize」に最も近い意味は何か。</span><span class="en">The word "mobilize" in paragraph 2 is closest in meaning to</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
-        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours7"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">消える</span><span class="en">disappear</span></div>
-        <div class="option-review" id="opt5B"><span class="label">B</span> <span class="jp">分裂する</span><span class="en">divide</span></div>
-        <div class="option-review is-correct" id="opt5C"><span class="label">C</span> <span class="jp">活性化する &#10003;</span><span class="en">activate &#10003;</span></div>
-        <div class="option-review" id="opt5D"><span class="label">D</span> <span class="jp">弱まる</span><span class="en">weaken</span></div>
+        <div class="option-review" id="opt7A"><span class="label">A</span> <span class="jp">消える</span><span class="en">disappear</span></div>
+        <div class="option-review" id="opt7B"><span class="label">B</span> <span class="jp">分裂する</span><span class="en">divide</span></div>
+        <div class="option-review is-correct" id="opt7C"><span class="label">C</span> <span class="jp">活性化する &#10003;</span><span class="en">activate &#10003;</span></div>
+        <div class="option-review" id="opt7D"><span class="label">D</span> <span class="jp">弱まる</span><span class="en">weaken</span></div>
       </div>
-      <div class="explanation"><strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
-        <span class="jp">第2段落は自然免疫を「the body's first line of defense」と論じ、「general-purpose immune cells that respond quickly」と言及する。好中球とマクロファージはこれらの細胞の例として与えられる = A。<br><br>B はワクチンを論じるが、第4段落の内容で第2段落ではない。C はBとTリンパ球に言及するが第3段落の内容。D は重要性の順位付けという比較主張をするが、パッセージは支持しない。</span>
+      <div class="explanation">
+        <strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
+        <span class="jp">本文は「these cells immediately mobilize to contain and destroy the threat（これらの細胞は脅威を封じ込めて破壊するため即座に mobilize する）」と述べる。これは危険に対する急速で組織的な反応を表す。代入確認：「these cells immediately <em>activate</em> to contain and destroy the threat」は自然に読める = C。<br><br>A（disappear 消える）は反応の逆。B（divide 分裂する）は細胞分裂を意味し、脅威への反応ではない。D（weaken 弱まる）は「immediately」や能動的な文脈と矛盾する。</span>
         <span class="en">The sentence reads "these cells immediately mobilize to contain and destroy the threat." The word describes a rapid, organized response to danger. Substituting: "these cells immediately <em>activate</em> to contain and destroy the threat" reads naturally = C.<br><br>
-        A (disappear) is the opposite of responding. B (divide) describes cell division, not a response to threats. D (slowly weaken) contradicts "immediately" and the active context.</span>
+        A (disappear) is the opposite of responding. B (divide) describes cell division, not a response to threats. D (weaken) contradicts "immediately" and the active context.</span>
       </div>
     </div>
 
-    <!-- Q6 -->
-    <div class="q-card" id="card6">
-      <div class="q-num"><span class="jp">設問 6 — 推論</span><span class="en">Question 6 — Inference</span></div>
+    <!-- Q8 -->
+    <div class="q-card" id="card8">
+      <div class="q-num"><span class="jp">設問 8 — 推論</span><span class="en">Question 8 — Inference</span></div>
       <div class="q-text"><span class="jp">パッセージに基づくと、特定のウイルス感染から回復した人について何が推論できるか。</span><span class="en">Based on the passage, what can be inferred about a person who has recovered from a particular viral infection?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
-        <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours8"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt6A"><span class="label">A</span> <span class="jp">彼らはそのウイルスに二度と曝露されない。</span><span class="en">They will never be exposed to that virus again.</span></div>
-        <div class="option-review is-correct" id="opt6B"><span class="label">B</span> <span class="jp">既に回復した病気のワクチン接種を受けても追加効果は限定的だろう。 &#10003;</span><span class="en">Receiving a vaccine against a disease they have already recovered from would provide limited additional benefit. &#10003;</span></div>
-        <div class="option-review" id="opt6C"><span class="label">C</span> <span class="jp">彼らの自然免疫系が永久に強くなる。</span><span class="en">Their innate immune system will become permanently stronger.</span></div>
-        <div class="option-review" id="opt6D"><span class="label">D</span> <span class="jp">彼らはもはや皮膚のような物理的バリアを必要としない。</span><span class="en">They no longer need physical barriers such as skin to protect them.</span></div>
+        <div class="option-review" id="opt8A"><span class="label">A</span> <span class="jp">彼らはそのウイルスに二度と曝露されない。</span><span class="en">They will never be exposed to that virus again.</span></div>
+        <div class="option-review is-correct" id="opt8B"><span class="label">B</span> <span class="jp">既に回復した病気のワクチン接種を受けても追加効果は限定的だろう。 &#10003;</span><span class="en">Receiving a vaccine against a disease they have already recovered from would provide limited additional benefit. &#10003;</span></div>
+        <div class="option-review" id="opt8C"><span class="label">C</span> <span class="jp">彼らの自然免疫系が永久に強くなる。</span><span class="en">Their innate immune system will become permanently stronger.</span></div>
+        <div class="option-review" id="opt8D"><span class="label">D</span> <span class="jp">彼らはもはや皮膚のような物理的バリアを必要としない。</span><span class="en">They no longer need physical barriers such as skin to protect them.</span></div>
       </div>
       <div class="explanation">
-        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong> Paragraph 4 states that memory cells allow the immune system to "mount a much faster and stronger response" when the same pathogen returns, "often eliminating the threat before any symptoms appear." A recovered person would have these memory cells = B.<br><br>
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第4段落は、メモリー細胞が同じ病原体が再侵入したときに免疫系が「mount a much faster and stronger response（はるかに速く強い反応を起こす）」ことを可能にし、「often eliminating the threat before any symptoms appear（症状が現れる前に脅威を排除することが多い）」と述べる。回復した人はすでにこれらのメモリー細胞を持っており、ワクチンが提供する保護は冗長になる = B。<br><br>A は誤り。免疫を持つことは曝露を防がない。本文は免疫系が速く反応すると言うのみで、曝露が避けられるとは言っていない。C は自然免疫と獲得免疫を混同。メモリー細胞は獲得免疫の一部で、自然免疫ではない。D は不合理。物理的バリアは過去の感染とは無関係に必要。</span>
+        <span class="en">Paragraph 4 states that memory cells allow the immune system to "mount a much faster and stronger response" when the same pathogen returns, "often eliminating the threat before any symptoms appear." A recovered person already has these memory cells, so vaccination would add little = B.<br><br>
         A is wrong because having immunity does not prevent exposure — the passage says the immune system responds faster, not that exposure is avoided. C confuses innate and adaptive immunity — memory cells are part of adaptive immunity, not innate. D is absurd — physical barriers remain necessary regardless of past infections.
         <div class="paraphrase-box">
-          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "mount a much faster and stronger response" &rarr; B: "respond more quickly" — simplified but accurate paraphrase
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "mount a much faster and stronger response" &rarr; B (combined with the fact that vaccines train the immune system) implies a prior infection already provides what the vaccine would.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" id="card9">
+      <div class="q-num"><span class="jp">設問 9 — 事実問題（情報詳細）</span><span class="en">Question 9 — Factual Detail</span></div>
+      <div class="q-text"><span class="jp">パッセージによれば、獲得免疫反応においてBリンパ球はどんな役割を果たすか。</span><span class="en">According to the passage, what role do B lymphocytes play in the adaptive immune response?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
+        <span class="answer-tag" id="yours9"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt9A"><span class="label">A</span> <span class="jp">皮膚や粘膜と同様の物理的バリアを形成する。</span><span class="en">They form physical barriers similar to the skin and mucous membranes.</span></div>
+        <div class="option-review is-correct" id="opt9B"><span class="label">B</span> <span class="jp">病原体に結合してそれを破壊の対象として印を付ける抗体を産生する。 &#10003;</span><span class="en">They produce antibodies that attach to pathogens and mark them for destruction. &#10003;</span></div>
+        <div class="option-review" id="opt9C"><span class="label">C</span> <span class="jp">体内の感染した細胞を直接攻撃して破壊する。</span><span class="en">They directly attack and destroy infected cells in the body.</span></div>
+        <div class="option-review" id="opt9D"><span class="label">D</span> <span class="jp">将来の免疫反応を刺激するため弱められた病原体を放出する。</span><span class="en">They release weakened pathogens to stimulate future immune responses.</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第3段落に「B lymphocytes produce antibodies that bind to the pathogen and mark it for destruction（Bリンパ球は病原体に結合してそれを破壊の対象として印を付ける抗体を産生する）」と明記 = B。<br><br>A（物理的バリア）は第2段落の自然免疫（皮膚・粘膜）の役割で、Bリンパ球の機能ではない。C（感染細胞を直接攻撃）はTリンパ球の役割であり、同じ段落に「T lymphocytes directly attack infected cells」と書かれている。D（弱められた病原体を放出）はワクチンの概念（第4段落）と混同したもの。Bリンパ球はそうした働きをしない。</span>
+        <span class="en">Paragraph 3 explicitly states: "B lymphocytes produce antibodies that bind to the pathogen and mark it for destruction" = B.<br><br>A (physical barriers) refers to innate immunity in paragraph 2 (skin, mucous membranes), not to B lymphocytes. C (directly attacking infected cells) is the role of T lymphocytes, stated in the same paragraph as "T lymphocytes directly attack infected cells." D (releasing weakened pathogens) confuses B lymphocytes with the concept of vaccines (paragraph 4); B lymphocytes do not do this.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "antibodies that bind to the pathogen and mark it for destruction" &rarr; B: "antibodies that attach to pathogens and mark them for destruction"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" id="card10">
+      <div class="q-num"><span class="jp">設問 10 — 推論</span><span class="en">Question 10 — Inference</span></div>
+      <div class="q-text"><span class="jp">ワクチンが疾病予防の有効な方法である理由について、何が推論できるか。</span><span class="en">What can be inferred about why vaccines are an effective method of disease prevention?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
+        <span class="answer-tag" id="yours10"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt10A"><span class="label">A</span> <span class="jp">感染に対する体の物理的バリアを永久に強化するから。</span><span class="en">They permanently strengthen the body's physical barriers against infection.</span></div>
+        <div class="option-review" id="opt10B"><span class="label">B</span> <span class="jp">自然免疫をより強く速い防衛システムで置き換えるから。</span><span class="en">They replace innate immunity with a stronger, faster defense system.</span></div>
+        <div class="option-review" id="opt10C"><span class="label">C</span> <span class="jp">体内に現在存在するすべての病原体を排除するから。</span><span class="en">They eliminate all existing pathogens currently present in the body.</span></div>
+        <div class="option-review is-correct" id="opt10D"><span class="label">D</span> <span class="jp">病気を引き起こさずに、より速い反応を可能にするメモリー細胞を作るから。 &#10003;</span><span class="en">They create memory cells that allow a faster response without causing illness. &#10003;</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第4段落は二つの主要な情報を組み合わせる：（1）メモリー細胞は同じ病原体が再侵入したときに「much faster and stronger response」を可能にする、（2）ワクチンは「introduces a harmless form of a pathogen to train the immune system without causing disease（病気を引き起こさずに免疫系を訓練するため病原体の無害な形を導入する）」。これらを組み合わせると、ワクチンが有効なのは病気なしでメモリー細胞を作るから = D。<br><br>A（物理的バリアを強化）は誤り。物理的バリアは自然免疫の一部で、ワクチンが影響を与えるものではない。B（自然免疫を置き換える）も誤り。ワクチンは獲得免疫を訓練するが、自然免疫を置き換えるわけではない。C（既存の病原体を排除）は誤り。ワクチンは予防のためであり、現在の感染を治療するためではない。</span>
+        <span class="en">Paragraph 4 combines two key pieces of information: (1) memory cells allow a "much faster and stronger response" when the same pathogen returns, and (2) vaccines "introduce a harmless form of a pathogen to train the immune system without causing disease." Combining these, vaccines work by creating memory cells without causing illness = D.<br><br>
+        A (strengthening physical barriers) is wrong — physical barriers are part of innate immunity and are not affected by vaccines. B (replacing innate immunity) is wrong — vaccines train adaptive immunity but do not replace innate immunity. C (eliminating existing pathogens) is wrong — vaccines are preventive, not treatments for current infections.
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "train the immune system without causing disease" + "memory cells" &rarr; D: "create memory cells that allow a faster response without causing illness"
         </div>
       </div>
     </div>
@@ -332,7 +430,7 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <script>
-var correctAnswers = {'1':'A','2':'B','3':'C','4':'A','5':'C','6':'B'};
+var correctAnswers = {'1':'A','2':'B','3':'C','4':'D','5':'A','6':'A','7':'C','8':'B','9':'B','10':'D'};
 (function(){
   var saved = sessionStorage.getItem('training_academic_p7_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -353,10 +451,18 @@ var correctAnswers = {'1':'A','2':'B','3':'C','4':'A','5':'C','6':'B'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/6';
+  document.getElementById('scoreDisplay').textContent = score+'/10';
 })();
 </script>
 <script src="../../js/auth.js"></script>
+<script>
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
+</script>
 <script defer src="../../js/tm-footer.js"></script>
 </body>
 </html>

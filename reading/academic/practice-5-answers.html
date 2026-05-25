@@ -114,8 +114,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/6</div>
-  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q6)</span><span class="en">Your Score (Q1&ndash;Q6)</span></div>
+  <div class="score-big" id="scoreDisplay">&ndash;/10</div>
+  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q10)</span><span class="en">Your Score (Q1&ndash;Q10)</span></div>
 </div>
 
 <div class="answers-body">
@@ -166,7 +166,7 @@ body[data-lang="en"] .jp{display:none}
       <div class="tip-card-body">
         Replace the highlighted word with each option and see which one reads most naturally in the sentence.
         <div class="tip-example">
-          <strong>Q5:</strong> "make populations more [susceptible] to disease" reads naturally. "make populations more [resistant] to disease" means the opposite of what the passage describes.
+          <strong>Q7:</strong> "make populations more [susceptible] to disease" reads naturally. "make populations more [resistant] to disease" means the opposite of what the passage describes.
         </div>
       </div>
     </div>
@@ -240,73 +240,168 @@ body[data-lang="en"] .jp{display:none}
         </div>
       </div>
     </div>
+
+    <!-- Q4 -->
+    <div class="q-card" id="card4">
+      <div class="q-num"><span class="jp">設問 4 — 修辞目的</span><span class="en">Question 4 — Rhetorical Purpose</span></div>
+      <div class="q-text"><span class="jp">なぜ著者は第2段落で鋼と空気に言及するのか。</span><span class="en">Why does the author mention steel and air in paragraph 2?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
+        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt4A"><span class="label">A</span> <span class="jp">媒体によって音速がどれほど劇的に異なるかを示すため &#10003;</span><span class="en">To illustrate how dramatically the speed of sound differs between media &#10003;</span></div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">ほとんどの人が日常的に経験する唯一の媒体は空気だと証明するため</span><span class="en">To prove that air is the only medium most people regularly experience</span></div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">工業用防音に使われる異なる金属を比較するため</span><span class="en">To compare different metals used for industrial soundproofing</span></div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> <span class="jp">空気中の湿気が音をかなり遅くすると示唆するため</span><span class="en">To suggest that humidity in air slows sound down considerably</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第2段落は「sound moves fastest through solids, slower through liquids, and slowest through gases（音は固体で最速、液体ではより遅く、気体で最も遅い）」と主張し、その直後に「For example, sound travels through steel at approximately 5,960 meters per second, but through air at only about 343 meters per second」という対比を提示する。鋼（約 5,960 m/s）と空気（約 343 m/s）という具体例は、媒体間の速度差がいかに劇的かを読者に印象づける = A。<br><br>B は本文と無関係（本文は人々の経験には触れていない）。C は誤り。比較されているのは「金属同士」ではなく「固体 vs 気体」。D は本文にない要素（湿気）を持ち込んでいる。</span>
+        <span class="en">Paragraph 2 claims that "sound moves fastest through solids, slower through liquids, and slowest through gases" and then immediately offers the contrast: "sound travels through steel at approximately 5,960 meters per second, but through air at only about 343 meters per second." The two concrete numbers (steel vs air) are given specifically to dramatize how large the difference between media can be = A.<br><br>B is unrelated &mdash; the passage does not discuss human experience. C compares metals to each other, but the passage actually contrasts a solid with a gas. D introduces "humidity," which the passage never mentions.</span>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" id="card5">
+      <div class="q-num"><span class="jp">設問 5 — 推論</span><span class="en">Question 5 — Inference</span></div>
+      <div class="q-text"><span class="jp">第3段落に基づくと、同じ高さ（ピッチ）で振幅の異なる2つの音について何が推論できるか。</span><span class="en">Based on paragraph 3, what can be inferred about two sounds produced at the same pitch but different amplitudes?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
+        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">大きい方の音は静かな音より空気中を速く伝わる</span><span class="en">The louder sound travels through air faster than the quieter sound</span></div>
+        <div class="option-review" id="opt5B"><span class="label">B</span> <span class="jp">静かな音は大きな音より高い周波数で振動する</span><span class="en">The quieter sound vibrates at a higher frequency than the loud one</span></div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> <span class="jp">両方の音はほとんどの人間の聴き手に同一に知覚される</span><span class="en">Both sounds will be perceived as identical by most human listeners</span></div>
+        <div class="option-review is-correct" id="opt5D"><span class="label">D</span> <span class="jp">大きい方の音は静かな音より多くのエネルギーを聴き手に届ける &#10003;</span><span class="en">The louder sound delivers more energy to the listener than the quieter one &#10003;</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第3段落は「A sound wave with greater amplitude carries more energy and is perceived as louder by the human ear（より大きな振幅をもつ音波はより多くのエネルギーを運び、人間の耳にはより大きな音として知覚される）」と述べる。同じピッチでも振幅が大きい音は、より多くのエネルギーを耳に届けることになる = D。<br><br>A は誤り。本文によれば速度は媒体で決まり、振幅で決まらない。B は周波数と振幅を混同。本文は両者を独立した特性として説明している。C は本文の主張と矛盾する。本文ははっきり「より大きい音として知覚される」と述べている。</span>
+        <span class="en">Paragraph 3 states that "a sound wave with greater amplitude carries more energy and is perceived as louder by the human ear." At the same pitch, the sound with greater amplitude must therefore deliver more energy to the ear = D.<br><br>A is wrong: speed depends on the medium, not on amplitude. B confuses amplitude with frequency; the passage describes them as independent properties. C contradicts the passage, which explicitly says the louder sound is perceived <em>differently</em> &mdash; not identically.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "greater amplitude carries more energy" &rarr; D: "delivers more energy to the listener"
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
     <div class="passage-title-bar">The Impact of Urbanization on Wildlife <span class="passage-type-badge"><span class="jp">Social Science</span><span class="en">Social Science</span></span></div>
 
-    <!-- Q4 -->
-    <div class="q-card" id="card4">
-      <div class="q-num"><span class="jp">設問 4 — 修辞目的</span><span class="en">Question 4 — Rhetorical Purpose</span></div>
-      <div class="q-text"><span class="jp">なぜ著者は第3段落でアライグマ、ハト、タカに言及するのか。</span><span class="en">Why does the author mention raccoons, pigeons, and hawks in paragraph 3?</span></div>
-      <div class="answer-row">
-        <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
-        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
-      </div>
-      <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> <span class="jp">都市化がすべての野生生物種に等しく利益をもたらすと論じるため</span><span class="en">To argue that urbanization benefits all wildlife species equally</span></div>
-        <div class="option-review is-correct" id="opt4B"><span class="label">B</span> <span class="jp">都市環境にうまく適応した種の例を示すため &#10003;</span><span class="en">To give examples of species that have successfully adapted to urban environments &#10003;</span></div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">これらの種が他より遺伝的に多様である理由を説明するため</span><span class="en">To explain why these species are more genetically diverse than others</span></div>
-        <div class="option-review" id="opt4D"><span class="label">D</span> <span class="jp">野生生物回廊が普通種には不要だと示唆するため</span><span class="en">To suggest that wildlife corridors are unnecessary for common species</span></div>
-      </div>
-      <div class="explanation"><strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
-        <span class="jp">第2段落には明示的に「molecules in solids are packed more tightly together, allowing vibrations to be transmitted more quickly」とある = C。<br><br>A は逆。固体は分子がより密に詰まっており、少なくはない。B は根拠なし。媒体で周波数が変わるとは述べていない。D は振幅と速度を混同。</span>
-        <span class="en">Paragraph 3 begins with "not all species are negatively affected" and then mentions raccoons, pigeons, and hawks as species that "have proven remarkably successful at exploiting urban environments." These are examples of successful urban adapters = B.<br><br>
-        A uses the extreme word "all" &mdash; the passage says only "some" species benefit. C is not discussed in paragraph 3. D is from paragraph 4 and is not the purpose of these examples.</span>
-      </div>
-    </div>
-
-    <!-- Q5 -->
-    <div class="q-card" id="card5">
-      <div class="q-num"><span class="jp">設問 5 — 文脈語彙</span><span class="en">Question 5 — Vocabulary in Context</span></div>
-      <div class="q-text"><span class="jp">第2段落の「vulnerable」に最も近い意味は何か。</span><span class="en">The word "vulnerable" in paragraph 2 is closest in meaning to</span></div>
-      <div class="answer-row">
-        <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
-        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
-      </div>
-      <div style="margin:10px 0">
-        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">抵抗のある</span><span class="en">resistant</span></div>
-        <div class="option-review" id="opt5B"><span class="label">B</span> <span class="jp">無関心な</span><span class="en">indifferent</span></div>
-        <div class="option-review is-correct" id="opt5C"><span class="label">C</span> <span class="jp">脆弱な &#10003;</span><span class="en">susceptible &#10003;</span></div>
-        <div class="option-review" id="opt5D"><span class="label">D</span> <span class="jp">引きつけられた</span><span class="en">attracted</span></div>
-      </div>
-      <div class="explanation"><strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
-        <span class="jp">第3段落は「not all species are negatively affected」で始まり、アライグマ、ハト、タカが「have proven remarkably successful at exploiting urban environments」種として言及される。これらは成功した都市適応者の例 = B。<br><br>A は極端な「all」を使う。パッセージは「some」種が利益を受けると言うだけ。C は第3段落で議論されない。D は第4段落の内容で、これらの例の目的ではない。</span>
-        <span class="en">The sentence discusses how isolation can "make populations more vulnerable to disease and environmental changes." Substituting: "make populations more [susceptible] to disease" reads naturally = C.<br><br>
-        A (resistant) is the opposite of vulnerable. B (indifferent) means not caring, which does not fit. D (attracted) makes no sense in context.</span>
-      </div>
-    </div>
-
     <!-- Q6 -->
     <div class="q-card" id="card6">
-      <div class="q-num"><span class="jp">設問 6 — 推論</span><span class="en">Question 6 — Inference</span></div>
-      <div class="q-text"><span class="jp">パッセージに基づくと、都市化と生物多様性の関係について何が推論できるか。</span><span class="en">Based on the passage, what can be inferred about the relationship between urbanization and biodiversity?</span></div>
+      <div class="q-num"><span class="jp">設問 6 — 修辞目的</span><span class="en">Question 6 — Rhetorical Purpose</span></div>
+      <div class="q-text"><span class="jp">なぜ著者は第3段落でアライグマ、ハト、タカに言及するのか。</span><span class="en">Why does the author mention raccoons, pigeons, and hawks in paragraph 3?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
         <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt6A"><span class="label">A</span> <span class="jp">都市化は影響を受ける地域で常に生物多様性の完全な喪失につながる。</span><span class="en">Urbanization always leads to a complete loss of biodiversity in affected areas.</span></div>
-        <div class="option-review is-correct" id="opt6B"><span class="label">B</span> <span class="jp">人間の食物廃棄を利用できる種は、全体的な生物多様性が低下する中でも繁栄する可能性が高い。 &#10003;</span><span class="en">Species that can exploit human food waste are likely to thrive even as overall biodiversity declines. &#10003;</span></div>
-        <div class="option-review" id="opt6C"><span class="label">C</span> <span class="jp">ほとんどの野生生物種は支援なしでも最終的に都市環境に適応する。</span><span class="en">Most wildlife species will eventually adapt to urban environments without assistance.</span></div>
-        <div class="option-review" id="opt6D"><span class="label">D</span> <span class="jp">野生生物回廊は絶滅危惧種の保護に効果がないことが証明されている。</span><span class="en">Wildlife corridors have proven ineffective at protecting endangered species.</span></div>
+        <div class="option-review" id="opt6A"><span class="label">A</span> <span class="jp">都市化がすべての野生生物種に等しく利益をもたらすと論じるため</span><span class="en">To argue that urbanization benefits all wildlife species equally</span></div>
+        <div class="option-review is-correct" id="opt6B"><span class="label">B</span> <span class="jp">都市環境にうまく適応した種の例を示すため &#10003;</span><span class="en">To give examples of species that have successfully adapted to urban environments &#10003;</span></div>
+        <div class="option-review" id="opt6C"><span class="label">C</span> <span class="jp">これらの種が他より遺伝的に多様である理由を説明するため</span><span class="en">To explain why these species are more genetically diverse than others</span></div>
+        <div class="option-review" id="opt6D"><span class="label">D</span> <span class="jp">野生生物回廊が普通種には不要だと示唆するため</span><span class="en">To suggest that wildlife corridors are unnecessary for common species</span></div>
+      </div>
+      <div class="explanation"><strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第3段落は「not all species are negatively affected by urbanization（すべての種が都市化によって悪影響を受けるわけではない）」で始まり、続けてアライグマ、ハト、タカが「have proven remarkably successful at exploiting urban environments（都市環境をうまく利用するのに著しく成功している）」種として挙げられる。これらは、都市環境にうまく適応した成功事例＝「urban adapters」の具体例として導入されている = B。<br><br>A は極端な「all」を使っており誤り。本文は「some animals」が利益を得ると述べているだけ。C（遺伝的多様性）は第3段落で議論されていない。D（野生生物回廊）は第4段落の話題で、これらの種を挙げる目的とは無関係。</span>
+        <span class="en">Paragraph 3 begins with "not all species are negatively affected" and then mentions raccoons, pigeons, and hawks as species that "have proven remarkably successful at exploiting urban environments." These are examples of successful urban adapters = B.<br><br>
+        A uses the extreme word "all" &mdash; the passage says only "some" species benefit. C is not discussed in paragraph 3. D is from paragraph 4 and is not the purpose of these examples.</span>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" id="card7">
+      <div class="q-num"><span class="jp">設問 7 — 文脈語彙</span><span class="en">Question 7 — Vocabulary in Context</span></div>
+      <div class="q-text"><span class="jp">第2段落の「vulnerable」に最も近い意味は何か。</span><span class="en">The word "vulnerable" in paragraph 2 is closest in meaning to</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
+        <span class="answer-tag" id="yours7"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt7A"><span class="label">A</span> <span class="jp">抵抗のある</span><span class="en">resistant</span></div>
+        <div class="option-review" id="opt7B"><span class="label">B</span> <span class="jp">無関心な</span><span class="en">indifferent</span></div>
+        <div class="option-review is-correct" id="opt7C"><span class="label">C</span> <span class="jp">脆弱な &#10003;</span><span class="en">susceptible &#10003;</span></div>
+        <div class="option-review" id="opt7D"><span class="label">D</span> <span class="jp">引きつけられた</span><span class="en">attracted</span></div>
+      </div>
+      <div class="explanation"><strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
+        <span class="jp">第2段落は孤立化（isolation）が「make populations more vulnerable to disease and environmental changes（個体群を病気や環境変化により vulnerable にする）」と述べる。代入確認：「more [susceptible] to disease（病気にかかりやすい）」は自然に読める = C。<br><br>A（resistant 抵抗のある）は vulnerable の正反対の意味。B（indifferent 無関心な）は気にしないという意味で、病気や環境変化の文脈に合わない。D（attracted 引きつけられた）は文脈上まったく意味をなさない。</span>
+        <span class="en">The sentence discusses how isolation can "make populations more vulnerable to disease and environmental changes." Substituting: "make populations more [susceptible] to disease" reads naturally = C.<br><br>
+        A (resistant) is the opposite of vulnerable. B (indifferent) means not caring, which does not fit. D (attracted) makes no sense in context.</span>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" id="card8">
+      <div class="q-num"><span class="jp">設問 8 — 推論</span><span class="en">Question 8 — Inference</span></div>
+      <div class="q-text"><span class="jp">パッセージに基づくと、都市化と生物多様性の関係について何が推論できるか。</span><span class="en">Based on the passage, what can be inferred about the relationship between urbanization and biodiversity?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
+        <span class="answer-tag" id="yours8"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt8A"><span class="label">A</span> <span class="jp">都市化は影響を受ける地域で常に生物多様性の完全な喪失につながる。</span><span class="en">Urbanization always leads to a complete loss of biodiversity in affected areas.</span></div>
+        <div class="option-review is-correct" id="opt8B"><span class="label">B</span> <span class="jp">人間の食物廃棄を利用できる種は、全体的な生物多様性が低下する中でも繁栄する可能性が高い。 &#10003;</span><span class="en">Species that can exploit human food waste are likely to thrive even as overall biodiversity declines. &#10003;</span></div>
+        <div class="option-review" id="opt8C"><span class="label">C</span> <span class="jp">ほとんどの野生生物種は支援なしでも最終的に都市環境に適応する。</span><span class="en">Most wildlife species will eventually adapt to urban environments without assistance.</span></div>
+        <div class="option-review" id="opt8D"><span class="label">D</span> <span class="jp">野生生物回廊は絶滅危惧種の保護に効果がないことが証明されている。</span><span class="en">Wildlife corridors have proven ineffective at protecting endangered species.</span></div>
       </div>
       <div class="explanation">
-        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong> Paragraph 3 states that urban adapters' success "raises important questions about how biodiversity changes rather than simply declines." This directly supports the idea that urbanization shifts species composition rather than eliminating all wildlife = B.<br><br>
-        A uses "always" and "complete loss," which contradicts the passage (some species thrive). C overgeneralizes &mdash; the passage says "some animals," not "most." D contradicts paragraph 4, which says wildlife corridors "have shown promise."
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第3段落は、urban adapters の成功が「raises important questions about how biodiversity changes rather than simply declines（生物多様性が単に減少するのではなく、どう変化するかという重要な問いを提起する）」と述べる。さらに、ハト・アライグマ・タカが「abundant food sources, including garbage and food waste（生ゴミや食物廃棄を含む豊富な食料源）」を利用していると説明されている。これらを合わせると、人間の食物廃棄を利用できる種は全体的な多様性が低下する中でも繁栄しうると推論できる = B。<br><br>A は「always（常に）」と「complete loss（完全な喪失）」が本文と矛盾する（一部の種は繁栄する）。C は過度な一般化。本文は「some animals」と言っているのであって「most」ではない。D は第4段落の「wildlife corridors... have shown promise（効果が見込める）」と矛盾する。</span>
+        <span class="en">Paragraph 3 states that urban adapters' success "raises important questions about how biodiversity changes rather than simply declines." The paragraph also explicitly notes that these species benefit from "abundant food sources, including garbage and food waste." Together this supports the idea that species exploiting human waste can thrive even while overall biodiversity falls = B.<br><br>
+        A uses "always" and "complete loss," which contradicts the passage (some species thrive). C overgeneralizes &mdash; the passage says "some animals," not "most." D contradicts paragraph 4, which says wildlife corridors "have shown promise."</span>
         <div class="paraphrase-box">
           <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "biodiversity changes rather than simply declines" &rarr; B: "changes the composition of species rather than eliminating all wildlife"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" id="card9">
+      <div class="q-num"><span class="jp">設問 9 — 事実問題（情報詳細）</span><span class="en">Question 9 — Factual Detail</span></div>
+      <div class="q-text"><span class="jp">第4段落によれば、研究者が都市化の野生生物への有害な影響を減らすために用いている戦略の一つは何か。</span><span class="en">According to paragraph 4, what is one strategy that researchers are using to reduce the harmful effects of urbanization on wildlife?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
+        <span class="answer-tag" id="yours9"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt9A"><span class="label">A</span> <span class="jp">郊外の生息地付近で新しい高速道路の建設を制限すること</span><span class="en">Limiting the construction of new highways near suburban habitats</span></div>
+        <div class="option-review" id="opt9B"><span class="label">B</span> <span class="jp">脅威にさらされた個体群を近くの未開発の農地へ移すこと</span><span class="en">Relocating threatened populations to undeveloped farmland nearby</span></div>
+        <div class="option-review is-correct" id="opt9C"><span class="label">C</span> <span class="jp">分断された自然地域をつなぐ生息地の帯（コリドー）を作ること &#10003;</span><span class="en">Creating strips of habitat that connect fragmented natural areas &#10003;</span></div>
+        <div class="option-review" id="opt9D"><span class="label">D</span> <span class="jp">適応種が餌をとる都市での人間の食物廃棄を制限すること</span><span class="en">Restricting human food waste in cities where adapter species feed</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第4段落に「Wildlife corridors, which are strips of natural habitat connecting fragmented areas, have shown promise in allowing animals to move between isolated patches of land（野生生物回廊は、分断された地域をつなぐ自然生息地の帯であり、孤立した土地の間を動物が移動できるようにする点で有望性を示している）」と明記 = C。<br><br>A（高速道路の建設制限）は本文に記述なし。B（農地への移送）も本文に根拠なし。D（食物廃棄の制限）は議論されていない。</span>
+        <span class="en">Paragraph 4 explicitly states: "Wildlife corridors, which are strips of natural habitat connecting fragmented areas, have shown promise in allowing animals to move between isolated patches of land" = C.<br><br>A (limiting highway construction) is not mentioned. B (relocation to farmland) is not supported. D (restricting food waste) is not discussed.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "strips of natural habitat connecting fragmented areas" &rarr; C: "strips of habitat that connect fragmented natural areas"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" id="card10">
+      <div class="q-num"><span class="jp">設問 10 — 推論</span><span class="en">Question 10 — Inference</span></div>
+      <div class="q-text"><span class="jp">第2段落の両生類に関する議論から何が推論できるか。</span><span class="en">What can be inferred from the discussion of amphibians in paragraph 2?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
+        <span class="answer-tag" id="yours10"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt10A"><span class="label">A</span> <span class="jp">カエルの個体群は郊外の庭に作られた新しい池の恩恵を受けている</span><span class="en">Frog populations have benefited from new ponds built in suburban yards</span></div>
+        <div class="option-review" id="opt10B"><span class="label">B</span> <span class="jp">サンショウウオは他の両生類より遺伝的に多様になっている</span><span class="en">Salamanders are now more genetically diverse than other amphibians</span></div>
+        <div class="option-review" id="opt10C"><span class="label">C</span> <span class="jp">繁殖池の近くに作られた道路は、より多くの両生類種を引き寄せる傾向がある</span><span class="en">Roads built near breeding ponds tend to attract more amphibian species</span></div>
+        <div class="option-review is-correct" id="opt10D"><span class="label">D</span> <span class="jp">道路が生息地を分断するとき、一部の種は繁殖に失敗する可能性がある &#10003;</span><span class="en">Some species may fail to reproduce when roads divide their habitat &#10003;</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第2段落は「studies of amphibian populations in suburban areas have shown that roads act as barriers, preventing frogs and salamanders from reaching breeding ponds（郊外の両生類個体群の研究では、道路が障壁として作用し、カエルやサンショウウオが繁殖池に到達するのを妨げていることが示されている）」と述べる。繁殖池に到達できなければ繁殖は成立しないため、こうした種は道路によって生息地が分断されると繁殖に失敗しうる、と推論できる = D。<br><br>A は本文と無関係（新しい池の話は出てこない）。B（遺伝的多様性の比較）は本文に根拠なし。C は本文の主張と逆。本文は道路が両生類を「引き寄せる」のではなく「妨げる」と述べている。</span>
+        <span class="en">Paragraph 2 states that "studies of amphibian populations in suburban areas have shown that roads act as barriers, preventing frogs and salamanders from reaching breeding ponds." Since reproduction requires reaching the breeding ponds, blocking access logically implies reproductive failure for some affected populations = D.<br><br>A is unrelated &mdash; the passage does not mention new ponds in yards. B (genetic diversity comparison) is not supported. C is the opposite of what the passage says &mdash; roads act as <em>barriers</em>, not attractors.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "roads act as barriers, preventing frogs and salamanders from reaching breeding ponds" &rarr; D: "some species may fail to reproduce when roads divide their habitat"
         </div>
       </div>
     </div>
@@ -334,7 +429,7 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <script>
-var correctAnswers = {'1':'A','2':'B','3':'C','4':'B','5':'C','6':'B'};
+var correctAnswers = {'1':'A','2':'B','3':'C','4':'A','5':'D','6':'B','7':'C','8':'B','9':'C','10':'D'};
 (function(){
   var saved = sessionStorage.getItem('training_academic_p5_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -355,10 +450,18 @@ var correctAnswers = {'1':'A','2':'B','3':'C','4':'B','5':'C','6':'B'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/6';
+  document.getElementById('scoreDisplay').textContent = score+'/10';
 })();
 </script>
 <script src="../../js/auth.js"></script>
+<script>
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
+</script>
 <script defer src="../../js/tm-footer.js"></script>
 </body>
 </html>

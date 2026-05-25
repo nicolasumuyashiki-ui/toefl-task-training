@@ -114,8 +114,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/6</div>
-  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q6)</span><span class="en">Your Score (Q1&ndash;Q6)</span></div>
+  <div class="score-big" id="scoreDisplay">&ndash;/10</div>
+  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q10)</span><span class="en">Your Score (Q1&ndash;Q10)</span></div>
 </div>
 
 <div class="answers-body">
@@ -242,73 +242,173 @@ body[data-lang="en"] .jp{display:none}
         </div>
       </div>
     </div>
+
+    <!-- Q4 -->
+    <div class="q-card" id="card4">
+      <div class="q-num"><span class="jp">設問 4 — 修辞目的</span><span class="en">Question 4 — Rhetorical Purpose</span></div>
+      <div class="q-text"><span class="jp">なぜ著者は第3段落で hieroglyphics（象形文字）と oracle bone inscriptions（甲骨文）に言及するのか。</span><span class="en">Why does the author mention hieroglyphics and oracle bone inscriptions in paragraph 3?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
+        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt4A"><span class="label">A</span> <span class="jp">異なる地域の文字体系が同様の経路で発展したことを示すため &#10003;</span><span class="en">To show that writing systems in different regions developed along similar paths &#10003;</span></div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">メソポタミア文化がエジプトと中国の両方に影響を与えたと論じるため</span><span class="en">To argue that Mesopotamian culture influenced both Egypt and China</span></div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">三つの古代文明の文学的業績を比較するため</span><span class="en">To compare the literary achievements of three ancient civilizations</span></div>
+        <div class="option-review" id="opt4D"><span class="label">D</span> <span class="jp">なぜ一部の文字体系が最終的に優位になったのかを説明するため</span><span class="en">To explain why some writing systems eventually became dominant</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第3段落は「A similar pattern of development occurred independently in other parts of the world」で始まり、エジプトの象形文字と中国の甲骨文を例として挙げる。最終文は「Although these systems arose in different cultures, they all followed a comparable path」と締めくくる。つまり、異なる地域での独立した発展が類似の経路をたどったことを示す例として導入されている = A。<br><br>B は誤り。本文は「independently（独立に）」と明記しており、メソポタミアの影響は述べていない。C は文学ではなく文字の発展が話題。D は「優位性」や「衰退」については本文に記述なし。</span>
+        <span class="en">Paragraph 3 opens with "A similar pattern of development occurred independently in other parts of the world" and ends with "Although these systems arose in different cultures, they all followed a comparable path." Hieroglyphics and oracle bones are introduced as examples of this independent but parallel development = A.<br><br>B is contradicted &mdash; the passage explicitly says "independently," not influenced by Mesopotamia. C confuses writing systems with literary tradition. D introduces "dominance," which is never discussed in the passage.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "arose in different cultures... followed a comparable path" &rarr; A: "in different regions developed along similar paths"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" id="card5">
+      <div class="q-num"><span class="jp">設問 5 — 推論</span><span class="en">Question 5 — Inference</span></div>
+      <div class="q-text"><span class="jp">パッセージから、象形文字から楔形マークへの移行について何が推論できるか。</span><span class="en">What can be inferred from the passage about the shift from pictographs to wedge-shaped marks?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
+        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">文字体系が一般の人にとって学習困難になった</span><span class="en">It made the writing system too difficult for ordinary people to learn</span></div>
+        <div class="option-review is-correct" id="opt5B"><span class="label">B</span> <span class="jp">記録をより効率的に作成する必要によって推進された &#10003;</span><span class="en">It was driven by a need to produce written records more efficiently &#10003;</span></div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> <span class="jp">文字が話し言葉との結びつきを失う結果になった</span><span class="en">It caused writing to lose its connection to the spoken language</span></div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> <span class="jp">楔形文字に固有の特徴で他の体系には見られない</span><span class="en">It was a unique feature of cuneiform not found in other systems</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第2段落に「Writers started using wedge-shaped marks pressed into soft clay tablets, which were <strong>faster to produce</strong> than detailed drawings」とある。「速く作れる」 → 効率性を求めた移行と推論できる = B。<br><br>A は「learn difficulty」について本文に言及なし。C は誤り。むしろ後に「symbols came to represent <strong>sounds</strong>」と述べており、話し言葉との結びつきは強まっている。D は誤り。第3段落でエジプトや中国でも類似の移行があったと示されている。</span>
+        <span class="en">Paragraph 2 states that wedge marks "were <strong>faster to produce</strong> than detailed drawings." The efficiency motive is the only stated reason for the shift, so the inference is that efficiency drove it = B.<br><br>A introduces "difficulty for ordinary people," never mentioned. C is the opposite &mdash; the passage says symbols later "came to represent sounds," strengthening the connection to spoken language. D is contradicted by paragraph 3, which describes similar shifts in Egypt and China.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "faster to produce than detailed drawings" &rarr; B: "produce written records more efficiently"
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
     <div class="passage-title-bar">Symbiotic Relationships in Marine Ecosystems <span class="passage-type-badge"><span class="jp">生命科学</span><span class="en">Life Science</span></span></div>
 
-    <!-- Q4 -->
-    <div class="q-card" id="card4">
-      <div class="q-num"><span class="jp">設問 4 — 修辞目的</span><span class="en">Question 4 — Rhetorical Purpose</span></div>
+    <!-- Q6 -->
+    <div class="q-card" id="card6">
+      <div class="q-num"><span class="jp">設問 6 — 修辞目的</span><span class="en">Question 6 — Rhetorical Purpose</span></div>
       <div class="q-text"><span class="jp">なぜ著者は第2段落でクマノミとイソギンチャクに言及するのか。</span><span class="en">Why does the author mention clownfish and sea anemones in paragraph 2?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
-        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt4A"><span class="label">A</span> <span class="jp">なぜイソギンチャクが大半の海洋動物にとって危険かを説明するため</span><span class="en">To explain why anemones are dangerous to most marine animals</span></div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">クマノミがサンゴ礁で最も重要な種であると論じるため</span><span class="en">To argue that clownfish are the most important species in coral reefs</span></div>
-        <div class="option-review is-correct" id="opt4C"><span class="label">C</span> <span class="jp">相互に有益な関係の例を示すため &#10003;</span><span class="en">To provide an example of a mutually beneficial relationship &#10003;</span></div>
-        <div class="option-review" id="opt4D"><span class="label">D</span> <span class="jp">相利共生と寄生を比較するため</span><span class="en">To compare mutualism with parasitism</span></div>
+        <div class="option-review" id="opt6A"><span class="label">A</span> <span class="jp">なぜイソギンチャクが大半の海洋動物にとって危険かを説明するため</span><span class="en">To explain why anemones are dangerous to most marine animals</span></div>
+        <div class="option-review" id="opt6B"><span class="label">B</span> <span class="jp">クマノミがサンゴ礁で最も重要な種であると論じるため</span><span class="en">To argue that clownfish are the most important species in coral reefs</span></div>
+        <div class="option-review is-correct" id="opt6C"><span class="label">C</span> <span class="jp">相互に有益な関係の例を示すため &#10003;</span><span class="en">To provide an example of a mutually beneficial relationship &#10003;</span></div>
+        <div class="option-review" id="opt6D"><span class="label">D</span> <span class="jp">相利共生と寄生を比較するため</span><span class="en">To compare mutualism with parasitism</span></div>
       </div>
-      <div class="explanation"><strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
-        <strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong> パッセージには象形文字が「became increasingly abstract」とあり、次の文で書記が「wedge-shaped marks」へ切り替えたと説明している。「faster to produce than detailed drawings」のため。これは記号が現実的な絵から離れ、簡略化された非具象的形になったことを意味する = B。<br><br>A（colorful）は文脈に根拠なし。C は逆。パッセージは作るのが<strong>速い</strong>と述べる。D（永続的な）は粘土板を表すもので、記号の性質ではない。
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第2段落は「Mutualism is a relationship in which both species benefit（相利共生は両種が利益を得る関係）」で始まり、最もよく知られた例として「One of the most well-known examples」とクマノミとイソギンチャクを導入する。この例は<strong>相利共生を例示する目的</strong>で使われている = C。<br><br>A は刺胞という細部に注目しすぎており、目的を捉えていない。B は「最も重要」という過剰表現で本文に根拠なし。D は誤り。寄生は別の段落で扱われており、この段落は相利共生のみが話題。</span>
         <span class="en">Paragraph 2 opens with "Mutualism is a relationship in which both species benefit" and then introduces the clownfish-anemone example with "One of the most well-known examples." The example serves to illustrate mutualism = C.<br><br>
         A focuses on only one detail (stinging tentacles) and misses the purpose. B uses extreme language ("most important") with no support. D is wrong because parasitism is discussed in a separate paragraph; this paragraph is solely about mutualism.</span>
       </div>
     </div>
 
-    <!-- Q5 -->
-    <div class="q-card" id="card5">
-      <div class="q-num"><span class="jp">設問 5 — 文脈語彙</span><span class="en">Question 5 — Vocabulary in Context</span></div>
+    <!-- Q7 -->
+    <div class="q-card" id="card7">
+      <div class="q-num"><span class="jp">設問 7 — 文脈語彙</span><span class="en">Question 7 — Vocabulary in Context</span></div>
       <div class="q-text"><span class="jp">第2段落の「thrive」に最も近い意味は何か。</span><span class="en">The word "thrive" in paragraph 2 is closest in meaning to</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
-        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours7"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">苦戦する</span><span class="en">struggle</span></div>
-        <div class="option-review is-correct" id="opt5B"><span class="label">B</span> <span class="jp">繁栄する &#10003;</span><span class="en">flourish &#10003;</span></div>
-        <div class="option-review" id="opt5C"><span class="label">C</span> <span class="jp">競争する</span><span class="en">compete</span></div>
-        <div class="option-review" id="opt5D"><span class="label">D</span> <span class="jp">移動する</span><span class="en">migrate</span></div>
+        <div class="option-review" id="opt7A"><span class="label">A</span> <span class="jp">苦戦する</span><span class="en">struggle</span></div>
+        <div class="option-review is-correct" id="opt7B"><span class="label">B</span> <span class="jp">繁栄する &#10003;</span><span class="en">flourish &#10003;</span></div>
+        <div class="option-review" id="opt7C"><span class="label">C</span> <span class="jp">競争する</span><span class="en">compete</span></div>
+        <div class="option-review" id="opt7D"><span class="label">D</span> <span class="jp">移動する</span><span class="en">migrate</span></div>
       </div>
-      <div class="explanation"><strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
-        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong> 第1段落に楔形文字は「was initially developed not for literary or religious purposes but for a far more practical reason: record-keeping」とあり、「people needed a reliable method to track goods, debts, and transactions」と続く = D。<br><br>A は直接矛盾。パッセージは宗教目的では<strong>ない</strong>と述べる。B と C は元来の目的として言及されていない。<div class="paraphrase-box"><strong>言い換え:</strong> パッセージ「track goods, debts, and transactions」 → D「keep track of goods and commercial exchanges」 — 「transactions」は「commercial exchanges」と言い換え</div>
+      <div class="explanation">
+        <strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
+        <span class="jp">本文は「Neither organism would thrive as well without the other（どちらの生物も互いがいなければ同じほど栄えない）」と述べ、両者が関係から利益を得る様子を示す。「thrive」は「うまく育つ、繁栄する」の意 = B。代入確認：「どちらの生物も互いがいなければ同じほど<em>繁栄</em>しない」と自然に読める。<br><br>A（苦戦する）は逆の意味。C（競争する）と D（移動する）は相互利益の文脈に合わない。</span>
         <span class="en">The sentence reads "Neither organism would thrive as well without the other," describing how both benefit from the relationship. "Thrive" means to do well, to flourish = B. Substituting: "Neither organism would <em>flourish</em> as well without the other" &mdash; this reads naturally.<br><br>
-        A is the opposite &mdash; "struggle" implies struggle, not success. C (compete) and D (migrate) do not fit the context of mutual benefit.</span>
+        A is the opposite &mdash; "struggle" implies difficulty, not success. C (compete) and D (migrate) do not fit the context of mutual benefit.</span>
       </div>
     </div>
 
-    <!-- Q6 -->
-    <div class="q-card" id="card6">
-      <div class="q-num"><span class="jp">設問 6 — 推論</span><span class="en">Question 6 — Inference</span></div>
+    <!-- Q8 -->
+    <div class="q-card" id="card8">
+      <div class="q-num"><span class="jp">設問 8 — 推論</span><span class="en">Question 8 — Inference</span></div>
       <div class="q-text"><span class="jp">パッセージに基づくと、海洋生態系における寄生生物の役割について何が推論できるか。</span><span class="en">Based on the passage, what can be inferred about the role of parasites in marine ecosystems?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
-        <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours8"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt6A"><span class="label">A</span> <span class="jp">彼らは常に有害で生態学的役割を持たない。</span><span class="en">They are always harmful and serve no ecological purpose.</span></div>
-        <div class="option-review" id="opt6B"><span class="label">B</span> <span class="jp">海洋温暖化により減少しつつある。</span><span class="en">They are becoming less common due to rising ocean temperatures.</span></div>
-        <div class="option-review" id="opt6C"><span class="label">C</span> <span class="jp">海中では動物より主に植物に影響する。</span><span class="en">They primarily affect plants rather than animals in the ocean.</span></div>
-        <div class="option-review is-correct" id="opt6D"><span class="label">D</span> <span class="jp">強い種の優位を制限することで、間接的に弱い種を守る可能性がある。 &#10003;</span><span class="en">They may indirectly protect weaker species by limiting the dominance of stronger ones. &#10003;</span></div>
+        <div class="option-review" id="opt8A"><span class="label">A</span> <span class="jp">彼らは常に有害で生態学的役割を持たない。</span><span class="en">They are always harmful and serve no ecological purpose.</span></div>
+        <div class="option-review" id="opt8B"><span class="label">B</span> <span class="jp">海洋温暖化により減少しつつある。</span><span class="en">They are becoming less common due to rising ocean temperatures.</span></div>
+        <div class="option-review" id="opt8C"><span class="label">C</span> <span class="jp">海中では動物より主に植物に影響する。</span><span class="en">They primarily affect plants rather than animals in the ocean.</span></div>
+        <div class="option-review is-correct" id="opt8D"><span class="label">D</span> <span class="jp">強い種の優位を制限することで、間接的に弱い種を守る可能性がある。 &#10003;</span><span class="en">They may indirectly protect weaker species by limiting the dominance of stronger ones. &#10003;</span></div>
       </div>
       <div class="explanation">
-        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong> The final paragraph states that "parasites play a crucial role in regulating host populations and preventing any single species from becoming overly dominant." From this, we can infer that parasites help maintain ecosystem balance by controlling population sizes = D.<br><br>
-        A directly contradicts the passage &mdash; ecologists argue parasites DO play "a crucial role." The word "always" is also an extreme qualifier that should raise suspicion. B introduces information (ocean temperatures) not discussed anywhere in the passage. C is unsupported &mdash; the passage only mentions fish as hosts.
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">最終段落は「parasites play a crucial role in regulating host populations and preventing any single species from becoming overly dominant（寄生生物は宿主集団の調整に重要な役割を果たし、特定の種が過度に支配的になるのを防ぐ）」と述べる。ここから、寄生生物が集団サイズを制御することで生態系のバランス維持に貢献している、と推論できる = D。<br><br>A は直接矛盾。生態学者は寄生生物が「重要な役割」を果たすと論じている。「always」も過剰な限定で要注意。B は海洋温度に関する情報を持ち込んでいるが本文にない。C は根拠なし。本文は宿主として魚にのみ言及。</span>
+        <span class="en">The final paragraph states that "parasites play a crucial role in regulating host populations and preventing any single species from becoming overly dominant." From this, we can infer that parasites help maintain ecosystem balance by controlling population sizes = D.<br><br>
+        A directly contradicts the passage &mdash; ecologists argue parasites DO play "a crucial role." The word "always" is also an extreme qualifier that should raise suspicion. B introduces information (ocean temperatures) not discussed anywhere in the passage. C is unsupported &mdash; the passage only mentions fish as hosts.</span>
         <div class="paraphrase-box">
-          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "play a crucial role in regulating host populations" &rarr; D: "help maintain balance by controlling the size of host populations" &mdash; "regulating" is paraphrased as "controlling the size of"
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "play a crucial role in regulating host populations" &rarr; D: "help maintain balance by controlling the size of host populations"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" id="card9">
+      <div class="q-num"><span class="jp">設問 9 — 事実問題（情報詳細）</span><span class="en">Question 9 — Factual Detail</span></div>
+      <div class="q-text"><span class="jp">パッセージによれば、コバンザメ（remora fish）とサメの関係について正しいのはどれか。</span><span class="en">According to the passage, what is true about the relationship between remora fish and sharks?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
+        <span class="answer-tag" id="yours9"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt9A"><span class="label">A</span> <span class="jp">サメは、コバンザメが体表の寄生生物を取り除いてくれるため利益を得る</span><span class="en">The sharks benefit because the remoras remove parasites from their skin</span></div>
+        <div class="option-review" id="opt9B"><span class="label">B</span> <span class="jp">サメは、コバンザメによって泳ぎが遅くなるため害を受ける</span><span class="en">The sharks are harmed because the remoras slow down their swimming</span></div>
+        <div class="option-review is-correct" id="opt9C"><span class="label">C</span> <span class="jp">コバンザメはサメに影響を与えずに移動手段と食べ物を得る &#10003;</span><span class="en">The remoras gain transportation and food without affecting the sharks &#10003;</span></div>
+        <div class="option-review" id="opt9D"><span class="label">D</span> <span class="jp">コバンザメは徐々にサメに依存して生存するようになる</span><span class="en">The remoras gradually become dependent on the sharks for survival</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第3段落は片利共生（commensalism）の例としてコバンザメとサメに言及する。「The remoras gain transportation and access to food scraps, but their presence has no measurable effect on the host（コバンザメは移動手段と食べ物のおこぼれを得るが、その存在は宿主に測定可能な影響を与えない）」と明記 = C。<br><br>A は誤り。本文はサメへの「測定可能な影響なし」と述べており、利益も言及されていない。B も誤り。「slow down」については本文に記述なし。D は誤り。「dependent on the sharks for survival（生存のためにサメに依存）」とは述べていない。</span>
+        <span class="en">Paragraph 3 introduces remora fish and sharks as an example of commensalism. The passage explicitly states: "The remoras gain transportation and access to food scraps, but their presence has no measurable effect on the host" = C.<br><br>A is wrong &mdash; the passage notes no measurable effect on the shark, and no mention of parasite removal. B is wrong &mdash; nothing about slowing down. D introduces "dependent for survival," which is not stated.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "gain transportation and access to food scraps... no measurable effect on the host" &rarr; C: "gain transportation and food without affecting the sharks"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" id="card10">
+      <div class="q-num"><span class="jp">設問 10 — 推論</span><span class="en">Question 10 — Inference</span></div>
+      <div class="q-text"><span class="jp">科学者が片利共生（commensalism）と相利共生（mutualism）の区別をどう見ているか、何が推論できるか。</span><span class="en">What can be inferred about how scientists view the distinction between commensalism and mutualism?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
+        <span class="answer-tag" id="yours10"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt10A"><span class="label">A</span> <span class="jp">二つのカテゴリーを明確に分けられるかについて常に確信があるわけではない &#10003;</span><span class="en">They are not always confident that the two categories can be clearly separated &#10003;</span></div>
+        <div class="option-review" id="opt10B"><span class="label">B</span> <span class="jp">両者は本質的に同じ関係であると考えている</span><span class="en">They consider the two types to be fundamentally the same relationship</span></div>
+        <div class="option-review" id="opt10C"><span class="label">C</span> <span class="jp">海では片利共生のほうが相利共生よりはるかに多いと信じている</span><span class="en">They believe commensalism is far more common than mutualism in oceans</span></div>
+        <div class="option-review" id="opt10D"><span class="label">D</span> <span class="jp">真に一方的な関係は実際には存在しないと結論づけている</span><span class="en">They have concluded that truly one-sided relationships do not actually exist</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第3段落の最後は「Scientists note, however, that the boundary between commensalism and mutualism is not always clear（しかし科学者は、片利共生と相利共生の境界が常に明確とは限らないと指摘する）」と述べる。さらに「even seemingly one-sided relationships may involve subtle benefits that are difficult to detect（一方的に見える関係でも検出困難な微細な利益を含む可能性がある）」と続く。ここから、科学者は区別の明確さに完全な確信を持っていない、と推論できる = A。<br><br>B は誤り。「本質的に同じ」と断定する記述はない。C は誤り。頻度の比較は本文にない。D は強すぎる結論。本文は「may involve subtle benefits」と<strong>可能性</strong>を示唆するだけで、「存在しない」とまでは述べていない。</span>
+        <span class="en">Paragraph 3 ends with "Scientists note, however, that the boundary between commensalism and mutualism is not always clear, since even seemingly one-sided relationships may involve subtle benefits that are difficult to detect." This shows scientists are uncertain about the sharpness of the distinction = A.<br><br>B is wrong &mdash; the passage never claims the categories are identical. C introduces a frequency claim not in the text. D is too strong &mdash; the passage only says one-sided relationships "may" involve subtle benefits, not that they "do not exist."</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "the boundary... is not always clear" &rarr; A: "not always confident that the two categories can be clearly separated"
         </div>
       </div>
     </div>
@@ -336,7 +436,7 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <script>
-var correctAnswers = {'1':'A','2':'B','3':'D','4':'C','5':'B','6':'D'};
+var correctAnswers = {'1':'A','2':'B','3':'D','4':'A','5':'B','6':'C','7':'B','8':'D','9':'C','10':'A'};
 (function(){
   var saved = sessionStorage.getItem('training_academic_p1_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -357,10 +457,18 @@ var correctAnswers = {'1':'A','2':'B','3':'D','4':'C','5':'B','6':'D'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/6';
+  document.getElementById('scoreDisplay').textContent = score+'/10';
 })();
 </script>
 <script src="../../js/auth.js"></script>
+<script>
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
+</script>
 <script defer src="../../js/tm-footer.js"></script>
 </body>
 </html>

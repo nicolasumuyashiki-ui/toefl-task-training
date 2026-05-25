@@ -237,6 +237,14 @@ renderAll();
 </script>
 
 <script>if(typeof __i18n==='undefined'){window.__i18n=function(jp,en){return (localStorage.getItem('tck_lang')||'jp')==='en'?en:jp;};}</script>
+<script>
+(function(){
+  var stored=localStorage.getItem("tck_lang")||"jp";
+  setLang(stored);
+  document.querySelectorAll("[data-lang-btn]").forEach(function(b){b.addEventListener("click",function(){setLang(b.getAttribute("data-lang-btn"));});});
+  function setLang(l){document.body.setAttribute("data-lang",l);document.documentElement.setAttribute("lang",l==="jp"?"ja":"en");localStorage.setItem("tck_lang",l);document.querySelectorAll("[data-lang-btn]").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-lang-btn")===l);});}
+})();
+</script>
 <script defer src="../../js/tm-footer.js"></script>
 </body>
 </html>

@@ -114,8 +114,8 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <div class="score-banner">
-  <div class="score-big" id="scoreDisplay">&ndash;/6</div>
-  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q6)</span><span class="en">Your Score (Q1&ndash;Q6)</span></div>
+  <div class="score-big" id="scoreDisplay">&ndash;/10</div>
+  <div class="score-label"><span class="jp">あなたのスコア (Q1〜Q10)</span><span class="en">Your Score (Q1&ndash;Q10)</span></div>
 </div>
 
 <div class="answers-body">
@@ -151,7 +151,7 @@ body[data-lang="en"] .jp{display:none}
       <div class="tip-card-body">
         When asked "Why does the author mention X?", the answer is usually found in the sentence <strong>immediately before</strong> the mention. The author states a claim, then provides X as an example or evidence.
         <div class="tip-example">
-          <strong>Q4:</strong> The sentence before says "the range of social structures found in primates is remarkably diverse." The mention of marmosets (small groups) and baboons (large hierarchies) illustrates this diversity = A.
+          <strong>Q6:</strong> The sentence before says "the range of social structures found in primates is remarkably diverse." The mention of marmosets (small groups) and baboons (large hierarchies) illustrates this diversity = A.
         </div>
       </div>
     </div>
@@ -237,71 +237,170 @@ body[data-lang="en"] .jp{display:none}
         </div>
       </div>
     </div>
+
+    <!-- Q4 -->
+    <div class="q-card" id="card4">
+      <div class="q-num"><span class="jp">設問 4 — 推論</span><span class="en">Question 4 — Inference</span></div>
+      <div class="q-text"><span class="jp">パッセージから、沿岸地域がより穏やかな気温になりやすい理由について何が推論できるか。</span><span class="en">What can be inferred from the passage about why coastal regions tend to have more moderate temperatures?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
+        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt4A"><span class="label">A</span> <span class="jp">内陸部よりも直射日光をはるかに少なく受けるから</span><span class="en">They receive far less direct sunlight than inland regions do</span></div>
+        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">山脈に守られて極端な天候が遮られているから</span><span class="en">They are sheltered by mountain ranges that block extreme weather</span></div>
+        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">海流が熱帯から暖かい水を絶えず運んでくるから</span><span class="en">Ocean currents continually bring warm water from tropical zones</span></div>
+        <div class="option-review is-correct" id="opt4D"><span class="label">D</span> <span class="jp">蒸発が大きな水域近くの地表から熱を奪うから &#10003;</span><span class="en">Evaporation removes heat from the surface near large water bodies &#10003;</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第3段落に「Regions near large bodies of water tend to experience more moderate temperatures because evaporation absorbs heat from the surface（大きな水域近くの地域は、蒸発が地表から熱を吸収するため、より穏やかな気温を経験する傾向がある）」と明記。「熱を奪う」 → 気温が極端に上がりにくい、と推論できる = D。<br><br>A（日光量）は本文に根拠なし。B（山脈）はパッセージで言及されていない。C（海流が暖水を運ぶ）も本文に記述なし。</span>
+        <span class="en">Paragraph 3 explicitly states that "Regions near large bodies of water tend to experience more moderate temperatures because evaporation absorbs heat from the surface." Heat being absorbed away from the surface explains why coastal temperatures stay moderate = D.<br><br>A (sunlight) is not discussed. B (mountains) is not mentioned. C (warm ocean currents) is also not in the passage.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "evaporation absorbs heat from the surface" &rarr; D: "Evaporation removes heat from the surface"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" id="card5">
+      <div class="q-num"><span class="jp">設問 5 — 事実問題（情報詳細）</span><span class="en">Question 5 — Factual Detail</span></div>
+      <div class="q-text"><span class="jp">パッセージによれば、海洋温度の変化がもたらしうる影響の一つは何か。</span><span class="en">According to the passage, what is one effect that changes in ocean temperatures can have?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
+        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review is-correct" id="opt5A"><span class="label">A</span> <span class="jp">降水パターンが変化し、干ばつや豪雨を引き起こすことがある &#10003;</span><span class="en">They can shift precipitation patterns and cause droughts or heavy rainfall &#10003;</span></div>
+        <div class="option-review" id="opt5B"><span class="label">B</span> <span class="jp">地表に到達する太陽エネルギーの量を減らす</span><span class="en">They reduce the amount of solar energy that reaches the surface</span></div>
+        <div class="option-review" id="opt5C"><span class="label">C</span> <span class="jp">地下の帯水層を溶け込んだ塩で汚染する</span><span class="en">They contaminate underground aquifers with dissolved salts</span></div>
+        <div class="option-review" id="opt5D"><span class="label">D</span> <span class="jp">内陸の湖や川の凍結を早める</span><span class="en">They speed up the freezing of inland lakes and rivers</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第3段落最終文に「changes in ocean temperatures can alter global precipitation patterns, sometimes leading to prolonged droughts or unusually heavy rainfall in certain regions（海洋温度の変化は地球規模の降水パターンを変え、ときに長引く干ばつや異常豪雨を引き起こすことがある）」と明記 = A。<br><br>B（太陽エネルギーを減らす）は本文に記述なし。C（帯水層への塩汚染）は本文と無関係。D（凍結を早める）も本文に記述なし。</span>
+        <span class="en">The last sentence of paragraph 3 explicitly states: "changes in ocean temperatures can alter global precipitation patterns, sometimes leading to prolonged droughts or unusually heavy rainfall in certain regions" = A.<br><br>B, C, and D introduce effects (solar reduction, salt contamination, faster freezing) that are not mentioned anywhere in the passage.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "alter global precipitation patterns... droughts or unusually heavy rainfall" &rarr; A: "shift precipitation patterns and cause droughts or heavy rainfall"
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Passage 2 -->
   <div class="passage-block">
     <div class="passage-title-bar">The Evolution of Social Behavior in Primates <span class="passage-type-badge"><span class="jp">生命科学</span><span class="en">Life Science</span></span></div>
 
-    <!-- Q4 -->
-    <div class="q-card" id="card4">
-      <div class="q-num"><span class="jp">設問 4 — 修辞目的</span><span class="en">Question 4 — Rhetorical Purpose</span></div>
+    <!-- Q6 -->
+    <div class="q-card" id="card6">
+      <div class="q-num"><span class="jp">設問 6 — 修辞目的</span><span class="en">Question 6 — Rhetorical Purpose</span></div>
       <div class="q-text"><span class="jp">なぜ著者は第1段落でマーモセットとヒヒに言及するのか。</span><span class="en">Why does the author mention marmosets and baboons in paragraph 1?</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: A</span><span class="en">Correct: A</span></span>
-        <span class="answer-tag" id="yours4"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review is-correct" id="opt4A"><span class="label">A</span> <span class="jp">霊長類における社会構造の多様性を示すため &#10003;</span><span class="en">To illustrate the diversity of social structures among primates &#10003;</span></div>
-        <div class="option-review" id="opt4B"><span class="label">B</span> <span class="jp">ヒヒがマーモセットより知的だと論じるため</span><span class="en">To argue that baboons are more intelligent than marmosets</span></div>
-        <div class="option-review" id="opt4C"><span class="label">C</span> <span class="jp">マーモセットが野生で絶滅危惧である理由を説明するため</span><span class="en">To explain why marmosets are endangered in the wild</span></div>
-        <div class="option-review" id="opt4D"><span class="label">D</span> <span class="jp">異なる霊長類の食事を比較するため</span><span class="en">To compare the diets of different primate species</span></div>
+        <div class="option-review is-correct" id="opt6A"><span class="label">A</span> <span class="jp">霊長類における社会構造の多様性を示すため &#10003;</span><span class="en">To illustrate the diversity of social structures among primates &#10003;</span></div>
+        <div class="option-review" id="opt6B"><span class="label">B</span> <span class="jp">ヒヒがマーモセットより知的だと論じるため</span><span class="en">To argue that baboons are more intelligent than marmosets</span></div>
+        <div class="option-review" id="opt6C"><span class="label">C</span> <span class="jp">マーモセットが野生で絶滅危惧である理由を説明するため</span><span class="en">To explain why marmosets are endangered in the wild</span></div>
+        <div class="option-review" id="opt6D"><span class="label">D</span> <span class="jp">異なる霊長類の食事を比較するため</span><span class="en">To compare the diets of different primate species</span></div>
       </div>
-      <div class="explanation"><strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
-        <span class="jp">第2段落には「Some of this water flows over the land as surface runoff」「The rest seeps into the ground, replenishing underground aquifers」とある = C。<br><br>A は議論されていない動植物に言及。B は「宇宙へ」というが、パッセージは大気への蒸発しか言及しない。D は「永久に」が極端な限定詞でパッセージに支持されない。</span>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第1段落に「the range of social structures found in primates is remarkably diverse（霊長類に見られる社会構造の幅は注目に値するほど多様）」とあり、その直後にマーモセット（小家族）とヒヒ（大階層社会）が対比例として導入される = A。<br><br>B は知能を持ち出すが第1段落の論点ではない。C の「絶滅危惧」は本文で全く議論されていない。D の「食事」も本文の話題ではない。</span>
         <span class="en">Paragraph 1 states: "the range of social structures found in primates is remarkably diverse" and then mentions marmosets (small family groups) and baboons (large hierarchical communities) as contrasting examples of this diversity = A.<br><br>
         B introduces intelligence, which is not the point of paragraph 1. C mentions endangerment, which is never discussed. D mentions diets, which are not the topic here.</span>
       </div>
     </div>
 
-    <!-- Q5 -->
-    <div class="q-card" id="card5">
-      <div class="q-num"><span class="jp">設問 5 — 文脈語彙</span><span class="en">Question 5 — Vocabulary in Context</span></div>
+    <!-- Q7 -->
+    <div class="q-card" id="card7">
+      <div class="q-num"><span class="jp">設問 7 — 文脈語彙</span><span class="en">Question 7 — Vocabulary in Context</span></div>
       <div class="q-text"><span class="jp">第2段落の「cognitive」に最も近い意味は何か。</span><span class="en">The word "cognitive" in paragraph 2 is closest in meaning to</span></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: C</span><span class="en">Correct: C</span></span>
-        <span class="answer-tag" id="yours5"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours7"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt5A"><span class="label">A</span> <span class="jp">身体的な</span><span class="en">physical</span></div>
-        <div class="option-review" id="opt5B"><span class="label">B</span> <span class="jp">感情的な</span><span class="en">emotional</span></div>
-        <div class="option-review is-correct" id="opt5C"><span class="label">C</span> <span class="jp">精神的な &#10003;</span><span class="en">mental &#10003;</span></div>
-        <div class="option-review" id="opt5D"><span class="label">D</span> <span class="jp">本能的な</span><span class="en">instinctive</span></div>
+        <div class="option-review" id="opt7A"><span class="label">A</span> <span class="jp">身体的な</span><span class="en">physical</span></div>
+        <div class="option-review" id="opt7B"><span class="label">B</span> <span class="jp">感情的な</span><span class="en">emotional</span></div>
+        <div class="option-review is-correct" id="opt7C"><span class="label">C</span> <span class="jp">精神的な &#10003;</span><span class="en">mental &#10003;</span></div>
+        <div class="option-review" id="opt7D"><span class="label">D</span> <span class="jp">本能的な</span><span class="en">instinctive</span></div>
       </div>
-      <div class="explanation"><strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
-        <span class="jp">第1段落は「the range of social structures found in primates is remarkably diverse」と述べ、その後マーモセット（小家族）とヒヒ（大階層社会）を多様性の対比例として挙げる = A。<br><br>B は知能を持ち出すが論点ではない。C は危惧を持ち出すが議論されていない。D は食事に言及するが主題ではない。</span>
+      <div class="explanation">
+        <strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
+        <span class="jp">本文は「recognizing allies and rivals, and navigating complex social hierarchies all require significant cognitive resources（味方と競争相手を認識し、複雑な社会階層をうまくこなすには、十分な認知資源が必要）」と述べ、これを「the neocortex, the part of the brain associated with higher-order thinking（高度な思考に関連する脳の部位である新皮質）」と結びつける。文脈は明らかに「cognitive」を脳ベースの思考プロセスと結びつける = C（mental＝精神的な／頭脳の）。<br><br>A（physical 身体的）は脳ではなく体に関連。B（emotional 感情的）は範囲が狭すぎる。D（instinctive 本能的）は自動的行動を含意するが、本文は意図的で複雑な精神プロセスを描いている。</span>
         <span class="en">The passage says "recognizing allies and rivals, and navigating complex social hierarchies all require significant cognitive resources" and links this to "the neocortex, the part of the brain associated with higher-order thinking." The context clearly associates "cognitive" with brain-based thinking processes = C.<br><br>
         A (physical) relates to the body, not the brain. B (emotional) is too narrow. D (instinctive) implies automatic behavior, but the passage describes deliberate, complex mental processes.</span>
       </div>
     </div>
 
-    <!-- Q6 -->
-    <div class="q-card" id="card6">
-      <div class="q-num"><span class="jp">設問 6 — 文挿入</span><span class="en">Question 6 — Sentence Insertion</span></div>
+    <!-- Q8 -->
+    <div class="q-card" id="card8">
+      <div class="q-num"><span class="jp">設問 8 — 文挿入</span><span class="en">Question 8 — Sentence Insertion</span></div>
       <div class="q-text">Look at the three squares in paragraph 3 that indicate where the following sentence could be added:<br><br><em>"As a result, these larger groups develop complex social hierarchies in which individuals must constantly compete for access to limited food supplies."</em></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
-        <span class="answer-tag" id="yours6"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+        <span class="answer-tag" id="yours8"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
       </div>
       <div style="margin:10px 0">
-        <div class="option-review" id="opt6A"><span class="label">A</span> <span class="jp">文1の後（「…primate social behavior.」の後）</span><span class="en">After sentence 1 (after "...primate social behavior.")</span></div>
-        <div class="option-review is-correct" id="opt6B"><span class="label">B</span> <span class="jp">文2の後（「…better protection against predators.」の後） &#10003;</span><span class="en">After sentence 2 (after "...better protection against predators.") &#10003;</span></div>
-        <div class="option-review" id="opt6C"><span class="label">C</span> <span class="jp">文3の後（「…the pressure to cooperate is reduced.」の後）</span><span class="en">After sentence 3 (after "...the pressure to cooperate is reduced.")</span></div>
+        <div class="option-review" id="opt8A"><span class="label">A</span> <span class="jp">文1の後（「…primate social behavior.」の後）</span><span class="en">After sentence 1 (after "...primate social behavior.")</span></div>
+        <div class="option-review is-correct" id="opt8B"><span class="label">B</span> <span class="jp">文2の後（「…better protection against predators.」の後） &#10003;</span><span class="en">After sentence 2 (after "...better protection against predators.") &#10003;</span></div>
+        <div class="option-review" id="opt8C"><span class="label">C</span> <span class="jp">文3の後（「…the pressure to cooperate is reduced.」の後）</span><span class="en">After sentence 3 (after "...the pressure to cooperate is reduced.")</span></div>
       </div>
-      <div class="explanation"><strong>Discourse marker clue:</strong>
-        <span class="jp">パッセージには「recognizing allies and rivals, and navigating complex social hierarchies all require significant cognitive resources」とあり、これを「the neocortex, the part of the brain associated with higher-order thinking」と関連づける。文脈は明らかに「cognitive」を脳ベースの思考プロセスと結びつける = C。<br><br>A（身体的）は身体に関連、脳ではない。B（感情的）は範囲が狭すぎる。D（本能的）は自動行動を含意するが、パッセージは意図的で複雑な精神プロセスを述べる。</span>
+      <div class="explanation">
+        <strong>Discourse marker clue:</strong>
+        <span class="jp">「As a result」は前の内容の<strong>結果</strong>を示す接続表現。文2は食料が乏しいときに霊長類が<strong>大きな集団</strong>を作ることを説明する。挿入文はその大きな集団の<strong>結果</strong>として複雑な階層と競争が生じることを述べる。「these larger groups（これらの大きな集団）」は文2で言及された大きな集団を直接指す = B。<br><br>A は誤り。文1は一般的な導入で、「larger groups」がまだ言及されていないため「these larger groups」の指示対象がない。C は誤り。文3は資源が豊富な環境での<strong>小さな</strong>集団を論じており、「these larger groups」と矛盾する。</span>
         <span class="en">"As a result" signals a consequence of the preceding idea. Sentence 2 explains that primates form <strong>larger groups</strong> when food is scarce. The insertion sentence describes what happens as a consequence of those larger groups &mdash; they develop complex hierarchies and competition. "These larger groups" directly refers back to the larger groups mentioned in sentence 2 = B.<br><br>
         A is incorrect because sentence 1 is a general introduction; no "larger groups" have been mentioned yet, so "these larger groups" has no referent. C is incorrect because sentence 3 discusses <em>smaller</em> groups in resource-rich environments, making "these larger groups" contradictory.</span>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" id="card9">
+      <div class="q-num"><span class="jp">設問 9 — 事実問題（情報詳細）</span><span class="en">Question 9 — Factual Detail</span></div>
+      <div class="q-text"><span class="jp">パッセージによれば、社会脳仮説（social brain hypothesis）を支持する具体的な発見は何か。</span><span class="en">According to the passage, what specific finding supports the social brain hypothesis?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: D</span><span class="en">Correct: D</span></span>
+        <span class="answer-tag" id="yours9"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt9A"><span class="label">A</span> <span class="jp">単独で生活する霊長類は集団で暮らす霊長類より大きな脳を発達させる</span><span class="en">Primates living alone tend to develop larger brains than those in groups</span></div>
+        <div class="option-review" id="opt9B"><span class="label">B</span> <span class="jp">大きな霊長類の集団は内部の対立で通常分裂する</span><span class="en">Larger primate groups usually split apart because of internal conflict</span></div>
+        <div class="option-review" id="opt9C"><span class="label">C</span> <span class="jp">新皮質は主に高度な道具製作を支えるために進化した</span><span class="en">The neocortex evolved primarily to support advanced tool-making behavior</span></div>
+        <div class="option-review is-correct" id="opt9D"><span class="label">D</span> <span class="jp">平均集団サイズと新皮質サイズの間に強い相関がある &#10003;</span><span class="en">There is a strong correlation between average group size and neocortex size &#10003;</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">解説:</span><span class="en">Explanation:</span></strong>
+        <span class="jp">第2段落に「Studies have shown a strong correlation between the average group size of a primate species and the size of its neocortex（研究は、霊長類種の平均集団サイズと新皮質のサイズの間に強い相関を示してきた）」と明記 = D。<br><br>A は逆方向で本文と矛盾。本文は大きな集団が大きな脳の進化を促したと述べる。B（内部対立で分裂）は議論されていない。C（道具製作）は本文の論点ではなく、本文は「higher-order thinking」とのみ関連づけている。</span>
+        <span class="en">Paragraph 2 explicitly states: "Studies have shown a strong correlation between the average group size of a primate species and the size of its neocortex" = D.<br><br>A is the opposite of what the passage says &mdash; group size drives brain size, not solo living. B (internal conflict splitting groups) is not discussed. C (tool-making) is not the focus; the passage links neocortex only to "higher-order thinking."</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "strong correlation between the average group size... and the size of its neocortex" &rarr; D: "strong correlation between average group size and neocortex size"
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" id="card10">
+      <div class="q-num"><span class="jp">設問 10 — 推論</span><span class="en">Question 10 — Inference</span></div>
+      <div class="q-text"><span class="jp">霊長類が地位の高い個体に不釣り合いに多くの時間を費やして毛づくろいする理由について何が推論できるか。</span><span class="en">What can be inferred about why primates spend disproportionate time grooming higher-ranking individuals?</span></div>
+      <div class="answer-row">
+        <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
+        <span class="answer-tag" id="yours10"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
+      </div>
+      <div style="margin:10px 0">
+        <div class="option-review" id="opt10A"><span class="label">A</span> <span class="jp">地位の高い個体は除去すべき寄生虫を多く抱えている傾向がある</span><span class="en">Higher-ranking individuals tend to carry more parasites that need removal</span></div>
+        <div class="option-review is-correct" id="opt10B"><span class="label">B</span> <span class="jp">地位の低い霊長類が社会的優位を得る手段として毛づくろいを使う &#10003;</span><span class="en">Lower-ranking primates use grooming as a way to gain social advantages &#10003;</span></div>
+        <div class="option-review" id="opt10C"><span class="label">C</span> <span class="jp">衛生の維持は地位の高い霊長類にとってより重要である</span><span class="en">Maintaining hygiene is more critical for primates of higher rank</span></div>
+        <div class="option-review" id="opt10D"><span class="label">D</span> <span class="jp">毛づくろいは霊長類の社会階層のルールによって義務づけられている</span><span class="en">Grooming is required by the rules of the primate social hierarchy</span></div>
+      </div>
+      <div class="explanation">
+        <strong><span class="jp">本文に基づく推論:</span><span class="en">Text-based inference:</span></strong>
+        <span class="jp">第4段落は「primates spend a disproportionate amount of time grooming individuals who hold higher social rank, suggesting that grooming may also serve as a strategic tool for gaining social advantages（霊長類は社会的地位の高い個体に不釣り合いに多くの時間を費やして毛づくろいしており、毛づくろいは社会的優位を得るための戦略的手段としても機能している可能性を示唆している）」と述べる。ここから、毛づくろいを行う側（地位の低い側）が社会的見返りを狙っている、と推論できる = B。<br><br>A（寄生虫が多い）は本文に根拠なし。C（衛生が地位の高い者により重要）も論じられていない。D（階層ルールで義務）は本文より強い断定で支持されない。</span>
+        <span class="en">Paragraph 4 says "primates spend a disproportionate amount of time grooming individuals who hold higher social rank, suggesting that grooming may also serve as a strategic tool for gaining social advantages." The party doing the grooming (the lower-ranked) is presumed to gain those advantages = B.<br><br>A (more parasites on higher-ranked) is not supported. C (hygiene more critical for higher-ranked) is not discussed. D ("required by the rules") is too strong &mdash; the passage uses "may" and "suggesting," not a hard rule.</span>
+        <div class="paraphrase-box">
+          <strong><span class="jp">言い換え:</span><span class="en">Paraphrase:</span></strong> Passage: "may also serve as a strategic tool for gaining social advantages" &rarr; B: "use grooming as a way to gain social advantages"
+        </div>
       </div>
     </div>
   </div>
@@ -330,7 +429,7 @@ body[data-lang="en"] .jp{display:none}
 </div>
 
 <script>
-var correctAnswers = {'1':'A','2':'B','3':'C','4':'A','5':'C','6':'B'};
+var correctAnswers = {'1':'A','2':'B','3':'C','4':'D','5':'A','6':'A','7':'C','8':'B','9':'D','10':'B'};
 (function(){
   var saved = sessionStorage.getItem('training_academic_p2_answers');
   var answers = saved ? JSON.parse(saved) : {};
@@ -351,10 +450,18 @@ var correctAnswers = {'1':'A','2':'B','3':'C','4':'A','5':'C','6':'B'};
       if(w) w.className = 'option-review is-wrong-pick';
     }
   }
-  document.getElementById('scoreDisplay').textContent = score+'/6';
+  document.getElementById('scoreDisplay').textContent = score+'/10';
 })();
 </script>
 <script src="../../js/auth.js"></script>
+<script>
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
+</script>
 <script defer src="../../js/tm-footer.js"></script>
 </body>
 </html>

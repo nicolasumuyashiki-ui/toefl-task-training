@@ -8,7 +8,7 @@ GitHub Pages でデプロイ: nicolasumuyashiki-ui/toefl-task-training
 
 ## ファイル構造
 ```
-reading/ctw/practice-{N}-set-{1,2,3}.html  — Complete the Words（1セット1ファイル）
+reading/ctw/practice-{N}-set-{1,2}.html    — Complete the Words（1セット1ファイル）
 reading/rdl/practice-{N}.html              — Read in Daily Life
 reading/academic/practice-{N}.html         — Read an Academic Passage
 listening/lcr/practice-{N}.html            — Listen and Choose a Response
@@ -32,9 +32,9 @@ speaking/ti/practice-{N}.html              — Take an Interview
 ## 各Practice内の問題数
 | タスク | 問題数/Practice | 備考 |
 |--------|----------------|------|
-| CTW | 2セット×10 blanks | セットごとに別パッセージ。Harder Module ラベルは付けない（ETS 仕様：Harder は section adaptive レベルで、個別 task 単位では指定なし） |
+| CTW | 2セット×10 blanks | Set 1: Module 1/Easier（CEFR B1-B2、接頭辞3-5文字表示）。Set 2: Harder Module（CEFR B2-C1、接頭辞1-3文字表示、HARDERバッジ表示）。セットごとに別パッセージ |
 | RDL | 2パッセージ×計4〜6問 | パッセージあたり 2〜3問。ETS は per-task 件数を固定していないので、4〜6問の幅で OK |
-| Academic Passage | 2問 | 後半1問がHarder Module（プロジェクト内の擬似 Harder 慣習） |
+| Academic Passage | 2パッセージ×5問 = 計10問 | 後半パッセージ（Q6-Q10）が Harder Module（プロジェクト内の擬似 Harder 慣習）。制限時間 25 分 |
 | LCR | 8問 | Q1-2:B1, Q3-5:B1-B2, Q6-8:B2 |
 | Conversation | 2会話×2問 | |
 | Announcement | 2題×2問 | |
@@ -70,13 +70,17 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - **基底 CSS の前提**: `css/common.css` は design tokens + i18n primitive のみ。`.header` `.back-pill` `.user-pill` 等のページ chrome は各 HTML の inline `<style>` で持つこと。
 - **CTW 入力欄スペーシング**: `.sh{margin-right:.22em}` `.word-blank{margin-right:.45em}` を必ず適用（短すぎると「a m■■don't」が「am◆◆don't」と詰まって読みづらい）。
 - **Build a Sentence ピリオド**: 文末の `.` `!` `?` を word bank の最後の piece に含めない（最後の piece が一目で判別できてしまうため）。`fixedEnd` に移動。
+- **lang-toggle handler 欠落（解説・tips ページ）**: `data-lang-btn="jp"` `data-lang-btn="en"` のボタンを top-nav に置く HTML には、対応する click handler の inline JS（`setLang()` 関数 + `body.setAttribute('data-lang', l)` + `localStorage.setItem('tck_lang', l)`）を `</body>` 直前に**必ず**含めること。`progress.js` の handler は練習ページの floating cluster 用で、静的 top-nav ボタンには attach されない。検出grep: `grep -L 'setLang(b.getAttribute' $(grep -l 'data-lang-btn' …)`
+- **練習ページの script 読み込み順**: `<script src="../../js/progress.js">` は inline `<script>` より**前に**置くこと。後ろに置くと inline script 内の `if(window.TCKProgress) TCKProgress.mountExitButton(...)` が undefined チェックに引っかかり、フローティング言語トグル・終了ボタン・再開プロンプトが表示されない。同様に `auth.js` `difficulty-badge.js` も依存される箇所より先に置く（auth.js は DOMContentLoaded 自動初期化があるので致命的ではないが、原則先に置く）。
+- **重複 `id` 属性**: 解説ページで既存問題を renumber する際、新規追加 card と旧 card で `id="card4"` 等が重複しないか確認すること。`grep -o 'id="card[0-9]*"' file | sort -u | wc -l` で件数チェック。
+- **解説の jp/en 内容ズレ**: 既存解説の翻訳作業で `<span class="jp">…</span>` 内に他問の解説テキストが混入する事故が過去発生（practice-1, 2, 3, 4 academic answers の旧 Q4-Q6 で発覚）。renumber や追加時は必ず両言語の内容が同じ設問について述べているか確認。
 
 ## kickstart HW形式への準拠（重要）
 すべてのタスクはTOEFL kickstart HWの形式を踏襲する。参照先: `toefl-kickstart-hw` リポジトリ。
 - **Listening (LCR/Conv/Announce/Talk)**: スタートオーバーレイ→音声再生→1問ずつ表示→タイマー→自動進行→結果画面
 - **Speaking (LR/TI)**: Instructionページ→音声再生→カウントダウンの逐次進行
 - **Writing (Discussion/Email/Sentence)**: Instructionページ→タイマー付きライティング→完了画面
-- **Reading (CTW)**: 1セット1ファイル（`practice-{N}-set-{1,2,3}.html`）、セット間はNext→ファイル遷移
+- **Reading (CTW)**: 1セット1ファイル（`practice-{N}-set-{1,2}.html`）、セット間はNext→ファイル遷移
 - **Reading (Academic/RDL)**: Split layout、1問ずつ表示
 
 ## Build a Sentence 複数正解対応
