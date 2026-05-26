@@ -540,7 +540,7 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
   <div class="chapter-body">
     <p>先週、子どもが書いたライティング答案を「見てくれない?」と言われた。</p>
 
-    <p>TOEFL® の Writing、Academic Discussion というタスクらしい。開いてみると、100語ちょっとの英文。文法は合っているように見える。主張と理由もある。でも、それが TOEFL® の採点基準で良い答案なのか、<em>親の私には判断がつかなかった</em>。</p>
+    <p>TOEFL® テストの Writing、Academic Discussion というタスクらしい。開いてみると、100語ちょっとの英文。文法は合っているように見える。主張と理由もある。でも、それが TOEFL® テストの採点基準で良い答案なのか、<em>親の私には判断がつかなかった</em>。</p>
 
     <p><span class="quote">「内容は分かるけど、これがいい答案かは、私には分からない」</span>そう答えるのが精一杯だった。子どもは「そうだよね」と笑って答案を持って部屋に戻った。別に落ち込んだ様子ではない。ただ、その夜、答案用紙がそのままリビングのテーブルに置かれていて、<em>私は少し遠くからそれを眺めた</em>。</p>
 
@@ -565,7 +565,7 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
   <div class="exercise-inner">
 
     <div class="exercise-intro">
-      <h2>お子様が向き合う、<br>新形式 TOEFL® の実物。</h2>
+      <h2>お子様が向き合う、<br>新形式 TOEFL® テストの実物。</h2>
     </div>
 
     <!-- ===== CTW ===== -->
@@ -574,7 +574,6 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
         <div>
           <div class="exercise-task-name">Complete the Words<span>Reading · CTW · Module 2 (Harder)</span></div>
         </div>
-        <span class="exercise-difficulty"><span class="dot"></span>CEFR B2 – C1</span>
       </div>
 
       <div class="exercise-prompt">
@@ -592,8 +591,8 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
       </p>
 
       <div class="exercise-actions">
-        <button class="btn-check" onclick="checkCTW()">答え合わせ</button>
-        <button class="btn-reset" onclick="resetCTW()">リセット</button>
+        <button class="btn-check" id="ctwCheck">答え合わせ</button>
+        <button class="btn-reset" id="ctwReset">リセット</button>
       </div>
 
       <div class="exercise-feedback" id="ctw-feedback"></div>
@@ -605,7 +604,6 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
         <div>
           <div class="exercise-task-name">Build a Sentence<span>Writing · Advanced (7 blanks)</span></div>
         </div>
-        <span class="exercise-difficulty"><span class="dot"></span>Relative Clause</span>
       </div>
 
       <div class="bas-prompt-speaker">
@@ -627,9 +625,9 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
       </div>
 
       <div class="exercise-actions">
-        <button class="btn-check" onclick="checkBAS()">答え合わせ</button>
-        <button class="btn-reset" onclick="resetBAS()">リセット</button>
-        <button class="btn-reveal" onclick="showBASAnswer()">正解を見る</button>
+        <button class="btn-check" id="basCheck">答え合わせ</button>
+        <button class="btn-reset" id="basReset">リセット</button>
+        <button class="btn-reveal" id="basReveal">正解を見る</button>
       </div>
 
       <div class="exercise-feedback" id="bas-feedback"></div>
@@ -637,7 +635,7 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 
     <p class="exercise-afterword">
       ──名前の印象と、実際の難易度のギャップを感じていただけたでしょうか。<br>
-      新形式 TOEFL® は、<em>ひとつひとつのタスクが小さく、しかし密度が高い</em>。<br>
+      新形式 TOEFL® テストは、<em>ひとつひとつのタスクが小さく、しかし密度が高い</em>。<br>
       だからこそ、タスク別に反復できる環境が要になります。
     </p>
 
@@ -664,7 +662,7 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
         </div>
       </div>
 
-      <p>「Reps」は、反復、繰り返しという意味です。新形式 TOEFL® は、ひとつひとつのタスクが小さく、<em>反復で身につく性質</em>を持っています。その性質に合わせて、全12タスクを、タスク単位で、10セットずつ繰り返し練習できる設計にしました。</p>
+      <p>「Reps」は、反復、繰り返しという意味です。新形式 TOEFL® テストは、ひとつひとつのタスクが小さく、<em>反復で身につく性質</em>を持っています。その性質に合わせて、全12タスクを、タスク単位で、10セットずつ繰り返し練習できる設計にしました。</p>
 
       <p>Writing の添削、Speaking の評価、Reading の時間配分──独学では判断に迷う領域には、必要に応じて個別指導を追加いただけます。月に1度、正解率データをもとに講師と次の学習プランを組み直す無料コンサルティングも含まれます。</p>
 
@@ -686,7 +684,7 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
       <span class="feature-num">01 · Volume</span>
       <h3 class="feature-title">全12タスク × 10セットの、反復演習。</h3>
       <p class="feature-body">
-        新形式 TOEFL® の全タスクを、それぞれ10セット収録。Reading・Listening・Speaking・Writing の、どのタスクでつまずいても、その領域だけを集中的に繰り返せます。
+        新形式 TOEFL® テストの全タスクを、それぞれ10セット収録。Reading・Listening・Speaking・Writing の、どのタスクでつまずいても、その領域だけを集中的に繰り返せます。
       </p>
       <div class="feature-meta">12 Tasks × 10 Sets</div>
     </div>
@@ -859,7 +857,7 @@ body{font-family:var(--font-jp);background:var(--cream);color:var(--ink-900);lin
 
   <div class="faq-list">
     <details class="faq-item">
-      <summary>新形式 TOEFL® の全タスクに対応していますか?<span class="faq-icon">+</span></summary>
+      <summary>新形式 TOEFL® テストの全タスクに対応していますか?<span class="faq-icon">+</span></summary>
       <div class="faq-body">はい。2026年1月以降の新形式 TOEFL iBT® で出題される全12タスク(Reading 3種・Listening 4種・Speaking 2種・Writing 3種)すべてに対応しています。各タスクに10セットずつの演習を用意しています。</div>
     </details>
 
@@ -1206,6 +1204,26 @@ function resetBAS(){
 }
 
 renderBAS();
+
+/* Bind static demo buttons in JS. Some WordPress setups (KSES / security
+   or optimizer plugins) strip inline on* attributes from Custom HTML block
+   content, leaving the buttons inert; binding here keeps them working as
+   long as this script runs. */
+(function () {
+  function bind() {
+    [['ctwCheck', checkCTW], ['ctwReset', resetCTW],
+     ['basCheck', checkBAS], ['basReset', resetBAS],
+     ['basReveal', showBASAnswer]].forEach(function (p) {
+      var el = document.getElementById(p[0]);
+      if (el) el.addEventListener('click', p[1]);
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+})();
 updateBASHasFixed();
 </script>
 <script defer src="js/tm-footer.js"></script>
