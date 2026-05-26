@@ -385,7 +385,7 @@ const TASK_META = {
  *              on every retake)
  * The `attemptCount` is read from localStorage `training_attempts_*`.
  *
- * Predicted Score is derived from `first` only (mirrors TOEFL®'s one-shot
+ * Predicted Score is derived from `first` only (mirrors the TOEFL® test's one-shot
  * nature). Mastery Rate uses `latest`. Both flow through aggregateSection
  * via the `which` arg.
  */
@@ -583,7 +583,7 @@ function render() {
     const tagTxt = s.estimated ? '<span class="jp">推定</span><span class="en">Estimated</span>' : '<span class="jp">換算表準拠</span><span class="en">Official Table</span>';
     // Display: Band score (new scale) is the headline; the legacy /30
     // raw scaled score sits beneath as smaller secondary metadata. This
-    // matches TOEFL®'s 2026 scoring shift to Band as the primary readout.
+    // matches the TOEFL® test's 2026 scoring shift to Band as the primary readout.
     const bandStr = s.scaled !== null ? formatBand(sectionToBand(s.scaled)) : '—';
     return '<div class="skill-card' + (s.estimated?' estimated':'') + '">' +
       '<div class="skill-head"><div class="skill-name">' + s.name + '</div><div class="skill-tag ' + tagCls + '">' + tagTxt + '</div></div>' +

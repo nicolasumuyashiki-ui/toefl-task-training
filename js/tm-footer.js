@@ -25,7 +25,7 @@
       'background:transparent', 'border-top:1px solid rgba(0,0,0,.06)'
     ].join(';');
     el.innerHTML =
-      'TOEFLはETSの登録商標です。このウェブサイトはETSの検討を受けまたはその承認を得たものではありません。'
+      'TOEFLはEducational Testing Service（ETS）の登録商標です。このウェブサイトはETSによって承認または推奨されたものではありません。'
       + '<br>'
       + 'TOEFL is a registered trademark of Educational Testing Service (ETS). This website is not endorsed or approved by ETS.';
     document.body.appendChild(el);
