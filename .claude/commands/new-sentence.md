@@ -7,21 +7,23 @@ Build a Sentence の新しい問題セットを作成してください。
 
 ## 指定
 $ARGUMENTS
-- 例: `16` → 16問で生成
-- 例: `14 travel` → 14問、旅行トピック中心
-- 例: 空 → 18問（デフォルト）、トピックランダム
+- 例: `campus life` → キャンパスライフトピック中心
+- 例: `travel` → 旅行トピック中心
+- 例: 空 → トピックランダム
+- ※ 問題数は ETS 2026 仕様により **10問固定**（引数で変更不可）
 
 ## 出力ファイル
 1. `writing/sentence/practice-{N}.html` — ドラッグ＆ドロップ形式HTML
 2. `writing/sentence/practice-{N}.md` — 問題文＋Answer Key
 
-## Build a Sentence 問題仕様 (v2.0)
+## Build a Sentence 問題仕様 (v3.0 — ETS 2026準拠)
 
 ### 概要
-- 14-18問（指定可能、デフォルト18問）
+- **10問固定**（ETS 2026 仕様 — 変更不可）
 - 会話形式: 相手の発話への返答を並べ替えで作成
 - ドラッグ＆ドロップで単語をBlankに配置
-- 制限時間: 問題数に応じて自動計算（14問=6分〜18問=8分）
+- **制限時間: 7分固定（420秒）**（ETS 2026 仕様）
+- 各問1点、計10点満点
 
 ### 問題形式
 - 固定単語: 文頭または文末に1-2語（最大2語）
@@ -37,19 +39,15 @@ $ARGUMENTS
 | Standard | 6語 | 関係代名詞、不定詞、句動詞、否定構文を含む |
 | Advanced | 7語 | 複雑な文構造（関係節+修飾、接続詞による複文など） |
 
-### 問題数別の難易度目標
-| 問題数 | Basic (5語) | Standard (6語) | Advanced (7語) |
-|--------|------------|----------------|----------------|
-| 14問 | 4問 | 6問 | 4問 |
-| 15問 | 4〜5問 | 6〜7問 | 4問 |
-| 16問 | 4〜5問 | 7問 | 4〜5問 |
-| 17問 | 5問 | 7〜8問 | 4〜5問 |
-| 18問 | 5〜6問 | 7〜8問 | 4〜5問 |
+### 10問の難易度配分目標
+| Basic (5語) | Standard (6語) | Advanced (7語) |
+|------------|----------------|----------------|
+| 3問 | 4問 | 3問 |
 
 ### 段階的配置ルール（必須）
-- Basic問題を**序盤**（Q1〜Q5付近）に配置
-- Standard問題を**中盤**（Q6〜Q13付近）に配置
-- Advanced問題を**後半**（Q14〜Q18付近）に配置
+- Basic問題を**序盤**（Q1〜Q3）に配置
+- Standard問題を**中盤**（Q4〜Q7）に配置
+- Advanced問題を**後半**（Q8〜Q10）に配置
 - 段階的に難しくなる構成にすること
 
 ### 文構造バリエーション（最低要件）
@@ -91,6 +89,7 @@ $ARGUMENTS
 
 ### HTML仕様
 - 既存の practice-1.html の構造を完全に踏襲
+- タイマー: `secondsLeft=420`, `const totalTime=420`、表示 `07:00`、テキスト "7 minutes"
 - ヘッダー: 左「Writing」、右にタイマー＋Finishボタン（赤）
 - Page 0: Instruction（説明＋Startボタン）
 - Question Page: Prompt（吹き出し）＋Answer Area（上）＋Word Bank（下）
@@ -100,11 +99,17 @@ $ARGUMENTS
 - フッター: Check All Answers / Reset All / Show All Answers
 - auth.js連携
 
-### 検証コード（必須実行）v2.0
+### 検証コード（必須実行）v3.0
 ```python
 def verify_build_sentence(problems):
-    """Build a Sentence問題の総合検証（難易度分布・文構造チェック付き）v2.0"""
+    """Build a Sentence問題の総合検証（ETS 2026準拠・10問固定）v3.0"""
     all_passed = True
+
+    # 問題数チェック
+    if len(problems) != 10:
+        print(f"❌ 問題数エラー: {len(problems)}問（10問固定）")
+        all_passed = False
+
     for p in problems:
         errors = []
         if p.get('word_bank') == p['answer']:
@@ -135,12 +140,14 @@ def verify_build_sentence(problems):
             for e in errors: print(f"   ❌ {e}")
             all_passed = False
 
-    # 難易度分布チェック
-    n = len(problems)
+    # 難易度分布チェック（10問: Basic=3, Standard=4, Advanced=3）
     basic = sum(1 for p in problems if len(p['answer']) == 5)
     standard = sum(1 for p in problems if len(p['answer']) == 6)
     advanced = sum(1 for p in problems if len(p['answer']) == 7)
-    print(f"\nDifficulty: Basic={basic}, Standard={standard}, Advanced={advanced}")
+    print(f"\nDifficulty: Basic={basic}/3, Standard={standard}/4, Advanced={advanced}/3")
+    if not (2 <= basic <= 4 and 3 <= standard <= 5 and 2 <= advanced <= 4):
+        print("❌ 難易度分布が目標から外れています")
+        all_passed = False
 
     # 文構造バリエーションチェック
     ans_all = [' '.join(p['answer']) for p in problems]
@@ -153,9 +160,9 @@ def verify_build_sentence(problems):
     for k, v in checks.items():
         print(f"  {'✅' if v >= 1 else '❌'} {k}: {v}")
 
-    # 段階的配置チェック
-    first = problems[:n//3]
-    last = problems[-(n//3):]
+    # 段階的配置チェック（前3問 vs 後3問）
+    first = problems[:3]
+    last = problems[-3:]
     avg_f = sum(len(p['answer']) for p in first) / len(first)
     avg_l = sum(len(p['answer']) for p in last) / len(last)
     print(f"\nProgressive: first_avg={avg_f:.1f}, last_avg={avg_l:.1f} {'✅' if avg_l > avg_f else '❌'}")
@@ -164,6 +171,6 @@ def verify_build_sentence(problems):
 
 ### 作成後
 1. HTML＋MDファイルを作成
-2. 検証コード v2.0 実行（シャッフル、Blank数5-7、難易度分布、文構造バリエーション、段階的配置）
+2. 検証コード v3.0 実行（問題数10問、シャッフル、Blank数5-7、難易度分布、文構造バリエーション、段階的配置）
 3. `docs/topic-history.md` のBuild a Sentenceセクションにトピック追記
 4. 検証サマリー表示
