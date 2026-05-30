@@ -7,54 +7,39 @@ Build a Sentence の新しい問題セットを作成してください。
 
 ## 指定
 $ARGUMENTS
-- 例: `16` → 16問で生成
-- 例: `14 travel` → 14問、旅行トピック中心
-- 例: 空 → 18問（デフォルト）、トピックランダム
+- 例: `travel` → 旅行トピック中心
+- 例: 空 → トピックランダム
+- 問題数は ETS 標準の **10問固定**
 
 ## 出力ファイル
 1. `writing/sentence/practice-{N}.html` — ドラッグ＆ドロップ形式HTML
 2. `writing/sentence/practice-{N}.md` — 問題文＋Answer Key
 
-## Build a Sentence 問題仕様 (v2.0)
+## Build a Sentence 問題仕様 (v3.0 / ETS 2026 準拠)
 
 ### 概要
-- 14-18問（指定可能、デフォルト18問）
+- **10問固定**（ETS 2026 仕様）
 - 会話形式: 相手の発話への返答を並べ替えで作成
 - ドラッグ＆ドロップで単語をBlankに配置
-- 制限時間: 問題数に応じて自動計算（14問=6分〜18問=8分）
+- **制限時間: 7分（420秒）固定**
 
 ### 問題形式
 - 固定単語: 文頭または文末に1-2語（最大2語）
-- **Blank数 = Word Bank単語数 = 5〜7語（厳守）**
-  - 4語以下は禁止（簡単すぎる）
-  - 8語以上は禁止（ドラッグ操作が困難）
+- **Blank数 = Word Bank単語数 = 3〜8語**（文の複雑さに応じて柔軟に設定）
 - Word Bankは正解順からシャッフル必須
 
-### 難易度バランス基準
-| レベル | Blank数 | 文構造の特徴 |
-|--------|---------|-------------|
-| Basic | 5語 | 単純なSVO構造、基本時制 |
-| Standard | 6語 | 関係代名詞、不定詞、句動詞、否定構文を含む |
-| Advanced | 7語 | 複雑な文構造（関係節+修飾、接続詞による複文など） |
+### 難易度バランス基準（10問）
+| レベル | Blank数目安 | 文構造の特徴 | 配置 |
+|--------|------------|-------------|------|
+| Easy | 3〜4語 | 単純なSVO構造、基本時制 | Q1〜Q3（序盤） |
+| Standard | 5〜6語 | 関係代名詞、不定詞、句動詞、否定構文 | Q4〜Q7（中盤） |
+| Hard | 7〜8語 | 複雑な文構造（関係節+修飾、接続詞による複文など） | Q8〜Q10（後半） |
 
-### 問題数別の難易度目標
-| 問題数 | Basic (5語) | Standard (6語) | Advanced (7語) |
-|--------|------------|----------------|----------------|
-| 14問 | 4問 | 6問 | 4問 |
-| 15問 | 4〜5問 | 6〜7問 | 4問 |
-| 16問 | 4〜5問 | 7問 | 4〜5問 |
-| 17問 | 5問 | 7〜8問 | 4〜5問 |
-| 18問 | 5〜6問 | 7〜8問 | 4〜5問 |
-
-### 段階的配置ルール（必須）
-- Basic問題を**序盤**（Q1〜Q5付近）に配置
-- Standard問題を**中盤**（Q6〜Q13付近）に配置
-- Advanced問題を**後半**（Q14〜Q18付近）に配置
-- 段階的に難しくなる構成にすること
+目安配分: Easy 3問 / Standard 4問 / Hard 3問（厳密ではなく目安）
 
 ### 文構造バリエーション（最低要件）
 - 関係代名詞 (who/that/which): **最低1問**
-- 不定詞 (to + verb): **最低2問**
+- 不定詞 (to + verb): **最低1問**
 - 句動詞 (phrasal verb): **最低1問**
 - 否定文 (not): **最低1問**
 - 接続詞 (since/but/and/so/because): **最低1問**
@@ -67,7 +52,7 @@ $ARGUMENTS
     speakerGender: "female", // or "male"
     fixedStart: "文頭固定語（空可）", // 最大2語
     fixedEnd: "文末固定語（空可）",   // 最大2語
-    blanks: ["単語1", "単語2", ...],  // 正解順（5〜7語）
+    blanks: ["単語1", "単語2", ...],  // 正解順（3〜8語）
     answer: ["単語1", "単語2", ...],  // blanksと同じ
     altAnswers: [["別解の順序"]]      // 省略可
 }
@@ -92,7 +77,7 @@ $ARGUMENTS
 ### HTML仕様
 - 既存の practice-1.html の構造を完全に踏襲
 - ヘッダー: 左「Writing」、右にタイマー＋Finishボタン（赤）
-- Page 0: Instruction（説明＋Startボタン）
+- Page 0: Instruction（説明＋Startボタン）、**"7 minutes"** / `secondsLeft=420` / `totalTime=420`
 - Question Page: Prompt（吹き出し）＋Answer Area（上）＋Word Bank（下）
 - Previous/Nextナビゲーション、最終問題でFinish
 - Finishボタン: 確認ポップアップ付き
@@ -100,10 +85,11 @@ $ARGUMENTS
 - フッター: Check All Answers / Reset All / Show All Answers
 - auth.js連携
 
-### 検証コード（必須実行）v2.0
+### 検証コード（必須実行）v3.0
 ```python
 def verify_build_sentence(problems):
-    """Build a Sentence問題の総合検証（難易度分布・文構造チェック付き）v2.0"""
+    """Build a Sentence問題の総合検証（ETS 2026 準拠）v3.0"""
+    assert len(problems) == 10, f"Question count must be 10, got {len(problems)}"
     all_passed = True
     for p in problems:
         errors = []
@@ -112,8 +98,8 @@ def verify_build_sentence(problems):
         if len(p.get('word_bank', [])) != len(p['answer']):
             errors.append("Word Bank count mismatch")
         bc = len(p['answer'])
-        if bc < 5 or bc > 7:
-            errors.append(f"Blank count out of range: {bc} (must be 5-7)")
+        if bc < 3 or bc > 8:
+            errors.append(f"Blank count out of range: {bc} (must be 3-8)")
         parts = []
         if p['fixedStart']: parts.append(p['fixedStart'])
         parts.extend(p['answer'])
@@ -135,12 +121,11 @@ def verify_build_sentence(problems):
             for e in errors: print(f"   ❌ {e}")
             all_passed = False
 
-    # 難易度分布チェック
-    n = len(problems)
-    basic = sum(1 for p in problems if len(p['answer']) == 5)
-    standard = sum(1 for p in problems if len(p['answer']) == 6)
-    advanced = sum(1 for p in problems if len(p['answer']) == 7)
-    print(f"\nDifficulty: Basic={basic}, Standard={standard}, Advanced={advanced}")
+    # 難易度分布（参考）
+    easy = sum(1 for p in problems if len(p['answer']) <= 4)
+    standard = sum(1 for p in problems if 5 <= len(p['answer']) <= 6)
+    hard = sum(1 for p in problems if len(p['answer']) >= 7)
+    print(f"\nDifficulty: Easy(3-4)={easy}, Standard(5-6)={standard}, Hard(7-8)={hard}")
 
     # 文構造バリエーションチェック
     ans_all = [' '.join(p['answer']) for p in problems]
@@ -153,17 +138,15 @@ def verify_build_sentence(problems):
     for k, v in checks.items():
         print(f"  {'✅' if v >= 1 else '❌'} {k}: {v}")
 
-    # 段階的配置チェック
-    first = problems[:n//3]
-    last = problems[-(n//3):]
-    avg_f = sum(len(p['answer']) for p in first) / len(first)
-    avg_l = sum(len(p['answer']) for p in last) / len(last)
-    print(f"\nProgressive: first_avg={avg_f:.1f}, last_avg={avg_l:.1f} {'✅' if avg_l > avg_f else '❌'}")
+    # 段階的配置チェック（前半平均 < 後半平均）
+    avg_f = sum(len(p['answer']) for p in problems[:3]) / 3
+    avg_l = sum(len(p['answer']) for p in problems[-3:]) / 3
+    print(f"\nProgressive: Q1-3 avg={avg_f:.1f}, Q8-10 avg={avg_l:.1f} {'✅' if avg_l > avg_f else '⚠️ check order'}")
     return all_passed
 ```
 
 ### 作成後
 1. HTML＋MDファイルを作成
-2. 検証コード v2.0 実行（シャッフル、Blank数5-7、難易度分布、文構造バリエーション、段階的配置）
+2. 検証コード v3.0 実行（問題数10問、シャッフル、Blank数3-8、文構造バリエーション、段階的配置）
 3. `docs/topic-history.md` のBuild a Sentenceセクションにトピック追記
 4. 検証サマリー表示
