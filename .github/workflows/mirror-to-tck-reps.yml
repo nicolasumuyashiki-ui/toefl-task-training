@@ -1,0 +1,69 @@
+name: Mirror to tck-reps
+
+# Phase 1 of the path migration (旧 /toefl-task-training/ → 新 /tck-reps/).
+# Strategy: keep this repo (toefl-task-training) running untouched for
+# existing users; auto-mirror the same content into the new repo
+# (nicolasumuyashiki-ui/tck-reps), which Pages serves at the new path.
+# Both URLs remain alive indefinitely. See: docs / Phase 0-1 plan.
+#
+# Setup (one-time, in the GitHub UI):
+#   1. Create empty public repo `nicolasumuyashiki-ui/tck-reps`.
+#   2. Generate a Fine-grained Personal Access Token with:
+#        - Repository access: tck-reps (only)
+#        - Permissions: Contents = Read and Write, Metadata = Read
+#   3. In this repo's Settings → Secrets and variables → Actions,
+#      add a Repository secret named MIRROR_TOKEN with that token.
+#   4. Once the first run completes, enable Pages on the new repo:
+#        Settings → Pages → Source = Deploy from a branch → main / (root)
+#        Custom domain inherits from organization config; verify
+#        apps.tckworkshop.co.jp/tck-reps/ serves.
+#
+# Safety:
+#   - This workflow only PUSHES to the mirror; it never reads from or
+#     modifies this source repo's content.
+#   - Force-push is used so the mirror exactly tracks main, including
+#     history rewrites. Manual changes pushed directly to the mirror
+#     WILL be overwritten — treat the mirror as read-only downstream.
+#   - Failing mirror does not affect this repo's deployment (the old
+#     URL keeps serving regardless of mirror health).
+
+on:
+  push:
+    branches: [main]
+  # Manual trigger from the Actions tab, useful for initial sync and
+  # for re-syncing after secret rotation.
+  workflow_dispatch:
+
+# Only one mirror job at a time; cancel any earlier in-flight runs so
+# the most recent main is what ends up on the mirror.
+concurrency:
+  group: mirror-to-tck-reps
+  cancel-in-progress: true
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    # Fail fast: a long-running mirror push hanging would be visible
+    # and recoverable via re-run.
+    timeout-minutes: 15
+    steps:
+      - name: Checkout main with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to mirror repository
+        env:
+          MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${MIRROR_TOKEN}" ]; then
+            echo "::error::MIRROR_TOKEN secret is not set. See header of this workflow for setup."
+            exit 1
+          fi
+          MIRROR_URL="https://x-access-token:${MIRROR_TOKEN}@github.com/nicolasumuyashiki-ui/tck-reps.git"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Force-push main so the mirror exactly tracks this repo.
+          git push --force "${MIRROR_URL}" "HEAD:refs/heads/main"
+          echo "✓ Mirror updated: nicolasumuyashiki-ui/tck-reps@main"
