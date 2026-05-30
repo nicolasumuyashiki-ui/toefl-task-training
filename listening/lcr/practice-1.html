@@ -262,7 +262,7 @@ window.addEventListener('DOMContentLoaded', function(){
     function doStart(){
         document.getElementById('startOverlay').style.display='none';
         started = true;
-        if (!instructionAudio) { loadQuestion(0); return; }
+        if (!instructionAudio) { loadQuestion(0, true); playAudio(questions[0].audio); return; }
         const instAudio = new Audio(instructionAudio);
         instAudio.addEventListener('ended', () => { setTimeout(() => { loadQuestion(0); }, 1500); });
         instAudio.addEventListener('error', () => { loadQuestion(0); });
@@ -284,7 +284,7 @@ window.addEventListener('DOMContentLoaded', function(){
 function startQuiz(){
     document.getElementById('startOverlay').style.display='none';
     started = true;
-    if (!instructionAudio) { loadQuestion(0); return; }
+    if (!instructionAudio) { loadQuestion(0, true); playAudio(questions[0].audio); return; }
     const instAudio = new Audio(instructionAudio);
     instAudio.addEventListener('ended', () => {
         setTimeout(() => { loadQuestion(0); }, 1500);
@@ -296,7 +296,7 @@ function startQuiz(){
 }
 
 /* ===== LOAD QUESTION ===== */
-function loadQuestion(idx){
+function loadQuestion(idx, skipPlay){
     currentQ = idx;
     if(window.TCKDifficulty)TCKDifficulty.setForIndex(idx,[5,6,7]);
     const q = questions[idx];
@@ -320,7 +320,7 @@ function loadQuestion(idx){
         div.onclick = function(){ selectOption(this, c.letter); };
         container.appendChild(div);
     });
-    setTimeout(()=>{ playAudio(q.audio); }, 1500);
+    if (!skipPlay) setTimeout(()=>{ playAudio(q.audio); }, 1500);
 }
 
 /* ===== AUDIO ===== */
