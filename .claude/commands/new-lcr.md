@@ -477,14 +477,28 @@ B2: Q6, Q7, Q8
 ================================================================================
 §7. 過去の問題との重複チェック
 
-以下のトピック/シーンは過去に使用済みなので避けること:
+**使用済みトピック一覧の出典**：`docs/topic-history.md` の「Listen and Choose a Response (LCR)」セクション（Practice 1-10 まで全トピックを記録）。新規セット作成前に必ず参照。
 
-- Set 1: 図書館、バス停、カスタマーサービス、夜の予定、郵便局、電話番号、週末の店、セミナー
-- Set 2: 来学期スケジュール、書店の教科書、プレゼン場所、教授退職、専攻変更、キャンパスシャトル、学生証、カフェテリア
-- Set 3: 卒業式登録、自販機、キャンパス交通手段、プレゼンリハーサル、フォーム入手、美術展、図書館ポリシー変更、試験レビュー
-- Set 4: コンピューターラボ、ジム施設、奨学金締切、ルームメイト騒音、チューターセンター、駐車場建設、グループプロジェクト、奨学金返金
-- Set 5: 教授オフィスアワー、夏のインターンシップ、カフェ閉鎖、オンライン登録、静かな勉強場所、教科書購入、体調不良、追加点数
-- Set 6: Lost and found、化学セクション間違い、Financial aid行列、Intramural sports、Dorm Wi-Fi、Art studio時間変更、Academic advisor助言、Volunteer hours未記録
+【絶対回避ルール — Practice 2-10 リリース後監査の結果】
+
+(1) **Q1 開始フレーズの多様化**
+- 既存：`Excuse me, do you know …` が Q1 で 4回（p2, p3, p7, p8）／`Excuse me, …` 始まりが 6/9 練習。
+- 新規 Q1 は以下から選び、上記パターンを回避：
+  - 直接疑問詞（Where/What/When/How can I …?）
+  - 状況説明（I just realized …、I bought … but …）
+  - 観察共有（Did you hear …、Have you noticed …）
+  - 困りごと表明（I'm having trouble with …、I've been struggling to …）
+
+(2) **使用済みフレーズ（ほぼ完全一致を禁止）**
+- `My roommate keeps playing loud music late at night…`（p2Q3, p9Q2）
+- `I'm (really) struggling with my calculus homework. Is there anywhere on campus I can get help?`（p7Q2, p10Q4）
+- `Excuse me, do you know …` の完全パターン
+
+(3) **集中トピックの回避**
+過去10セットの出現回数：professor 6 / dorm 5 / calculus 3 / shuttle 3 / library 3 / study abroad 3 / parking ticket 2 / roommate 2 / financial aid 2。新規ではこれらを優先的に避ける。
+
+(4) **文構造の分布目標**
+過去10セット全72問：`I/I'm …` 44%・Others 22%・`Did you …` 10%・`Excuse me …` 8%・他 16%。新規セットでは `I/I'm …` < 50%、`Excuse me …` ≤ 1問。
 
 ================================================================================
 §8. 検証チェックリスト
@@ -526,8 +540,12 @@ B2: Q6, Q7, Q8
   - [ ] 少なくとも3種類のアクセントを使用
   - [ ] 男女で画像と声の性別が一致
 
-- [ ] **過去セットとの重複**
-  - [ ] 使用済みトピックと重複していない
+- [ ] **過去セットとの重複（§7 参照）**
+  - [ ] 使用済みトピックと重複していない（`docs/topic-history.md` で確認）
+  - [ ] Q1 が `Excuse me, do you know …` で始まらない
+  - [ ] §7(2) 禁止フレーズ（roommate loud music / calculus struggling 等）と一致しない
+  - [ ] 開始構文の分布：`I/I'm …` < 50% (4問以下)、`Excuse me …` ≤ 1問
+  - [ ] 集中トピック（professor/dorm/calculus/shuttle/library/study abroad/parking/roommate/financial aid）の使用は1セット内で1〜2問まで
 
 ================================================================================
 END OF GUIDE (v2.4.1)
