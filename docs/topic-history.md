@@ -92,6 +92,28 @@
 | 9 | Homecoming concert tickets, noisy roommate / sleep, library card renewal, recommendation letter request, campus shuttle pass, computer lab hours, student health insurance bill, graduation rehearsal change |
 | 10 | Meal plan balance, locked out of dorm, textbook return (highlighted), calculus homework help, financial aid application deadline, study abroad credit transfer, research assistant application / faculty reference, parking ticket dispute |
 
+#### LCR — Practice 11+ 作成時の禁止ルール（Practice 2-10 監査結果より）
+
+**(A) Q1 開始フレーズの多様化**（リリース後に重複が発覚）
+- 「Excuse me, do you know …」が Q1 で **4回**（p2, p3, p7, p8）／「Excuse me, …」が **6/9** 練習で使用済み。
+- Practice 11+ の Q1 は以下の代替構文から選ぶ：
+  - 直接疑問詞（Where/What/When/How can I …? / What's the best way to …?）
+  - 状況説明（I just realized … / I bought … but … / I can't seem to …）
+  - 観察共有（Did you hear … / Have you noticed … / Someone told me …）
+  - 困りごと表明（I'm having trouble with … / I've been struggling to …）
+
+**(B) 使用済みフレーズ（ほぼ完全一致を禁止）**
+- `My roommate keeps playing loud music late at night…`（p2Q3, p9Q2）
+- `I'm (really) struggling with my calculus homework. Is there anywhere on campus I can get help?`（p7Q2, p10Q4）
+- `Excuse me, do you know …`（4回既出）— 新規ではこの完全パターンを避ける
+
+**(C) 集中トピック（極力回避）**
+過去10セットの出現回数：professor 6 / dorm 5 / calculus 3 / shuttle 3 / library 3 / study abroad 3 / parking ticket 2 / roommate 2 / financial aid 2
+
+**(D) 文構造の分布目標**
+過去10セット全72問の分布：`I/I'm …` 44%・Others 22%・`Did you …` 10%・`Excuse me …` 8%・他 16%。
+新規セットでは `I/I'm …` を **50%未満**、`Excuse me …` を **1問以下** に抑える。
+
 ### Listen to a Conversation
 | Practice | Topic 1 | Topic 2 |
 |----------|---------|---------|
