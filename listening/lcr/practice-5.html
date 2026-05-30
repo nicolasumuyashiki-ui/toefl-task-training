@@ -181,6 +181,7 @@ window.addEventListener('DOMContentLoaded', function(){
     function doStart(){
         document.getElementById('startOverlay').style.display='none';
         started = true;
+        if (!instructionAudio) { loadQuestion(0); return; }
         const instAudio = new Audio(instructionAudio);
         instAudio.addEventListener('ended', () => { setTimeout(() => { loadQuestion(0); }, 1500); });
         instAudio.addEventListener('error', () => { loadQuestion(0); });
@@ -202,6 +203,7 @@ window.addEventListener('DOMContentLoaded', function(){
 function startQuiz(){
     document.getElementById('startOverlay').style.display='none';
     started = true;
+    if (!instructionAudio) { loadQuestion(0); return; }
     const instAudio = new Audio(instructionAudio);
     instAudio.addEventListener('ended', () => {
         setTimeout(() => { loadQuestion(0); }, 1500);
