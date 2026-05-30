@@ -325,6 +325,10 @@ function loadQuestion(idx, skipPlay){
 
 /* ===== AUDIO ===== */
 function playAudio(src){
+    // Fallback: derive audio path from currentQ when data lacks q.audio (practice 2+)
+    if (!src && typeof LCR_AUDIO !== 'undefined' && typeof currentQ !== 'undefined') {
+        src = LCR_AUDIO['q' + (currentQ + 1)];
+    }
     if(currentAudio){ currentAudio.pause(); currentAudio=null; }
     document.getElementById('audioIndicator').classList.add('active');
     currentAudio = new Audio(src);
