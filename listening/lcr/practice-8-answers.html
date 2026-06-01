@@ -152,122 +152,82 @@ const QS = [
   {
     q: "Excuse me, do you know how to add money to my printing account?",
     type: "detail",
-    opts: [
-      "Use the kiosk next to the lab.",
-      "The third floor printer needs paper.",
-      "I printed my essay this morning.",
-      "The reading room was just renovated."
-    ],
-    correct: 0,
-    explain: "\u300cDo you know how to\u2026?\u300d\u3068\u3044\u3046\u65b9\u6cd5\u3092\u5c0b\u306d\u308bYes/No\u7591\u554f\u6587\u306b\u5bfe\u3057\u3001(A)\u306f\u5177\u4f53\u7684\u306a\u65b9\u6cd5\uff08kiosk\u3067\u30c1\u30e3\u30fc\u30b8\uff09\u3068\u5834\u6240\uff08lab\u306e\u6a2a\uff09\u3092\u6559\u3048\u3066\u3044\u308b\u3002",
-    hint: "Yes/No\u7591\u554f\u6587\uff08Do you know how to\u2026\uff09 \u2192 \u5177\u4f53\u7684\u306a\u65b9\u6cd5\u306e\u60c5\u5831\u63d0\u4f9b\u304c\u81ea\u7136\u3002(B)\u306f\u30d7\u30ea\u30f3\u30bf\u30fc\u306e\u7d19\u5207\u308c\u306e\u8a71\u3067\u8cea\u554f\u3068\u7121\u95a2\u4fc2\u3001(C)\u306f\u81ea\u5206\u304c\u5370\u5237\u3057\u305f\u8a71\u3067\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3001(D)\u306f\u56f3\u66f8\u9928\u306e\u6539\u88c5\u306e\u8a71\u3067\u5370\u5237\u30a2\u30ab\u30a6\u30f3\u30c8\u3068\u306f\u5b8c\u5168\u306b\u7121\u95a2\u4fc2\u3002",
-    explain_en: "To the Yes/No question 'Do you know how to...?', (A) gives a concrete method (kiosk to add money) and a location (next to the lab).",
-    hint_en: "Yes/No (Do you know how to...?) \u2192 concrete method information is natural. (B) is about the printer being out of paper (unrelated); (C) is what the speaker printed (not an answer); (D) is library renovation (totally unrelated to the print account)."
+    opts: ["The reading room was just renovated.", "The third floor printer needs paper.", "I printed my essay this morning.", "Use the kiosk next to the lab."],
+    correct: 3,
+    explain: "\u300cDo you know how to\u2026?\u300d\u3068\u3044\u3046\u65b9\u6cd5\u3092\u5c0b\u306d\u308bYes/No\u7591\u554f\u6587\u306b\u5bfe\u3057\u3001(D)\u306f\u5177\u4f53\u7684\u306a\u65b9\u6cd5\uff08kiosk\u3067\u30c1\u30e3\u30fc\u30b8\uff09\u3068\u5834\u6240\uff08lab\u306e\u6a2a\uff09\u3092\u6559\u3048\u3066\u3044\u308b\u3002",
+    hint: "Yes/No\u7591\u554f\u6587\uff08Do you know how to\u2026\uff09 \u2192 \u5177\u4f53\u7684\u306a\u65b9\u6cd5\u306e\u60c5\u5831\u63d0\u4f9b\u304c\u81ea\u7136\u3002(B)\u306f\u30d7\u30ea\u30f3\u30bf\u30fc\u306e\u7d19\u5207\u308c\u306e\u8a71\u3067\u8cea\u554f\u3068\u7121\u95a2\u4fc2\u3001(C)\u306f\u81ea\u5206\u304c\u5370\u5237\u3057\u305f\u8a71\u3067\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3001(A)\u306f\u56f3\u66f8\u9928\u306e\u6539\u88c5\u306e\u8a71\u3067\u5370\u5237\u30a2\u30ab\u30a6\u30f3\u30c8\u3068\u306f\u5b8c\u5168\u306b\u7121\u95a2\u4fc2\u3002",
+    explain_en: "To the Yes/No question 'Do you know how to...?', (D) gives a concrete method (kiosk to add money) and a location (next to the lab).",
+    hint_en: "Yes/No (Do you know how to...?) \u2192 concrete method information is natural. (B) is about the printer being out of paper (unrelated); (C) is what the speaker printed (not an answer); (A) is library renovation (totally unrelated to the print account)."
   },
   {
     q: "Have you submitted your study abroad application yet? The deadline is this Friday.",
     type: "detail",
-    opts: [
-      "I studied abroad in high school.",
-      "Not yet. I still need a letter.",
-      "The abroad office is on floor two.",
-      "Friday is the last day before break."
-    ],
-    correct: 1,
-    explain: "\u300cHave you submitted\u2026yet?\u300d\u3068\u3044\u3046\u63d0\u51fa\u72b6\u6cc1\u306e\u78ba\u8a8d\u306b\u5bfe\u3057\u3001(B)\u306f\u300c\u307e\u3060\u300d\u3068\u7b54\u3048\u3001\u5177\u4f53\u7684\u306a\u7406\u7531\uff08\u63a8\u85a6\u72b6\u304c\u5fc5\u8981\uff09\u3092\u8ff0\u3079\u3066\u4f1a\u8a71\u304c\u524d\u306b\u9032\u3080\u3002",
-    hint: "Yes/No\u7591\u554f\u6587\uff08Have you\u2026yet?\uff09 \u2192 \u5b8c\u4e86\u72b6\u6cc1\u3092\u7b54\u3048\u308b\u306e\u304c\u81ea\u7136\u3002(A)\u306f\u904e\u53bb\u306e\u7559\u5b66\u7d4c\u9a13\u306e\u8a71\u3067\u73fe\u5728\u306e\u7533\u8acb\u306b\u3064\u3044\u3066\u7b54\u3048\u3066\u3044\u306a\u3044\u3001(C)\u306f\u30aa\u30d5\u30a3\u30b9\u306e\u5834\u6240\u60c5\u5831\u3067\u63d0\u51fa\u72b6\u6cc1\u3078\u306e\u8fd4\u7b54\u3067\u306f\u306a\u3044\u3001(D)\u306f\u91d1\u66dc\u65e5\u304c\u6388\u696d\u6700\u7d42\u65e5\u3068\u3044\u3046\u8a71\u984c\u306b\u8131\u7dda\u3002",
-    explain_en: "To 'Have you submitted...yet?', (B) answers 'not yet' with a concrete reason (still waiting on a recommendation letter).",
-    hint_en: "Yes/No (Have you...yet?) \u2192 state your status is natural. (A) is past study-abroad experience (doesn't address the current application); (C) is office location (not a status reply); (D) drifts to 'Friday is the last class day'."
+    opts: ["I studied abroad in high school.", "The abroad office is on floor two.", "Not yet. I still need a letter.", "Friday is the last day before break."],
+    correct: 2,
+    explain: "\u300cHave you submitted\u2026yet?\u300d\u3068\u3044\u3046\u63d0\u51fa\u72b6\u6cc1\u306e\u78ba\u8a8d\u306b\u5bfe\u3057\u3001(C)\u306f\u300c\u307e\u3060\u300d\u3068\u7b54\u3048\u3001\u5177\u4f53\u7684\u306a\u7406\u7531\uff08\u63a8\u85a6\u72b6\u304c\u5fc5\u8981\uff09\u3092\u8ff0\u3079\u3066\u4f1a\u8a71\u304c\u524d\u306b\u9032\u3080\u3002",
+    hint: "Yes/No\u7591\u554f\u6587\uff08Have you\u2026yet?\uff09 \u2192 \u5b8c\u4e86\u72b6\u6cc1\u3092\u7b54\u3048\u308b\u306e\u304c\u81ea\u7136\u3002(A)\u306f\u904e\u53bb\u306e\u7559\u5b66\u7d4c\u9a13\u306e\u8a71\u3067\u73fe\u5728\u306e\u7533\u8acb\u306b\u3064\u3044\u3066\u7b54\u3048\u3066\u3044\u306a\u3044\u3001(B)\u306f\u30aa\u30d5\u30a3\u30b9\u306e\u5834\u6240\u60c5\u5831\u3067\u63d0\u51fa\u72b6\u6cc1\u3078\u306e\u8fd4\u7b54\u3067\u306f\u306a\u3044\u3001(D)\u306f\u91d1\u66dc\u65e5\u304c\u6388\u696d\u6700\u7d42\u65e5\u3068\u3044\u3046\u8a71\u984c\u306b\u8131\u7dda\u3002",
+    explain_en: "To 'Have you submitted...yet?', (C) answers 'not yet' with a concrete reason (still waiting on a recommendation letter).",
+    hint_en: "Yes/No (Have you...yet?) \u2192 state your status is natural. (A) is past study-abroad experience (doesn't address the current application); (B) is office location (not a status reply); (D) drifts to 'Friday is the last class day'."
   },
   {
     q: "All three washing machines in the dorm are broken again. I have no clean clothes left.",
     type: "inference",
-    opts: [
-      "The dorm cafeteria has a new menu.",
-      "The common room is really nice.",
-      "We should try the Oak Street laundromat.",
-      "Washing machines use a lot of water."
-    ],
-    correct: 2,
-    explain: "\u300c\u6d17\u6fef\u6a5f\u304c\u307e\u305f\u58ca\u308c\u305f\u3001\u304d\u308c\u3044\u306a\u670d\u304c\u306a\u3044\u300d\u3068\u3044\u3046\u4e0d\u6e80\u30fb\u56f0\u308a\u3054\u3068\u306b\u5bfe\u3057\u3001(C)\u306f\u4ee3\u66ff\u6848\uff08Oak Street\u306e\u30b3\u30a4\u30f3\u30e9\u30f3\u30c9\u30ea\u30fc\uff09\u3092\u63d0\u793a\u3057\u3066\u3044\u308b\u3002",
-    hint: "\u4e0d\u6e80\u30fb\u56f0\u308a\u3054\u3068\u306e\u8868\u660e \u2192 \u89e3\u6c7a\u7b56\u306e\u63d0\u6848\u304c\u81ea\u7136\u3002(A)\u306f\u5bae\u306e\u98df\u5802\u306e\u30e1\u30cb\u30e5\u30fc\u306e\u8a71\u3067\u6d17\u6fef\u6a5f\u306e\u554f\u984c\u3068\u306f\u5b8c\u5168\u306b\u7121\u95a2\u4fc2\u3001(B)\u306f\u5bae\u306e\u8a2d\u5099\u7d39\u4ecb\u3067\u8a71\u984c\u304c\u305a\u308c\u3066\u3044\u308b\u3001(D)\u306f\u6d17\u6fef\u6a5f\u306e\u4e00\u822c\u8ad6\u3067\u89e3\u6c7a\u7b56\u304c\u306a\u3044\u3002",
-    explain_en: "To 'all the washing machines are broken', (C) gives an alternative (laundromat on Oak Street) \u2014 practical problem-solving.",
-    hint_en: "Complaint/trouble \u2192 suggesting a fix is natural. (A) is the dorm cafeteria's menu (totally unrelated to washing machines); (B) introduces dorm facilities (drift); (D) is generic washing-machine talk (no fix)."
+    opts: ["We should try the Oak Street laundromat.", "The common room is really nice.", "The dorm cafeteria has a new menu.", "Washing machines use a lot of water."],
+    correct: 0,
+    explain: "\u300c\u6d17\u6fef\u6a5f\u304c\u307e\u305f\u58ca\u308c\u305f\u3001\u304d\u308c\u3044\u306a\u670d\u304c\u306a\u3044\u300d\u3068\u3044\u3046\u4e0d\u6e80\u30fb\u56f0\u308a\u3054\u3068\u306b\u5bfe\u3057\u3001(A)\u306f\u4ee3\u66ff\u6848\uff08Oak Street\u306e\u30b3\u30a4\u30f3\u30e9\u30f3\u30c9\u30ea\u30fc\uff09\u3092\u63d0\u793a\u3057\u3066\u3044\u308b\u3002",
+    hint: "\u4e0d\u6e80\u30fb\u56f0\u308a\u3054\u3068\u306e\u8868\u660e \u2192 \u89e3\u6c7a\u7b56\u306e\u63d0\u6848\u304c\u81ea\u7136\u3002(C)\u306f\u5bae\u306e\u98df\u5802\u306e\u30e1\u30cb\u30e5\u30fc\u306e\u8a71\u3067\u6d17\u6fef\u6a5f\u306e\u554f\u984c\u3068\u306f\u5b8c\u5168\u306b\u7121\u95a2\u4fc2\u3001(B)\u306f\u5bae\u306e\u8a2d\u5099\u7d39\u4ecb\u3067\u8a71\u984c\u304c\u305a\u308c\u3066\u3044\u308b\u3001(D)\u306f\u6d17\u6fef\u6a5f\u306e\u4e00\u822c\u8ad6\u3067\u89e3\u6c7a\u7b56\u304c\u306a\u3044\u3002",
+    explain_en: "To 'all the washing machines are broken', (A) gives an alternative (laundromat on Oak Street) \u2014 practical problem-solving.",
+    hint_en: "Complaint/trouble \u2192 suggesting a fix is natural. (C) is the dorm cafeteria's menu (totally unrelated to washing machines); (B) introduces dorm facilities (drift); (D) is generic washing-machine talk (no fix)."
   },
   {
     q: "Could you tell me where Professor Kim\u2019s office is? I need to drop off my assignment.",
     type: "detail",
-    opts: [
-      "She teaches organic chemistry.",
-      "I already submitted my assignment.",
-      "The assignment deadline is Friday.",
-      "Room 314 in the Science Building."
-    ],
-    correct: 3,
-    explain: "\u300cCould you tell me where\u2026?\u300d\u3068\u3044\u3046\u5834\u6240\u3092\u5c0b\u306d\u308b\u4f9d\u983c\u306b\u5bfe\u3057\u3001(D)\u306f\u5177\u4f53\u7684\u306a\u5834\u6240\uff08Science Building, room 314\uff09\u3092\u6559\u3048\u3066\u3044\u308b\u3002",
-    hint: "\u4f9d\u983c\uff08Could you tell me where\u2026\uff09 \u2192 \u5177\u4f53\u7684\u306a\u5834\u6240\u60c5\u5831\u306e\u63d0\u4f9b\u304c\u81ea\u7136\u3002(A)\u306f\u6559\u6388\u306e\u62c5\u5f53\u79d1\u76ee\u306e\u8a71\u3067\u5834\u6240\u3092\u805e\u3044\u3066\u3044\u308b\u306e\u306b\u305a\u308c\u3066\u3044\u308b\u3001(B)\u306f\u81ea\u5206\u306e\u63d0\u51fa\u72b6\u6cc1\u306e\u8a71\u3067\u4f9d\u983c\u3078\u306e\u8fd4\u7b54\u3067\u306f\u306a\u3044\u3001(C)\u306f\u7de0\u5207\u306e\u8a71\u3067\u5834\u6240\u306e\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3002",
-    explain_en: "To 'Could you tell me where...?', (D) gives a precise location (Science Building, room 314).",
-    hint_en: "Request (Could you tell me where...?) \u2192 concrete location info is natural. (A) is the professor's courses (not a location); (B) is the speaker's submission status; (C) is about the deadline (not a location)."
+    opts: ["She teaches organic chemistry.", "Room 314 in the Science Building.", "The assignment deadline is Friday.", "I already submitted my assignment."],
+    correct: 1,
+    explain: "\u300cCould you tell me where\u2026?\u300d\u3068\u3044\u3046\u5834\u6240\u3092\u5c0b\u306d\u308b\u4f9d\u983c\u306b\u5bfe\u3057\u3001(B)\u306f\u5177\u4f53\u7684\u306a\u5834\u6240\uff08Science Building, room 314\uff09\u3092\u6559\u3048\u3066\u3044\u308b\u3002",
+    hint: "\u4f9d\u983c\uff08Could you tell me where\u2026\uff09 \u2192 \u5177\u4f53\u7684\u306a\u5834\u6240\u60c5\u5831\u306e\u63d0\u4f9b\u304c\u81ea\u7136\u3002(A)\u306f\u6559\u6388\u306e\u62c5\u5f53\u79d1\u76ee\u306e\u8a71\u3067\u5834\u6240\u3092\u805e\u3044\u3066\u3044\u308b\u306e\u306b\u305a\u308c\u3066\u3044\u308b\u3001(D)\u306f\u81ea\u5206\u306e\u63d0\u51fa\u72b6\u6cc1\u306e\u8a71\u3067\u4f9d\u983c\u3078\u306e\u8fd4\u7b54\u3067\u306f\u306a\u3044\u3001(C)\u306f\u7de0\u5207\u306e\u8a71\u3067\u5834\u6240\u306e\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3002",
+    explain_en: "To 'Could you tell me where...?', (B) gives a precise location (Science Building, room 314).",
+    hint_en: "Request (Could you tell me where...?) \u2192 concrete location info is natural. (A) is the professor's courses (not a location); (D) is the speaker's submission status; (C) is about the deadline (not a location)."
   },
   {
     q: "I\u2019m a transfer student and I keep getting lost on campus. Is there a map I can use?",
     type: "detail",
-    opts: [
-      "Download the campus map app for routes.",
-      "Transfer students need to attend orientation.",
-      "This campus is bigger than my last.",
-      "I transferred from a community college."
-    ],
-    correct: 0,
-    explain: "\u300cIs there a map\u2026?\u300d\u3068\u3044\u3046\u30de\u30c3\u30d7\u306e\u6709\u7121\u3092\u78ba\u8a8d\u3059\u308bYes/No\u7591\u554f\u6587\u306b\u5bfe\u3057\u3001(A)\u306f\u5177\u4f53\u7684\u306a\u89e3\u6c7a\u7b56\uff08\u30a2\u30d7\u30ea\uff09\u3092\u63d0\u4f9b\u3057\u3066\u3044\u308b\u3002",
-    hint: "Yes/No\u7591\u554f\u6587\uff08Is there\u2026\uff09 \u2192 \u5177\u4f53\u7684\u306a\u89e3\u6c7a\u7b56\u306e\u63d0\u793a\u304c\u81ea\u7136\u3002(B)\u306f\u30aa\u30ea\u30a8\u30f3\u30c6\u30fc\u30b7\u30e7\u30f3\u306e\u8a71\u3067\u5730\u56f3\u306e\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3001(C)\u306f\u30ad\u30e3\u30f3\u30d1\u30b9\u306e\u5927\u304d\u3055\u306e\u611f\u60f3\u3067\u89e3\u6c7a\u7b56\u304c\u306a\u3044\u3001(D)\u306f\u81ea\u5206\u306e\u7de8\u5165\u7d4c\u9a13\u306e\u8a71\u3067\u76f8\u624b\u306e\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3002",
-    explain_en: "To 'Is there a map...?', (A) offers a concrete solution (a campus app).",
-    hint_en: "Yes/No (Is there...?) \u2192 presenting a concrete fix is natural. (B) is about orientation (not the map); (C) is impressions of campus size (no fix); (D) is the speaker's transfer experience."
+    opts: ["Transfer students need to attend orientation.", "Download the campus map app for routes.", "This campus is bigger than my last.", "I transferred from a community college."],
+    correct: 1,
+    explain: "\u300cIs there a map\u2026?\u300d\u3068\u3044\u3046\u30de\u30c3\u30d7\u306e\u6709\u7121\u3092\u78ba\u8a8d\u3059\u308bYes/No\u7591\u554f\u6587\u306b\u5bfe\u3057\u3001(B)\u306f\u5177\u4f53\u7684\u306a\u89e3\u6c7a\u7b56\uff08\u30a2\u30d7\u30ea\uff09\u3092\u63d0\u4f9b\u3057\u3066\u3044\u308b\u3002",
+    hint: "Yes/No\u7591\u554f\u6587\uff08Is there\u2026\uff09 \u2192 \u5177\u4f53\u7684\u306a\u89e3\u6c7a\u7b56\u306e\u63d0\u793a\u304c\u81ea\u7136\u3002(A)\u306f\u30aa\u30ea\u30a8\u30f3\u30c6\u30fc\u30b7\u30e7\u30f3\u306e\u8a71\u3067\u5730\u56f3\u306e\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3001(C)\u306f\u30ad\u30e3\u30f3\u30d1\u30b9\u306e\u5927\u304d\u3055\u306e\u611f\u60f3\u3067\u89e3\u6c7a\u7b56\u304c\u306a\u3044\u3001(D)\u306f\u81ea\u5206\u306e\u7de8\u5165\u7d4c\u9a13\u306e\u8a71\u3067\u76f8\u624b\u306e\u8cea\u554f\u306b\u7b54\u3048\u3066\u3044\u306a\u3044\u3002",
+    explain_en: "To 'Is there a map...?', (B) offers a concrete solution (a campus app).",
+    hint_en: "Yes/No (Is there...?) \u2192 presenting a concrete fix is natural. (A) is about orientation (not the map); (C) is impressions of campus size (no fix); (D) is the speaker's transfer experience."
   },
   {
     q: "I heard we can get student discounts at the bookstore. Do you know how it works?",
     type: "detail",
-    opts: [
-      "They sell lots of merchandise there.",
-      "Show your student ID at checkout.",
-      "The shuttle comes every thirty minutes.",
-      "Student discounts are uncommon now."
-    ],
-    correct: 1,
-    explain: "\u300cDo you know how it works?\u300d\u3068\u3044\u3046\u4ed5\u7d44\u307f\u3092\u5c0b\u306d\u308b\u8cea\u554f\u306b\u5bfe\u3057\u3001(B)\u306f\u5177\u4f53\u7684\u306a\u624b\u9806\uff08\u5b66\u751fID\u3092\u898b\u305b\u308b\uff09\u3092\u8aac\u660e\u3057\u3066\u3044\u308b\u3002",
-    hint: "Yes/No\u7591\u554f\u6587\uff08Do you know how\u2026\uff09 \u2192 \u5177\u4f53\u7684\u306a\u624b\u9806\u306e\u8aac\u660e\u304c\u81ea\u7136\u3002(A)\u306f\u66f8\u5e97\u306e\u54c1\u63c3\u3048\u306e\u8a71\u3067\u5272\u5f15\u306e\u65b9\u6cd5\u306b\u3064\u3044\u3066\u7b54\u3048\u3066\u3044\u306a\u3044\u3001(C)\u306f\u30b7\u30e3\u30c8\u30eb\u306e\u904b\u884c\u60c5\u5831\u3067\u66f8\u5e97\u306e\u5272\u5f15\u3068\u306f\u5b8c\u5168\u306b\u7121\u95a2\u4fc2\u3001(D)\u306f\u5b66\u751f\u5272\u5f15\u306e\u4e00\u822c\u8ad6\u3067\u5177\u4f53\u7684\u306a\u65b9\u6cd5\u3092\u6559\u3048\u3066\u3044\u306a\u3044\u3002",
-    explain_en: "To 'Do you know how it works?', (B) explains a concrete procedure (show your student ID).",
-    hint_en: "Yes/No (Do you know how...?) \u2192 concrete procedure is natural. (A) is the bookstore's selection (not the discount method); (C) is shuttle schedules (totally unrelated); (D) is generic student-discount talk (no concrete steps)."
+    opts: ["They sell lots of merchandise there.", "Student discounts are uncommon now.", "The shuttle comes every thirty minutes.", "Show your student ID at checkout."],
+    correct: 3,
+    explain: "\u300cDo you know how it works?\u300d\u3068\u3044\u3046\u4ed5\u7d44\u307f\u3092\u5c0b\u306d\u308b\u8cea\u554f\u306b\u5bfe\u3057\u3001(D)\u306f\u5177\u4f53\u7684\u306a\u624b\u9806\uff08\u5b66\u751fID\u3092\u898b\u305b\u308b\uff09\u3092\u8aac\u660e\u3057\u3066\u3044\u308b\u3002",
+    hint: "Yes/No\u7591\u554f\u6587\uff08Do you know how\u2026\uff09 \u2192 \u5177\u4f53\u7684\u306a\u624b\u9806\u306e\u8aac\u660e\u304c\u81ea\u7136\u3002(A)\u306f\u66f8\u5e97\u306e\u54c1\u63c3\u3048\u306e\u8a71\u3067\u5272\u5f15\u306e\u65b9\u6cd5\u306b\u3064\u3044\u3066\u7b54\u3048\u3066\u3044\u306a\u3044\u3001(C)\u306f\u30b7\u30e3\u30c8\u30eb\u306e\u904b\u884c\u60c5\u5831\u3067\u66f8\u5e97\u306e\u5272\u5f15\u3068\u306f\u5b8c\u5168\u306b\u7121\u95a2\u4fc2\u3001(B)\u306f\u5b66\u751f\u5272\u5f15\u306e\u4e00\u822c\u8ad6\u3067\u5177\u4f53\u7684\u306a\u65b9\u6cd5\u3092\u6559\u3048\u3066\u3044\u306a\u3044\u3002",
+    explain_en: "To 'Do you know how it works?', (D) explains a concrete procedure (show your student ID).",
+    hint_en: "Yes/No (Do you know how...?) \u2192 concrete procedure is natural. (A) is the bookstore's selection (not the discount method); (C) is shuttle schedules (totally unrelated); (B) is generic student-discount talk (no concrete steps)."
   },
   {
     q: "Did you see the weather alert? They\u2019re saying there might be a severe thunderstorm tonight.",
     type: "inference",
-    opts: [
-      "The library extended hours for finals.",
-      "The campus gym closes at nine.",
-      "Thanks. I should move my bike inside.",
-      "I rarely check the weather forecast."
-    ],
-    correct: 2,
-    explain: "\u300c\u5929\u6c17\u8b66\u5831\u304c\u51fa\u3066\u3044\u308b\u300d\u3068\u3044\u3046\u60c5\u5831\u5171\u6709\u306b\u5bfe\u3057\u3001(C)\u306f\u611f\u8b1d\uff08Thanks\uff09\uff0b\u5177\u4f53\u7684\u306a\u884c\u52d5\uff08\u81ea\u8ee2\u8eca\u3092\u5c4b\u5185\u306b\u79fb\u3059\uff09\u3092\u8ff0\u3079\u3066\u4f1a\u8a71\u304c\u81ea\u7136\u306b\u9032\u3080\u3002",
-    hint: "\u60c5\u5831\u5171\u6709 \u2192 \u611f\u8b1d\uff0b\u5177\u4f53\u7684\u306a\u884c\u52d5\u304c\u81ea\u7136\u3002(A)\u306f\u56f3\u66f8\u9928\u306e\u6642\u9593\u5ef6\u9577\u306e\u8a71\u3067\u5929\u6c17\u8b66\u5831\u3068\u306f\u5b8c\u5168\u306b\u7121\u95a2\u4fc2\u3001(B)\u306f\u30b8\u30e0\u306e\u55b6\u696d\u6642\u9593\u306e\u8a71\u3067\u96f7\u96e8\u306e\u8b66\u5831\u3068\u306f\u5b8c\u5168\u306b\u7121\u95a2\u4fc2\u3001(D)\u306f\u5929\u6c17\u4e88\u5831\u3092\u78ba\u8a8d\u3057\u306a\u3044\u7fd2\u6163\u306e\u8a71\u3067\u4f1a\u8a71\u304c\u6b62\u307e\u308b\u3002",
-    explain_en: "To a weather alert share, (C) thanks the speaker and adds a concrete action (move the bike inside) \u2014 natural follow-up.",
-    hint_en: "Information sharing \u2192 thanks + concrete action is natural. (A) is about extended library hours (totally unrelated to the alert); (B) is gym hours (totally unrelated to a thunderstorm); (D) is a habit of not checking weather (ends the talk)."
+    opts: ["Thanks. I should move my bike inside.", "The campus gym closes at nine.", "The library extended hours for finals.", "I rarely check the weather forecast."],
+    correct: 0,
+    explain: "\u300c\u5929\u6c17\u8b66\u5831\u304c\u51fa\u3066\u3044\u308b\u300d\u3068\u3044\u3046\u60c5\u5831\u5171\u6709\u306b\u5bfe\u3057\u3001(A)\u306f\u611f\u8b1d\uff08Thanks\uff09\uff0b\u5177\u4f53\u7684\u306a\u884c\u52d5\uff08\u81ea\u8ee2\u8eca\u3092\u5c4b\u5185\u306b\u79fb\u3059\uff09\u3092\u8ff0\u3079\u3066\u4f1a\u8a71\u304c\u81ea\u7136\u306b\u9032\u3080\u3002",
+    hint: "\u60c5\u5831\u5171\u6709 \u2192 \u611f\u8b1d\uff0b\u5177\u4f53\u7684\u306a\u884c\u52d5\u304c\u81ea\u7136\u3002(C)\u306f\u56f3\u66f8\u9928\u306e\u6642\u9593\u5ef6\u9577\u306e\u8a71\u3067\u5929\u6c17\u8b66\u5831\u3068\u306f\u5b8c\u5168\u306b\u7121\u95a2\u4fc2\u3001(B)\u306f\u30b8\u30e0\u306e\u55b6\u696d\u6642\u9593\u306e\u8a71\u3067\u96f7\u96e8\u306e\u8b66\u5831\u3068\u306f\u5b8c\u5168\u306b\u7121\u95a2\u4fc2\u3001(D)\u306f\u5929\u6c17\u4e88\u5831\u3092\u78ba\u8a8d\u3057\u306a\u3044\u7fd2\u6163\u306e\u8a71\u3067\u4f1a\u8a71\u304c\u6b62\u307e\u308b\u3002",
+    explain_en: "To a weather alert share, (A) thanks the speaker and adds a concrete action (move the bike inside) \u2014 natural follow-up.",
+    hint_en: "Information sharing \u2192 thanks + concrete action is natural. (C) is about extended library hours (totally unrelated to the alert); (B) is gym hours (totally unrelated to a thunderstorm); (D) is a habit of not checking weather (ends the talk)."
   },
   {
     q: "Are you coming to the photography club meeting tomorrow? We\u2019re planning the end-of-year exhibition.",
     type: "inference",
-    opts: [
-      "Photography is a great creative hobby.",
-      "I took great photos last summer.",
-      "The exhibition hall is being renovated.",
-      "I have ideas for the theme."
-    ],
-    correct: 3,
-    explain: "\u300c\u660e\u65e5\u6765\u308b\uff1f\u300d\u3068\u3044\u3046\u8a98\u3044\u306b\u5bfe\u3057\u3001(D)\u306f\u524d\u5411\u304d\u306a\u53c2\u52a0\u610f\u6b32\u3068\u5177\u4f53\u7684\u306a\u8ca2\u732e\uff08\u30c6\u30fc\u30de\u306e\u30a2\u30a4\u30c7\u30a2\uff09\u3092\u793a\u3057\u3001\u4f1a\u8a71\u3092\u767a\u5c55\u3055\u305b\u3066\u3044\u308b\u3002",
-    hint: "\u8a98\u3044 \u2192 \u8cd2\u5426\uff0b\u5177\u4f53\u7684\u306a\u53cd\u5fdc\u304c\u81ea\u7136\u3002(A)\u306f\u5199\u771f\u306e\u4e00\u822c\u8ad6\u3067\u8a98\u3044\u3078\u306e\u8fd4\u7b54\u3067\u306f\u306a\u3044\u3001(B)\u306f\u904e\u53bb\u306e\u65c5\u884c\u5199\u771f\u306e\u8a71\u3067\u660e\u65e5\u306e\u30df\u30fc\u30c6\u30a3\u30f3\u30b0\u306b\u95a2\u4fc2\u306a\u3044\u3001(C)\u306f\u5c55\u793a\u4f1a\u5834\u306e\u5de5\u4e8b\u60c5\u5831\u3067\u8a98\u3044\u3078\u306e\u8fd4\u7b54\u3067\u306f\u306a\u3044\u3002",
-    explain_en: "To the invite 'Are you coming...?', (D) shows positive intent and a concrete contribution (theme ideas), developing the conversation.",
-    hint_en: "Invite \u2192 accept/decline + a concrete reaction is natural. (A) is a generality about photography (not a reply); (B) is past travel photos (not the meeting); (C) is venue construction (not a reply to the invite)."
+    opts: ["Photography is a great creative hobby.", "I took great photos last summer.", "I have ideas for the theme.", "The exhibition hall is being renovated."],
+    correct: 2,
+    explain: "\u300c\u660e\u65e5\u6765\u308b\uff1f\u300d\u3068\u3044\u3046\u8a98\u3044\u306b\u5bfe\u3057\u3001(C)\u306f\u524d\u5411\u304d\u306a\u53c2\u52a0\u610f\u6b32\u3068\u5177\u4f53\u7684\u306a\u8ca2\u732e\uff08\u30c6\u30fc\u30de\u306e\u30a2\u30a4\u30c7\u30a2\uff09\u3092\u793a\u3057\u3001\u4f1a\u8a71\u3092\u767a\u5c55\u3055\u305b\u3066\u3044\u308b\u3002",
+    hint: "\u8a98\u3044 \u2192 \u8cd2\u5426\uff0b\u5177\u4f53\u7684\u306a\u53cd\u5fdc\u304c\u81ea\u7136\u3002(A)\u306f\u5199\u771f\u306e\u4e00\u822c\u8ad6\u3067\u8a98\u3044\u3078\u306e\u8fd4\u7b54\u3067\u306f\u306a\u3044\u3001(B)\u306f\u904e\u53bb\u306e\u65c5\u884c\u5199\u771f\u306e\u8a71\u3067\u660e\u65e5\u306e\u30df\u30fc\u30c6\u30a3\u30f3\u30b0\u306b\u95a2\u4fc2\u306a\u3044\u3001(D)\u306f\u5c55\u793a\u4f1a\u5834\u306e\u5de5\u4e8b\u60c5\u5831\u3067\u8a98\u3044\u3078\u306e\u8fd4\u7b54\u3067\u306f\u306a\u3044\u3002",
+    explain_en: "To the invite 'Are you coming...?', (C) shows positive intent and a concrete contribution (theme ideas), developing the conversation.",
+    hint_en: "Invite \u2192 accept/decline + a concrete reaction is natural. (A) is a generality about photography (not a reply); (B) is past travel photos (not the meeting); (D) is venue construction (not a reply to the invite)."
   }
 ];
 

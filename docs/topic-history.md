@@ -161,7 +161,7 @@
 ### Build a Sentence
 | Practice | Theme |
 |----------|-------|
-| 1 | Campus life conversations (16 questions) |
+| 1 | Campus life conversations |
 | 2 | Campus events & dining (festival, cafeteria, parties) |
 | 3 | Course registration & group work |
 | 4 | Shopping, restaurants & daily errands |
