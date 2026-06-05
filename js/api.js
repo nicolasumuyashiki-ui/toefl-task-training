@@ -117,6 +117,25 @@ var Api = {
       + '&pass=' + encodeURIComponent(p));
   },
 
+  /* Demo (USERS_TRIAL) admin listings — show free-trial signups and
+     their saved answers in admin. Speaking recordings are not in the
+     demo product, so no listTrialRecordings is provided. */
+  listTrialUsers: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=listTrialUsers'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
+  },
+
+  listTrialAttempts: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=listTrialAttempts'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
+  },
+
   listRecordings: function(id, pass) {
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';

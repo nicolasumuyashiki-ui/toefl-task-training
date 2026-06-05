@@ -213,6 +213,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
     <button class="tab" data-panel="progress" type="button">進捗状況</button>
     <button class="tab" data-panel="recordings" type="button">スピーキング</button>
     <button class="tab" data-panel="writing" type="button">ライティング</button>
+    <button class="tab" data-panel="demo" type="button">デモ版 回答一覧</button>
   </nav>
 
   <!-- ========== 一覧 ========== -->
@@ -398,6 +399,48 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
       <div class="karte-user-list" id="writingUserList"></div>
       <div class="karte-detail" id="writingDetail">
         <p style="color:var(--ink-500)">左のリストからユーザーを選択してください。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== デモ版 回答一覧 ==========
+       無料体験版（USERS_TRIAL）の生徒が提出した回答を一覧表示。
+       スピーキングの録音は無料体験では未提供のため対象外。 -->
+  <section class="panel" id="panel-demo">
+    <div class="toolbar">
+      <div class="filter-group">
+        <input type="search" id="searchDemo" class="input" placeholder="氏名・メールで検索…" oninput="renderDemoAttempts()">
+        <select id="filterDemoTask" class="select" onchange="renderDemoAttempts()">
+          <option value="">全タスクタイプ</option>
+        </select>
+      </div>
+      <span class="count-badge"><strong id="demoCount">0</strong> 件</span>
+      <button class="btn btn-primary" onclick="loadDemoAttempts()">
+        <span>⟳</span> 再読み込み
+      </button>
+    </div>
+    <div id="demoStatus" style="padding:8px 0;color:var(--ink-500);font-size:.92em"></div>
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table id="demoTable">
+          <thead>
+            <tr>
+              <th data-sort="timestamp">受験日時</th>
+              <th data-sort="userName">氏名</th>
+              <th data-sort="email">メール</th>
+              <th data-sort="userId">体験ID</th>
+              <th data-sort="task">タスクタイプ</th>
+              <th data-sort="practice">Practice</th>
+              <th data-sort="score">得点率</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="demoBody">
+            <tr><td colspan="8" class="empty" style="text-align:center;padding:24px;color:var(--ink-500)">
+              「デモ版 回答一覧」タブを開くと自動で読み込まれます。
+            </td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -784,6 +827,10 @@ function boot() {
       // Render the writing user list whenever the tab opens (cheap — uses ATTEMPTS in memory).
       if (btn.dataset.panel === 'writing') {
         renderWritingUserList();
+      }
+      // Lazy-load demo (USERS_TRIAL) data the first time the tab is opened.
+      if (btn.dataset.panel === 'demo' && !window.__demoLoaded) {
+        loadDemoAttempts();
       }
     });
   });
@@ -1256,6 +1303,138 @@ function loadRecordings() {
     document.getElementById('recDetail').innerHTML =
       '<p style="color:var(--terracotta)">通信エラー：' + escapeHtml(String(err && err.message || err)) + '</p>';
   });
+}
+
+/* ============================================================
+   Tab: デモ版 回答一覧
+   USERS_TRIAL の体験生が ANSWERS に保存した回答を一覧。
+   GAS 側に listTrialUsers / listTrialAttempts エンドポイントが
+   必要（docs/gas-trial-listing.js を本番に追加・デプロイ）。
+   スピーキング録音は無料体験で未提供のため一覧対象外。
+   ============================================================ */
+window.__demoLoaded = false;
+window.__demoAttempts = [];
+window.__demoUsers = [];
+// Build {taskKey: label} lookup from TASKS once (defined near top of script).
+var TASK_LABEL_MAP = (typeof TASKS !== 'undefined')
+  ? TASKS.reduce(function(m, t){ m[t.key] = t.label; return m; }, {})
+  : {};
+
+function loadDemoAttempts() {
+  var statusEl = document.getElementById('demoStatus');
+  statusEl.textContent = '読み込み中…';
+  Promise.all([
+    Api.listTrialAttempts ? Api.listTrialAttempts() : Promise.resolve({ success:false, error:'api_method_missing' }),
+    Api.listTrialUsers    ? Api.listTrialUsers()    : Promise.resolve({ success:true,  users:[] })
+  ]).then(function(results){
+    var ares = results[0], ures = results[1];
+    if (!ares || !ares.success) {
+      // Most likely: GAS hasn't been redeployed with the new actions yet.
+      var err = (ares && ares.error) || 'unknown';
+      statusEl.innerHTML = '<span style="color:var(--terracotta)">読み込みに失敗：' + escapeHtml(err) +
+        '（GAS に listTrialAttempts エンドポイントが未追加の可能性。docs/gas-trial-listing.js を本番に追加→デプロイしてください）</span>';
+      return;
+    }
+    window.__demoAttempts = ares.attempts || [];
+    window.__demoUsers    = (ures && ures.users) || [];
+    window.__demoLoaded   = true;
+    // Build email lookup so attempt rows can show the trial signup email.
+    window.__demoEmailById = {};
+    window.__demoUsers.forEach(function(u){ window.__demoEmailById[u.userId] = u.email || ''; });
+    // Populate task filter from observed tasks (preserves the order they
+    // appear so admins see the same dropdown ordering as other tabs).
+    var taskSel = document.getElementById('filterDemoTask');
+    var seenTasks = {};
+    var firstOpt = taskSel.querySelector('option[value=""]');
+    taskSel.innerHTML = '';
+    taskSel.appendChild(firstOpt);
+    window.__demoAttempts.forEach(function(a){
+      var t = parseTaskKey(a.set);
+      if (t && !seenTasks[t]) {
+        seenTasks[t] = true;
+        var opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = TASK_LABEL_MAP[t] || t;
+        taskSel.appendChild(opt);
+      }
+    });
+    statusEl.textContent = window.__demoAttempts.length + ' 件 / 体験生 ' + window.__demoUsers.length + ' 人';
+    renderDemoAttempts();
+  }).catch(function(err){
+    statusEl.innerHTML = '<span style="color:var(--terracotta)">通信エラー：' +
+      escapeHtml(String(err && err.message || err)) + '</span>';
+  });
+}
+
+/* Parse "Task PN [Set N]" set-string into the task key used by
+   TASK_FOLDER / TASK_LABELS (e.g. "Academic P2" → "academic"). */
+function parseTaskKey(setStr) {
+  if (!setStr) return '';
+  var label = String(setStr).split(' ')[0];
+  var map = { 'CTW':'ctw','RDL':'rdl','Academic':'academic','LCR':'lcr','Conv':'conv','Announce':'announce',
+              'Talk':'talk','Sentence':'sentence','Email':'email','Discussion':'discussion','LR':'lr','TI':'ti' };
+  return map[label] || '';
+}
+
+function parsePracticeNum(setStr) {
+  var m = String(setStr || '').match(/P(\d+)/);
+  return m ? Number(m[1]) : 0;
+}
+
+function parseSetNum(setStr) {
+  var m = String(setStr || '').match(/Set (\d+)/);
+  return m ? Number(m[1]) : '';
+}
+
+function renderDemoAttempts() {
+  var body = document.getElementById('demoBody');
+  var q = (document.getElementById('searchDemo').value || '').toLowerCase().trim();
+  var fTask = document.getElementById('filterDemoTask').value;
+  var rows = (window.__demoAttempts || []).slice();
+
+  // Filter
+  rows = rows.filter(function(a){
+    var task = parseTaskKey(a.set);
+    if (fTask && task !== fTask) return false;
+    if (q) {
+      var hay = (a.userName + ' ' + (window.__demoEmailById[a.userId] || '') + ' ' + a.userId).toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  });
+
+  // Sort newest first
+  rows.sort(function(a, b){ return (b.timestamp || '').localeCompare(a.timestamp || ''); });
+
+  document.getElementById('demoCount').textContent = rows.length;
+
+  if (rows.length === 0) {
+    body.innerHTML = '<tr><td colspan="8" class="empty" style="text-align:center;padding:24px;color:var(--ink-500)">該当データなし</td></tr>';
+    return;
+  }
+
+  body.innerHTML = rows.slice(0, 500).map(function(a){
+    var task = parseTaskKey(a.set);
+    var practice = parsePracticeNum(a.set);
+    var setNum = parseSetNum(a.set);
+    var email = window.__demoEmailById[a.userId] || '';
+    var scoreText = (a.score === '' || a.score === null || a.score === undefined) ? '—' : String(a.score);
+    var ts = a.timestamp ? new Date(a.timestamp).toLocaleString('ja-JP') : '—';
+    var viewBtn = (task && practice)
+      ? '<button class="link-btn" onclick="viewStudentAnswers(\'' + a.userId + '\',\'' + task + '\',' + practice + ',\'' + setNum + '\')">回答を見る</button>'
+      : '<span class="muted">—</span>';
+    return '<tr>' +
+      '<td class="muted num">' + escapeHtml(ts) + '</td>' +
+      '<td>' + escapeHtml(a.userName || '(無記名)') + '</td>' +
+      '<td class="muted">' + escapeHtml(email) + '</td>' +
+      '<td class="muted">' + escapeHtml(a.userId) + '</td>' +
+      '<td><span class="task-tag">' + escapeHtml(TASK_LABEL_MAP[task] || task || '?') + '</span></td>' +
+      '<td>Practice ' + (practice || '?') + (setNum ? ' Set ' + setNum : '') + '</td>' +
+      '<td class="num">' + escapeHtml(scoreText) + '</td>' +
+      '<td>' + viewBtn + '</td>' +
+      '</tr>';
+  }).join('') +
+    (rows.length > 500 ? '<tr><td colspan="8" class="muted" style="text-align:center;padding:12px">…最初の 500 件を表示</td></tr>' : '');
 }
 
 /* ============================================================
