@@ -119,30 +119,38 @@ var Auth = {
     var page = (location.pathname.split('/').pop() || '').toLowerCase();
     if (this._SUB_EXEMPT_PAGES.indexOf(page) !== -1) return;
 
-    // Cached subscription status (15-min TTL) so we don't hit GAS on
-    // every page load. Cache key includes userId so multiple sessions
-    // on the same browser don't collide.
+    // Cached subscription status (15-min TTL for ACTIVE only) so we don't
+    // hit GAS on every page load. Negative results are intentionally NOT
+    // cached: a just-paid user can be in the window between Stripe checkout
+    // and the SUBSCRIPTIONS row landing in GAS, and a stale "not active"
+    // cache would lock them out for up to 15 min after they've paid.
+    // Cache key includes userId so multiple sessions on the same browser
+    // don't collide.
     var cacheKey = 'tck_sub_status_' + user.userId;
     var cached = null;
     try { cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null'); } catch (e) {}
-    var fresh = cached && (Date.now() - cached.checkedAt) < 15 * 60 * 1000;
-    if (fresh) {
-      if (cached.active) return;       // proven active — let through
-      this._redirectToBilling();
-      return;
-    }
+    // Only trust POSITIVE cache. Old negative entries from earlier
+    // versions are ignored automatically and forced to re-check.
+    var fresh = cached && cached.active === true
+                       && (Date.now() - cached.checkedAt) < 15 * 60 * 1000;
+    if (fresh) return;  // proven active recently — let through
 
-    // No fresh cache → check via Api. Render the page in the meantime;
-    // if the check resolves to "not active", redirect.
+    // No fresh positive cache → check via Api. Render the page in the
+    // meantime; if the check resolves to "not active", redirect.
     var self = this;
     if (typeof Api === 'undefined' || !Api.getSubscription) return; // Api not loaded yet — fail-open
     Api.getSubscription().then(function(res) {
       var active = !!(res && res.success && res.subscription &&
         ['active','trialing'].indexOf(String(res.subscription.status || '').toLowerCase()) !== -1);
-      try {
-        sessionStorage.setItem(cacheKey, JSON.stringify({ active: active, checkedAt: Date.now() }));
-      } catch (e) {}
-      if (!active) self._redirectToBilling();
+      if (active) {
+        // Cache positive result (15-min TTL keeps perf benefit for paid users).
+        try { sessionStorage.setItem(cacheKey, JSON.stringify({ active: true, checkedAt: Date.now() })); } catch (e) {}
+      } else {
+        // Do NOT cache negative result; also clear any stale entry so the
+        // next page load re-checks immediately after a webhook lands.
+        try { sessionStorage.removeItem(cacheKey); } catch (e) {}
+        self._redirectToBilling();
+      }
     }).catch(function(){
       // Network failure — fail-open so we don't lock paying users out.
     });
