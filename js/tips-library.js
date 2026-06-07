@@ -60,8 +60,8 @@ window.TCK_TIPS = {
     {
       "titleJp": "NOT/EXCEPT問題は消去法で",
       "titleEn": "NOT/EXCEPT: Use elimination",
-      "bodyJp": "手順:1. 設問内の NOT/EXCEPT に印をつける2. 各選択肢をパッセージと一つずつ照らし合わせる3. パッセージに書かれている3つの選択肢を消す。残った1つが正解。",
-      "bodyEn": "Steps:1. Circle NOT/EXCEPT in the question2. Check each option against the passage one by one3. Cross out the 3 options that ARE mentioned in the passage. The remaining one is the answer.",
+      "bodyJp": "手順:1. 設問の NOT/EXCEPT を意識する（CBTなので画面に印は付けられないが、頭の中で必ず確認）2. 各選択肢をパッセージと一つずつ照らし合わせる3. パッセージに書かれている3つの選択肢を消去候補にする。残った1つが正解。",
+      "bodyEn": "Steps:1. Note the NOT/EXCEPT in the question (you can't mark the screen — fix it in your head)2. Check each option against the passage one by one3. Rule out the 3 options that ARE mentioned in the passage. The remaining one is the answer.",
       "task": "RDL",
       "taskJp": "RDL"
     },
@@ -108,8 +108,8 @@ window.TCK_TIPS = {
     {
       "titleJp": "NOT/EXCEPT問題は消去法で",
       "titleEn": "NOT/EXCEPT: Use elimination",
-      "bodyJp": "手順: 1. 設問内の NOT/EXCEPT に印をつける 2. 各選択肢をパッセージと一つずつ照らし合わせる 3. パッセージに書かれている3つの選択肢を消す。残った1つが正解。",
-      "bodyEn": "Steps: 1. Circle NOT/EXCEPT in the question 2. Check each option against the passage one by one 3. Cross out the 3 options that ARE mentioned in the passage. The remaining one is the answer.",
+      "bodyJp": "手順: 1. 設問の NOT/EXCEPT を意識する（CBTなので画面に印は付けられないが、頭の中で必ず確認） 2. 各選択肢をパッセージと一つずつ照らし合わせる 3. パッセージに書かれている3つの選択肢を消去候補にする。残った1つが正解。",
+      "bodyEn": "Steps: 1. Note the NOT/EXCEPT in the question (you can't mark the screen — fix it in your head) 2. Check each option against the passage one by one 3. Rule out the 3 options that ARE mentioned in the passage. The remaining one is the answer.",
       "task": "RDL",
       "taskJp": "RDL"
     },
@@ -212,16 +212,16 @@ window.TCK_TIPS = {
     {
       "titleJp": "広告では割引の条件に注意",
       "titleEn": "Advertisements: watch conditions on discounts",
-      "bodyJp": "広告のパッセージには条件が異なる複数のオファー（早期割引、学生割引、会員割引など）が含まれることが多い。設問はオファーを正確な条件と一致させられるかを問う。最初に読むときに各割引の締切や条件に下線を引こう。",
-      "bodyEn": "Ad passages usually include multiple offers with different conditions (early bird, student discount, membership, etc.). Questions often test whether you can match the offer to its exact condition. Underline the deadline or requirement for each discount on your first read.",
+      "bodyJp": "広告のパッセージには条件が異なる複数のオファー（早期割引、学生割引、会員割引など）が含まれることが多い。設問はオファーを正確な条件と一致させられるかを問う。CBTでは画面に書き込めないため、最初に読むときに各割引の締切や条件を頭の中で「ラベル付け」して整理しよう（例：「早期 = 3/15まで」「学生 = ID必須」）。",
+      "bodyEn": "Ad passages usually include multiple offers with different conditions (early bird, student discount, membership, etc.). Questions often test whether you can match the offer to its exact condition. Since you can't annotate the screen on a CBT, mentally label each offer with its deadline or requirement on your first read (e.g., \"early bird = by 3/15\", \"student = ID required\").",
       "task": "RDL",
       "taskJp": "RDL"
     },
     {
       "titleJp": "NOT/EXCEPT問題は記載のあるものを消去する",
       "titleEn": "NOT/EXCEPT: eliminate what is mentioned",
-      "bodyJp": "手順: 1. 設問内の NOT/EXCEPT に印をつける 2. 各選択肢をパッセージと一つずつ照らし合わせる 3. 記載のある3つの選択肢を消去する。残った1つが正解。",
-      "bodyEn": "Steps: 1. Circle NOT/EXCEPT in the question 2. Check each option against the passage one by one 3. Cross out the 3 options that ARE mentioned. The remaining one is the answer.",
+      "bodyJp": "手順: 1. 設問の NOT/EXCEPT を意識する（CBTなので画面に印は付けられないが、頭の中で必ず確認） 2. 各選択肢をパッセージと一つずつ照らし合わせる 3. 記載のある3つの選択肢を消去候補にする。残った1つが正解。",
+      "bodyEn": "Steps: 1. Note the NOT/EXCEPT in the question (you can't mark the screen — fix it in your head) 2. Check each option against the passage one by one 3. Rule out the 3 options that ARE mentioned. The remaining one is the answer.",
       "task": "RDL",
       "taskJp": "RDL"
     },
