@@ -94,7 +94,8 @@ var Api = {
       + '&score=' + encodeURIComponent(score)
       + '&harderCorrect=' + encodeURIComponent(meta.harderCorrect || 0)
       + '&harderTotal=' + encodeURIComponent(meta.harderTotal || 0)
-      + '&attemptNumber=' + encodeURIComponent(meta.attemptNumber || 1);
+      + '&attemptNumber=' + encodeURIComponent(meta.attemptNumber || 1)
+      + '&total=' + encodeURIComponent(meta.total != null ? meta.total : 0);
     return _jsonpRequest(url);
   },
 

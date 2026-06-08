@@ -479,10 +479,10 @@ const TASKS = [
   {key:'rdl', label:'Read in Daily Life', total:5, section:'Reading', autoGraded:true},
   {key:'academic', label:'Academic Passage', total:10, section:'Reading', autoGraded:true},
   {key:'lcr', label:'Listen & Choose', total:8, section:'Listening', autoGraded:true},
-  {key:'conv', label:'Conversation', total:8, section:'Listening', autoGraded:true},
+  {key:'conv', label:'Conversation', total:4, section:'Listening', autoGraded:true},
   {key:'announce', label:'Announcement', total:4, section:'Listening', autoGraded:true},
-  {key:'talk', label:'Academic Talk', total:4, section:'Listening', autoGraded:true},
-  {key:'sentence', label:'Build a Sentence', total:16, section:'Writing', autoGraded:true},
+  {key:'talk', label:'Academic Talk', total:8, section:'Listening', autoGraded:true},
+  {key:'sentence', label:'Build a Sentence', total:10, section:'Writing', autoGraded:true},
   {key:'email', label:'Write an Email', total:null, section:'Writing', autoGraded:false},
   {key:'discussion', label:'Academic Discussion', total:null, section:'Writing', autoGraded:false},
   {key:'lr', label:'Listen & Repeat', total:null, section:'Speaking', autoGraded:false},
@@ -740,7 +740,7 @@ function mapLiveAttempts(rawAttempts, users) {
     const meta = TASKS.find(t => t.key === parsed.task);
     if (!meta) return;
     const u = userIndex[r.userId] || { userName: r.userName || r.userId, displayName: '', email: '' };
-    const total = meta.total;
+    const total = (r.total && parseInt(r.total) > 0) ? parseInt(r.total) : meta.total;
     const score = (total && meta.autoGraded) ? Math.round((r.score / total) * 100) : null;
     out.push({
       userId: r.userId,

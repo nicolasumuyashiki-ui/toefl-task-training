@@ -480,6 +480,7 @@ function navigate(dir){
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
     sessionStorage.setItem('training_score_rdl_p3',JSON.stringify({correct:sc,total:6,harderCorrect:0,harderTotal:0,updatedAt:new Date().toISOString()}));
+    if(typeof Api!=='undefined'&&Api.saveAnswers){try{Api.saveAnswers('RDL P3',ans,sc,{total:6,harderCorrect:0,harderTotal:0,attemptNumber:(window.TCKAttempt?TCKAttempt.count(TCK_TASK,TCK_PRACTICE):0)+1});}catch(e){}}
     if(window.TCKProgress) TCKProgress.clear(TCK_TASK, TCK_PRACTICE);
     window.location.href = 'practice-3-answers.html';
     return;
