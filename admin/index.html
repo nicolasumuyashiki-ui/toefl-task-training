@@ -568,15 +568,23 @@ function predictScoresForUser(userAttempts) {
      If an attempt has answeredCount of 0 (immediate abandonment), it's
      skipped so a tab-close-on-load doesn't tank the prediction. */
   function pickFirstAttempts(items) {
+    // Sort by timestamp ASC so the chronologically earliest attempt wins
+    // dedupe. Fall through updatedAt → timestamp → '' so legacy rows
+    // (no timestamp in the GAS row) don't all collapse to the same key.
     const sorted = items.slice().sort((a, b) => {
-      const ta = a.updatedAt || a.timestamp || '';
-      const tb = b.updatedAt || b.timestamp || '';
+      const ta = a.timestamp || a.updatedAt || '';
+      const tb = b.timestamp || b.updatedAt || '';
       return ta.localeCompare(tb);
     });
     const seen = {};
     const out = [];
     for (const a of sorted) {
-      const key = a.task + '#' + a.practice + '#' + (a.set || '');
+      // CTW saves separate ANSWERS rows for Set 1 and Set 2, with the
+      // Harder Module weight applied only to Set 2 in avgPct. Collapsing
+      // both into a single "ctw#5#" bucket would silently drop Set 2 and
+      // inflate the prediction. Include set in the dedupe key so each
+      // Set is tracked independently.
+      const key = a.task + '#' + a.practice + '#' + (a.set != null ? a.set : '');
       if (seen[key]) continue;
       // Skip 0-answered abandons — surface the next attempt instead.
       if (a.correct === 0 && a.total === 0) continue;
@@ -751,11 +759,15 @@ function mapLiveAttempts(rawAttempts, users) {
       taskLabel: meta.label,
       section: meta.section,
       practice: parsed.practice,
-      correct: meta.autoGraded ? r.score : null,
+      set: parsed.setNum || null,
+      correct: meta.autoGraded ? Number(r.score) || 0 : null,
       total: meta.autoGraded ? total : null,
+      harderCorrect: Number(r.harderCorrect) || 0,
+      harderTotal:   Number(r.harderTotal)   || 0,
       score: score,
       status: meta.autoGraded ? (score === null ? 'inprog' : gradeFor(score)) : 'submitted',
-      updatedAt: r.updatedAt || '',
+      updatedAt: r.updatedAt || r.timestamp || '',
+      timestamp: r.timestamp || '',
       autoGraded: meta.autoGraded,
     });
   });
