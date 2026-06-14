@@ -127,7 +127,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
   <div class="passage-content">
     <p>Along the warm, shallow coastlines of the tropics and subtropics, a remarkable type of forest thrives where almost no other tree could survive. Mangrove forests grow in salty, oxygen-poor mud that floods twice a day with the tides, conditions that would kill most ordinary plants. To survive, mangrove trees have evolved aerial roots that arch above the water like stilts, allowing the tree to breathe through small pores even when the soil is submerged.</p>
     <p>These forests provide a wide range of ecological services that extend far beyond the trees themselves. Mangrove root tangles slow incoming waves and trap sediment, protecting nearby coastlines from erosion and even reducing the impact of tropical storms on inland communities. The same root systems serve as a nursery for many fish species, shrimp, and crabs that hide in the calm shaded water until they grow large enough to move out to open reefs and grassbeds.</p>
-    <p id="insertionParagraph">Despite their value, mangrove forests have been disappearing faster than nearly any other coastal habitat. Large stretches have been cleared to make room for shrimp farms, coastal resorts, and rice paddies, and pollution from upstream cities has weakened many of the trees that remain. Conservation programs are now planting young mangrove seedlings in areas where the original forests were destroyed, but a replanted mangrove may take twenty years before it can offer the same level of protection and habitat as the forest it replaced.</p>
+    <p id="insertionParagraph">Despite their value, mangrove forests have been disappearing faster than nearly any other coastal habitat. Large stretches have been cleared to make room for shrimp farms, coastal resorts, and rice paddies, and pollution from upstream cities has weakened many of the trees that remain. Conservation programs are now planting young mangrove seedlings in areas where the original forests were destroyed, but a replanted mangrove may take twenty years before it can offer the same level of protection and habitat as the forest it replaced. Even where regrowth eventually catches up, the gap of two decades represents a long stretch of weaker coastline.</p>
   </div>
 </div>
 
@@ -289,11 +289,11 @@ function selectOption(el){
 }
 
 /* ===== SENTENCE INSERTION ===== */
-var normalParagraphHTML = 'The researchers proposed that two main psychological processes explain this behavior. The first is diffusion of responsibility, which occurs when people assume someone else will take action. The second is pluralistic ignorance, in which individuals look to others for cues on how to react. If no one appears concerned, each person concludes that the situation is not serious. Together, these processes can prevent even well-meaning people from helping in critical moments.';
+var normalParagraphHTML = 'Despite their value, mangrove forests have been disappearing faster than nearly any other coastal habitat. Large stretches have been cleared to make room for shrimp farms, coastal resorts, and rice paddies, and pollution from upstream cities has weakened many of the trees that remain. Conservation programs are now planting young mangrove seedlings in areas where the original forests were destroyed, but a replanted mangrove may take twenty years before it can offer the same level of protection and habitat as the forest it replaced. Even where regrowth eventually catches up, the gap of two decades represents a long stretch of weaker coastline.';
 
 var insertionParagraphHTML = 'Despite their value, mangrove forests have been disappearing faster than nearly any other coastal habitat. <span class="insert-square" data-insert="A">\u25A0</span> Large stretches have been cleared to make room for shrimp farms, coastal resorts, and rice paddies, and pollution from upstream cities has weakened many of the trees that remain. <span class="insert-square" data-insert="B">\u25A0</span> Conservation programs are now planting young mangrove seedlings in areas where the original forests were destroyed, but a replanted mangrove may take twenty years before it can offer the same level of protection and habitat as the forest it replaced. <span class="insert-square" data-insert="C">\u25A0</span> Even where regrowth eventually catches up, the gap of two decades represents a long stretch of weaker coastline. <span class="insert-square" data-insert="D">\u25A0</span>';
 
-var insertSentenceText = "In other words, responsibility becomes spread across the group rather than felt by any single individual.";
+var insertSentenceText = "Together, these pressures often act faster than natural regeneration can keep up.";
 var correctInsertion = "B";
 var insertionQuestionPage = 4;
 var selectedInsertionPoint = null;
@@ -327,11 +327,10 @@ function attachSquareListeners(){
 
 function rebuildParagraphWithInsertion(pos){
   var sentences = [
-    'The researchers proposed that two main psychological processes explain this behavior.',
-    'The first is diffusion of responsibility, which occurs when people assume someone else will take action.',
-    'The second is pluralistic ignorance, in which individuals look to others for cues on how to react.',
-    'If no one appears concerned, each person concludes that the situation is not serious.',
-    'Together, these processes can prevent even well-meaning people from helping in critical moments.'
+    'Despite their value, mangrove forests have been disappearing faster than nearly any other coastal habitat.',
+    'Large stretches have been cleared to make room for shrimp farms, coastal resorts, and rice paddies, and pollution from upstream cities has weakened many of the trees that remain.',
+    'Conservation programs are now planting young mangrove seedlings in areas where the original forests were destroyed, but a replanted mangrove may take twenty years before it can offer the same level of protection and habitat as the forest it replaced.',
+    'Even where regrowth eventually catches up, the gap of two decades represents a long stretch of weaker coastline.'
   ];
   var positions = ['A','B','C','D'];
   var html = '';
