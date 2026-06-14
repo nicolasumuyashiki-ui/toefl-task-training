@@ -75,6 +75,7 @@ print("✅ PASS")
 - Page 0: 説明ページ
 - Page 1: トーク再生（話者画像+「Now listening...」、1.5秒後に自動再生）
 - Page 2-5: 問題ページ（4問）
+- 各問題30秒カウントダウン（残5秒で赤色警告、0秒で自動次問題）
 - 音声終了後自動遷移（またはNextボタン）
 - Backボタンなし
 - フッター: Check All Answers / Reset All / Show All Answers
