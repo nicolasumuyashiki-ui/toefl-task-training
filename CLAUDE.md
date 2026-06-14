@@ -99,3 +99,18 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - `.claude/commands/` にあるスラッシュコマンドの仕様書を必ず読むこと
 - `docs/topic-history.md` でトピック重複を確認し、作成後は同ファイルに追記すること（以前は技能別4分割 `docs/history-{技能}.md` を想定していたが、実体は単一ファイルに統合されている）
 - PPTXの攻略コツを解答解説に組み込むこと
+
+## ETS 公式 TOEFL iBT 2026 仕様準拠状況（2026-06-14 最終確認）
+
+`.claude/commands/` 内の各 `.md` 仕様書は ETS 公式 2026 仕様と整合済み。冒頭に「✅ ETS 公式準拠済み」バナーがある仕様書は、Routines / audit による公式準拠チェックでは合格扱い。
+
+| タスク | 公式パッセージ語数 | 公式問題数 |
+|---|---|---|
+| CTW | 70-90 語 | 10 incomplete words |
+| RDL | 15-150 語（典型 60-120） | 2-3 問/パッセージ |
+| Academic Passage | **180-220 語**（公式: 約 200 語、Standard / Harder で語数差なし） | 5 問/パッセージ |
+| Academic Talk | — | 4 問/talk |
+| Email | — | 1 問・7 分 |
+| Discussion | — | 1 問・10 分 |
+
+仕様書を変更する場合は、公式から逸脱していないか確認の上、バナーの最終確認日を更新すること。
