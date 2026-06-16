@@ -74,6 +74,19 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - サーバ側エンドポイント `getMyHistory` の本体は `docs/gas-my-history.js`（GAS にペースト＆デプロイ）。
   未デプロイでも frontend は壊れず、ローカルキャッシュ表示に degrade する。
 
+### 全タスクのサーバ保存（`js/auth.js` の sessionStorage フック）
+`auth.js` は `sessionStorage.setItem('training_score_<task>_p<N>', …)` を監視して、**全ページ共通で**:
+1. **最新スコアを localStorage にミラー**（`training_score_*`）。`sessionStorage` はブラウザを閉じると消えるが
+   localStorage は残るので、**同一PCならバックエンド無しでもスコアが消えない**。
+2. **サーバ未保存タスクを自動で `Api.saveAnswers`**（`api.js` を必要なら遅延ロード）。対象は
+   `{rdl, academic, lcr, conv, announce, talk, sentence}`（set 文字列は `"RDL P1"` 等）。
+   これで別ブラウザ・別デバイスでも履歴が引き継がれる。
+- **除外**（二重保存を防ぐため auto-save しない）: `ctw`（set ファイルが `"CTW PN Set X"` を保存）、
+  `email`/`discussion`（`finishWriting` で保存）、`lr`/`ti`（録音を RECORDINGS シートに保存）。
+- 新タスク追加時は、独自に `saveAnswers` するか、この allowlist (`AUTO_SAVE_LABELS`) に追加するか
+  どちらかで**必ずサーバ保存される状態**にすること。`training_score_*` を sessionStorage だけに書いて
+  放置すると、そのタスクだけ履歴が消える（過去の RDL/Academic/LCR 等で実際に発生 → 修正済み）。
+
 ## Writing 完了時の markDone / clear（再発防止）
 free-response タスク（Email / Discussion）の練習ページは、**完了関数（`finishWriting`/`complete`）の中で**
 `TCKProgress.clear()` と `TCKProgress.markDone()` を呼ぶこと。これを誤って `resetAll()`（リセットボタン）側に
