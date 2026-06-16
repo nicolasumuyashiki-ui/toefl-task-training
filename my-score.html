@@ -401,6 +401,7 @@ function collectAttempts() {
                      || localStorage.getItem('training_score_' + task + '_p' + p);
       const firstRaw  = localStorage.getItem('training_first_' + task + '_p' + p);
       const progressRaw = localStorage.getItem('tck_progress_' + task + '_p' + p);
+      const doneRaw = localStorage.getItem('tck_done_' + task + '_p' + p);
       const attemptCount = parseInt(localStorage.getItem('training_attempts_' + task + '_p' + p) || '0', 10) || 0;
       let first = null, latest = null, prog = null;
       try { if (firstRaw)  first  = JSON.parse(firstRaw); } catch(e){}
@@ -429,6 +430,17 @@ function collectAttempts() {
           attemptCount: attemptCount,
           updatedAt: when,
           status: 'done',
+        });
+      } else if (doneRaw) {
+        // Free-response tasks (Email / Discussion / LR / TI) record only a
+        // "submitted" marker + timestamp — no auto score. Surface them in the
+        // history table so every completed practice is reflected.
+        out.push({
+          task, label: TASK_META[task].label, section: TASK_META[task].section,
+          autoGraded: TASK_META[task].autoGraded, practice: p,
+          first: null, latest: null, attemptCount: attemptCount,
+          updatedAt: doneRaw,
+          status: 'submitted',
         });
       } else if (progressRaw) {
         out.push({
@@ -512,8 +524,8 @@ function render() {
   const writingAttemptCount = (sentenceAgg ? sentenceAgg.attempts : 0) + writingSubmissions;
 
   // Speaking — no automated audio assessment, no prediction.
-  const lrCount = attempts.filter(a => a.task === 'lr' && a.status === 'done').length;
-  const tiCount = attempts.filter(a => a.task === 'ti' && a.status === 'done').length;
+  const lrCount = attempts.filter(a => a.task === 'lr' && (a.status === 'done' || a.status === 'submitted')).length;
+  const tiCount = attempts.filter(a => a.task === 'ti' && (a.status === 'done' || a.status === 'submitted')).length;
   const speakingScaled = null;
   const speakingAttemptCount = lrCount + tiCount;
 
@@ -610,7 +622,12 @@ function render() {
   }).join('');
 
   // Store all completed attempts for pagination
-  window.__activityRows = attempts.filter(a => a.status === 'done').slice().reverse();
+  // Include completed free-response tasks (status 'submitted') too, and
+  // order newest-first by date so "いつ取り組んだか" reads chronologically.
+  window.__activityRows = attempts
+    .filter(a => a.status === 'done' || a.status === 'submitted')
+    .slice()
+    .sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')));
   window.__activityPage = 0;
   renderActivityPage();
 }

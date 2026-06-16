@@ -82,7 +82,11 @@ speaking/ti/practice-{N}.html              — Take an Interview
    `{rdl, academic, lcr, conv, announce, talk, sentence}`（set 文字列は `"RDL P1"` 等）。
    これで別ブラウザ・別デバイスでも履歴が引き継がれる。
 - **除外**（二重保存を防ぐため auto-save しない）: `ctw`（set ファイルが `"CTW PN Set X"` を保存）、
-  `email`/`discussion`（`finishWriting` で保存）、`lr`/`ti`（録音を RECORDINGS シートに保存）。
+  `email`/`discussion`（`finishWriting` で保存）、`lr`/`ti`（録音を RECORDINGS シートに保存。加えて
+  `speaking-recorder-hook.js` の `showComplete` で `"LR PN"`/`"TI PN"` の軽量 done 行を ANSWERS に保存し、
+  別デバイスでも「提出済み」が復元される）。
+- **my-score の反映**: free-response（email/discussion/lr/ti）は `training_score` を持たないため、
+  `collectAttempts` は `tck_done_*`（ISO 日時）を見て status `'submitted'` 行として学習履歴に出す。
 - 新タスク追加時は、独自に `saveAnswers` するか、この allowlist (`AUTO_SAVE_LABELS`) に追加するか
   どちらかで**必ずサーバ保存される状態**にすること。`training_score_*` を sessionStorage だけに書いて
   放置すると、そのタスクだけ履歴が消える（過去の RDL/Academic/LCR 等で実際に発生 → 修正済み）。
