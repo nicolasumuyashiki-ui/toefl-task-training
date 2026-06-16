@@ -86,6 +86,17 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - 新タスク追加時は、独自に `saveAnswers` するか、この allowlist (`AUTO_SAVE_LABELS`) に追加するか
   どちらかで**必ずサーバ保存される状態**にすること。`training_score_*` を sessionStorage だけに書いて
   放置すると、そのタスクだけ履歴が消える（過去の RDL/Academic/LCR 等で実際に発生 → 修正済み）。
+- **日付表示**: `training_score_*` の `updatedAt`（各ページが書く ISO）と `training_first_*` の `capturedAt` を
+  サーバ復元時も `history-sync` が引き継ぐ。my-score の学習履歴テーブルは `fmtWhen()` で JST 整形して表示する。
+
+### Practice Test（模試）の履歴
+模試は `practice-test/js/api.js` の `savePtResult`/`listPtResults` で**集約 GAS（REC_URL = 本番 API_URL と同じ）**に保存。
+本体は `docs/gas-pt-results.js`（`PT_RESULTS` シート、userId 紐付け、sessionId で重複排除）。results.html は
+`Api.savePtResult` が無いと "history disabled" で degrade する。模試の素点/換算/Band は results.html が DOM から再収集して送る。
+
+### 復習モード（retry）ポップアップ
+`auth.js` の `maybeShowRetryModal` は **1 practice につきセッション 1 回だけ**表示する（`sessionStorage tck_retry_shown_<task>_p<N>`）。
+CTW の Set1→Set2 等、複数ページにまたがる practice で毎回出ないようにするため。「practice 開始時だけ」が要件。
 
 ## Writing 完了時の markDone / clear（再発防止）
 free-response タスク（Email / Discussion）の練習ページは、**完了関数（`finishWriting`/`complete`）の中で**

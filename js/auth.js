@@ -485,6 +485,15 @@ if (typeof window !== 'undefined') {
       if (!info) return;
       var n = this.count(info.task, info.practice);
       if (n < 1) return;  // First time — no modal
+      // Show at most ONCE per practice per browser session, so advancing
+      // through a multi-page practice (e.g. CTW Set 1 → Set 2) or coming
+      // back to a page doesn't keep re-popping the review modal. The intent
+      // is "only when you start the practice".
+      var shownKey = 'tck_retry_shown_' + info.task + '_p' + info.practice;
+      try {
+        if (sessionStorage.getItem(shownKey)) return;
+        sessionStorage.setItem(shownKey, '1');
+      } catch (e) {}
       _showRetryModal(n + 1);
     }
   };

@@ -402,13 +402,19 @@ function collectAttempts() {
       const firstRaw  = localStorage.getItem('training_first_' + task + '_p' + p);
       const progressRaw = localStorage.getItem('tck_progress_' + task + '_p' + p);
       const attemptCount = parseInt(localStorage.getItem('training_attempts_' + task + '_p' + p) || '0', 10) || 0;
-      let first = null, latest = null;
+      let first = null, latest = null, prog = null;
       try { if (firstRaw)  first  = JSON.parse(firstRaw); } catch(e){}
       try { if (latestRaw) latest = JSON.parse(latestRaw); } catch(e){}
+      try { if (progressRaw) prog = JSON.parse(progressRaw); } catch(e){}
 
       if (first || latest) {
         const baseline = first || latest;       // Predicted source
         const recent   = latest || first;       // Mastery source
+        // When the learner did this (for the 日付 / Date column). Latest
+        // attempt's time, else the first attempt's captured time.
+        const when = (latest && latest.updatedAt)
+                  || (first && (first.capturedAt || first.updatedAt))
+                  || null;
         out.push({
           task, label: TASK_META[task].label, section: TASK_META[task].section,
           autoGraded: TASK_META[task].autoGraded, practice: p,
@@ -421,6 +427,7 @@ function collectAttempts() {
             harderCorrect: recent.harderCorrect || 0, harderTotal: recent.harderTotal || 0,
           } : null,
           attemptCount: attemptCount,
+          updatedAt: when,
           status: 'done',
         });
       } else if (progressRaw) {
@@ -428,6 +435,7 @@ function collectAttempts() {
           task, label: TASK_META[task].label, section: TASK_META[task].section,
           autoGraded: TASK_META[task].autoGraded, practice: p,
           first: null, latest: null, attemptCount: 0,
+          updatedAt: (prog && prog.updatedAt) || null,
           status: 'inprog',
         });
       }
@@ -624,6 +632,21 @@ const TASK_PATHS = {
 
 const ROWS_PER_PAGE = 15;
 
+/* Format an ISO timestamp → "2026/06/16 11:41" (JST, local). Returns "—"
+   when no date is available (e.g. legacy attempts saved before timestamps
+   were captured). */
+function fmtWhen(iso) {
+  if (!iso) return '—';
+  try {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '—';
+    return d.toLocaleString('ja-JP', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hour12: false
+    });
+  } catch (e) { return '—'; }
+}
+
 function renderActivityPage() {
   const rows = window.__activityRows || [];
   const tbody = document.getElementById('activityBody');
@@ -650,7 +673,7 @@ function renderActivityPage() {
     const pill = '<span class="pill ' + grade + '"><span class="jp">' + jp + '</span><span class="en">' + en + '</span></span>';
     const retryTag = a.attemptCount > 1 ? ' <span style="font-size:.72em;color:var(--ink-500);font-weight:600">×' + a.attemptCount + '</span>' : '';
     const score = a.autoGraded ? (lat.correct + '/' + lat.total + ' · ' + pct + '%' + retryTag) : '—';
-    const when = a.updatedAt || '—';
+    const when = fmtWhen(a.updatedAt);
     const path = TASK_PATHS[a.task] ? TASK_PATHS[a.task](a.practice) : null;
     const reviewBtn = path
       ? '<a class="review-btn" href="' + path + '"><span class="jp">復習する</span><span class="en">Review</span><span class="arrow">→</span></a>'

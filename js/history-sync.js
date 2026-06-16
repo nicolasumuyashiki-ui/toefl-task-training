@@ -102,6 +102,7 @@
       // Sum across sets (CTW has Set 1 + Set 2; everything else is one bucket).
       var firstCorrect = 0, firstTotal = 0, latestCorrect = 0, latestTotal = 0;
       var graded = false, maxAttempts = 0, latestUnscoredTs = '';
+      var latestTs = '', firstTs = '';
       setKeys.forEach(function (sk) {
         var rows = buckets[sk];
         rows.sort(function (x, y) { return (x.ts || '').localeCompare(y.ts || ''); });
@@ -111,17 +112,20 @@
           graded = true;
           firstCorrect += (first.score || 0); firstTotal += first.total;
           latestCorrect += (latest.score || 0); latestTotal += latest.total;
+          if ((latest.ts || '') > latestTs) latestTs = latest.ts || '';
+          if (!firstTs || (first.ts || '') < firstTs) firstTs = first.ts || '';
         } else {
           if ((latest.ts || '') > latestUnscoredTs) latestUnscoredTs = latest.ts || '';
         }
       });
 
       if (graded && latestTotal > 0) {
-        // Latest score → always refresh from server truth.
-        lsSet('training_score_' + gk, JSON.stringify({ correct: latestCorrect, total: latestTotal }));
+        // Latest score → always refresh from server truth (carry the
+        // timestamp so my-score can show WHEN it was done).
+        lsSet('training_score_' + gk, JSON.stringify({ correct: latestCorrect, total: latestTotal, updatedAt: latestTs }));
         // First attempt → set only if absent (preserve locally-captured first).
         if (!lsGet('training_first_' + gk)) {
-          lsSet('training_first_' + gk, JSON.stringify({ correct: firstCorrect, total: firstTotal }));
+          lsSet('training_first_' + gk, JSON.stringify({ correct: firstCorrect, total: firstTotal, capturedAt: firstTs }));
         }
         // Attempt counter → never shrink.
         var localN = parseInt(lsGet('training_attempts_' + gk) || '0', 10) || 0;
