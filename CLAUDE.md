@@ -55,6 +55,31 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - js/api.js の GAS_URL を変更しない（本番URLが入っている）
 - index.html の認証ロジックを変更しない
 - 既存の問題ファイルの正解を勝手に変更しない（必ず確認を求めること）
+- **学習者の履歴・スコアを絶対にリセットしない**（下記「履歴は絶対にリセットしない」参照）
+
+## 履歴は絶対にリセットしない（最重要・再発防止）
+お客様の取り組み履歴・スコアは**サーバ（GAS の ANSWERS シート、userId 紐付け）が唯一の正本**。
+各 attempt は `Api.saveAnswers` で必ずサーバに保存される。`localStorage` / `sessionStorage` は
+表示用キャッシュにすぎない（`sessionStorage` はブラウザを閉じると消える）。
+
+- **問題ファイルの微修正・リライト・採点ロジック調整の際に、以下を消去・初期化してはならない**:
+  - localStorage: `training_score_*` / `training_first_*` / `training_attempts_*` / `tck_done_*` / `tck_progress_*`
+  - サーバ ANSWERS シートの行
+- **表示は必ずサーバから復元する**: メニュー4枚（reading/listening/writing/speaking の menu.html）と
+  my-score.html は `js/history-sync.js`（`Api.getMyHistory`）でサーバから履歴を取得し、上記 localStorage
+  キーに書き戻してバッジ・スコアを描画する。これにより **どのブラウザ・デバイスで入っても同じアカウントなら
+  履歴が必ず引き継がれる**。`history-sync` は追加・更新のみで、履歴を消すことは一切しない。
+- **復元の優先順位**: 同一セッションの結果（sessionStorage）→ サーバ最新（localStorage `training_score_*`）→
+  初回（`training_first_*`）。履歴消失後に2回目を取り組んだ場合は、**新しい方（最新の attempt）を正本として復元**する。
+- サーバ側エンドポイント `getMyHistory` の本体は `docs/gas-my-history.js`（GAS にペースト＆デプロイ）。
+  未デプロイでも frontend は壊れず、ローカルキャッシュ表示に degrade する。
+
+## Writing 完了時の markDone / clear（再発防止）
+free-response タスク（Email / Discussion）の練習ページは、**完了関数（`finishWriting`/`complete`）の中で**
+`TCKProgress.clear()` と `TCKProgress.markDone()` を呼ぶこと。これを誤って `resetAll()`（リセットボタン）側に
+置くと、**完了しても `tck_progress_*` が残り `tck_done_*` が立たず、メニューが「中断中」のまま**になる
+（discussion practice-2〜10 で実際に発生 → 修正済み）。`resetAll()` は `clear()` のみ。
+検出: 完了関数内に `markDone` があるか、`saveAnswers` 行直後を grep で確認。
 
 ## 音声生成時の必須ルール（再発防止）
 - **スクリプト→音声→解答の一貫性**: 音声を生成する際、ElevenLabsに送るテキスト（スクリプト）を**必ずそのまま**解答ページの問題文（`q`フィールド等）にコピーすること。要約・言い換え・記憶による再構成は厳禁。

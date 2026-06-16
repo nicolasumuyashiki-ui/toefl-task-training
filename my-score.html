@@ -256,6 +256,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 
 <script src="js/auth.js"></script>
 <script src="js/api.js"></script>
+<script src="js/history-sync.js"></script>
 <script>
 /* Language toggle */
 (function(){
@@ -393,7 +394,11 @@ function collectAttempts() {
   const out = [];
   Object.keys(TASK_META).forEach(task => {
     for (let p = 1; p <= 10; p++) {
-      const latestRaw = sessionStorage.getItem('training_score_' + task + '_p' + p);
+      // latest: this-session score wins; otherwise the server-hydrated
+      // latest in localStorage (history-sync) — so a retake done after a
+      // history loss is restored as the newest result, on any device.
+      const latestRaw = sessionStorage.getItem('training_score_' + task + '_p' + p)
+                     || localStorage.getItem('training_score_' + task + '_p' + p);
       const firstRaw  = localStorage.getItem('training_first_' + task + '_p' + p);
       const progressRaw = localStorage.getItem('tck_progress_' + task + '_p' + p);
       const attemptCount = parseInt(localStorage.getItem('training_attempts_' + task + '_p' + p) || '0', 10) || 0;
@@ -697,7 +702,12 @@ function aggregateSectionTask(attempts, taskKey) {
   return { correct, total, pct: total > 0 ? (correct / total * 100) : 0, attempts: items.length };
 }
 
+// Render immediately from the local cache, then hydrate the full history
+// from the server (so scores show on ANY browser / device, and survive a
+// browser close) and re-render once it lands. history-sync only adds /
+// refreshes — it never clears a learner's history.
 render();
+if (window.TCKHistory) TCKHistory.hydrate(function (changed) { if (changed) render(); });
 
 /* ============================================================
    Speaking Recordings — fetch via Api.listMyRecordings (student
