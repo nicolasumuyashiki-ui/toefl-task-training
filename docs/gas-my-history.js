@@ -55,17 +55,22 @@ function handleGetMyHistory_(e, callback) {
       var setName = String(row[3] || '').trim();
       if (!setName) continue;
 
-      // Derive total: prefer an explicit total column if your sheet has one
-      // (PR #55), else count the answers array length (auto-graded tasks),
-      // else 0 (Writing/Speaking free-response — no auto score).
+      // Derive total (question count). The dedicated `total` column (index 9)
+      // is unreliable — js/api.js saveAnswers does not send &total, so it is
+      // 0 for every row. So derive from the answers ARRAY length (every
+      // auto-graded task saves answers as an array; CTW saves `ua`, the
+      // others save an array of length=total). Free-response tasks
+      // (Email/Discussion/LR/TI) save an object → not an array → total 0.
+      // Fall back to the total column only if it ever carries a real value.
+      //
+      // NOTE: do NOT read row[6] for total — that column is harder_correct.
       var total = 0;
-      if (row.length > 6 && row[6] !== '' && row[6] !== null && !isNaN(Number(row[6]))) {
-        total = Number(row[6]);
-      } else {
-        try {
-          var parsed = (typeof row[4] === 'string' && row[4]) ? JSON.parse(row[4]) : row[4];
-          if (Array.isArray(parsed)) total = parsed.length;
-        } catch (err) { total = 0; }
+      try {
+        var parsed = (typeof row[4] === 'string' && row[4]) ? JSON.parse(row[4]) : row[4];
+        if (Array.isArray(parsed)) total = parsed.length;
+      } catch (err) { total = 0; }
+      if (!total && row.length > 9 && row[9] !== '' && row[9] !== null && !isNaN(Number(row[9]))) {
+        total = Number(row[9]);
       }
 
       var scoreRaw = row[5];
