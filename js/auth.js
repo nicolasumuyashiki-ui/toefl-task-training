@@ -367,13 +367,48 @@ if (typeof window !== 'undefined') {
   if (window.__TCKFirstAttemptInit) return;
   window.__TCKFirstAttemptInit = true;
 
+  // Capture auth.js's own URL now (document.currentScript is valid during
+  // this synchronous load) so we can lazy-load api.js later, from inside
+  // the setItem hook, on pages that don't include it.
+  var AUTH_SRC = (document.currentScript && document.currentScript.src) || (function () {
+    var s = document.getElementsByTagName('script');
+    for (var i = 0; i < s.length; i++) { if (/\/auth\.js(\?|#|$)/.test(s[i].src || '')) return s[i].src; }
+    return '';
+  })();
+
+  // Tasks that DON'T already persist their attempts to the server on their
+  // own get auto-saved here so their history survives a browser close and
+  // follows the account across devices (same as the others). Excluded:
+  //   ctw      → set files call Api.saveAnswers("CTW PN Set X")
+  //   email/discussion → call Api.saveAnswers in finishWriting()
+  //   lr/ti    → upload recordings to the RECORDINGS sheet
+  // Auto-saving those would create duplicate / conflicting rows.
+  var AUTO_SAVE_LABELS = {
+    rdl: 'RDL', academic: 'Academic', lcr: 'LCR', conv: 'Conv',
+    announce: 'Announce', talk: 'Talk', sentence: 'Sentence'
+  };
+  var _apiLoading = null, _lastSaved = {};
+  function _ensureApi(cb) {
+    if (typeof Api !== 'undefined' && Api.saveAnswers) return cb();
+    if (_apiLoading) { _apiLoading.then(cb, function () {}); return; }
+    if (!AUTH_SRC) return;
+    var apiSrc = AUTH_SRC.replace(/\/auth\.js(\?[^#]*)?(#.*)?$/, '/api.js');
+    _apiLoading = new Promise(function (resolve, reject) {
+      var t = document.createElement('script');
+      t.src = apiSrc; t.onload = resolve; t.onerror = reject;
+      document.head.appendChild(t);
+    });
+    _apiLoading.then(function () { if (typeof Api !== 'undefined' && Api.saveAnswers) cb(); }, function () {});
+  }
+
   var origSet = sessionStorage.setItem.bind(sessionStorage);
   sessionStorage.setItem = function (key, value) {
     origSet(key, value);
     var m = String(key).match(/^training_score_(.+)_p(\d+)$/);
     if (!m) return;
-    var firstKey = 'training_first_' + m[1] + '_p' + m[2];
-    var countKey = 'training_attempts_' + m[1] + '_p' + m[2];
+    var task = m[1], practice = m[2];
+    var firstKey = 'training_first_' + task + '_p' + practice;
+    var countKey = 'training_attempts_' + task + '_p' + practice;
     try {
       var d = JSON.parse(value);
       if (!d || typeof d.total !== 'number') return;
@@ -387,6 +422,28 @@ if (typeof window !== 'undefined') {
       // Bump attempt counter (used for retry-modal display).
       var n = parseInt(localStorage.getItem(countKey) || '0', 10) || 0;
       localStorage.setItem(countKey, String(n + 1));
+
+      // (1) Mirror the LATEST score to localStorage (persists across a
+      // browser close on the SAME device — sessionStorage does not). This
+      // alone fixes "scores vanished on my PC" for every task, with no
+      // backend. history-sync later overwrites with server truth when online.
+      try { localStorage.setItem('training_score_' + task + '_p' + practice, value); } catch (e) {}
+
+      // (2) Auto-save to the server for tasks that don't persist on their
+      // own, so their history follows the account across devices. answers is
+      // an array of length=total so the server can derive the question count.
+      var label = AUTO_SAVE_LABELS[task];
+      if (label) {
+        var sig = task + '_p' + practice + '=' + value;
+        if (_lastSaved[task + '_p' + practice] !== sig) {  // de-dupe identical writes
+          _lastSaved[task + '_p' + practice] = sig;
+          var correct = d.correct, total = d.total;
+          var meta = { harderCorrect: d.harderCorrect || 0, harderTotal: d.harderTotal || 0, attemptNumber: n + 1 };
+          _ensureApi(function () {
+            try { Api.saveAnswers(label + ' P' + practice, new Array(total).fill(0), correct, meta); } catch (e) {}
+          });
+        }
+      }
     } catch (e) {}
   };
 
@@ -428,6 +485,15 @@ if (typeof window !== 'undefined') {
       if (!info) return;
       var n = this.count(info.task, info.practice);
       if (n < 1) return;  // First time — no modal
+      // Show at most ONCE per practice per browser session, so advancing
+      // through a multi-page practice (e.g. CTW Set 1 → Set 2) or coming
+      // back to a page doesn't keep re-popping the review modal. The intent
+      // is "only when you start the practice".
+      var shownKey = 'tck_retry_shown_' + info.task + '_p' + info.practice;
+      try {
+        if (sessionStorage.getItem(shownKey)) return;
+        sessionStorage.setItem(shownKey, '1');
+      } catch (e) {}
       _showRetryModal(n + 1);
     }
   };

@@ -171,6 +171,21 @@ var Api = {
       + '&set='      + encodeURIComponent(set || ''));
   },
 
+  /* Student-side BULK history — returns a COMPACT list of EVERY attempt the
+     logged-in user has saved (all tasks/practices) in one JSONP call:
+     [{ set, score, total, timestamp }]. GAS forces userId == verified user.
+     Used by js/history-sync.js to hydrate menu / my-score badges from the
+     server so history follows the account across browsers and devices
+     (localStorage / sessionStorage are per-browser and can't do that).
+     Backed by handleGetMyHistory_ — see docs/gas-my-history.js. */
+  getMyHistory: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=getMyHistory'
+      + '&id='   + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
+  },
+
   /* Fetch the saved `answers` JSON for a specific attempt (admin only).
      Used by the answer pages when opened with ?fromAdmin=1 to overlay
      the student's actual submission on top of the answer key. */

@@ -312,6 +312,7 @@ function finishWriting(method){
 
   sessionStorage.setItem('discussionResponse_p7', JSON.stringify({text:text, words:wc, time:m+':'+String(s).padStart(2,'0')}));
   if(typeof Api!=="undefined"&&Api.saveAnswers){try{Api.saveAnswers("Discussion P7",{text:text,words:wordCount,time:m+":"+String(s).padStart(2,"0")},0,{attemptNumber:1});}catch(e){}}
+  if(typeof TCKProgress!=='undefined')TCKProgress.clear(TCK_TASK,TCK_PRACTICE); if(window.TCKProgress)TCKProgress.markDone(TCK_TASK,TCK_PRACTICE);
 
   document.getElementById('writingPage').style.display='none';
   document.getElementById('completionPage').style.display='flex';
@@ -325,7 +326,7 @@ function finishWriting(method){
 function resetAll(){
   if(!confirm('Are you sure you want to reset?')) return;
   clearInterval(timerInterval); secondsLeft=totalSeconds;
-  if(typeof TCKProgress!=='undefined')TCKProgress.clear(TCK_TASK,TCK_PRACTICE); if(window.TCKProgress)TCKProgress.markDone(TCK_TASK,TCK_PRACTICE);
+  if(typeof TCKProgress!=='undefined')TCKProgress.clear(TCK_TASK,TCK_PRACTICE);
   document.getElementById('writingArea').value='';
   document.getElementById('timer').classList.remove('warning');
   document.getElementById('progressFill').style.width='0%';

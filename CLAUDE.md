@@ -55,6 +55,59 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - js/api.js の GAS_URL を変更しない（本番URLが入っている）
 - index.html の認証ロジックを変更しない
 - 既存の問題ファイルの正解を勝手に変更しない（必ず確認を求めること）
+- **学習者の履歴・スコアを絶対にリセットしない**（下記「履歴は絶対にリセットしない」参照）
+
+## 履歴は絶対にリセットしない（最重要・再発防止）
+お客様の取り組み履歴・スコアは**サーバ（GAS の ANSWERS シート、userId 紐付け）が唯一の正本**。
+各 attempt は `Api.saveAnswers` で必ずサーバに保存される。`localStorage` / `sessionStorage` は
+表示用キャッシュにすぎない（`sessionStorage` はブラウザを閉じると消える）。
+
+- **問題ファイルの微修正・リライト・採点ロジック調整の際に、以下を消去・初期化してはならない**:
+  - localStorage: `training_score_*` / `training_first_*` / `training_attempts_*` / `tck_done_*` / `tck_progress_*`
+  - サーバ ANSWERS シートの行
+- **表示は必ずサーバから復元する**: メニュー4枚（reading/listening/writing/speaking の menu.html）と
+  my-score.html は `js/history-sync.js`（`Api.getMyHistory`）でサーバから履歴を取得し、上記 localStorage
+  キーに書き戻してバッジ・スコアを描画する。これにより **どのブラウザ・デバイスで入っても同じアカウントなら
+  履歴が必ず引き継がれる**。`history-sync` は追加・更新のみで、履歴を消すことは一切しない。
+- **復元の優先順位**: 同一セッションの結果（sessionStorage）→ サーバ最新（localStorage `training_score_*`）→
+  初回（`training_first_*`）。履歴消失後に2回目を取り組んだ場合は、**新しい方（最新の attempt）を正本として復元**する。
+- サーバ側エンドポイント `getMyHistory` の本体は `docs/gas-my-history.js`（GAS にペースト＆デプロイ）。
+  未デプロイでも frontend は壊れず、ローカルキャッシュ表示に degrade する。
+
+### 全タスクのサーバ保存（`js/auth.js` の sessionStorage フック）
+`auth.js` は `sessionStorage.setItem('training_score_<task>_p<N>', …)` を監視して、**全ページ共通で**:
+1. **最新スコアを localStorage にミラー**（`training_score_*`）。`sessionStorage` はブラウザを閉じると消えるが
+   localStorage は残るので、**同一PCならバックエンド無しでもスコアが消えない**。
+2. **サーバ未保存タスクを自動で `Api.saveAnswers`**（`api.js` を必要なら遅延ロード）。対象は
+   `{rdl, academic, lcr, conv, announce, talk, sentence}`（set 文字列は `"RDL P1"` 等）。
+   これで別ブラウザ・別デバイスでも履歴が引き継がれる。
+- **除外**（二重保存を防ぐため auto-save しない）: `ctw`（set ファイルが `"CTW PN Set X"` を保存）、
+  `email`/`discussion`（`finishWriting` で保存）、`lr`/`ti`（録音を RECORDINGS シートに保存。加えて
+  `speaking-recorder-hook.js` の `showComplete` で `"LR PN"`/`"TI PN"` の軽量 done 行を ANSWERS に保存し、
+  別デバイスでも「提出済み」が復元される）。
+- **my-score の反映**: free-response（email/discussion/lr/ti）は `training_score` を持たないため、
+  `collectAttempts` は `tck_done_*`（ISO 日時）を見て status `'submitted'` 行として学習履歴に出す。
+- 新タスク追加時は、独自に `saveAnswers` するか、この allowlist (`AUTO_SAVE_LABELS`) に追加するか
+  どちらかで**必ずサーバ保存される状態**にすること。`training_score_*` を sessionStorage だけに書いて
+  放置すると、そのタスクだけ履歴が消える（過去の RDL/Academic/LCR 等で実際に発生 → 修正済み）。
+- **日付表示**: `training_score_*` の `updatedAt`（各ページが書く ISO）と `training_first_*` の `capturedAt` を
+  サーバ復元時も `history-sync` が引き継ぐ。my-score の学習履歴テーブルは `fmtWhen()` で JST 整形して表示する。
+
+### Practice Test（模試）の履歴
+模試は `practice-test/js/api.js` の `savePtResult`/`listPtResults` で**集約 GAS（REC_URL = 本番 API_URL と同じ）**に保存。
+本体は `docs/gas-pt-results.js`（`PT_RESULTS` シート、userId 紐付け、sessionId で重複排除）。results.html は
+`Api.savePtResult` が無いと "history disabled" で degrade する。模試の素点/換算/Band は results.html が DOM から再収集して送る。
+
+### 復習モード（retry）ポップアップ
+`auth.js` の `maybeShowRetryModal` は **1 practice につきセッション 1 回だけ**表示する（`sessionStorage tck_retry_shown_<task>_p<N>`）。
+CTW の Set1→Set2 等、複数ページにまたがる practice で毎回出ないようにするため。「practice 開始時だけ」が要件。
+
+## Writing 完了時の markDone / clear（再発防止）
+free-response タスク（Email / Discussion）の練習ページは、**完了関数（`finishWriting`/`complete`）の中で**
+`TCKProgress.clear()` と `TCKProgress.markDone()` を呼ぶこと。これを誤って `resetAll()`（リセットボタン）側に
+置くと、**完了しても `tck_progress_*` が残り `tck_done_*` が立たず、メニューが「中断中」のまま**になる
+（discussion practice-2〜10 で実際に発生 → 修正済み）。`resetAll()` は `clear()` のみ。
+検出: 完了関数内に `markDone` があるか、`saveAnswers` 行直後を grep で確認。
 
 ## 音声生成時の必須ルール（再発防止）
 - **スクリプト→音声→解答の一貫性**: 音声を生成する際、ElevenLabsに送るテキスト（スクリプト）を**必ずそのまま**解答ページの問題文（`q`フィールド等）にコピーすること。要約・言い換え・記憶による再構成は厳禁。

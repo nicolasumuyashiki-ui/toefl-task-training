@@ -196,6 +196,16 @@
     if (window.TCKProgress && typeof TCK_TASK !== 'undefined' && typeof TCK_PRACTICE !== 'undefined') {
       try { TCKProgress.markDone(TCK_TASK, TCK_PRACTICE); } catch(e){}
     }
+    // Also write a lightweight "done" row to the server (ANSWERS sheet) so
+    // the 提出済み badge + my-score history follow the account across
+    // browsers/devices. The audio itself lives in the RECORDINGS sheet;
+    // this row just lets getMyHistory restore the submitted state.
+    try {
+      if (typeof Api !== 'undefined' && Api.saveAnswers &&
+          typeof TCK_TASK !== 'undefined' && typeof TCK_PRACTICE !== 'undefined') {
+        Api.saveAnswers(String(TCK_TASK).toUpperCase() + ' P' + TCK_PRACTICE, { recorded: true }, 0, { attemptNumber: 1 });
+      }
+    } catch(e){}
     return origShowComplete.apply(this, arguments);
   };
 
