@@ -13,7 +13,7 @@
  *   3. Save (Ctrl+S) → Deploy → Manage deployments → 鉛筆 → New version → Deploy.
  *      (Same deployment URL — no need to update js/api.js.)
  *
- * Sheet assumption (verified against the live "TOEFL Reps Database" book):
+ * Sheet assumption (verified against the live "TCK Reps Database" book):
  *   Sheet name: ANSWERS
  *   Columns:    A=timestamp | B=userId | C=userName | D=set
  *               E=answers   | F=score  | G=harder_correct | H=harder_total
