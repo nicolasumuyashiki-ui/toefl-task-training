@@ -167,3 +167,19 @@ free-response タスク（Email / Discussion）の練習ページは、**完了�
 | Discussion | — | 1 問・10 分 |
 
 仕様書を変更する場合は、公式から逸脱していないか確認の上、バナーの最終確認日を更新すること。
+
+### タイマー値（確定・2026-06-16）
+画面表示・JS実装・仕様書（`.claude/commands/`）の3者を必ず一致させること。
+| タスク | 1問/全体の時間 | 根拠 |
+|---|---|---|
+| LCR | 20 秒/問 | ETS 公式で唯一明示された問題別タイマー |
+| Conversation | 20 秒/問 | |
+| Announcement | **20 秒/問** | ETS は問題別秒数を非公開（アダプティブ・回答中のみカウント）。第三者目安「約30秒/問」を踏まえた設計値 |
+| Academic Talk | **30 秒/問** | 同上。第三者目安「約30秒/問」に整合 |
+| Build a Sentence | **7 分（420秒）固定・10問** | 多数ソースが「10問・約7分（6:50≈7分）」で一致 |
+| Write an Email | 7 分 | ETS 公式 |
+| Academic Discussion | 10 分 | ETS 公式 |
+| RDL | 25 分 | 仕様書・オーバーレイ表示に整合 |
+| Take an Interview | 45 秒/問 | 仕様書・表示に整合 |
+| Listen & Repeat | 文ごと | — |
+※ Listening の問題別秒数は ETS 非公開のため設計判断。変更時はこの表とソース（Test Resources / Writing30 / Study.com 等）を更新。

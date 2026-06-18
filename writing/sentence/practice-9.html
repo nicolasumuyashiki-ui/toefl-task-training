@@ -105,7 +105,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="top-nav">
 <div class="nav-left"><img class="brand-logo" src="../../assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px"><span class="section-label">Writing</span><span class="divider">|</span><span class="task-label">Build a Sentence</span></div>
 <div class="nav-right">
-<span class="timer-display" id="timer">06:00</span>
+<span class="timer-display" id="timer">07:00</span>
 <button class="finish-btn" id="btnFinish" onclick="showModal()" style="display:none">Finish</button>
 <div class="user-badge" id="userBadge">?</div>
 </div>
@@ -120,11 +120,11 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <thead><tr><th>Detail</th><th>Info</th></tr></thead>
 <tbody>
 <tr><td>Questions</td><td>10</td></tr>
-<tr><td>Time Limit</td><td>6 minutes</td></tr>
+<tr><td>Time Limit</td><td>7 minutes</td></tr>
 <tr><td>Format</td><td>Drag words from the Word Bank into the blank slots</td></tr>
 </tbody>
 </table>
-<div class="warning-box">⏱️ You have <strong>6 minutes</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
+<div class="warning-box">⏱️ You have <strong>7 minutes</strong>. Click "Start" to begin. You can finish early with the Finish button.</div>
 <button class="btn-start" onclick="startQuiz()">Start</button>
 </div>
 </div>
@@ -197,8 +197,8 @@ const questions=[{"id":1,"prompt":"Are you happy with your new apartment?","gend
 
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=360,isActive=false;
-const totalTime=360;
+let currentQ=0,userAnswers=[],timerInterval=null,secondsLeft=420,isActive=false;
+const totalTime=420;
 questions.forEach(()=>userAnswers.push([]));
 
 function startQuiz(){

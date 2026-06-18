@@ -95,7 +95,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <div class="start-overlay" id="startOverlay">
 <div class="start-card">
 <h2>�� Listen to an Academic Talk</h2>
-<p>You will hear 2 short academic lectures.<br>After each talk, you will answer 4 questions.<br><br>You have <strong>20 seconds</strong> per question.<br>You will only hear each talk <strong>once</strong>.</p>
+<p>You will hear 2 short academic lectures.<br>After each talk, you will answer 4 questions.<br><br>You have <strong>30 seconds</strong> per question.<br>You will only hear each talk <strong>once</strong>.</p>
 <button class="btn-start" onclick="startListening()">Start Listening</button>
 </div>
 </div>
@@ -318,7 +318,7 @@ function showQuestion(qIdx){
     } else {
         document.getElementById('btnNext').classList.remove('active');
     }
-    startTimer(35);
+    startTimer(30);
 }
 
 function startTimer(secs){
