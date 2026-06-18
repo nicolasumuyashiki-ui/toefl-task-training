@@ -696,8 +696,8 @@ function generateAttempts() {
   });
   return out;
 }
-/* Mutable so we can swap in live data once GAS responds */
-let MOCK_USERS_LIVE = MOCK_USERS;
+/* Working user list — starts as mock seed, replaced with live data on load */
+let activeUsers = MOCK_USERS;
 let ATTEMPTS = generateAttempts();
 
 /* Parse an ANSWERS-sheet `set` string into task/practice/setNum.
@@ -787,8 +787,7 @@ function loadLiveData() {
     const users = (ures.users || []).map(u => Object.assign({ displayName: '' }, u));
     const liveAttempts = mapLiveAttempts(ares.attempts || [], users);
     // Overwrite module-level data
-    MOCK_USERS_LIVE.length = 0;
-    users.forEach(u => MOCK_USERS_LIVE.push(u));
+    activeUsers = users;
     ATTEMPTS = liveAttempts;
     // Swap banner
     if (banner) {
@@ -1009,7 +1008,7 @@ function buildDistributionBar(scores) {
    Tab: レポート
    ============================================================ */
 function renderReport() {
-  document.getElementById('rptUsers').textContent = MOCK_USERS.length;
+  document.getElementById('rptUsers').textContent = activeUsers.length;
   const activeCutoff = new Date(); activeCutoff.setDate(activeCutoff.getDate() - 30);
   const activeSet = new Set(ATTEMPTS.filter(a => new Date(a.updatedAt) >= activeCutoff).map(a => a.userId));
   document.getElementById('rptActive').textContent = activeSet.size;
@@ -1048,7 +1047,7 @@ function renderReport() {
 let selectedKarteUser = null;
 function renderKarteList() {
   const q = document.getElementById('searchKarte').value.toLowerCase().trim();
-  const users = MOCK_USERS.filter(u => !q || (u.userName + ' ' + u.displayName + ' ' + u.userId + ' ' + u.email).toLowerCase().indexOf(q) !== -1);
+  const users = activeUsers.filter(u => !q || (u.userName + ' ' + u.displayName + ' ' + u.userId + ' ' + u.email).toLowerCase().indexOf(q) !== -1);
   document.getElementById('karteCount').textContent = users.length;
   const list = document.getElementById('karteUserList');
   list.innerHTML = users.map(u => {
@@ -1062,7 +1061,7 @@ function selectKarte(userId) {
   renderKarteDetail();
 }
 function renderKarteDetail() {
-  const u = MOCK_USERS.find(x => x.userId === selectedKarteUser);
+  const u = activeUsers.find(x => x.userId === selectedKarteUser);
   const el = document.getElementById('karteDetail');
   if (!u) return;
   const attempts = ATTEMPTS.filter(a => a.userId === u.userId);
@@ -1118,7 +1117,7 @@ function renderKarteDetail() {
    ============================================================ */
 function renderProgress() {
   const q = document.getElementById('searchProgress').value.toLowerCase().trim();
-  const users = MOCK_USERS.filter(u => !q || (u.userName + ' ' + u.userId + ' ' + u.email).toLowerCase().indexOf(q) !== -1);
+  const users = activeUsers.filter(u => !q || (u.userName + ' ' + u.userId + ' ' + u.email).toLowerCase().indexOf(q) !== -1);
   document.getElementById('progressCount').textContent = users.length;
 
   // Head: user | task cells | divider | R scaled | L scaled | W scaled | S scaled | TOTAL
@@ -1194,7 +1193,7 @@ function exportCSV(kind) {
   } else if (kind === 'progress') {
     filename = 'tck-progress-' + today() + '.csv';
     rows.push(['ユーザー','ログインID','メール', ...TASKS.map(t => t.label), 'Overall%', 'R (scaled)', 'R (band)', 'L (scaled)', 'L (band)', 'W (scaled, est)', 'W (band)', 'S (採点なし)', 'Total (/90)', 'Total (Band /6.0 換算)']);
-    MOCK_USERS.forEach(u => {
+    activeUsers.forEach(u => {
       const userAtts = ATTEMPTS.filter(a => a.userId === u.userId);
       const cells = TASKS.map(t => {
         if (!t.autoGraded) {
@@ -1249,7 +1248,7 @@ function formatRelative(iso) {
 
 /* Detail modal (stub) */
 function showDetail(userId, task, practice) {
-  const u = MOCK_USERS.find(x => x.userId === userId);
+  const u = activeUsers.find(x => x.userId === userId);
   const a = ATTEMPTS.find(x => x.userId === userId && x.task === task && x.practice === practice);
   alert((u ? u.userName : userId) + ' · ' + (a ? a.taskLabel : task) + ' · Practice ' + practice + '\n' +
         (a ? ('スコア: ' + (a.score ?? '—') + '%  合否: ' + a.status + '\n最終更新: ' + a.updatedAt) : ''));
@@ -1274,7 +1273,7 @@ function viewStudentAnswers(userId, task, practice, set) {
     alert('回答ページが未対応のタスクです: ' + task);
     return;
   }
-  const u = MOCK_USERS.find(x => x.userId === userId);
+  const u = activeUsers.find(x => x.userId === userId);
   const params = new URLSearchParams({
     userId: userId,
     userName: u ? u.userName : '',
@@ -1501,7 +1500,7 @@ function renderRecDetail() {
     (groups[k] = groups[k] || []).push(r);
   });
 
-  const u = MOCK_USERS.find(x => x.userId === userId);
+  const u = activeUsers.find(x => x.userId === userId);
   const head = '<div class="karte-head"><h3>' + escapeHtml((u && u.userName) || recs[0].userName || userId) +
     ' <span style="color:var(--ink-500);font-weight:500;font-size:.7em">(' + escapeHtml(userId) + ')</span></h3>' +
     '<div class="kmeta">録音 ' + recs.length + ' 件</div></div>';
@@ -1591,7 +1590,7 @@ function renderWritingDetail() {
   items.sort((a,b) => (b.updatedAt || '').localeCompare(a.updatedAt || ''));
 
   // Split into Email vs Discussion sections so admin can scan one task at a time.
-  const u = MOCK_USERS.find(x => x.userId === userId) || { userName:items[0].userName, email:'', userId:userId };
+  const u = activeUsers.find(x => x.userId === userId) || { userName:items[0].userName, email:'', userId:userId };
   const groups = { email:[], discussion:[] };
   items.forEach(a => groups[a.task].push(a));
 
