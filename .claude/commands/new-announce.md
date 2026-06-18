@@ -19,7 +19,7 @@ $ARGUMENTS
 ### 概要
 - 2つのアナウンスメント × 各2問 = 計4問
 - アナウンス長: 40-85語程度
-- アナウンス再生中は質問非表示 → 終了後に質問表示+15秒タイマー
+- アナウンス再生中は質問非表示 → 終了後に質問表示+20秒タイマー
 
 ### 場面設定（以下から選択）
 - "in a classroom" / "on the campus radio station" / "at a school event"
@@ -45,7 +45,7 @@ $ARGUMENTS
 - 既存の listening-announce.html の構造を完全に踏襲
 - Page 0: Instruction（音声自動再生、終了までNext無効）
 - アナウンスページ: 左に話者画像、右に問題（音声終了後表示）
-- 15秒タイマー（残5秒で赤色警告、0秒で自動次問題）
+- 20秒タイマー（残5秒で赤色警告、0秒で自動次問題）
 - 選択肢選択前はNext無効
 - フッター: Check All Answers / Reset All / Show All Answers
 - auth.js連携
