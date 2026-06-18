@@ -289,11 +289,11 @@ function selectOption(el){
 }
 
 /* ===== SENTENCE INSERTION ===== */
-var normalParagraphHTML = 'The researchers proposed that two main psychological processes explain this behavior. The first is diffusion of responsibility, which occurs when people assume someone else will take action. The second is pluralistic ignorance, in which individuals look to others for cues on how to react. If no one appears concerned, each person concludes that the situation is not serious. Together, these processes can prevent even well-meaning people from helping in critical moments.';
+var normalParagraphHTML = 'One particularly damaging mechanism involves how nicotine-like pesticides affect a forager bee\'s memory. Even sublethal doses can disrupt the bee\'s ability to remember the route from a food source back to its hive. Because honeybees rely on the experience of older foragers to teach younger workers, the loss of even a small number of veterans can ripple through the entire colony. Combined with the high mortality from mites, this creates a downward spiral from which the hive rarely recovers.';
 
 var insertionParagraphHTML = 'One particularly damaging mechanism involves how nicotine-like pesticides affect a forager bee\'s memory. <span class="insert-square" data-insert="A">\u25A0</span> Even sublethal doses can disrupt the bee\'s ability to remember the route from a food source back to its hive. <span class="insert-square" data-insert="B">\u25A0</span> Because honeybees rely on the experience of older foragers to teach younger workers, the loss of even a small number of veterans can ripple through the entire colony. <span class="insert-square" data-insert="C">\u25A0</span> Combined with the high mortality from mites, this creates a downward spiral from which the hive rarely recovers. <span class="insert-square" data-insert="D">\u25A0</span>';
 
-var insertSentenceText = "In other words, responsibility becomes spread across the group rather than felt by any single individual.";
+var insertSentenceText = "These bees never make it back, even though they are physically capable of flying.";
 var correctInsertion = "B";
 var insertionQuestionPage = 4;
 var selectedInsertionPoint = null;
@@ -327,11 +327,10 @@ function attachSquareListeners(){
 
 function rebuildParagraphWithInsertion(pos){
   var sentences = [
-    'The researchers proposed that two main psychological processes explain this behavior.',
-    'The first is diffusion of responsibility, which occurs when people assume someone else will take action.',
-    'The second is pluralistic ignorance, in which individuals look to others for cues on how to react.',
-    'If no one appears concerned, each person concludes that the situation is not serious.',
-    'Together, these processes can prevent even well-meaning people from helping in critical moments.'
+    'One particularly damaging mechanism involves how nicotine-like pesticides affect a forager bee\'s memory.',
+    'Even sublethal doses can disrupt the bee\'s ability to remember the route from a food source back to its hive.',
+    'Because honeybees rely on the experience of older foragers to teach younger workers, the loss of even a small number of veterans can ripple through the entire colony.',
+    'Combined with the high mortality from mites, this creates a downward spiral from which the hive rarely recovers.'
   ];
   var positions = ['A','B','C','D'];
   var html = '';
