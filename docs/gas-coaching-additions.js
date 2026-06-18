@@ -141,7 +141,7 @@ function sendCoachingConfirmationToUser_(email, userName, skills, lang) {
       '── About the session ──\n' +
       'The 60-minute session focuses entirely on the skills you selected:\n' +
       'explanation, feedback, and hands-on practice. Held on Google Meet.\n\n' +
-      'Questions? Reply to this email or contact TOEFL-Reps-tfpif@tckworkshop.co.jp.\n\n' +
+      'Questions? Reply to this email or contact reps-support@tckworkshop.co.jp.\n\n' +
       '— TCK Workshop / TCK Reps';
   } else {
     subject = '個別指導のお申込みありがとうございます — TCK Workshop';
@@ -169,7 +169,7 @@ function sendCoachingConfirmationToUser_(email, userName, skills, lang) {
       '── セッションについて ──\n' +
       'セッションでは、選択された技能に絞って、解説・添削・実践演習を行います。\n' +
       '1 セッション 60 分、Google Meet にて開催します。\n\n' +
-      'ご質問はこのメールに返信、または TOEFL-Reps-tfpif@tckworkshop.co.jp まで\n' +
+      'ご質問はこのメールに返信、または reps-support@tckworkshop.co.jp まで\n' +
       'ご連絡ください。\n\n' +
       '— TCK Workshop / TCK Reps';
   }
@@ -222,9 +222,9 @@ function sendCoachingNotificationToInstructor_(userId, userName, email, skills, 
 // instructor) = ~750 requests/day max. More than enough for this use
 // case.
 //
-// If you'd rather send from a Gmail alias (e.g. TOEFL-Reps-tfpif@tckworkshop.co.jp
+// If you'd rather send from a Gmail alias (e.g. reps-support@tckworkshop.co.jp
 // instead of the Apps Script owner's address), replace MailApp.sendEmail
-// with GmailApp.sendEmail and add { from: 'TOEFL-Reps-tfpif@tckworkshop.co.jp' } —
+// with GmailApp.sendEmail and add { from: 'reps-support@tckworkshop.co.jp' } —
 // but that requires the alias to be registered as a "send mail as"
 // address in the Apps Script owner's Gmail settings.
 //
