@@ -1,7 +1,7 @@
 /**
  * docs/gas-trial-listing.js
  *
- * 本番 Apps Script (TOEFL Reps Database に紐づくスクリプト) に追加するコード。
+ * 本番 Apps Script (TCK Reps Database に紐づくスクリプト) に追加するコード。
  * admin タブ「デモ版 回答一覧」が呼ぶ 2 つのエンドポイントを実装する。
  *
  * Speaking 録音は無料体験では未提供のため、recordings 系は対象外。

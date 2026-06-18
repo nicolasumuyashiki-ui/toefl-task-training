@@ -25,7 +25,7 @@
  *   the fallback path becomes dead code and no harm is done.
  *
  * INSTALLATION
- *   1. Open the GAS project bound to the TOEFL Reps Database
+ *   1. Open the GAS project bound to the TCK Reps Database
  *      spreadsheet.
  *   2. Locate the existing `handleGetSubscription_` (currently the
  *      one from gas-monitor-allowlist.js). REPLACE it with the
