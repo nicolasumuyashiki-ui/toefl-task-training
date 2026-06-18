@@ -85,6 +85,6 @@ TCK Workshop の TOEFL® 学習アプリ「TCK Reps」をご利用中の生徒�
 ## 8. 質問・相談先
 
 - 仕様の詳細・改善要望: Nicolas（プロダクト担当）
-- 生徒さんとの調整・スケジューリング: 事務局（TOEFL-Reps-tfpif@tckworkshop.co.jp）
+- 生徒さんとの調整・スケジューリング: 事務局（reps-support@tckworkshop.co.jp）
 
 ご不明点があればお気軽にお声がけください！
