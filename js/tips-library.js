@@ -18,7 +18,7 @@ window.TCK_TIPS = {
       "taskJp": "CTW"
     },
     {
-      "titleJp": "推測でも必ず埋めるAlways fill the blank",
+      "titleJp": "推測でも必ず埋める",
       "titleEn": "Always fill the blank",
       "bodyJp": "正解 → 得点／不正解 → 0 点／空欄 → 0 点。推測しないと損。",
       "bodyEn": "Correct → points · Wrong → 0 · Blank → 0. Guessing costs nothing.",

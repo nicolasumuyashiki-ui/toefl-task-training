@@ -360,7 +360,7 @@ body[data-lang="en"] .jp{display:none}
   }
 })();
 
-if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
+if(typeof Auth!=='undefined'){Auth.require();}
 var u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
 if(u.userName){
   document.getElementById('userName').textContent=u.userName;
