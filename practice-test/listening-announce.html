@@ -123,7 +123,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
 <nav class="top-nav">
     <img class="brand-logo" src="assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto;margin-right:12px"><div class="nav-left">Question <strong id="qNum">13</strong> of 24 &nbsp;|&nbsp; Listening</div>
     <div class="nav-right">
-        <div class="timer-display" id="timerDisplay">00:15</div>
+        <div class="timer-display" id="timerDisplay">00:20</div>
         <button class="btn-timer-toggle" id="btnTimerToggle" onclick="toggleTimer()">Hide Time</button>
         <div class="user-badge" id="userBadge"></div>
     </div>
@@ -226,7 +226,7 @@ const pages = [
 
 let currentPage = 0;
 let selectedAnswers = [null, null, null, null];
-let timeLeft = 15;
+let timeLeft = 20;
 let timerInterval = null;
 let timerHidden = false;
 let audioPlaying = false;
@@ -245,7 +245,7 @@ const elBtnNext = document.getElementById('btnNext');
 
 function startTimer(){
     clearInterval(timerInterval);
-    timeLeft=15;
+    timeLeft=20;
     updateTimerDisplay();
     elTimerDisplay.classList.remove('warning');
     timerInterval=setInterval(()=>{

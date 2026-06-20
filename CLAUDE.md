@@ -56,6 +56,9 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - index.html の認証ロジックを変更しない
 - 既存の問題ファイルの正解を勝手に変更しない（必ず確認を求めること）
 - **学習者の履歴・スコアを絶対にリセットしない**（下記「履歴は絶対にリセットしない」参照）
+- **朝次監査の修正実施時も同様**: バグ修正（タイマー・リンク・HTML 構造等）を行う場合でも、生徒の受講履歴・スコア
+  （localStorage `training_*` / `tck_*`、sessionStorage、サーバ ANSWERS / RECORDINGS / PT_RESULTS）には一切触れない。
+  これはすべての朝次監査で共通の不変ルール（`.claude/commands/audit.md` 禁止事項にも明記）。
 
 ## 履歴は絶対にリセットしない（最重要・再発防止）
 お客様の取り組み履歴・スコアは**サーバ（GAS の ANSWERS シート、userId 紐付け）が唯一の正本**。
