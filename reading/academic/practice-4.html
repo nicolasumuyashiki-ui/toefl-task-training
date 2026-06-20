@@ -518,7 +518,7 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'A','2':'C','3':'B','4':'A','5':'B','6':'D','7':'C','8':'B','9':'C','10':'D'};
+    var ca={'1':'A','2':'C','3':'B','4':'A','5':'B','6':'D','7':'C','8':'C','9':'C','10':'D'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
     var harderCorrect=0,harderTotal=0;['6','7','8','9','10'].forEach(function(k){harderTotal++;if(ans[k]===ca[k])harderCorrect++;});
@@ -608,9 +608,9 @@ function closeReview(){
 
 /* ===== SENTENCE INSERTION SETUP ===== */
 var normalParagraphHTML = 'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. Understanding how plants adjust their photosynthetic processes in response to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties that are more resilient to environmental stress. In this way, research into photosynthesis has implications that extend well beyond basic biology and into the fields of agriculture and food security.';
-var insertionParagraphHTML = 'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. <span class="insert-square" data-insert="A">\u25A0</span> Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress. <span class="insert-square" data-insert="B">\u25A0</span> In this way, photosynthesis research has implications extending well beyond basic biology, reaching into agriculture and food security. <span class="insert-square" data-insert="C">\u25A0</span>';
+var insertionParagraphHTML = '<span class="insert-square" data-insert="A">\u25A0</span> Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. <span class="insert-square" data-insert="B">\u25A0</span> Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress. <span class="insert-square" data-insert="C">\u25A0</span> In this way, photosynthesis research has implications extending well beyond basic biology, reaching into agriculture and food security. <span class="insert-square" data-insert="D">\u25A0</span>';
 var insertSentenceText = "Furthermore, these improved crops would be especially valuable in tropical regions, where rising temperatures already threaten staple food production.";
-var correctInsertion = "B";
+var correctInsertion = "C";
 var insertionQuestionPage = 8;
 var selectedInsertionPoint = null;
 var insertionPara = document.getElementById('insertionParagraph');
@@ -651,8 +651,9 @@ function rebuildParagraphWithInsertion(position){
     'Understanding how plants adjust their photosynthetic processes in response to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties that are more resilient to environmental stress.',
     'In this way, research into photosynthesis has implications that extend well beyond basic biology and into the fields of agriculture and food security.'
   ];
-  var labels = ['A','B','C'];
-  var html = '';
+  var labels = ['B','C','D'];
+  var html = '<span class="insert-square' + (position === 'A' ? ' selected-square' : '') + '" data-insert="A">■</span> ';
+  if(position === 'A'){ html += '<span class="inserted-sentence">' + insertSentenceText + '</span> '; }
   for(var i = 0; i < sentences.length; i++){
     html += sentences[i] + ' ';
     if(labels[i] === position){

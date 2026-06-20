@@ -56,6 +56,11 @@ speaking/ti/practice-{N}.html              — Take an Interview
 - index.html の認証ロジックを変更しない
 - 既存の問題ファイルの正解を勝手に変更しない（必ず確認を求めること）
 - **学習者の履歴・スコアを絶対にリセットしない**（下記「履歴は絶対にリセットしない」参照）
+- **監査・メンテナンスでの問題修正中も、生徒の受講履歴・スコアには絶対に変更を加えないこと**（全朝次監査で常に適用）。
+  問題ファイル・解答ページ・採点ロジック・タイマー・接頭辞・挿入問題などをどれだけ修正しても、
+  localStorage（`training_score_*` / `training_first_*` / `training_attempts_*` / `tck_done_*` / `tck_progress_*`）と
+  サーバ ANSWERS シートの既存行は一切消去・初期化・上書きしないこと。正本はサーバ側にあり、過去 attempt のスコアは不変。
+  採点ロジックの正解を変えた場合でも、それは「今後の attempt」にのみ適用され、保存済み履歴は遡及変更しない。
 
 ## 履歴は絶対にリセットしない（最重要・再発防止）
 お客様の取り組み履歴・スコアは**サーバ（GAS の ANSWERS シート、userId 紐付け）が唯一の正本**。
@@ -179,7 +184,7 @@ free-response タスク（Email / Discussion）の練習ページは、**完了�
 | Build a Sentence | **7 分（420秒）固定・10問** | 多数ソースが「10問・約7分（6:50≈7分）」で一致 |
 | Write an Email | 7 分 | ETS 公式 |
 | Academic Discussion | 10 分 | ETS 公式 |
-| RDL | 25 分 | 仕様書・オーバーレイ表示に整合 |
+| RDL | **10 分（600秒）** | 公式 Reading セクション全体が約30分・3タスク（CTW/RDL/Academic）構成、RDL 単独はその約1/3。仕様書・オーバーレイ・JS実装に整合（2026-06-20 是正：旧 25 分は長すぎた） |
 | Take an Interview | 45 秒/問 | 仕様書・表示に整合 |
 | Listen & Repeat | 文ごと | — |
 ※ Listening の問題別秒数は ETS 非公開のため設計判断。変更時はこの表とソース（Test Resources / Writing30 / Study.com 等）を更新。

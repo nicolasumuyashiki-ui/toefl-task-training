@@ -123,7 +123,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
 </head>
 <body>
-<div class="tck-instruction-overlay" id="tckInstructionOverlay"><div class="tck-instruction-card" role="dialog" aria-modal="true"><h2 class="tck-instruction-title">Read in Daily Life</h2><p class="tck-instruction-intro"><span class="jp">日常的な 2 つの文書を読み、それぞれに関する選択肢問題に答えます。</span><span class="en">Read two everyday documents and answer multiple-choice questions about each.</span></p><ul class="tck-instruction-points"><li><span class="jp">左パネルに文書が固定表示、右パネルに 1 問ずつ表示されます。</span><span class="en">The document stays on the left; questions appear one at a time on the right.</span></li><li><span class="jp">各選択肢は 4 択。一番適切なものを選んでください。</span><span class="en">Each question has 4 choices — pick the best one.</span></li><li><span class="jp">迷ったらスキャニング：キーワードの場所から答えを特定。</span><span class="en">Skim first, then scan for keywords when you need the answer.</span></li></ul><div class="tck-instruction-notice">⏱ <span class="jp">制限時間 25 分。「はじめる」をクリックするとタイマーがスタートします。</span><span class="en">Time limit: 25 minutes. The timer starts when you click Start.</span></div><button class="tck-instruction-start" type="button" onclick="tckStartTask()"><span class="jp">はじめる</span><span class="en">Start</span></button></div></div>
+<div class="tck-instruction-overlay" id="tckInstructionOverlay"><div class="tck-instruction-card" role="dialog" aria-modal="true"><h2 class="tck-instruction-title">Read in Daily Life</h2><p class="tck-instruction-intro"><span class="jp">日常的な 2 つの文書を読み、それぞれに関する選択肢問題に答えます。</span><span class="en">Read two everyday documents and answer multiple-choice questions about each.</span></p><ul class="tck-instruction-points"><li><span class="jp">左パネルに文書が固定表示、右パネルに 1 問ずつ表示されます。</span><span class="en">The document stays on the left; questions appear one at a time on the right.</span></li><li><span class="jp">各選択肢は 4 択。一番適切なものを選んでください。</span><span class="en">Each question has 4 choices — pick the best one.</span></li><li><span class="jp">迷ったらスキャニング：キーワードの場所から答えを特定。</span><span class="en">Skim first, then scan for keywords when you need the answer.</span></li></ul><div class="tck-instruction-notice">⏱ <span class="jp">制限時間 10 分。「はじめる」をクリックするとタイマーがスタートします。</span><span class="en">Time limit: 10 minutes. The timer starts when you click Start.</span></div><button class="tck-instruction-start" type="button" onclick="tckStartTask()"><span class="jp">はじめる</span><span class="en">Start</span></button></div></div>
 
 <!-- TOP NAV -->
 <div class="top-nav">
@@ -134,7 +134,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
   </div>
   <div class="top-nav-right">
     <button class="timer-btn" onclick="toggleTimer()">Hide Time</button>
-    <span class="timer-display" id="timerDisplay">25:00</span>
+    <span class="timer-display" id="timerDisplay">10:00</span>
     <button class="review-btn" onclick="openReview()">Review</button>
     <span class="user-badge" id="userBadge"></span>
   </div>
@@ -368,7 +368,7 @@ var currentQ = 1;
 var totalQ = 5;
 var userAnswers = {};
 var timerVisible = true;
-var timeLeft = 1500; // 10 minutes
+var timeLeft = 600; // 10 minutes
 var timerInterval;
 var storageKey = 'training_rdl_p8_answers';
 var timerKey = 'training_rdl_p8_timer';

@@ -518,7 +518,7 @@ function navigate(dir){
   var next = currentQ + dir;
   if(next < 1 || next > totalQ + 1) return;
   if(next > totalQ){
-    var ca={'1':'A','2':'B','3':'C','4':'D','5':'A','6':'A','7':'C','8':'B','9':'D','10':'B'};
+    var ca={'1':'A','2':'B','3':'C','4':'D','5':'A','6':'A','7':'C','8':'C','9':'D','10':'B'};
     var ans=JSON.parse(sessionStorage.getItem(storageKey)||'{}');
     var sc=0;for(var k in ca){if(ans[k]===ca[k])sc++;}
     var harderCorrect=0,harderTotal=0;['6','7','8','9','10'].forEach(function(k){harderTotal++;if(ans[k]===ca[k])harderCorrect++;});
@@ -608,9 +608,9 @@ function closeReview(){
 
 /* ===== SENTENCE INSERTION SETUP ===== */
 var normalParagraphHTML = 'Environmental factors have also shaped primate social behavior. In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced.';
-var insertionParagraphHTML = 'Environmental factors have also shaped primate social behavior. <span class="insert-square" data-insert="A">\u25A0</span> In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. <span class="insert-square" data-insert="B">\u25A0</span> In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced. <span class="insert-square" data-insert="C">\u25A0</span>';
+var insertionParagraphHTML = '<span class="insert-square" data-insert="A">\u25A0</span> Environmental factors have also shaped primate social behavior. <span class="insert-square" data-insert="B">\u25A0</span> In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. <span class="insert-square" data-insert="C">\u25A0</span> In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced. <span class="insert-square" data-insert="D">\u25A0</span>';
 var insertSentenceText = "As a result, these larger groups develop complex social hierarchies in which individuals must constantly compete for access to limited food supplies.";
-var correctInsertion = "B";
+var correctInsertion = "C";
 var insertionQuestionPage = 8;
 var selectedInsertionPoint = null;
 var insertionPara = document.getElementById('insertionParagraph');
@@ -651,8 +651,9 @@ function rebuildParagraphWithInsertion(position){
     'In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators.',
     'In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced.'
   ];
-  var labels = ['A','B','C'];
-  var html = '';
+  var labels = ['B','C','D'];
+  var html = '<span class="insert-square' + (position === 'A' ? ' selected-square' : '') + '" data-insert="A">■</span> ';
+  if(position === 'A'){ html += '<span class="inserted-sentence">' + insertSentenceText + '</span> '; }
   for(var i = 0; i < sentences.length; i++){
     html += sentences[i] + ' ';
     if(labels[i] === position){

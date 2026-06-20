@@ -384,7 +384,7 @@ document.getElementById('reviewOverlay').addEventListener('click', function(e){
 
 /* ===== SAVE SCORES & NAVIGATE TO MODULE 2 ===== */
 function saveM1Scores(){
-  var correctAnswers = {q16:'C', q17:'B', q18:'A', q19:'B', q20:'D'};
+  var correctAnswers = {q16:'C', q17:'B', q18:'A', q20:'D'}; /* q19 is sentence-insertion, scored below via selectedInsertionPoint */
   var correct = 0;
   for(var k in correctAnswers){
     if(userAnswers[k] === correctAnswers[k]) correct++;
