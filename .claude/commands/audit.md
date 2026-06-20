@@ -84,6 +84,11 @@ $ARGUMENTS
 - `index.html` の認証ロジックを変更しない
 - 既存の問題ファイルの正解を勝手に変更しない
 - `report-only` モードでは commit / push を一切行わない
+- **`fix` モードで修正を実施する場合でも、生徒の受講履歴・スコアには絶対に変更を加えない**
+  （localStorage `training_score_*` / `training_first_*` / `training_attempts_*` / `tck_done_*` /
+  `tck_progress_*`、sessionStorage、サーバ ANSWERS / RECORDINGS / PT_RESULTS シート）。
+  監査修正はタイマー値・リンク・HTML 構造・表示文字列など UI/整合性に限定し、履歴永続化コード
+  （`Api.saveAnswers` 呼び出し・履歴キーの読み書き）は触れない。これは**すべての朝次監査で共通の不変ルール**。
 
 ## 過去の見落とし（チェック追加履歴）
 - 2026-05-18: 項目 #8（lang-toggle handler 欠落）と #9（script 読み込み順）を追加。Academic Passage の answers ページで EN ボタンが機能しないバグ、および練習ページで progress.js が後から読み込まれフローティング UI が出ないバグを見逃したため。
