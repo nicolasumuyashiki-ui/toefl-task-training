@@ -182,7 +182,7 @@ free-response タスク（Email / Discussion）の練習ページは、**完了�
 | Build a Sentence | **7 分（420秒）固定・10問** | 多数ソースが「10問・約7分（6:50≈7分）」で一致 |
 | Write an Email | 7 分 | ETS 公式 |
 | Academic Discussion | 10 分 | ETS 公式 |
-| RDL | 25 分 | 仕様書・オーバーレイ表示に整合 |
+| RDL | 10 分 | Reading 全体 約30分を CTW/RDL/Academic で配分。RDL 単独25分は不成立のため約10分（ETS は問題別非公開・設計判断） |
 | Take an Interview | 45 秒/問 | 仕様書・表示に整合 |
 | Listen & Repeat | 文ごと | — |
 ※ Listening の問題別秒数は ETS 非公開のため設計判断。変更時はこの表とソース（Test Resources / Writing30 / Study.com 等）を更新。
