@@ -86,16 +86,70 @@ var Api = {
   saveAnswers: function(setName, answers, score, meta) {
     var user = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     meta = meta || {};
-    var url = API_URL + '?action=saveAnswers'
+    var answersStr = JSON.stringify(answers == null ? '' : answers);
+    /* Transport: small payloads keep the proven JSONP GET (it also survives
+       an immediate page navigation, e.g. CTW jumping straight to the next
+       set right after saving). Large payloads — free-response essays
+       (Email / Discussion) — make the GET URL longer than the GAS Web App
+       accepts, so the request silently failed and the essay never reached
+       the ANSWERS sheet. Those go out as a hidden-iframe POST instead (same
+       reliable mechanism uploadRecording uses; GAS doPost ->
+       handleSaveAnswersPost_). Free-response pages don't navigate right
+       after saving, so the POST has time to complete. Either way it's
+       fire-and-forget (verified via the ANSWERS sheet). */
+    var getUrl = API_URL + '?action=saveAnswers'
       + '&userId=' + encodeURIComponent(user.userId || '')
       + '&userName=' + encodeURIComponent(user.userName || '')
-      + '&set=' + encodeURIComponent(setName)
-      + '&answers=' + encodeURIComponent(JSON.stringify(answers))
-      + '&score=' + encodeURIComponent(score)
+      + '&set=' + encodeURIComponent(setName || '')
+      + '&answers=' + encodeURIComponent(answersStr)
+      + '&score=' + encodeURIComponent(score == null ? '' : score)
       + '&harderCorrect=' + encodeURIComponent(meta.harderCorrect || 0)
       + '&harderTotal=' + encodeURIComponent(meta.harderTotal || 0)
-      + '&attemptNumber=' + encodeURIComponent(meta.attemptNumber || 1);
-    return _jsonpRequest(url);
+      + '&attemptNumber=' + encodeURIComponent(meta.attemptNumber || 1)
+      + '&total=' + encodeURIComponent(meta.total || 0);
+    if (getUrl.length <= 1500) return _jsonpRequest(getUrl);
+    var data = {
+      action:        'saveAnswers',
+      userId:        user.userId   || '',
+      userName:      user.userName || '',
+      set:           setName       || '',
+      answers:       answersStr,
+      score:         String(score == null ? '' : score),
+      harderCorrect: String(meta.harderCorrect || 0),
+      harderTotal:   String(meta.harderTotal   || 0),
+      attemptNumber: String(meta.attemptNumber || 1),
+      total:         String(meta.total || 0)
+    };
+    return new Promise(function(resolve){
+      var name = 'gasSave_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+      var iframe = document.createElement('iframe');
+      iframe.name = name; iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      var form = document.createElement('form');
+      form.method = 'POST'; form.action = API_URL; form.target = name;
+      form.enctype = 'application/x-www-form-urlencoded'; form.acceptCharset = 'UTF-8';
+      form.style.display = 'none';
+      Object.keys(data).forEach(function(k){
+        var inp = document.createElement('input');
+        inp.type = 'hidden'; inp.name = k; inp.value = data[k];
+        form.appendChild(inp);
+      });
+      document.body.appendChild(form);
+
+      var done = false;
+      function cleanup(result){
+        if (done) return; done = true;
+        setTimeout(function(){
+          try { form.parentNode && form.parentNode.removeChild(form); } catch(e){}
+          try { iframe.parentNode && iframe.parentNode.removeChild(iframe); } catch(e){}
+        }, 250);
+        resolve(result);
+      }
+      iframe.onload = function(){ cleanup({ success: true }); };
+      setTimeout(function(){ cleanup({ success: true, timeout: true }); }, 30000);
+      try { form.submit(); } catch(e){ cleanup({ success: false, error: String(e) }); }
+    });
   },
 
   /* Admin endpoints — require staff id/pass.
