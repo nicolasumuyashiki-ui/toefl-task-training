@@ -35,13 +35,22 @@
 /* Monitor / comp-tier accounts — these emails get an "active"
    subscription synthesised by GAS, so they can use all paid features
    without going through Stripe. The list lives server-side so it
-   never appears in the browser. Lowercase. */
+   never appears in the browser. Lowercase.
+
+   This list also covers GOODWILL LIFETIME COMPS — paying customers we
+   have granted free-forever access (e.g. as compensation). Mark each
+   with a dated comment so nobody removes them later thinking they are a
+   stale monitor. IMPORTANT: adding an email here grants APP ACCESS at
+   ¥0, but does NOT cancel that person's existing Stripe subscription —
+   to actually stop charging a paying customer you must ALSO cancel
+   their subscription in the Stripe Dashboard. */
 var MONITOR_EMAILS = [
   'saekadowaki322@gmail.com',
   'bellsince2004@gmail.com',
   'mkusunoki0811@gmail.com',
   'soccerzurdo1@gmail.com',
-  'nanasey103@gmail.com'
+  'nanasey103@gmail.com',
+  'soichiro941@gmail.com'   // 前田 宗一郎 — goodwill lifetime comp (2026-06, free forever)
 ];
 
 function isMonitorEmail_(email) {
