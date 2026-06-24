@@ -5,6 +5,22 @@
   function key(task, practice){ return 'tck_progress_' + task + '_p' + practice; }
   var lang = (localStorage.getItem('tck_lang') || 'jp');
 
+  /* Lazily ensure api.js is present so we can mirror the in-progress snapshot
+     to the server (some practice pages don't include api.js). cb always fires
+     — if api.js can't be loaded the callers simply skip the server call. */
+  var _apiLoading = null;
+  function _ensureApi(cb){
+    if (typeof Api !== 'undefined' && Api.saveProgress) return cb();
+    if (_apiLoading){ _apiLoading.then(cb, cb); return; }
+    var src = '';
+    var sc = document.getElementsByTagName('script');
+    for (var i=0;i<sc.length;i++){ if (/\/progress\.js(\?|#|$)/.test(sc[i].src||'')){ src = sc[i].src; break; } }
+    if (!src) return cb();
+    var apiSrc = src.replace(/\/progress\.js(\?[^#]*)?(#.*)?$/, '/api.js');
+    _apiLoading = new Promise(function(res){ var t=document.createElement('script'); t.src=apiSrc; t.onload=function(){res();}; t.onerror=function(){res();}; document.head.appendChild(t); });
+    _apiLoading.then(cb, cb);
+  }
+
   /* Apply body[data-lang] so .jp/.en spans work on every page that
      loads this script, not just those that explicitly add the toggle. */
   function applyLangToBody(){
@@ -45,15 +61,18 @@
   function t(k){ return (strings[lang] || strings.jp)[k]; }
 
   function save(task, practice, state){
-    try {
-      localStorage.setItem(key(task,practice), JSON.stringify(Object.assign({ updatedAt: Date.now() }, state||{})));
-    } catch(e){}
+    var snap = Object.assign({ updatedAt: Date.now() }, state||{});
+    try { localStorage.setItem(key(task,practice), JSON.stringify(snap)); } catch(e){}
+    // Mirror to the server so the practice can be resumed on another device.
+    _ensureApi(function(){ try { if (Api && Api.saveProgress) Api.saveProgress(task, practice, snap); } catch(e){} });
   }
   function load(task, practice){
     try { return JSON.parse(localStorage.getItem(key(task,practice))); } catch(e){ return null; }
   }
   function clear(task, practice){
     try { localStorage.removeItem(key(task,practice)); } catch(e){}
+    // Remove the server snapshot too (completed or restarted → no longer in progress).
+    _ensureApi(function(){ try { if (Api && Api.clearProgress) Api.clearProgress(task, practice); } catch(e){} });
   }
   function hasSaved(task, practice){ return !!load(task,practice); }
 
@@ -72,10 +91,28 @@
   }
 
   /* Resume modal — calls onResume(savedState) or onRestart() based on choice.
-     If no saved state, onRestart() fires immediately. */
+     If no LOCAL snapshot, fall back to the SERVER snapshot (resume on another
+     device); if neither, onRestart() fires. */
   function promptResume(task, practice, callbacks){
     var saved = load(task,practice);
-    if (!saved){ if(callbacks && callbacks.onRestart) callbacks.onRestart(); return; }
+    if (saved){ _showResumeModal(task, practice, saved, callbacks); return; }
+    _ensureApi(function(){
+      if (typeof Api === 'undefined' || !Api.getProgress){ if(callbacks && callbacks.onRestart) callbacks.onRestart(); return; }
+      Api.getProgress().then(function(res){
+        var found = null;
+        if (res && res.success && res.progress){
+          for (var i=0;i<res.progress.length;i++){
+            var pr = res.progress[i];
+            if (String(pr.task)===String(task) && String(pr.practice)===String(practice) && pr.state){ found = pr.state; break; }
+          }
+        }
+        if (found){ try { localStorage.setItem(key(task,practice), JSON.stringify(found)); } catch(e){} _showResumeModal(task, practice, found, callbacks); }
+        else if (callbacks && callbacks.onRestart) callbacks.onRestart();
+      }).catch(function(){ if(callbacks && callbacks.onRestart) callbacks.onRestart(); });
+    });
+  }
+
+  function _showResumeModal(task, practice, saved, callbacks){
     var ov = document.createElement('div');
     ov.className = 'tck-resume-overlay';
     function dual(k){ return '<span class="jp">' + strings.jp[k] + '</span><span class="en">' + strings.en[k] + '</span>'; }

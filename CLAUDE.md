@@ -105,6 +105,17 @@ speaking/ti/practice-{N}.html              — Take an Interview
 `auth.js` の `maybeShowRetryModal` は **1 practice につきセッション 1 回だけ**表示する（`sessionStorage tck_retry_shown_<task>_p<N>`）。
 CTW の Set1→Set2 等、複数ページにまたがる practice で毎回出ないようにするため。「practice 開始時だけ」が要件。
 
+### バッジは「ベスト（最高点）」表示
+メニューのスコアバッジは **最高点**を表示する（`training_best_<task>_p<N>`）。誤って開いて0点を保存しても下がらない。
+`history-sync.applyAttempts` がサーバ全 attempt から set ごとの最高点を集計し、`auth.js` の完了フックも「より高い時だけ」更新する。
+`training_score_*`（最新）は my-score の最近表示用に保持、`training_first_*`（初回）は予想スコア用。`readScore` は best を優先。
+
+### 中断（Resume）のサーバ同期＝別端末で再開できる
+中断スナップショット（`tck_progress_*`）は **サーバにも同期**する（別端末で「最初から」になるのを防ぐ）。
+- `progress.js`：`save()`→`Api.saveProgress`（POST/大きい本文対応）、`clear()`→`Api.clearProgress`、`promptResume()` はローカルが無ければ `Api.getProgress` で**サーバから復元**。`api.js` 未読込のページでも遅延ロードする。
+- `history-sync` の `mirrorProgress()` がメニュー hydrate 時にサーバの中断をローカル `tck_progress_*` へ写し、別端末でも「中断中」バッジが出る。
+- サーバ本体は `docs/gas-progress-sync.js`（`PROGRESS` シート、userId+task+practice で upsert）。**未デプロイでも従来どおりローカル中断で動作**（degrade）。
+
 ## Writing 完了時の markDone / clear（再発防止）
 free-response タスク（Email / Discussion）の練習ページは、**完了関数（`finishWriting`/`complete`）の中で**
 `TCKProgress.clear()` と `TCKProgress.markDone()` を呼ぶこと。これを誤って `resetAll()`（リセットボタン）側に

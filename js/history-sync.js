@@ -43,6 +43,16 @@
   function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
   function parse(s) { try { return JSON.parse(s); } catch (e) { return null; } }
 
+  // Best-score store for the menu badge: a worse retake must never lower it.
+  function bumpBest(gk, correct, total) {
+    if (!(total > 0) || typeof correct !== 'number') return;
+    var cur = parse(lsGet('training_best_' + gk));
+    var better = !cur || typeof cur.correct !== 'number' || typeof cur.total !== 'number' || !(cur.total > 0)
+      || (correct / total) > (cur.correct / cur.total)
+      || ((correct / total) === (cur.correct / cur.total) && total > cur.total);
+    if (better) lsSet('training_best_' + gk, JSON.stringify({ correct: correct, total: total }));
+  }
+
   function userId() {
     var u = parse(ssGet('kickstart_user')) || {};
     return u.userId || '';
@@ -66,6 +76,9 @@
      then the locked-in first attempt. Returns {correct,total} or null. */
   function readScore(task, practice) {
     var k = task + '_p' + practice;
+    // Menu badge shows the BEST score (a worse retake won't lower it).
+    var best = parse(lsGet('training_best_' + k));
+    if (best && typeof best.total === 'number' && best.total > 0 && typeof best.correct === 'number') return best;
     var d = parse(ssGet('training_score_' + k))
          || parse(lsGet('training_score_' + k))
          || parse(lsGet('training_first_' + k));
@@ -100,7 +113,7 @@
       var setKeys = Object.keys(buckets);
 
       // Sum across sets (CTW has Set 1 + Set 2; everything else is one bucket).
-      var firstCorrect = 0, firstTotal = 0, latestCorrect = 0, latestTotal = 0;
+      var firstCorrect = 0, firstTotal = 0, latestCorrect = 0, latestTotal = 0, bestCorrect = 0, bestTotal = 0;
       var graded = false, maxAttempts = 0, latestUnscoredTs = '';
       var latestTs = '', firstTs = '';
       setKeys.forEach(function (sk) {
@@ -112,6 +125,10 @@
           graded = true;
           firstCorrect += (first.score || 0); firstTotal += first.total;
           latestCorrect += (latest.score || 0); latestTotal += latest.total;
+          // Best attempt for this set (highest score) → drives the menu badge.
+          var bestRow = null;
+          rows.forEach(function (r) { if (r.total > 0 && r.score !== null && (bestRow === null || (r.score || 0) > (bestRow.score || 0))) bestRow = r; });
+          if (bestRow) { bestCorrect += (bestRow.score || 0); bestTotal += bestRow.total; }
           if ((latest.ts || '') > latestTs) latestTs = latest.ts || '';
           if (!firstTs || (first.ts || '') < firstTs) firstTs = first.ts || '';
         } else {
@@ -123,6 +140,8 @@
         // Latest score → always refresh from server truth (carry the
         // timestamp so my-score can show WHEN it was done).
         lsSet('training_score_' + gk, JSON.stringify({ correct: latestCorrect, total: latestTotal, updatedAt: latestTs }));
+        // Best score → what the menu badge shows (never lowered by a worse retake).
+        bumpBest(gk, bestCorrect, bestTotal);
         // First attempt → set only if absent (preserve locally-captured first).
         if (!lsGet('training_first_' + gk)) {
           lsSet('training_first_' + gk, JSON.stringify({ correct: firstCorrect, total: firstTotal, capturedAt: firstTs }));
@@ -162,6 +181,7 @@
       try { sessionStorage.setItem(cacheKey, JSON.stringify({ at: Date.now(), attempts: res.attempts })); } catch (e) {}
       applyAttempts(res.attempts);
       reconcile(res.attempts);   // push back any local completions the server is missing
+      mirrorProgress();          // pull server in-progress into local so the 中断中 badge shows cross-device
       cb(true);
     }).catch(function () {
       _inflight = null;
@@ -289,6 +309,22 @@
     });
   }
 
+  /* Pull the user's server-side in-progress snapshots into local
+     tck_progress_* (set-if-absent) so the menu "中断中" badge appears on any
+     device. The practice page's own promptResume also falls back to the
+     server, so resume works even when opened directly. Best-effort. */
+  function mirrorProgress() {
+    if (typeof Api === 'undefined' || !Api.getProgress) return;
+    Api.getProgress().then(function (res) {
+      if (!res || !res.success || !Array.isArray(res.progress)) return;
+      res.progress.forEach(function (pr) {
+        if (!pr || !pr.task || !pr.practice || !pr.state) return;
+        var k = 'tck_progress_' + pr.task + '_p' + pr.practice;
+        if (!lsGet(k)) { try { lsSet(k, JSON.stringify(pr.state)); } catch (e) {} }
+      });
+    }).catch(function () {});
+  }
+
   global.TCKHistory = {
     readScore: readScore,
     isDone: isDone,
@@ -298,6 +334,7 @@
     renderMenu: renderMenu,
     applyAttempts: applyAttempts,
     reconcile: reconcile,
+    mirrorProgress: mirrorProgress,
     parseSet: parseSet
   };
 })(window);

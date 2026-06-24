@@ -240,6 +240,57 @@ var Api = {
       + '&pass=' + encodeURIComponent(p));
   },
 
+  /* ---- Cross-device "中断 / Resume" sync (see docs/gas-progress-sync.js) ----
+     The in-progress snapshot a learner leaves mid-practice is mirrored to the
+     server so it can be resumed on another device. saveProgress uses the same
+     small->GET / large->POST hybrid as saveAnswers (Discussion snapshots carry
+     the essay text). Best-effort: if the GAS endpoints aren't deployed yet the
+     client just falls back to the local snapshot. */
+  saveProgress: function(task, practice, state) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    if (!u.userId) return Promise.resolve(null);
+    var stateStr = JSON.stringify(state == null ? {} : state);
+    var getUrl = API_URL + '?action=saveProgress'
+      + '&userId=' + encodeURIComponent(u.userId)
+      + '&task=' + encodeURIComponent(task)
+      + '&practice=' + encodeURIComponent(practice)
+      + '&state=' + encodeURIComponent(stateStr);
+    if (getUrl.length <= 1500) return _jsonpRequest(getUrl).catch(function(){ return null; });
+    var data = { action:'saveProgress', userId:u.userId, task:String(task), practice:String(practice), state:stateStr };
+    return new Promise(function(resolve){
+      var name = 'gasProg_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+      var iframe = document.createElement('iframe'); iframe.name = name; iframe.style.display = 'none'; document.body.appendChild(iframe);
+      var form = document.createElement('form');
+      form.method = 'POST'; form.action = API_URL; form.target = name;
+      form.enctype = 'application/x-www-form-urlencoded'; form.acceptCharset = 'UTF-8'; form.style.display = 'none';
+      Object.keys(data).forEach(function(k){ var i = document.createElement('input'); i.type='hidden'; i.name=k; i.value=data[k]; form.appendChild(i); });
+      document.body.appendChild(form);
+      var done = false;
+      function cleanup(r){ if(done) return; done = true; setTimeout(function(){ try{form.parentNode&&form.parentNode.removeChild(form);}catch(e){} try{iframe.parentNode&&iframe.parentNode.removeChild(iframe);}catch(e){} }, 250); resolve(r); }
+      iframe.onload = function(){ cleanup({ success:true }); };
+      setTimeout(function(){ cleanup({ success:true, timeout:true }); }, 30000);
+      try { form.submit(); } catch(e){ cleanup({ success:false }); }
+    });
+  },
+
+  getProgress: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=getProgress'
+      + '&id='   + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
+  },
+
+  clearProgress: function(task, practice, id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=clearProgress'
+      + '&id='   + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p)
+      + '&task=' + encodeURIComponent(task)
+      + '&practice=' + encodeURIComponent(practice)).catch(function(){ return null; });
+  },
+
   /* Fetch the saved `answers` JSON for a specific attempt (admin only).
      Used by the answer pages when opened with ?fromAdmin=1 to overlay
      the student's actual submission on top of the answer key. */
