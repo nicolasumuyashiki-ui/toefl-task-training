@@ -140,6 +140,21 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
 .karte-activity .atable th{background:transparent;color:var(--ink-500);font-size:.74em;font-weight:700;padding:8px 10px;border-bottom:1px solid var(--paper)}
 .karte-activity .atable th:hover{background:transparent;color:var(--green-dark)}
 .karte-activity .atable td{padding:8px 10px;border-bottom:1px solid rgba(245,233,211,.6)}
+/* ② student-menu badge preview (emergency verification) */
+.menu-preview{margin-top:26px}
+.menu-preview>h4{font-family:var(--font-en);font-size:.78em;font-weight:700;color:var(--green-dark);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.menu-preview .mp-note{font-size:.78em;color:var(--ink-500);margin-bottom:12px}
+.mp-task{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid rgba(245,233,211,.6)}
+.mp-task .mp-label{flex:0 0 150px;font-size:.82em;font-weight:700;color:var(--green-deep)}
+.mp-chips{display:flex;flex-wrap:wrap;gap:6px}
+.mp-chip{font-family:var(--font-en);font-size:.74em;font-weight:700;padding:4px 9px;border-radius:6px;display:inline-flex;gap:5px;align-items:center;white-space:nowrap}
+.mp-chip .pno{opacity:.7;font-weight:600}
+.mp-chip.done100{background:var(--green);color:#fff}
+.mp-chip.done80{background:var(--sky);color:#fff}
+.mp-chip.done50{background:var(--gold);color:var(--green-deep)}
+.mp-chip.doneLow{background:#B85C3C;color:#fff}
+.mp-chip.submitted{background:var(--green-deep);color:#fff}
+.mp-chip.inprog{background:#FFE8AE;color:#8A6D2A}
 
 /* ===== PROGRESS MATRIX ===== */
 .matrix-wrap{background:#fff;border:1px solid var(--paper);border-radius:10px;overflow:hidden}
@@ -148,6 +163,12 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
 .matrix-table th.sticky-col{position:sticky;left:0;background:var(--green-deep);z-index:2}
 .matrix-table td.sticky-col{position:sticky;left:0;background:#fff;z-index:1;border-right:1px solid var(--paper)}
 .matrix-table tbody tr:nth-child(even) td.sticky-col{background:rgba(245,233,211,.15)}
+/* ① sticky task-header row: give the matrix its own scroll viewport (the
+   overflow-x wrapper would otherwise make vertical position:sticky stick to
+   a non-scrolling box), then pin the header row + top-left corner. */
+#panel-progress .table-scroll{max-height:calc(100vh - 168px);overflow:auto}
+.matrix-table thead th{position:sticky;top:0;z-index:3;background:var(--green-deep)}
+.matrix-table thead th.sticky-col{top:0;left:0;z-index:5}
 .cell-score{font-family:var(--font-en);font-size:.78em;font-weight:700;padding:6px 10px;border-radius:6px;display:inline-block;min-width:48px;text-align:center}
 .cell-score.s100{background:var(--green);color:#fff}
 .cell-score.s80{background:var(--sky);color:#fff}
@@ -1091,15 +1112,47 @@ function renderKarteDetail() {
   const total120Proj = pred.total > 0 ? Math.round(pred.total * 4 / 3) : 0;
   const totalBandStr = pred.total > 0 ? formatBand(totalToBand(total120Proj)) : '—';
   const totalPredBlock = pred.total > 0
-    ? '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-dark));color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase">Predicted TOEFL® Total</div><div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.55);margin-top:2px">R+L+W のみ（Speaking 採点なし）／ Band は 120 換算</div></div><div style="text-align:right"><div style="font-family:var(--font-en);font-size:2.2em;font-weight:800;letter-spacing:-0.02em;line-height:1"><span>' + pred.total + '</span><span style="font-size:.4em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 90</span></div><div style="font-family:var(--font-en);font-size:1em;font-weight:700;color:var(--gold);margin-top:4px">Band ' + totalBandStr + '<span style="font-size:.6em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 6.0</span></div></div></div>'
+    ? '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-dark));color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase">Predicted TOEFL® Total</div><div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.55);margin-top:2px">R+L+W を 120 点満点に換算（Speaking は推定）</div></div><div style="text-align:right"><div style="font-family:var(--font-en);font-size:2.2em;font-weight:800;letter-spacing:-0.02em;line-height:1"><span>' + total120Proj + '</span><span style="font-size:.4em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 120</span></div><div style="font-family:var(--font-en);font-size:1em;font-weight:700;color:var(--gold);margin-top:4px">Band ' + totalBandStr + '<span style="font-size:.6em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 6.0</span></div></div></div>'
     : '';
-  const recent = attempts.slice().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, 12);
-  const activityRows = recent.map(a => {
+  const allAtts = attempts.slice().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  const activityRows = allAtts.map(a => {
     const status = '<span class="pill ' + a.status + '">' + (GRADE_LABELS[a.status] || a.status) + '</span>';
     const score = (a.status === 'inprog' || !a.autoGraded) ? '—' : (a.score + '%');
     const viewBtn = '<button class="link-btn" onclick="viewStudentAnswers(\'' + a.userId + '\',\'' + a.task + '\',' + a.practice + ',\'' + (a.set || '') + '\')">回答を見る</button>';
     return '<tr><td class="muted">' + a.updatedAt + '</td><td><span class="task-tag">' + a.taskLabel + '</span></td><td>P' + a.practice + '</td><td class="num">' + score + '</td><td>' + status + '</td><td>' + viewBtn + '</td></tr>';
   }).join('');
+  /* ② Student-menu preview — mirror the badge each practice would show on
+     the learner's own menu (best score / 提出 / 中断中), rebuilt from server
+     attempts, so staff can verify badges in an emergency. Completion always
+     supersedes 中断中, exactly like the student menu. */
+  const previewTasks = TASKS.map(t => {
+    const items = attempts.filter(a => a.task === t.key);
+    if (!items.length) return '';
+    const byP = {};
+    items.forEach(a => { (byP[a.practice] = byP[a.practice] || []).push(a); });
+    const chips = Object.keys(byP).map(Number).sort((a, b) => a - b).map(pnum => {
+      const arr = byP[pnum];
+      const ntry = arr.length;
+      const scored = arr.filter(a => a.score !== null);
+      const submitted = arr.filter(a => a.status === 'submitted');
+      let cls, txt;
+      if (t.autoGraded && scored.length) {
+        const best = Math.max.apply(null, scored.map(a => a.score));
+        cls = best === 100 ? 'done100' : best >= 80 ? 'done80' : best >= 50 ? 'done50' : 'doneLow';
+        txt = best + '%';
+      } else if (!t.autoGraded && submitted.length) {
+        cls = 'submitted'; txt = '提出';
+      } else {
+        cls = 'inprog'; txt = '中断中';
+      }
+      const cnt = ntry > 1 ? ' <span class="pno">\u00d7' + ntry + '</span>' : '';
+      return '<span class="mp-chip ' + cls + '" title="' + ntry + '\u56de \u53d6\u308a\u7d44\u307f">P' + pnum + ' ' + txt + cnt + '</span>';
+    }).join('');
+    return '<div class="mp-task"><div class="mp-label">' + t.label + '</div><div class="mp-chips">' + chips + '</div></div>';
+  }).filter(Boolean).join('');
+  const previewBlock = previewTasks
+    ? '<div class="menu-preview"><h4>\u751f\u5f92\u30e1\u30cb\u30e5\u30fc \u30d7\u30ec\u30d3\u30e5\u30fc \u00b7 \u3053\u306e\u751f\u5f92\u306b\u8868\u793a\u3055\u308c\u308b\u30d0\u30c3\u30b8</h4><div class="mp-note">\u30b5\u30fc\u30d0\u5c65\u6b74\u304b\u3089\u518d\u73fe\u3057\u305f\u3001\u751f\u5f92\u306e\u30e1\u30cb\u30e5\u30fc\u753b\u9762\u306b\u51fa\u308b\u306f\u305a\u306e\u30d0\u30c3\u30b8\uff08\u30d9\u30b9\u30c8\u6b63\u89e3\u7387\uff0f\u63d0\u51fa\uff0f\u4e2d\u65ad\u4e2d\uff09\u3002\u7dca\u6025\u6642\u306e\u7167\u5408\u7528\u3002</div>' + previewTasks + '</div>'
+    : '';
   /* Active-now badge: green dot if last_seen within 5 min, soft tag
      for last login time. Both flow from the GAS USERS sheet (live
      mode only — mock users won't have these fields). */
@@ -1110,7 +1163,8 @@ function renderKarteDetail() {
   el.innerHTML = '<div class="karte-head"><h3>' + escapeHtml(u.userName) + ' <span style="color:var(--ink-500);font-weight:500;font-size:.7em">(' + u.displayName + ')</span>' + activeDot + '</h3><div class="kmeta">' + u.userId + ' · ' + escapeHtml(u.email) + ' · 登録 ' + u.joined + loginTag + '</div></div>'
     + totalPredBlock
     + '<div class="skill-scores">' + sectionBlocks + '</div>'
-    + '<div class="karte-activity"><h4>Recent activity · 最新の学習履歴</h4><table class="atable"><thead><tr><th>日付</th><th>タスク</th><th>Practice</th><th class="num">スコア</th><th>評価</th><th>回答</th></tr></thead><tbody>' + activityRows + '</tbody></table></div>';
+    + '<div class="karte-activity"><h4>全学習履歴（新しい順） · ' + allAtts.length + ' 件</h4><table class="atable"><thead><tr><th>日付</th><th>タスク</th><th>Practice</th><th class="num">スコア</th><th>評価</th><th>回答</th></tr></thead><tbody>' + activityRows + '</tbody></table></div>'
+    + previewBlock;
 }
 
 /* ============================================================
@@ -1163,7 +1217,7 @@ function renderProgress() {
     const wCell = scaledCell(pred.writing, true);
     const sCell = scaledCell(pred.speaking, true);
     const totalCell = pred.total > 0
-      ? '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span style="font-family:var(--font-en);font-size:1em;font-weight:800;color:var(--gold);letter-spacing:-0.01em">' + pred.total + '<span style="font-size:.72em;color:rgba(255,255,255,.5);font-weight:500;margin-left:2px">/90</span></span><div style="font-family:var(--font-en);font-size:.72em;color:rgba(255,255,255,.75);font-weight:700;margin-top:2px">Band ' + formatBand(totalToBand(Math.round(pred.total * 4 / 3))) + '</div></td>'
+      ? '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span style="font-family:var(--font-en);font-size:1em;font-weight:800;color:var(--gold);letter-spacing:-0.01em">' + Math.round(pred.total * 4 / 3) + '<span style="font-size:.72em;color:rgba(255,255,255,.5);font-weight:500;margin-left:2px">/120</span></span><div style="font-family:var(--font-en);font-size:.72em;color:rgba(255,255,255,.75);font-weight:700;margin-top:2px">Band ' + formatBand(totalToBand(Math.round(pred.total * 4 / 3))) + '</div></td>'
       : '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span class="cell-none" style="color:rgba(255,255,255,.3)">—</span></td>';
     return '<tr><td class="sticky-col"><strong>' + escapeHtml(u.userName) + '</strong><div style="font-size:.82em;color:var(--ink-500);font-family:var(--font-en)">' + u.userId + '</div></td>' + cells + rCell + lCell + wCell + sCell + totalCell + '</tr>';
   }).join('');
@@ -1193,7 +1247,7 @@ function exportCSV(kind) {
       g.autoGraded ? (g.counted ? Math.round(g.high/g.counted*100) : '') : '']));
   } else if (kind === 'progress') {
     filename = 'tck-progress-' + today() + '.csv';
-    rows.push(['ユーザー','ログインID','メール', ...TASKS.map(t => t.label), 'Overall%', 'R (scaled)', 'R (band)', 'L (scaled)', 'L (band)', 'W (scaled, est)', 'W (band)', 'S (採点なし)', 'Total (/90)', 'Total (Band /6.0 換算)']);
+    rows.push(['ユーザー','ログインID','メール', ...TASKS.map(t => t.label), 'Overall%', 'R (scaled)', 'R (band)', 'L (scaled)', 'L (band)', 'W (scaled, est)', 'W (band)', 'S (採点なし)', 'Total (/120)', 'Total (Band /6.0 換算)']);
     MOCK_USERS.forEach(u => {
       const userAtts = ATTEMPTS.filter(a => a.userId === u.userId);
       const cells = TASKS.map(t => {
@@ -1212,7 +1266,7 @@ function exportCSV(kind) {
         pred.listening ?? '', pred.listening !== null ? formatBand(sectionToBand(pred.listening)) : '',
         pred.writing ?? '',   pred.writing   !== null ? formatBand(sectionToBand(pred.writing))   : '',
         '採点なし',
-        pred.total || '',     pred.total > 0 ? formatBand(totalToBand(Math.round(pred.total * 4 / 3))) : '']);
+        (pred.total > 0 ? Math.round(pred.total * 4 / 3) : ''),     pred.total > 0 ? formatBand(totalToBand(Math.round(pred.total * 4 / 3))) : '']);
     });
   }
   const csv = rows.map(r => r.map(cell => {
