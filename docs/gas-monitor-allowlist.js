@@ -50,7 +50,11 @@ var MONITOR_EMAILS = [
   'mkusunoki0811@gmail.com',
   'soccerzurdo1@gmail.com',
   'nanasey103@gmail.com',
-  'soichiro941@gmail.com'   // 前田 宗一郎 — goodwill lifetime comp (2026-06, free forever)
+  // 前田 宗一郎 — goodwill comp (2026-06, 今後無料). Listed BOTH login-id and
+  // account email because GAS matches on the email column (u.email); both
+  // are included so the comp activates regardless of which field is checked.
+  'kyo.maeda2015@gmail.com',
+  'soichiro941@gmail.com'
 ];
 
 function isMonitorEmail_(email) {
