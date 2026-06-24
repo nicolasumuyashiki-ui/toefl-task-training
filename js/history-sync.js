@@ -181,6 +181,7 @@
       try { sessionStorage.setItem(cacheKey, JSON.stringify({ at: Date.now(), attempts: res.attempts })); } catch (e) {}
       applyAttempts(res.attempts);
       reconcile(res.attempts);   // push back any local completions the server is missing
+      mirrorProgress();          // pull server in-progress into local so the 中断中 badge shows cross-device
       cb(true);
     }).catch(function () {
       _inflight = null;
@@ -308,6 +309,22 @@
     });
   }
 
+  /* Pull the user's server-side in-progress snapshots into local
+     tck_progress_* (set-if-absent) so the menu "中断中" badge appears on any
+     device. The practice page's own promptResume also falls back to the
+     server, so resume works even when opened directly. Best-effort. */
+  function mirrorProgress() {
+    if (typeof Api === 'undefined' || !Api.getProgress) return;
+    Api.getProgress().then(function (res) {
+      if (!res || !res.success || !Array.isArray(res.progress)) return;
+      res.progress.forEach(function (pr) {
+        if (!pr || !pr.task || !pr.practice || !pr.state) return;
+        var k = 'tck_progress_' + pr.task + '_p' + pr.practice;
+        if (!lsGet(k)) { try { lsSet(k, JSON.stringify(pr.state)); } catch (e) {} }
+      });
+    }).catch(function () {});
+  }
+
   global.TCKHistory = {
     readScore: readScore,
     isDone: isDone,
@@ -317,6 +334,7 @@
     renderMenu: renderMenu,
     applyAttempts: applyAttempts,
     reconcile: reconcile,
+    mirrorProgress: mirrorProgress,
     parseSet: parseSet
   };
 })(window);
