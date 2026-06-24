@@ -429,6 +429,19 @@ if (typeof window !== 'undefined') {
       // backend. history-sync later overwrites with server truth when online.
       try { localStorage.setItem('training_score_' + task + '_p' + practice, value); } catch (e) {}
 
+      // (1b) Keep the BEST score for the menu badge — a worse retake must
+      // never lower it (history-sync maintains the same key from server data).
+      try {
+        if (typeof d.correct === 'number' && typeof d.total === 'number' && d.total > 0) {
+          var _bk = 'training_best_' + task + '_p' + practice;
+          var _cb = JSON.parse(localStorage.getItem(_bk) || 'null');
+          var _better = !_cb || typeof _cb.correct !== 'number' || typeof _cb.total !== 'number' || !(_cb.total > 0)
+            || (d.correct / d.total) > (_cb.correct / _cb.total)
+            || ((d.correct / d.total) === (_cb.correct / _cb.total) && d.total > _cb.total);
+          if (_better) localStorage.setItem(_bk, JSON.stringify({ correct: d.correct, total: d.total }));
+        }
+      } catch (e) {}
+
       // (2) Auto-save to the server for tasks that don't persist on their
       // own, so their history follows the account across devices. answers is
       // an array of length=total so the server can derive the question count.
