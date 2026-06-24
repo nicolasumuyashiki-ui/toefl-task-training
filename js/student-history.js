@@ -52,7 +52,7 @@
       if (/student-history\.js(\?|$|#)/.test(src)) { here = src; break; }
     }
     if (!here) { return poll(cb); }
-    var apiSrc = here.replace(/student-history\.js(\?[^#]*)?(\#.*)?$/, 'api.js');
+    var apiSrc = here.replace(/student-history\.js(\?[^#]*)?(\#.*)?$/, 'api.js$1');
     var tag = document.createElement('script');
     tag.src = apiSrc;
     tag.onload = function(){ poll(cb); };

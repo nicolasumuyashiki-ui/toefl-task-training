@@ -45,6 +45,17 @@ speaking/ti/practice-{N}.html              — Take an Interview
 | Listen & Repeat | 7文 | 段階的に長くなる |
 | Take an Interview | 4問 | 段階的に深くなる |
 
+## 共有JSのキャッシュバスティング（再発防止・最重要）
+GitHub Pages は静的配信で、ブラウザは `js/*.js` を**数日キャッシュ**する。保存POST化・履歴復元・ベスト表示
+などの**挙動修正をマージしても、お客様のブラウザが古いJSを掴んでいると新コードが走らない**（「日頃のPCで変化なし」
+の主因。Pages 再ビルドは数分で終わるので半日後の不具合は再ビルド遅延では説明できない＝ブラウザキャッシュが原因）。
+- 全 HTML の共有JS `<script src="…js/NAME.js">` には `?v=YYYYMMDD` を付ける（例 `js/auth.js?v=20260624`）。
+- **`js/` 配下を変更したら必ず** `python3 tools/bump-cache-version.py <YYYYMMDD>` を実行してバージョンを上げ、
+  同じコミットに含める。これで全クライアントが新コードを1回だけ再取得する。
+- 動的ロード（`auth.js→api.js`、`progress.js→api.js`、`admin-answer-overlay.js`/`student-history.js`）は
+  ローダ側の正規表現が `$1` で**自分のバージョンを引き継ぐ**ので、静的タグだけ bump すれば全体に伝播する。
+- お客様には初回のみ強制再読み込み（Ctrl+Shift+R / スマホはタブを閉じて開き直す）も案内する。
+
 ## コミットメッセージの規則
 - `feat: add Reading CTW Practice 2` — 新しい問題を追加
 - `fix: correct answer key in rdl practice-1` — 正解の修正

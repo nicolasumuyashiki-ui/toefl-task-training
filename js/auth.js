@@ -392,7 +392,7 @@ if (typeof window !== 'undefined') {
     if (typeof Api !== 'undefined' && Api.saveAnswers) return cb();
     if (_apiLoading) { _apiLoading.then(cb, function () {}); return; }
     if (!AUTH_SRC) return;
-    var apiSrc = AUTH_SRC.replace(/\/auth\.js(\?[^#]*)?(#.*)?$/, '/api.js');
+    var apiSrc = AUTH_SRC.replace(/\/auth\.js(\?[^#]*)?(#.*)?$/, '/api.js$1');
     _apiLoading = new Promise(function (resolve, reject) {
       var t = document.createElement('script');
       t.src = apiSrc; t.onload = resolve; t.onerror = reject;
@@ -745,7 +745,7 @@ if (typeof window !== 'undefined') {
     }
   }
   if (!here) return;
-  var overlaySrc = here.replace(/\/auth\.js(\?[^#]*)?(\#.*)?$/, '/admin-answer-overlay.js');
+  var overlaySrc = here.replace(/\/auth\.js(\?[^#]*)?(\#.*)?$/, '/admin-answer-overlay.js$1');
   var tag = document.createElement('script');
   tag.src = overlaySrc;
   tag.defer = true;
@@ -771,7 +771,7 @@ if (typeof window !== 'undefined') {
     }
   }
   if (!here) return;
-  var historySrc = here.replace(/\/auth\.js(\?[^#]*)?(\#.*)?$/, '/student-history.js');
+  var historySrc = here.replace(/\/auth\.js(\?[^#]*)?(\#.*)?$/, '/student-history.js$1');
   var tag = document.createElement('script');
   tag.src = historySrc;
   tag.defer = true;

@@ -46,7 +46,7 @@
       if (/admin-answer-overlay\.js(\?|$|#)/.test(src)) { here = src; break; }
     }
     if (!here) { whenApiReady(cb); return; }
-    var apiSrc = here.replace(/admin-answer-overlay\.js(\?[^#]*)?(\#.*)?$/, 'api.js');
+    var apiSrc = here.replace(/admin-answer-overlay\.js(\?[^#]*)?(\#.*)?$/, 'api.js$1');
     var tag = document.createElement('script');
     tag.src = apiSrc;
     tag.onload = function(){ whenApiReady(cb); };

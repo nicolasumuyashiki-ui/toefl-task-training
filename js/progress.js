@@ -16,7 +16,7 @@
     var sc = document.getElementsByTagName('script');
     for (var i=0;i<sc.length;i++){ if (/\/progress\.js(\?|#|$)/.test(sc[i].src||'')){ src = sc[i].src; break; } }
     if (!src) return cb();
-    var apiSrc = src.replace(/\/progress\.js(\?[^#]*)?(#.*)?$/, '/api.js');
+    var apiSrc = src.replace(/\/progress\.js(\?[^#]*)?(#.*)?$/, '/api.js$1');
     _apiLoading = new Promise(function(res){ var t=document.createElement('script'); t.src=apiSrc; t.onload=function(){res();}; t.onerror=function(){res();}; document.head.appendChild(t); });
     _apiLoading.then(cb, cb);
   }
