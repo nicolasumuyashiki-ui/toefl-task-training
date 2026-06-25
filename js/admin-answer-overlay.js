@@ -65,6 +65,21 @@
     });
   }
 
+  /* (A) Detect a "score-only" record: every stored answer is 0/empty. The
+     auth.js auto-save historically pushed new Array(total).fill(0) because the
+     per-question selections weren't captured, so Admin used to see "0: 0…".
+     Now we show an honest note instead of a misleading list of zeros. */
+  function answersLookEmpty(ans) {
+    if (!ans) return true;
+    var vals = Array.isArray(ans) ? ans : Object.keys(ans).map(function(k){ return ans[k]; });
+    if (!vals.length) return true;
+    return vals.every(function(v){
+      var x = (v && typeof v === 'object' && 'selected' in v) ? v.selected : v;
+      return x === 0 || x === '0' || x === null || x === undefined || x === '';
+    });
+  }
+  var SCORE_ONLY_NOTE = '<div style="padding:10px 12px;background:#FFF4D6;border:1px solid #E3C871;border-radius:8px;color:#6B5A1E;font-size:.9em;line-height:1.6">\u3053\u306e\u8a18\u9332\u306f\u81ea\u52d5\u63a1\u70b9\u30bf\u30b9\u30af\u306e\u3082\u306e\u3067\u3001<strong>\u5f97\u70b9\u306f\u6709\u52b9</strong>\u3067\u3059\u304c\u3001\u8a2d\u554f\u3054\u3068\u306e\u9078\u629e\u5185\u5bb9\u306f\u4fdd\u5b58\u3055\u308c\u3066\u3044\u306a\u3044\u305f\u3081\u8868\u793a\u3067\u304d\u307e\u305b\u3093\uff08\u65e7\u4ed5\u69d8\u306e\u8a18\u9332\uff09\u3002<br><span style="font-size:.85em;color:#8A7B45">\u203b \u4eca\u5f8c\u306e\u53d6\u308a\u7d44\u307f\u304b\u3089\u306f\u9078\u629e\u5185\u5bb9\u3082\u8a18\u9332\u3055\u308c\u3001\u3053\u3053\u306b\u8868\u793a\u3055\u308c\u307e\u3059\u3002</span></div>';
+
   /* ============================================================
      Insert a styled panel into the page, right after the admin
      banner (so it sits above the existing answer-key content).
@@ -169,7 +184,7 @@
       var rows = Object.keys(answers).sort(function(a,b){return Number(a)-Number(b);}).map(function(k){
         return '<div style="padding:4px 0">Q' + escapeHtml(k) + ': <strong style="color:#005434">' + escapeHtml(answers[k]) + '</strong></div>';
       }).join('');
-      insertPanel(makeSubmissionPanel(rows || '<div style="color:#5A6861">回答データなし</div>'));
+      insertPanel(makeSubmissionPanel(answersLookEmpty(answers) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
     },
 
     /* ---------- Academic ---------- */
@@ -182,7 +197,7 @@
       var rows = Object.keys(answers).sort(function(a,b){return Number(a)-Number(b);}).map(function(k){
         return '<div style="padding:4px 0">Q' + escapeHtml(k) + ': <strong style="color:#005434">' + escapeHtml(answers[k]) + '</strong></div>';
       }).join('');
-      insertPanel(makeSubmissionPanel(rows || '<div style="color:#5A6861">回答データなし</div>'));
+      insertPanel(makeSubmissionPanel(answersLookEmpty(answers) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
     },
 
     /* ---------- LCR ---------- */
@@ -211,7 +226,7 @@
         var pick = (v && typeof v === 'object' && 'selected' in v) ? v.selected : v;
         return '<div style="padding:4px 0">' + escapeHtml(k) + ': <strong style="color:#005434">' + escapeHtml(pick == null ? '—' : pick) + '</strong></div>';
       }).join('');
-      insertPanel(makeSubmissionPanel(rows || '<div style="color:#5A6861">回答データなし</div>'));
+      insertPanel(makeSubmissionPanel(answersLookEmpty(answers) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
     },
 
     /* ---------- Conv / Announce / Talk ---------- */
@@ -246,7 +261,7 @@
         var v = answers[k];
         return '<div style="padding:6px 0;border-bottom:1px solid #F5E9D3"><strong>Q' + escapeHtml(k) + '</strong>: ' + escapeHtml(typeof v === 'string' ? v : JSON.stringify(v)) + '</div>';
       }).join('');
-      insertPanel(makeSubmissionPanel(rows || '<div style="color:#5A6861">回答データなし</div>'));
+      insertPanel(makeSubmissionPanel(answersLookEmpty(answers) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
     }
   };
 
@@ -261,7 +276,7 @@
       var pick = (v && typeof v === 'object' && 'selected' in v) ? v.selected : v;
       return '<div style="padding:4px 0">' + escapeHtml(k) + ': <strong style="color:#005434">' + escapeHtml(pick == null ? '—' : pick) + '</strong></div>';
     }).join('');
-    insertPanel(makeSubmissionPanel(rows || '<div style="color:#5A6861">回答データなし</div>'));
+    insertPanel(makeSubmissionPanel(answersLookEmpty(answers) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
   }
 
   /* Writing (email/discussion) — restore the existing userPreview/

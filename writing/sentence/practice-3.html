@@ -159,8 +159,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 </div>
 </div>
 
-<script src="../../js/auth.js?v=20260624"></script>
-<script src="../../js/progress.js?v=20260624"></script>
+<script src="../../js/auth.js?v=20260625"></script>
+<script src="../../js/progress.js?v=20260625"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -336,6 +336,7 @@ function finishQuiz(){
   // Save to sessionStorage
   if(window.TCKProgress) TCKProgress.clear(TCK_TASK,TCK_PRACTICE);
   sessionStorage.setItem('sentenceAnswers_p3',JSON.stringify({answers:userAnswers,score:correct,total:questions.length}));
+  try{sessionStorage.setItem('training_answers_sentence_p3',JSON.stringify(userAnswers));}catch(e){}
   sessionStorage.setItem('training_score_sentence_p3',JSON.stringify({correct:correct,total:questions.length,harderCorrect:0,harderTotal:0,updatedAt:new Date().toISOString()}));
 
   document.getElementById('quizPage').style.display='none';
@@ -346,6 +347,6 @@ function finishQuiz(){
   document.getElementById('progressFill').style.width='100%';
 }
 </script>
-<script defer src="../../js/tm-footer.js?v=20260624"></script>
+<script defer src="../../js/tm-footer.js?v=20260625"></script>
 </body>
 </html>

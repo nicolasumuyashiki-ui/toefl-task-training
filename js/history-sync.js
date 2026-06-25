@@ -260,14 +260,19 @@
      in sessionStorage (gone on close) and cannot be recovered — only the
      "submitted" status / score is restored. */
   var RECON_LABEL = {
-    rdl:'RDL', academic:'Academic', lcr:'LCR', conv:'Conv', announce:'Announce',
+    ctw:'CTW', rdl:'RDL', academic:'Academic', lcr:'LCR', conv:'Conv', announce:'Announce',
     talk:'Talk', sentence:'Sentence', email:'Email', discussion:'Discussion', lr:'LR', ti:'TI'
   };
   function reconcile(serverAttempts) {
     var uid = userId(); if (!uid) return;
     if (typeof Api === 'undefined' || !Api.saveAnswers) return;
-    var guard = 'tck_reconciled_' + uid;
-    try { if (sessionStorage.getItem(guard)) return; sessionStorage.setItem(guard, '1'); } catch (e) {}
+    // Per-item guard (was a once-per-session global flag): track which task_pN
+    // we've already pushed this session, so late-appearing local completions
+    // sync on a later menu load instead of being permanently skipped after the
+    // first partial run. Add-only — never deletes server rows.
+    var guardKey = 'tck_reconcile_pushed_' + uid;
+    var pushed = {};
+    try { pushed = JSON.parse(sessionStorage.getItem(guardKey) || '{}') || {}; } catch (e) { pushed = {}; }
 
     // What the server already has, keyed by task_pN.
     var have = {};
@@ -283,18 +288,18 @@
         var fm = k && k.match(/^tck_done_(email|discussion|lr|ti)_p(\d+)$/);
         if (fm) {
           var fk = fm[1] + '_p' + fm[2];
-          if (!have[fk]) { have[fk] = true; pending.push({ set: RECON_LABEL[fm[1]] + ' P' + fm[2], answers: { recovered: true }, score: 0, meta: {} }); }
+          if (!have[fk] && !pushed[fk]) { have[fk] = true; pending.push({ key: fk, set: RECON_LABEL[fm[1]] + ' P' + fm[2], answers: { recovered: true }, score: 0, meta: {} }); }
           continue;
         }
         // Auto-graded scores (usually already on the server; recovered if not).
-        var sm = k && k.match(/^training_score_(rdl|academic|lcr|conv|announce|talk|sentence)_p(\d+)$/);
+        var sm = k && k.match(/^training_score_(ctw|rdl|academic|lcr|conv|announce|talk|sentence)_p(\d+)$/);
         if (sm) {
           var sk = sm[1] + '_p' + sm[2];
-          if (!have[sk]) {
+          if (!have[sk] && !pushed[sk]) {
             var d = parse(lsGet(k));
             if (d && typeof d.total === 'number' && d.total > 0 && typeof d.correct === 'number') {
               have[sk] = true;
-              pending.push({ set: RECON_LABEL[sm[1]] + ' P' + sm[2], answers: new Array(d.total).fill(0),
+              pending.push({ key: sk, set: RECON_LABEL[sm[1]] + ' P' + sm[2], answers: new Array(d.total).fill(0),
                 score: d.correct, meta: { harderCorrect: d.harderCorrect || 0, harderTotal: d.harderTotal || 0, attemptNumber: 1 } });
             }
           }
@@ -305,8 +310,10 @@
     if (!pending.length) return;
     // Stagger so we don't hammer GAS.
     pending.forEach(function (p, idx) {
+      if (p.key) pushed[p.key] = true;
       setTimeout(function () { try { Api.saveAnswers(p.set, p.answers, p.score, p.meta); } catch (e) {} }, idx * 600);
     });
+    try { sessionStorage.setItem(guardKey, JSON.stringify(pushed)); } catch (e) {}
   }
 
   /* Pull the user's server-side in-progress snapshots into local
