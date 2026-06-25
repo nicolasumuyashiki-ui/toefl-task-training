@@ -161,8 +161,9 @@
   var _inflight = null;
   var CACHE_TTL = 60 * 1000;  // 60s — snappy in-session menu hopping
 
-  function hydrate(cb) {
+  function hydrate(cb, _attempt) {
     cb = cb || function () {};
+    _attempt = _attempt || 0;
     var uid = userId();
     if (!uid || typeof Api === 'undefined' || !Api.getMyHistory) return cb(false);
 
@@ -175,18 +176,26 @@
     }
     if (_inflight) { _inflight.then(function () { cb(true); }, function () { cb(false); }); return; }
 
+    // Part B — server is the source of truth for what the learner sees. A
+    // momentary congestion / offline blip must NOT leave them staring at a
+    // stale local cache while the server (= Admin) actually has more. So retry
+    // a transient failure with backoff before giving up; on final failure we
+    // keep the local cache (degrade), never blank the screen.
+    function onFail() {
+      _inflight = null;
+      if (_attempt < 3) { setTimeout(function () { hydrate(cb, _attempt + 1); }, 1500 * (_attempt + 1)); return; }
+      cb(false);
+    }
+
     _inflight = Api.getMyHistory().then(function (res) {
       _inflight = null;
-      if (!res || !res.success || !Array.isArray(res.attempts)) return cb(false);
+      if (!res || !res.success || !Array.isArray(res.attempts)) { onFail(); return; }
       try { sessionStorage.setItem(cacheKey, JSON.stringify({ at: Date.now(), attempts: res.attempts })); } catch (e) {}
       applyAttempts(res.attempts);
       reconcile(res.attempts);   // push back any local completions the server is missing
       mirrorProgress();          // pull server in-progress into local so the 中断中 badge shows cross-device
       cb(true);
-    }).catch(function () {
-      _inflight = null;
-      cb(false);  // offline / endpoint not deployed yet → keep local cache
-    });
+    }).catch(onFail);
   }
 
   /* mount(render): draw from whatever's cached locally NOW (instant), then
