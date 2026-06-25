@@ -132,8 +132,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <button class="btn-next" id="btnNext" onclick="nextStep()">Next →</button>
 </div>
 
-<script src="../../js/auth.js?v=20260624"></script><script src="../../js/difficulty-badge.js?v=20260624"></script>
-<script src="../../js/progress.js?v=20260624"></script>
+<script src="../../js/auth.js?v=20260625"></script><script src="../../js/difficulty-badge.js?v=20260625"></script>
+<script src="../../js/progress.js?v=20260625"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -347,11 +347,12 @@ function showCompletion(){
     document.getElementById('scoreDisplay').textContent = correct+' / 4';
     var harderCorrect = 0, harderTotal = 0;
     [2,3].forEach(function(idx){ harderTotal++; if(userAnswers[idx] === questions[idx].correct) harderCorrect++; });
+    try{sessionStorage.setItem('training_answers_conv_p7',JSON.stringify(userAnswers));}catch(e){}
     try{sessionStorage.setItem('training_score_conv_p7',JSON.stringify({correct:correct,total:4,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));}catch(e){}
     sessionStorage.setItem('convAnswers', JSON.stringify(userAnswers));
     document.getElementById('answersBtn').style.display = 'inline-block';
 }
 </script>
-<script defer src="../../js/tm-footer.js?v=20260624"></script>
+<script defer src="../../js/tm-footer.js?v=20260625"></script>
 </body>
 </html>

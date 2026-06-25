@@ -453,7 +453,35 @@ if (typeof window !== 'undefined') {
           var correct = d.correct, total = d.total;
           var meta = { harderCorrect: d.harderCorrect || 0, harderTotal: d.harderTotal || 0, attemptNumber: n + 1 };
           _ensureApi(function () {
-            try { Api.saveAnswers(label + ' P' + practice, new Array(total).fill(0), correct, meta); } catch (e) {}
+            try {
+              // Build a length=total answers array so getMyHistory still derives
+              // the question count from .length. Fill REAL selected answers from
+              // the page's training_answers_* snapshot when present (so Admin can
+              // see what the student chose); fall back to 0 when unavailable.
+              var ansArr = new Array(total).fill(0);
+              try {
+                var _raw = sessionStorage.getItem('training_answers_' + task + '_p' + practice);
+                var _parsed = _raw ? JSON.parse(_raw) : null;
+                if (Array.isArray(_parsed)) {
+                  for (var _i = 0; _i < total; _i++) {
+                    var _v = _parsed[_i];
+                    if (_v !== undefined && _v !== null) ansArr[_i] = (_v && typeof _v === 'object' && 'selected' in _v) ? _v.selected : _v;
+                  }
+                } else if (_parsed && typeof _parsed === 'object') {
+                  Object.keys(_parsed).forEach(function (k) {
+                    var _idx = parseInt(String(k).replace(/[^0-9]/g, ''), 10);
+                    if (!isNaN(_idx)) {
+                      var _pos = _idx >= 1 ? _idx - 1 : _idx;   // q-keys are 1-based
+                      if (_pos >= 0 && _pos < total) {
+                        var _w = _parsed[k];
+                        ansArr[_pos] = (_w && typeof _w === 'object' && 'selected' in _w) ? _w.selected : _w;
+                      }
+                    }
+                  });
+                }
+              } catch (e) {}
+              Api.saveAnswers(label + ' P' + practice, ansArr, correct, meta);
+            } catch (e) {}
           });
         }
       }
