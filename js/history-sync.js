@@ -263,6 +263,26 @@
     ctw:'CTW', rdl:'RDL', academic:'Academic', lcr:'LCR', conv:'Conv', announce:'Announce',
     talk:'Talk', sentence:'Sentence', email:'Email', discussion:'Discussion', lr:'LR', ti:'TI'
   };
+  /* Build a length=total answers array from the durable training_answers_*
+     snapshot (mirrored by auth.js). Lets reconcile push the REAL selections,
+     not zeros, when recovering an auto-graded attempt the server is missing. */
+  function reconAnswers(task, practice, total) {
+    var arr = new Array(total).fill(0);
+    try {
+      var raw = lsGet('training_answers_' + task + '_p' + practice);
+      var parsed = raw ? JSON.parse(raw) : null;
+      if (Array.isArray(parsed)) {
+        for (var i = 0; i < total; i++) { var v = parsed[i]; if (v !== undefined && v !== null) arr[i] = (v && typeof v === 'object' && 'selected' in v) ? v.selected : v; }
+      } else if (parsed && typeof parsed === 'object') {
+        Object.keys(parsed).forEach(function (k) {
+          var idx = parseInt(String(k).replace(/[^0-9]/g, ''), 10);
+          if (!isNaN(idx)) { var pos = idx >= 1 ? idx - 1 : idx; if (pos >= 0 && pos < total) { var w = parsed[k]; arr[pos] = (w && typeof w === 'object' && 'selected' in w) ? w.selected : w; } }
+        });
+      }
+    } catch (e) {}
+    return arr;
+  }
+
   function reconcile(serverAttempts) {
     var uid = userId(); if (!uid) return;
     if (typeof Api === 'undefined' || !Api.saveAnswers) return;
@@ -299,7 +319,7 @@
             var d = parse(lsGet(k));
             if (d && typeof d.total === 'number' && d.total > 0 && typeof d.correct === 'number') {
               have[sk] = true;
-              pending.push({ key: sk, set: RECON_LABEL[sm[1]] + ' P' + sm[2], answers: new Array(d.total).fill(0),
+              pending.push({ key: sk, set: RECON_LABEL[sm[1]] + ' P' + sm[2], answers: reconAnswers(sm[1], sm[2], d.total),
                 score: d.correct, meta: { harderCorrect: d.harderCorrect || 0, harderTotal: d.harderTotal || 0, attemptNumber: 1 } });
             }
           }

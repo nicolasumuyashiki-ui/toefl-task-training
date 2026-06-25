@@ -412,6 +412,10 @@ if (typeof window !== 'undefined') {
     try {
       var d = JSON.parse(value);
       if (!d || typeof d.total !== 'number') return;
+      // Mirror the page's selection snapshot to DURABLE localStorage so
+      // reconcile can recover it on a later login if this attempt's immediate
+      // save fails. (The page writes training_answers_* just before training_score.)
+      try { var _ta = sessionStorage.getItem('training_answers_' + task + '_p' + practice); if (_ta) localStorage.setItem('training_answers_' + task + '_p' + practice, _ta); } catch (e) {}
       // Lock in the first completed attempt forever.
       if (!localStorage.getItem(firstKey)) {
         localStorage.setItem(firstKey, JSON.stringify({
