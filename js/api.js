@@ -36,6 +36,120 @@ function _jsonpRequest(url) {
   });
 }
 
+/* ============================================================
+   Durable save OUTBOX — every saveAnswers payload is written to a
+   localStorage queue FIRST, then transmitted. On a confirmed server
+   response the item is removed; otherwise it stays and is re-sent on the
+   next page load / login (flushOutbox). This guarantees a completed
+   attempt is NEVER silently lost to a network blip, GAS congestion, an
+   immediate page navigation, or the tab closing. Add-only — it never
+   deletes history; it only ensures saves actually reach the server.
+   ============================================================ */
+var _OUTBOX_KEY = 'tck_outbox';
+var _OUTBOX_MAX = 500;
+var _flushingOutbox = false;
+
+function _outboxRead() {
+  try { return JSON.parse(localStorage.getItem(_OUTBOX_KEY) || '[]') || []; } catch (e) { return []; }
+}
+function _outboxWrite(arr) {
+  try {
+    if (arr.length > _OUTBOX_MAX) arr = arr.slice(arr.length - _OUTBOX_MAX);
+    localStorage.setItem(_OUTBOX_KEY, JSON.stringify(arr));
+  } catch (e) {}
+}
+function _outboxAdd(item) { var a = _outboxRead(); a.push(item); _outboxWrite(a); }
+function _outboxRemove(id) {
+  var a = _outboxRead();
+  var n = a.filter(function (it) { return it && it.id !== id; });
+  if (n.length !== a.length) _outboxWrite(n);
+}
+function _genSaveId() { return 's_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9); }
+
+/* Build + transmit ONE save payload (hybrid GET / hidden-iframe POST).
+   Resolves with the server response on success; rejects on network
+   failure/timeout. clientSaveId lets the server dedupe retries (optional
+   GAS-side; without it a rare lost-response retry just adds a duplicate
+   row, which the menu/predicted view already collapse per set). */
+function _sendSavePayload(item) {
+  var user = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+  var meta = item.meta || {};
+  var answersStr = JSON.stringify(item.answers == null ? '' : item.answers);
+  var getUrl = API_URL + '?action=saveAnswers'
+    + '&userId=' + encodeURIComponent(user.userId || '')
+    + '&userName=' + encodeURIComponent(user.userName || '')
+    + '&set=' + encodeURIComponent(item.setName || '')
+    + '&answers=' + encodeURIComponent(answersStr)
+    + '&score=' + encodeURIComponent(item.score == null ? '' : item.score)
+    + '&harderCorrect=' + encodeURIComponent(meta.harderCorrect || 0)
+    + '&harderTotal=' + encodeURIComponent(meta.harderTotal || 0)
+    + '&attemptNumber=' + encodeURIComponent(meta.attemptNumber || 1)
+    + '&total=' + encodeURIComponent(meta.total || 0)
+    + '&clientSaveId=' + encodeURIComponent(item.id || '');
+  if (getUrl.length <= 1500) return _jsonpRequest(getUrl);
+  var data = {
+    action: 'saveAnswers',
+    userId: user.userId || '', userName: user.userName || '',
+    set: item.setName || '', answers: answersStr,
+    score: String(item.score == null ? '' : item.score),
+    harderCorrect: String(meta.harderCorrect || 0),
+    harderTotal: String(meta.harderTotal || 0),
+    attemptNumber: String(meta.attemptNumber || 1),
+    total: String(meta.total || 0),
+    clientSaveId: String(item.id || '')
+  };
+  return new Promise(function (resolve, reject) {
+    var name = 'gasSave_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+    var iframe = document.createElement('iframe');
+    iframe.name = name; iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    var form = document.createElement('form');
+    form.method = 'POST'; form.action = API_URL; form.target = name;
+    form.enctype = 'application/x-www-form-urlencoded'; form.acceptCharset = 'UTF-8';
+    form.style.display = 'none';
+    Object.keys(data).forEach(function (k) {
+      var inp = document.createElement('input');
+      inp.type = 'hidden'; inp.name = k; inp.value = data[k];
+      form.appendChild(inp);
+    });
+    document.body.appendChild(form);
+    var done = false;
+    function cleanup(result, ok) {
+      if (done) return; done = true;
+      setTimeout(function () {
+        try { form.parentNode && form.parentNode.removeChild(form); } catch (e) {}
+        try { iframe.parentNode && iframe.parentNode.removeChild(iframe); } catch (e) {}
+      }, 250);
+      ok ? resolve(result) : reject(new Error((result && result.error) || 'post_failed'));
+    }
+    iframe.onload = function () { cleanup({ success: true }, true); };
+    setTimeout(function () { cleanup({ success: true, timeout: true }, true); }, 30000);
+    try { form.submit(); } catch (e) { cleanup({ success: false, error: String(e) }, false); }
+  });
+}
+
+/* Re-send every pending save until the server confirms. Safe to call on
+   every page load — staggered, guarded against concurrent runs. */
+function _flushOutbox() {
+  if (_flushingOutbox) return Promise.resolve();
+  var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+  if (!u.userId) return Promise.resolve();
+  var arr = _outboxRead();
+  if (!arr.length) return Promise.resolve();
+  _flushingOutbox = true;
+  var i = 0;
+  function step() {
+    if (i >= arr.length) { _flushingOutbox = false; return Promise.resolve(); }
+    var item = arr[i++];
+    return _sendSavePayload(item).then(function (res) {
+      if (res && res.success !== false) _outboxRemove(item.id);
+    }, function () {}).then(function () {
+      return new Promise(function (r) { setTimeout(r, 500); }).then(step);
+    });
+  }
+  return step().then(null, function () { _flushingOutbox = false; });
+}
+
 var Api = {
   login: function(id, pass) {
     return _jsonpRequest(API_URL + '?action=login&id=' + encodeURIComponent(id) + '&pass=' + encodeURIComponent(pass));
@@ -83,74 +197,26 @@ var Api = {
    * weighting and dedupe to first-attempt only. When omitted (legacy
    * callers / pages not yet updated), GAS defaults to 0/0/1.
    */
+  /**
+   * Save a completed practice attempt — now OUTBOX-backed so it can never
+   * be silently lost. The payload is written to a durable localStorage
+   * queue FIRST, then sent; on a confirmed response it's removed, otherwise
+   * it's re-sent on the next page load / login. Callers are unchanged.
+   */
   saveAnswers: function(setName, answers, score, meta) {
-    var user = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
-    meta = meta || {};
-    var answersStr = JSON.stringify(answers == null ? '' : answers);
-    /* Transport: small payloads keep the proven JSONP GET (it also survives
-       an immediate page navigation, e.g. CTW jumping straight to the next
-       set right after saving). Large payloads — free-response essays
-       (Email / Discussion) — make the GET URL longer than the GAS Web App
-       accepts, so the request silently failed and the essay never reached
-       the ANSWERS sheet. Those go out as a hidden-iframe POST instead (same
-       reliable mechanism uploadRecording uses; GAS doPost ->
-       handleSaveAnswersPost_). Free-response pages don't navigate right
-       after saving, so the POST has time to complete. Either way it's
-       fire-and-forget (verified via the ANSWERS sheet). */
-    var getUrl = API_URL + '?action=saveAnswers'
-      + '&userId=' + encodeURIComponent(user.userId || '')
-      + '&userName=' + encodeURIComponent(user.userName || '')
-      + '&set=' + encodeURIComponent(setName || '')
-      + '&answers=' + encodeURIComponent(answersStr)
-      + '&score=' + encodeURIComponent(score == null ? '' : score)
-      + '&harderCorrect=' + encodeURIComponent(meta.harderCorrect || 0)
-      + '&harderTotal=' + encodeURIComponent(meta.harderTotal || 0)
-      + '&attemptNumber=' + encodeURIComponent(meta.attemptNumber || 1)
-      + '&total=' + encodeURIComponent(meta.total || 0);
-    if (getUrl.length <= 1500) return _jsonpRequest(getUrl);
-    var data = {
-      action:        'saveAnswers',
-      userId:        user.userId   || '',
-      userName:      user.userName || '',
-      set:           setName       || '',
-      answers:       answersStr,
-      score:         String(score == null ? '' : score),
-      harderCorrect: String(meta.harderCorrect || 0),
-      harderTotal:   String(meta.harderTotal   || 0),
-      attemptNumber: String(meta.attemptNumber || 1),
-      total:         String(meta.total || 0)
-    };
-    return new Promise(function(resolve){
-      var name = 'gasSave_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
-      var iframe = document.createElement('iframe');
-      iframe.name = name; iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-
-      var form = document.createElement('form');
-      form.method = 'POST'; form.action = API_URL; form.target = name;
-      form.enctype = 'application/x-www-form-urlencoded'; form.acceptCharset = 'UTF-8';
-      form.style.display = 'none';
-      Object.keys(data).forEach(function(k){
-        var inp = document.createElement('input');
-        inp.type = 'hidden'; inp.name = k; inp.value = data[k];
-        form.appendChild(inp);
-      });
-      document.body.appendChild(form);
-
-      var done = false;
-      function cleanup(result){
-        if (done) return; done = true;
-        setTimeout(function(){
-          try { form.parentNode && form.parentNode.removeChild(form); } catch(e){}
-          try { iframe.parentNode && iframe.parentNode.removeChild(iframe); } catch(e){}
-        }, 250);
-        resolve(result);
-      }
-      iframe.onload = function(){ cleanup({ success: true }); };
-      setTimeout(function(){ cleanup({ success: true, timeout: true }); }, 30000);
-      try { form.submit(); } catch(e){ cleanup({ success: false, error: String(e) }); }
+    var item = { id: _genSaveId(), setName: setName, answers: answers, score: score, meta: meta || {}, enqueuedAt: new Date().toISOString() };
+    _outboxAdd(item);   // durable FIRST — survives navigation / offline / crash
+    return _sendSavePayload(item).then(function (res) {
+      if (res && res.success !== false) _outboxRemove(item.id);
+      return res;
+    }, function (err) {
+      return { success: false, queued: true, error: String((err && err.message) || err) };
     });
   },
+
+  /* Re-send any saves the server hasn't confirmed yet. Idempotent + guarded. */
+  flushOutbox: function() { return _flushOutbox(); },
+  outboxPending: function() { return _outboxRead().length; },
 
   /* Admin endpoints — require staff id/pass.
      Pass is read from sessionStorage.kickstart_staff_pass (set on
@@ -430,3 +496,8 @@ var Api = {
       + '&pass=' + encodeURIComponent(p));
   }
 };
+
+/* On every load, retry any saves the server hasn't confirmed yet, so a
+   completed attempt eventually reaches the server even if the original
+   send failed (offline / GAS congestion / tab closed mid-send). */
+try { setTimeout(function () { try { _flushOutbox(); } catch (e) {} }, 1500); } catch (e) {}
