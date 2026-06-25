@@ -18,12 +18,23 @@
     var el = document.createElement('div');
     el.id = 'tckTmDisclaimer';
     el.setAttribute('role', 'contentinfo');
-    el.style.cssText = [
+    var css = [
       'box-sizing:border-box', 'width:100%', 'margin:0', 'padding:14px 22px 18px',
       'text-align:center', 'font-size:11px', 'line-height:1.65', 'color:#8A938C',
       'font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif',
       'background:transparent', 'border-top:1px solid rgba(0,0,0,.06)'
-    ].join(';');
+    ];
+    // Auth pages (login / password-change / admin login) centre a single card
+    // via `body{display:flex;justify-content:center;align-items:center}`. A
+    // normally-appended child becomes a SECOND flex item and lands BESIDE the
+    // card, breaking the layout. When the body is a flex/grid container, pin
+    // the disclaimer to the viewport bottom so it stays out of that flow.
+    var disp = '';
+    try { disp = String((window.getComputedStyle(document.body).display || '')).toLowerCase(); } catch (e) {}
+    if (disp.indexOf('flex') !== -1 || disp.indexOf('grid') !== -1) {
+      css.push('position:fixed', 'left:0', 'right:0', 'bottom:0', 'z-index:1');
+    }
+    el.style.cssText = css.join(';');
     el.innerHTML =
       'TOEFLはEducational Testing Service（ETS）の登録商標です。このウェブサイトはETSによって承認または推奨されたものではありません。'
       + '<br>'
