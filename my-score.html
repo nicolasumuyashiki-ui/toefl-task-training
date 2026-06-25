@@ -254,9 +254,9 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   </a>
 </div>
 
-<script src="js/auth.js?v=20260625f"></script>
-<script src="js/api.js?v=20260625f"></script>
-<script src="js/history-sync.js?v=20260625f"></script>
+<script src="js/auth.js?v=20260625g"></script>
+<script src="js/api.js?v=20260625g"></script>
+<script src="js/history-sync.js?v=20260625g"></script>
 <script>
 /* Language toggle */
 (function(){
@@ -652,6 +652,15 @@ const ROWS_PER_PAGE = 15;
 /* Format an ISO timestamp → "2026/06/16 11:41" (JST, local). Returns "—"
    when no date is available (e.g. legacy attempts saved before timestamps
    were captured). */
+function tckLoadPlayer(btn, fileId) {
+  if (!fileId) return;
+  var ifr = document.createElement('iframe');
+  ifr.src = 'https://drive.google.com/file/d/' + fileId + '/preview';
+  ifr.setAttribute('allow', 'autoplay');
+  ifr.style.cssText = 'width:100%;max-width:260px;height:60px;border:0;border-radius:6px;background:#FBF6EC;vertical-align:middle';
+  if (btn && btn.parentNode) btn.parentNode.replaceChild(ifr, btn);
+}
+
 function fmtWhen(iso) {
   if (!iso) return '—';
   try {
@@ -784,8 +793,10 @@ function loadMyRecordings(){
       // we embed the official Drive preview iframe — it supports webm/mp3
       // playback and works for "anyone with link" files.
       var previewUrl = rec.fileId ? ('https://drive.google.com/file/d/' + rec.fileId + '/preview') : '';
-      var player = previewUrl
-        ? '<iframe src="' + previewUrl + '" allow="autoplay" style="width:100%;max-width:260px;height:60px;border:0;border-radius:6px;background:#FBF6EC" loading="lazy"></iframe>'
+      // Click-to-play: load the Drive player only on demand, so a learner with
+      // many recordings doesn't race dozens of iframes (some never rendered).
+      var player = rec.fileId
+        ? '<button type="button" onclick="tckLoadPlayer(this,\'' + rec.fileId + '\')" style="font-family:var(--font-en),var(--font-jp);font-size:.8em;font-weight:600;color:#fff;background:var(--green);border:0;border-radius:999px;padding:5px 14px;cursor:pointer">\u25b6 \u518d\u751f</button>'
         : '<span class="muted">—</span>';
       return '<tr>' +
         '<td style="white-space:nowrap;font-size:.84em;color:var(--ink-500)">' + dt + '</td>' +
@@ -802,6 +813,6 @@ function loadMyRecordings(){
 }
 loadMyRecordings();
 </script>
-<script defer src="js/tm-footer.js?v=20260625f"></script>
+<script defer src="js/tm-footer.js?v=20260625g"></script>
 </body>
 </html>
