@@ -119,6 +119,27 @@
     console.log('[recorder-hook] showRec', on, '— display=', el.style.display);
   }
 
+  // Upload one question's audio, retrying on failure (the large cross-origin
+  // POST can be dropped by a flaky connection / privacy tool). The base64 is
+  // kept across retries so a transient failure self-heals without re-recording.
+  function uploadWithRetry(meta, b64, tries){
+    tries = tries || 0;
+    return Api.uploadRecording(meta, b64).then(function(res){
+      if (res && res.success === false && tries < 3) {
+        return new Promise(function(r){ setTimeout(r, 900 * (tries + 1)); })
+          .then(function(){ return uploadWithRetry(meta, b64, tries + 1); });
+      }
+      return res;
+    }, function(err){
+      if (tries < 3) {
+        console.warn('[recorder-hook] upload retry ' + (tries + 1) + ' after error:', err);
+        return new Promise(function(r){ setTimeout(r, 900 * (tries + 1)); })
+          .then(function(){ return uploadWithRetry(meta, b64, tries + 1); });
+      }
+      throw err;
+    });
+  }
+
   function uploadCurrent(qNum){
     if (!recordingActive) return Promise.resolve();
     var dur = Math.round((Date.now() - recStartedAt) / 1000);
@@ -128,7 +149,7 @@
       console.log('[recorder-hook] q=' + qNum + ' blob size=' + (blob ? blob.size : 'null') + 'B type=' + (blob ? blob.type : 'null'));
       return TCKRecorder.blobToBase64(blob).then(function(b64){
         console.log('[recorder-hook] q=' + qNum + ' base64 length=' + (b64 ? b64.length : 0) + ' chars');
-        return Api.uploadRecording({
+        return uploadWithRetry({
           task:           (typeof TCK_TASK !== 'undefined') ? TCK_TASK : 'speaking',
           practiceSet:    (typeof TCK_PRACTICE !== 'undefined') ? TCK_PRACTICE : 0,
           questionIndex:  qNum,
@@ -139,7 +160,7 @@
         }, b64);
       });
     }).catch(function(e){
-      console.warn('[recorder-hook] upload failed for q' + qNum + ':', e);
+      console.warn('[recorder-hook] upload failed for q' + qNum + ' (after retries):', e);
     });
   }
 
