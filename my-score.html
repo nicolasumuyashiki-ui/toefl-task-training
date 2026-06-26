@@ -523,9 +523,8 @@ function render() {
   // but doesn't affect the predicted scaled score.
   const sentenceAgg = aggregateSectionTask(attempts, 'sentence');
   const writingSubmissions = attempts.filter(a => ['email','discussion'].indexOf(a.task) !== -1 && (a.status === 'done' || a.status === 'submitted')).length;
-  const _sentenceScaled = estimateWritingScaled(sentenceAgg ? sentenceAgg.pct : null);
-  // Writing: Build a Sentence when available, else estimate from R/L.
-  const writingScaled = _sentenceScaled !== null ? _sentenceScaled : rlAvg;
+  // Writing — ONLY from Build a Sentence (no estimate). "—" when not done.
+  const writingScaled = estimateWritingScaled(sentenceAgg ? sentenceAgg.pct : null);
   const writingAttemptCount = (sentenceAgg ? sentenceAgg.attempts : 0) + writingSubmissions;
 
   // Speaking — no automated audio assessment, no prediction.
@@ -582,14 +581,14 @@ function render() {
   // estimate we scale up to a 0-120 equivalent so the new TOEFL® band
   // (1.0-6.0) lookup remains meaningful — this is a rough projection,
   // assuming Speaking would land in line with the other three sections.
-  // Total spans all four sections out of 120. Writing & Speaking are estimated
-  // from the learner's R/L level when not directly measured, so an untaken
-  // section isn't counted as 0 (which dragged the Total below the section
-  // bands). Speaking's CARD still shows "—" (speakingScaled stays null).
-  const _sForTotal = rlAvg;  // Speaking estimate (display stays —)
-  let total = 0;
+  // Total = average of the AVAILABLE section scaled values (R, L, W-if-done,
+  // S-estimate) projected across all 4 sections → /120. Writing is from Build
+  // a Sentence only (excluded from the average when not done — never 0).
+  // Speaking is estimated from R/L for the Total; its CARD stays "—".
+  const _sForTotal = rlAvg;
+  const _avail = [readingScaled, listeningScaled, writingScaled, _sForTotal].filter(function (v) { return v !== null && v !== undefined; });
+  const total = _avail.length ? Math.round(_avail.reduce(function (a, v) { return a + v; }, 0) / _avail.length * 4) : 0;
   const totalKnown = (readingScaled !== null || listeningScaled !== null);
-  [readingScaled, listeningScaled, writingScaled, _sForTotal].forEach(function (v) { if (v !== null && v !== undefined) total += v; });
   document.getElementById('totalScore').textContent = totalKnown && total > 0 ? total : '—';
   document.getElementById('totalBand').textContent = totalKnown && total > 0 ? formatBand(totalToBand(total)) : '—';
 

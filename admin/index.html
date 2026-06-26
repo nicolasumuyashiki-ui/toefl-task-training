@@ -647,22 +647,25 @@ function predictScoresForUser(userAttempts) {
   const rlAvail = [rScaled, lScaled].filter(function (v) { return v !== null; });
   const rlAvg = rlAvail.length ? Math.round(rlAvail.reduce(function (s, v) { return s + v; }, 0) / rlAvail.length) : null;
 
-  // Writing — use Build a Sentence accuracy when available (most direct
-  // signal); otherwise estimate from the learner's Reading/Listening level.
+  // Writing — ONLY from Build a Sentence accuracy (no estimate). If the
+  // learner hasn't done Build a Sentence the Writing card shows "—" and the
+  // section is simply excluded from the Total average (not counted as 0).
   const sentenceItems = firstScored.filter(a => a.task === 'sentence');
   const sentencePct = avgPct(sentenceItems);
-  const wScaled = sentencePct !== null ? percentToScaled(sentencePct, READING_TABLE) : rlAvg;
-  const wEstimated = (sentencePct === null && rlAvg !== null);
+  const wScaled = sentencePct !== null ? percentToScaled(sentencePct, READING_TABLE) : null;
 
   // Speaking — no automated audio assessment, so its CARD stays "—" (sScaled
   // is null → not shown). But the TOTAL projects it from R/L so the overall
-  // score reflects all four sections.
+  // score reflects Speaking too.
   const sScaled = null;
   const sEst = rlAvg;
 
-  // Total now spans all four sections (R + L + W_est + S_est) out of 120.
-  const totalScaled = [rScaled, lScaled, wScaled, sEst].reduce((s, v) => s + (v || 0), 0);
-  return { reading: rScaled, listening: lScaled, writing: wScaled, speaking: sScaled, total: totalScaled, writingEstimated: wEstimated, speakingEst: sEst };
+  // Total = average of the AVAILABLE section scaled values (R, L, W-if-done,
+  // S-estimate), projected across all 4 sections → /120. An untaken section is
+  // excluded from the average, never counted as 0 (which dragged it down).
+  const _avail = [rScaled, lScaled, wScaled, sEst].filter(function (v) { return v !== null && v !== undefined; });
+  const totalScaled = _avail.length ? Math.round(_avail.reduce(function (s, v) { return s + v; }, 0) / _avail.length * 4) : 0;
+  return { reading: rScaled, listening: lScaled, writing: wScaled, speaking: sScaled, total: totalScaled, speakingEst: sEst };
 }
 
 const MOCK_USERS = [
