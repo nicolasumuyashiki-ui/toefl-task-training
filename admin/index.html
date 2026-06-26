@@ -641,21 +641,31 @@ function predictScoresForUser(userAttempts) {
   const rScaled = rPct !== null ? percentToScaled(rPct, READING_TABLE) : null;
   const lScaled = lPct !== null ? percentToScaled(lPct, LISTENING_TABLE) : null;
 
-  // Writing — Build a Sentence accuracy mapped through the Reading
-  // raw→scaled curve. Email/Discussion are not auto-graded; we assume
-  // they perform in line with the learner's Sentence accuracy. Use
-  // first-attempt only (same dedupe as R/L for consistency).
+  // R/L average — used to ESTIMATE the sections we can't auto-grade, so the
+  // Total reflects a full 4-section projection instead of counting an untaken
+  // section as 0 (which dragged the Total below the section bands).
+  const rlAvail = [rScaled, lScaled].filter(function (v) { return v !== null; });
+  const rlAvg = rlAvail.length ? Math.round(rlAvail.reduce(function (s, v) { return s + v; }, 0) / rlAvail.length) : null;
+
+  // Writing — ONLY from Build a Sentence accuracy (no estimate). If the
+  // learner hasn't done Build a Sentence the Writing card shows "—" and the
+  // section is simply excluded from the Total average (not counted as 0).
   const sentenceItems = firstScored.filter(a => a.task === 'sentence');
   const sentencePct = avgPct(sentenceItems);
   const wScaled = sentencePct !== null ? percentToScaled(sentencePct, READING_TABLE) : null;
 
-  // Speaking — intentionally not predicted: TCK has no automated audio
-  // assessment, so any number would be misleading. The Total below
-  // intentionally excludes Speaking (Total / 90, not / 120).
+  // Speaking — no automated audio assessment, so its CARD stays "—" (sScaled
+  // is null → not shown). But the TOTAL projects it from R/L so the overall
+  // score reflects Speaking too.
   const sScaled = null;
+  const sEst = rlAvg;
 
-  const totalScaled = [rScaled, lScaled, wScaled].reduce((s, v) => s + (v || 0), 0);
-  return { reading: rScaled, listening: lScaled, writing: wScaled, speaking: sScaled, total: totalScaled };
+  // Total = average of the AVAILABLE section scaled values (R, L, W-if-done,
+  // S-estimate), projected across all 4 sections → /120. An untaken section is
+  // excluded from the average, never counted as 0 (which dragged it down).
+  const _avail = [rScaled, lScaled, wScaled, sEst].filter(function (v) { return v !== null && v !== undefined; });
+  const totalScaled = _avail.length ? Math.round(_avail.reduce(function (s, v) { return s + v; }, 0) / _avail.length * 4) : 0;
+  return { reading: rScaled, listening: lScaled, writing: wScaled, speaking: sScaled, total: totalScaled, speakingEst: sEst };
 }
 
 const MOCK_USERS = [
@@ -1109,10 +1119,10 @@ function renderKarteDetail() {
      Project to a 120-equivalent for the band lookup so the new 1-6 chart
      remains meaningful — assumes Speaking would land in line with the
      other three sections. */
-  const total120Proj = pred.total > 0 ? Math.round(pred.total * 4 / 3) : 0;
+  const total120Proj = pred.total > 0 ? Math.round(pred.total) : 0;
   const totalBandStr = pred.total > 0 ? formatBand(totalToBand(total120Proj)) : '—';
   const totalPredBlock = pred.total > 0
-    ? '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-dark));color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase">Predicted TOEFL® Total</div><div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.55);margin-top:2px">R+L+W を 120 点満点に換算（Speaking は推定）</div></div><div style="text-align:right"><div style="font-family:var(--font-en);font-size:2.2em;font-weight:800;letter-spacing:-0.02em;line-height:1"><span>' + total120Proj + '</span><span style="font-size:.4em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 120</span></div><div style="font-family:var(--font-en);font-size:1em;font-weight:700;color:var(--gold);margin-top:4px">Band ' + totalBandStr + '<span style="font-size:.6em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 6.0</span></div></div></div>'
+    ? '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-dark));color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:var(--font-en);font-size:.68em;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.14em;text-transform:uppercase">Predicted TOEFL® Total</div><div style="font-family:var(--font-en);font-size:.78em;color:rgba(255,255,255,.55);margin-top:2px">4技能の予測（Writing・Speaking は Reading/Listening から推定）</div></div><div style="text-align:right"><div style="font-family:var(--font-en);font-size:2.2em;font-weight:800;letter-spacing:-0.02em;line-height:1"><span>' + total120Proj + '</span><span style="font-size:.4em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 120</span></div><div style="font-family:var(--font-en);font-size:1em;font-weight:700;color:var(--gold);margin-top:4px">Band ' + totalBandStr + '<span style="font-size:.6em;color:rgba(255,255,255,.5);font-weight:500;margin-left:3px">/ 6.0</span></div></div></div>'
     : '';
   const allAtts = attempts.slice().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   const activityRows = allAtts.map(a => {
@@ -1217,7 +1227,7 @@ function renderProgress() {
     const wCell = scaledCell(pred.writing, true);
     const sCell = scaledCell(pred.speaking, true);
     const totalCell = pred.total > 0
-      ? '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span style="font-family:var(--font-en);font-size:1em;font-weight:800;color:var(--gold);letter-spacing:-0.01em">' + Math.round(pred.total * 4 / 3) + '<span style="font-size:.72em;color:rgba(255,255,255,.5);font-weight:500;margin-left:2px">/120</span></span><div style="font-family:var(--font-en);font-size:.72em;color:rgba(255,255,255,.75);font-weight:700;margin-top:2px">Band ' + formatBand(totalToBand(Math.round(pred.total * 4 / 3))) + '</div></td>'
+      ? '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span style="font-family:var(--font-en);font-size:1em;font-weight:800;color:var(--gold);letter-spacing:-0.01em">' + Math.round(pred.total) + '<span style="font-size:.72em;color:rgba(255,255,255,.5);font-weight:500;margin-left:2px">/120</span></span><div style="font-family:var(--font-en);font-size:.72em;color:rgba(255,255,255,.75);font-weight:700;margin-top:2px">Band ' + formatBand(totalToBand(Math.round(pred.total))) + '</div></td>'
       : '<td style="background:var(--green-deep);border-left:2px solid var(--gold)"><span class="cell-none" style="color:rgba(255,255,255,.3)">—</span></td>';
     return '<tr><td class="sticky-col"><strong>' + escapeHtml(u.userName) + '</strong><div style="font-size:.82em;color:var(--ink-500);font-family:var(--font-en)">' + u.userId + '</div></td>' + cells + rCell + lCell + wCell + sCell + totalCell + '</tr>';
   }).join('');
@@ -1266,7 +1276,7 @@ function exportCSV(kind) {
         pred.listening ?? '', pred.listening !== null ? formatBand(sectionToBand(pred.listening)) : '',
         pred.writing ?? '',   pred.writing   !== null ? formatBand(sectionToBand(pred.writing))   : '',
         '採点なし',
-        (pred.total > 0 ? Math.round(pred.total * 4 / 3) : ''),     pred.total > 0 ? formatBand(totalToBand(Math.round(pred.total * 4 / 3))) : '']);
+        (pred.total > 0 ? Math.round(pred.total) : ''),     pred.total > 0 ? formatBand(totalToBand(Math.round(pred.total))) : '']);
     });
   }
   const csv = rows.map(r => r.map(cell => {

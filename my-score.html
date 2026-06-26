@@ -168,10 +168,10 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   <div class="total-inner">
     <div>
       <div class="total-label">Predicted Total <span style="font-size:.7em;opacity:.55;font-weight:500;text-transform:none;letter-spacing:.02em">· 1回目スコアベース</span></div>
-      <div class="total-big">Band <span id="totalBand">—</span> <small>/ 6.0 <span style="font-size:.55em;opacity:.7;font-weight:500;letter-spacing:.04em;margin-left:2px">(Reading・Listening・Writing 換算)</span></small></div>
+      <div class="total-big">Band <span id="totalBand">—</span> <small>/ 6.0 <span style="font-size:.55em;opacity:.7;font-weight:500;letter-spacing:.04em;margin-left:2px">(4技能予測 · Writing/Speaking は R/L から推定)</span></small></div>
       <div style="font-family:var(--font-en);font-size:.95em;font-weight:600;color:rgba(255,255,255,.65);margin-top:6px;letter-spacing:.02em">
         <span class="jp">旧スコア</span><span class="en">Legacy scale</span>
-        <span style="margin-left:6px"><span id="totalScore">—</span> <small style="opacity:.7">/ 90 <span style="font-size:.85em;opacity:.7;font-weight:500">(Speaking 採点なし)</span></small></span>
+        <span style="margin-left:6px"><span id="totalScore">—</span> <small style="opacity:.7">/ 120 <span style="font-size:.85em;opacity:.7;font-weight:500">(Writing/Speaking は推定)</span></small></span>
       </div>
       <div id="masteryBlock" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.18);display:none">
         <div style="font-family:var(--font-en);font-size:.66em;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px">Mastery Rate <span style="font-weight:500;text-transform:none;letter-spacing:.02em;opacity:.85">· 復習による習得率（最新スコア）</span></div>
@@ -513,6 +513,9 @@ function render() {
   const listening = aggregateSection(attempts, 'Listening');
   const readingScaled = reading.hasData ? percentToScaled(reading.pct, READING_TABLE) : null;
   const listeningScaled = listening.hasData ? percentToScaled(listening.pct, LISTENING_TABLE) : null;
+  // R/L average — used to estimate Writing/Speaking when not directly measured.
+  const _rlVals = [readingScaled, listeningScaled].filter(function (v) { return v !== null; });
+  const rlAvg = _rlVals.length ? Math.round(_rlVals.reduce(function (a, v) { return a + v; }, 0) / _rlVals.length) : null;
 
   // Writing — Sentence accuracy as the sole signal (Email/Discussion
   // would need coach grading; we estimate they'd land where Sentence
@@ -520,6 +523,7 @@ function render() {
   // but doesn't affect the predicted scaled score.
   const sentenceAgg = aggregateSectionTask(attempts, 'sentence');
   const writingSubmissions = attempts.filter(a => ['email','discussion'].indexOf(a.task) !== -1 && (a.status === 'done' || a.status === 'submitted')).length;
+  // Writing — ONLY from Build a Sentence (no estimate). "—" when not done.
   const writingScaled = estimateWritingScaled(sentenceAgg ? sentenceAgg.pct : null);
   const writingAttemptCount = (sentenceAgg ? sentenceAgg.attempts : 0) + writingSubmissions;
 
@@ -577,13 +581,16 @@ function render() {
   // estimate we scale up to a 0-120 equivalent so the new TOEFL® band
   // (1.0-6.0) lookup remains meaningful — this is a rough projection,
   // assuming Speaking would land in line with the other three sections.
-  const scoredSections = sections.filter(s => s.key !== 'speaking');
-  let total = 0, totalKnown = true;
-  scoredSections.forEach(s => { if (s.scaled !== null) total += s.scaled; else totalKnown = false; });
+  // Total = average of the AVAILABLE section scaled values (R, L, W-if-done,
+  // S-estimate) projected across all 4 sections → /120. Writing is from Build
+  // a Sentence only (excluded from the average when not done — never 0).
+  // Speaking is estimated from R/L for the Total; its CARD stays "—".
+  const _sForTotal = rlAvg;
+  const _avail = [readingScaled, listeningScaled, writingScaled, _sForTotal].filter(function (v) { return v !== null && v !== undefined; });
+  const total = _avail.length ? Math.round(_avail.reduce(function (a, v) { return a + v; }, 0) / _avail.length * 4) : 0;
+  const totalKnown = (readingScaled !== null || listeningScaled !== null);
   document.getElementById('totalScore').textContent = totalKnown && total > 0 ? total : '—';
-  // Project to a 120-scale for band lookup so the 1-6 chart still applies.
-  const projected120 = totalKnown && total > 0 ? Math.round(total * 4 / 3) : null;
-  document.getElementById('totalBand').textContent = projected120 !== null ? formatBand(totalToBand(projected120)) : '—';
+  document.getElementById('totalBand').textContent = totalKnown && total > 0 ? formatBand(totalToBand(total)) : '—';
 
   // Mastery Rate (latest-attempt aggregate). Hidden until at least one retry exists.
   const mastery = computeMastery(attempts);
