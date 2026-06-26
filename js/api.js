@@ -14,7 +14,7 @@ var API_URL = 'https://script.google.com/macros/s/AKfycbwjI8n86Cu1ar1IsPffyq9mbo
    EMPTY = disabled → behavior is 100% unchanged (direct GAS as before).
    Saves always FALL BACK to the direct method if the proxy errors, so flipping
    this on can never make saving worse than today. */
-var SAVE_PROXY_URL = '';
+var SAVE_PROXY_URL = 'https://tck-save.nicolas-umuyashiki.workers.dev/';
 
 var _jsonpCounter = 0;
 
@@ -34,13 +34,14 @@ function _proxyPost(params) {
     if (!r.ok) throw new Error('proxy_http_' + r.status);
     return r.text();
   }).then(function (txt) {
-    // GAS may answer with JSON or JSONP-wrapped text; extract the JSON object.
-    try { return JSON.parse(txt); }
-    catch (e) {
-      var m = txt && txt.match(/\{[\s\S]*\}/);
-      if (m) { try { return JSON.parse(m[0]); } catch (e2) {} }
-      return { success: true, proxied: true };
-    }
+    // GAS answers with a JSON object. Parse it; if the body is NOT a JSON
+    // object (e.g. a misconfigured Worker still returning "Hello World!", or
+    // an HTML error page), REJECT so the caller falls back to the direct
+    // transport — never report a false success that would drop the save.
+    try { var o = JSON.parse(txt); if (o && typeof o === 'object') return o; } catch (e) {}
+    var m = txt && txt.match(/\{[\s\S]*\}/);
+    if (m) { try { var o2 = JSON.parse(m[0]); if (o2 && typeof o2 === 'object') return o2; } catch (e2) {} }
+    throw new Error('proxy_bad_response');
   });
 }
 
