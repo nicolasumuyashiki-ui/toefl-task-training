@@ -6,7 +6,43 @@
  */
 var API_URL = 'https://script.google.com/macros/s/AKfycbwjI8n86Cu1ar1IsPffyq9mboDrUNpG-SsVpFtURjP6AmCFHD3Zbw5_qcJJUksz_UDyyw/exec';
 
+/* Same-origin SAVE RELAY (root fix for environments that block the direct
+   request to script.google.com — privacy extensions, corporate/VPN filters).
+   When set to your Cloudflare Worker URL (see docs/cloudflare-save-proxy.js),
+   writes (saveAnswers / uploadRecording) are sent to YOUR domain, which the
+   Worker forwards to GAS server-to-server — defeating domain-based blockers.
+   EMPTY = disabled → behavior is 100% unchanged (direct GAS as before).
+   Saves always FALL BACK to the direct method if the proxy errors, so flipping
+   this on can never make saving worse than today. */
+var SAVE_PROXY_URL = '';
+
 var _jsonpCounter = 0;
+
+/* POST a params object to the save relay and resolve with the parsed JSON
+   response. Rejects on network error / non-2xx / unparseable body so the
+   caller can fall back to the direct transport. */
+function _proxyPost(params) {
+  if (!SAVE_PROXY_URL || typeof fetch !== 'function') return Promise.reject(new Error('no_proxy'));
+  var body = Object.keys(params).map(function (k) {
+    return encodeURIComponent(k) + '=' + encodeURIComponent(params[k] == null ? '' : params[k]);
+  }).join('&');
+  return fetch(SAVE_PROXY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+    body: body
+  }).then(function (r) {
+    if (!r.ok) throw new Error('proxy_http_' + r.status);
+    return r.text();
+  }).then(function (txt) {
+    // GAS may answer with JSON or JSONP-wrapped text; extract the JSON object.
+    try { return JSON.parse(txt); }
+    catch (e) {
+      var m = txt && txt.match(/\{[\s\S]*\}/);
+      if (m) { try { return JSON.parse(m[0]); } catch (e2) {} }
+      return { success: true, proxied: true };
+    }
+  });
+}
 
 function _jsonpRequest(url) {
   return new Promise(function(resolve, reject) {
@@ -71,7 +107,39 @@ function _genSaveId() { return 's_' + Date.now() + '_' + Math.random().toString(
    failure/timeout. clientSaveId lets the server dedupe retries (optional
    GAS-side; without it a rare lost-response retry just adds a duplicate
    row, which the menu/predicted view already collapse per set). */
+/* Build the saveAnswers params object (shared by the proxy + POST paths). */
+function _saveParams(item) {
+  var user = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+  var meta = item.meta || {};
+  return {
+    action: 'saveAnswers',
+    userId: user.userId || '', userName: user.userName || '',
+    set: item.setName || '', answers: JSON.stringify(item.answers == null ? '' : item.answers),
+    score: String(item.score == null ? '' : item.score),
+    harderCorrect: String(meta.harderCorrect || 0),
+    harderTotal: String(meta.harderTotal || 0),
+    attemptNumber: String(meta.attemptNumber || 1),
+    total: String(meta.total || 0),
+    clientSaveId: String(item.id || '')
+  };
+}
+
+/* Try the same-origin relay first (if configured), then fall back to the
+   direct GET/iframe transport. The relay defeats domain-based blockers; the
+   fallback guarantees we never do WORSE than today's direct method. */
 function _sendSavePayload(item) {
+  if (SAVE_PROXY_URL) {
+    return _proxyPost(_saveParams(item)).then(function (res) {
+      if (res && res.success !== false) return res;
+      return _sendSaveDirect(item);   // relay reachable but GAS said no → retry direct
+    }, function () {
+      return _sendSaveDirect(item);   // relay blocked/errored → direct
+    });
+  }
+  return _sendSaveDirect(item);
+}
+
+function _sendSaveDirect(item) {
   var user = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
   var meta = item.meta || {};
   var answersStr = JSON.stringify(item.answers == null ? '' : item.answers);
@@ -421,6 +489,18 @@ var Api = {
       attemptNumber: String(meta.attemptNumber || 1),
       audioB64:      base64Audio || ''
     };
+    // Same-origin relay first (defeats domain blockers that drop the large
+    // cross-origin recording POST), then fall back to the iframe POST.
+    var _direct = function(){ return Api._uploadRecordingDirect(data); };
+    if (SAVE_PROXY_URL) {
+      return _proxyPost(data).then(function(res){
+        return (res && res.success !== false) ? res : _direct();
+      }, _direct);
+    }
+    return _direct();
+  },
+
+  _uploadRecordingDirect: function(data) {
     return new Promise(function(resolve){
       var name = 'gasUpload_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
       var iframe = document.createElement('iframe');

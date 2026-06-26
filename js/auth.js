@@ -812,3 +812,29 @@ if (typeof window !== 'undefined') {
   tag.defer = true;
   document.head.appendChild(tag);
 })();
+
+/* ============================================================
+   Save-guard loader — inject js/save-guard.js on EVERY page (for
+   logged-in learners) so a save that didn't reach the server becomes
+   visible with a one-tap resend, instead of being silently lost. The
+   module no-ops for logged-out pages and is pure UI over the existing
+   outbox (never touches save logic or history).
+   ============================================================ */
+(function(){
+  if (typeof location === 'undefined') return;
+  if (location.search.indexOf('fromAdmin=1') !== -1) return; // admin overlay path
+  var here = (document.currentScript && document.currentScript.src) || '';
+  if (!here) {
+    var scripts = document.getElementsByTagName('script');
+    for (var i = 0; i < scripts.length; i++) {
+      var s = scripts[i].src || '';
+      if (/\/auth\.js(\?|$)/.test(s)) { here = s; break; }
+    }
+  }
+  if (!here) return;
+  var guardSrc = here.replace(/\/auth\.js(\?[^#]*)?(\#.*)?$/, '/save-guard.js$1');
+  var tag = document.createElement('script');
+  tag.src = guardSrc;
+  tag.defer = true;
+  document.head.appendChild(tag);
+})();
