@@ -321,15 +321,25 @@
           continue;
         }
         // Auto-graded scores (usually already on the server; recovered if not).
-        var sm = k && k.match(/^training_score_(ctw|rdl|academic|lcr|conv|announce|talk|sentence)_p(\d+)$/);
+        // NOTE: CTW is intentionally EXCLUDED here (mirrors auth.js
+        // AUTO_SAVE_LABELS). CTW's real attempts are saved per-set as
+        // "CTW PN Set X" with the actual selections; reconcile only has the
+        // aggregate `training_score_ctw_pN` and NO per-question snapshot
+        // (CTW never writes training_answers_ctw_*), so pushing it here would
+        // create a malformed set-less "CTW PN" row filled with zeros — the
+        // unhelpful all-0 rows we used to see. Let the per-set save + outbox
+        // own CTW recovery instead.
+        var sm = k && k.match(/^training_score_(rdl|academic|lcr|conv|announce|talk|sentence)_p(\d+)$/);
         if (sm) {
           var sk = sm[1] + '_p' + sm[2];
           if (!have[sk] && !pushed[sk]) {
             var d = parse(lsGet(k));
             if (d && typeof d.total === 'number' && d.total > 0 && typeof d.correct === 'number') {
               have[sk] = true;
+              // Pass the real `total` so the recovered row records the question
+              // count instead of 0 (display can fall back to answers.length too).
               pending.push({ key: sk, set: RECON_LABEL[sm[1]] + ' P' + sm[2], answers: reconAnswers(sm[1], sm[2], d.total),
-                score: d.correct, meta: { harderCorrect: d.harderCorrect || 0, harderTotal: d.harderTotal || 0, attemptNumber: 1 } });
+                score: d.correct, meta: { harderCorrect: d.harderCorrect || 0, harderTotal: d.harderTotal || 0, attemptNumber: 1, total: d.total } });
             }
           }
         }

@@ -455,7 +455,10 @@ if (typeof window !== 'undefined') {
         if (_lastSaved[task + '_p' + practice] !== sig) {  // de-dupe identical writes
           _lastSaved[task + '_p' + practice] = sig;
           var correct = d.correct, total = d.total;
-          var meta = { harderCorrect: d.harderCorrect || 0, harderTotal: d.harderTotal || 0, attemptNumber: n + 1 };
+          // Record the real question count so the ANSWERS `total` column isn't
+          // left 0 (display can also derive it from answers.length, but storing
+          // it keeps the sheet honest for admin/export).
+          var meta = { harderCorrect: d.harderCorrect || 0, harderTotal: d.harderTotal || 0, attemptNumber: n + 1, total: total };
           _ensureApi(function () {
             try {
               // Build a length=total answers array so getMyHistory still derives

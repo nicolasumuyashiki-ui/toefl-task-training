@@ -313,7 +313,7 @@ var correctAnswers = {'1':'A','2':'C','3':'B','4':'C','5':'C'};
   document.getElementById('scoreDisplay').textContent = score+'/5';
 })();
 </script>
-<script src="../../js/auth.js?v=20260626"></script>
+<script src="../../js/auth.js?v=20260626b"></script>
 <script>
 (function(){
   var stored=localStorage.getItem("tck_lang")||"jp";
@@ -322,6 +322,6 @@ var correctAnswers = {'1':'A','2':'C','3':'B','4':'C','5':'C'};
   function setLang(l){document.body.setAttribute("data-lang",l);document.documentElement.setAttribute("lang",l==="jp"?"ja":"en");localStorage.setItem("tck_lang",l);document.querySelectorAll("[data-lang-btn]").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-lang-btn")===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260626"></script>
+<script defer src="../../js/tm-footer.js?v=20260626b"></script>
 </body>
 </html>
