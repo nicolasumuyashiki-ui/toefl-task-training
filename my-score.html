@@ -103,6 +103,9 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 .review-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;background:var(--white);border:1.5px solid var(--green);border-radius:999px;font-family:var(--font-en),var(--font-jp);font-size:.78em;font-weight:600;color:var(--green-dark);text-decoration:none;cursor:pointer;transition:all .15s;white-space:nowrap}
 .review-btn:hover{background:var(--green);color:var(--white)}
 .review-btn .arrow{font-size:.95em}
+.answers-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;background:var(--white);border:1.5px solid var(--paper);border-radius:999px;font-family:var(--font-en),var(--font-jp);font-size:.78em;font-weight:600;color:var(--ink-500);text-decoration:none;cursor:pointer;transition:all .15s;white-space:nowrap}
+.answers-btn:hover{border-color:var(--green);color:var(--green-dark)}
+.review-actions{display:inline-flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 
 .activity-pager{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-top:1px solid var(--paper);background:var(--cream);font-family:var(--font-en);font-size:.82em;color:var(--ink-500);gap:12px;flex-wrap:wrap}
 .pager-info{font-weight:500}
@@ -254,9 +257,9 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   </a>
 </div>
 
-<script src="js/auth.js?v=20260625g"></script>
-<script src="js/api.js?v=20260625g"></script>
-<script src="js/history-sync.js?v=20260625g"></script>
+<script src="js/auth.js?v=20260626"></script>
+<script src="js/api.js?v=20260626"></script>
+<script src="js/history-sync.js?v=20260626"></script>
 <script>
 /* Language toggle */
 (function(){
@@ -654,6 +657,28 @@ const TASK_PATHS = {
   ti: (n) => 'speaking/ti/practice-' + n + '.html',
 };
 
+/* "答案を見る" — link to the answers/tips page, where auth.js auto-injects
+   js/student-history.js for logged-in students. That panel restores the
+   learner's OWN past submission from the server (getMyAnswers): the essay
+   text for Email/Discussion, the per-attempt score history for auto-graded
+   tasks, and the recordings for LR/TI. So learners can review exactly what
+   they submitted before — not just re-do the practice. Speaking has no
+   -answers page; its -tips page carries the recordings panel instead. */
+const ANSWER_PATHS = {
+  ctw: (n) => 'reading/ctw/practice-' + n + '-answers.html',
+  rdl: (n) => 'reading/rdl/practice-' + n + '-answers.html',
+  academic: (n) => 'reading/academic/practice-' + n + '-answers.html',
+  lcr: (n) => 'listening/lcr/practice-' + n + '-answers.html',
+  conv: (n) => 'listening/conv/practice-' + n + '-answers.html',
+  announce: (n) => 'listening/announce/practice-' + n + '-answers.html',
+  talk: (n) => 'listening/talk/practice-' + n + '-answers.html',
+  sentence: (n) => 'writing/sentence/practice-' + n + '-answers.html',
+  email: (n) => 'writing/email/practice-' + n + '-answers.html',
+  discussion: (n) => 'writing/discussion/practice-' + n + '-answers.html',
+  lr: (n) => 'speaking/lr/practice-' + n + '-tips.html',
+  ti: (n) => 'speaking/ti/practice-' + n + '-tips.html',
+};
+
 const ROWS_PER_PAGE = 15;
 
 /* Format an ISO timestamp → "2026/06/16 11:41" (JST, local). Returns "—"
@@ -708,8 +733,12 @@ function renderActivityPage() {
     const score = a.autoGraded ? (lat.correct + '/' + lat.total + ' · ' + pct + '%' + retryTag) : '—';
     const when = fmtWhen(a.updatedAt);
     const path = TASK_PATHS[a.task] ? TASK_PATHS[a.task](a.practice) : null;
+    const ansPath = ANSWER_PATHS[a.task] ? ANSWER_PATHS[a.task](a.practice) : null;
     const reviewBtn = path
       ? '<a class="review-btn" href="' + path + '"><span class="jp">復習する</span><span class="en">Review</span><span class="arrow">→</span></a>'
+      : '';
+    const answersBtn = ansPath
+      ? '<a class="answers-btn" href="' + ansPath + '"><span class="jp">答案を見る</span><span class="en">My answers</span></a>'
       : '';
     return '<tr>' +
       '<td class="muted">' + when + '</td>' +
@@ -717,7 +746,7 @@ function renderActivityPage() {
       '<td>Practice ' + a.practice + '</td>' +
       '<td class="num">' + score + '</td>' +
       '<td>' + pill + '</td>' +
-      '<td>' + reviewBtn + '</td>' +
+      '<td><div class="review-actions">' + answersBtn + reviewBtn + '</div></td>' +
     '</tr>';
   }).join('');
 
@@ -820,6 +849,6 @@ function loadMyRecordings(){
 }
 loadMyRecordings();
 </script>
-<script defer src="js/tm-footer.js?v=20260625g"></script>
+<script defer src="js/tm-footer.js?v=20260626"></script>
 </body>
 </html>
