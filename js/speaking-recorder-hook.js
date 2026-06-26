@@ -92,6 +92,16 @@
   var recQNum = 0;
   var indicator = null;
 
+  // Keep each question's encoded audio in memory for the duration of the
+  // practice, keyed by question number: { meta, b64 }. The cross-origin
+  // form-POST upload can't truly confirm success (the iframe is opaque and
+  // a 30s timeout resolves success:true even if nothing arrived). After the
+  // section finishes we ask the server which questions actually landed and
+  // re-send any that are missing FROM THIS KEPT AUDIO — so a silent drop
+  // self-heals without the learner re-recording. This is what stops the
+  // "recordings stopped arriving" class of bug.
+  var keptAudio = {};
+
   function ensureIndicator(){
     if (indicator) return indicator;
     var s = document.createElement('style');
@@ -149,7 +159,7 @@
       console.log('[recorder-hook] q=' + qNum + ' blob size=' + (blob ? blob.size : 'null') + 'B type=' + (blob ? blob.type : 'null'));
       return TCKRecorder.blobToBase64(blob).then(function(b64){
         console.log('[recorder-hook] q=' + qNum + ' base64 length=' + (b64 ? b64.length : 0) + ' chars');
-        return uploadWithRetry({
+        var meta = {
           task:           (typeof TCK_TASK !== 'undefined') ? TCK_TASK : 'speaking',
           practiceSet:    (typeof TCK_PRACTICE !== 'undefined') ? TCK_PRACTICE : 0,
           questionIndex:  qNum,
@@ -157,11 +167,66 @@
           ext:            TCKRecorder.getExt(),
           durationSec:    dur,
           attemptNumber:  1
-        }, b64);
+        };
+        // Keep the audio so reconcileUploads() can re-send if the server
+        // didn't actually receive it (only kept if we have real audio).
+        if (b64) keptAudio[qNum] = { meta: meta, b64: b64 };
+        return uploadWithRetry(meta, b64);
       });
     }).catch(function(e){
       console.warn('[recorder-hook] upload failed for q' + qNum + ' (after retries):', e);
     });
+  }
+
+  // Confirm-and-resend: after the section finishes, ask the server which
+  // questions for this (task, practice) actually arrived in the RECORDINGS
+  // sheet, and re-upload any that are missing from the kept audio. Runs a
+  // couple of verify rounds with a short delay so the server has time to
+  // record the last upload before we check. Best-effort and non-blocking:
+  // if listMyRecordings is unavailable or fails we simply keep the audio
+  // (which we already tried to upload) and don't risk losing anything.
+  function reconcileUploads(){
+    if (SKIP_RECORDING) return Promise.resolve();
+    if (typeof Api === 'undefined' || !Api.listMyRecordings) return Promise.resolve();
+    var qs = Object.keys(keptAudio);
+    if (!qs.length) return Promise.resolve();
+    var task = (typeof TCK_TASK !== 'undefined') ? String(TCK_TASK) : '';
+    var pset = (typeof TCK_PRACTICE !== 'undefined') ? String(TCK_PRACTICE) : '';
+
+    function verifyAndResend(round){
+      return Api.listMyRecordings().then(function(r){
+        var arrived = {};
+        if (r && r.success && r.recordings) {
+          r.recordings.forEach(function(rec){
+            if (String(rec.task) === task && String(rec.practiceSet) === pset) {
+              arrived[String(rec.questionIndex)] = true;
+            }
+          });
+        } else {
+          // Couldn't read the server list — don't guess, just stop (audio
+          // is still kept and was already uploaded once).
+          return;
+        }
+        var missing = qs.filter(function(q){ return !arrived[String(q)]; });
+        if (!missing.length) {
+          console.log('[recorder-hook] reconcile: all ' + qs.length + ' recordings confirmed on server');
+          return;
+        }
+        console.warn('[recorder-hook] reconcile round ' + round + ': re-sending missing Q ' + missing.join(','));
+        return Promise.all(missing.map(function(q){
+          var item = keptAudio[q];
+          return item ? uploadWithRetry(item.meta, item.b64).catch(function(){}) : null;
+        })).then(function(){
+          if (round < 2) {
+            return new Promise(function(res){ setTimeout(res, 2500); })
+              .then(function(){ return verifyAndResend(round + 1); });
+          }
+        });
+      }, function(){ /* listMyRecordings rejected — leave kept audio as-is */ });
+    }
+    // Give the server a moment to persist the final upload before checking.
+    return new Promise(function(res){ setTimeout(res, 2500); })
+      .then(function(){ return verifyAndResend(0); });
   }
 
   // --- Pre-init mic on the user-gesture Start button ---
@@ -212,7 +277,11 @@
   window.showComplete = function(){
     var lastQ = recQNum || (typeof totalQuestions === 'number' ? totalQuestions : 0);
     var p = recordingActive ? uploadCurrent(lastQ) : Promise.resolve();
-    p.then(function(){ TCKRecorder.release(); });
+    // After the final upload, verify against the server and re-send any
+    // dropped questions, THEN release the mic. Non-blocking for the UI
+    // (origShowComplete runs immediately below).
+    p.then(function(){ return reconcileUploads(); })
+     .then(function(){ TCKRecorder.release(); }, function(){ TCKRecorder.release(); });
     // Persist "done" so the menu shows a 提出済み / Submitted badge.
     if (window.TCKProgress && typeof TCK_TASK !== 'undefined' && typeof TCK_PRACTICE !== 'undefined') {
       try { TCKProgress.markDone(TCK_TASK, TCK_PRACTICE); } catch(e){}

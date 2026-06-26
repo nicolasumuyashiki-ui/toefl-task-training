@@ -90,8 +90,45 @@
     insertAfterUserPreview(box);
   }
 
+  // True when every stored selection is 0/empty — the old auth.js auto-save
+  // pushed a score-only row (new Array(total).fill(0)) before per-question
+  // selections were captured. Show an honest note instead of "Q1: 0".
+  function selectionsLookEmpty(ans){
+    if (!ans) return true;
+    var vals = Array.isArray(ans) ? ans : Object.keys(ans).map(function(k){ return ans[k]; });
+    if (!vals.length) return true;
+    return vals.every(function(v){
+      var x = (v && typeof v === 'object' && 'selected' in v) ? v.selected : v;
+      return x === 0 || x === '0' || x === null || x === undefined || x === '';
+    });
+  }
+
+  // Render the learner's actual per-question selections (matches what staff
+  // see in the admin overlay). Handles array shape (CTW/Sentence), object
+  // map ({1:"A"} / {q1:{selected}}), and the {selected} wrapper.
+  function formatSelections(ans){
+    if (selectionsLookEmpty(ans)) {
+      return '<div style="padding:8px 10px;background:#FFF4D6;border:1px solid #E3C871;border-radius:8px;color:#6B5A1E;font-size:.84em;line-height:1.55">この記録は得点のみ保存された旧仕様のため、設問ごとの選択内容は表示できません（得点は有効です）。</div>';
+    }
+    var keys = Array.isArray(ans)
+      ? ans.map(function(_, i){ return i; })
+      : Object.keys(ans).sort(function(a,b){ var na=Number(a.replace(/\D/g,'')), nb=Number(b.replace(/\D/g,'')); return (isNaN(na)||isNaN(nb)) ? String(a).localeCompare(String(b)) : na-nb; });
+    var rows = keys.map(function(k){
+      var v = ans[k];
+      var pick = (v && typeof v === 'object' && 'selected' in v) ? v.selected : v;
+      var qlabel = Array.isArray(ans) ? ('Q' + (Number(k) + 1)) : (/^q?\d+$/i.test(k) ? ('Q' + String(k).replace(/\D/g,'')) : k);
+      return '<div style="padding:4px 0;display:flex;gap:10px;font-size:.88em">' +
+        '<span style="min-width:42px;color:#5A6861;font-weight:600">' + escapeHtml(qlabel) + '</span>' +
+        '<strong style="color:#005434">' + escapeHtml(pick == null || pick === '' ? '—' : (typeof pick === 'string' ? pick : JSON.stringify(pick))) + '</strong>' +
+      '</div>';
+    }).join('');
+    return '<div style="margin-top:8px;padding:12px 14px;background:#fff;border:1px solid #F5E9D3;border-radius:8px">' +
+      '<div style="font-size:.78em;font-weight:700;color:#8A6D2A;margin-bottom:6px">あなたが選んだ答え</div>' + rows + '</div>';
+  }
+
   // Auto-graded tasks (CTW/RDL/Academic/LCR/Conv/Announce/Talk/Sentence).
-  // For each attempt: date, score, total, percentage, set label (CTW only).
+  // For each attempt: date, score, total, percentage, set label (CTW only),
+  // plus an expandable list of the actual selections the learner made.
   // Total is derived from answers array length.
   function renderAutoGraded(attempts){
     if (!attempts.length) return;
@@ -119,15 +156,20 @@
       var setMatch = String(att.set || '').match(/Set\s+(\d+)/);
       if (setMatch) setLabel = '<span style="color:#5A6861;font-family:Manrope,sans-serif;font-size:.78em;background:#F5E9D3;padding:2px 8px;border-radius:999px">Set ' + setMatch[1] + '</span>';
       var label = (i === 0 ? '🆕 ' : '#' + (attempts.length - i) + '  ');
-      return '<div style="border-top:1px solid #F5E9D3;padding:12px 0;display:flex;align-items:center;gap:14px;flex-wrap:wrap">' +
-        '<div style="font-family:Manrope,sans-serif;font-size:.82em;color:#5A6861;min-width:170px">' + escapeHtml(label + dt) + '</div>' +
-        setLabel +
-        '<div style="font-family:Manrope,sans-serif;font-weight:800;color:' + color + ';font-size:1.05em;margin-left:auto">' +
+      var scoreHtml = '<div style="font-family:Manrope,sans-serif;font-weight:800;color:' + color + ';font-size:1.05em;margin-left:auto">' +
           icon + ' ' +
           (sc !== null ? sc + (total > 0 ? ' / ' + total : '') : '—') +
           (pct !== null ? '<span style="font-size:.82em;font-weight:600;margin-left:6px;color:#5A6861">(' + pct + '%)</span>' : '') +
-        '</div>' +
-      '</div>';
+        '</div>';
+      return '<details ' + (i === 0 ? 'open' : '') + ' style="border-top:1px solid #F5E9D3;padding:12px 0">' +
+        '<summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;flex-wrap:wrap">' +
+          '<span style="font-family:Manrope,sans-serif;font-size:.82em;color:#5A6861;min-width:170px">' + escapeHtml(label + dt) + '</span>' +
+          setLabel +
+          scoreHtml +
+          '<span style="font-size:.72em;color:#8A6D2A;font-weight:700;width:100%;margin-top:2px">▼ 答案を見る</span>' +
+        '</summary>' +
+        formatSelections(ans) +
+      '</details>';
     }).join('');
     box.innerHTML = header + rows;
     // Insert just below the existing score summary card if it exists,
