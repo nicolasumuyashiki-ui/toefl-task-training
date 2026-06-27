@@ -19,10 +19,10 @@
     el.id = 'tckTmDisclaimer';
     el.setAttribute('role', 'contentinfo');
     var css = [
-      'box-sizing:border-box', 'width:100%', 'margin:0', 'padding:14px 22px 18px',
-      'text-align:center', 'font-size:11px', 'line-height:1.65', 'color:#8A938C',
+      'box-sizing:border-box', 'width:100%', 'margin:0', 'padding:12px 22px 16px',
+      'text-align:center', 'font-size:10px', 'line-height:1.6', 'color:#9AA39C',
       'font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif',
-      'background:transparent', 'border-top:1px solid rgba(0,0,0,.06)'
+      'background:transparent', 'border-top:1px solid rgba(0,0,0,.05)'
     ];
     // CRITICAL: never pin the disclaimer with position:fixed. A fixed footer
     // sits ON TOP of page content and was covering the "次へ" button (and on
@@ -41,15 +41,17 @@
       disp = String(cs.display || '').toLowerCase();
       dir  = String(cs.flexDirection || '').toLowerCase();
     } catch (e) {}
-    // On a flex/grid body (auth cards, some practice layouts) make the footer
-    // span the full row and sort LAST, so it sits cleanly BELOW the centred
-    // content instead of beside it. For a row-flex body, allow wrapping so the
-    // full-width footer drops to its own line rather than squeezing the card.
+    // Keep it SMALL and at the VERY BOTTOM — only seen when you scroll all the
+    // way down — on every device. Practice / practice-test pages are
+    // `min-height:100vh; display:flex; flex-direction:column`, so `margin-top:
+    // auto` sinks the footer to the bottom edge of the viewport-tall column
+    // (content stays at the top; footer is below the fold). For a row-flex body
+    // (auth) allow wrapping so it drops to its own full-width line at the end.
     if (disp.indexOf('flex') !== -1) {
-      css.push('flex-basis:100%', 'order:9999');
+      css.push('flex-basis:100%', 'order:9999', 'margin-top:auto');
       if (dir.indexOf('row') === 0) { try { document.body.style.flexWrap = 'wrap'; } catch (e) {} }
     } else if (disp.indexOf('grid') !== -1) {
-      css.push('grid-column:1 / -1', 'order:9999');
+      css.push('grid-column:1 / -1', 'order:9999', 'margin-top:auto');
     }
     el.style.cssText = css.join(';');
     el.innerHTML =
