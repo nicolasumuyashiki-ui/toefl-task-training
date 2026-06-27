@@ -29,9 +29,20 @@
     // normally-appended child becomes a SECOND flex item and lands BESIDE the
     // card, breaking the layout. When the body is a flex/grid container, pin
     // the disclaimer to the viewport bottom so it stays out of that flow.
-    var disp = '';
-    try { disp = String((window.getComputedStyle(document.body).display || '')).toLowerCase(); } catch (e) {}
-    if (disp.indexOf('flex') !== -1 || disp.indexOf('grid') !== -1) {
+    var disp = '', dir = '';
+    try {
+      var cs = window.getComputedStyle(document.body);
+      disp = String(cs.display || '').toLowerCase();
+      dir  = String(cs.flexDirection || '').toLowerCase();
+    } catch (e) {}
+    // Only pin to the viewport bottom when a normally-appended child would land
+    // BESIDE the centred card — i.e. a ROW flex container, or a grid. A COLUMN
+    // flex container (e.g. the login page) stacks children vertically, so the
+    // disclaimer flows cleanly BELOW the card's own footer links; pinning it
+    // fixed there just overlaps "パスワードを忘れた / 管理者はこちら".
+    var isRowFlex = disp.indexOf('flex') !== -1 && dir.indexOf('row') === 0;
+    var isGrid = disp.indexOf('grid') !== -1;
+    if (isRowFlex || isGrid) {
       css.push('position:fixed', 'left:0', 'right:0', 'bottom:0', 'z-index:1');
     }
     el.style.cssText = css.join(';');
