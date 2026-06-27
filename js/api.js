@@ -45,14 +45,50 @@ function _proxyPost(params) {
   });
 }
 
+/* GET via the same-origin relay (fetch → Worker → GAS). Used so LOGIN and
+   READS also survive an environment that blocks script.google.com directly
+   (e.g. McAfee WebAdvisor / privacy extensions — the same block that stops
+   saves). Resolves with the parsed JSON; rejects on any failure so the caller
+   falls back to the classic JSONP <script> request. */
+function _proxyGet(url) {
+  if (!SAVE_PROXY_URL || typeof fetch !== 'function') return Promise.reject(new Error('no_proxy'));
+  var qIndex = url.indexOf('?');
+  var qs = qIndex >= 0 ? url.slice(qIndex) : '';
+  var target = SAVE_PROXY_URL.replace(/\/$/, '') + '/' + qs;
+  var fetchP = fetch(target, { method: 'GET' }).then(function (r) {
+    if (!r.ok) throw new Error('proxy_http_' + r.status);
+    return r.text();
+  }).then(function (txt) {
+    // GAS returns a JSON object (plain, or — if it wraps — extractable).
+    try { var o = JSON.parse(txt); if (o && typeof o === 'object') return o; } catch (e) {}
+    var m = txt && txt.match(/\{[\s\S]*\}/);
+    if (m) { try { var o2 = JSON.parse(m[0]); if (o2 && typeof o2 === 'object') return o2; } catch (e2) {} }
+    throw new Error('proxy_bad_response');
+  });
+  // Bound the wait so a hung relay falls back to JSONP rather than hanging.
+  var timeoutP = new Promise(function (_, reject) { setTimeout(function () { reject(new Error('proxy_timeout')); }, 12000); });
+  return Promise.race([fetchP, timeoutP]);
+}
+
 function _jsonpRequest(url) {
+  // Direct JSONP FIRST — fast and 100% unchanged for normal users. Only if it
+  // fails (an extension / network blocks script.google.com, the 前田-type case)
+  // do we fall back to the same-origin relay so blocked users can still log in
+  // and load data. A shorter timeout on the first try bounds the fallback wait.
+  if (SAVE_PROXY_URL) {
+    return _jsonpDirect(url, 9000).catch(function () { return _proxyGet(url); });
+  }
+  return _jsonpDirect(url);
+}
+
+function _jsonpDirect(url, timeoutMs) {
   return new Promise(function(resolve, reject) {
     var cbName = '_gasCallback_' + (++_jsonpCounter) + '_' + Date.now();
     var timeout = setTimeout(function() {
       delete window[cbName];
       if (script.parentNode) script.parentNode.removeChild(script);
       reject(new Error('Request timeout'));
-    }, 15000);
+    }, timeoutMs || 15000);
 
     window[cbName] = function(data) {
       clearTimeout(timeout);
