@@ -403,12 +403,14 @@ function collectAttempts() {
       const latestRaw = sessionStorage.getItem('training_score_' + task + '_p' + p)
                      || localStorage.getItem('training_score_' + task + '_p' + p);
       const firstRaw  = localStorage.getItem('training_first_' + task + '_p' + p);
+      const bestRaw   = localStorage.getItem('training_best_' + task + '_p' + p);
       const progressRaw = localStorage.getItem('tck_progress_' + task + '_p' + p);
       const doneRaw = localStorage.getItem('tck_done_' + task + '_p' + p);
       const attemptCount = parseInt(localStorage.getItem('training_attempts_' + task + '_p' + p) || '0', 10) || 0;
-      let first = null, latest = null, prog = null;
+      let first = null, latest = null, prog = null, best = null;
       try { if (firstRaw)  first  = JSON.parse(firstRaw); } catch(e){}
       try { if (latestRaw) latest = JSON.parse(latestRaw); } catch(e){}
+      try { if (bestRaw)   best   = JSON.parse(bestRaw); } catch(e){}
       try { if (progressRaw) prog = JSON.parse(progressRaw); } catch(e){}
 
       if (first || latest) {
@@ -429,6 +431,14 @@ function collectAttempts() {
           latest: recent ? {
             correct: recent.correct, total: recent.total,
             harderCorrect: recent.harderCorrect || 0, harderTotal: recent.harderTotal || 0,
+          } : null,
+          // BEST attempt for this practice (monotonic — history-sync only ever
+          // raises training_best_*). The Predicted band aggregates by best so a
+          // learner's score reflects their best work and can never drop as they
+          // do more practice.
+          best: best ? {
+            correct: best.correct, total: best.total,
+            harderCorrect: best.harderCorrect || 0, harderTotal: best.harderTotal || 0,
           } : null,
           attemptCount: attemptCount,
           updatedAt: when,
@@ -469,15 +479,20 @@ function collectAttempts() {
    The raw (unweighted) correct/total are still returned for the
    "X / Y" display fragment. */
 function aggregateSection(attempts, section, which) {
-  const key = which === 'latest' ? 'latest' : 'first';
-  const items = attempts.filter(a => a.section === section && a.autoGraded && a.status === 'done' && a[key]);
+  which = which || 'best';
+  // 'best' → best attempt per practice (falls back to first when no best
+  // recorded); 'latest' → most recent; 'first' → initial attempt.
+  const pick = a => which === 'best' ? (a.best || a.first || a.latest)
+                  : which === 'latest' ? a.latest : a.first;
+  const items = attempts.filter(a => a.section === section && a.autoGraded && a.status === 'done' && pick(a));
   if (!items.length) return { hasData: false };
   let correct = 0, total = 0, hC = 0, hT = 0;
   items.forEach(a => {
-    correct += a[key].correct;
-    total   += a[key].total;
-    hC      += a[key].harderCorrect;
-    hT      += a[key].harderTotal;
+    const x = pick(a);
+    correct += x.correct;
+    total   += x.total;
+    hC      += x.harderCorrect || 0;
+    hT      += x.harderTotal || 0;
   });
   const stdC = correct - hC, stdT = total - hT;
   const wCorrect = stdC + hC * 1.5;
@@ -507,6 +522,35 @@ function gradeFor(pct) {
 }
 const GRADE_LABELS_JP = { perfect:'Perfect', great:'Great', good:'Good', keep:'Keep Going', submitted:'提出済み' };
 const GRADE_LABELS_EN = { perfect:'Perfect', great:'Great', good:'Good', keep:'Keep Going', submitted:'Submitted' };
+
+/* ============================================================
+   HIGH-WATER-MARK — a learner's section band / total / practice count must
+   NEVER drop below the best ever shown. Partial server sync, doing extra
+   practice, or any scoring tweak could otherwise make a displayed score
+   "reset" lower, which is the #1 trust-killer. These helpers are PURELY
+   ADDITIVE: they only ever RAISE the stored value and clamp the display to
+   that maximum — a shown band can never go down. Stored in localStorage.
+   ============================================================ */
+function hwmApply(key, scaled, pct, attempts, correctTotal) {
+  var prev = null;
+  try { prev = JSON.parse(localStorage.getItem('tck_hwm_' + key) || 'null'); } catch (e) {}
+  prev = prev || { scaled: null, pct: null, attempts: 0, correctTotal: null };
+  var out = { scaled: prev.scaled, pct: prev.pct, attempts: prev.attempts || 0, correctTotal: prev.correctTotal };
+  if (scaled !== null && scaled !== undefined && (out.scaled === null || scaled >= out.scaled)) {
+    out.scaled = scaled; out.pct = pct; out.correctTotal = correctTotal;   // new high band → snapshot its metadata
+  }
+  if (typeof attempts === 'number' && attempts > out.attempts) out.attempts = attempts; // practice count only grows
+  try { localStorage.setItem('tck_hwm_' + key, JSON.stringify(out)); } catch (e) {}
+  return out;
+}
+function hwmNum(key, val) {
+  var prev = null;
+  try { var r = localStorage.getItem('tck_hwm_' + key); prev = (r === null) ? null : parseFloat(r); } catch (e) {}
+  if (prev !== null && isNaN(prev)) prev = null;
+  var mx = (val !== null && val !== undefined) ? ((prev === null) ? val : Math.max(prev, val)) : prev;
+  if (mx !== null && mx !== undefined) { try { localStorage.setItem('tck_hwm_' + key, String(mx)); } catch (e) {} }
+  return mx;
+}
 
 function render() {
   const attempts = collectAttempts();
@@ -579,6 +623,15 @@ function render() {
     },
   ];
 
+  // HIGH-WATER-MARK clamp: a section's band / practice count can only go UP.
+  // Even if best-aggregation or sync ever yields a lower value, the display
+  // never drops below the best ever shown.
+  sections.forEach(function (s) {
+    if (s.key === 'speaking') return;   // Speaking is never auto-scored
+    var h = hwmApply('sec_' + s.key, s.scaled, s.pct, s.attempts, s.correctTotal);
+    s.scaled = h.scaled; s.pct = h.pct; s.attempts = h.attempts; s.correctTotal = h.correctTotal;
+  });
+
   // Total — Speaking is intentionally unscored, so the headline number
   // is the sum of Reading + Listening + Writing (max 90). For the band
   // estimate we scale up to a 0-120 equivalent so the new TOEFL® band
@@ -588,10 +641,15 @@ function render() {
   // S-estimate) projected across all 4 sections → /120. Writing is from Build
   // a Sentence only (excluded from the average when not done — never 0).
   // Speaking is estimated from R/L for the Total; its CARD stays "—".
-  const _sForTotal = rlAvg;
-  const _avail = [readingScaled, listeningScaled, writingScaled, _sForTotal].filter(function (v) { return v !== null && v !== undefined; });
-  const total = _avail.length ? Math.round(_avail.reduce(function (a, v) { return a + v; }, 0) / _avail.length * 4) : 0;
-  const totalKnown = (readingScaled !== null || listeningScaled !== null);
+  // Build the total from the HIGH-WATER-CLAMPED section scaled values, then
+  // clamp the total itself — so the headline band can never drop either.
+  const _rS = sections[0].scaled, _lS = sections[1].scaled, _wS = sections[2].scaled;
+  const _rl = [_rS, _lS].filter(function (v) { return v !== null && v !== undefined; });
+  const _sForTotal = _rl.length ? Math.round(_rl.reduce(function (a, v) { return a + v; }, 0) / _rl.length) : null;
+  const _avail = [_rS, _lS, _wS, _sForTotal].filter(function (v) { return v !== null && v !== undefined; });
+  let total = _avail.length ? Math.round(_avail.reduce(function (a, v) { return a + v; }, 0) / _avail.length * 4) : 0;
+  total = hwmNum('total', total > 0 ? total : null) || 0;
+  const totalKnown = (_rS !== null && _rS !== undefined) || (_lS !== null && _lS !== undefined) || total > 0;
   document.getElementById('totalScore').textContent = totalKnown && total > 0 ? total : '—';
   document.getElementById('totalBand').textContent = totalKnown && total > 0 ? formatBand(totalToBand(total)) : '—';
 
@@ -780,10 +838,11 @@ function goActivityPage(p) {
 
 /* Sentence proxy — uses first-attempt for honest baseline. */
 function aggregateSectionTask(attempts, taskKey) {
-  const items = attempts.filter(a => a.task === taskKey && a.status === 'done' && a.first);
+  const pick = a => a.best || a.first || a.latest;     // best per practice
+  const items = attempts.filter(a => a.task === taskKey && a.status === 'done' && pick(a));
   if (!items.length) return null;
   let correct = 0, total = 0;
-  items.forEach(a => { correct += a.first.correct; total += a.first.total; });
+  items.forEach(a => { const x = pick(a); correct += x.correct; total += x.total; });
   return { correct, total, pct: total > 0 ? (correct / total * 100) : 0, attempts: items.length };
 }
 
