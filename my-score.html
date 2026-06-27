@@ -257,9 +257,9 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   </a>
 </div>
 
-<script src="js/auth.js?v=20260627c"></script>
-<script src="js/api.js?v=20260627c"></script>
-<script src="js/history-sync.js?v=20260627c"></script>
+<script src="js/auth.js?v=20260627d"></script>
+<script src="js/api.js?v=20260627d"></script>
+<script src="js/history-sync.js?v=20260627d"></script>
 <script>
 /* Language toggle */
 (function(){
@@ -552,6 +552,46 @@ function hwmNum(key, val) {
   return mx;
 }
 
+/* ---- Cross-device persistence of the band high-water-mark ----
+   Collect the local HWM blob to push to the server, and merge a server blob
+   in (taking the MAX of each field) so the best score FOLLOWS THE ACCOUNT to
+   any device — a brand-new device shows the true best instead of recomputing
+   from possibly-incomplete data. Only ever raises; never lowers. */
+function collectBandHwm() {
+  var o = {};
+  ['sec_reading', 'sec_listening', 'sec_writing'].forEach(function (k) {
+    try { var v = localStorage.getItem('tck_hwm_' + k); if (v) o[k] = JSON.parse(v); } catch (e) {}
+  });
+  try { var t = localStorage.getItem('tck_hwm_total'); if (t !== null) o.total = parseFloat(t); } catch (e) {}
+  return o;
+}
+function mergeServerBands(server) {
+  if (!server || typeof server !== 'object') return false;
+  var changed = false;
+  ['sec_reading', 'sec_listening', 'sec_writing'].forEach(function (k) {
+    var s = server[k]; if (!s || typeof s !== 'object') return;
+    var cur = null; try { cur = JSON.parse(localStorage.getItem('tck_hwm_' + k) || 'null'); } catch (e) {}
+    var out = cur || { scaled: null, pct: null, attempts: 0, correctTotal: null };
+    if (s.scaled !== null && s.scaled !== undefined && (out.scaled === null || s.scaled > out.scaled)) {
+      out.scaled = s.scaled; out.pct = s.pct; out.correctTotal = s.correctTotal; changed = true;
+    }
+    if (typeof s.attempts === 'number' && s.attempts > (out.attempts || 0)) { out.attempts = s.attempts; changed = true; }
+    try { localStorage.setItem('tck_hwm_' + k, JSON.stringify(out)); } catch (e) {}
+  });
+  if (server.total !== null && server.total !== undefined) {
+    var ct = null; try { ct = parseFloat(localStorage.getItem('tck_hwm_total')); } catch (e) {}
+    if (isNaN(ct)) ct = null;
+    if (ct === null || server.total > ct) { try { localStorage.setItem('tck_hwm_total', String(server.total)); } catch (e) {} changed = true; }
+  }
+  return changed;
+}
+var _bandSaveTimer = null;
+function persistBandHwm() {
+  if (typeof Api === 'undefined' || !Api.saveBands) return;
+  if (_bandSaveTimer) clearTimeout(_bandSaveTimer);
+  _bandSaveTimer = setTimeout(function () { try { Api.saveBands(collectBandHwm()); } catch (e) {} }, 1500);
+}
+
 function render() {
   const attempts = collectAttempts();
 
@@ -698,6 +738,10 @@ function render() {
     .sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')));
   window.__activityPage = 0;
   renderActivityPage();
+
+  // Persist the (raised) high-water-mark to the server so it follows the
+  // account to every device. Debounced; degrades gracefully if not deployed.
+  persistBandHwm();
 }
 
 const TASK_PATHS = {
@@ -851,6 +895,14 @@ function aggregateSectionTask(attempts, taskKey) {
 // browser close) and re-render once it lands. history-sync only adds /
 // refreshes — it never clears a learner's history.
 render();
+// Cross-device high-water-mark: pull the server's stored best bands and merge
+// (max) into the local HWM, then re-render — so a NEW device / private window
+// shows the true best instead of recomputing low from incomplete data.
+if (typeof Api !== 'undefined' && Api.getBands) {
+  Api.getBands().then(function (r) {
+    if (r && r.success && r.bands && mergeServerBands(r.bands)) render();
+  }).catch(function () {});
+}
 if (window.TCKHistory) TCKHistory.hydrate(function (changed) { if (changed) render(); });
 
 /* ============================================================
@@ -908,6 +960,6 @@ function loadMyRecordings(){
 }
 loadMyRecordings();
 </script>
-<script defer src="js/tm-footer.js?v=20260627c"></script>
+<script defer src="js/tm-footer.js?v=20260627d"></script>
 </body>
 </html>

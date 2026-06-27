@@ -334,6 +334,30 @@ var Api = {
   flushOutbox: function() { return _flushOutbox(); },
   outboxPending: function() { return _outboxRead().length; },
 
+  /* ---- Cross-device band HIGH-WATER-MARK (see docs/gas-band-hwm.js) ----
+     Persists the HIGHEST section bands / total a learner has ever reached so
+     the predicted score is IDENTICAL on every device and can never "reset" on
+     a new device or after a partial sync. The server stores the MAX of each
+     field (only ever raises — never lowers). Degrades gracefully: if the GAS
+     endpoint isn't deployed yet, these resolve null and the page just uses the
+     per-device localStorage high-water-mark. */
+  getBands: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=getBands'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p)).catch(function () { return null; });
+  },
+  saveBands: function(bands, id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    if (!u.userId && !id) return Promise.resolve(null);
+    var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=saveBands'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p)
+      + '&bands=' + encodeURIComponent(JSON.stringify(bands || {}))).catch(function () { return null; });
+  },
+
   /* Admin endpoints — require staff id/pass.
      Pass is read from sessionStorage.kickstart_staff_pass (set on
      admin login) or can be provided explicitly. */
