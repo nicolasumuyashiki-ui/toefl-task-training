@@ -72,6 +72,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 .btn-next{padding:10px 28px;background:#007646;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;opacity:.5;pointer-events:none;transition:opacity .2s;}
 .btn-next.active{opacity:1;pointer-events:auto;}
 .btn-next:hover{background:#3a7cc0;}
+@media(max-width:600px){/*mtopnav*/.top-nav{padding:8px 12px!important;flex-wrap:wrap!important;row-gap:6px!important}.top-nav .nav-left,.top-nav .nav-right{gap:8px!important}.top-nav .section-label,.top-nav .divider{display:none!important}}
 </style>
 <!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
 </head>
@@ -132,8 +133,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
 <button class="btn-next" id="btnNext" onclick="nextStep()">Next →</button>
 </div>
 
-<script src="../../js/auth.js?v=20260627b"></script><script src="../../js/difficulty-badge.js?v=20260627b"></script>
-<script src="../../js/progress.js?v=20260627b"></script>
+<script src="../../js/auth.js?v=20260627c"></script><script src="../../js/difficulty-badge.js?v=20260627c"></script>
+<script src="../../js/progress.js?v=20260627c"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -353,6 +354,6 @@ function showCompletion(){
     document.getElementById('answersBtn').style.display = 'inline-block';
 }
 </script>
-<script defer src="../../js/tm-footer.js?v=20260627b"></script>
+<script defer src="../../js/tm-footer.js?v=20260627c"></script>
 </body>
 </html>
