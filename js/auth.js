@@ -176,7 +176,15 @@ var Auth = {
 
   showBadge: function(elementId) {
     var u = this.getUser(), el = document.getElementById(elementId);
-    if (u && el) el.innerHTML = '<strong>' + u.userName + '</strong>';
+    if (!u || !el) return;
+    // The badge is a SMALL circular avatar (≈28px). Show ONE initial, never
+    // the full name: a long name (e.g. "屋敷 ニコラ") overflowed the circle,
+    // wrapped one character per line, and pushed the whole page wider than the
+    // phone screen → horizontal scroll on mobile (the speaker photo then looked
+    // "cut off"). Full name is kept in the title tooltip.
+    var name = String(u.userName || u.userId || '?').trim();
+    el.textContent = name ? name.charAt(0).toUpperCase() : '?';
+    try { el.title = name; } catch (e) {}
   },
 
   completeSet: function(setNum) {
