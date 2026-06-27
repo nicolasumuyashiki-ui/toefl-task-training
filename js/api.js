@@ -70,15 +70,26 @@ function _proxyGet(url) {
   return Promise.race([fetchP, timeoutP]);
 }
 
+// Once we detect (this session) that direct calls to script.google.com are
+// blocked — a security product / extension / network filter — remember it, so
+// every subsequent request goes RELAY-FIRST and the user (e.g. a McAfee user)
+// isn't slowed by a doomed direct attempt on each call. Normal users never set
+// this flag, so their path stays 100% unchanged.
+function _relayPref() { try { return sessionStorage.getItem('tck_relay_pref') === '1'; } catch (e) { return false; } }
+function _setRelayPref() { try { sessionStorage.setItem('tck_relay_pref', '1'); } catch (e) {} }
+
 function _jsonpRequest(url) {
-  // Direct JSONP FIRST — fast and 100% unchanged for normal users. Only if it
-  // fails (an extension / network blocks script.google.com, the 前田-type case)
-  // do we fall back to the same-origin relay so blocked users can still log in
-  // and load data. A shorter timeout on the first try bounds the fallback wait.
-  if (SAVE_PROXY_URL) {
-    return _jsonpDirect(url, 9000).catch(function () { return _proxyGet(url); });
+  if (!SAVE_PROXY_URL) return _jsonpDirect(url);
+  if (_relayPref()) {
+    // Known-blocked environment this session → relay first (fast), JSONP fallback.
+    return _proxyGet(url).catch(function () { return _jsonpDirect(url); });
   }
-  return _jsonpDirect(url);
+  // Normal: direct first (unchanged for the 99%). If it fails — the security-
+  // software case — use the relay AND remember it for the rest of the session
+  // so the user gets full speed from then on.
+  return _jsonpDirect(url, 9000).catch(function () {
+    return _proxyGet(url).then(function (res) { _setRelayPref(); return res; });
+  });
 }
 
 function _jsonpDirect(url, timeoutMs) {
