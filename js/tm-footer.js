@@ -24,26 +24,32 @@
       'font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif',
       'background:transparent', 'border-top:1px solid rgba(0,0,0,.06)'
     ];
-    // Auth pages (login / password-change / admin login) centre a single card
-    // via `body{display:flex;justify-content:center;align-items:center}`. A
-    // normally-appended child becomes a SECOND flex item and lands BESIDE the
-    // card, breaking the layout. When the body is a flex/grid container, pin
-    // the disclaimer to the viewport bottom so it stays out of that flow.
+    // CRITICAL: never pin the disclaimer with position:fixed. A fixed footer
+    // sits ON TOP of page content and was covering the "次へ" button (and on
+    // small screens, question text / audio controls), so learners couldn't
+    // advance, see the problem, or play audio. Instead keep it in NORMAL FLOW
+    // at the very end of the document, where it can never overlap anything.
+    //
+    // Belt-and-suspenders: pointer-events:none guarantees that even if some
+    // page positions content over this footer, clicks/taps pass THROUGH to the
+    // control beneath (the disclaimer is non-interactive text — it has no
+    // links/buttons, so nothing is lost by making it click-through).
+    css.push('pointer-events:none');
     var disp = '', dir = '';
     try {
       var cs = window.getComputedStyle(document.body);
       disp = String(cs.display || '').toLowerCase();
       dir  = String(cs.flexDirection || '').toLowerCase();
     } catch (e) {}
-    // Only pin to the viewport bottom when a normally-appended child would land
-    // BESIDE the centred card — i.e. a ROW flex container, or a grid. A COLUMN
-    // flex container (e.g. the login page) stacks children vertically, so the
-    // disclaimer flows cleanly BELOW the card's own footer links; pinning it
-    // fixed there just overlaps "パスワードを忘れた / 管理者はこちら".
-    var isRowFlex = disp.indexOf('flex') !== -1 && dir.indexOf('row') === 0;
-    var isGrid = disp.indexOf('grid') !== -1;
-    if (isRowFlex || isGrid) {
-      css.push('position:fixed', 'left:0', 'right:0', 'bottom:0', 'z-index:1');
+    // On a flex/grid body (auth cards, some practice layouts) make the footer
+    // span the full row and sort LAST, so it sits cleanly BELOW the centred
+    // content instead of beside it. For a row-flex body, allow wrapping so the
+    // full-width footer drops to its own line rather than squeezing the card.
+    if (disp.indexOf('flex') !== -1) {
+      css.push('flex-basis:100%', 'order:9999');
+      if (dir.indexOf('row') === 0) { try { document.body.style.flexWrap = 'wrap'; } catch (e) {} }
+    } else if (disp.indexOf('grid') !== -1) {
+      css.push('grid-column:1 / -1', 'order:9999');
     }
     el.style.cssText = css.join(';');
     el.innerHTML =

@@ -71,23 +71,24 @@ function _proxyGet(url) {
 }
 
 function _jsonpRequest(url) {
-  // Relay-first when configured (defeats blockers on script.google.com), with
-  // automatic fallback to the direct JSONP request so normal/offline-relay
-  // environments behave exactly as before.
+  // Direct JSONP FIRST — fast and 100% unchanged for normal users. Only if it
+  // fails (an extension / network blocks script.google.com, the 前田-type case)
+  // do we fall back to the same-origin relay so blocked users can still log in
+  // and load data. A shorter timeout on the first try bounds the fallback wait.
   if (SAVE_PROXY_URL) {
-    return _proxyGet(url).catch(function () { return _jsonpDirect(url); });
+    return _jsonpDirect(url, 9000).catch(function () { return _proxyGet(url); });
   }
   return _jsonpDirect(url);
 }
 
-function _jsonpDirect(url) {
+function _jsonpDirect(url, timeoutMs) {
   return new Promise(function(resolve, reject) {
     var cbName = '_gasCallback_' + (++_jsonpCounter) + '_' + Date.now();
     var timeout = setTimeout(function() {
       delete window[cbName];
       if (script.parentNode) script.parentNode.removeChild(script);
       reject(new Error('Request timeout'));
-    }, 15000);
+    }, timeoutMs || 15000);
 
     window[cbName] = function(data) {
       clearTimeout(timeout);
