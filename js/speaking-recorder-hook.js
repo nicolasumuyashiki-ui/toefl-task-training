@@ -277,25 +277,40 @@
   window.showComplete = function(){
     var lastQ = recQNum || (typeof totalQuestions === 'number' ? totalQuestions : 0);
     var p = recordingActive ? uploadCurrent(lastQ) : Promise.resolve();
-    // After the final upload, verify against the server and re-send any
-    // dropped questions, THEN release the mic. Non-blocking for the UI
-    // (origShowComplete runs immediately below).
+    // Decide whether ANY audio was actually captured this session, THEN (and
+    // only then) write the "submitted" markers. Reaching this screen with no
+    // captured audio — mic denied, clicked straight through, auto-advanced —
+    // must NOT create a phantom 提出 row. That unconditional write was the
+    // source of the "解いていない履歴" for LR/TI (markers with no matching
+    // RECORDINGS audio). We wait for the final upload so keptAudio reflects the
+    // whole session, but cap the wait (8s) so a hung upload can't block the
+    // marker for a genuine recording (prior questions are already in keptAudio).
+    var markerGate = Promise.race([p, new Promise(function (r) { setTimeout(r, 8000); })]);
+    markerGate.then(function () {
+      var hasAudio = false;
+      try { hasAudio = Object.keys(keptAudio).length > 0; } catch (e) {}
+      if (!hasAudio) {
+        console.log('[recorder-hook] showComplete: no audio captured — skipping 提出 marker (no phantom row)');
+        return;
+      }
+      // Persist "done" so the menu shows a 提出済み / Submitted badge.
+      if (window.TCKProgress && typeof TCK_TASK !== 'undefined' && typeof TCK_PRACTICE !== 'undefined') {
+        try { TCKProgress.markDone(TCK_TASK, TCK_PRACTICE); } catch (e) {}
+      }
+      // Lightweight "done" row to the server (ANSWERS) so the 提出済み badge +
+      // my-score history follow the account across devices. The audio itself
+      // lives in RECORDINGS; this row just restores the submitted state. Goes
+      // through the durable outbox, so save-guard surfaces it if it can't send.
+      try {
+        if (typeof Api !== 'undefined' && Api.saveAnswers &&
+            typeof TCK_TASK !== 'undefined' && typeof TCK_PRACTICE !== 'undefined') {
+          Api.saveAnswers(String(TCK_TASK).toUpperCase() + ' P' + TCK_PRACTICE, { recorded: true }, 0, { attemptNumber: 1 });
+        }
+      } catch (e) {}
+    });
+    // Independently finalize uploads + release the mic (original behavior).
     p.then(function(){ return reconcileUploads(); })
      .then(function(){ TCKRecorder.release(); }, function(){ TCKRecorder.release(); });
-    // Persist "done" so the menu shows a 提出済み / Submitted badge.
-    if (window.TCKProgress && typeof TCK_TASK !== 'undefined' && typeof TCK_PRACTICE !== 'undefined') {
-      try { TCKProgress.markDone(TCK_TASK, TCK_PRACTICE); } catch(e){}
-    }
-    // Also write a lightweight "done" row to the server (ANSWERS sheet) so
-    // the 提出済み badge + my-score history follow the account across
-    // browsers/devices. The audio itself lives in the RECORDINGS sheet;
-    // this row just lets getMyHistory restore the submitted state.
-    try {
-      if (typeof Api !== 'undefined' && Api.saveAnswers &&
-          typeof TCK_TASK !== 'undefined' && typeof TCK_PRACTICE !== 'undefined') {
-        Api.saveAnswers(String(TCK_TASK).toUpperCase() + ' P' + TCK_PRACTICE, { recorded: true }, 0, { attemptNumber: 1 });
-      }
-    } catch(e){}
     return origShowComplete.apply(this, arguments);
   };
 
