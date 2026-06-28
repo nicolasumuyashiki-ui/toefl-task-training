@@ -310,7 +310,7 @@ function auditReconcileContamination() {
       var b = [a[i]];
       for (var j = i + 1; j < a.length && a[j].t - a[i].t <= 6000; j++) b.push(a[j]);
       var s = {}; b.forEach(function (x) { s[x.set] = 1; });
-      if (b.length >= 2 && Object.keys(s).length >= 2) b.forEach(function (x) { flag(x.r, '数秒内に複数別課題が同時保存'); });
+      if (b.length >= 2 && Object.keys(s).length >= 2) b.forEach(function (x) { flag(x, '数秒内に複数別課題が同時保存'); });
     }
   });
 
