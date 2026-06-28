@@ -171,10 +171,10 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   <div class="total-inner">
     <div>
       <div class="total-label">Predicted Total <span style="font-size:.7em;opacity:.55;font-weight:500;text-transform:none;letter-spacing:.02em">· 1回目スコアベース</span></div>
-      <div class="total-big">Band <span id="totalBand">—</span> <small>/ 6.0 <span style="font-size:.55em;opacity:.7;font-weight:500;letter-spacing:.04em;margin-left:2px">(4技能予測 · Writing/Speaking は R/L から推定)</span></small></div>
+      <div class="total-big">Band <span id="totalBand">—</span> <small>/ 6.0 <span style="font-size:.55em;opacity:.7;font-weight:500;letter-spacing:.04em;margin-left:2px">(4技能予測 · Speaking は R/L から推定 · Writing は Build a Sentence)</span></small></div>
       <div style="font-family:var(--font-en);font-size:.95em;font-weight:600;color:rgba(255,255,255,.65);margin-top:6px;letter-spacing:.02em">
         <span class="jp">旧スコア</span><span class="en">Legacy scale</span>
-        <span style="margin-left:6px"><span id="totalScore">—</span> <small style="opacity:.7">/ 120 <span style="font-size:.85em;opacity:.7;font-weight:500">(Writing/Speaking は推定)</span></small></span>
+        <span style="margin-left:6px"><span id="totalScore">—</span> <small style="opacity:.7">/ 120 <span style="font-size:.85em;opacity:.7;font-weight:500">(Speaking は推定)</span></small></span>
       </div>
       <div id="masteryBlock" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.18);display:none">
         <div style="font-family:var(--font-en);font-size:.66em;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px">Mastery Rate <span style="font-weight:500;text-transform:none;letter-spacing:.02em;opacity:.85">· 復習による習得率（最新スコア）</span></div>
@@ -257,9 +257,9 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   </a>
 </div>
 
-<script src="js/auth.js?v=20260627d"></script>
-<script src="js/api.js?v=20260627d"></script>
-<script src="js/history-sync.js?v=20260627d"></script>
+<script src="js/auth.js?v=20260627e"></script>
+<script src="js/api.js?v=20260627e"></script>
+<script src="js/history-sync.js?v=20260627e"></script>
 <script>
 /* Language toggle */
 (function(){
@@ -484,7 +484,12 @@ function aggregateSection(attempts, section, which) {
   // recorded); 'latest' → most recent; 'first' → initial attempt.
   const pick = a => which === 'best' ? (a.best || a.first || a.latest)
                   : which === 'latest' ? a.latest : a.first;
-  const items = attempts.filter(a => a.section === section && a.autoGraded && a.status === 'done' && pick(a));
+  // Exclude a practice whose BEST is a 0-score (correct 0 of a real total):
+  // on auto-graded tasks that is almost always an "opened but not genuinely
+  // completed" / save-glitch artifact (e.g. 9/10 on Set 1 but 0/10 on Set 2),
+  // not a real attempt — counting it unfairly drags the band down.
+  const _isZero = x => x && x.total > 0 && (x.correct || 0) === 0;
+  const items = attempts.filter(a => a.section === section && a.autoGraded && a.status === 'done' && pick(a) && !_isZero(pick(a)));
   if (!items.length) return { hasData: false };
   let correct = 0, total = 0, hC = 0, hT = 0;
   items.forEach(a => {
@@ -681,17 +686,24 @@ function render() {
   // S-estimate) projected across all 4 sections → /120. Writing is from Build
   // a Sentence only (excluded from the average when not done — never 0).
   // Speaking is estimated from R/L for the Total; its CARD stays "—".
-  // Build the total from the HIGH-WATER-CLAMPED section scaled values, then
-  // clamp the total itself — so the headline band can never drop either.
+  // TOTAL — shown ONLY when Writing (Build a Sentence) has data. Per spec, if
+  // Writing isn't done we do NOT estimate a total; the headline stays blank.
+  // When shown: Total(/120) = Reading + Listening + Writing + Speaking, where
+  // Speaking is estimated as the average of Reading & Listening (its card stays
+  // "—"). The average of the available section scaled values × 4 equals that
+  // four-skill sum out of 120.
   const _rS = sections[0].scaled, _lS = sections[1].scaled, _wS = sections[2].scaled;
-  const _rl = [_rS, _lS].filter(function (v) { return v !== null && v !== undefined; });
-  const _sForTotal = _rl.length ? Math.round(_rl.reduce(function (a, v) { return a + v; }, 0) / _rl.length) : null;
-  const _avail = [_rS, _lS, _wS, _sForTotal].filter(function (v) { return v !== null && v !== undefined; });
-  let total = _avail.length ? Math.round(_avail.reduce(function (a, v) { return a + v; }, 0) / _avail.length * 4) : 0;
-  total = hwmNum('total', total > 0 ? total : null) || 0;
-  const totalKnown = (_rS !== null && _rS !== undefined) || (_lS !== null && _lS !== undefined) || total > 0;
-  document.getElementById('totalScore').textContent = totalKnown && total > 0 ? total : '—';
-  document.getElementById('totalBand').textContent = totalKnown && total > 0 ? formatBand(totalToBand(total)) : '—';
+  let total = 0, totalShown = false;
+  if (_wS !== null && _wS !== undefined) {                 // require Writing (Build a Sentence)
+    const _rl = [_rS, _lS].filter(function (v) { return v !== null && v !== undefined; });
+    const _sForTotal = _rl.length ? Math.round(_rl.reduce(function (a, v) { return a + v; }, 0) / _rl.length) : null; // Speaking = avg(R,L)
+    const _avail = [_rS, _lS, _wS, _sForTotal].filter(function (v) { return v !== null && v !== undefined; });
+    total = _avail.length ? Math.round(_avail.reduce(function (a, v) { return a + v; }, 0) / _avail.length * 4) : 0;
+    total = hwmNum('total', total > 0 ? total : null) || 0;
+    totalShown = total > 0;
+  }
+  document.getElementById('totalScore').textContent = totalShown ? total : '—';
+  document.getElementById('totalBand').textContent = totalShown ? formatBand(totalToBand(total)) : '—';
 
   // Mastery Rate (latest-attempt aggregate). Hidden until at least one retry exists.
   const mastery = computeMastery(attempts);
@@ -883,7 +895,8 @@ function goActivityPage(p) {
 /* Sentence proxy — uses first-attempt for honest baseline. */
 function aggregateSectionTask(attempts, taskKey) {
   const pick = a => a.best || a.first || a.latest;     // best per practice
-  const items = attempts.filter(a => a.task === taskKey && a.status === 'done' && pick(a));
+  const _isZero = x => x && x.total > 0 && (x.correct || 0) === 0;   // 0-best = not genuinely completed
+  const items = attempts.filter(a => a.task === taskKey && a.status === 'done' && pick(a) && !_isZero(pick(a)));
   if (!items.length) return null;
   let correct = 0, total = 0;
   items.forEach(a => { const x = pick(a); correct += x.correct; total += x.total; });
@@ -960,6 +973,6 @@ function loadMyRecordings(){
 }
 loadMyRecordings();
 </script>
-<script defer src="js/tm-footer.js?v=20260627d"></script>
+<script defer src="js/tm-footer.js?v=20260627e"></script>
 </body>
 </html>

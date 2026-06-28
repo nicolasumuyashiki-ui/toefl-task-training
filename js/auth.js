@@ -846,3 +846,28 @@ if (typeof window !== 'undefined') {
   tag.defer = true;
   document.head.appendChild(tag);
 })();
+
+/* ============================================================
+   Score-notice loader — inject js/score-notice.js ONLY on the main screens
+   (skill menus + my-score), so the one-time dismissible score-fix banner
+   shows there and never during a practice/test. Self-guards on URL too.
+   ============================================================ */
+(function(){
+  if (typeof location === 'undefined') return;
+  var pq = location.pathname + location.search;
+  if (!(/\/menu\.html(?:[?#]|$)/.test(pq) || /\/my-score\.html(?:[?#]|$)/.test(pq))) return;
+  var here = (document.currentScript && document.currentScript.src) || '';
+  if (!here) {
+    var scripts = document.getElementsByTagName('script');
+    for (var i = 0; i < scripts.length; i++) {
+      var s = scripts[i].src || '';
+      if (/\/auth\.js(\?|$)/.test(s)) { here = s; break; }
+    }
+  }
+  if (!here) return;
+  var noticeSrc = here.replace(/\/auth\.js(\?[^#]*)?(\#.*)?$/, '/score-notice.js$1');
+  var tag = document.createElement('script');
+  tag.src = noticeSrc;
+  tag.defer = true;
+  document.head.appendChild(tag);
+})();
