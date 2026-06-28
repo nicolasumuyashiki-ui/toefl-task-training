@@ -65,6 +65,47 @@ function tckRootPrefix() {
   return '';
 }
 
+/* ============================================================
+   Account-cache isolation — prevents one account's history/scores from
+   showing under ANOTHER account on the SAME browser.
+
+   The per-account DISPLAY cache (training_score_*, training_best_*,
+   tck_done_*, tck_progress_*, tck_hwm_* …) lives in shared localStorage and
+   is NOT namespaced by user. Without this, logging into account B on a
+   browser that previously held account A's data shows A's scores/history
+   under B (observed: logging into a learner's account, then a test account,
+   on the same device). On a detected account CHANGE we purge ONLY the
+   previous account's display cache so it cannot leak; history-sync then
+   re-hydrates the correct account from the SERVER.
+
+   The SERVER (ANSWERS sheet) is the source of truth and is NEVER touched
+   here — so a learner's own history is never deleted. When they log back
+   into their own account, their real history simply reloads from the server.
+   ============================================================ */
+(function () {
+  try {
+    if (typeof localStorage === 'undefined' || typeof sessionStorage === 'undefined') return;
+    var u = null;
+    try { u = JSON.parse(sessionStorage.getItem('kickstart_user') || 'null'); } catch (e) {}
+    var uid = (u && u.userId) ? String(u.userId) : '';
+    if (!uid) return;                       // logged out → nothing to isolate
+    var prev = localStorage.getItem('tck_cache_uid');
+    if (prev && prev !== uid) {
+      // A different account used this browser before → purge its display cache.
+      var kill = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && /^(training_score_|training_best_|training_first_|training_attempts_|training_answers_|tck_done_|tck_progress_|tck_hwm_|tck_retry_shown_)/.test(k)) kill.push(k);
+      }
+      for (var j = 0; j < kill.length; j++) { try { localStorage.removeItem(kill[j]); } catch (e) {} }
+      // Drop any not-yet-sent saves from the previous account so they cannot be
+      // mis-attributed to the new account on the next outbox flush.
+      try { localStorage.removeItem('tck_outbox'); } catch (e) {}
+    }
+    if (prev !== uid) { try { localStorage.setItem('tck_cache_uid', uid); } catch (e) {} }
+  } catch (e) {}
+})();
+
 var Auth = {
   SESSION_KEY: 'kickstart_user',
 
