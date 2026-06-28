@@ -321,13 +321,19 @@
     try {
       for (var i = 0; i < localStorage.length; i++) {
         var k = localStorage.key(i);
-        // Free-response done-markers (Email / Discussion / LR / TI).
-        var fm = k && k.match(/^tck_done_(email|discussion|lr|ti)_p(\d+)$/);
-        if (fm) {
-          var fk = fm[1] + '_p' + fm[2];
-          if (!have[fk] && !pushed[fk]) { have[fk] = true; pending.push({ key: fk, set: RECON_LABEL[fm[1]] + ' P' + fm[2], answers: { recovered: true }, score: 0, meta: {} }); }
-          continue;
-        }
+        // Free-response done-markers (Email / Discussion / LR / TI) are NO
+        // LONGER reconstructed here. They used to push a CONTENT-LESS
+        // {recovered:true} row whenever the server lacked a real submission —
+        // which is exactly what produced the "解いていない履歴" phantom rows
+        // (a local done-marker is only a UI flag, not proof of a real
+        // submission). The genuine submission is already saved durably by its
+        // own page and the OUTBOX (api.js), which retries the REAL payload
+        // until the server confirms it: Email/Discussion via finishWriting →
+        // Api.saveAnswers, and LR/TI via the real RECORDINGS upload + the
+        // recorded:true row that speaking-recorder-hook now writes ONLY when
+        // audio was actually captured. So the OUTBOX — not a content-less
+        // push — is what guarantees nothing is silently lost.
+        if (k && /^tck_done_(email|discussion|lr|ti)_p\d+$/.test(k)) continue;
         // Auto-graded scores (usually already on the server; recovered if not).
         // NOTE: CTW is intentionally EXCLUDED here (mirrors auth.js
         // AUTO_SAVE_LABELS). CTW's real attempts are saved per-set as
