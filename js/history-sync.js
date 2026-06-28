@@ -99,6 +99,10 @@
     attempts.forEach(function (a) {
       var info = parseSet(a.set);
       if (!info) return;
+      // CTW always has a Set number. A set-less CTW row ("CTW P1" with no Set)
+      // is the legacy reconcile garbage — ignore it so its junk score can't
+      // drag the practice's accuracy down.
+      if (info.task === 'ctw' && (info.setNum === undefined || info.setNum === null || info.setNum === '')) return;
       var gk = info.task + '_p' + info.practice;
       (groups[gk] = groups[gk] || {});
       (groups[gk][info.setNum] = groups[gk][info.setNum] || []).push({
@@ -128,7 +132,11 @@
           // Best attempt for this set (highest score) → drives the menu badge.
           var bestRow = null;
           rows.forEach(function (r) { if (r.total > 0 && r.score !== null && (bestRow === null || (r.score || 0) > (bestRow.score || 0))) bestRow = r; });
-          if (bestRow) { bestCorrect += (bestRow.score || 0); bestTotal += bestRow.total; }
+          // Skip a SET whose best is a 0-score (total>0): on auto-graded tasks
+          // that is an "opened but not genuinely completed" / save-glitch
+          // artifact, and summing it unfairly drags the practice accuracy down
+          // (e.g. CTW Set1 9/10 + Set2 0/10 → 9/20). Treat the set as not done.
+          if (bestRow && !((bestRow.score || 0) === 0 && bestRow.total > 0)) { bestCorrect += (bestRow.score || 0); bestTotal += bestRow.total; }
           if ((latest.ts || '') > latestTs) latestTs = latest.ts || '';
           if (!firstTs || (first.ts || '') < firstTs) firstTs = first.ts || '';
         } else {
