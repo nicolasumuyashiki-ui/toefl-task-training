@@ -59,7 +59,23 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 
 /* ===== SECTION CARDS ===== */
 .skills-grid{max-width:980px;margin:20px auto;padding:0 28px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-@media(max-width:720px){.skills-grid{grid-template-columns:1fr}}
+@media(max-width:720px){
+  .skills-grid{grid-template-columns:1fr}
+  .total-card{padding:0 14px}
+  .total-inner{padding:22px 20px;gap:16px}
+  .total-big{font-size:2.7em}
+  .total-caveat{min-width:0;width:100%;flex:none}
+  /* Mobile header: drop the redundant title + name (avatar shows the initial),
+     keep everything on one line without per-character wrapping. */
+  .header{padding:12px 14px}
+  .header-left{gap:8px}
+  .header-right{gap:8px}
+  .header-title,.header-divider{display:none}
+  .btn-logout{white-space:nowrap;padding:6px 4px}
+  .user-pill{padding:4px 4px}
+  .user-pill #userName{display:none}
+  .tck-lang-toggle button{padding:5px 11px}
+}
 .skill-card{background:var(--white);border:1px solid var(--paper);border-radius:16px;padding:24px 26px;position:relative;overflow:hidden}
 .skill-card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--green)}
 .skill-card.estimated::before{background:var(--gold)}
@@ -170,11 +186,11 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 <div class="total-card">
   <div class="total-inner">
     <div>
-      <div class="total-label">Predicted Total <span style="font-size:.7em;opacity:.55;font-weight:500;text-transform:none;letter-spacing:.02em">· 1回目スコアベース</span></div>
-      <div class="total-big">Band <span id="totalBand">—</span> <small>/ 6.0 <span style="font-size:.55em;opacity:.7;font-weight:500;letter-spacing:.04em;margin-left:2px">(4技能予測 · Speaking は R/L から推定 · Writing は Build a Sentence)</span></small></div>
+      <div class="total-label">Predicted Total</div>
+      <div class="total-big">Band <span id="totalBand">—</span> <small>/ 6.0</small></div>
       <div style="font-family:var(--font-en);font-size:.95em;font-weight:600;color:rgba(255,255,255,.65);margin-top:6px;letter-spacing:.02em">
-        <span class="jp">旧スコア</span><span class="en">Legacy scale</span>
-        <span style="margin-left:6px"><span id="totalScore">—</span> <small style="opacity:.7">/ 120 <span style="font-size:.85em;opacity:.7;font-weight:500">(Speaking は推定)</span></small></span>
+        <span class="jp">換算スコア</span><span class="en">Scaled</span>
+        <span style="margin-left:6px"><span id="totalScore">—</span> <small style="opacity:.7">/ 120</small></span>
       </div>
       <div id="masteryBlock" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.18);display:none">
         <div style="font-family:var(--font-en);font-size:.66em;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px">Mastery Rate <span style="font-weight:500;text-transform:none;letter-spacing:.02em;opacity:.85">· 復習による習得率（最新スコア）</span></div>
@@ -185,8 +201,9 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
       </div>
     </div>
     <div class="total-caveat">
-      <span class="jp"><strong>ご参考まで</strong>：Reading と Listening は信頼性の高い推定スコアです。Writing は Build a Sentence の出来から概算、Speaking は自動採点不可です。詳細な指導は有料の個別指導オプションでご利用いただけます。</span>
-      <span class="en"><strong>Reference only</strong>: Reading and Listening estimates are reliable. Writing is approximated from Build a Sentence accuracy; Speaking is not auto-scored. Detailed feedback is available via the paid private coaching option.</span>
+      <a href="score-method.html" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.32);color:#fff;font-weight:700;font-size:.92em;text-decoration:none">
+        <span class="jp">採点方法について（技能ごとの算出方法）→</span><span class="en">How each skill is scored →</span>
+      </a>
     </div>
   </div>
 </div>
@@ -652,8 +669,8 @@ function render() {
       attempts: writingAttemptCount, correctTotal: sentenceAgg ? sentenceAgg.correct+'/'+sentenceAgg.total : null,
       estimated:true,
       note: {
-        jp: '<strong>暫定値</strong>：Build a Sentence の正答率を Reading 換算表に当てはめた推定スコア。Email / Discussion も同等の出来と仮定して算出。詳細なフィードバックや修正提案が必要な場合は、有料の<strong>個別指導オプション</strong>をご利用ください。',
-        en: '<strong>Tentative</strong>: derived from Build-a-Sentence accuracy mapped through the Reading conversion table, assuming Email and Discussion perform similarly. For detailed feedback or revisions, see the paid <strong>private coaching option</strong>.',
+        jp: 'Writing は <strong>Build a Sentence の正答率</strong>から算出した推定スコアです。エッセイ（Email・Academic Discussion）は自動採点できないため、スコアには含まれません。Build a Sentence を受けると表示されます。',
+        en: 'Writing is estimated from your <strong>Build a Sentence accuracy</strong>. Essays (Email and Academic Discussion) cannot be auto-scored and are not included. It appears once you have done Build a Sentence.',
       },
     },
     {
@@ -733,7 +750,7 @@ function render() {
     return '<div class="skill-card' + (s.estimated?' estimated':'') + '">' +
       '<div class="skill-head"><div class="skill-name">' + s.name + '</div><div class="skill-tag ' + tagCls + '">' + tagTxt + '</div></div>' +
       '<div class="skill-score"><div class="pred">' + (s.scaled !== null ? 'Band ' + bandStr : '—') + '<small>/ 6.0</small>' +
-        (s.scaled !== null ? '<div style="font-family:var(--font-en);font-size:.4em;font-weight:600;color:var(--ink-500);margin-top:2px;letter-spacing:.02em">' + scaled + ' <span style="opacity:.6">/ 30 旧スコア</span></div>' : '') +
+        (s.scaled !== null ? '<div style="font-family:var(--font-en);font-size:.4em;font-weight:600;color:var(--ink-500);margin-top:2px;letter-spacing:.02em">' + scaled + ' <span style="opacity:.6">/ 30 換算</span></div>' : '') +
       '</div>' + rate + '</div>' +
       '<div class="skill-bar"><div class="skill-bar-fill" style="width:' + barWidth + '%"></div></div>' +
       '<div class="skill-meta">' + meta + '</div>' +
