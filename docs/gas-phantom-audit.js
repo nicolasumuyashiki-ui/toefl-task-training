@@ -30,8 +30,15 @@
 // RECORDINGS 列: 0 timestamp, 1 userId, 2 userName, 3 task, 4 practice_set,
 //   5 question_index, 6 duration_sec, 7 attempt_number, 8 file_id
 
+// ANSWERS の set 名（"LR P5" 等）から practice 番号を取る（"P" 前提）
 function _ph_practiceNum_(s) {
   var m = String(s || '').match(/p\s*0*(\d+)/i);
+  return m ? Number(m[1]) : null;
+}
+
+// RECORDINGS の practice_set は素の数字（"5"）なので、"P" 無しでも拾う
+function _ph_num_(s) {
+  var m = String(s == null ? '' : s).match(/0*(\d+)/);
   return m ? Number(m[1]) : null;
 }
 
@@ -46,7 +53,7 @@ function _ph_recordedKeys_() {
     for (var r = 1; r < d.length; r++) {
       var uid = String(d[r][1] || '').trim();
       var task = String(d[r][3] || '').trim().toLowerCase();
-      var pnum = _ph_practiceNum_(d[r][4]);
+      var pnum = _ph_num_(d[r][4]);   // practice_set は "5" のような素の数字
       var fileId = String(d[r][8] || '').trim();
       if (!uid || !task || pnum === null) continue;
       // file_id があれば「本物の録音」。空でも行があれば提出はされたとみなす緩めの判定。
@@ -115,6 +122,47 @@ function _ph_collect_() {
     }
   }
   return out;
+}
+
+/**
+ * 診断用：RECORDINGS の中身と、マッチング状況を確認する（読み取り専用）。
+ * 「録音なし」判定が正しいかを検証するために、削除の前に必ずこれを実行する。
+ */
+function auditRecordingsDebug() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var keys = _ph_recordedKeys_();
+  var nKeys = Object.keys(keys).length;
+  Logger.log('=== RECORDINGS 診断 ===');
+  ['RECORDINGS', 'RECORDINGS_PT'].forEach(function (name) {
+    var sh = ss.getSheetByName(name);
+    if (!sh) { Logger.log(name + ': シートなし'); return; }
+    var d = sh.getDataRange().getValues();
+    Logger.log(name + ': ' + (d.length - 1) + ' 行');
+    for (var r = 1; r < d.length && r <= 6; r++) {
+      Logger.log('   sample row ' + (r + 1) + ' | userId=' + d[r][1] +
+        ' | task=' + d[r][3] + ' | practice_set=' + d[r][4] +
+        ' | file_id=' + (String(d[r][8] || '') ? 'あり' : 'なし'));
+    }
+  });
+  Logger.log('マッチキー数（userId|task|practice）= ' + nKeys);
+
+  // recorded:true の ANSWERS 行のうち、何件が録音とマッチするか
+  var sh = ss.getSheetByName('ANSWERS');
+  var d = sh.getDataRange().getValues();
+  var matched = 0, unmatched = 0;
+  for (var i = 1; i < d.length; i++) {
+    var setName = String(d[i][3] || '').trim();
+    var ans = null;
+    try { ans = (typeof d[i][4] === 'string' && d[i][4]) ? JSON.parse(d[i][4]) : d[i][4]; } catch (e) {}
+    if (!(ans && typeof ans === 'object' && ans.recorded === true)) continue;
+    var tm = setName.match(/^(LR|TI)\b/i);
+    var task = tm ? tm[1].toLowerCase() : '';
+    var pnum = _ph_practiceNum_(setName);
+    if (task && pnum !== null && keys[d[i][1] + '|' + task + '|' + pnum]) matched++; else unmatched++;
+  }
+  Logger.log('recorded:true の ANSWERS 行 → 録音あり ' + matched + ' 件 / 録音なし ' + unmatched + ' 件');
+  Logger.log('※ 録音あり が 0 のままなら、まだマッチが取れていない（RECORDINGS の列を要確認）。');
+  return { recordingKeys: nKeys, matched: matched, unmatched: unmatched };
 }
 
 /** ログに、ユーザーごとにまとめて出力する（読み取り専用）。 */
