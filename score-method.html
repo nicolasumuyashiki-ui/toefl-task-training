@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<title>採点方法について — TCK Reps</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Zen Kaku Gothic New","Noto Sans JP",Manrope,system-ui,sans-serif;background:#FBF6EC;color:#1B2A22;line-height:1.8;-webkit-font-smoothing:antialiased}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;background:#fff;border-bottom:1px solid #EFE6D6}
+.back{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:#fff;border:1.5px solid #007646;border-radius:999px;color:#00402A;font-weight:700;font-size:.84em;text-decoration:none;cursor:pointer}
+.back:hover{background:#007646;color:#fff}
+.lang{display:inline-flex;border:1px solid #D6DAD7;border-radius:999px;overflow:hidden}
+.lang button{border:0;background:#fff;color:#5A6861;font-weight:700;font-size:.8em;padding:6px 13px;cursor:pointer;font-family:inherit}
+.lang button.active{background:#007646;color:#fff}
+.wrap{max-width:760px;margin:0 auto;padding:28px 22px 64px}
+h1{font-size:1.7em;font-weight:800;color:#00402A;letter-spacing:-.01em;margin-bottom:6px}
+.lead{color:#5A6861;font-size:.95em;margin-bottom:26px}
+.card{background:#fff;border:1px solid #EFE6D6;border-radius:14px;padding:22px 24px;margin-bottom:18px}
+.card h2{font-size:1.12em;font-weight:800;color:#005434;margin-bottom:10px;display:flex;align-items:center;gap:9px}
+.card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#007646;color:#fff;font-size:.72em;font-weight:800}
+.card p{margin:0 0 10px}
+.card ul{margin:6px 0 6px 4px;padding:0;list-style:none}
+.card li{position:relative;padding-left:20px;margin-bottom:7px}
+.card li::before{content:"✓";position:absolute;left:0;top:0;color:#007646;font-weight:800}
+.hl{background:#FFF4D6;border:1px solid #E3C871;border-radius:10px;padding:13px 16px;color:#6B5A1E;font-weight:600;margin:10px 0 2px}
+.muted{color:#5A6861;font-size:.9em}
+em{font-style:normal;font-weight:800;color:#00402A}
+[data-lang="jp"] .en{display:none}
+[data-lang="en"] .jp{display:none}
+</style>
+</head>
+<body data-lang="jp">
+<div class="top">
+  <a class="back" href="javascript:void(0)" onclick="(history.length>1)?history.back():(location.href='my-score.html')">
+    <span class="jp">← 戻る</span><span class="en">← Back</span>
+  </a>
+  <div class="lang">
+    <button type="button" data-lang-btn="jp" class="active">日本語</button>
+    <button type="button" data-lang-btn="en">EN</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <h1><span class="jp">採点方法について</span><span class="en">How your score is calculated</span></h1>
+  <p class="lead">
+    <span class="jp">マイスコアの予測スコアが、どのように算出されるかをご説明します。</span>
+    <span class="en">An explanation of how the predicted score on “My Score” is calculated.</span>
+  </p>
+
+  <!-- 1. Aggregation basis -->
+  <div class="card">
+    <h2><span class="n">1</span><span class="jp">集計の基準（取り組んだ正答率から算出）</span><span class="en">How it is aggregated (from your accuracy)</span></h2>
+    <p>
+      <span class="jp">Reading・Listening のスコアは、これまで取り組んだ問題の<em>正答率</em>を、ETS 公式の換算表に当てはめてスコア化し、バンド（1.0〜6.0）に変換しています。</span>
+      <span class="en">Your Reading and Listening scores come from your <em>accuracy</em> on the practices you have done, mapped through ETS’s official conversion tables to a band (1.0–6.0).</span>
+    </p>
+    <ul>
+      <li><span class="jp">各 Practice は、<em>その中で一番良かった回（最高得点）</em>を採用します。</span><span class="en">Each practice uses your <em>best attempt</em> (your highest score on it).</span></li>
+      <li><span class="jp"><em>復習して点が上がれば、スコアにも反映</em>されます。逆に、後から低い点を取ってもスコアは下がりません。</span><span class="en">If you retry and improve, your score <em>goes up</em>; a lower later attempt never lowers it.</span></li>
+      <li><span class="jp">Reading＝CTW＋RDL＋Academic、Listening＝LCR＋Conversation＋Announcement＋Academic Talk をまとめて算出します。</span><span class="en">Reading = CTW + RDL + Academic; Listening = LCR + Conversation + Announcement + Academic Talk.</span></li>
+    </ul>
+  </div>
+
+  <!-- 2. Speaking estimate -->
+  <div class="card">
+    <h2><span class="n">2</span><span class="jp">Speaking の「推測値」について</span><span class="en">About the Speaking “estimate”</span></h2>
+    <p>
+      <span class="jp">Speaking（発話）は<em>自動採点を行っていません</em>。機械で発話力を正確に測ることはできないためです。そのため、Speaking 単体のスコアは「—」と表示しています。</span>
+      <span class="en">Speaking is <em>not auto-scored</em> — speech cannot be reliably graded automatically — so the Speaking score itself is shown as “—”.</span>
+    </p>
+    <div class="hl">
+      <span class="jp">⚠ 総合スコアの算出にあたっては、Speaking を <em>Reading と Listening の平均</em>で「<em>推測</em>」して合算しています。これは<em>あくまで参考の推測値</em>であり、実際のスピーキング力を測定・保証するものではありません。</span>
+      <span class="en">⚠ For the overall total only, Speaking is <em>estimated</em> as the <em>average of your Reading and Listening</em>. This is <em>only a rough estimate for reference</em> — it is not a measurement of your actual speaking ability.</span>
+    </div>
+    <p class="muted" style="margin-top:10px">
+      <span class="jp">※ 正確なスピーキングの評価をご希望の場合は、有料の個別指導オプションをご利用いただけます。</span>
+      <span class="en">※ For an actual speaking evaluation, the paid private-coaching option is available.</span>
+    </p>
+  </div>
+
+  <!-- 3. Writing & total -->
+  <div class="card">
+    <h2><span class="n">3</span><span class="jp">Writing と総合スコア</span><span class="en">Writing &amp; the overall total</span></h2>
+    <ul>
+      <li><span class="jp">Writing は <em>Build a Sentence の正答率</em>から算出します（エッセイは自動採点できないため）。受けていない場合は「—」です。</span><span class="en">Writing is derived from your <em>Build a Sentence accuracy</em> (essays cannot be auto-graded). It shows “—” until you have done Build a Sentence.</span></li>
+      <li><span class="jp">総合スコアは <em>Build a Sentence を受けると</em>表示されます（Reading＋Listening＋Writing＋Speaking推測 を 120 点満点 → バンドに換算）。</span><span class="en">The overall total appears <em>once you have done Build a Sentence</em> (Reading + Listening + Writing + estimated Speaking, out of 120 → band).</span></li>
+    </ul>
+  </div>
+
+  <!-- 4. Disclaimer -->
+  <div class="card" style="background:#FBF6EC">
+    <h2><span class="jp">ご注意</span><span class="en">Please note</span></h2>
+    <p class="muted">
+      <span class="jp">本ページの予測スコアは ETS 公式の換算表に基づく<em>参考値</em>であり、実際の TOEFL iBT® のスコアを保証するものではありません。</span>
+      <span class="en">The predicted score is a <em>reference estimate</em> based on ETS’s official conversion tables and does not guarantee an actual TOEFL iBT® score.</span>
+    </p>
+  </div>
+</div>
+
+<script>
+function setLang(l){
+  document.body.setAttribute('data-lang', l);
+  document.documentElement.setAttribute('lang', l === 'jp' ? 'ja' : 'en');
+  try { localStorage.setItem('tck_lang', l); } catch(e){}
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-lang-btn') === l); });
+}
+document.querySelectorAll('[data-lang-btn]').forEach(function(b){
+  b.addEventListener('click', function(){ setLang(b.getAttribute('data-lang-btn')); });
+});
+(function(){ var l='jp'; try{ l = localStorage.getItem('tck_lang') || 'jp'; }catch(e){} setLang(l); })();
+</script>
+<script defer src="js/tm-footer.js?v=20260628"></script>
+</body>
+</html>
