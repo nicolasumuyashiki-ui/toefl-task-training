@@ -136,74 +136,7 @@ body[data-lang="en"] .jp{display:none}
 
 <script src="../../js/auth.js?v=20260628b"></script>
 <script>
-var SD=[
-{intro:"Coffee is one of the most widely consumed beverages in the world. Its origins can be traced back to the highlands of Ethiopia, where, according to legend, a goat herder noticed his animals became unusually energetic after eating certain red berries.",conclusion:"Today coffee is grown in dozens of countries and plays a central role in the global economy.",target:[
-{w:"The",a:"he",s:"T",p:""},
-{w:"practice",a:null,s:null,p:""},
-{w:"of",a:null,s:null,p:""},
-{w:"drinking",a:"king",s:"drin",p:""},
-{w:"coffee",a:null,s:null,p:""},
-{w:"spread",a:"ead",s:"spr",p:""},
-{w:"from",a:null,s:null,p:""},
-{w:"Ethiopia",a:null,s:null,p:""},
-{w:"to",a:"o",s:"t",p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"Arabian",a:null,s:null,p:""},
-{w:"Peninsula",a:null,s:null,p:""},
-{w:"where",a:"ere",s:"wh",p:""},
-{w:"it",a:null,s:null,p:""},
-{w:"became",a:"came",s:"be",p:""},
-{w:"an",a:null,s:null,p:""},
-{w:"important",a:"tant",s:"impor",p:""},
-{w:"part",a:null,s:null,p:""},
-{w:"of",a:null,s:null,p:""},
-{w:"daily",a:"ily",s:"da",p:""},
-{w:"life",a:null,s:null,p:"."}
-],exp:[
-{pos:"冠詞",d:"MOD",e:"「空欄＋practice」→冠詞。\"T\"1文字→The。品詞パターンで即答。",e_en:"\"blank + practice\" → article. \"T\" (1 letter) → The. Instant via POS pattern."},
-{pos:"動名詞",d:"MOD",e:"「of＋空欄＋coffee」→動名詞。\"drin\"→drinking。前置詞の後は名詞/動名詞。",e_en:"\"of + blank + coffee\" → gerund. \"drin\" → drinking. After a preposition: noun / gerund."},
-{pos:"動詞",d:"MOD",e:"「coffee＋空欄＋from」→動詞。\"spr\"→spread。過去形も同形。",e_en:"\"coffee + blank + from\" → verb. \"spr\" → spread. Past tense is the same form."},
-{pos:"前置詞",d:"MOD",e:"「from Ethiopia＋空欄＋the」→前置詞。\"t\"→to。from...toのペア。",e_en:"\"from Ethiopia + blank + the\" → preposition. \"t\" → to. from...to pair."},
-{pos:"関係副詞",d:"MOD",e:"「Peninsula＋空欄＋it became」→関係副詞。\"wh\"→where。場所の先行詞。",e_en:"\"Peninsula + blank + it became\" → relative adverb. \"wh\" → where. Place antecedent."},
-{pos:"動詞",d:"MOD",e:"「it＋空欄＋an important」→動詞。\"be\"→became。SVC構文。",e_en:"\"it + blank + an important\" → verb. \"be\" → became. SVC construction."},
-{pos:"形容詞",d:"MOD",e:"「an＋空欄＋part」→形容詞。\"impor\"→important。冠詞＋形容詞＋名詞。",e_en:"\"an + blank + part\" → adjective. \"impor\" → important. Article + adjective + noun."},
-{pos:"形容詞",d:"MOD",e:"「of＋空欄＋life」→形容詞。\"da\"→daily（日常の）。",e_en:"\"of + blank + life\" → adjective. \"da\" → daily."}
-]},
-{intro:"Bioluminescence, the remarkable production of visible light by living organisms through a carefully orchestrated chemical reaction, occurs in an astonishing variety of marine species throughout the world's oceans. From tiny plankton drifting near the sunlit surface to predatory fish lurking in the crushing darkness of the abyss, countless creatures have evolved to exploit this extraordinary ability for survival. Some use glowing displays to attract mates, while others startle approaching predators with sudden flashes of brilliance, and still others lure curious prey directly into waiting jaws. The ecological importance of this phenomenon cannot be overstated in modern marine biology.",conclusion:"Scientists continue to investigate these remarkable phenomena using submersibles and advanced imaging technology, hoping that such detailed knowledge will illuminate broader questions about evolution, adaptation, and survival strategies in the deep sea. Recent genetic studies have revealed that the ability to generate light has appeared independently dozens of times across unrelated lineages, suggesting enormous selective advantages for organisms living in environments where sunlight never reaches. Understanding these glowing communities may also inspire new medical imaging techniques and energy-efficient technologies, demonstrating once again how curiosity about the natural world yields unexpected practical rewards for humanity.",target:[
-{w:"However",a:"owever",s:"H",p:","},
-{w:"the",a:null,s:null,p:""},
-{w:"precise",a:"cise",s:"pre",p:""},
-{w:"chemistry",a:"mistry",s:"che",p:""},
-{w:"differs",a:"ers",s:"diff",p:""},
-{w:"among",a:null,s:null,p:""},
-{w:"species",a:null,s:null,p:","},
-{w:"most",a:null,s:null,p:""},
-{w:"reactions",a:"ctions",s:"rea",p:""},
-{w:"require",a:"ire",s:"requ",p:""},
-{w:"a",a:null,s:null,p:""},
-{w:"molecule",a:null,s:null,p:""},
-{w:"named",a:null,s:null,p:""},
-{w:"luciferin",a:null,s:null,p:"."},
-{w:"Predators",a:"dators",s:"Pre",p:""},
-{w:"cleverly",a:"erly",s:"clev",p:""},
-{w:"exploit",a:"loit",s:"exp",p:""},
-{w:"faint",a:"aint",s:"f",p:""},
-{w:"signals",a:null,s:null,p:""},
-{w:"nearby",a:null,s:null,p:"."}
-],exp:[
-{pos:"接続副詞",d:"HARD",e:"「空欄＋, the precise chemistry」→文頭の逆接副詞。\"H\"1文字→However。6文字入力のHARD。",e_en:"\"blank + , the precise chemistry\" → sentence-initial contrastive adverb. \"H\" (1 letter) → However. 6-letter input — HARD."},
-{pos:"形容詞",d:"MOD",e:"「the＋空欄＋chemistry」→形容詞。\"pre\"→precise（精密な）。冠詞＋形容詞＋名詞の型。",e_en:"\"the + blank + chemistry\" → adjective. \"pre\" → precise. Pattern: article + adjective + noun."},
-{pos:"名詞",d:"HARD",e:"「precise＋空欄＋differs」→名詞（主語）。\"che\"→chemistry（化学反応の仕組み）。6文字入力のHARD。",e_en:"\"precise + blank + differs\" → noun (subject). \"che\" → chemistry. 6-letter input — HARD."},
-{pos:"動詞",d:"MOD",e:"「chemistry＋空欄＋among」→動詞（3単現）。\"diff\"→differs（異なる）。主語の後の動詞。",e_en:"\"chemistry + blank + among\" → verb (3rd-person singular). \"diff\" → differs. Verb after subject."},
-{pos:"名詞",d:"HARD",e:"「most＋空欄＋require」→複数名詞。\"rea\"→reactions（反応）。mostの後は複数形。6文字入力のHARD。",e_en:"\"most + blank + require\" → plural noun. \"rea\" → reactions. After \"most\": plural form. 6-letter input — HARD."},
-{pos:"動詞",d:"MOD",e:"「reactions＋空欄＋a molecule」→動詞。\"requ\"→require（必要とする）。主語+動詞+目的語の型。",e_en:"\"reactions + blank + a molecule\" → verb. \"requ\" → require. Subject + verb + object pattern."},
-{pos:"名詞",d:"HARD",e:"「空欄＋cleverly exploit」→複数名詞（主語）。\"Pre\"→Predators（捕食者）。文頭の大文字に注目。",e_en:"\"blank + cleverly exploit\" → plural noun (subject). \"Pre\" → Predators. Note the sentence-initial capital."},
-{pos:"副詞",d:"MOD",e:"「Predators＋空欄＋exploit」→副詞。\"clev\"→cleverly（巧みに）。主語+副詞+動詞の型。",e_en:"\"Predators + blank + exploit\" → adverb. \"clev\" → cleverly. Subject + adverb + verb pattern."},
-{pos:"動詞",d:"MOD",e:"「cleverly＋空欄＋faint」→動詞。\"exp\"→exploit（利用する）。副詞の後は動詞。",e_en:"\"cleverly + blank + faint\" → verb. \"exp\" → exploit. Verb follows adverb."},
-{pos:"形容詞",d:"HARD",e:"「exploit＋空欄＋signals」→形容詞。\"f\"1文字→faint（かすかな）。動詞+形容詞+名詞の型。4文字入力のHARD。",e_en:"\"exploit + blank + signals\" → adjective. \"f\" (1 letter) → faint. Verb + adjective + noun pattern. 4-letter input — HARD."}
-]}
-];
-
+var SD=[{"intro":"Coffee is one of the most widely consumed beverages in the world. Its origins can be traced back to the highlands of Ethiopia, where, according to legend, a goat herder noticed his animals became unusually energetic after eating certain red berries.","conclusion":"Today coffee is grown in dozens of countries and plays a central role in the global economy.","target":[{"w":"The","a":"he","s":"T","p":""},{"w":"practice","a":null,"s":null,"p":""},{"w":"of","a":null,"s":null,"p":""},{"w":"drinking","a":"king","s":"drin","p":""},{"w":"coffee","a":null,"s":null,"p":""},{"w":"spread","a":"ead","s":"spr","p":""},{"w":"from","a":null,"s":null,"p":""},{"w":"Ethiopia","a":null,"s":null,"p":""},{"w":"to","a":"o","s":"t","p":""},{"w":"the","a":null,"s":null,"p":""},{"w":"Arabian","a":null,"s":null,"p":""},{"w":"Peninsula","a":null,"s":null,"p":""},{"w":"where","a":"ere","s":"wh","p":""},{"w":"it","a":null,"s":null,"p":""},{"w":"became","a":"came","s":"be","p":""},{"w":"an","a":null,"s":null,"p":""},{"w":"important","a":"tant","s":"impor","p":""},{"w":"part","a":null,"s":null,"p":""},{"w":"of","a":null,"s":null,"p":""},{"w":"daily","a":"ily","s":"da","p":""},{"w":"life","a":null,"s":null,"p":"."}],"exp":[{"pos":"冠詞","d":"MOD","e":"「空欄＋practice」→冠詞。\"T\"1文字→The。品詞パターンで即答。","e_en":"\"blank + practice\" → article. \"T\" (1 letter) → The. Instant via POS pattern."},{"pos":"動名詞","d":"MOD","e":"「of＋空欄＋coffee」→動名詞。\"drin\"→drinking。前置詞の後は名詞/動名詞。","e_en":"\"of + blank + coffee\" → gerund. \"drin\" → drinking. After a preposition: noun / gerund."},{"pos":"動詞","d":"MOD","e":"「coffee＋空欄＋from」→動詞。\"spr\"→spread。過去形も同形。","e_en":"\"coffee + blank + from\" → verb. \"spr\" → spread. Past tense is the same form."},{"pos":"前置詞","d":"MOD","e":"「from Ethiopia＋空欄＋the」→前置詞。\"t\"→to。from...toのペア。","e_en":"\"from Ethiopia + blank + the\" → preposition. \"t\" → to. from...to pair."},{"pos":"関係副詞","d":"MOD","e":"「Peninsula＋空欄＋it became」→関係副詞。\"wh\"→where。場所の先行詞。","e_en":"\"Peninsula + blank + it became\" → relative adverb. \"wh\" → where. Place antecedent."},{"pos":"動詞","d":"MOD","e":"「it＋空欄＋an important」→動詞。\"be\"→became。SVC構文。","e_en":"\"it + blank + an important\" → verb. \"be\" → became. SVC construction."},{"pos":"形容詞","d":"MOD","e":"「an＋空欄＋part」→形容詞。\"impor\"→important。冠詞＋形容詞＋名詞。","e_en":"\"an + blank + part\" → adjective. \"impor\" → important. Article + adjective + noun."},{"pos":"形容詞","d":"MOD","e":"「of＋空欄＋life」→形容詞。\"da\"→daily（日常の）。","e_en":"\"of + blank + life\" → adjective. \"da\" → daily."}]},{"intro":"Bioluminescence, the remarkable production of visible light by living organisms through a carefully orchestrated chemical reaction, occurs in an astonishing variety of marine species throughout the world's oceans. From tiny plankton drifting near the sunlit surface to predatory fish lurking in the crushing darkness of the abyss, countless creatures have evolved to exploit this extraordinary ability for survival. Some use glowing displays to attract mates, while others startle approaching predators with sudden flashes of brilliance, and still others lure curious prey directly into waiting jaws. The ecological importance of this phenomenon cannot be overstated in modern marine biology.","conclusion":"Scientists continue to investigate these remarkable phenomena using submersibles and advanced imaging technology, hoping that such detailed knowledge will illuminate broader questions about evolution, adaptation, and survival strategies in the deep sea. Recent genetic studies have revealed that the ability to generate light has appeared independently dozens of times across unrelated lineages, suggesting enormous selective advantages for organisms living in environments where sunlight never reaches. Understanding these glowing communities may also inspire new medical imaging techniques and energy-efficient technologies, demonstrating once again how curiosity about the natural world yields unexpected practical rewards for humanity.","target":[{"w":"However","a":"wever","s":"Ho","p":","},{"w":"the","a":null,"s":null,"p":""},{"w":"precise","a":"cise","s":"pre","p":""},{"w":"chemistry","a":"istry","s":"chem","p":""},{"w":"differs","a":"ers","s":"diff","p":""},{"w":"among","a":null,"s":null,"p":""},{"w":"species","a":null,"s":null,"p":","},{"w":"most","a":null,"s":null,"p":""},{"w":"reactions","a":"tions","s":"reac","p":""},{"w":"require","a":"ire","s":"requ","p":""},{"w":"a","a":null,"s":null,"p":""},{"w":"molecule","a":null,"s":null,"p":""},{"w":"named","a":null,"s":null,"p":""},{"w":"luciferin","a":null,"s":null,"p":"."},{"w":"Predators","a":"ators","s":"Pred","p":""},{"w":"cleverly","a":"erly","s":"clev","p":""},{"w":"exploit","a":"loit","s":"exp","p":""},{"w":"faint","a":"aint","s":"f","p":""},{"w":"signals","a":null,"s":null,"p":""},{"w":"nearby","a":null,"s":null,"p":"."}],"exp":[{"pos":"接続副詞","d":"HARD","e":"「空欄＋, the precise chemistry」→文頭の逆接副詞。\"Ho\"1文字→However。5文字入力のHARD。","e_en":"\"blank + , the precise chemistry\" → sentence-initial contrastive adverb. \"Ho\" (1 letter) → However. 5-letter input — HARD."},{"pos":"形容詞","d":"MOD","e":"「the＋空欄＋chemistry」→形容詞。\"pre\"→precise（精密な）。冠詞＋形容詞＋名詞の型。","e_en":"\"the + blank + chemistry\" → adjective. \"pre\" → precise. Pattern: article + adjective + noun."},{"pos":"名詞","d":"HARD","e":"「precise＋空欄＋differs」→名詞（主語）。\"chem\"→chemistry（化学反応の仕組み）。5文字入力のHARD。","e_en":"\"precise + blank + differs\" → noun (subject). \"chem\" → chemistry. 5-letter input — HARD."},{"pos":"動詞","d":"MOD","e":"「chemistry＋空欄＋among」→動詞（3単現）。\"diff\"→differs（異なる）。主語の後の動詞。","e_en":"\"chemistry + blank + among\" → verb (3rd-person singular). \"diff\" → differs. Verb after subject."},{"pos":"名詞","d":"HARD","e":"「most＋空欄＋require」→複数名詞。\"reac\"→reactions（反応）。mostの後は複数形。5文字入力のHARD。","e_en":"\"most + blank + require\" → plural noun. \"reac\" → reactions. After \"most\": plural form. 5-letter input — HARD."},{"pos":"動詞","d":"MOD","e":"「reactions＋空欄＋a molecule」→動詞。\"requ\"→require（必要とする）。主語+動詞+目的語の型。","e_en":"\"reactions + blank + a molecule\" → verb. \"requ\" → require. Subject + verb + object pattern."},{"pos":"名詞","d":"HARD","e":"「空欄＋cleverly exploit」→複数名詞（主語）。\"Pred\"→Predators（捕食者）。文頭の大文字に注目。","e_en":"\"blank + cleverly exploit\" → plural noun (subject). \"Pred\" → Predators. Note the sentence-initial capital."},{"pos":"副詞","d":"MOD","e":"「Predators＋空欄＋exploit」→副詞。\"clev\"→cleverly（巧みに）。主語+副詞+動詞の型。","e_en":"\"Predators + blank + exploit\" → adverb. \"clev\" → cleverly. Subject + adverb + verb pattern."},{"pos":"動詞","d":"MOD","e":"「cleverly＋空欄＋faint」→動詞。\"exp\"→exploit（利用する）。副詞の後は動詞。","e_en":"\"cleverly + blank + faint\" → verb. \"exp\" → exploit. Verb follows adverb."},{"pos":"形容詞","d":"HARD","e":"「exploit＋空欄＋signals」→形容詞。\"f\"1文字→faint（かすかな）。動詞+形容詞+名詞の型。4文字入力のHARD。","e_en":"\"exploit + blank + signals\" → adjective. \"f\" (1 letter) → faint. Verb + adjective + noun pattern. 4-letter input — HARD."}]}];
 var posEn={'代名詞':'pronoun','冠詞':'article','前置詞':'preposition','副詞':'adverb','副詞（接続）':'adverb (connector)','助動詞':'auxiliary verb','動名詞':'gerund','動詞':'verb','名詞':'noun','名詞（主語）':'noun (subject)','固有名詞':'proper noun','形容詞':'adjective','形容詞（比較級）':'adjective (comparative)','指示形容詞':'demonstrative adjective','接続副詞':'conjunctive adverb','接続詞':'conjunction','数詞':'numeral','過去分詞':'past participle','関係代名詞':'relative pronoun','関係副詞':'relative adverb'};
 function renderAll(){
   var ts=0,tq=0,harderCorrect=0,harderTotal=0,sh='';
