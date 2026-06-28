@@ -72,7 +72,18 @@ body[data-lang="en"] .jp{display:none}
 .hero-sub{font-size:1em;color:var(--ink-500);max-width:560px}
 
 .skill-grid{max-width:980px;margin:24px auto 80px;padding:0 28px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-@media(max-width:720px){.skill-grid{grid-template-columns:1fr}.hero h1{font-size:1.7em}}
+@media(max-width:720px){.skill-grid{grid-template-columns:1fr}.hero h1{font-size:1.7em}
+  /* Compact the header so the ログアウト button stays on-screen on phones
+     (the full header overflowed, pushing Log out off the right edge). */
+  .header{padding:12px 14px}
+  .header-left{gap:8px}
+  .header-right{gap:8px}
+  .header-divider,.product-logo{display:none}
+  .user-pill{padding:4px 4px}
+  .user-pill #userName{display:none}
+  .btn-logout{white-space:nowrap;padding:6px 6px}
+  .lang-toggle button{padding:5px 10px}
+}
 
 /* Full Length Test banner — sits above the four-skill grid as a
    prominent secondary entrypoint distinct from the regular

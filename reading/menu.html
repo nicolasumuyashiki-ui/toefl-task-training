@@ -105,6 +105,16 @@ body[data-lang="en"] .jp{display:none}
 .footer a.next-cta:hover,.next-cta:hover{background:var(--green-dark);border-color:var(--green-dark);color:#FFFFFF;transform:translateX(2px)}
 .next-cta .arrow{font-size:1em;line-height:1}
 
+@media(max-width:720px){
+  /* Keep the ログアウト button on-screen on phones (header overflowed). */
+  .header{padding:12px 14px}
+  .header-left{gap:8px}.header-right{gap:8px}
+  .header-title,.header-divider{display:none}
+  .user-pill{padding:4px 4px}
+  .user-pill #userName{display:none}
+  .btn-logout{white-space:nowrap;padding:6px 6px}
+  .lang-toggle button{padding:5px 10px}
+}
 </style>
 <!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
 </head>
