@@ -1,48 +1,40 @@
 /**
- * gas-phantom-audit.js — 「解いていないはずの履歴」（幽霊行）を全ユーザー分まとめて
- * 洗い出すための、読み取り専用の監査スクリプト。
+ * gas-phantom-audit.js — 幽霊行の監査 + 録音カバレッジ + Drive 実ファイル確認（全部入り・読み取り専用）
  *
- * 背景（なぜ幽霊行ができるか）:
- *   ① reconcile（js/history-sync.js）が、ブラウザに残った tck_done_* の印を
- *      サーバに無ければ {"recovered":true} の行として書き戻す。
- *   ② Speaking 完了フック（js/speaking-recorder-hook.js）が、実際の録音が無くても
- *      {"recorded":true}（score 0）の「提出済み」行を書く。
- *   ③ 旧 reconcile が "CTW PN"（Set 番号なし）のゴミ行を書いたことがある。
+ * ■ 実行する関数（GAS の関数ドロップダウンで選んで ▶）:
+ *   auditPhantomRows()         … 解いていない幽霊行をユーザー別に一覧（削除しない）
+ *   auditPhantomRowsToSheet()  … 同上を "PHANTOM_AUDIT" シートに書き出し（削除しない）
+ *   auditRecordingsCoverage()  … 録音の file_id 有無をユーザー別に集計（◆客 / ・内部）
+ *   auditDriveCustomers()      … 全お客さんの録音 Drive 実ファイルが開ける/共有されてるか（引数不要）
+ *   auditDriveFiles('userId')  … 特定ユーザーだけ Drive 確認（run系ラッパー経由で実行）
+ *   deletePhantomRows({dryRun:false}) … 【承認後のみ】幽霊行を削除（既定 dryRun=true で消さない）
  *
- * このスクリプトは ANSWERS シートを走査し、上記に該当する行を
- *   ・行番号（シート上の実際の行）
- *   ・ユーザー・set・理由
- * として Logger に出力するだけ。**削除は一切行わない**。
- *
- * 使い方（GAS エディタ）:
- *   1. このファイルの中身を GAS プロジェクトに貼り付けて保存。
- *   2. 関数 auditPhantomRows を実行 → 表示 > ログ で結果を確認。
- *   3. 返り値（2次元配列）をスプレッドシートに書き出したい場合は
- *      auditPhantomRowsToSheet を実行（"PHANTOM_AUDIT" シートに出力）。
- *
- * 実際に削除する場合は、必ず内容を確認した上で deletePhantomRows を使う
- *   （既定は dryRun=true。実削除は deletePhantomRows({dryRun:false})）。
- *   ※ 正答実績のある本物の行・実際の録音がある提出行には一切触れない設計。
+ * ■ シート列:
+ *   ANSWERS:    0 ts,1 userId,2 name,3 set,4 answers,5 score,6 harderCorrect,7 harderTotal,8 attemptNumber,9 total
+ *   RECORDINGS: 0 ts,1 userId,2 name,3 task,4 practice_set,5 q_index,6 dur,7 attempt,8 file_id
  */
 
-// ANSWERS 列（0-index）: 0 timestamp, 1 userId, 2 userName, 3 set, 4 answers,
-//   5 score, 6 harderCorrect, 7 harderTotal, 8 attemptNumber, 9 total
-// RECORDINGS 列: 0 timestamp, 1 userId, 2 userName, 3 task, 4 practice_set,
-//   5 question_index, 6 duration_sec, 7 attempt_number, 8 file_id
+// ===== 内部（モニター/管理者/テスト）アカウント。お客さん集計から除外 =====
+// 一覧は docs/internal-accounts.md と同期すること。
+var INTERNAL_IDS = ('Nico,marisando,Nico1,andomarisa,mayu,yuna.kitamura,Momotaro,h.sakai,'
+  + 'satoshi.okadome,hananotck,tmashimo,saosao,monitor-kadowaki,monitor-murakami,'
+  + 'monitor-kusunoki,monitor-sato,burton,monitor-nanase,testuser,user01,allZero')
+  .split(',').reduce(function (o, x) { o[x.trim()] = 1; return o; }, {});
 
-// ANSWERS の set 名（"LR P5" 等）から practice 番号を取る（"P" 前提）
+function _isInternal_(uid) { return !!INTERNAL_IDS[String(uid || '').trim()]; }
+
+// ANSWERS の set 名（"LR P5"）から practice 番号（"P" 前提）
 function _ph_practiceNum_(s) {
   var m = String(s || '').match(/p\s*0*(\d+)/i);
   return m ? Number(m[1]) : null;
 }
-
-// RECORDINGS の practice_set は素の数字（"5"）なので、"P" 無しでも拾う
+// RECORDINGS の practice_set は素の数字（"5"）。"P" 無しでも拾う
 function _ph_num_(s) {
   var m = String(s == null ? '' : s).match(/0*(\d+)/);
   return m ? Number(m[1]) : null;
 }
 
-/** RECORDINGS から「userId + task + practice」で実際の録音があるキーの集合を作る。 */
+// RECORDINGS から「userId|task|practice」の集合（実音声があるか）を作る
 function _ph_recordedKeys_() {
   var set = {};
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -53,20 +45,16 @@ function _ph_recordedKeys_() {
     for (var r = 1; r < d.length; r++) {
       var uid = String(d[r][1] || '').trim();
       var task = String(d[r][3] || '').trim().toLowerCase();
-      var pnum = _ph_num_(d[r][4]);   // practice_set は "5" のような素の数字
+      var pnum = _ph_num_(d[r][4]);
       var fileId = String(d[r][8] || '').trim();
       if (!uid || !task || pnum === null) continue;
-      // file_id があれば「本物の録音」。空でも行があれば提出はされたとみなす緩めの判定。
       set[uid + '|' + task + '|' + pnum] = fileId ? 'audio' : 'rowonly';
     }
   });
   return set;
 }
 
-/**
- * 幽霊行を分類して返す。削除はしない（読み取り専用）。
- * @return {Array<Object>} {row, ts, userId, userName, set, reason, severity}
- */
+// 幽霊行を分類して返す（読み取り専用）
 function _ph_collect_() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sh = ss.getSheetByName('ANSWERS');
@@ -81,33 +69,26 @@ function _ph_collect_() {
     var name = String(row[2] || '').trim();
     var setName = String(row[3] || '').trim();
     if (!setName) continue;
-    var rawAns = row[4];
 
     var ans = null;
-    try { ans = (typeof rawAns === 'string' && rawAns) ? JSON.parse(rawAns) : rawAns; } catch (e) { ans = rawAns; }
+    try { ans = (typeof row[4] === 'string' && row[4]) ? JSON.parse(row[4]) : row[4]; } catch (e) { ans = row[4]; }
     var isObj = ans && typeof ans === 'object' && !Array.isArray(ans);
 
     var reason = null, severity = null;
 
-    // ① reconcile が書いた復元行（解いた実体が無いのに履歴化されたもの）
     if (isObj && ans.recovered === true) {
       reason = 'reconcile 復元行（{"recovered":true}）— 解いた実体なし';
       severity = 'high';
-    }
-    // ② 録音フックの提出マーカー。実際の録音が無ければ幽霊。
-    else if (isObj && ans.recorded === true) {
-      var taskM = setName.match(/^(LR|TI)\b/i);
-      var task = taskM ? taskM[1].toLowerCase() : '';
+    } else if (isObj && ans.recorded === true) {
+      var tm = setName.match(/^(LR|TI)\b/i);
+      var task = tm ? tm[1].toLowerCase() : '';
       var pnum = _ph_practiceNum_(setName);
       var key = uid + '|' + task + '|' + pnum;
       if (task && pnum !== null && !recorded[key]) {
         reason = '録音なしの提出マーカー（{"recorded":true}）— RECORDINGS に該当音声なし';
         severity = 'high';
       }
-      // 録音があるものは本物の提出 → 対象外（フラグしない）
-    }
-    // ③ Set 番号なしの CTW ゴミ行
-    else if (/^ctw\b/i.test(setName) && !/set\s*\d+/i.test(setName)) {
+    } else if (/^ctw\b/i.test(setName) && !/set\s*\d+/i.test(setName)) {
       reason = 'CTW の Set 番号なしゴミ行（旧 reconcile 由来）';
       severity = 'mid';
     }
@@ -115,7 +96,7 @@ function _ph_collect_() {
     if (reason) {
       var ts = row[0];
       out.push({
-        row: r + 1,                         // シート上の実際の行番号（1-based）
+        row: r + 1,
         ts: (ts instanceof Date) ? Utilities.formatDate(ts, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss') : String(ts || ''),
         userId: uid, userName: name, set: setName, reason: reason, severity: severity
       });
@@ -124,60 +105,16 @@ function _ph_collect_() {
   return out;
 }
 
-/**
- * 診断用：RECORDINGS の中身と、マッチング状況を確認する（読み取り専用）。
- * 「録音なし」判定が正しいかを検証するために、削除の前に必ずこれを実行する。
- */
-function auditRecordingsDebug() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var keys = _ph_recordedKeys_();
-  var nKeys = Object.keys(keys).length;
-  Logger.log('=== RECORDINGS 診断 ===');
-  ['RECORDINGS', 'RECORDINGS_PT'].forEach(function (name) {
-    var sh = ss.getSheetByName(name);
-    if (!sh) { Logger.log(name + ': シートなし'); return; }
-    var d = sh.getDataRange().getValues();
-    Logger.log(name + ': ' + (d.length - 1) + ' 行');
-    for (var r = 1; r < d.length && r <= 6; r++) {
-      Logger.log('   sample row ' + (r + 1) + ' | userId=' + d[r][1] +
-        ' | task=' + d[r][3] + ' | practice_set=' + d[r][4] +
-        ' | file_id=' + (String(d[r][8] || '') ? 'あり' : 'なし'));
-    }
-  });
-  Logger.log('マッチキー数（userId|task|practice）= ' + nKeys);
-
-  // recorded:true の ANSWERS 行のうち、何件が録音とマッチするか
-  var sh = ss.getSheetByName('ANSWERS');
-  var d = sh.getDataRange().getValues();
-  var matched = 0, unmatched = 0;
-  for (var i = 1; i < d.length; i++) {
-    var setName = String(d[i][3] || '').trim();
-    var ans = null;
-    try { ans = (typeof d[i][4] === 'string' && d[i][4]) ? JSON.parse(d[i][4]) : d[i][4]; } catch (e) {}
-    if (!(ans && typeof ans === 'object' && ans.recorded === true)) continue;
-    var tm = setName.match(/^(LR|TI)\b/i);
-    var task = tm ? tm[1].toLowerCase() : '';
-    var pnum = _ph_practiceNum_(setName);
-    if (task && pnum !== null && keys[d[i][1] + '|' + task + '|' + pnum]) matched++; else unmatched++;
-  }
-  Logger.log('recorded:true の ANSWERS 行 → 録音あり ' + matched + ' 件 / 録音なし ' + unmatched + ' 件');
-  Logger.log('※ 録音あり が 0 のままなら、まだマッチが取れていない（RECORDINGS の列を要確認）。');
-  return { recordingKeys: nKeys, matched: matched, unmatched: unmatched };
-}
-
-/** ログに、ユーザーごとにまとめて出力する（読み取り専用）。 */
+// ★ 幽霊行をユーザー別に一覧（読み取り専用・削除なし）
 function auditPhantomRows() {
   var rows = _ph_collect_();
   if (!rows.length) { Logger.log('幽霊行は見つかりませんでした。'); return rows; }
-
-  // userId でグルーピングして見やすく
   var byUser = {};
   rows.forEach(function (x) { (byUser[x.userId] = byUser[x.userId] || []).push(x); });
-
   Logger.log('=== 幽霊行 監査（読み取り専用・削除なし） 合計 ' + rows.length + ' 行 ===');
   Object.keys(byUser).sort().forEach(function (uid) {
     var list = byUser[uid];
-    Logger.log('\n■ ' + uid + '（' + (list[0].userName || '') + '） — ' + list.length + ' 行');
+    Logger.log('\n■ ' + (_isInternal_(uid) ? '[内部] ' : '') + uid + '（' + (list[0].userName || '') + '） — ' + list.length + ' 行');
     list.forEach(function (x) {
       Logger.log('   row ' + x.row + ' | ' + x.ts + ' | ' + x.set + ' | [' + x.severity + '] ' + x.reason);
     });
@@ -186,53 +123,135 @@ function auditPhantomRows() {
   return rows;
 }
 
-/** 監査結果を "PHANTOM_AUDIT" シートに書き出す（こちらも削除はしない）。 */
+// 監査結果を "PHANTOM_AUDIT" シートに書き出す（こちらも削除はしない）
 function auditPhantomRowsToSheet() {
   var rows = _ph_collect_();
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sh = ss.getSheetByName('PHANTOM_AUDIT') || ss.insertSheet('PHANTOM_AUDIT');
   sh.clearContents();
-  sh.appendRow(['ANSWERS行', '日時', 'userId', '氏名', 'set', '重要度', '理由']);
+  sh.appendRow(['ANSWERS行', '日時', 'userId', '氏名', 'set', '重要度', '理由', '内部?']);
   rows.sort(function (a, b) { return a.userId.localeCompare(b.userId) || a.row - b.row; });
-  rows.forEach(function (x) { sh.appendRow([x.row, x.ts, x.userId, x.userName, x.set, x.severity, x.reason]); });
+  rows.forEach(function (x) { sh.appendRow([x.row, x.ts, x.userId, x.userName, x.set, x.severity, x.reason, _isInternal_(x.userId) ? '内部' : '']); });
   Logger.log('PHANTOM_AUDIT シートに ' + rows.length + ' 行を書き出しました。');
   return rows.length;
 }
 
+// ★ 録音の file_id 有無をユーザー別に集計（◆客 / ・内部）
+function auditRecordingsCoverage() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var agg = {};
+  ['RECORDINGS', 'RECORDINGS_PT'].forEach(function (name) {
+    var sh = ss.getSheetByName(name); if (!sh) return;
+    var d = sh.getDataRange().getValues();
+    for (var r = 1; r < d.length; r++) {
+      var uid = String(d[r][1] || '').trim();
+      if (!uid) continue;
+      var hasFile = !!String(d[r][8] || '').trim();
+      var a = agg[uid] || (agg[uid] = { rows: 0, withFile: 0 });
+      a.rows++; if (hasFile) a.withFile++;
+    }
+  });
+  var custRows = 0, custFile = 0, intFile = 0;
+  Logger.log('=== 録音カバレッジ（◆=お客さん / ・=内部）===');
+  Object.keys(agg).sort().forEach(function (uid) {
+    var a = agg[uid], isInt = _isInternal_(uid);
+    if (isInt) intFile += a.withFile; else { custRows += a.rows; custFile += a.withFile; }
+    Logger.log('   ' + (isInt ? '・' : '◆') + ' ' + uid + ' : ' + a.rows + ' 行 / ファイルあり ' + a.withFile);
+  });
+  Logger.log('--------');
+  Logger.log('◆お客さん合計: ' + custRows + ' 行 / 実ファイルあり ' + custFile + ' 行');
+  Logger.log('・内部合計: 実ファイルあり ' + intFile + ' 行');
+  return agg;
+}
+
+// 指定ユーザーの録音 file_id が Drive で開ける／共有されているか（読み取り専用）
+function auditDriveFiles(userId) {
+  userId = String(userId);
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ok = 0, priv = 0, gone = 0, total = 0;
+  Logger.log('=== ' + userId + ' の Drive 実ファイル確認 ===');
+  ['RECORDINGS', 'RECORDINGS_PT'].forEach(function (name) {
+    var sh = ss.getSheetByName(name); if (!sh) return;
+    var d = sh.getDataRange().getValues();
+    for (var r = 1; r < d.length; r++) {
+      if (String(d[r][1]).trim() !== userId) continue;
+      var fileId = String(d[r][8] || '').trim();
+      if (!fileId) continue;
+      total++;
+      try {
+        var f = DriveApp.getFileById(fileId);
+        var acc = f.getSharingAccess();
+        var shared = (acc === DriveApp.Access.ANYONE_WITH_LINK || acc === DriveApp.Access.ANYONE);
+        if (shared) ok++; else priv++;
+        if (total <= 6) Logger.log('   ' + name + ' row ' + (r + 1) + ' | ' + d[r][3] + ' P' + d[r][4] +
+          ' | ' + (shared ? '✓公開' : '△非公開(要再共有)') + ' | ' + f.getName());
+      } catch (e) {
+        gone++;
+        if (gone <= 6) Logger.log('   ' + name + ' row ' + (r + 1) + ' | ' + d[r][3] + ' P' + d[r][4] +
+          ' | ✗消失/不可 | ' + fileId);
+      }
+    }
+  });
+  Logger.log('--------');
+  Logger.log(userId + ': 合計 ' + total + ' / ✓公開 ' + ok + ' / △非公開 ' + priv + ' / ✗消失 ' + gone);
+  return { total: total, ok: ok, priv: priv, gone: gone };
+}
+
+// ★ 全お客さんの Drive 実ファイルをまとめて確認（引数不要・読み取り専用）
+function auditDriveCustomers() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var users = {};
+  ['RECORDINGS', 'RECORDINGS_PT'].forEach(function (name) {
+    var sh = ss.getSheetByName(name); if (!sh) return;
+    var d = sh.getDataRange().getValues();
+    for (var r = 1; r < d.length; r++) {
+      var uid = String(d[r][1] || '').trim();
+      if (uid && !_isInternal_(uid)) users[uid] = 1;
+    }
+  });
+  var tot = 0, ok = 0, priv = 0, gone = 0;
+  Logger.log('=== 全お客さんの Drive 実ファイル確認 ===');
+  Object.keys(users).sort().forEach(function (uid) {
+    var r = auditDriveFiles(uid);
+    tot += r.total; ok += r.ok; priv += r.priv; gone += r.gone;
+  });
+  Logger.log('========');
+  Logger.log('◆お客さん総計: ' + tot + ' / ✓公開 ' + ok + ' / △非公開 ' + priv + ' / ✗消失 ' + gone);
+  if (priv > 0) Logger.log('→ △非公開がある場合: reshareAllRecordings({dryRun:false}) で一括再共有できます（音声は消えていない）。');
+  if (gone > 0) Logger.log('→ ✗消失がある場合: その file_id は Drive 上で削除済み。別途相談。');
+  return { total: tot, ok: ok, priv: priv, gone: gone };
+}
+
+// 個別ユーザー用（引数なしで実行できる呼び出しラッパー）
+function runKirari()   { auditDriveFiles('Kirari'); }
+function runYagu()     { auditDriveFiles('yagu1004'); }
+function runAiriseko() { auditDriveFiles('airiseko2021'); }
+function runMaeda()    { auditDriveFiles('soichiro941@gmail.com'); }
+
 /**
- * 幽霊行を削除する。**既定は dryRun=true（実際には消さない）**。
- * 必ず auditPhantomRows で内容を確認し、オーナーの承認を得てから
- *   deletePhantomRows({dryRun:false}) を実行すること。
- * 下から消すので行番号がずれない。正答実績のある行・録音実体のある行は対象外。
+ * 【削除用・承認後のみ】既定は dryRun=true（消さない）。
+ * 実削除: deletePhantomRows({dryRun:false})
+ * オプション: {userId:'...'} 特定ユーザーのみ / {severity:'high'} high のみ
+ * 下から消すので行番号がずれない。正答実績・録音実体のある行は対象外。
  */
 function deletePhantomRows(opts) {
   opts = opts || {};
   var DRY_RUN = opts.dryRun !== false;
-  // 任意: 特定 userId だけに限定したい場合 opts.userId を渡す
   var onlyUser = opts.userId ? String(opts.userId) : null;
-  // 任意: 重要度 'high' のみ消す等。既定は high+mid 全部。
-  var minSeverity = opts.severity || null; // 'high' を渡すと high のみ
+  var minSeverity = opts.severity || null;
 
   var rows = _ph_collect_();
   if (onlyUser) rows = rows.filter(function (x) { return x.userId === onlyUser; });
   if (minSeverity === 'high') rows = rows.filter(function (x) { return x.severity === 'high'; });
-
   if (!rows.length) { Logger.log('対象の幽霊行はありません。'); return 'no rows'; }
 
   var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ANSWERS');
-  // 行番号の大きい順に消す（小さい行を消すと下の行番号がずれるため）
   rows.sort(function (a, b) { return b.row - a.row; });
-
   var deleted = 0;
   rows.forEach(function (x) {
-    if (DRY_RUN) {
-      Logger.log('[would delete] row ' + x.row + ' | ' + x.userId + ' | ' + x.set + ' | ' + x.reason);
-    } else {
-      sh.deleteRow(x.row);
-      deleted++;
-    }
+    if (DRY_RUN) Logger.log('[would delete] row ' + x.row + ' | ' + x.userId + ' | ' + x.set + ' | ' + x.reason);
+    else { sh.deleteRow(x.row); deleted++; }
   });
-
   var msg = 'deletePhantomRows ' + (DRY_RUN ? '(DRY RUN) ' : '(LIVE) ') +
             '— 対象 ' + rows.length + ' 行' + (DRY_RUN ? '（未削除）' : '、削除 ' + deleted + ' 行');
   Logger.log(msg);
