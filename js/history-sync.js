@@ -38,6 +38,16 @@
     lr: 'lr', ti: 'ti'
   };
 
+  /* SCORE DISPLAY SWITCH-OVER (going-forward, never retroactive).
+     From this instant on, a practice's score is driven by the learner's
+     LATEST attempt — which CAN be lower than a past best, so review genuinely
+     moves the predicted score up toward 6.0 (and a careless retake moves it
+     down). BEFORE this instant nothing changes: the best score is still shown,
+     so NO existing score drops on its own — a score only moves when the learner
+     does a NEW attempt at/after the switch-over. Set to 2026-06-30 00:00 JST so
+     nothing already recorded counts as "new". (Mirrored in my-score.html.) */
+  var SCORE_CUTOFF = '2026-06-29T15:00:00Z';
+
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
@@ -76,14 +86,26 @@
      then the locked-in first attempt. Returns {correct,total} or null. */
   function readScore(task, practice) {
     var k = task + '_p' + practice;
-    // Menu badge shows the BEST score (a worse retake won't lower it).
+    var valid = function (d) { return d && typeof d.total === 'number' && d.total > 0 && typeof d.correct === 'number'; };
+    var isZero = function (d) { return d && d.total > 0 && (d.correct || 0) === 0; };
     var best = parse(lsGet('training_best_' + k));
-    if (best && typeof best.total === 'number' && best.total > 0 && typeof best.correct === 'number') return best;
-    var d = parse(ssGet('training_score_' + k))
-         || parse(lsGet('training_score_' + k))
-         || parse(lsGet('training_first_' + k));
-    if (d && typeof d.total === 'number' && d.total > 0 &&
-        typeof d.correct === 'number') return d;
+    // A post-switch-over latest of 0 is almost always a glitch / "opened but not
+    // done", not a real worse attempt — don't let it drop the badge to 0 when a
+    // real best exists.
+    var glitchZero = function (d) { return isZero(d) && valid(best) && !isZero(best); };
+    // A retake done THIS session (sessionStorage) is the learner's current
+    // ability → it wins, even if lower than a past best.
+    var live = parse(ssGet('training_score_' + k));
+    if (valid(live) && !glitchZero(live)) return live;
+    // A server-hydrated latest attempt stamped AT/AFTER the switch-over also
+    // wins (going-forward honesty — may be lower than best).
+    var latest = parse(lsGet('training_score_' + k));
+    if (valid(latest) && latest.updatedAt && latest.updatedAt >= SCORE_CUTOFF && !glitchZero(latest)) return latest;
+    // Otherwise (no post-switch attempt) keep showing the BEST so an existing
+    // badge never drops on its own.
+    if (valid(best)) return best;
+    var d = latest || parse(lsGet('training_first_' + k));
+    if (valid(d)) return d;
     return null;
   }
   function isDone(task, practice) { return !!lsGet('tck_done_' + task + '_p' + practice); }

@@ -480,7 +480,14 @@ if (typeof window !== 'undefined') {
       // browser close on the SAME device — sessionStorage does not). This
       // alone fixes "scores vanished on my PC" for every task, with no
       // backend. history-sync later overwrites with server truth when online.
-      try { localStorage.setItem('training_score_' + task + '_p' + practice, value); } catch (e) {}
+      // Stamp updatedAt=now (when the page didn't) so the "latest-attempt wins"
+      // switch-over recognises this as a NEW attempt even in another tab,
+      // before the server round-trip.
+      try {
+        var _mirror = value;
+        if (!d.updatedAt) { d.updatedAt = new Date().toISOString(); _mirror = JSON.stringify(d); }
+        localStorage.setItem('training_score_' + task + '_p' + practice, _mirror);
+      } catch (e) {}
 
       // (1b) Keep the BEST score for the menu badge — a worse retake must
       // never lower it (history-sync maintains the same key from server data).
