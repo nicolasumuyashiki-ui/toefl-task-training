@@ -274,9 +274,9 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   </a>
 </div>
 
-<script src="js/auth.js?v=20260628c"></script>
-<script src="js/api.js?v=20260628c"></script>
-<script src="js/history-sync.js?v=20260628c"></script>
+<script src="js/auth.js?v=20260629"></script>
+<script src="js/api.js?v=20260629"></script>
+<script src="js/history-sync.js?v=20260629"></script>
 <script>
 /* Language toggle */
 (function(){
@@ -410,6 +410,29 @@ const TASK_META = {
  * nature). Mastery Rate uses `latest`. Both flow through aggregateSection
  * via the `which` arg.
  */
+/* SCORE DISPLAY SWITCH-OVER (going-forward, never retroactive) — mirrors
+   js/history-sync.js. From this instant the predicted band is driven by each
+   practice's LATEST attempt (which CAN be lower than a past best, so review
+   moves the score up toward 6.0 and a careless retake moves it down). BEFORE
+   it, the best score is still used, so NO existing score drops on its own — a
+   section only moves when the learner does a NEW attempt at/after the switch-
+   over. 2026-06-30 00:00 JST, so nothing already recorded counts as "new". */
+const SCORE_CUTOFF = '2026-06-29T15:00:00Z';
+
+/* The value that drives the predicted band for one practice: the LATEST attempt
+   when it is the learner's current ability (done this session, or a server
+   attempt stamped at/after the switch-over) — else the best (today's behavior,
+   so existing displays never drop). */
+function pickCurrent(a) {
+  // A post-switch-over latest of 0 (correct 0 of a real total) is almost always
+  // an "opened but not genuinely done" / save glitch, not a real worse attempt —
+  // fall back to best so a glitch can't drop a section. A real low retake
+  // (e.g. 5/10) IS honoured and lowers the score.
+  var latestZero = a.latest && a.latest.total > 0 && (a.latest.correct || 0) === 0;
+  if (a.latestIsCurrent && a.latest && !latestZero) return a.latest;
+  return a.best || a.first || a.latest;
+}
+
 function collectAttempts() {
   const out = [];
   Object.keys(TASK_META).forEach(task => {
@@ -417,8 +440,9 @@ function collectAttempts() {
       // latest: this-session score wins; otherwise the server-hydrated
       // latest in localStorage (history-sync) — so a retake done after a
       // history loss is restored as the newest result, on any device.
-      const latestRaw = sessionStorage.getItem('training_score_' + task + '_p' + p)
-                     || localStorage.getItem('training_score_' + task + '_p' + p);
+      const ssLatestRaw = sessionStorage.getItem('training_score_' + task + '_p' + p);
+      const lsLatestRaw = localStorage.getItem('training_score_' + task + '_p' + p);
+      const latestRaw = ssLatestRaw || lsLatestRaw;
       const firstRaw  = localStorage.getItem('training_first_' + task + '_p' + p);
       const bestRaw   = localStorage.getItem('training_best_' + task + '_p' + p);
       const progressRaw = localStorage.getItem('tck_progress_' + task + '_p' + p);
@@ -433,6 +457,11 @@ function collectAttempts() {
       if (first || latest) {
         const baseline = first || latest;       // Predicted source
         const recent   = latest || first;       // Mastery source
+        // Is the latest attempt the learner's CURRENT ability for the switch-
+        // over? In-session retake (sessionStorage = done right now), or a
+        // server attempt stamped at/after the switch-over instant.
+        const latestIsCurrent = !!ssLatestRaw
+          || !!(latest && latest.updatedAt && latest.updatedAt >= SCORE_CUTOFF);
         // When the learner did this (for the 日付 / Date column). Latest
         // attempt's time, else the first attempt's captured time.
         const when = (latest && latest.updatedAt)
@@ -450,13 +479,14 @@ function collectAttempts() {
             harderCorrect: recent.harderCorrect || 0, harderTotal: recent.harderTotal || 0,
           } : null,
           // BEST attempt for this practice (monotonic — history-sync only ever
-          // raises training_best_*). The Predicted band aggregates by best so a
-          // learner's score reflects their best work and can never drop as they
-          // do more practice.
+          // raises training_best_*). Used as the pre-switch-over baseline so an
+          // existing display never drops; after the switch-over the LATEST
+          // attempt (latestIsCurrent) drives the band instead (see pickCurrent).
           best: best ? {
             correct: best.correct, total: best.total,
             harderCorrect: best.harderCorrect || 0, harderTotal: best.harderTotal || 0,
           } : null,
+          latestIsCurrent: latestIsCurrent,
           attemptCount: attemptCount,
           updatedAt: when,
           status: 'done',
@@ -496,10 +526,12 @@ function collectAttempts() {
    The raw (unweighted) correct/total are still returned for the
    "X / Y" display fragment. */
 function aggregateSection(attempts, section, which) {
-  which = which || 'best';
-  // 'best' → best attempt per practice (falls back to first when no best
-  // recorded); 'latest' → most recent; 'first' → initial attempt.
-  const pick = a => which === 'best' ? (a.best || a.first || a.latest)
+  which = which || 'current';
+  // 'current' → switch-over rule: latest-if-current else best (drives the
+  // Predicted band); 'best' → best attempt per practice; 'latest' → most
+  // recent (Mastery); 'first' → initial attempt.
+  const pick = a => which === 'current' ? pickCurrent(a)
+                  : which === 'best' ? (a.best || a.first || a.latest)
                   : which === 'latest' ? a.latest : a.first;
   // Exclude a practice whose BEST is a 0-score (correct 0 of a real total):
   // on auto-graded tasks that is almost always an "opened but not genuinely
@@ -520,7 +552,10 @@ function aggregateSection(attempts, section, which) {
   const wCorrect = stdC + hC * 1.5;
   const wTotal   = stdT + hT * 1.5;
   const pct = wTotal > 0 ? (wCorrect / wTotal * 100) : 0;
-  return { hasData: true, correct, total, harderCorrect: hC, harderTotal: hT, pct, attempts: items.length };
+  // Re-engaged = at least one contributing practice is using a post-switch-over
+  // latest attempt → this section may move DOWN, so skip the never-drop clamp.
+  const reengaged = which === 'current' && items.some(a => a.latestIsCurrent && pickCurrent(a) === a.latest);
+  return { hasData: true, correct, total, harderCorrect: hC, harderTotal: hT, pct, attempts: items.length, reengaged };
 }
 
 /* Mastery Rate: % of completed practices whose LATEST attempt is ≥ 80%.
@@ -647,7 +682,7 @@ function render() {
       key:'reading', name:'Reading',
       scaled: readingScaled, pct: reading.hasData ? Math.round(reading.pct) : null,
       attempts: reading.hasData ? reading.attempts : 0, correctTotal: reading.hasData ? reading.correct+'/'+reading.total : null,
-      estimated:false,
+      estimated:false, reengaged: !!reading.reengaged,
       note: {
         jp: 'CTW + RDL + Academic の正答率を ETS 公式換算表に照らしたもの。',
         en: 'Mapped from CTW + RDL + Academic accuracy to the ETS official conversion table.',
@@ -657,7 +692,7 @@ function render() {
       key:'listening', name:'Listening',
       scaled: listeningScaled, pct: listening.hasData ? Math.round(listening.pct) : null,
       attempts: listening.hasData ? listening.attempts : 0, correctTotal: listening.hasData ? listening.correct+'/'+listening.total : null,
-      estimated:false,
+      estimated:false, reengaged: !!listening.reengaged,
       note: {
         jp: 'LCR + Conversation + Announcement + Academic Talk の正答率を ETS 公式換算表に照らしたもの。',
         en: 'Mapped from LCR + Conversation + Announcement + Academic Talk accuracy to the ETS official conversion table.',
@@ -667,7 +702,7 @@ function render() {
       key:'writing', name:'Writing',
       scaled: writingScaled, pct: sentenceAgg ? Math.round(sentenceAgg.pct) : null,
       attempts: writingAttemptCount, correctTotal: sentenceAgg ? sentenceAgg.correct+'/'+sentenceAgg.total : null,
-      estimated:true,
+      estimated:true, reengaged: !!(sentenceAgg && sentenceAgg.reengaged),
       note: {
         jp: 'Writing は <strong>Build a Sentence の正答率</strong>から算出した推定スコアです。エッセイ（Email・Academic Discussion）は自動採点できないため、スコアには含まれません。Build a Sentence を受けると表示されます。',
         en: 'Writing is estimated from your <strong>Build a Sentence accuracy</strong>. Essays (Email and Academic Discussion) cannot be auto-scored and are not included. It appears once you have done Build a Sentence.',
@@ -677,7 +712,7 @@ function render() {
       key:'speaking', name:'Speaking',
       scaled: null, pct: null,
       attempts: speakingAttemptCount, correctTotal: null,
-      estimated:true,
+      estimated:true, reengaged:false,
       note: {
         jp: 'Speaking は自動採点に対応していません。Listen & Repeat と Take an Interview で発話練習を積み、より詳しい指導が必要な場合は有料の<strong>個別指導オプション</strong>をご活用ください。',
         en: 'Speaking is not auto-scored. Practice with Listen & Repeat and Take an Interview; for tailored coaching, see the paid <strong>private coaching option</strong>.',
@@ -685,14 +720,20 @@ function render() {
     },
   ];
 
-  // HIGH-WATER-MARK clamp: a section's band / practice count can only go UP.
-  // Even if best-aggregation or sync ever yields a lower value, the display
-  // never drops below the best ever shown.
+  // HIGH-WATER-MARK clamp: a section's band / practice count can only go UP —
+  // EXCEPT once the learner re-engages a section AFTER the switch-over, when the
+  // section reflects their CURRENT (latest) ability and may legitimately drop.
+  // For untouched sections (no post-switch attempt) behavior is unchanged, so
+  // no existing score moves on its own.
   sections.forEach(function (s) {
     if (s.key === 'speaking') return;   // Speaking is never auto-scored
+    if (s.reengaged) return;            // post-switch-over: show current, allow drop
     var h = hwmApply('sec_' + s.key, s.scaled, s.pct, s.attempts, s.correctTotal);
     s.scaled = h.scaled; s.pct = h.pct; s.attempts = h.attempts; s.correctTotal = h.correctTotal;
   });
+  // If ANY section reflects post-switch-over current ability, the headline Total
+  // tracks it too (may drop); otherwise the Total keeps its never-drop clamp.
+  var anyReengaged = sections.some(function (s) { return s.reengaged; });
 
   // Total — Speaking is intentionally unscored, so the headline number
   // is the sum of Reading + Listening + Writing (max 90). For the band
@@ -716,7 +757,7 @@ function render() {
     const _sForTotal = _rl.length ? Math.round(_rl.reduce(function (a, v) { return a + v; }, 0) / _rl.length) : null; // Speaking = avg(R,L)
     const _avail = [_rS, _lS, _wS, _sForTotal].filter(function (v) { return v !== null && v !== undefined; });
     total = _avail.length ? Math.round(_avail.reduce(function (a, v) { return a + v; }, 0) / _avail.length * 4) : 0;
-    total = hwmNum('total', total > 0 ? total : null) || 0;
+    total = anyReengaged ? total : (hwmNum('total', total > 0 ? total : null) || 0);
     totalShown = total > 0;
   }
   document.getElementById('totalScore').textContent = totalShown ? total : '—';
@@ -911,13 +952,14 @@ function goActivityPage(p) {
 
 /* Sentence proxy — uses first-attempt for honest baseline. */
 function aggregateSectionTask(attempts, taskKey) {
-  const pick = a => a.best || a.first || a.latest;     // best per practice
-  const _isZero = x => x && x.total > 0 && (x.correct || 0) === 0;   // 0-best = not genuinely completed
+  const pick = a => pickCurrent(a);     // switch-over: latest-if-current else best
+  const _isZero = x => x && x.total > 0 && (x.correct || 0) === 0;   // 0 = not genuinely completed
   const items = attempts.filter(a => a.task === taskKey && a.status === 'done' && pick(a) && !_isZero(pick(a)));
   if (!items.length) return null;
   let correct = 0, total = 0;
   items.forEach(a => { const x = pick(a); correct += x.correct; total += x.total; });
-  return { correct, total, pct: total > 0 ? (correct / total * 100) : 0, attempts: items.length };
+  const reengaged = items.some(a => a.latestIsCurrent && pickCurrent(a) === a.latest);
+  return { correct, total, pct: total > 0 ? (correct / total * 100) : 0, attempts: items.length, reengaged };
 }
 
 // Render immediately from the local cache, then hydrate the full history
@@ -990,6 +1032,6 @@ function loadMyRecordings(){
 }
 loadMyRecordings();
 </script>
-<script defer src="js/tm-footer.js?v=20260628c"></script>
+<script defer src="js/tm-footer.js?v=20260629"></script>
 </body>
 </html>

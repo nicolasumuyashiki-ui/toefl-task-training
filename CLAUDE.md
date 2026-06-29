@@ -116,10 +116,17 @@ GitHub Pages は静的配信で、ブラウザは `js/*.js` を**数日キャッ
 `auth.js` の `maybeShowRetryModal` は **1 practice につきセッション 1 回だけ**表示する（`sessionStorage tck_retry_shown_<task>_p<N>`）。
 CTW の Set1→Set2 等、複数ページにまたがる practice で毎回出ないようにするため。「practice 開始時だけ」が要件。
 
-### バッジは「ベスト（最高点）」表示
-メニューのスコアバッジは **最高点**を表示する（`training_best_<task>_p<N>`）。誤って開いて0点を保存しても下がらない。
-`history-sync.applyAttempts` がサーバ全 attempt から set ごとの最高点を集計し、`auth.js` の完了フックも「より高い時だけ」更新する。
-`training_score_*`（最新）は my-score の最近表示用に保持、`training_first_*`（初回）は予想スコア用。`readScore` は best を優先。
+### バッジ／予想スコアは「最新の回」表示（2026-06-30 切替・最重要）
+**2026-06-30 0:00 JST（switch-over）以降の新しい取り組みからは、各 Practice の「最新の回」のスコアでバッジ・予想バンドを表示する**
+（復習して伸ばせば上がり、雑に解けば下がる＝今の実力を正直に反映。お客様の明確な要望で「最高点で固定（HWM）」から方針転換）。
+- **切替境界 `SCORE_CUTOFF = '2026-06-29T15:00:00Z'`**（= 6/30 0:00 JST）を `js/history-sync.js` と `my-score.html` の**両方**に持つ。変更時は必ず両方そろえる。
+- **going-forward のみ・既存表示は絶対に勝手に下げない**: switch-over **より前**の取り組みしか無い Practice／セクションは従来どおり **best＋HWM** で表示する。
+  `updatedAt >= SCORE_CUTOFF` の attempt（またはその場の sessionStorage 完了）がある時だけ「最新優先」に切り替わり、そのセクションは HWM クランプを**外す**（下落可）。
+  → **新しく解き直すまでは誰のスコアも 1mm も動かない**。これが「今後の取り組みから」の担保。
+- **glitch 0 ガード**: switch-over 後でも latest が `0/total`（開いただけ・保存不具合）の時は best にフォールバックして下げない。本物の低得点（例 5/10）は反映して下げる。
+- 実装: `pickCurrent`（my-score）＝ latestIsCurrent かつ非0なら latest、それ以外 best。`readScore`（history-sync）も同ロジック。`auth.js` は localStorage ミラー時に `updatedAt=now` を必ず刻む（別タブでも「最新」と認識させるため）。
+- `training_best_*`（最高点）と `tck_hwm_*`/サーバ `BANDS` は**残す**（switch-over 前のベースライン＝下げない床として機能）。`training_first_*`（初回）は予想スコアの初期値用。
+- **据え置き（前田・矢口）との関係**: BANDS フロアは「新しい取り組みをするまで」現在値を保持する床として今も有効。re-engage したセクションだけ最新に追従する（＝全員・今後の取り組みからの方針と一致）。**矢口さまの Reading 4.5 固定（holdYaguReading）は本方針と矛盾するため実行しない**。
 
 ### 中断（Resume）のサーバ同期＝別端末で再開できる
 中断スナップショット（`tck_progress_*`）は **サーバにも同期**する（別端末で「最初から」になるのを防ぐ）。
