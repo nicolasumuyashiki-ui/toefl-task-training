@@ -258,3 +258,69 @@ function deletePhantomRows(opts) {
   if (DRY_RUN) Logger.log('↑ DRY RUN。実削除は deletePhantomRows({dryRun:false})');
   return msg;
 }
+
+/**
+ * reconcile が押し込んだ自動採点スコアの「混入の疑い」を全顧客一括で炙り出す（読み取り専用）。
+ * 前提：オーナーは顧客アカウントで問題を解いていない → これらは本物の取り組みではない。
+ * 3つの手がかり: ①答え全0なのに得点>0 ②別アカウントと完全同一の解答 ③数秒内に複数別課題が同時保存。
+ * 「疑い」を出すだけ。削除は内容確認後に deletePhantomRows 等で個別に。
+ */
+function auditReconcileContamination() {
+  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ANSWERS');
+  var d = sh.getDataRange().getValues();
+  var rows = [];
+  for (var i = 1; i < d.length; i++) {
+    var uid = String(d[i][1] || '').trim();
+    if (!uid || _isInternal_(uid)) continue;
+    var set = String(d[i][3] || '').trim();
+    if (!/^(RDL|Academic|LCR|Conversation|Announcement|Academic Talk|Talk|Build a Sentence|Sentence)/i.test(set)) continue; // 自動採点のみ
+    var raw = d[i][4], ans = null;
+    try { ans = (typeof raw === 'string' && raw) ? JSON.parse(raw) : raw; } catch (e) {}
+    var t = (d[i][0] instanceof Date) ? d[i][0].getTime() : Date.parse(d[i][0]);
+    rows.push({ row: i + 1, uid: uid, name: String(d[i][2] || ''), set: set, ans: ans,
+      ansStr: (typeof raw === 'string' ? raw : JSON.stringify(raw)), score: Number(d[i][5]) || 0, t: t });
+  }
+  var flags = {};
+  function flag(r, why) { (flags[r.row] = flags[r.row] || { r: r, why: [] }).why.push(why); }
+
+  // ① 答え全0なのに得点>0
+  rows.forEach(function (r) {
+    if (Array.isArray(r.ans) && r.ans.length &&
+        r.ans.every(function (x) { return x === 0 || x === '0' || x === '' || x == null; }) && r.score > 0)
+      flag(r, '答え全0なのに得点>0');
+  });
+  // ② 別アカウントと完全同一の解答配列
+  var byAns = {};
+  rows.forEach(function (r) {
+    if (Array.isArray(r.ans) && r.ans.length >= 2) {
+      var k = r.set.replace(/\s*P\d+.*/, '') + '|' + r.ansStr;
+      (byAns[k] = byAns[k] || []).push(r);
+    }
+  });
+  Object.keys(byAns).forEach(function (k) {
+    var L = byAns[k], u = {}; L.forEach(function (r) { u[r.uid] = 1; });
+    if (Object.keys(u).length >= 2) L.forEach(function (r) { flag(r, '別アカウントと完全同一の解答'); });
+  });
+  // ③ 数秒以内に複数の別課題が同時保存
+  var byU = {};
+  rows.forEach(function (r) { if (!isNaN(r.t)) (byU[r.uid] = byU[r.uid] || []).push(r); });
+  Object.keys(byU).forEach(function (uid) {
+    var a = byU[uid].sort(function (x, y) { return x.t - y.t; });
+    for (var i = 0; i < a.length; i++) {
+      var b = [a[i]];
+      for (var j = i + 1; j < a.length && a[j].t - a[i].t <= 6000; j++) b.push(a[j]);
+      var s = {}; b.forEach(function (x) { s[x.set] = 1; });
+      if (b.length >= 2 && Object.keys(s).length >= 2) b.forEach(function (x) { flag(x, '数秒内に複数別課題が同時保存'); });
+    }
+  });
+
+  var out = {}, total = 0;
+  Object.keys(flags).forEach(function (rw) { var f = flags[rw]; (out[f.r.uid] = out[f.r.uid] || []).push(f); total++; });
+  Logger.log('=== reconcile 混入の疑い（読み取り専用・削除なし） 合計 ' + total + ' 行 ===');
+  Object.keys(out).sort().forEach(function (uid) {
+    Logger.log('\n■ ' + uid + '（' + (out[uid][0].r.name || '') + '） ' + out[uid].length + ' 行');
+    out[uid].forEach(function (f) { Logger.log('   行' + f.r.row + ' | ' + f.r.set + ' | score:' + f.r.score + ' | ' + f.why.join(' / ')); });
+  });
+  Logger.log('\n※ あくまで「疑い」。削除前に必ず内容確認。');
+  return total;
+}
