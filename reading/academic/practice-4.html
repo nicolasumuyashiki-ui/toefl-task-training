@@ -609,7 +609,7 @@ function closeReview(){
 
 /* ===== SENTENCE INSERTION SETUP ===== */
 var normalParagraphHTML = 'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. Understanding how plants adjust their photosynthetic processes in response to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties that are more resilient to environmental stress. In this way, research into photosynthesis has implications that extend well beyond basic biology and into the fields of agriculture and food security.';
-var insertionParagraphHTML = 'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. <span class="insert-square" data-insert="A">\u25A0</span> Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress. <span class="insert-square" data-insert="B">\u25A0</span> In this way, photosynthesis research has implications extending well beyond basic biology, reaching into agriculture and food security. <span class="insert-square" data-insert="C">\u25A0</span>';
+var insertionParagraphHTML = '<span class="insert-square" data-insert="D">\u25A0</span> Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. <span class="insert-square" data-insert="A">\u25A0</span> Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress. <span class="insert-square" data-insert="B">\u25A0</span> In this way, photosynthesis research has implications extending well beyond basic biology, reaching into agriculture and food security. <span class="insert-square" data-insert="C">\u25A0</span>';
 var insertSentenceText = "Furthermore, these improved crops would be especially valuable in tropical regions, where rising temperatures already threaten staple food production.";
 var correctInsertion = "B";
 var insertionQuestionPage = 8;
@@ -654,6 +654,11 @@ function rebuildParagraphWithInsertion(position){
   ];
   var labels = ['A','B','C'];
   var html = '';
+  // 4th insertion square (D) \u2014 before sentence 1. The inserted sentence does
+  // not fit here ("Furthermore"/"these improved crops" have no antecedent yet),
+  // so D is a valid-but-wrong position; the unique answer stays B (after S2).
+  if(position === 'D'){ html += '<span class="inserted-sentence">' + insertSentenceText + '</span> '; }
+  html += '<span class="insert-square' + (position === 'D' ? ' selected-square' : '') + '" data-insert="D">\u25A0</span> ';
   for(var i = 0; i < sentences.length; i++){
     html += sentences[i] + ' ';
     if(labels[i] === position){

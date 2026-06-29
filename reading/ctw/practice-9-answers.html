@@ -136,78 +136,7 @@ body[data-lang="en"] .jp{display:none}
 
 <script src="../../js/auth.js?v=20260628c"></script>
 <script>
-var SD=[
-{intro:"Before the twentieth century, even minor infections could be fatal because doctors had no effective way to fight bacteria. The discovery of antibiotics transformed medicine and saved countless lives around the world.",conclusion:"Today, antibiotics remain one of the most important tools in modern medicine, although their overuse has created new challenges.",target:[
-{w:"In",a:null,s:null,p:""},
-{w:"1928",a:null,s:null,p:","},
-{w:"Alexander",a:"ander",s:"Alex",p:""},
-{w:"Fleming",a:null,s:null,p:""},
-{w:"noticed",a:"iced",s:"not",p:""},
-{w:"that",a:null,s:null,p:""},
-{w:"a",a:null,s:null,p:""},
-{w:"mold",a:"ld",s:"mo",p:""},
-{w:"growing",a:null,s:null,p:""},
-{w:"on",a:null,s:null,p:""},
-{w:"one",a:"ne",s:"o",p:""},
-{w:"of",a:null,s:null,p:""},
-{w:"his",a:null,s:null,p:""},
-{w:"laboratory",a:"ratory",s:"labo",p:""},
-{w:"dishes",a:null,s:null,p:""},
-{w:"was",a:"as",s:"w",p:""},
-{w:"killing",a:null,s:null,p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"bacteria",a:"teria",s:"bac",p:""},
-{w:"around",a:null,s:null,p:""},
-{w:"it",a:null,s:null,p:"."}
-],exp:[
-{pos:"固有名詞",d:"MOD",e:"「1928, 空欄 Fleming」→人名。\"Alex\"→Alexander。固有名詞は文脈から推測。",e_en:"\"1928, blank Fleming\" → personal name. \"Alex\" → Alexander. Guess proper nouns from context."},
-{pos:"動詞",d:"MOD",e:"「Fleming＋空欄＋that」→動詞。\"not\"→noticed（気づいた）。過去形。",e_en:"\"Fleming + blank + that\" → verb. \"not\" → noticed. Past tense."},
-{pos:"名詞",d:"MOD",e:"「a＋空欄＋growing」→名詞。\"mo\"→mold（カビ）。文脈でカビと推測。",e_en:"\"a + blank + growing\" → noun. \"mo\" → mold. Guess \"mold\" from context."},
-{pos:"数詞",d:"HARD",e:"「on＋空欄＋of」→数詞。\"o\"→one。1文字のみで難しい。",e_en:"\"on + blank + of\" → numeral. \"o\" → one. Hard with only 1 hint letter."},
-{pos:"名詞",d:"HARD",e:"「his＋空欄＋dishes」→名詞。\"labo\"→laboratory（実験室）。6文字の答え。",e_en:"\"his + blank + dishes\" → noun. \"labo\" → laboratory. 6-letter answer."},
-{pos:"動詞",d:"HARD",e:"「空欄＋killing」→be動詞。\"w\"→was。1文字表示で難。",e_en:"\"blank + killing\" → be-verb. \"w\" → was. Only 1-letter hint shown — hard."},
-{pos:"名詞",d:"MOD",e:"「the＋空欄＋around」→名詞。\"bac\"→bacteria（細菌）。introからの推測。",e_en:"\"the + blank + around\" → noun. \"bac\" → bacteria. Guess from intro."}
-]},
-{intro:"Learning a new language is one of the most complex tasks the human brain can perform. It requires the coordination of multiple brain regions responsible for memory, attention, and pattern recognition.",conclusion:"These findings suggest that the brain's remarkable plasticity allows people of all ages to acquire new languages, though the process becomes more effortful over time.",target:[
-{w:"Researchers",a:"rchers",s:"Resea",p:""},
-{w:"have",a:null,s:null,p:""},
-{w:"demonstrated",a:"strated",s:"demon",p:""},
-{w:"that",a:null,s:null,p:""},
-{w:"acquiring",a:"iring",s:"acqu",p:""},
-{w:"vocabulary",a:null,s:null,p:""},
-{w:"primarily",a:"marily",s:"pri",p:""},
-{w:"engages",a:null,s:null,p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"hippocampus",a:"campus",s:"hippo",p:","},
-{w:"whereas",a:"reas",s:"whe",p:""},
-{w:"mastering",a:null,s:null,p:""},
-{w:"grammar",a:"mmar",s:"gra",p:""},
-{w:"relies",a:null,s:null,p:""},
-{w:"heavily",a:"vily",s:"hea",p:""},
-{w:"on",a:null,s:null,p:""},
-{w:"procedural",a:"dural",s:"proce",p:""},
-{w:"memory",a:null,s:null,p:""},
-{w:"circuits",a:"cuits",s:"cir",p:""},
-{w:"located",a:null,s:null,p:""},
-{w:"in",a:null,s:null,p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"frontal",a:"ntal",s:"fro",p:""},
-{w:"cortex",a:null,s:null,p:"."}
-],exp:[
-{pos:"名詞（主語）",d:"HARD",e:"「空欄＋have demonstrated」→主語。\"Resea\"→Researchers。6文字の答え。",e_en:"\"blank + have demonstrated\" → subject. \"Resea\" → Researchers. 6-letter answer."},
-{pos:"動詞",d:"HARD",e:"「Researchers have＋空欄」→過去分詞。\"demon\"→demonstrated。7文字の答え。",e_en:"\"Researchers have + blank\" → past participle. \"demon\" → demonstrated. 7-letter answer."},
-{pos:"動名詞",d:"HARD",e:"「that＋空欄＋vocabulary」→主語（動名詞）。\"acqu\"→acquiring（習得すること）。",e_en:"\"that + blank + vocabulary\" → subject (gerund). \"acqu\" → acquiring."},
-{pos:"副詞",d:"HARD",e:"「vocabulary＋空欄＋engages」→副詞。\"pri\"→primarily（主に）。",e_en:"\"vocabulary + blank + engages\" → adverb. \"pri\" → primarily."},
-{pos:"名詞",d:"HARD",e:"「the＋空欄」→名詞。\"hippo\"→hippocampus（海馬）。専門用語。",e_en:"\"the + blank\" → noun. \"hippo\" → hippocampus. Specialized term."},
-{pos:"接続詞",d:"MOD",e:"「hippocampus,＋空欄＋mastering」→接続詞。\"whe\"→whereas（一方で）。",e_en:"\"hippocampus, + blank + mastering\" → conjunction. \"whe\" → whereas."},
-{pos:"名詞",d:"MOD",e:"「mastering＋空欄」→名詞。\"gra\"→grammar（文法）。",e_en:"\"mastering + blank\" → noun. \"gra\" → grammar."},
-{pos:"副詞",d:"MOD",e:"「relies＋空欄＋on」→副詞。\"hea\"→heavily。relies heavily onは頻出。",e_en:"\"relies + blank + on\" → adverb. \"hea\" → heavily. relies heavily on is frequent."},
-{pos:"形容詞",d:"HARD",e:"「on＋空欄＋memory」→形容詞。\"proce\"→procedural（手続き的な）。専門用語。",e_en:"\"on + blank + memory\" → adjective. \"proce\" → procedural. Specialized term."},
-{pos:"名詞",d:"HARD",e:"「memory＋空欄」→名詞。\"cir\"→circuits（回路）。5文字の答え。",e_en:"\"memory + blank\" → noun. \"cir\" → circuits. 5-letter answer."},
-{pos:"形容詞",d:"MOD",e:"「the＋空欄＋cortex」→形容詞。\"fro\"→frontal（前頭の）。",e_en:"\"the + blank + cortex\" → adjective. \"fro\" → frontal."}
-]}
-];
-
+var SD=[{"intro":"Before the twentieth century, even minor infections could be fatal because doctors had no effective way to fight bacteria. The discovery of antibiotics transformed medicine and saved countless lives around the world. In","conclusion":"Today, antibiotics remain one of the most important tools in modern medicine, although their overuse has created new challenges.","target":[{"w":"1928","a":"28","s":"19","p":","},{"w":"Alexander","a":null,"s":null,"p":""},{"w":"Fleming","a":"ming","s":"Fle","p":""},{"w":"noticed","a":null,"s":null,"p":""},{"w":"that","a":"at","s":"th","p":""},{"w":"a","a":null,"s":null,"p":""},{"w":"mold","a":"ld","s":"mo","p":""},{"w":"growing","a":null,"s":null,"p":""},{"w":"on","a":"on","s":"","p":""},{"w":"one","a":null,"s":null,"p":""},{"w":"of","a":"of","s":"","p":""},{"w":"his","a":null,"s":null,"p":""},{"w":"laboratory","a":"ory","s":"laborat","p":""},{"w":"dishes","a":null,"s":null,"p":""},{"w":"was","a":"as","s":"w","p":""},{"w":"killing","a":null,"s":null,"p":""},{"w":"the","a":"he","s":"t","p":""},{"w":"bacteria","a":null,"s":null,"p":""},{"w":"around","a":"ound","s":"ar","p":""},{"w":"it","a":null,"s":null,"p":"."}],"exp":[{"pos":"数詞","d":"MOD","e":"「文頭＋空欄＋Alexander」→数詞。\"19\"→1928（1928（年））。2文字の答え。","e_en":"\"start + blank + Alexander\" → numeral. \"19\" → 1928. 2-letter answer."},{"pos":"固有名詞","d":"MOD","e":"「Alexander＋空欄＋noticed」→固有名詞。\"Fle\"→Fleming（フレミング（人名））。4文字の答え。","e_en":"\"Alexander + blank + noticed\" → proper noun. \"Fle\" → Fleming. 4-letter answer."},{"pos":"接続詞","d":"MOD","e":"「noticed＋空欄＋a」→接続詞。\"th\"→that（〜ということ）。2文字の答え。","e_en":"\"noticed + blank + a\" → conjunction. \"th\" → that. 2-letter answer."},{"pos":"名詞","d":"MOD","e":"「a＋空欄＋growing」→名詞。\"mo\"→mold（カビ）。2文字の答え。","e_en":"\"a + blank + growing\" → noun. \"mo\" → mold. 2-letter answer."},{"pos":"前置詞","d":"MOD","e":"「growing＋空欄＋one」→前置詞。接頭辞の表示なし→on（〜の上に）。2文字の答え。","e_en":"\"growing + blank + one\" → preposition. No prefix shown → on. 2-letter answer."},{"pos":"前置詞","d":"MOD","e":"「one＋空欄＋his」→前置詞。接頭辞の表示なし→of（〜の）。2文字の答え。","e_en":"\"one + blank + his\" → preposition. No prefix shown → of. 2-letter answer."},{"pos":"名詞","d":"MOD","e":"「his＋空欄＋dishes」→名詞。\"laborat\"→laboratory（実験室）。3文字の答え。","e_en":"\"his + blank + dishes\" → noun. \"laborat\" → laboratory. 3-letter answer."},{"pos":"動詞","d":"MOD","e":"「dishes＋空欄＋killing」→動詞。\"w\"→was（〜だった）。2文字の答え。","e_en":"\"dishes + blank + killing\" → verb (be). \"w\" → was. 2-letter answer."},{"pos":"冠詞","d":"MOD","e":"「killing＋空欄＋bacteria」→冠詞。\"t\"→the（その（定冠詞））。2文字の答え。","e_en":"\"killing + blank + bacteria\" → article. \"t\" → the. 2-letter answer."},{"pos":"前置詞","d":"MOD","e":"「bacteria＋空欄＋it」→前置詞。\"ar\"→around（〜の周りに）。4文字の答え。","e_en":"\"bacteria + blank + it\" → preposition. \"ar\" → around. 4-letter answer."}]},{"intro":"Learning a new language is one of the most complex tasks the human brain can perform. It requires the coordination of multiple brain regions responsible for memory, attention, and pattern recognition. Researchers have demonstrated that","conclusion":"These findings suggest that the brain's remarkable plasticity allows people of all ages to acquire new languages, though the process becomes more effortful over time.","target":[{"w":"acquiring","a":"iring","s":"acqu","p":""},{"w":"vocabulary","a":null,"s":null,"p":""},{"w":"primarily","a":"arily","s":"prim","p":""},{"w":"engages","a":null,"s":null,"p":""},{"w":"the","a":"he","s":"t","p":""},{"w":"hippocampus","a":null,"s":null,"p":","},{"w":"whereas","a":"reas","s":"whe","p":""},{"w":"mastering","a":null,"s":null,"p":""},{"w":"grammar","a":"mmar","s":"gra","p":""},{"w":"relies","a":null,"s":null,"p":""},{"w":"heavily","a":"vily","s":"hea","p":""},{"w":"on","a":null,"s":null,"p":""},{"w":"procedural","a":"dural","s":"proce","p":""},{"w":"memory","a":null,"s":null,"p":""},{"w":"circuits","a":"cuits","s":"cir","p":""},{"w":"located","a":null,"s":null,"p":""},{"w":"in","a":"in","s":"","p":""},{"w":"the","a":null,"s":null,"p":""},{"w":"frontal","a":"ntal","s":"fro","p":""},{"w":"cortex","a":null,"s":null,"p":"."}],"exp":[{"pos":"動名詞","d":"HARD","e":"「文頭＋空欄＋vocabulary」→動名詞。\"acqu\"→acquiring（習得すること）。5文字の答え。","e_en":"\"start + blank + vocabulary\" → gerund. \"acqu\" → acquiring. 5-letter answer."},{"pos":"副詞","d":"HARD","e":"「vocabulary＋空欄＋engages」→副詞。\"prim\"→primarily（主に）。5文字の答え。","e_en":"\"vocabulary + blank + engages\" → adverb. \"prim\" → primarily. 5-letter answer."},{"pos":"冠詞","d":"HARD","e":"「engages＋空欄＋hippocampus」→冠詞。\"t\"→the（その（定冠詞））。2文字の答え。","e_en":"\"engages + blank + hippocampus\" → article. \"t\" → the. 2-letter answer."},{"pos":"接続詞","d":"HARD","e":"「hippocampus＋空欄＋mastering」→接続詞。\"whe\"→whereas（〜である一方）。4文字の答え。","e_en":"\"hippocampus + blank + mastering\" → conjunction. \"whe\" → whereas. 4-letter answer."},{"pos":"名詞","d":"HARD","e":"「mastering＋空欄＋relies」→名詞。\"gra\"→grammar（文法）。4文字の答え。","e_en":"\"mastering + blank + relies\" → noun. \"gra\" → grammar. 4-letter answer."},{"pos":"副詞","d":"HARD","e":"「relies＋空欄＋on」→副詞。\"hea\"→heavily（大きく・重く）。4文字の答え。","e_en":"\"relies + blank + on\" → adverb. \"hea\" → heavily. 4-letter answer."},{"pos":"形容詞","d":"HARD","e":"「on＋空欄＋memory」→形容詞。\"proce\"→procedural（手続き的な）。5文字の答え。","e_en":"\"on + blank + memory\" → adjective. \"proce\" → procedural. 5-letter answer."},{"pos":"名詞","d":"HARD","e":"「memory＋空欄＋located」→名詞。\"cir\"→circuits（回路）。5文字の答え。","e_en":"\"memory + blank + located\" → noun. \"cir\" → circuits. 5-letter answer."},{"pos":"前置詞","d":"HARD","e":"「located＋空欄＋the」→前置詞。接頭辞の表示なし→in（〜の中に）。2文字の答え。","e_en":"\"located + blank + the\" → preposition. No prefix shown → in. 2-letter answer."},{"pos":"形容詞","d":"HARD","e":"「the＋空欄＋cortex」→形容詞。\"fro\"→frontal（前頭の）。4文字の答え。","e_en":"\"the + blank + cortex\" → adjective. \"fro\" → frontal. 4-letter answer."}]}];
 var posEn={'代名詞':'pronoun','冠詞':'article','前置詞':'preposition','副詞':'adverb','副詞（接続）':'adverb (connector)','助動詞':'auxiliary verb','動名詞':'gerund','動詞':'verb','名詞':'noun','名詞（主語）':'noun (subject)','固有名詞':'proper noun','形容詞':'adjective','形容詞（比較級）':'adjective (comparative)','指示形容詞':'demonstrative adjective','接続副詞':'conjunctive adverb','接続詞':'conjunction','数詞':'numeral','過去分詞':'past participle','関係代名詞':'relative pronoun','関係副詞':'relative adverb'};
 function renderAll(){
   var ts=0,tq=0,harderCorrect=0,harderTotal=0,sh='';

@@ -136,75 +136,7 @@ body[data-lang="en"] .jp{display:none}
 
 <script src="../../js/auth.js?v=20260628c"></script>
 <script>
-var SD=[
-{intro:"For centuries, people have kept wild animals in captivity. Ancient rulers often collected exotic creatures as symbols of power and wealth. However, the purpose of keeping animals has changed dramatically over the past two hundred years.",conclusion:"These changes reflect a growing awareness that zoos should serve the needs of animals, not just entertain human visitors.",target:[
-{w:"Early",a:"rly",s:"Ea",p:""},
-{w:"zoos",a:null,s:null,p:""},
-{w:"primarily",a:"arily",s:"prim",p:""},
-{w:"displayed",a:null,s:null,p:""},
-{w:"exotic",a:"tic",s:"exo",p:""},
-{w:"animals",a:null,s:null,p:""},
-{w:"in",a:"n",s:"i",p:""},
-{w:"small",a:null,s:null,p:""},
-{w:"cages",a:"ges",s:"ca",p:""},
-{w:"for",a:null,s:null,p:""},
-{w:"public",a:"lic",s:"pub",p:""},
-{w:"entertainment",a:null,s:null,p:""},
-{w:"but",a:"ut",s:"b",p:""},
-{w:"modern",a:null,s:null,p:""},
-{w:"facilities",a:"ities",s:"facil",p:""},
-{w:"focus",a:null,s:null,p:""},
-{w:"instead",a:"ead",s:"inst",p:""},
-{w:"on",a:null,s:null,p:""},
-{w:"conservation",a:"ation",s:"conserv",p:""},
-{w:"programs",a:null,s:null,p:"."}
-],exp:[
-{pos:"形容詞",d:"MOD",e:"「空欄＋zoos」→形容詞。\"Ea\"→Early（初期の）。文頭の形容詞パターン。",e_en:"\"blank + zoos\" → adjective. \"Ea\" → Early. Sentence-initial adjective pattern."},
-{pos:"副詞",d:"HARD",e:"「zoos＋空欄＋displayed」→副詞。\"prim\"→primarily（主に）。5文字の答え。",e_en:"\"zoos + blank + displayed\" → adverb. \"prim\" → primarily. 5-letter answer."},
-{pos:"形容詞",d:"MOD",e:"「displayed＋空欄＋animals」→形容詞。\"exo\"→exotic（エキゾチックな）。",e_en:"\"displayed + blank + animals\" → adjective. \"exo\" → exotic."},
-{pos:"前置詞",d:"MOD",e:"「animals＋空欄＋small」→前置詞。\"i\"→in。1文字で即答。",e_en:"\"animals + blank + small\" → preposition. \"i\" → in. Instant from 1-letter hint."},
-{pos:"名詞",d:"MOD",e:"「small＋空欄」→名詞。\"ca\"→cages（檻）。文脈から推測。",e_en:"\"small + blank\" → noun. \"ca\" → cages. Guess from context."},
-{pos:"形容詞",d:"MOD",e:"「for＋空欄＋entertainment」→形容詞。\"pub\"→public（公共の）。",e_en:"\"for + blank + entertainment\" → adjective. \"pub\" → public."},
-{pos:"接続詞",d:"MOD",e:"「entertainment＋空欄＋modern」→接続詞。\"b\"→but。対比の接続詞。",e_en:"\"entertainment + blank + modern\" → conjunction. \"b\" → but. Contrastive conjunction."},
-{pos:"名詞",d:"HARD",e:"「modern＋空欄」→名詞。\"facil\"→facilities（施設）。5文字の答え。",e_en:"\"modern + blank\" → noun. \"facil\" → facilities. 5-letter answer."},
-{pos:"副詞",d:"HARD",e:"「focus＋空欄＋on」→副詞。\"inst\"→instead（代わりに）。focus instead onは頻出。",e_en:"\"focus + blank + on\" → adverb. \"inst\" → instead. focus instead on is frequent."},
-{pos:"名詞",d:"HARD",e:"「on＋空欄＋programs」→名詞。\"conserv\"→conservation（保全）。5文字の答え。",e_en:"\"on + blank + programs\" → noun. \"conserv\" → conservation. 5-letter answer."}
-]},
-{intro:"Volcanic eruptions inject enormous quantities of gas and particulate matter into the atmosphere, where these emissions interact with solar radiation in ways that climate scientists are still working to characterize. The chemical species involved — primarily sulfur dioxide, carbon dioxide, and fine ash — differ markedly in their atmospheric lifetimes and radiative effects.",conclusion:"Reconstructing past eruptions from ice-core sulfate records therefore provides an indispensable benchmark against which contemporary climate models can be calibrated and refined.",target:[
-{w:"Stratospheric",a:null,s:null,p:""},
-{w:"sulfate",a:null,s:null,p:""},
-{w:"aerosols",a:"osols",s:"aer",p:""},
-{w:"reflect",a:"lect",s:"ref",p:""},
-{w:"incoming",a:null,s:null,p:""},
-{w:"sunlight",a:null,s:null,p:","},
-{w:"thereby",a:"reby",s:"the",p:""},
-{w:"inducing",a:"cing",s:"indu",p:""},
-{w:"transient",a:"sient",s:"tran",p:""},
-{w:"cooling",a:null,s:null,p:""},
-{w:"globally",a:"bally",s:"glo",p:"."},
-{w:"Carbon",a:null,s:null,p:""},
-{w:"dioxide",a:null,s:null,p:""},
-{w:"persists",a:"sists",s:"per",p:""},
-{w:"considerably",a:"rably",s:"conside",p:""},
-{w:"longer",a:null,s:null,p:","},
-{w:"gradually",a:"ually",s:"grad",p:""},
-{w:"warming",a:null,s:null,p:""},
-{w:"the",a:null,s:null,p:""},
-{w:"troposphere",a:"phere",s:"tropos",p:"."}
-],exp:[
-{pos:"名詞",d:"HARD",e:"sulfateが修飾する名詞。\"aer\"→aerosols（エアロゾル）。大気科学の専門語。",e_en:"Noun modified by sulfate. \"aer\"→aerosols. Atmospheric science technical term."},
-{pos:"動詞",d:"HARD",e:"主語aerosolsの動詞。\"ref\"→reflect（反射する）。物理用語。",e_en:"Verb of subject aerosols. \"ref\"→reflect. Physics technical term."},
-{pos:"副詞",d:"MOD",e:"分詞構文を導く副詞。\"the\"→thereby（それによって）。学術文体の連結語。",e_en:"Adverb introducing participial clause. \"the\"→thereby. Academic connector."},
-{pos:"動詞",d:"MOD",e:"thereby + V-ing。\"indu\"→inducing（誘発する）。Latinate学術動詞。",e_en:"V-ing after thereby. \"indu\"→inducing. Latinate academic verb."},
-{pos:"形容詞",d:"HARD",e:"coolingを修飾する形容詞。\"tran\"→transient（一時的な）。C1学術語。",e_en:"Adjective modifying cooling. \"tran\"→transient. C1 academic adjective."},
-{pos:"副詞",d:"MOD",e:"文末の副詞。\"glo\"→globally（地球規模で）。気候科学の頻出副詞。",e_en:"Sentence-final adverb. \"glo\"→globally. Frequent adverb in climate science."},
-{pos:"動詞",d:"HARD",e:"主語dioxideの述語動詞。\"per\"→persists（残存する）。表示3字、難。",e_en:"Verb of subject dioxide. \"per\"→persists. Hard — only 3 hint chars."},
-{pos:"副詞",d:"MOD",e:"longerを修飾する副詞。\"conside\"→considerably（かなり）。形式語。",e_en:"Adverb modifying longer. \"conside\"→considerably. Formal-register adverb."},
-{pos:"副詞",d:"MOD",e:"warmingを修飾する副詞。\"grad\"→gradually（徐々に）。",e_en:"Adverb modifying warming. \"grad\"→gradually. Step-by-step."},
-{pos:"名詞",d:"HARD",e:"warmingの目的語。\"tropos\"→troposphere（対流圏）。大気科学の専門語。",e_en:"Object of warming. \"tropos\"→troposphere. Atmospheric science technical term."}
-]}
-];
-
+var SD=[{"intro":"For centuries, people have kept wild animals in captivity. Ancient rulers often collected exotic creatures as symbols of power and wealth. However, the purpose of keeping animals has changed dramatically over the past two hundred years.","conclusion":"These changes reflect a growing awareness that zoos should serve the needs of animals, not just entertain human visitors.","target":[{"w":"Early","a":"rly","s":"Ea","p":""},{"w":"zoos","a":null,"s":null,"p":""},{"w":"primarily","a":"ily","s":"primar","p":""},{"w":"displayed","a":null,"s":null,"p":""},{"w":"exotic","a":"tic","s":"exo","p":""},{"w":"animals","a":null,"s":null,"p":""},{"w":"in","a":"n","s":"i","p":""},{"w":"small","a":null,"s":null,"p":""},{"w":"cages","a":"ges","s":"ca","p":""},{"w":"for","a":null,"s":null,"p":""},{"w":"public","a":"lic","s":"pub","p":""},{"w":"entertainment","a":null,"s":null,"p":""},{"w":"but","a":"ut","s":"b","p":""},{"w":"modern","a":null,"s":null,"p":""},{"w":"facilities","a":"ies","s":"facilit","p":""},{"w":"focus","a":null,"s":null,"p":""},{"w":"instead","a":"ead","s":"inst","p":""},{"w":"on","a":null,"s":null,"p":""},{"w":"conservation","a":"ion","s":"conservat","p":""},{"w":"programs","a":null,"s":null,"p":"."}],"exp":[{"pos":"形容詞","d":"MOD","e":"「空欄＋zoos」→形容詞。\"Ea\"→Early（初期の）。文頭の形容詞パターン。","e_en":"\"blank + zoos\" → adjective. \"Ea\" → Early. Sentence-initial adjective pattern."},{"pos":"副詞","d":"HARD","e":"「zoos＋空欄＋displayed」→副詞。\"primar\"→primarily（主に）。3文字の答え。","e_en":"\"zoos + blank + displayed\" → adverb. \"primar\" → primarily. 3-letter answer."},{"pos":"形容詞","d":"MOD","e":"「displayed＋空欄＋animals」→形容詞。\"exo\"→exotic（エキゾチックな）。","e_en":"\"displayed + blank + animals\" → adjective. \"exo\" → exotic."},{"pos":"前置詞","d":"MOD","e":"「animals＋空欄＋small」→前置詞。\"i\"→in。1文字で即答。","e_en":"\"animals + blank + small\" → preposition. \"i\" → in. Instant from 1-letter hint."},{"pos":"名詞","d":"MOD","e":"「small＋空欄」→名詞。\"ca\"→cages（檻）。文脈から推測。","e_en":"\"small + blank\" → noun. \"ca\" → cages. Guess from context."},{"pos":"形容詞","d":"MOD","e":"「for＋空欄＋entertainment」→形容詞。\"pub\"→public（公共の）。","e_en":"\"for + blank + entertainment\" → adjective. \"pub\" → public."},{"pos":"接続詞","d":"MOD","e":"「entertainment＋空欄＋modern」→接続詞。\"b\"→but。対比の接続詞。","e_en":"\"entertainment + blank + modern\" → conjunction. \"b\" → but. Contrastive conjunction."},{"pos":"名詞","d":"HARD","e":"「modern＋空欄」→名詞。\"facilit\"→facilities（施設）。3文字の答え。","e_en":"\"modern + blank\" → noun. \"facilit\" → facilities. 3-letter answer."},{"pos":"副詞","d":"HARD","e":"「focus＋空欄＋on」→副詞。\"inst\"→instead（代わりに）。focus instead onは頻出。","e_en":"\"focus + blank + on\" → adverb. \"inst\" → instead. focus instead on is frequent."},{"pos":"名詞","d":"HARD","e":"「on＋空欄＋programs」→名詞。\"conservat\"→conservation（保全）。3文字の答え。","e_en":"\"on + blank + programs\" → noun. \"conservat\" → conservation. 3-letter answer."}]},{"intro":"Volcanic eruptions inject enormous quantities of gas and particulate matter into the atmosphere, where these emissions interact with solar radiation in ways that climate scientists are still working to characterize. The chemical species involved — primarily sulfur dioxide, carbon dioxide, and fine ash — differ markedly in their atmospheric lifetimes and radiative effects.","conclusion":"Reconstructing past eruptions from ice-core sulfate records therefore provides an indispensable benchmark against which contemporary climate models can be calibrated and refined.","target":[{"w":"Stratospheric","a":null,"s":null,"p":""},{"w":"sulfate","a":null,"s":null,"p":""},{"w":"aerosols","a":"osols","s":"aer","p":""},{"w":"reflect","a":"lect","s":"ref","p":""},{"w":"incoming","a":null,"s":null,"p":""},{"w":"sunlight","a":null,"s":null,"p":","},{"w":"thereby","a":"reby","s":"the","p":""},{"w":"inducing","a":"cing","s":"indu","p":""},{"w":"transient","a":"sient","s":"tran","p":""},{"w":"cooling","a":null,"s":null,"p":""},{"w":"globally","a":"bally","s":"glo","p":"."},{"w":"Carbon","a":null,"s":null,"p":""},{"w":"dioxide","a":null,"s":null,"p":""},{"w":"persists","a":"sists","s":"per","p":""},{"w":"considerably","a":"rably","s":"conside","p":""},{"w":"longer","a":null,"s":null,"p":","},{"w":"gradually","a":"ually","s":"grad","p":""},{"w":"warming","a":null,"s":null,"p":""},{"w":"the","a":null,"s":null,"p":""},{"w":"troposphere","a":"phere","s":"tropos","p":"."}],"exp":[{"pos":"名詞","d":"HARD","e":"sulfateが修飾する名詞。\"aer\"→aerosols（エアロゾル）。大気科学の専門語。","e_en":"Noun modified by sulfate. \"aer\"→aerosols. Atmospheric science technical term."},{"pos":"動詞","d":"HARD","e":"主語aerosolsの動詞。\"ref\"→reflect（反射する）。物理用語。","e_en":"Verb of subject aerosols. \"ref\"→reflect. Physics technical term."},{"pos":"副詞","d":"MOD","e":"分詞構文を導く副詞。\"the\"→thereby（それによって）。学術文体の連結語。","e_en":"Adverb introducing participial clause. \"the\"→thereby. Academic connector."},{"pos":"動詞","d":"MOD","e":"thereby + V-ing。\"indu\"→inducing（誘発する）。Latinate学術動詞。","e_en":"V-ing after thereby. \"indu\"→inducing. Latinate academic verb."},{"pos":"形容詞","d":"HARD","e":"coolingを修飾する形容詞。\"tran\"→transient（一時的な）。C1学術語。","e_en":"Adjective modifying cooling. \"tran\"→transient. C1 academic adjective."},{"pos":"副詞","d":"MOD","e":"文末の副詞。\"glo\"→globally（地球規模で）。気候科学の頻出副詞。","e_en":"Sentence-final adverb. \"glo\"→globally. Frequent adverb in climate science."},{"pos":"動詞","d":"HARD","e":"主語dioxideの述語動詞。\"per\"→persists（残存する）。表示3字、難。","e_en":"Verb of subject dioxide. \"per\"→persists. Hard — only 3 hint chars."},{"pos":"副詞","d":"MOD","e":"longerを修飾する副詞。\"conside\"→considerably（かなり）。形式語。","e_en":"Adverb modifying longer. \"conside\"→considerably. Formal-register adverb."},{"pos":"副詞","d":"MOD","e":"warmingを修飾する副詞。\"grad\"→gradually（徐々に）。","e_en":"Adverb modifying warming. \"grad\"→gradually. Step-by-step."},{"pos":"名詞","d":"HARD","e":"warmingの目的語。\"tropos\"→troposphere（対流圏）。大気科学の専門語。","e_en":"Object of warming. \"tropos\"→troposphere. Atmospheric science technical term."}]}];
 var posEn={'代名詞':'pronoun','冠詞':'article','前置詞':'preposition','副詞':'adverb','副詞（接続）':'adverb (connector)','助動詞':'auxiliary verb','動名詞':'gerund','動詞':'verb','名詞':'noun','名詞（主語）':'noun (subject)','固有名詞':'proper noun','形容詞':'adjective','形容詞（比較級）':'adjective (comparative)','指示形容詞':'demonstrative adjective','接続副詞':'conjunctive adverb','接続詞':'conjunction','数詞':'numeral','過去分詞':'past participle','関係代名詞':'relative pronoun','関係副詞':'relative adverb'};
 function renderAll(){
   var ts=0,tq=0,harderCorrect=0,harderTotal=0,sh='';
