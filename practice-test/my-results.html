@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Past Practice Test Results — TCK Workshop">
+<meta property="og:description" content="Complete TOEFL iBT® Practice Test covering Reading, Listening, Writing, and Speaking — by TCK Workshop.">
+<meta property="og:image" content="https://apps.tckworkshop.co.jp/toefl-practice/assets/ogp-card.jpg">
+<meta property="og:site_name" content="TCK Workshop">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Past Practice Test Results — TCK Workshop">
+<meta name="twitter:description" content="Complete TOEFL iBT® Practice Test covering Reading, Listening, Writing, and Speaking — by TCK Workshop.">
+<meta name="twitter:image" content="https://apps.tckworkshop.co.jp/toefl-practice/assets/ogp-card.jpg">
+
+<title>過去の模試結果 — TCK Workshop</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{min-height:100%}
+body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-height:100vh;color:var(--ink-900);-webkit-font-smoothing:antialiased;line-height:1.6;display:block}
+
+.header{background:var(--cream);border-bottom:1px solid var(--paper);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.header-left{display:flex;align-items:center;gap:14px}
+.header-divider{width:1px;height:16px;background:var(--ink-200)}
+.header-title{font-size:.88em;color:var(--ink-500);font-weight:500}
+.header-right{display:flex;align-items:center;gap:12px}
+.tck-lang-toggle{display:inline-flex;background:var(--white);border:1px solid var(--paper);border-radius:999px;padding:3px;gap:2px}
+.tck-lang-toggle button{background:transparent;border:none;font-family:var(--font-en);font-size:.74em;font-weight:600;padding:5px 12px;border-radius:999px;cursor:pointer;color:var(--ink-500)}
+.tck-lang-toggle button.active{background:var(--green);color:var(--white)}
+.user-pill{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--paper);padding:5px 12px 5px 5px;border-radius:999px;font-size:.78em;font-weight:500}
+.avatar{width:24px;height:24px;border-radius:50%;background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:.72em;font-weight:700;font-family:var(--font-en)}
+.btn-logout{background:transparent;border:none;font-size:.74em;font-weight:500;color:var(--ink-500);cursor:pointer;font-family:var(--font-en);padding:6px 10px;border-radius:8px}
+.btn-logout:hover{color:var(--green-deep)}
+
+.wrap{max-width:980px;margin:0 auto;padding:28px 28px 80px}
+.crumb{display:inline-flex;align-items:center;gap:6px;font-size:.82em;color:var(--ink-500);text-decoration:none;margin-bottom:18px}
+.crumb:hover{color:var(--green-deep)}
+.kicker{font-family:var(--font-en);font-size:.72em;font-weight:700;color:var(--green);letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
+h1{font-family:var(--font-en);font-size:2.1em;font-weight:800;color:var(--green-deep);line-height:1.12;letter-spacing:-0.02em;margin-bottom:8px}
+.sub{font-size:.92em;color:var(--ink-500);max-width:680px;margin-bottom:26px}
+
+.table-wrap{background:var(--white);border:1px solid var(--paper);border-radius:16px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--paper);font-size:.82em}
+th{padding:12px 14px;text-align:right;font-weight:700;color:var(--green-dark);white-space:nowrap}
+th.l{text-align:left}
+tbody td{padding:12px 14px;text-align:right;font-family:var(--font-en);font-weight:600;border-bottom:1px solid var(--paper)}
+tbody td.l{text-align:left}
+tbody tr:last-child td{border-bottom:none}
+.col-total{font-weight:800;color:var(--green-deep)}
+
+.empty{background:var(--white);border:1px dashed var(--ink-200);border-radius:16px;padding:44px 28px;text-align:center;color:var(--ink-500)}
+.empty .emoji{font-size:2em;margin-bottom:10px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:999px;font-family:var(--font-en);font-size:.9em;font-weight:700;text-decoration:none;cursor:pointer;border:none}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-deep)}
+.btn-ghost{background:var(--white);border:1px solid var(--paper);color:var(--green-deep)}
+.btn-ghost:hover{border-color:var(--green)}
+.note{margin-top:18px;font-size:.8em;color:var(--ink-500);line-height:1.7}
+</style>
+<!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
+</head>
+<body data-lang="jp">
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo-mark"><img class="brand-logo" src="assets/tck-logo.png" alt="TCK Workshop" style="height:28px;width:auto"></div>
+    <span class="header-divider"></span>
+    <span class="header-title jp">過去の模試結果</span><span class="header-title en">Past Practice Test Results</span>
+  </div>
+  <div class="header-right">
+    <div class="tck-lang-toggle">
+      <button type="button" data-lang-btn="jp" class="active">日本語</button>
+      <button type="button" data-lang-btn="en">EN</button>
+    </div>
+    <div class="user-pill"><span class="avatar" id="avatarInit">?</span><span id="userName">---</span></div>
+    <button class="btn-logout" onclick="doLogout()"><span class="jp">ログアウト</span><span class="en">Log out</span></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <a class="crumb" href="test-select.html"><span>←</span><span class="jp">模試メニューに戻る</span><span class="en">Back to mock menu</span></a>
+  <div class="kicker">Practice Test History</div>
+  <h1><span class="jp">過去の模試結果</span><span class="en">Your Past Results</span></h1>
+  <p class="sub">
+    <span class="jp">これまでに受験したフルレングス模試のスコアです。受験のたびにサーバへ記録され、どの端末・ブラウザからでも確認できます。Reading・Listening は ETS 公式換算表に基づく予測スコアです。</span>
+    <span class="en">All the full-length Practice Tests you have taken. Each attempt is saved to the server, so you can review it from any device or browser. Reading and Listening use the official ETS conversion tables.</span>
+  </p>
+
+  <!-- Loading -->
+  <div id="loadingBox" class="empty"><span class="jp">読み込み中…</span><span class="en">Loading…</span></div>
+
+  <!-- History table (hidden until data) -->
+  <div id="tableWrap" class="table-wrap" style="display:none">
+    <table>
+      <thead>
+        <tr>
+          <th class="l"><span class="jp">回</span><span class="en">#</span></th>
+          <th class="l"><span class="jp">日時</span><span class="en">Date</span></th>
+          <th>Reading</th>
+          <th>Listening</th>
+          <th>Writing</th>
+          <th><span class="jp">合計 / 90</span><span class="en">Total / 90</span></th>
+          <th>Band</th>
+        </tr>
+      </thead>
+      <tbody id="historyBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Empty state (no saved results) -->
+  <div id="emptyBox" class="empty" style="display:none">
+    <div class="emoji">📝</div>
+    <div class="jp">まだ模試の結果がありません。フルレングス模試を最後まで受験すると、ここに記録されます。</div>
+    <div class="en">No results yet. Finish a full-length Practice Test and your score will appear here.</div>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="test-select.html"><span class="jp">模試を受ける</span><span class="en">Take a Practice Test</span> <span>→</span></a>
+    <a class="btn btn-ghost" href="../menu.html"><span class="jp">メインメニュー</span><span class="en">Main menu</span></a>
+  </div>
+
+  <p class="note" id="degradeNote" style="display:none">
+    <span class="jp">※ 履歴サービスに接続できませんでした。しばらくしてから再度お試しください。</span>
+    <span class="en">Could not reach the history service. Please try again later.</span>
+  </p>
+</div>
+
+<script src="js/auth.js?v=20260629"></script>
+<script src="js/api.js?v=20260629"></script>
+<script>
+/* ===== Language toggle (mirrors results.html / my-score.html) ===== */
+(function(){
+  var stored=localStorage.getItem('tck_lang')||'jp';
+  setLang(stored);
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});
+  function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
+})();
+
+if(typeof Auth!=='undefined'){Auth.require();}
+var currentUser=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
+if(currentUser.userName){document.getElementById('userName').textContent=currentUser.userName;document.getElementById('avatarInit').textContent=currentUser.userName.charAt(0).toUpperCase();}
+function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='../index.html';}
+
+/* ===== Load saved Practice Test results from the server (PT_RESULTS) ===== */
+(function(){
+  var loading=document.getElementById('loadingBox');
+  var tableWrap=document.getElementById('tableWrap');
+  var emptyBox=document.getElementById('emptyBox');
+  var degradeNote=document.getElementById('degradeNote');
+
+  function showEmpty(){ loading.style.display='none'; emptyBox.style.display='block'; }
+  function showDegrade(){ loading.style.display='none'; emptyBox.style.display='block'; degradeNote.style.display='block'; }
+
+  if(typeof Api==='undefined' || typeof Api.listPtResults!=='function'){
+    showDegrade();
+    return;
+  }
+
+  Api.listPtResults().then(function(r){
+    if(!r || !r.success){ showDegrade(); return; }
+    var results = r.results || [];
+    if(!results.length){ showEmpty(); return; }
+    renderHistory(results);
+    loading.style.display='none';
+    tableWrap.style.display='block';
+  }).catch(function(){
+    showDegrade();
+  });
+
+  /* Same rendering contract as results.html renderHistory():
+     number attempts oldest-first, but display newest-first. */
+  function renderHistory(results){
+    var ordered = results.slice().sort(function(a,b){ return (a.timestamp||'').localeCompare(b.timestamp||''); });
+    var lookup = {};
+    ordered.forEach(function(row, idx){ lookup[row.timestamp] = idx + 1; });
+    var rowsDesc = results.slice().sort(function(a,b){ return (b.timestamp||'').localeCompare(a.timestamp||''); });
+    document.getElementById('historyBody').innerHTML = rowsDesc.map(function(row){
+      var attemptN = lookup[row.timestamp] || '?';
+      var dt = row.timestamp ? new Date(row.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
+      return '<tr>'
+        + '<td class="l"><strong>' + attemptN + '</strong></td>'
+        + '<td class="l" style="white-space:nowrap">' + dt + '</td>'
+        + '<td>' + (row.readingScaled   || '—') + '</td>'
+        + '<td>' + (row.listeningScaled || '—') + '</td>'
+        + '<td>' + (row.writingScaled   || '—') + '</td>'
+        + '<td class="col-total">' + (row.total || '—') + '</td>'
+        + '<td>' + (row.band || '—') + '</td>'
+        + '</tr>';
+    }).join('');
+  }
+})();
+</script>
+
+<div class="tck-footer-brand">
+  <img src="assets/tck-logo.png" alt="TCK Workshop">
+  <span>Powered by TCK Workshop</span>
+</div>
+<script defer src="../js/tm-footer.js?v=20260629"></script>
+</body>
+</html>

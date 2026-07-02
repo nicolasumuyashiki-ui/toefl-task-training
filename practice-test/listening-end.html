@@ -66,6 +66,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
 </div>
 
 <script src="js/auth.js?v=20260629"></script>
+<script src="js/api.js?v=20260629"></script>
 <script>
 if (typeof Auth !== 'undefined') {
   Auth.require();
@@ -74,26 +75,125 @@ if (typeof Auth !== 'undefined') {
 function goNext() {
   window.location.href = 'writing-intro.html';
 }
-/* One-time Listening retake completion (apology remedy). When the user came in
-   via the "リスニングを受け直す" button (session flag), this was a listening-only
-   run — mark it used, show their listening score, and return to results instead
-   of continuing to Writing. Does not touch scores/history of the original test. */
+/* ============================================================
+   One-time Listening retake completion (apology remedy).
+   SCOPED to the "リスニングを受け直す" button flow ONLY (session flag).
+   Behaviour (per owner's decision, this button only):
+   the corrected Listening score OVERWRITES the Listening portion of the
+   user's most-recent saved Practice-Test record. Reading / Writing are
+   preserved; Total and Band are recomputed; the ORIGINAL row is updated
+   in place (same sessionId → savePtResult de-dupes) so history is not
+   inflated. Normal mock completions are unaffected.
+   ============================================================ */
 (function(){
-  try{
-    if(sessionStorage.getItem('tck_lst_retake')!=='1') return;
-    sessionStorage.removeItem('tck_lst_retake');
-    var u={}; try{ u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
-    if(u && u.userId){ try{ localStorage.setItem('tck_lst_retake_used_'+u.userId,'1'); }catch(e){} }
-    var ans={}; try{ ans=JSON.parse(sessionStorage.getItem('practice_listening_answers')||'{}'); }catch(e){}
-    var correct=0,total=0;
-    Object.keys(ans).forEach(function(k){ total++; if(ans[k]&&ans[k].selected===ans[k].correct) correct++; });
-    var h2=document.querySelector('.listening-content h2');
-    var pp=document.querySelector('.listening-content p');
+  if(sessionStorage.getItem('tck_lst_retake')!=='1') return;
+  sessionStorage.removeItem('tck_lst_retake');
+
+  var u={}; try{ u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
+  if(u && u.userId){ try{ localStorage.setItem('tck_lst_retake_used_'+u.userId,'1'); }catch(e){} }
+
+  var h2=document.querySelector('.listening-content h2');
+  var pp=document.querySelector('.listening-content p');
+  var btn=document.querySelector('.listening-footer .btn-start');
+
+  /* ---- ETS raw→scaled tables + band lookup (mirrors results.html exactly) ---- */
+  var LISTENING_TABLE=[
+    {raw:28,scaled:30},{raw:27,scaled:29},{raw:26,scaled:27},{raw:25,scaled:26},
+    {raw:24,scaled:25},{raw:23,scaled:23},{raw:22,scaled:22},{raw:21,scaled:21},
+    {raw:20,scaled:19},{raw:19,scaled:17},{raw:18,scaled:16},{raw:17,scaled:14},
+    {raw:16,scaled:13},{raw:15,scaled:11},{raw:14,scaled:10},{raw:13,scaled:8},
+    {raw:12,scaled:7},{raw:11,scaled:6},{raw:10,scaled:5},{raw:9,scaled:4},
+    {raw:8,scaled:3},{raw:7,scaled:2},{raw:6,scaled:2},{raw:5,scaled:1},
+    {raw:4,scaled:0},{raw:3,scaled:0},{raw:2,scaled:0},{raw:1,scaled:0},{raw:0,scaled:0}
+  ];
+  var LISTENING_HARDER_QS={q6:1,q7:1,q8:1, q11:1,q12:1, q21:1,q22:1,q23:1,q24:1};
+  function percentToScaled(pct,table){
+    if(pct<0)pct=0;if(pct>100)pct=100;
+    var maxRaw=table[0].raw, rawFloat=(pct/100)*maxRaw;
+    var lower=Math.floor(rawFloat),upper=Math.ceil(rawFloat);
+    var rowLow=table.find(function(r){return r.raw===lower;}),rowHigh=table.find(function(r){return r.raw===upper;});
+    if(!rowLow||!rowHigh)return 0;
+    if(lower===upper)return rowLow.scaled;
+    var frac=rawFloat-lower;
+    return Math.round(rowLow.scaled+(rowHigh.scaled-rowLow.scaled)*frac);
+  }
+  function totalToBand(t){
+    if(t===null||t===undefined||isNaN(t))return null; t=Number(t);
+    if(t>=114)return 6.0; if(t>=107)return 5.5; if(t>=95)return 5.0; if(t>=86)return 4.5;
+    if(t>=72)return 4.0; if(t>=58)return 3.5; if(t>=44)return 3.0; if(t>=34)return 2.5;
+    if(t>=24)return 2.0; if(t>=12)return 1.5; return 1.0;
+  }
+  function sectionToBand(s30){ if(s30===null||s30===undefined||isNaN(s30))return null; return totalToBand(Number(s30)*4); }
+  function fmtBand(b){ return b===null||b===undefined?'':Number(b).toFixed(1); }
+
+  /* ---- Score THIS listening run (weighted, same as results.html) ---- */
+  var ans={}; try{ ans=JSON.parse(sessionStorage.getItem('practice_listening_answers')||'{}'); }catch(e){}
+  var correct=0,total=0,stdC=0,stdT=0,hC=0,hT=0;
+  Object.keys(ans).forEach(function(k){
+    var item=ans[k]; if(!item) return;
+    total++;
+    var ok=false;
+    if(typeof item.isCorrect==='boolean') ok=item.isCorrect;
+    else if(item.selected!==undefined && item.correct!==undefined) ok=String(item.selected)===String(item.correct);
+    if(ok)correct++;
+    if(LISTENING_HARDER_QS[k]){ hT++; if(ok)hC++; } else { stdT++; if(ok)stdC++; }
+  });
+  var wC=stdC+hC*1.5, wT=stdT+hT*1.5;
+  var newListeningScaled = wT>0 ? percentToScaled(wC/wT*100, LISTENING_TABLE) : 0;
+
+  function showScore(extraJp){
     if(h2) h2.textContent='リスニング 再受験 完了';
-    if(pp) pp.innerHTML='お疲れさまでした。今回のリスニングの結果：<strong>'+correct+' / '+total+'</strong> 正解。<br>このたびはご不便をおかけし、誠に申し訳ございませんでした。';
-    var btn=document.querySelector('.listening-footer .btn-start');
-    if(btn){ btn.textContent='結果ページへ戻る'; btn.onclick=function(){ window.location.href='results.html'; }; }
-  }catch(e){}
+    if(pp) pp.innerHTML='お疲れさまでした。今回のリスニングの結果：<strong>'+correct+' / '+total+'</strong> 正解'
+      + (wT>0 ? '（換算スコア <strong>'+newListeningScaled+'</strong> / 30）' : '')
+      + '。<br>'+(extraJp||'')+'このたびはご不便をおかけし、誠に申し訳ございませんでした。';
+    if(btn){ btn.textContent='過去の結果を見る'; btn.onclick=function(){ window.location.href='my-results.html'; }; }
+  }
+
+  /* ---- Merge into the user's most-recent saved record and overwrite in place ---- */
+  if(typeof Api==='undefined' || typeof Api.listPtResults!=='function' || typeof Api.savePtResult!=='function'){
+    showScore('');  // API unavailable — show the score, leave records untouched.
+    return;
+  }
+  Api.listPtResults().then(function(r){
+    var list=(r && r.success && r.results) ? r.results : [];
+    if(!list.length){ showScore(''); return; }   // no original attempt to update
+    // Most recent saved attempt = the one affected by the outage.
+    var orig=list.slice().sort(function(a,b){ return (b.timestamp||'').localeCompare(a.timestamp||''); })[0];
+    if(!orig || !orig.sessionId){ showScore(''); return; }
+
+    var readingScaled = Number(orig.readingScaled)||0;
+    var writingScaled = Number(orig.writingScaled)||0;
+    var newTotal = readingScaled + newListeningScaled + writingScaled;
+    var bands=[sectionToBand(readingScaled),sectionToBand(newListeningScaled),sectionToBand(writingScaled)]
+                .filter(function(b){return b!==null&&b!==undefined;});
+    var band='';
+    if(bands.length){ var avg=bands.reduce(function(a,b){return a+b;},0)/bands.length; band=fmtBand(Math.round(avg*2)/2); }
+
+    var payload={
+      sessionId:          orig.sessionId,               // same id → updates the original row in place
+      readingCorrect:     Number(orig.readingCorrect)||0,
+      readingTotal:       Number(orig.readingTotal)||0,
+      readingScaled:      readingScaled,                // preserved
+      listeningCorrect:   correct,                      // overwritten
+      listeningTotal:     total,                        // overwritten
+      listeningScaled:    newListeningScaled,           // overwritten
+      writingSentCorrect: Number(orig.writingSentCorrect)||0,
+      writingSentTotal:   Number(orig.writingSentTotal)||0,
+      writingScaled:      writingScaled,                // preserved
+      speakingLr:         String(orig.speakingLr)==='true' || orig.speakingLr===true,
+      speakingTi:         String(orig.speakingTi)==='true' || orig.speakingTi===true,
+      total:              newTotal,
+      band:               band,
+      readingPath:        orig.readingPath || ''
+    };
+    Api.savePtResult(payload).then(function(){
+      showScore('模試のリスニング得点を今回の結果に更新しました（合計 <strong>'+newTotal+'</strong> / 90・Band <strong>'+(band||'—')+'</strong>）。<br>');
+    }).catch(function(){
+      showScore('');  // save failed — show score; do not fabricate a record.
+    });
+  }).catch(function(){
+    showScore('');
+  });
 })();
 </script>
 <div class="tck-footer-brand">
