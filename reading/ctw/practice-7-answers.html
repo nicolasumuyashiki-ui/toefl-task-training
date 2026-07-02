@@ -146,8 +146,8 @@ function renderAll(){
   SD.forEach(function(s,si){
     var bl=s.target.filter(function(t){return t.a!==null;});
     var st=null;try{st=JSON.parse(sessionStorage.getItem('ctw_p7_answers_'+(si+1)));}catch(e){}
-    var ua=st?st.answers:[];var sc=st?st.score:0;ts+=sc;tq+=bl.length;if(si===1){harderCorrect+=sc;harderTotal+=bl.length;}
-    sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+bl.length+'</div><div class="score-detail">'+(st?Math.round(sc/bl.length*100)+'%':'—')+'</div></div>';
+    var ua=st?st.answers:[];var sc=st?st.score:0;var denom=(st&&typeof st.total==='number'&&st.total>0)?st.total:bl.length;if(denom<sc)denom=sc;ts+=sc;tq+=denom;if(si===1){harderCorrect+=sc;harderTotal+=bl.length;}
+    sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+denom+'</div><div class="score-detail">'+(st?Math.round(sc/denom*100)+'%':'—')+'</div></div>';
     var ph='<span>'+s.intro+'</span> ';
     s.target.forEach(function(t){if(t.a!==null){ph+='<span class="blank-word">'+t.s+'<span class="blank-answer">'+t.a+'</span></span>';if(t.p)ph+=t.p;ph+=' ';}else{ph+=t.w+(t.p||'')+' ';}});
     ph+='<span>'+s.conclusion+'</span>';
