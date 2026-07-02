@@ -394,24 +394,22 @@ function renderQuestion(idx){
 }
 
 /* ===== AUDIO ===== */
+var _afb=null;
 function playAudio(src, onEnded){
+    if(_afb){clearTimeout(_afb);_afb=null;}
     if(currentAudio){currentAudio.pause();currentAudio=null;}
+    var revealed=false;
+    function reveal(){ if(revealed) return; revealed=true; if(_afb){clearTimeout(_afb);_afb=null;} audioPlaying=false; if(onEnded) onEnded(); }
     currentAudio = new Audio(src);
-    currentAudio.onended = ()=>{
-        audioPlaying=false;
-        if(onEnded) onEnded();
-    };
-    currentAudio.onerror = ()=>{
-        audioPlaying=false;
-        // Show retry button on left panel
-        showRetryButton(src, onEnded);
-    };
+    currentAudio.onended = reveal;
+    currentAudio.onerror = ()=>{ showRetryButton(src, onEnded); if(_afb)clearTimeout(_afb); _afb=setTimeout(reveal,4000); };
+    // Some devices/browsers play the .wav but never fire "ended" — reveal the
+    // question after the clip's own duration so the student is never stuck.
+    currentAudio.onloadedmetadata = ()=>{ var d=currentAudio.duration; if(isFinite(d)&&d>0){ if(_afb)clearTimeout(_afb); _afb=setTimeout(reveal,(d+6)*1000); } };
     audioPlaying=true;
-    currentAudio.play().catch(()=>{
-        audioPlaying=false;
-        // Autoplay blocked — show retry button
-        showRetryButton(src, onEnded);
-    });
+    currentAudio.play().catch(()=>{ showRetryButton(src, onEnded); if(_afb)clearTimeout(_afb); _afb=setTimeout(reveal,6000); });
+    // Hard safety net: never leave a blank, unanswerable screen on any device.
+    if(!_afb) _afb=setTimeout(reveal,90000);
 }
 
 function showRetryButton(src, onEnded){

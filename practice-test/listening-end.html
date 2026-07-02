@@ -74,6 +74,27 @@ if (typeof Auth !== 'undefined') {
 function goNext() {
   window.location.href = 'writing-intro.html';
 }
+/* One-time Listening retake completion (apology remedy). When the user came in
+   via the "リスニングを受け直す" button (session flag), this was a listening-only
+   run — mark it used, show their listening score, and return to results instead
+   of continuing to Writing. Does not touch scores/history of the original test. */
+(function(){
+  try{
+    if(sessionStorage.getItem('tck_lst_retake')!=='1') return;
+    sessionStorage.removeItem('tck_lst_retake');
+    var u={}; try{ u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
+    if(u && u.userId){ try{ localStorage.setItem('tck_lst_retake_used_'+u.userId,'1'); }catch(e){} }
+    var ans={}; try{ ans=JSON.parse(sessionStorage.getItem('practice_listening_answers')||'{}'); }catch(e){}
+    var correct=0,total=0;
+    Object.keys(ans).forEach(function(k){ total++; if(ans[k]&&ans[k].selected===ans[k].correct) correct++; });
+    var h2=document.querySelector('.listening-content h2');
+    var pp=document.querySelector('.listening-content p');
+    if(h2) h2.textContent='リスニング 再受験 完了';
+    if(pp) pp.innerHTML='お疲れさまでした。今回のリスニングの結果：<strong>'+correct+' / '+total+'</strong> 正解。<br>このたびはご不便をおかけし、誠に申し訳ございませんでした。';
+    var btn=document.querySelector('.listening-footer .btn-start');
+    if(btn){ btn.textContent='結果ページへ戻る'; btn.onclick=function(){ window.location.href='results.html'; }; }
+  }catch(e){}
+})();
 </script>
 <div class="tck-footer-brand">
   <img src="assets/tck-logo.png" alt="TCK Workshop">

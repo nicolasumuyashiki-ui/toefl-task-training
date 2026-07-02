@@ -157,7 +157,8 @@ function renderQuestion(idx){
     pg.choices.forEach(c=>{const div=document.createElement('div');div.className='option'+(selectedAnswers[idx]===c.letter?' selected':'');div.innerHTML='<div class="option-letter">'+c.letter+'</div><div class="option-text">'+c.text+'</div>';div.onclick=()=>selectOption(idx,c.letter,div);elOptionsContainer.appendChild(div);});
     updateNextBtn(idx);
 }
-function playAudio(src,onEnded){if(currentAudio){currentAudio.pause();currentAudio=null;}currentAudio=new Audio(src);currentAudio.onended=()=>{audioPlaying=false;if(onEnded)onEnded();};currentAudio.onerror=()=>{audioPlaying=false;showRetryButton(src,onEnded);};audioPlaying=true;currentAudio.play().catch(()=>{audioPlaying=false;showRetryButton(src,onEnded);});}
+var _afb=null;
+function playAudio(src,onEnded){if(_afb){clearTimeout(_afb);_afb=null;}if(currentAudio){currentAudio.pause();currentAudio=null;}var revealed=false;function reveal(){if(revealed)return;revealed=true;if(_afb){clearTimeout(_afb);_afb=null;}audioPlaying=false;if(onEnded)onEnded();}currentAudio=new Audio(src);currentAudio.onended=reveal;currentAudio.onerror=()=>{showRetryButton(src,onEnded);if(_afb)clearTimeout(_afb);_afb=setTimeout(reveal,4000);};currentAudio.onloadedmetadata=()=>{var d=currentAudio.duration;if(isFinite(d)&&d>0){if(_afb)clearTimeout(_afb);_afb=setTimeout(reveal,(d+6)*1000);}};audioPlaying=true;currentAudio.play().catch(()=>{showRetryButton(src,onEnded);if(_afb)clearTimeout(_afb);_afb=setTimeout(reveal,6000);});if(!_afb)_afb=setTimeout(reveal,90000);}
 function showRetryButton(src,onEnded){let btn=document.getElementById('retryAudioBtn');if(!btn){btn=document.createElement('button');btn.id='retryAudioBtn';btn.style.cssText='position:absolute;bottom:60px;left:50%;transform:translateX(-50%);background:#007646;color:#fff;border:none;padding:12px 36px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;z-index:10;';btn.textContent='▶ Play Lecture';elLeftPanel.appendChild(btn);}btn.style.display='block';btn.onclick=()=>{btn.style.display='none';playAudio(src,onEnded);};}
 function selectOption(pageIdx,letter,el){if(audioPlaying)return;selectedAnswers[pageIdx]=letter;document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));document.querySelectorAll('.option .option-letter').forEach(o=>{o.style.background='';o.style.color='';});el.classList.add('selected');el.querySelector('.option-letter').style.background='#007646';el.querySelector('.option-letter').style.color='#fff';updateNextBtn(pageIdx);}
 function updateNextBtn(idx){if(selectedAnswers[idx])elBtnNext.classList.remove('disabled');else elBtnNext.classList.add('disabled');}
@@ -174,12 +175,7 @@ function startListening(){
         elLeftPanel.classList.add('full-width');elRightPanel.style.display='none';
         elAudioIndicator.classList.add('visible');elTimerDisplay.textContent='--:--';
         elBtnNext.classList.add('disabled');
-        // Create and play audio IMMEDIATELY in click context
-        currentAudio=new Audio(pg.audio);
-        audioPlaying=true;
-        currentAudio.onended=()=>{audioPlaying=false;elAudioIndicator.classList.remove('visible');elLeftPanel.classList.remove('full-width');elRightPanel.style.display='flex';renderQuestion(0);startTimer();};
-        currentAudio.onerror=()=>{audioPlaying=false;showRetryButton(pg.audio,()=>{elAudioIndicator.classList.remove('visible');elLeftPanel.classList.remove('full-width');elRightPanel.style.display='flex';renderQuestion(0);startTimer();});};
-        currentAudio.play().catch(()=>{audioPlaying=false;showRetryButton(pg.audio,()=>{elAudioIndicator.classList.remove('visible');elLeftPanel.classList.remove('full-width');elRightPanel.style.display='flex';renderQuestion(0);startTimer();});});
+        playAudio(pg.audio,()=>{elAudioIndicator.classList.remove('visible');elLeftPanel.classList.remove('full-width');elRightPanel.style.display='flex';renderQuestion(0);startTimer();});
     } else {
         renderPage(0,true);
     }
