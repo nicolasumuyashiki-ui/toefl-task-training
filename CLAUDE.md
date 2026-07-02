@@ -32,7 +32,7 @@ speaking/ti/practice-{N}.html              — Take an Interview
 ## 各Practice内の問題数
 | タスク | 問題数/Practice | 備考 |
 |--------|----------------|------|
-| CTW | 2セット×10 blanks | Set 1: Module 1/Easier（CEFR B1-B2、接頭辞3-5文字表示）。Set 2: Harder Module（CEFR B2-C1、接頭辞1-3文字表示、HARDERバッジ表示）。セットごとに別パッセージ |
+| CTW | 2セット×10 blanks | **v3.5.2（公式逆解析準拠）**: 削り方は全モジュール **floor(n/2) 固定**（表示=先頭 n//2 文字・手調整禁止）。**厳密交互**（20語 target の奇数位置=空所＝空所は絶対に隣接しない→文脈で一意）。**機能語・短語も空所OK**（len≥2 のみ・the/a も可）。難化は**語彙のみ**（Set 1=Module 1/B1-B2、Set 2=Module 2 HARDER/B2-C1、show% は両方 ~46%）。specialist 語は空所にしない。詳細は `.claude/commands/new-ctw.md` |
 | RDL | 2パッセージ×計4〜6問 | パッセージあたり 2〜3問。ETS は per-task 件数を固定していないので、4〜6問の幅で OK |
 | Academic Passage | 2パッセージ×5問 = 計10問 | 後半パッセージ（Q6-Q10）が Harder Module（プロジェクト内の擬似 Harder 慣習）。制限時間 25 分 |
 | LCR | 8問 | Q1-2:B1, Q3-5:B1-B2, Q6-8:B2 |
@@ -191,7 +191,7 @@ free-response タスク（Email / Discussion）の練習ページは、**完了�
 
 | タスク | 公式パッセージ語数 | 公式問題数 |
 |---|---|---|
-| CTW | 70-90 語 | 10 incomplete words |
+| CTW | 70-100 語 | 10 incomplete words（floor(n/2) 削除・厳密交互・v3.5.2） |
 | RDL | 15-150 語（典型 60-120） | 2-3 問/パッセージ |
 | Academic Passage | **180-220 語**（公式: 約 200 語、Standard / Harder で語数差なし） | 5 問/パッセージ |
 | Academic Talk | — | 4 問/talk |
