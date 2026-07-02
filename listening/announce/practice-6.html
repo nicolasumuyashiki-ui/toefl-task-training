@@ -213,11 +213,26 @@ function startListening(){
   document.getElementById('audioStatus').innerHTML = '<span class="pulse"></span> Listen to the instructions...';
   document.getElementById('qInfo').textContent = 'Instructions';
 
-  audio.addEventListener('ended', () => { instrPlayed = true; var __ov=document.createElement('div');__ov.id='cdOverlay';__ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:90;color:#fff;font-size:96px;font-weight:800;font-family:Manrope,sans-serif;';__ov.textContent='3';document.body.appendChild(__ov);var __n=3;var __iv=setInterval(function(){__n--;if(__n>0){__ov.textContent=String(__n);}else{clearInterval(__iv);if(__ov.parentNode)__ov.parentNode.removeChild(__ov);playAnnouncement(0);}},1000); });
+  var _instrDone=false,_instrTimer=null;
+  function _startAnn(){
+    if(_instrDone)return; _instrDone=true;
+    if(_instrTimer){clearTimeout(_instrTimer);_instrTimer=null;}
+    instrPlayed = true; var __ov=document.createElement('div');__ov.id='cdOverlay';__ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:90;color:#fff;font-size:96px;font-weight:800;font-family:Manrope,sans-serif;';__ov.textContent='3';document.body.appendChild(__ov);var __n=3;var __iv=setInterval(function(){__n--;if(__n>0){__ov.textContent=String(__n);}else{clearInterval(__iv);if(__ov.parentNode)__ov.parentNode.removeChild(__ov);playAnnouncement(0);}},1000);
+  }
+  audio.addEventListener('ended', _startAnn);
+  audio.addEventListener('error', function(){
+    document.getElementById('audioStatus').innerHTML = '<button onclick="retryInstr()" style="padding:10px 24px;background:#007646;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">\u25b6 Play Instructions</button>';
+    if(_instrTimer)clearTimeout(_instrTimer); _instrTimer=setTimeout(_startAnn,4000);
+  });
+  audio.addEventListener('loadedmetadata', function(){
+    var d=audio.duration; if(isFinite(d)&&d>0){ if(_instrTimer)clearTimeout(_instrTimer); _instrTimer=setTimeout(_startAnn,(d+6)*1000); }
+  });
   audio.play().catch(e => {
     console.log('Autoplay blocked:', e);
     document.getElementById('audioStatus').innerHTML = '<button onclick="retryInstr()" style="padding:10px 24px;background:#007646;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">\u25b6 Play Instructions</button>';
+    if(_instrTimer)clearTimeout(_instrTimer); _instrTimer=setTimeout(_startAnn,6000);
   });
+  if(!_instrTimer) _instrTimer=setTimeout(_startAnn,90000);
 }
 
 function retryInstr(){
@@ -240,12 +255,25 @@ function playAnnouncement(idx){
 
   const key = 'ann' + (idx+1);
   audio = new Audio(audioFiles[key]);
-  audio.addEventListener('ended', () => {
+  var _annRevealed=false,_annTimer=null;
+  function _annReveal(){
+    if(_annRevealed)return; _annRevealed=true;
+    if(_annTimer){clearTimeout(_annTimer);_annTimer=null;}
     showQuestion(idx * 2);
+  }
+  audio.addEventListener('ended', _annReveal);
+  audio.addEventListener('error', function(){
+    document.getElementById('audioStatus').innerHTML = '<button onclick="retryAnn()" style="padding:10px 24px;background:#007646;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">\u25b6 Play Announcement</button>';
+    if(_annTimer)clearTimeout(_annTimer); _annTimer=setTimeout(_annReveal,4000);
+  });
+  audio.addEventListener('loadedmetadata', function(){
+    var d=audio.duration; if(isFinite(d)&&d>0){ if(_annTimer)clearTimeout(_annTimer); _annTimer=setTimeout(_annReveal,(d+6)*1000); }
   });
   audio.play().catch(e => {
     document.getElementById('audioStatus').innerHTML = '<button onclick="retryAnn()" style="padding:10px 24px;background:#007646;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">\u25b6 Play Announcement</button>';
+    if(_annTimer)clearTimeout(_annTimer); _annTimer=setTimeout(_annReveal,6000);
   });
+  if(!_annTimer) _annTimer=setTimeout(_annReveal,90000);
 }
 
 function retryAnn(){
