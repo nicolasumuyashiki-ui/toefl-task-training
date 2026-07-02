@@ -94,6 +94,16 @@ h1{font-size:2em;font-weight:800;color:#002817;letter-spacing:-0.02em;margin-bot
 <div class="main">
   <div class="wrap">
     <h1 style="margin-bottom:32px"><span class="jp">受験する模試を選択</span><span class="en">Choose Your Mock Test</span></h1>
+
+    <!-- One-time Listening retake (apology remedy for a specific user; gated by userId only).
+         Placed here so it is reachable from the main menu — results.html is only shown at the
+         end of a completed mock and cannot be navigated to afterwards. -->
+    <div id="lstRetakeBanner" style="display:none;margin:0 0 28px;padding:18px 22px;background:#fff8ec;border:1.5px solid #f0d9a8;border-radius:14px">
+      <div style="font-weight:700;color:#8a5a00;margin-bottom:6px">🎧 リスニングをもう一度受けられます（1回限り）</div>
+      <div style="font-size:.9em;color:#6b5a2e;line-height:1.7;margin-bottom:12px">先日の不具合でリスニングが正しく表示されなかった件のお詫びとして、<strong>リスニングセクションだけ</strong>もう一度チャレンジいただけます。下のボタンから開始してください（このボタンは1回のみご利用いただけます）。</div>
+      <button id="lstRetakeBtn" style="background:#007646;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer">リスニングを受け直す →</button>
+    </div>
+
     <div class="cards">
       <a class="card card-1" href="javascript:void(0)" onclick="selectTest(1)">
         <div class="card-label">Mock Test</div>
@@ -120,6 +130,23 @@ h1{font-size:2em;font-weight:800;color:#002817;letter-spacing:-0.02em;margin-bot
 <script>
 if (typeof Auth !== 'undefined') { Auth.require(); Auth.showBadge('userBadge'); }
 function doLogout(){ Auth.clear(); location.href='../index.html'; }
+
+/* One-time Listening retake entry (apology remedy; gated by userId only, same as results.html).
+   Reachable from the main menu so the eligible user can start it even after closing the mock tab. */
+(function(){
+  try{
+    var u={}; try{ u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
+    if(!u || u.userId!=='Kirari') return;                                   // this account only
+    if(localStorage.getItem('tck_lst_retake_used_'+u.userId)==='1') return; // one time only
+    var b=document.getElementById('lstRetakeBanner'), btn=document.getElementById('lstRetakeBtn');
+    if(!b||!btn) return;
+    b.style.display='block';
+    btn.addEventListener('click',function(){
+      try{ sessionStorage.setItem('tck_lst_retake','1'); sessionStorage.setItem('practice_test_id','1'); }catch(e){}
+      window.location.href='listening-intro.html';   // top-level = Test 1 (the mock affected)
+    });
+  }catch(e){}
+})();
 
 /* JP/EN toggle — mirrors the pattern used on TT menu / consultation /
    my-score / billing. Persists choice in localStorage.tck_lang. */
