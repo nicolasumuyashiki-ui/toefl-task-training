@@ -267,16 +267,30 @@ function playTalk(idx){
         return;
     }
     audio = new Audio(talkAudio[idx]);
-    audio.addEventListener('ended', function(){
+    var _revealed=false,_fbTimer=null;
+    function _reveal(){
+        if(_revealed)return; _revealed=true;
+        if(_fbTimer){clearTimeout(_fbTimer);_fbTimer=null;}
         document.getElementById('audioStatus').innerHTML = '\u2705 Audio complete.';
         var firstQ = 0;
         for(var i=0;i<questions.length;i++){ if(questions[i].talk===idx){ firstQ=i; break; } }
         showQuestion(firstQ);
+    }
+    audio.addEventListener('ended', _reveal);
+    audio.addEventListener('error', function(){
+        document.getElementById('audioStatus').innerHTML =
+            '<button onclick="retryAudio()" style="padding:10px 24px;background:#007646;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">\u25b6 Play Lecture</button>';
+        if(_fbTimer)clearTimeout(_fbTimer); _fbTimer=setTimeout(_reveal,4000);
+    });
+    audio.addEventListener('loadedmetadata', function(){
+        var d=audio.duration; if(isFinite(d)&&d>0){ if(_fbTimer)clearTimeout(_fbTimer); _fbTimer=setTimeout(_reveal,(d+6)*1000); }
     });
     audio.play().catch(function(e){
         document.getElementById('audioStatus').innerHTML =
             '<button onclick="retryAudio()" style="padding:10px 24px;background:#007646;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">\u25b6 Play Lecture</button>';
+        if(_fbTimer)clearTimeout(_fbTimer); _fbTimer=setTimeout(_reveal,6000);
     });
+    if(!_fbTimer) _fbTimer=setTimeout(_reveal,90000);
 }
 
 function retryAudio(){
