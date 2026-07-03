@@ -172,9 +172,10 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 <script>
 (function(){
   try{
+    var RETAKE_IDS=['Kirari','Kotaro'];                                     // 佐藤さま / 美田さま — courtesy remedy, these accounts only
     var u={}; try{ u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
-    if(!u || u.userId!=='Kirari') return;                                   // courtesy remedy: this account only
-    if(localStorage.getItem('tck_lst_retake_used_'+u.userId)==='1') return; // one time only
+    if(!u || RETAKE_IDS.indexOf(u.userId)===-1) return;                     // eligible accounts only
+    if(localStorage.getItem('tck_lst_retake_used_'+u.userId)==='1') return; // one time only (per-user key)
     var b=document.getElementById('lstRetakeBanner'), btn=document.getElementById('lstRetakeBtn');
     if(!b||!btn) return;
     b.style.display='block';
