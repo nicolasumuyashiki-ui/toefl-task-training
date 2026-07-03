@@ -148,46 +148,32 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
 var intro = "Cognitive biases represent systematic deviations from rational judgment that affect the quality of everyday decisions.";
 
 var blanks = [
-  {given:"under",  answer:"mine"},       // 1. undermine
-  {given:"over",   answer:"estimate"},    // 2. overestimate
-  {given:"prob",   answer:"abilities"},   // 3. probabilities
-  {given:"assoc",  answer:"iated"},       // 4. associated
-  {given:"fam",    answer:"iliar"},       // 5. familiar
-  {given:"neg",    answer:"lect"},        // 6. neglect
+  {given:"Conf",   answer:"irmation"},    // 1. Confirmation
+  {given:"bel",    answer:"ieve"},        // 2. believe
+  {given:"contra", answer:"dicts"},       // 3. contradicts
+  {given:"esti",   answer:"mate"},        // 4. estimate
+  {given:"conn",   answer:"ection"},      // 5. connection
+  {given:"prob",   answer:"able"},        // 6. probable
   {given:"stat",   answer:"istical"},     // 7. statistical
-  {given:"pers",   answer:"uasive"},      // 8. persuasive
-  {given:"rati",   answer:"onal"},        // 9. rational
+  {given:"judg",   answer:"ment"},        // 8. judgment
+  {given:"warr",   answer:"ants"},        // 9. warrants
   {given:"prev",   answer:"alent"}        // 10. prevalent
 ];
 
 var fullWords = [
-  "Researchers",    // after blank 1
-  "consistently",   // after blank 2
-  "the",            // after blank 3
-  "with",           // after blank 4
-  "outcomes",       // after blank 5
-  "crucial",        // after blank 6
-  "evidence.",      // after blank 7
-  "data,",          // after blank 8
-  "analysis,",      // after blank 9
-  "across"          // after blank 10
+  "bias leads people to search for evidence supporting what they already",
+  "while they overlook information that",
+  "it. An early number can distort every later",
+  "a person makes, even when that number has no real",
+  "to the decision at hand. Because vivid or recent events often feel more",
+  "than they truly are, investors may overreact to dramatic headlines while ignoring long-term",
+  "trends. Overconfidence compounds these errors further, since experts frequently trust personal",
+  "more than the evidence actually",
+  "and this pattern stays remarkably",
+  "across"
 ];
 
 var conclusion = "cultures and educational backgrounds.";
-
-/* Surrounding text fragments that connect blanks and full words into natural sentences */
-var fragments = [
-  "Researchers have demonstrated that individuals ",  // before blank 1
-  " the accuracy of their judgments. They consistently ", // between blank 1 → full 2 → blank 2
-  " the ",                                            // before blank 3
-  " ",                                                // before blank 4
-  " with ",                                           // before blank 5 (after full 4)
-  " and ",                                            // before blank 6
-  " ",                                                // before blank 7
-  " Even when presented with ",                       // before blank 8
-  " people frequently rely on intuition rather than ", // before blank 9
-  " a tendency that remains remarkably "              // before blank 10
-];
 
 /* ===== BUILD PASSAGE ===== */
 var inputIdx = 0;

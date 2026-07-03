@@ -141,17 +141,17 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
 
 <script>
 /* ===== PASSAGE DATA =====
-   Topic: Cognitive biases in decision-making (higher difficulty than M2E)
+   Topic: Modern cryptography (number theory foundations)
    Pattern: ETS alternating — blank/full every other word in target section
    10 blanks, 10 full words interleaved
 */
 var intro = "Modern cryptography relies on a small handful of mathematical ideas that are easy to compute in one direction but extraordinarily difficult to reverse, providing the security that protects everything from online banking to private messages.";
 
 var blanks = [
-  {given:"primali", answer:"ty"},
+  {given:"Primali", answer:"ty"},
   {given:"modu", answer:"lar"},
   {given:"exponen", answer:"ts"},
-  {given:"integer", answer:"s"},
+  {given:"intege", answer:"rs"},
   {given:"multipli", answer:"cation"},
   {given:"factor", answer:"ization"},
   {given:"encryp", answer:"tion"},
@@ -161,33 +161,19 @@ var blanks = [
 ];
 
 var fullWords = [
-  "Researchers",
-  "specifically",
-  "the",
+  "testing determines whether a large number has no divisors other than one and itself, a property that underlies many encryption schemes because",
+  "arithmetic makes it possible to wrap numbers around a fixed range and compute huge",
+  "efficiently without ever storing enormous",
+  "directly. Because these operations work on numbers of any size, engineers can combine",
   "with",
-  "operations",
-  "essential",
-  "evidence.",
-  "protocols,",
-  "complexity,",
-  "security"
+  "in ways that are simple to perform in one direction yet practically impossible to undo without the right key, an asymmetry that makes public-key",
+  "secure and also makes",
+  "reliable, since only the holder of a private key can prove their identity. These",
+  "techniques together form the",
+  "layer that keeps sensitive data protected"
 ];
 
 var conclusion = "across nearly every digital system in everyday use today.";
-
-/* Surrounding text fragments that connect blanks and full words into natural sentences */
-var fragments = [
-  "Researchers have demonstrated that individuals ",  // before blank 1
-  " the accuracy of their judgments. They consistently ", // between blank 1 → full 2 → blank 2
-  " the ",                                            // before blank 3
-  " ",                                                // before blank 4
-  " with ",                                           // before blank 5 (after full 4)
-  " and ",                                            // before blank 6
-  " ",                                                // before blank 7
-  " Even when presented with ",                       // before blank 8
-  " people frequently rely on intuition rather than ", // before blank 9
-  " a tendency that remains remarkably "              // before blank 10
-];
 
 /* ===== BUILD PASSAGE ===== */
 var inputIdx = 0;

@@ -318,6 +318,7 @@ function attachSquareListeners(){
     sq.addEventListener('click', function(){
       if(insertionChecked) return;
       selectedInsertionPoint = this.getAttribute('data-insert');
+      userAnswers['q19'] = selectedInsertionPoint;
       rebuildParagraphWithInsertion(selectedInsertionPoint);
       document.getElementById('insertionStatus').className = 'selection-status chosen';
       document.getElementById('insertionStatus').textContent = 'Sentence placed at position ' + selectedInsertionPoint + '.';
