@@ -48,8 +48,25 @@
     // (content stays at the top; footer is below the fold). For a row-flex body
     // (auth) allow wrapping so it drops to its own full-width line at the end.
     if (disp.indexOf('flex') !== -1) {
-      css.push('flex-basis:100%', 'order:9999', 'margin-top:auto');
-      if (dir.indexOf('row') === 0) { try { document.body.style.flexWrap = 'wrap'; } catch (e) {} }
+      css.push('order:9999', 'margin-top:auto');
+      // CRITICAL: flex-basis meaning depends on the main axis.
+      //  - ROW flex (auth pages): main axis = horizontal, so flex-basis is a
+      //    WIDTH. 100% + flex-wrap drops the disclaimer onto its own full-width
+      //    line at the very end. Correct.
+      //  - COLUMN flex (every practice / practice-test page —
+      //    display:flex;flex-direction:column;height:100vh;overflow:hidden):
+      //    main axis = vertical, so flex-basis is a HEIGHT. Setting 100% made
+      //    the disclaimer 100vh tall, driving free space negative and shrinking
+      //    the flex:1 content region (.main-content) to ZERO height. With
+      //    overflow:hidden that renders a fully blank page (the listening
+      //    white-screen bug). So NEVER set flex-basis here for column: leave it
+      //    auto (natural height). width:100% (base css) already spans the cross
+      //    axis; margin-top:auto still sinks it and is inert wherever a
+      //    flex-grow sibling already consumes the free space.
+      if (dir.indexOf('column') !== 0) {
+        css.push('flex-basis:100%');
+        try { document.body.style.flexWrap = 'wrap'; } catch (e) {}
+      }
     } else if (disp.indexOf('grid') !== -1) {
       css.push('grid-column:1 / -1', 'order:9999', 'margin-top:auto');
     }
