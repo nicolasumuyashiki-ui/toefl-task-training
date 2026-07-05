@@ -146,6 +146,18 @@ function startModule2(){
   /* Snapshot before wiping */
   snapshotM1Results();
 
+  /* Clear Module-1 reading answers so Module 2 (which REUSES the q11–q20 ids)
+     does not inherit them. Matches real TOEFL: you cannot return to a previous
+     module. (Snapshot/scoring above already preserved the M1 result.) */
+  try {
+    var _mc = JSON.parse(sessionStorage.getItem('practice_reading_ans') || '{}');
+    ['q11','q12','q13','q14','q15','q16','q17','q18','q19','q20'].forEach(function(q){ delete _mc[q]; });
+    sessionStorage.setItem('practice_reading_ans', JSON.stringify(_mc));
+    var _ctw = JSON.parse(sessionStorage.getItem('practice_reading_ctw') || '{}');
+    delete _ctw['reading-ctw.html'];
+    sessionStorage.setItem('practice_reading_ctw', JSON.stringify(_ctw));
+  } catch(e){}
+
   /* Clean up M1 scores */
   localStorage.removeItem('m1_academic_correct');
   localStorage.removeItem('m1_academic_total');
