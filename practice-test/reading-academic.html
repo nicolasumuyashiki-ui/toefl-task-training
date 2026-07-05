@@ -318,6 +318,7 @@ function attachSquareListeners(){
     sq.addEventListener('click', function(){
       if(insertionChecked) return;
       selectedInsertionPoint = this.getAttribute('data-insert');
+      userAnswers['q19'] = selectedInsertionPoint;   // record for the Review overlay's answered-check (scored separately below)
       rebuildParagraphWithInsertion(selectedInsertionPoint);
       document.getElementById('insertionStatus').className = 'selection-status chosen';
       document.getElementById('insertionStatus').textContent = 'Sentence placed at position ' + selectedInsertionPoint + '.';
@@ -384,7 +385,7 @@ document.getElementById('reviewOverlay').addEventListener('click', function(e){
 
 /* ===== SAVE SCORES & NAVIGATE TO MODULE 2 ===== */
 function saveM1Scores(){
-  var correctAnswers = {q16:'C', q17:'B', q18:'A', q19:'B', q20:'D'};
+  var correctAnswers = {q16:'C', q17:'B', q18:'A', q20:'D'};   // q19 (sentence insertion) scored separately via selectedInsertionPoint below (avoid double-count)
   var correct = 0;
   for(var k in correctAnswers){
     if(userAnswers[k] === correctAnswers[k]) correct++;

@@ -718,6 +718,15 @@ render();
   var saveAttemptCount = 0;
   function saveAttempt() {
     if (saveAttemptCount++ > 0) return;  // only once
+    // Phantom-row guard: never persist an empty attempt (results.html reopened
+    // with no session data → all sections 0). Saving it would append a 0-score
+    // row that pollutes the user's history and mis-targets the listening-retake
+    // "most recent" overwrite. Only save a real, non-empty completed run.
+    if ((reading.total || 0) === 0 && (listening.total || 0) === 0 && (writing.sentenceTotal || 0) === 0) {
+      console.warn('[pt-results] no session data — skipping phantom save');
+      fetchHistory();
+      return;
+    }
     var payload = {
       sessionId:          sessionId,
       readingCorrect:     reading.correct || 0,
