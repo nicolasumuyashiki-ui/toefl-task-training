@@ -139,7 +139,7 @@ function doLogout(){ Auth.clear(); location.href='../index.html'; }
     var RETAKE_IDS=['Kirari','Kotaro'];                                     // 佐藤さま / 美田さま — courtesy remedy, these accounts only
     var u={}; try{ u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
     if(!u || RETAKE_IDS.indexOf(u.userId)===-1) return;                     // eligible accounts only
-    if(localStorage.getItem('tck_lst_retake_used_'+u.userId)==='1') return; // one time only (per-user key)
+    if(localStorage.getItem('tck_lst_retake_used2_'+u.userId)==='1') return; // one time only (per-user key). v2: old "used_" flags no longer block, re-granting one clean retry after the save-fail bug. Flag is set ONLY after a confirmed save (listening-end.html).
     var b=document.getElementById('lstRetakeBanner'), btn=document.getElementById('lstRetakeBtn');
     if(!b||!btn) return;
     b.style.display='block';

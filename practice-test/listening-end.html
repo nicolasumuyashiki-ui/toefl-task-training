@@ -89,8 +89,15 @@ function goNext() {
   if(sessionStorage.getItem('tck_lst_retake')!=='1') return;
   sessionStorage.removeItem('tck_lst_retake');
 
-  var u={}; try{ u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
-  if(u && u.userId){ try{ localStorage.setItem('tck_lst_retake_used_'+u.userId,'1'); }catch(e){} }
+  var retakeUser={}; try{ retakeUser=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
+  // CRITICAL: do NOT burn the one-time "used" flag here. Previously it was set
+  // synchronously at the top of this IIFE — so a JSONP timeout, an empty run, or
+  // a wrong-row/failed save would permanently consume the button with NOTHING
+  // saved (exactly what happened to Kirari: 1 record, never overwritten, button
+  // dead). The flag is now set ONLY inside the confirmed save-success callback
+  // (markRetakeUsed, below). Key bumped to "…used2…" so an already-burned old
+  // flag no longer blocks eligible users → they get one clean retry.
+  function markRetakeUsed(){ if(retakeUser && retakeUser.userId){ try{ localStorage.setItem('tck_lst_retake_used2_'+retakeUser.userId,'1'); }catch(e){} } }
 
   var h2=document.querySelector('.listening-content h2');
   var pp=document.querySelector('.listening-content p');
@@ -149,6 +156,14 @@ function goNext() {
     if(btn){ btn.textContent='過去の結果を見る'; btn.onclick=function(){ window.location.href='my-results.html'; }; }
   }
 
+  // Empty-run guard: if no listening answers were parsed (total===0), do NOT
+  // overwrite the saved record (would wipe Listening to 0) and do NOT burn the
+  // one-time flag. Show a retry-friendly message so the learner can try again.
+  if(total===0){
+    showScore('（今回の解答が取得できなかったため、記録は更新していません。お手数ですが、もう一度お試しください。）<br>');
+    return;
+  }
+
   /* ---- Merge into the user's most-recent saved record and overwrite in place ---- */
   if(typeof Api==='undefined' || typeof Api.listPtResults!=='function' || typeof Api.savePtResult!=='function'){
     showScore('');  // API unavailable — show the score, leave records untouched.
@@ -186,10 +201,20 @@ function goNext() {
       band:               band,
       readingPath:        orig.readingPath || ''
     };
-    Api.savePtResult(payload).then(function(){
+    Api.savePtResult(payload).then(function(r){
+      // The GAS endpoint resolves with {success:false,...} on a server-side
+      // failure (and _ptJsonp resolves rather than rejects for it), so a bare
+      // .then is NOT proof of a save. Require an explicit success before burning
+      // the one-time flag; otherwise keep the button usable for a retry.
+      if(!r || r.success===false){
+        showScore('（保存に失敗しました。通信状況をご確認のうえ、もう一度お試しください。）<br>');
+        return;
+      }
+      markRetakeUsed();   // burn the one-time flag ONLY after a CONFIRMED successful save
       showScore('模試のリスニング得点を今回の結果に更新しました（合計 <strong>'+newTotal+'</strong> / 90・Band <strong>'+(band||'—')+'</strong>）。<br>');
     }).catch(function(){
-      showScore('');  // save failed — show score; do not fabricate a record.
+      // Timeout / network → keep the button usable (flag NOT burned) so the learner can retry.
+      showScore('（保存に失敗しました。通信状況をご確認のうえ、もう一度お試しください。）<br>');
     });
   }).catch(function(){
     showScore('');
