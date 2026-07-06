@@ -732,7 +732,7 @@ render();
     var label = (card.querySelector('.skill-name') || {}).textContent || '';
     var pred  = card.querySelector('.skill-score .pred');
     if (!pred) return;
-    var n = parseInt((pred.textContent || '').replace(/[^0-9]/g,''), 10);
+    var n = parseInt(pred.textContent || '', 10);   // primary scaled only. Do NOT strip non-digits: the ".pred" contains "<small>/ 30</small>", so stripping concatenated 29 and 30 into 2930 and corrupted every saved scaled score.
     if (isNaN(n)) return;
     if (/Reading|リーディング/i.test(label))  scaledBySection.reading = n;
     if (/Listening|リスニング/i.test(label))  scaledBySection.listening = n;
@@ -812,6 +812,17 @@ render();
     });
   }
 
+  // Display sanitizer (same as my-results.html): repair rows saved with a
+  // broken scaled value (2930) or garbage total (4687) so the history table
+  // shows sane numbers. Display only — the sheet is not modified here.
+  function _histSaneScaled(v){ v = Number(v) || 0; if (v > 30) v = Math.floor(v / 100); if (v > 30) v = 30; if (v < 0) v = 0; return v; }
+  function _histBandOf(t){ if(t>=114)return 6.0; if(t>=107)return 5.5; if(t>=95)return 5.0; if(t>=86)return 4.5; if(t>=72)return 4.0; if(t>=58)return 3.5; if(t>=44)return 3.0; if(t>=34)return 2.5; if(t>=24)return 2.0; if(t>=12)return 1.5; return 1.0; }
+  function _histSaneRow(row){
+    var r = _histSaneScaled(row.readingScaled), l = _histSaneScaled(row.listeningScaled), w = _histSaneScaled(row.writingScaled);
+    var total = Number(row.total) || 0, band = (row.band || '');
+    if (total > 90) { total = r + l + w; var avg = (_histBandOf(r*4) + _histBandOf(l*4) + _histBandOf(w*4)) / 3; band = (Math.round(avg*2)/2).toFixed(1); }
+    return { r: r, l: l, w: w, total: total, band: band };
+  }
   function renderHistory(results) {
     document.getElementById('historySection').style.display = 'block';
     var tbody = document.getElementById('historyBody');
@@ -824,14 +835,15 @@ render();
     tbody.innerHTML = rowsDesc.map(function(r){
       var attemptN = lookup[r.timestamp] || '?';
       var dt = r.timestamp ? new Date(r.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
+      var s = _histSaneRow(r);
       return '<tr style="border-bottom:1px solid var(--paper);font-size:.85em">'
         + '<td style="padding:10px 12px"><strong>' + attemptN + '</strong></td>'
         + '<td style="padding:10px 12px;white-space:nowrap">' + dt + '</td>'
-        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-en);font-weight:600">' + (r.readingScaled || '—') + '</td>'
-        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-en);font-weight:600">' + (r.listeningScaled || '—') + '</td>'
-        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-en);font-weight:600">' + (r.writingScaled  || '—') + '</td>'
-        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-en);font-weight:700;color:var(--green-deep)">' + (r.total || '—') + '</td>'
-        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-en);font-weight:600">' + (r.band || '—') + '</td>'
+        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-en);font-weight:600">' + (s.r || '—') + '</td>'
+        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-en);font-weight:600">' + (s.l || '—') + '</td>'
+        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-en);font-weight:600">' + (s.w  || '—') + '</td>'
+        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-en);font-weight:700;color:var(--green-deep)">' + (s.total || '—') + '</td>'
+        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-en);font-weight:600">' + (s.band || '—') + '</td>'
         + '</tr>';
     }).join('');
   }
