@@ -282,7 +282,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 </section>
 
 <script src="js/auth.js?v=20260629"></script>
-<script src="js/api.js?v=20260706"></script>
+<script src="js/api.js?v=20260707"></script>
 <script>
 /* ===== Language toggle (mirrors my-score.html) ===== */
 (function(){
@@ -787,7 +787,8 @@ render();
       speakingTi:         !!speaking.ti,
       total:              num('totalScore') || 0,
       band:               (document.getElementById('totalBand') || {}).textContent || '',
-      readingPath:        reading.path || ''
+      readingPath:        reading.path || '',
+      testId:             '1'   // this results page IS Test 1 (top-level). Lets the listening retake target this mock reliably.
     };
     Api.savePtResult(payload).then(function(r){
       console.log('[pt-results] save:', r);

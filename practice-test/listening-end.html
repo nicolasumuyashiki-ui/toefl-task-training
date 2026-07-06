@@ -66,7 +66,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
 </div>
 
 <script src="js/auth.js?v=20260629"></script>
-<script src="js/api.js?v=20260706"></script>
+<script src="js/api.js?v=20260707"></script>
 <script>
 if (typeof Auth !== 'undefined') {
   Auth.require();
@@ -172,12 +172,29 @@ function goNext() {
   Api.listPtResults().then(function(r){
     var list=(r && r.success && r.results) ? r.results : [];
     if(!list.length){ showScore(''); return; }   // no original attempt to update
-    // Most recent saved attempt = the one affected by the outage.
-    var orig=list.slice().sort(function(a,b){ return (b.timestamp||'').localeCompare(a.timestamp||''); })[0];
-    if(!orig || !orig.sessionId){ showScore(''); return; }
+    // Target the TEST-1 record (the mock affected by the outage) — NEVER "most
+    // recent", because the learner may have since taken Test 2/3 (that mistake
+    // grabbed Test 2's Reading/Writing). Prefer rows explicitly tagged
+    // testId==='1'; otherwise fall back to the OLDEST untagged legacy row
+    // (Test 1 is normally the first mock taken) — but never a row tagged as a
+    // different test.
+    var t1 = list.filter(function(x){ return String(x.testId)==='1'; });
+    var orig;
+    if(t1.length){
+      orig = t1.slice().sort(function(a,b){ return (b.timestamp||'').localeCompare(a.timestamp||''); })[0];
+    } else {
+      var legacy = list.filter(function(x){ return !x.testId; });
+      orig = legacy.slice().sort(function(a,b){ return (a.timestamp||'').localeCompare(b.timestamp||''); })[0];
+    }
+    if(!orig || !orig.sessionId){ showScore('（対象の模試1の記録が見つかりませんでした。お手数ですが運営までご連絡ください。）<br>'); return; }
 
-    var readingScaled = Number(orig.readingScaled)||0;
-    var writingScaled = Number(orig.writingScaled)||0;
+    // Sanitize legacy garbage scaled: a scaled >30 is the old "value+30" concat
+    // (e.g. 2830→28), so the preserved Reading/Writing — and the recomputed
+    // total — stay sane even on rows saved before the scaled-save fix. This also
+    // repairs the row in place (it is written back below).
+    function fixScaled(v){ v = Number(v)||0; if(v>30) v = Math.floor(v/100); if(v>30) v=30; if(v<0) v=0; return v; }
+    var readingScaled = fixScaled(orig.readingScaled);
+    var writingScaled = fixScaled(orig.writingScaled);
     var newTotal = readingScaled + newListeningScaled + writingScaled;
     var bands=[sectionToBand(readingScaled),sectionToBand(newListeningScaled),sectionToBand(writingScaled)]
                 .filter(function(b){return b!==null&&b!==undefined;});
@@ -199,7 +216,8 @@ function goNext() {
       speakingTi:         String(orig.speakingTi)==='true' || orig.speakingTi===true,
       total:              newTotal,
       band:               band,
-      readingPath:        orig.readingPath || ''
+      readingPath:        orig.readingPath || '',
+      testId:             '1'                 // this retake always corrects Test 1
     };
     Api.savePtResult(payload).then(function(r){
       // The GAS endpoint resolves with {success:false,...} on a server-side

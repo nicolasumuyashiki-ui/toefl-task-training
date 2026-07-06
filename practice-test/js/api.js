@@ -186,7 +186,8 @@ var Api = {
       + '&speakingTi=' + (payload.speakingTi ? 'true' : 'false')
       + '&total=' + encodeURIComponent(payload.total || 0)
       + '&band='  + encodeURIComponent(payload.band  || '')
-      + '&readingPath=' + encodeURIComponent(payload.readingPath || '');
+      + '&readingPath=' + encodeURIComponent(payload.readingPath || '')
+      + '&testId=' + encodeURIComponent(payload.testId || '');   // which mock (1/2/3) so the listening retake can target the right attempt
     return _ptJsonp(REC_URL + qs);  // 集約 GAS の savePtResult エンドポイント
   },
 

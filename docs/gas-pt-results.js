@@ -35,7 +35,7 @@ var PT_RESULTS_HEADER = [
   'readingCorrect', 'readingTotal', 'readingScaled',
   'listeningCorrect', 'listeningTotal', 'listeningScaled',
   'writingSentCorrect', 'writingSentTotal', 'writingScaled',
-  'speakingLr', 'speakingTi', 'total', 'band', 'readingPath'
+  'speakingLr', 'speakingTi', 'total', 'band', 'readingPath', 'testId'
 ];
 
 function _ptResultsSheet_() {
@@ -86,7 +86,8 @@ function handleSavePtResult_(e, callback) {
       String(p.speakingTi) === 'true',
       Number(p.total) || 0,
       String(p.band || ''),
-      String(p.readingPath || '')
+      String(p.readingPath || ''),
+      String(p.testId || '')          // which mock: '1' | '2' | '3'  (blank on legacy rows)
     ];
 
     if (targetRow > 0) {
@@ -133,7 +134,8 @@ function handleListPtResults_(e, callback) {
         speakingTi:       row[14] === true || String(row[14]) === 'true',
         total:            Number(row[15]) || 0,
         band:             String(row[16] || ''),
-        readingPath:      String(row[17] || '')
+        readingPath:      String(row[17] || ''),
+        testId:           String(row[18] || '')
       });
     }
     return jsonpResponse_(callback, { success: true, results: results });
