@@ -109,7 +109,41 @@
     }
   }
 
-  function restoreAll() { restoreMC(); restoreCTW(); restoreInsertion(); }
+  /* ---------- section-global timer ----------
+   * Each Reading page historically ran its OWN hardcoded countdown, so moving
+   * back reset the clock to that page's start value (extra time, unlike the
+   * real TOEFL single section clock). Instead we keep one deadline per module
+   * in sessionStorage and drive the timer element from it, so the countdown is
+   * continuous across back/forward within a module. Module totals mirror the
+   * old per-first-page values: Module 1 = 36:00; Module 2 easy = 9:30, hard =
+   * 12:00 (the two Module-2 paths are mutually exclusive per attempt). Keys are
+   * practice_-prefixed so test-select's cross-test wipe clears them.
+   */
+  function initTimer() {
+    var el = document.getElementById('timerDisplay') || document.getElementById('timer');
+    if (!el) return;
+    var pk = pageKey(), mod, total;
+    if (pk.indexOf('m2e') !== -1)      { mod = 'm2'; total = 9 * 60 + 30; }
+    else if (pk.indexOf('m2h') !== -1) { mod = 'm2'; total = 12 * 60; }
+    else                                { mod = 'm1'; total = 36 * 60; } // ctw / rdl1 / rdl2 / academic
+    // Stop the page's own per-page countdown (it stores its handle in the
+    // global `timerInterval`); we render the element from the shared deadline.
+    try { if (window.timerInterval) clearInterval(window.timerInterval); } catch (e) {}
+    var dkey = 'practice_reading_deadline_' + mod;
+    var dl = parseInt(sessionStorage.getItem(dkey), 10);
+    if (!dl || isNaN(dl)) { dl = Date.now() + total * 1000; try { sessionStorage.setItem(dkey, String(dl)); } catch (e) {} }
+    function render() {
+      var left = Math.round((dl - Date.now()) / 1000);
+      if (left < 0) left = 0;
+      var m = Math.floor(left / 60), s = left % 60;
+      el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+      if (left <= 0 && window.__rsTimerInterval) { try { clearInterval(window.__rsTimerInterval); } catch (e) {} }
+    }
+    render();
+    try { window.__rsTimerInterval = setInterval(render, 1000); } catch (e) {}
+  }
+
+  function restoreAll() { restoreMC(); restoreCTW(); restoreInsertion(); initTimer(); }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', restoreAll);
   else restoreAll();
