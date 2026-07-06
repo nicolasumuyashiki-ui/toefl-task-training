@@ -258,7 +258,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 </section>
 
 <script src="../js/auth.js?v=20260629"></script>
-<script src="../js/api.js?v=20260629"></script>
+<script src="../js/api.js?v=20260706"></script>
 <script>
 /* ===== Language toggle (mirrors my-score.html) ===== */
 (function(){
@@ -715,6 +715,25 @@ render();
     if (/Writing|ライティング/i.test(label))  scaledBySection.writing = n;
   });
 
+  // Collect the raw per-question answer CONTENTS this attempt left behind, so
+  // they can be archived to the server (recoverable/auditable — scores alone
+  // live in PT_RESULTS). Sweeps the known answer-bearing keys generically.
+  function snapshotAnswers() {
+    var snap = {};
+    function grab(store, tag){
+      try {
+        for (var i = 0; i < store.length; i++) {
+          var k = store.key(i);
+          if (/answer|practice_reading|practice_listening|^m1_|^m2[eh]?_|^results_m/i.test(k)) {
+            snap[tag + ':' + k] = store.getItem(k);
+          }
+        }
+      } catch(e){}
+    }
+    grab(sessionStorage, 's'); grab(localStorage, 'l');
+    return snap;
+  }
+
   var saveAttemptCount = 0;
   function saveAttempt() {
     if (saveAttemptCount++ > 0) return;  // only once
@@ -751,6 +770,11 @@ render();
       console.warn('[pt-results] save failed:', err);
       fetchHistory();
     });
+    // Archive the raw answer contents alongside the score (best-effort, same
+    // sessionId). Never blocks or affects the score save above.
+    if (typeof Api.savePtAnswers === 'function') {
+      try { Api.savePtAnswers(sessionId, snapshotAnswers()); } catch(e){}
+    }
   }
 
   function fetchHistory() {

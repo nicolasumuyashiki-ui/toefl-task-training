@@ -76,6 +76,40 @@ function _ptJsonp(url) {
   });
 }
 
+/* POST helper (hidden iframe form-submit) for bodies too LARGE for a JSONP GET
+   URL — e.g. archived answer contents. Same transport as uploadRecording, so it
+   bypasses the GAS 302 → CORS issue. Resolves when the iframe loads (best-effort
+   archival; a not-yet-deployed endpoint simply no-ops). */
+function _ptPost(data) {
+  return new Promise(function(resolve){
+    var name = 'ptPost_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+    var iframe = document.createElement('iframe');
+    iframe.name = name; iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    var form = document.createElement('form');
+    form.method = 'POST'; form.action = REC_URL; form.target = name;
+    form.enctype = 'application/x-www-form-urlencoded'; form.acceptCharset = 'UTF-8';
+    form.style.display = 'none';
+    Object.keys(data).forEach(function(k){
+      var inp = document.createElement('input');
+      inp.type = 'hidden'; inp.name = k; inp.value = data[k];
+      form.appendChild(inp);
+    });
+    document.body.appendChild(form);
+    var done = false;
+    function cleanup(r){ if (done) return; done = true;
+      setTimeout(function(){
+        try { form.parentNode && form.parentNode.removeChild(form); } catch(e){}
+        try { iframe.parentNode && iframe.parentNode.removeChild(iframe); } catch(e){}
+      }, 250);
+      resolve(r);
+    }
+    iframe.onload = function(){ cleanup({ success: true }); };
+    setTimeout(function(){ cleanup({ success: true, timeout: true }); }, 30000);
+    form.submit();
+  });
+}
+
 /* Lower-case `Api` mirror — speaking-recorder-hook.js looks for this name.
    Uses hidden iframe form-submit POST to bypass the GAS 302 → CORS issue
    that causes plain fetch to lose the body. Same pattern as Task Training. */
@@ -160,5 +194,30 @@ var Api = {
   listPtResults: function(){
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     return _ptJsonp(REC_URL + '?action=listPtResults&userId=' + encodeURIComponent(u.userId || ''));
+  },
+
+  /* Archive the raw per-question ANSWER CONTENTS for a mock attempt so they can
+     be recovered/audited later. PT_RESULTS stores scores only; this stores what
+     the learner actually selected. Keyed by (userId, sessionId) and upserted
+     server-side (same sessionId → overwrite, e.g. a listening retake replaces
+     that attempt's listening answers). Large body → POST. Best-effort: if the
+     GAS endpoint is not deployed yet it degrades to a no-op and never blocks the
+     score save. */
+  savePtAnswers: function(sessionId, answersObj){
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var json; try { json = JSON.stringify(answersObj || {}); } catch(e){ json = '{}'; }
+    return _ptPost({
+      action:      'savePtAnswers',
+      userId:      u.userId   || '',
+      userName:    u.userName || '',
+      sessionId:   String(sessionId || ''),
+      answersJson: json
+    });
+  },
+
+  /* Fetch archived answer contents for (current user, sessionId) — recovery/audit. */
+  getPtAnswers: function(sessionId){
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    return _ptJsonp(REC_URL + '?action=getPtAnswers&userId=' + encodeURIComponent(u.userId || '') + '&sessionId=' + encodeURIComponent(sessionId || ''));
   }
 };

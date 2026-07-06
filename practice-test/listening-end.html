@@ -66,7 +66,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
 </div>
 
 <script src="js/auth.js?v=20260629"></script>
-<script src="js/api.js?v=20260629"></script>
+<script src="js/api.js?v=20260706"></script>
 <script>
 if (typeof Auth !== 'undefined') {
   Auth.require();
@@ -211,6 +211,11 @@ function goNext() {
         return;
       }
       markRetakeUsed();   // burn the one-time flag ONLY after a CONFIRMED successful save
+      // Also archive the raw listening answer contents (best-effort) so this
+      // attempt's answers — not just its score — are recoverable next time.
+      if (typeof Api.savePtAnswers === 'function') {
+        try { Api.savePtAnswers(orig.sessionId, { listening: ans, listeningScore: { correct: correct, total: total, scaled: newListeningScaled } }); } catch(e){}
+      }
       showScore('模試のリスニング得点を今回の結果に更新しました（合計 <strong>'+newTotal+'</strong> / 90・Band <strong>'+(band||'—')+'</strong>）。<br>');
     }).catch(function(){
       // Timeout / network → keep the button usable (flag NOT burned) so the learner can retry.
