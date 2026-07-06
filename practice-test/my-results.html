@@ -177,6 +177,22 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='.
     showDegrade();
   });
 
+  /* Display sanitizer. Historically some rows were saved with a broken scaled
+     value (the results-page DOM read "29 / 30" and stripped it to 2930) and,
+     when a listening retake summed those, a garbage total (e.g. 2930+27+1730 =
+     4687). This repairs the DISPLAY only: a scaled >30 is the "value+30" concat
+     → floor(v/100); a total >90 is recomputed from the repaired sections along
+     with its band. Valid rows are shown unchanged. (Underlying sheet is not
+     touched here.) */
+  function _saneScaled(v){ v = Number(v) || 0; if (v > 30) v = Math.floor(v / 100); if (v > 30) v = 30; if (v < 0) v = 0; return v; }
+  function _bandOf(t){ if(t>=114)return 6.0; if(t>=107)return 5.5; if(t>=95)return 5.0; if(t>=86)return 4.5; if(t>=72)return 4.0; if(t>=58)return 3.5; if(t>=44)return 3.0; if(t>=34)return 2.5; if(t>=24)return 2.0; if(t>=12)return 1.5; return 1.0; }
+  function _saneRow(row){
+    var r = _saneScaled(row.readingScaled), l = _saneScaled(row.listeningScaled), w = _saneScaled(row.writingScaled);
+    var total = Number(row.total) || 0, band = (row.band || '');
+    if (total > 90) { total = r + l + w; var avg = (_bandOf(r*4) + _bandOf(l*4) + _bandOf(w*4)) / 3; band = (Math.round(avg*2)/2).toFixed(1); }
+    return { r: r, l: l, w: w, total: total, band: band };
+  }
+
   /* Same rendering contract as results.html renderHistory():
      number attempts oldest-first, but display newest-first. */
   function renderHistory(results){
@@ -187,14 +203,15 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='.
     document.getElementById('historyBody').innerHTML = rowsDesc.map(function(row){
       var attemptN = lookup[row.timestamp] || '?';
       var dt = row.timestamp ? new Date(row.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
+      var s = _saneRow(row);
       return '<tr>'
         + '<td class="l"><strong>' + attemptN + '</strong></td>'
         + '<td class="l" style="white-space:nowrap">' + dt + '</td>'
-        + '<td>' + (row.readingScaled   || '—') + '</td>'
-        + '<td>' + (row.listeningScaled || '—') + '</td>'
-        + '<td>' + (row.writingScaled   || '—') + '</td>'
-        + '<td class="col-total">' + (row.total || '—') + '</td>'
-        + '<td>' + (row.band || '—') + '</td>'
+        + '<td>' + (s.r || '—') + '</td>'
+        + '<td>' + (s.l || '—') + '</td>'
+        + '<td>' + (s.w || '—') + '</td>'
+        + '<td class="col-total">' + (s.total || '—') + '</td>'
+        + '<td>' + (s.band || '—') + '</td>'
         + '</tr>';
     }).join('');
   }
