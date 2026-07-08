@@ -170,7 +170,7 @@ let html='';
 answers.forEach((a,i)=>{
   html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"</div></div>'
     +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
-    +'<div class="q-grammar">📝 '+a.grammar+'</div></div></div>';
+    +'<div class="q-grammar">📝 <span class="jp">'+a.grammar+'</span><span class="en">'+(a.grammar_en||a.grammar)+'</span></div></div></div>';
 });
 document.getElementById('qList').innerHTML=html;
 </script>

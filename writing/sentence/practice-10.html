@@ -303,13 +303,13 @@ function finishQuiz(){
     if(q.fixedStart)parts.push(q.fixedStart);
     parts.push(...q.answer);
     if(q.fixedEnd)parts.push(q.fixedEnd);
-    const correctSentence=parts.join(' ');
+    const correctSentence=parts.join(' ').replace(/\s+([.!?])$/,'$1');
 
     const uaParts=[];
     if(q.fixedStart)uaParts.push(q.fixedStart);
     uaParts.push(...ua.map(w=>w||'___'));
     if(q.fixedEnd)uaParts.push(q.fixedEnd);
-    const userSentence=uaParts.join(' ');
+    const userSentence=uaParts.join(' ').replace(/\s+([.!?])$/,'$1');
 
     html+='<div class="result-row '+(isCorrect?'correct':'incorrect')+'">'
       +(isCorrect?'✅':'❌')+' <strong>Q'+(i+1)+':</strong> '

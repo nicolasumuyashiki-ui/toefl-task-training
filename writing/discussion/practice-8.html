@@ -145,7 +145,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
           <tr><td>Review</td><td>Check your response before the time runs out.</td></tr>
         </tbody>
       </table>
-      <div class="warning-box">You will have <strong>10 minutes</strong> to complete this task. The timer will start when you click "Start Writing."</div>
+      <div class="warning-box">⏱️ You will have <strong>10 minutes</strong> to complete this task. The timer will start when you click "Start Writing."</div>
       <button class="btn-start" onclick="startWriting()">Start Writing</button>
     </div>
   </div>
@@ -303,7 +303,7 @@ function finishWriting(method){
   const m=Math.floor(used/60),s=used%60;
 
   if(method==='timeout'){
-    document.getElementById('completionIcon').textContent='\u23F0';
+    document.getElementById('completionIcon').textContent='⏰';
     document.getElementById('completionTitle').textContent="Time's Up!";
     document.getElementById('completionSubtitle').textContent='The time limit has been reached. Your response has been saved.';
   }
@@ -312,7 +312,7 @@ function finishWriting(method){
   document.getElementById('previewText').textContent=text||'(No response written)';
 
   sessionStorage.setItem('discussionResponse_p8', JSON.stringify({text:text, words:wc, time:m+':'+String(s).padStart(2,'0')}));
-  if(typeof Api!=="undefined"&&Api.saveAnswers){try{Api.saveAnswers("Discussion P8",{text:text,words:wordCount,time:m+":"+String(s).padStart(2,"0")},0,{attemptNumber:1});}catch(e){}}
+  if(typeof Api!=="undefined"&&Api.saveAnswers){try{Api.saveAnswers("Discussion P8",{text:text,words:wc,time:m+":"+String(s).padStart(2,"0")},0,{attemptNumber:1});}catch(e){}}
   if(typeof TCKProgress!=='undefined')TCKProgress.clear(TCK_TASK,TCK_PRACTICE); if(window.TCKProgress)TCKProgress.markDone(TCK_TASK,TCK_PRACTICE);
 
   document.getElementById('writingPage').style.display='none';
