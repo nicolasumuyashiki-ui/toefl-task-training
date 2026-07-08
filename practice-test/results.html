@@ -821,6 +821,11 @@ render();
   function _histSaneRow(row){
     var r = _histSaneScaled(row.readingScaled), l = _histSaneScaled(row.listeningScaled), w = _histSaneScaled(row.writingScaled);
     var total = Number(row.total) || 0, band = (row.band || '');
+    // Google Sheets auto-converts a string like "5.0" written via the API into
+    // the NUMBER 5, dropping the trailing zero (a genuine non-integer band
+    // like "5.5" is unaffected since Sheets can't drop a real fractional
+    // digit). Re-apply one-decimal formatting so "5" and "5.0" render the same.
+    if (band !== '' && !isNaN(Number(band))) band = Number(band).toFixed(1);
     if (total > 90) { total = r + l + w; var avg = (_histBandOf(r*4) + _histBandOf(l*4) + _histBandOf(w*4)) / 3; band = (Math.round(avg*2)/2).toFixed(1); }
     return { r: r, l: l, w: w, total: total, band: band };
   }
