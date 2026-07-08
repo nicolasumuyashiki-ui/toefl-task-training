@@ -175,7 +175,7 @@ body{{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5
 <div class="start-overlay" id="startOverlay">
 <div class="start-card">
 <h2>\\ud83c\\udf93 Listen to an Academic Talk</h2>
-<p>You will hear {len(talks)} short academic lectures.<br>After each talk, you will answer {len(talks[0]['questions'])} questions.<br><br>You have <strong>20 seconds</strong> per question.<br>You will only hear each talk <strong>once</strong>.</p>
+<p>You will hear {len(talks)} short academic lectures.<br>After each talk, you will answer {len(talks[0]['questions'])} questions.<br><br>You have <strong>30 seconds</strong> per question.<br>You will only hear each talk <strong>once</strong>.</p>
 <button class="btn-start" onclick="startListening()">Start Listening</button>
 </div>
 </div>
@@ -313,7 +313,7 @@ function showQuestion(qIdx){{
     }} else {{
         document.getElementById('btnNext').classList.remove('active');
     }}
-    startTimer(20);
+    startTimer(30);
 }}
 
 function startTimer(secs){{
