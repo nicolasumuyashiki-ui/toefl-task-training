@@ -781,7 +781,10 @@ render();
   function fetchHistory() {
     Api.listPtResults().then(function(r){
       if (!r || !r.success || !r.results || !r.results.length) return;
-      renderHistory(r.results);
+      // This page is Test 3 — only show its own history.
+      var mine = r.results.filter(function(x){ return String(x.testId || '') === '3'; });
+      if (!mine.length) return;
+      renderHistory(mine);
     }).catch(function(err){
       console.warn('[pt-results] fetch history failed:', err);
     });
