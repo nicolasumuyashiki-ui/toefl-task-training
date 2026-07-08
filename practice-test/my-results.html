@@ -47,6 +47,11 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 h1{font-family:var(--font-en);font-size:2.1em;font-weight:800;color:var(--green-deep);line-height:1.12;letter-spacing:-0.02em;margin-bottom:8px}
 .sub{font-size:.92em;color:var(--ink-500);max-width:680px;margin-bottom:26px}
 
+.test-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.test-tab{background:var(--white);border:1px solid var(--paper);color:var(--ink-500);font-family:var(--font-en);font-size:.86em;font-weight:700;padding:9px 20px;border-radius:999px;cursor:pointer}
+.test-tab.active{background:var(--green);border-color:var(--green);color:#fff}
+.test-tab .tab-count{opacity:.75;font-weight:600;margin-left:4px}
+
 .table-wrap{background:var(--white);border:1px solid var(--paper);border-radius:16px;overflow:hidden}
 table{width:100%;border-collapse:collapse}
 thead tr{background:var(--paper);font-size:.82em}
@@ -99,6 +104,13 @@ tbody tr:last-child td{border-bottom:none}
   <!-- Loading -->
   <div id="loadingBox" class="empty"><span class="jp">読み込み中…</span><span class="en">Loading…</span></div>
 
+  <!-- Mock-test tabs (shown once we have at least one saved result) -->
+  <div id="testTabs" class="test-tabs" style="display:none">
+    <button type="button" class="test-tab" data-test="1"><span class="jp">模試 No.1</span><span class="en">Mock Test No.1</span><span class="tab-count"></span></button>
+    <button type="button" class="test-tab" data-test="2"><span class="jp">模試 No.2</span><span class="en">Mock Test No.2</span><span class="tab-count"></span></button>
+    <button type="button" class="test-tab" data-test="3"><span class="jp">模試 No.3</span><span class="en">Mock Test No.3</span><span class="tab-count"></span></button>
+  </div>
+
   <!-- History table (hidden until data) -->
   <div id="tableWrap" class="table-wrap" style="display:none">
     <table>
@@ -117,7 +129,14 @@ tbody tr:last-child td{border-bottom:none}
     </table>
   </div>
 
-  <!-- Empty state (no saved results) -->
+  <!-- Per-tab empty state (this mock test has no saved results yet, but others do) -->
+  <div id="tabEmptyBox" class="empty" style="display:none">
+    <div class="emoji">📝</div>
+    <div class="jp">この模試はまだ受験していません。</div>
+    <div class="en">You haven't taken this mock test yet.</div>
+  </div>
+
+  <!-- Empty state (no saved results at all) -->
   <div id="emptyBox" class="empty" style="display:none">
     <div class="emoji">📝</div>
     <div class="jp">まだ模試の結果がありません。フルレングス模試を最後まで受験すると、ここに記録されます。</div>
@@ -154,7 +173,9 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');try{localStorage
 /* ===== Load saved Practice Test results from the server (PT_RESULTS) ===== */
 (function(){
   var loading=document.getElementById('loadingBox');
+  var testTabs=document.getElementById('testTabs');
   var tableWrap=document.getElementById('tableWrap');
+  var tabEmptyBox=document.getElementById('tabEmptyBox');
   var emptyBox=document.getElementById('emptyBox');
   var degradeNote=document.getElementById('degradeNote');
 
@@ -166,16 +187,65 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');try{localStorage
     return;
   }
 
+  var groups=null;   // {'1':[...], '2':[...], '3':[...]} — populated once results arrive
+  var activeTest='1';
+
   Api.listPtResults().then(function(r){
     if(!r || !r.success){ showDegrade(); return; }
     var results = r.results || [];
     if(!results.length){ showEmpty(); return; }
-    renderHistory(results);
+
+    groups = groupByTest(results);
+    ['1','2','3'].forEach(function(t){
+      var count = groups[t].length;
+      var btn = testTabs.querySelector('[data-test="' + t + '"]');
+      btn.querySelector('.tab-count').textContent = count ? ' (' + count + ')' : '';
+      btn.addEventListener('click', function(){ selectTab(t); });
+    });
+
+    // Default to whichever mock test has the MOST RECENT attempt, so the
+    // learner lands on what they just did rather than always Test 1.
+    var latest = results.slice().sort(function(a,b){ return (b.timestamp||'').localeCompare(a.timestamp||''); })[0];
+    activeTest = (latest && latest.testId) ? String(latest.testId) : '1';
+    if (['1','2','3'].indexOf(activeTest) === -1) activeTest = '1';
+
     loading.style.display='none';
-    tableWrap.style.display='block';
+    testTabs.style.display='flex';
+    selectTab(activeTest);
   }).catch(function(){
     showDegrade();
   });
+
+  /* Group rows by which mock test (1/2/3) they belong to. Rows saved before
+     the testId column existed (or before the learner's first mock after it
+     was added) have no testId — bucket those under Test 1, matching the
+     same "untagged → assume Test 1" fallback the listening-retake targeting
+     uses elsewhere, since Test 1 is normally taken first. */
+  function groupByTest(results){
+    var g = { '1':[], '2':[], '3':[] };
+    results.forEach(function(row){
+      var t = String(row.testId || '').trim();
+      if (t !== '1' && t !== '2' && t !== '3') t = '1';
+      g[t].push(row);
+    });
+    return g;
+  }
+
+  function selectTab(t){
+    activeTest = t;
+    testTabs.querySelectorAll('.test-tab').forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-test') === t);
+    });
+    var rows = groups[t];
+    if (!rows.length){
+      tableWrap.style.display='none';
+      tabEmptyBox.style.display='block';
+      return;
+    }
+    tabEmptyBox.style.display='none';
+    renderHistory(rows);
+    tableWrap.style.display='block';
+  }
 
   /* Display sanitizer. Historically some rows were saved with a broken scaled
      value (the results-page DOM read "29 / 30" and stripped it to 2930) and,
@@ -193,8 +263,9 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');try{localStorage
     return { r: r, l: l, w: w, total: total, band: band };
   }
 
-  /* Same rendering contract as results.html renderHistory():
-     number attempts oldest-first, but display newest-first. */
+  /* Numbers attempts oldest-first WITHIN the given (already tab-filtered)
+     group, but displays newest-first — matching results.html's convention,
+     now scoped per mock test rather than across all three. */
   function renderHistory(results){
     var ordered = results.slice().sort(function(a,b){ return (a.timestamp||'').localeCompare(b.timestamp||''); });
     var lookup = {};
