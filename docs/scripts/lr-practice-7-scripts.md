@@ -44,7 +44,7 @@ Chunks:
 Sentence 3 (s3.mp3)
 ========================================
 Words: 9
-Time Limit: 10s
+Time Limit: 9s
 Difficulty: 2/5
 
 Script:

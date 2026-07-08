@@ -44,7 +44,7 @@ Chunks:
 Sentence 3 (s3.mp3)
 ========================================
 Words: 10
-Time Limit: 10s
+Time Limit: 9s
 Difficulty: 2/5
 
 Script:
@@ -70,7 +70,7 @@ Chunks:
 Sentence 5 (s5.mp3)
 ========================================
 Words: 16
-Time Limit: 11s
+Time Limit: 10s
 Difficulty: 3/5
 
 Script:
