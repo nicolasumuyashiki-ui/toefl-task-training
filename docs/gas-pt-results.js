@@ -30,12 +30,20 @@
  */
 
 var PT_RESULTS_SHEET = 'PT_RESULTS';
+// NOTE: `testId` is appended as the LAST column (index 18) on purpose. Existing
+// sheets already have the 18-column layout below; adding it at the end keeps every
+// legacy row valid — reading row[18] on an old row yields undefined → returned as
+// '' (empty) so the front-end treats those rows as "legacy / untagged" and its
+// single-record-only guard keeps the listening-retake safe. REQUIRES GAS
+// RE-DEPLOY (Save → Deploy → Manage deployments → New version) to take effect;
+// until then testId is simply not persisted and everything degrades gracefully.
 var PT_RESULTS_HEADER = [
   'timestamp', 'userId', 'userName', 'sessionId',
   'readingCorrect', 'readingTotal', 'readingScaled',
   'listeningCorrect', 'listeningTotal', 'listeningScaled',
   'writingSentCorrect', 'writingSentTotal', 'writingScaled',
-  'speakingLr', 'speakingTi', 'total', 'band', 'readingPath'
+  'speakingLr', 'speakingTi', 'total', 'band', 'readingPath',
+  'testId'
 ];
 
 function _ptResultsSheet_() {
@@ -86,7 +94,8 @@ function handleSavePtResult_(e, callback) {
       String(p.speakingTi) === 'true',
       Number(p.total) || 0,
       String(p.band || ''),
-      String(p.readingPath || '')
+      String(p.readingPath || ''),
+      String(p.testId || '')   // 'test1' | 'test2' | 'test3' — which mock this row belongs to
     ];
 
     if (targetRow > 0) {
@@ -133,7 +142,10 @@ function handleListPtResults_(e, callback) {
         speakingTi:       row[14] === true || String(row[14]) === 'true',
         total:            Number(row[15]) || 0,
         band:             String(row[16] || ''),
-        readingPath:      String(row[17] || '')
+        readingPath:      String(row[17] || ''),
+        // Legacy rows (saved before this column existed) have no row[18] →
+        // returned as '' so the front-end treats them as untagged/legacy.
+        testId:           String(row[18] || '')
       });
     }
     return jsonpResponse_(callback, { success: true, results: results });

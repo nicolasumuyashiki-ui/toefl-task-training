@@ -135,10 +135,21 @@ var Api = {
   /* Save the current Practice Test result (every attempt — no dedup) */
   savePtResult: function(payload){
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    // testId ('test1'/'test2'/'test3') — which mock this record belongs to.
+    // Priority: explicit payload.testId (listening-retake forces 'test1') →
+    // else derive from the practice_test_id flag set by test-select.html
+    // (root=1, test2/=2, test3/=3). Sent so the listening-retake overwrite can
+    // target the correct mock and NEVER clobber a different test's record.
+    // NOTE: requires the GAS PT_RESULTS endpoint to be re-deployed to persist
+    // this column; until then it is written to the query but ignored server-side
+    // and listPtResults returns testId='' (legacy), which the retake logic
+    // treats as the safe single-record-only case.
+    var testId = payload.testId || ('test' + (function(){ try{ return sessionStorage.getItem('practice_test_id') || '1'; }catch(e){ return '1'; } })());
     var qs = '?action=savePtResult'
       + '&userId='   + encodeURIComponent(u.userId   || '')
       + '&userName=' + encodeURIComponent(u.userName || '')
       + '&sessionId='+ encodeURIComponent(payload.sessionId || '')
+      + '&testId='   + encodeURIComponent(testId)
       + '&readingCorrect='   + encodeURIComponent(payload.readingCorrect   || 0)
       + '&readingTotal='     + encodeURIComponent(payload.readingTotal     || 0)
       + '&readingScaled='    + encodeURIComponent(payload.readingScaled    || 0)

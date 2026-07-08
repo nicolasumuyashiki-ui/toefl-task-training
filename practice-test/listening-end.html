@@ -78,12 +78,18 @@ function goNext() {
 /* ============================================================
    One-time Listening retake completion (apology remedy).
    SCOPED to the "リスニングを受け直す" button flow ONLY (session flag).
+   This retake is TEST 1 ONLY (the outage-affected mock).
    Behaviour (per owner's decision, this button only):
    the corrected Listening score OVERWRITES the Listening portion of the
-   user's most-recent saved Practice-Test record. Reading / Writing are
-   preserved; Total and Band are recomputed; the ORIGINAL row is updated
-   in place (same sessionId → savePtResult de-dupes) so history is not
-   inflated. Normal mock completions are unaffected.
+   user's Test 1 Practice-Test record. Reading / Writing are preserved;
+   Total and Band are recomputed; the ORIGINAL Test 1 row is updated in
+   place (same sessionId → savePtResult de-dupes) so history is not inflated.
+   FAIL-SAFE (fix, 2026-07): the target row is chosen ONLY when it can be
+   proven to be Test 1 — by matching testId==='test1' when records carry a
+   testId, or (legacy rows with no testId) only when there is exactly ONE
+   record. In any ambiguous case we DO NOT overwrite; we append a fresh
+   Test 1 row instead, so a Test 2 / Test 3 record is never clobbered.
+   Normal mock completions are unaffected.
    ============================================================ */
 (function(){
   if(sessionStorage.getItem('tck_lst_retake')!=='1') return;
@@ -164,18 +170,62 @@ function goNext() {
     return;
   }
 
-  /* ---- Merge into the user's most-recent saved record and overwrite in place ---- */
-  if(typeof Api==='undefined' || typeof Api.listPtResults!=='function' || typeof Api.savePtResult!=='function'){
-    showScore('');  // API unavailable — show the score, leave records untouched.
-    return;
-  }
-  Api.listPtResults().then(function(r){
-    var list=(r && r.success && r.results) ? r.results : [];
-    if(!list.length){ showScore(''); return; }   // no original attempt to update
-    // Most recent saved attempt = the one affected by the outage.
-    var orig=list.slice().sort(function(a,b){ return (b.timestamp||'').localeCompare(a.timestamp||''); })[0];
-    if(!orig || !orig.sessionId){ showScore(''); return; }
+  /* ---- Persist THIS listening retake, NEVER clobbering a different mock's row ----
+     This retake is Test 1 ONLY (the outage-affected mock; results.html/test-select.html
+     only surface the button for Test 1, landing here at the root listening-end.html).
+     PT_RESULTS has no reliable per-mock key historically, so overwriting "the most
+     recent row" could wipe a Test 2 / Test 3 record for a learner who took several
+     mocks. Guard rails below make the overwrite happen ONLY when we can prove the
+     target is a Test 1 record; otherwise we fall back to a fresh (append) save so no
+     other test's history is ever touched. */
+  var CURRENT_TID='test1';
 
+  function commitSave(payload, okMsg){
+    Api.savePtResult(payload).then(function(r){
+      // The GAS endpoint resolves with {success:false,...} on a server-side
+      // failure (and _ptJsonp resolves rather than rejects for it), so a bare
+      // .then is NOT proof of a save. Require an explicit success before burning
+      // the one-time flag; otherwise keep the button usable for a retry.
+      if(!r || r.success===false){
+        showScore('（保存に失敗しました。通信状況をご確認のうえ、もう一度お試しください。）<br>');
+        return;
+      }
+      markRetakeUsed();   // burn the one-time flag ONLY after a CONFIRMED successful save
+      showScore(okMsg);
+    }).catch(function(){
+      // Timeout / network → keep the button usable (flag NOT burned) so the learner can retry.
+      showScore('（保存に失敗しました。通信状況をご確認のうえ、もう一度お試しください。）<br>');
+    });
+  }
+
+  // Fallback path: we could NOT confidently identify a Test 1 row to overwrite,
+  // so we APPEND a brand-new Test 1 record (fresh sessionId, testId forced to
+  // 'test1') carrying only this listening run. This guarantees no other mock's
+  // record is ever overwritten. Reading/Writing are 0 here because they were not
+  // re-taken; the row is clearly a standalone listening retake.
+  function saveAsNew(){
+    var newSessionId='pt_'+(new Date().toISOString().replace(/[^0-9]/g,'').slice(0,14))+'_'+Math.random().toString(36).slice(2,7);
+    var bandLst=sectionToBand(newListeningScaled);
+    var payload={
+      sessionId:          newSessionId,
+      testId:             CURRENT_TID,                 // force Test 1 so future retakes target THIS row
+      readingCorrect:0, readingTotal:0, readingScaled:0,
+      listeningCorrect:   correct,
+      listeningTotal:     total,
+      listeningScaled:    newListeningScaled,
+      writingSentCorrect:0, writingSentTotal:0, writingScaled:0,
+      speakingLr:false, speakingTi:false,
+      total:              newListeningScaled,
+      band:               bandLst===null?'':fmtBand(Math.round(bandLst*2)/2),
+      readingPath:        ''
+    };
+    commitSave(payload, 'リスニング再受験の結果を新しい記録として保存しました（リスニング換算 <strong>'+newListeningScaled+'</strong> / 30）。<br>');
+  }
+
+  // Overwrite path: `orig` is a CONFIRMED Test 1 record. Preserve its Reading /
+  // Writing, replace only the Listening portion, keep the same sessionId so GAS
+  // updates that row in place (no history inflation).
+  function overwrite(orig){
     var readingScaled = Number(orig.readingScaled)||0;
     var writingScaled = Number(orig.writingScaled)||0;
     var newTotal = readingScaled + newListeningScaled + writingScaled;
@@ -186,6 +236,7 @@ function goNext() {
 
     var payload={
       sessionId:          orig.sessionId,               // same id → updates the original row in place
+      testId:             CURRENT_TID,                  // stamp/normalize to Test 1
       readingCorrect:     Number(orig.readingCorrect)||0,
       readingTotal:       Number(orig.readingTotal)||0,
       readingScaled:      readingScaled,                // preserved
@@ -201,21 +252,38 @@ function goNext() {
       band:               band,
       readingPath:        orig.readingPath || ''
     };
-    Api.savePtResult(payload).then(function(r){
-      // The GAS endpoint resolves with {success:false,...} on a server-side
-      // failure (and _ptJsonp resolves rather than rejects for it), so a bare
-      // .then is NOT proof of a save. Require an explicit success before burning
-      // the one-time flag; otherwise keep the button usable for a retry.
-      if(!r || r.success===false){
-        showScore('（保存に失敗しました。通信状況をご確認のうえ、もう一度お試しください。）<br>');
-        return;
-      }
-      markRetakeUsed();   // burn the one-time flag ONLY after a CONFIRMED successful save
-      showScore('模試のリスニング得点を今回の結果に更新しました（合計 <strong>'+newTotal+'</strong> / 90・Band <strong>'+(band||'—')+'</strong>）。<br>');
-    }).catch(function(){
-      // Timeout / network → keep the button usable (flag NOT burned) so the learner can retry.
-      showScore('（保存に失敗しました。通信状況をご確認のうえ、もう一度お試しください。）<br>');
-    });
+    commitSave(payload, '模試のリスニング得点を今回の結果に更新しました（合計 <strong>'+newTotal+'</strong> / 90・Band <strong>'+(band||'—')+'</strong>）。<br>');
+  }
+
+  if(typeof Api==='undefined' || typeof Api.listPtResults!=='function' || typeof Api.savePtResult!=='function'){
+    showScore('');  // API unavailable — show the score, leave records untouched.
+    return;
+  }
+  Api.listPtResults().then(function(r){
+    var list=(r && r.success && r.results) ? r.results : [];
+    if(!list.length){ saveAsNew(); return; }   // no prior attempt → append a fresh Test 1 row (safe)
+    var byTsDesc=function(a,b){ return (b.timestamp||'').localeCompare(a.timestamp||''); };
+
+    // Records that carry a testId (GAS re-deployed with the testId column).
+    var tagged=list.filter(function(x){ return x && x.testId; });
+
+    var orig=null;
+    if(tagged.length){
+      // testId present → overwrite ONLY the most-recent record whose testId is Test 1.
+      // If there is no Test 1 record among the tagged rows, we must NOT overwrite any
+      // other mock's row → append a new Test 1 record instead.
+      var t1=tagged.filter(function(x){ return String(x.testId)===CURRENT_TID; });
+      if(t1.length){ orig=t1.slice().sort(byTsDesc)[0]; }
+    } else {
+      // LEGACY: no row carries a testId (GAS not yet re-deployed). We cannot tell mocks
+      // apart, so overwriting is safe ONLY when exactly ONE record exists (the classic
+      // single-record case, e.g. 佐藤さま). With 2+ ambiguous legacy rows we refuse to
+      // overwrite and append a new Test 1 row instead — never risking another test.
+      if(list.length===1){ orig=list[0]; }
+    }
+
+    if(orig && orig.sessionId){ overwrite(orig); }
+    else { saveAsNew(); }
   }).catch(function(){
     showScore('');
   });
