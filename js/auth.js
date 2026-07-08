@@ -89,8 +89,14 @@ function tckRootPrefix() {
     try { u = JSON.parse(sessionStorage.getItem('kickstart_user') || 'null'); } catch (e) {}
     var uid = (u && u.userId) ? String(u.userId) : '';
     if (!uid) return;                       // logged out → nothing to isolate
+    // Compare normalized (trimmed/lowercased) so incidental formatting
+    // differences in the SAME account's userId (stray whitespace, a login
+    // path that cases an email differently, etc.) can't be mistaken for an
+    // account CHANGE and trigger a false-positive cache purge.
+    var uidNorm = uid.trim().toLowerCase();
     var prev = localStorage.getItem('tck_cache_uid');
-    if (prev && prev !== uid) {
+    var prevNorm = prev ? String(prev).trim().toLowerCase() : '';
+    if (prevNorm && prevNorm !== uidNorm) {
       // A different account used this browser before → purge its display cache.
       var kill = [];
       for (var i = 0; i < localStorage.length; i++) {
@@ -102,7 +108,7 @@ function tckRootPrefix() {
       // mis-attributed to the new account on the next outbox flush.
       try { localStorage.removeItem('tck_outbox'); } catch (e) {}
     }
-    if (prev !== uid) { try { localStorage.setItem('tck_cache_uid', uid); } catch (e) {} }
+    if (prevNorm !== uidNorm) { try { localStorage.setItem('tck_cache_uid', uid); } catch (e) {} }
   } catch (e) {}
 })();
 

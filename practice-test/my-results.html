@@ -168,7 +168,12 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='.
 
   Api.listPtResults().then(function(r){
     if(!r || !r.success){ showDegrade(); return; }
-    var results = r.results || [];
+    // Ghost-row guard: a saved attempt with total===0 across every section
+    // is essentially never a genuine result — it's a glitched/partial save.
+    // Hide it rather than confuse the learner with a "0/90" row. Mirrors
+    // the same 偽0点/ゴミ行除外 principle used for task-history badges
+    // (history-sync.js).
+    var results = (r.results || []).filter(function(row){ return Number(row.total) > 0; });
     if(!results.length){ showEmpty(); return; }
     renderHistory(results);
     loading.style.display='none';

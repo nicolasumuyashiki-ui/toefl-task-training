@@ -169,10 +169,11 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   <div style="font-size:.9em;color:#6b5a2e;line-height:1.7;margin-bottom:12px">先日の不具合でリスニングが正しく表示されなかった件のお詫びとして、<strong>リスニングセクションだけ</strong>もう一度チャレンジいただけます。下のボタンから開始してください（このボタンは1回のみご利用いただけます）。</div>
   <button id="lstRetakeBtn" style="background:#007646;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer">リスニングを受け直す →</button>
 </div>
+<script src="js/retake-config.js?v=20260708"></script>
 <script>
 (function(){
   try{
-    var RETAKE_IDS=['Kirari','Kotaro'];                                     // 佐藤さま / 美田さま — courtesy remedy, these accounts only
+    var RETAKE_IDS=window.PT_RETAKE_IDS||[];                                // courtesy remedy — see docs/internal-accounts.md for account mapping
     var u={}; try{ u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
     if(!u || RETAKE_IDS.indexOf(u.userId)===-1) return;                     // eligible accounts only
     if(localStorage.getItem('tck_lst_retake_used_'+u.userId)==='1') return; // one time only (per-user key)
@@ -757,7 +758,8 @@ render();
       speakingTi:         !!speaking.ti,
       total:              num('totalScore') || 0,
       band:               (document.getElementById('totalBand') || {}).textContent || '',
-      readingPath:        reading.path || ''
+      readingPath:        reading.path || '',
+      testId:             sessionStorage.getItem('practice_test_id') || '1'
     };
     Api.savePtResult(payload).then(function(r){
       console.log('[pt-results] save:', r);
@@ -778,6 +780,14 @@ render();
   }
 
   function renderHistory(results) {
+    // Ghost-row guard: a saved attempt with total===0 across every section
+    // is essentially never a genuine result (Reading/Listening are
+    // objectively auto-graded) — it's a glitched/partial save (e.g. a
+    // reload before any section was attempted). Hide it rather than
+    // confuse the learner with a "0/90" row. Mirrors the same 偽0点/ゴミ行
+    // 除外 principle used for task-history badges (history-sync.js).
+    results = results.filter(function(r){ return Number(r.total) > 0; });
+    if (!results.length) return;
     document.getElementById('historySection').style.display = 'block';
     var tbody = document.getElementById('historyBody');
     // Oldest first for "1回目, 2回目..." numbering, but display newest first

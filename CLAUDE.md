@@ -32,7 +32,7 @@ speaking/ti/practice-{N}.html              — Take an Interview
 ## 各Practice内の問題数
 | タスク | 問題数/Practice | 備考 |
 |--------|----------------|------|
-| CTW | 2セット×10 blanks | **v3.5.2（公式逆解析準拠）**: 削り方は全モジュール **floor(n/2) 固定**（表示=先頭 n//2 文字・手調整禁止）。**厳密交互**（20語 target の奇数位置=空所＝空所は絶対に隣接しない→文脈で一意）。**機能語・短語も空所OK**（len≥2 のみ・the/a も可）。難化は**語彙のみ**（Set 1=Module 1/B1-B2、Set 2=Module 2 HARDER/B2-C1、show% は両方 ~46%）。specialist 語は空所にしない。詳細は `.claude/commands/new-ctw.md` |
+| CTW | 2セット×10 blanks | **v3.5.2（公式逆解析準拠）**: 削り方は全モジュール **floor(n/2) 固定**（表示=先頭 n//2 文字・手調整禁止）。**厳密交互**（20語 target の奇数位置=空所＝空所は絶対に隣接しない→文脈で一意）。**機能語・短語も空所OK**（len≥2 のみ・the 等は可、a/I 等の1文字語は空所化禁止）。難化は**語彙のみ**（Set 1=Module 1/B1-B2、Set 2=Module 2 HARDER/B2-C1、show% は両方 ~46%）。specialist 語は空所にしない。詳細は `.claude/commands/new-ctw.md` |
 | RDL | 2パッセージ×計4〜6問 | パッセージあたり 2〜3問。ETS は per-task 件数を固定していないので、4〜6問の幅で OK |
 | Academic Passage | 2パッセージ×5問 = 計10問 | 後半パッセージ（Q6-Q10）が Harder Module（プロジェクト内の擬似 Harder 慣習）。制限時間 25 分 |
 | LCR | 8問 | Q1-2:B1, Q3-5:B1-B2, Q6-8:B2 |

@@ -1,7 +1,10 @@
 Write an Email の新しい問題を作成してください。
 
+> ✅ **ETS 公式 TOEFL iBT 2026 仕様準拠済み**（最終確認: 2026-07-08）
+> 問題数（1問）・制限時間（7分）は ETS 公式情報と整合。
+
 ## 事前準備（自動実行）
-1. `docs/history-writing.md` を読み、Write an Emailセクションの使用済みトピックを確認する
+1. `docs/topic-history.md` を読み、Write an Emailセクションの使用済みトピックを確認する
 2. `writing/email/` フォルダ内の既存ファイルを確認する
 3. 既存ファイルのHTML構造・CSS・JSを踏襲する
 
@@ -52,5 +55,5 @@ $ARGUMENTS
 
 ### 作成後
 1. HTML＋MDファイルを作成
-2. `docs/history-writing.md` のWrite an Emailセクションにシナリオ追記
+2. `docs/topic-history.md` のWrite an Emailセクションにシナリオ追記
 3. サマリー表示: シナリオ概要、タスクポイント、メールヘッダー

@@ -156,8 +156,14 @@ function goNext() {
   }
   Api.listPtResults().then(function(r){
     var list=(r && r.success && r.results) ? r.results : [];
+    // Scope to Test 1 records only (testId==='1'; missing/legacy testId
+    // defaults to '1') — this button only ever sends the learner through
+    // the top-level Test 1 flow, so the record it overwrites must match.
+    // Without this filter, a Test 2/3 attempt taken in between would look
+    // "more recent" and get its Listening score clobbered instead.
+    list=list.filter(function(r){ return String(r.testId||'1')==='1'; });
     if(!list.length){ showScore(''); return; }   // no original attempt to update
-    // Most recent saved attempt = the one affected by the outage.
+    // Most recent saved Test-1 attempt = the one affected by the outage.
     var orig=list.slice().sort(function(a,b){ return (b.timestamp||'').localeCompare(a.timestamp||''); })[0];
     if(!orig || !orig.sessionId){ showScore(''); return; }
 
@@ -184,7 +190,8 @@ function goNext() {
       speakingTi:         String(orig.speakingTi)==='true' || orig.speakingTi===true,
       total:              newTotal,
       band:               band,
-      readingPath:        orig.readingPath || ''
+      readingPath:        orig.readingPath || '',
+      testId:             orig.testId || '1'
     };
     Api.savePtResult(payload).then(function(){
       showScore('模試のリスニング得点を今回の結果に更新しました（合計 <strong>'+newTotal+'</strong> / 90・Band <strong>'+(band||'—')+'</strong>）。<br>');

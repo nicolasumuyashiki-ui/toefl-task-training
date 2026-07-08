@@ -1,5 +1,9 @@
 Listen to an Academic Talk の新しい問題セットを作成してください。
 
+> ✅ **ETS 公式 TOEFL iBT 2026 仕様準拠済み**（最終確認: 2026-07-08）
+> 問題数（4問/talk）・トークの構造は ETS 公式情報と整合。タイマー秒数（30秒/問）は ETS が
+> 問題別秒数を非公開にしているため、CLAUDE.md に明記の設計値（第三者目安「約30秒/問」に整合）を採用。
+
 ## 事前準備（自動実行）
 1. `docs/topic-history.md` を読み、Academic Talkセクションの使用済みトピックを確認する
 2. `listening/talk/` フォルダ内の既存ファイルを確認する
@@ -22,6 +26,7 @@ $ARGUMENTS
 - 話者: 教授/講師 1名
 - 背景知識不要
 - 音声は1回のみ再生（リプレイ不可）
+- **タイマー: 30秒/問固定**（ETS は問題別秒数非公開のため設計値。CLAUDE.md タイマー値表と一致させること）
 
 ### トピック分野（以下から選択）
 History / Art and Music / Life Science / Physical Science / Business and Economics / Social Science

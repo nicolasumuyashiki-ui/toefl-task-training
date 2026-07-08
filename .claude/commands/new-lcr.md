@@ -15,6 +15,9 @@ $ARGUMENTS
 2. `listening/lcr/practice-{N}.html` — HTML（音声はプレースホルダー）
 3. `listening/lcr/practice-{N}-answers.html` — 解答解説ページ
 
+### タイマー
+- **20秒/問固定**（ETS 公式で唯一明示された問題別タイマー。CLAUDE.md タイマー値表と一致させること）
+
 ================================================================================
 TOEFL iBT - Listen and Choose a Response 問題作成ガイド v2.4.1（Module 1 — Routing Module）
 

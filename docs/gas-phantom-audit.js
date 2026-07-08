@@ -7,6 +7,7 @@
  *   auditRecordingsCoverage()  … 録音の file_id 有無をユーザー別に集計（◆客 / ・内部）
  *   auditDriveCustomers()      … 全お客さんの録音 Drive 実ファイルが開ける/共有されてるか（引数不要）
  *   auditDriveFiles('userId')  … 特定ユーザーだけ Drive 確認（run系ラッパー経由で実行）
+ *   auditPtGhostResults()      … Practice Test（PT_RESULTS）の total=0 幽霊行を一覧（削除しない）
  *   deletePhantomRows({dryRun:false}) … 【承認後のみ】幽霊行を削除（既定 dryRun=true で消さない）
  *
  * ■ シート列:
@@ -220,6 +221,37 @@ function auditDriveCustomers() {
   if (priv > 0) Logger.log('→ △非公開がある場合: reshareAllRecordings({dryRun:false}) で一括再共有できます（音声は消えていない）。');
   if (gone > 0) Logger.log('→ ✗消失がある場合: その file_id は Drive 上で削除済み。別途相談。');
   return { total: tot, ok: ok, priv: priv, gone: gone };
+}
+
+// ★ Practice Test（模試）の PT_RESULTS 幽霊行を一覧（読み取り専用・削除なし）
+// total===0 の行は、Reading/Listening が客観採点であることを踏まえるとほぼ確実に
+// 「途中で保存された/グリッチによる空の記録」— 学習者本人の履歴表示（results.html /
+// my-results.html）側では既にフィルタ済みだが、運用側からも可視化できるようにする。
+function auditPtGhostResults() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName('PT_RESULTS');
+  if (!sh) { Logger.log('PT_RESULTS シートが見つかりません。'); return []; }
+  var d = sh.getDataRange().getValues();
+  var rows = [];
+  for (var r = 1; r < d.length; r++) {
+    var row = d[r];
+    var total = Number(row[15]) || 0;
+    if (total !== 0) continue;
+    var ts = row[0];
+    rows.push({
+      row: r + 1,
+      ts: (ts instanceof Date) ? Utilities.formatDate(ts, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss') : String(ts || ''),
+      userId: String(row[1] || ''), userName: String(row[2] || ''), sessionId: String(row[3] || ''),
+      testId: String(row[18] || '1')
+    });
+  }
+  if (!rows.length) { Logger.log('PT_RESULTS に total=0 の幽霊行は見つかりませんでした。'); return rows; }
+  Logger.log('=== PT_RESULTS 幽霊行（total=0・読み取り専用） 合計 ' + rows.length + ' 行 ===');
+  rows.forEach(function (x) {
+    Logger.log('   row ' + x.row + ' | ' + x.ts + ' | ' + (_isInternal_(x.userId) ? '[内部] ' : '') + x.userId +
+      ' | Test' + x.testId + ' | session:' + x.sessionId);
+  });
+  return rows;
 }
 
 // 個別ユーザー用（引数なしで実行できる呼び出しラッパー）

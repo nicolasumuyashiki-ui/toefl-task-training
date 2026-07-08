@@ -128,6 +128,7 @@ h1{font-size:2em;font-weight:800;color:#002817;letter-spacing:-0.02em;margin-bot
   </div>
 </div>
 <script src="js/auth.js?v=20260629"></script>
+<script src="js/retake-config.js?v=20260708"></script>
 <script>
 if (typeof Auth !== 'undefined') { Auth.require(); Auth.showBadge('userBadge'); }
 function doLogout(){ Auth.clear(); location.href='../index.html'; }
@@ -136,7 +137,7 @@ function doLogout(){ Auth.clear(); location.href='../index.html'; }
    Reachable from the main menu so the eligible user can start it even after closing the mock tab. */
 (function(){
   try{
-    var RETAKE_IDS=['Kirari','Kotaro'];                                     // 佐藤さま / 美田さま — courtesy remedy, these accounts only
+    var RETAKE_IDS=window.PT_RETAKE_IDS||[];                                // courtesy remedy — see docs/internal-accounts.md for account mapping
     var u={}; try{ u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
     if(!u || RETAKE_IDS.indexOf(u.userId)===-1) return;                     // eligible accounts only
     if(localStorage.getItem('tck_lst_retake_used_'+u.userId)==='1') return; // one time only (per-user key)

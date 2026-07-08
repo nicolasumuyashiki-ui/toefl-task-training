@@ -1,7 +1,10 @@
 Writing for an Academic Discussion の新しい問題を作成してください。
 
+> ✅ **ETS 公式 TOEFL iBT 2026 仕様準拠済み**（最終確認: 2026-07-08）
+> 問題数（1問）・制限時間（10分）は ETS 公式情報と整合。
+
 ## 事前準備（自動実行）
-1. `docs/history-writing.md` を読み、Academic Discussionセクションの使用済みトピックを確認する
+1. `docs/topic-history.md` を読み、Academic Discussionセクションの使用済みトピックを確認する
 2. `writing/discussion/` フォルダ内の既存ファイルを確認する
 3. 既存ファイルのHTML構造・CSS・JSを踏襲する
 
@@ -101,5 +104,5 @@ def verify_discussion(professor_text, student1_text, student2_text):
 ### 作成後
 1. HTML＋MDファイルを作成
 2. 語数検証をPythonで実行（教授60-80語、学生各40-60語）
-3. `docs/history-writing.md` のAcademic Discussionセクションにトピック・分野・質問タイプを追記
+3. `docs/topic-history.md` のAcademic Discussionセクションにトピック・分野・質問タイプを追記
 4. サマリー表示: 学問分野、質問タイプ、教授名、学生名、語数結果

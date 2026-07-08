@@ -36,3 +36,16 @@ monitor-nanase
 - GAS 監査スクリプト（`docs/gas-phantom-audit.js` ほか）では、この一覧を `INTERNAL_IDS` 集合として
   持たせ、「お客さんのみ」の集計時に除外する。
 - 新しいモニター／管理者アカウントを追加したら、ここにも追記すること。
+
+## Practice Test リスニング再受験（お詫び救済）対象アカウント
+
+`practice-test/js/retake-config.js`（`window.PT_RETAKE_IDS`）で有効化されている、リスニング白紙バグの
+お詫びとして1回限りの再受験を許可されている userId と、対応する実名の対応表。**このマッピングはここ以外
+（コード・コメント含む）に書かないこと** — `retake-config.js` はブラウザに配信される公開ファイルのため。
+
+| userId | 実名 |
+|---|---|
+| `Kirari` | 佐藤さま |
+| `Kotaro` | 美田さま |
+
+新しく対象アカウントを追加する場合は、`retake-config.js` の `PT_RETAKE_IDS` 配列とこの表の両方を更新すること。

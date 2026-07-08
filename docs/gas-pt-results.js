@@ -27,15 +27,26 @@
  *   3. Save → Deploy → Manage deployments → 鉛筆 → New version → Deploy.
  *      (URL unchanged, so no front-end edit is needed.)
  * ----------------------------------------------------------------------
+ *
+ * 2026-07-08 UPDATE: added a trailing 'testId' column (index 18) so a
+ * retake/overwrite can be scoped to the correct test copy (1/2/3) instead
+ * of blindly picking the learner's most-recent saved row. If you already
+ * pasted an earlier version of this file, re-paste and redeploy — the new
+ * column is appended at the END, so existing rows/data are unaffected and
+ * simply read back as testId==='1' until they're resaved.
  */
 
 var PT_RESULTS_SHEET = 'PT_RESULTS';
+// NOTE: 'testId' was appended AFTER the original 18 columns (not inserted
+// in the middle) so existing sheets/rows created before this field existed
+// don't need a migration — old rows simply read back as testId==='' and
+// callers default that to '1' (Test 1, the only copy that existed originally).
 var PT_RESULTS_HEADER = [
   'timestamp', 'userId', 'userName', 'sessionId',
   'readingCorrect', 'readingTotal', 'readingScaled',
   'listeningCorrect', 'listeningTotal', 'listeningScaled',
   'writingSentCorrect', 'writingSentTotal', 'writingScaled',
-  'speakingLr', 'speakingTi', 'total', 'band', 'readingPath'
+  'speakingLr', 'speakingTi', 'total', 'band', 'readingPath', 'testId'
 ];
 
 function _ptResultsSheet_() {
@@ -86,7 +97,8 @@ function handleSavePtResult_(e, callback) {
       String(p.speakingTi) === 'true',
       Number(p.total) || 0,
       String(p.band || ''),
-      String(p.readingPath || '')
+      String(p.readingPath || ''),
+      String(p.testId || '1')
     ];
 
     if (targetRow > 0) {
@@ -133,7 +145,8 @@ function handleListPtResults_(e, callback) {
         speakingTi:       row[14] === true || String(row[14]) === 'true',
         total:            Number(row[15]) || 0,
         band:             String(row[16] || ''),
-        readingPath:      String(row[17] || '')
+        readingPath:      String(row[17] || ''),
+        testId:           String(row[18] || '1')
       });
     }
     return jsonpResponse_(callback, { success: true, results: results });
