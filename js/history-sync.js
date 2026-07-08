@@ -325,6 +325,14 @@
   function reconcile(serverAttempts) {
     var uid = userId(); if (!uid) return;
     if (typeof Api === 'undefined' || !Api.saveAnswers) return;
+    // Cache-owner guard: only push local mirrors to the server when the
+    // display cache in this browser is confirmed to belong to the CURRENT
+    // account (auth.js stamps tck_cache_uid and purges on account switch).
+    // If the stamp is missing or names another account — e.g. a stale cached
+    // auth.js that predates the purge logic is still running — pushing would
+    // record the previous user's scores under this user's name. Skip instead;
+    // display still works and the real saves flow via each page's own save.
+    try { if (localStorage.getItem('tck_cache_uid') !== String(uid)) return; } catch (e) { return; }
     // Per-item guard (was a once-per-session global flag): track which task_pN
     // we've already pushed this session, so late-appearing local completions
     // sync on a later menu load instead of being permanently skipped after the

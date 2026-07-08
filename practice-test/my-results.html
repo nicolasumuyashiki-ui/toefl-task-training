@@ -135,7 +135,7 @@ tbody tr:last-child td{border-bottom:none}
   </p>
 </div>
 
-<script src="js/auth.js?v=20260629"></script>
+<script src="js/auth.js?v=20260708"></script>
 <script src="js/api.js?v=20260707"></script>
 <script>
 /* ===== Language toggle (mirrors results.html / my-score.html) ===== */
@@ -149,7 +149,7 @@ tbody tr:last-child td{border-bottom:none}
 if(typeof Auth!=='undefined'){Auth.require();}
 var currentUser=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
 if(currentUser.userName){document.getElementById('userName').textContent=currentUser.userName;document.getElementById('avatarInit').textContent=currentUser.userName.charAt(0).toUpperCase();}
-function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='../index.html';}
+function doLogout(){sessionStorage.removeItem('kickstart_user');try{localStorage.removeItem('toefl_user');}catch(e){}location.href='../index.html';}
 
 /* ===== Load saved Practice Test results from the server (PT_RESULTS) ===== */
 (function(){

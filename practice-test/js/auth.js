@@ -17,20 +17,26 @@ const Auth = {
     } catch (e) {}
   },
   get() {
-    // Primary: PT's own toefl_user in localStorage.
-    try {
-      const pt = JSON.parse(localStorage.getItem('toefl_user'));
-      if (pt) return pt;
-    } catch {}
-    // Fallback: TT's kickstart_user in sessionStorage (when running
-    // inside toefl-task-training/practice-test/, the user is already
-    // authenticated as a TT member).
-    try {
-      const tt = JSON.parse(sessionStorage.getItem('kickstart_user'));
-      if (tt && (tt.userId || tt.userName || tt.email)) {
-        return { id: tt.userId, name: tt.userName, email: tt.email };
+    // Primary: TT's kickstart_user in sessionStorage — the account that is
+    // ACTUALLY logged in right now. This must win: toefl_user persists in
+    // localStorage across account switches on a shared PC, and letting it
+    // override the live session made results save under the PREVIOUS user.
+    let tt = null;
+    try { tt = JSON.parse(sessionStorage.getItem('kickstart_user')); } catch {}
+    let pt = null;
+    try { pt = JSON.parse(localStorage.getItem('toefl_user')); } catch {}
+    if (tt && (tt.userId || tt.userName || tt.email)) {
+      // Stale persisted login from a DIFFERENT account → discard it so it can
+      // never resurrect the previous user after this session ends.
+      const ptId = pt ? String(pt.id || pt.userId || '') : '';
+      if (pt && ptId && ptId !== String(tt.userId || '')) {
+        try { localStorage.removeItem('toefl_user'); } catch (e) {}
       }
-    } catch {}
+      return { id: tt.userId, name: tt.userName, email: tt.email };
+    }
+    // Fallback: PT's own persisted login (standalone PT usage with no live
+    // session in this tab).
+    if (pt) return pt;
     return null;
   },
   clear() {

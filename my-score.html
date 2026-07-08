@@ -276,7 +276,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 
 <script src="js/auth.js?v=20260629"></script>
 <script src="js/api.js?v=20260629"></script>
-<script src="js/history-sync.js?v=20260629"></script>
+<script src="js/history-sync.js?v=20260708"></script>
 <script>
 /* Language toggle */
 (function(){
@@ -645,6 +645,14 @@ function mergeServerBands(server) {
 var _bandSaveTimer = null;
 function persistBandHwm() {
   if (typeof Api === 'undefined' || !Api.saveBands) return;
+  // Cache-owner guard: BANDS is a never-lowered floor on the server, so a
+  // foreign tck_hwm_* residue pushed under this account would pollute it
+  // permanently. Only push when the local cache is stamped as owned by the
+  // current account (auth.js sets tck_cache_uid / purges on account switch).
+  try {
+    var _uid = (currentUser && currentUser.userId) ? String(currentUser.userId) : '';
+    if (!_uid || localStorage.getItem('tck_cache_uid') !== _uid) return;
+  } catch (e) { return; }
   if (_bandSaveTimer) clearTimeout(_bandSaveTimer);
   _bandSaveTimer = setTimeout(function () { try { Api.saveBands(collectBandHwm()); } catch (e) {} }, 1500);
 }

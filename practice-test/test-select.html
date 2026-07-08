@@ -127,7 +127,7 @@ h1{font-size:2em;font-weight:800;color:#002817;letter-spacing:-0.02em;margin-bot
     </div>
   </div>
 </div>
-<script src="js/auth.js?v=20260629"></script>
+<script src="js/auth.js?v=20260708"></script>
 <script>
 if (typeof Auth !== 'undefined') { Auth.require(); Auth.showBadge('userBadge'); }
 function doLogout(){ Auth.clear(); location.href='../index.html'; }
@@ -174,7 +174,7 @@ function selectTest(n){
     var keys = [];
     for (var i = 0; i < store.length; i++){
       var k = store.key(i);
-      if (/^(practice_|m1_|m2h_|results_|kickstart_done_|mic_check_next$|practice_test_id$)/.test(k)) keys.push(k);
+      if (/^(practice_|m1_|m2e_|m2h_|results_|kickstart_done_|mic_check_next$|practice_test_id$)/.test(k)) keys.push(k);
     }
     keys.forEach(function(k){ store.removeItem(k); });
   };

@@ -281,7 +281,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   </div>
 </section>
 
-<script src="js/auth.js?v=20260629"></script>
+<script src="js/auth.js?v=20260708"></script>
 <script src="js/api.js?v=20260707"></script>
 <script>
 /* ===== Language toggle (mirrors my-score.html) ===== */
@@ -306,7 +306,7 @@ if(currentUser.userName){document.getElementById('userName').textContent=current
   if (lblJp) lblJp.textContent = ' (Test ' + tid + ')';
   if (lblEn) lblEn.textContent = ' ' + tid;
 })();
-function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='../index.html';}
+function doLogout(){sessionStorage.removeItem('kickstart_user');try{localStorage.removeItem('toefl_user');}catch(e){}location.href='../index.html';}
 
 /* ============================================================
    ETS-derived raw→scaled tables + band lookup
