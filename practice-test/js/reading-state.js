@@ -22,9 +22,11 @@
  * a new mock is started. Restoring is additive and never deletes answers.
  *
  * Real-TOEFL module boundary: going back is only meaningful WITHIN a module.
- * reading-m2-select.html calls PTReadingState.clearModule1() at the
- * Module 1 → Module 2 handoff so Module 2 starts clean and a learner cannot
- * reach back into the previous module (matches ETS adaptive behaviour).
+ * reading-m2-select.html (which does NOT load this script) clears the
+ * Module-1 q11-q20 answers inline at the Module 1 → Module 2 handoff, so
+ * Module 2 starts clean and a learner cannot reach back into the previous
+ * module (matches ETS adaptive behaviour). Keep that inline logic in sync
+ * with the MC_KEY/CTW_KEY clearing below if the key shapes ever change.
  */
 (function () {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
@@ -147,15 +149,4 @@
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', restoreAll);
   else restoreAll();
-
-  /* ---------- module boundary ---------- */
-
-  window.PTReadingState = {
-    clearModule1: function () {
-      var mc = readJSON(MC_KEY);
-      ['q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19', 'q20'].forEach(function (q) { delete mc[q]; });
-      writeJSON(MC_KEY, mc);
-      var ctw = readJSON(CTW_KEY); delete ctw['reading-ctw.html']; writeJSON(CTW_KEY, ctw);
-    }
-  };
 })();

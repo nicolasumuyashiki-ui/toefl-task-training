@@ -118,8 +118,7 @@ SPECIALIST = {"hieroglyph","aqueduct","algorithm","photosynthesis","chromosome",
  "metamorphosis","seismograph","chlorophyll","isotope","aperture","oscillation",
  "calibration","thermodynamic","cardiovascular","neurotransmitter","pathogen"}
 BANDS = {"M1": dict(ans_avg=(2.3,3.3), ans_max=5),
-         "M2H":dict(ans_avg=(2.5,3.7), ans_max=6),
-         "M2E":dict(ans_avg=(1.8,2.6), ans_max=4)}
+         "M2H":dict(ans_avg=(2.5,3.7), ans_max=6)}
 def _wc(t): return len(re.sub(r'<[^>]+>','',t).split())
 
 def verify_ctw_v35(intro, target, conclusion, module="M1"):
