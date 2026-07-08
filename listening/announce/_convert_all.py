@@ -169,7 +169,7 @@ body{{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5
 <div class="start-overlay" id="startOverlay">
 <div class="start-card">
 <h2>\\ud83d\\udce2 Listen to an Announcement</h2>
-<p>You will hear 2 short announcements.<br>After each announcement, you will answer 2 questions.<br><br>You have <strong>15 seconds</strong> per question.</p>
+<p>You will hear 2 short announcements.<br>After each announcement, you will answer 2 questions.<br><br>You have <strong>20 seconds</strong> per question.</p>
 <button class="btn-start" onclick="startListening()">Start Listening</button>
 </div>
 </div>
@@ -311,7 +311,7 @@ function showQuestion(qIdx){{
   }});
 
   document.getElementById('btnNext').classList.remove('active');
-  startTimer(15);
+  startTimer(20);
 }}
 
 function startTimer(secs){{
