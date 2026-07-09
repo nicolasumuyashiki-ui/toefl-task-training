@@ -268,6 +268,18 @@
 
     /* ---------- CTW ---------- */
     ctw: function(attempts) {
+      // CTW was wholesale-rebuilt to v3.5.2 (#125). Attempts saved BEFORE
+      // the rebuild answered the OLD passages — mapping them onto today's
+      // blanks makes them look like garbage answers even though the saved
+      // score is valid. Flag those attempts so admin reads them correctly.
+      var CTW_REBUILD_ISO = '2026-07-02T04:07:36Z';
+      if (attempts.some(function(a){ return a.timestamp && String(a.timestamp) < CTW_REBUILD_ISO; })) {
+        var note = document.createElement('div');
+        note.id = 'tckAdminLegacyNote';
+        note.style.cssText = 'background:#FFF4D6;border:2px solid #E3C871;border-radius:14px;padding:14px 20px;margin:18px auto;max-width:900px;color:#6B5A1E;font-size:.9em;line-height:1.6;font-family:Manrope,"Noto Sans JP",sans-serif';
+        note.innerHTML = '⚠ この生徒の記録には <strong>CTW 全面リビルド（2026-07-02・v3.5.2）以前</strong>の取り組みが含まれます。当時の問題文への回答のため、現在の解答ページ上では選択内容が問題と一致して見えません（<strong>得点は保存時のまま有効</strong>です）。';
+        insertPanel(note);
+      }
       // GAS returns rows newest-first, one per Set ("CTW P5 Set 1/2").
       // Keep the NEWEST row per set — iterating blindly used to let the
       // OLDEST row win because later writes overwrote earlier ones.
