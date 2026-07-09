@@ -470,7 +470,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
 </div>
 
 <script src="../js/api.js?v=20260629"></script>
-<script src="../js/auth.js?v=20260709"></script>
+<script src="../js/auth.js?v=20260710"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -592,90 +592,101 @@ function formatBand(b) {
   return b === null || b === undefined ? '—' : Number(b).toFixed(1);
 }
 
-function predictScoresForUser(userAttempts) {
-  /* First-attempt only: the TOEFL® test is a one-shot test, so the predictor
-     should reflect cold performance, not memorization through retries.
-     Dedupe by (task + practice + set) keeping the earliest timestamp.
-     If an attempt has answeredCount of 0 (immediate abandonment), it's
-     skipped so a tab-close-on-load doesn't tank the prediction. */
-  function pickFirstAttempts(items) {
-    // Sort by timestamp ASC so the chronologically earliest attempt wins
-    // dedupe. Fall through updatedAt → timestamp → '' so legacy rows
-    // (no timestamp in the GAS row) don't all collapse to the same key.
-    const sorted = items.slice().sort((a, b) => {
-      const ta = a.timestamp || a.updatedAt || '';
-      const tb = b.timestamp || b.updatedAt || '';
-      return ta.localeCompare(tb);
-    });
-    const seen = {};
-    const out = [];
-    for (const a of sorted) {
-      // CTW saves separate ANSWERS rows for Set 1 and Set 2, with the
-      // Harder Module weight applied only to Set 2 in avgPct. Collapsing
-      // both into a single "ctw#5#" bucket would silently drop Set 2 and
-      // inflate the prediction. Include set in the dedupe key so each
-      // Set is tracked independently.
-      const key = a.task + '#' + a.practice + '#' + (a.set != null ? a.set : '');
-      if (seen[key]) continue;
-      // Skip 0-answered abandons — surface the next attempt instead.
-      if (a.correct === 0 && a.total === 0) continue;
-      seen[key] = true;
-      out.push(a);
-    }
-    return out;
+/* ============================================================
+   予想スコア — 生徒側 my-score.html と同一ロジック。
+   my-score の pickCurrent（切替後は最新優先＋0点ガード、それ以外は
+   ベスト）/ aggregateSection（Harder 1.5x 重み）/ percentToScaled /
+   「Writing 未実施なら Total を出さない」をサーバの生 attempt 行から
+   再構成する。これで Admin のバンド・% が生徒画面と一致する。
+   既知の近似（表示専用・僅差）:
+     - CTW の first/best/latest は Set 別系列の合算で近似
+     - サーバ BANDS の「下がらない床」は staff 認証では読めないため
+       未適用（床が効いている生徒は生徒画面の方が高く出ることがある） ============================================================ */
+const SCORE_CUTOFF = '2026-06-29T15:00:00Z';   // my-score.html / history-sync.js と必ず一致させる
+
+function buildPracticeBuckets(userAttempts) {
+  const rows = userAttempts.filter(a => a.autoGraded && a.score !== null);
+  const byKey = {};
+  rows.forEach(a => { const k = a.task + '#' + a.practice; (byKey[k] = byKey[k] || []).push(a); });
+  const val = a => ({ correct: a.correct || 0, total: a.total || 0,
+    harderCorrect: a.harderCorrect || 0, harderTotal: a.harderTotal || 0,
+    updatedAt: String(a.updatedAt || a.timestamp || '') });
+  const pctOf = v => v.total > 0 ? v.correct / v.total : -1;
+  function series(items) {
+    const sr = items.slice().sort((x, y) => String(x.updatedAt || x.timestamp || '').localeCompare(String(y.updatedAt || y.timestamp || '')));
+    const first = val(sr[0]);
+    const latest = val(sr[sr.length - 1]);
+    let best = first;
+    sr.forEach(x => { const v = val(x); if (pctOf(v) > pctOf(best)) best = v; });
+    return { first, best, latest, count: sr.length };
   }
+  const buckets = {};
+  Object.keys(byKey).forEach(k => {
+    const list = byKey[k];
+    const a0 = list[0];
+    let first, best, latest, count;
+    if (a0.task === 'ctw') {
+      // CTW は Set 別に1行ずつ — Set ごとの first/best/latest を合算して
+      // 生徒側の「Set1+Set2 合算スコア」を近似する
+      const bySet = {};
+      list.forEach(a => { const sn = a.set != null ? a.set : '?'; (bySet[sn] = bySet[sn] || []).push(a); });
+      const parts = Object.keys(bySet).map(sn => series(bySet[sn]));
+      const sum = pick => parts.reduce((acc, p) => { const v = p[pick];
+        return { correct: acc.correct + v.correct, total: acc.total + v.total,
+                 harderCorrect: acc.harderCorrect + v.harderCorrect, harderTotal: acc.harderTotal + v.harderTotal,
+                 updatedAt: acc.updatedAt > v.updatedAt ? acc.updatedAt : v.updatedAt };
+      }, { correct: 0, total: 0, harderCorrect: 0, harderTotal: 0, updatedAt: '' });
+      first = sum('first'); best = sum('best'); latest = sum('latest');
+      count = Math.max.apply(null, parts.map(p => p.count));
+    } else {
+      const sr = series(list);
+      first = sr.first; best = sr.best; latest = sr.latest; count = sr.count;
+    }
+    buckets[k] = { task: a0.task, section: a0.section, practice: a0.practice,
+      first, best, latest, count,
+      latestIsCurrent: !!(latest.updatedAt && latest.updatedAt >= SCORE_CUTOFF) };
+  });
+  return buckets;
+}
 
-  const allScored = userAttempts.filter(a => a.autoGraded && a.score !== null);
-  const firstScored = pickFirstAttempts(allScored);
+/* my-score.html の pickCurrent と同一: 切替後の最新（0点ガード付き）、
+   それ以外はベスト。 */
+function pickCurrentSrv(b) {
+  const latestZero = b.latest && b.latest.total > 0 && (b.latest.correct || 0) === 0;
+  if (b.latestIsCurrent && b.latest && !latestZero) return b.latest;
+  return b.best || b.first || b.latest;
+}
 
-  const scored = s => firstScored.filter(a => a.section === s);
-  /* Weighted accuracy with 1.5× boost for TOEFL® Harder Module items.
-     Falls back gracefully when an attempt has no Harder breakdown
-     fields (older mock rows / pre-rollout attempts). */
-  function avgPct(items) {
+function predictScoresForUser(userAttempts) {
+  const buckets = buildPracticeBuckets(userAttempts);
+  const list = Object.keys(buckets).map(k => buckets[k]);
+  const isZero = x => x && x.total > 0 && (x.correct || 0) === 0;
+  function sectionPct(filterFn) {
+    const items = list.filter(b => filterFn(b) && pickCurrentSrv(b) && !isZero(pickCurrentSrv(b)));
     if (!items.length) return null;
     let c = 0, t = 0, hC = 0, hT = 0;
-    items.forEach(a => {
-      c  += a.correct;
-      t  += a.total;
-      hC += a.harderCorrect || 0;
-      hT += a.harderTotal   || 0;
-    });
+    items.forEach(b => { const x = pickCurrentSrv(b); c += x.correct; t += x.total; hC += x.harderCorrect; hT += x.harderTotal; });
     const stdC = c - hC, stdT = t - hT;
-    const wC = stdC + hC * 1.5;
-    const wT = stdT + hT * 1.5;
+    const wC = stdC + hC * 1.5, wT = stdT + hT * 1.5;
     return wT > 0 ? (wC / wT * 100) : null;
   }
-  const rPct = avgPct(scored('Reading'));
-  const lPct = avgPct(scored('Listening'));
+  const rPct = sectionPct(b => b.section === 'Reading');
+  const lPct = sectionPct(b => b.section === 'Listening');
   const rScaled = rPct !== null ? percentToScaled(rPct, READING_TABLE) : null;
   const lScaled = lPct !== null ? percentToScaled(lPct, LISTENING_TABLE) : null;
-
-  // R/L average — used to ESTIMATE the sections we can't auto-grade, so the
-  // Total reflects a full 4-section projection instead of counting an untaken
-  // section as 0 (which dragged the Total below the section bands).
-  const rlAvail = [rScaled, lScaled].filter(function (v) { return v !== null; });
-  const rlAvg = rlAvail.length ? Math.round(rlAvail.reduce(function (s, v) { return s + v; }, 0) / rlAvail.length) : null;
-
-  // Writing — ONLY from Build a Sentence accuracy (no estimate). If the
-  // learner hasn't done Build a Sentence the Writing card shows "—" and the
-  // section is simply excluded from the Total average (not counted as 0).
-  const sentenceItems = firstScored.filter(a => a.task === 'sentence');
-  const sentencePct = avgPct(sentenceItems);
+  // Writing — 生徒側と同じく Build a Sentence のみから換算（推定はしない）
+  const sentencePct = sectionPct(b => b.task === 'sentence');
   const wScaled = sentencePct !== null ? percentToScaled(sentencePct, READING_TABLE) : null;
-
-  // Speaking — no automated audio assessment, so its CARD stays "—" (sScaled
-  // is null → not shown). But the TOTAL projects it from R/L so the overall
-  // score reflects Speaking too.
-  const sScaled = null;
-  const sEst = rlAvg;
-
-  // Total = average of the AVAILABLE section scaled values (R, L, W-if-done,
-  // S-estimate), projected across all 4 sections → /120. An untaken section is
-  // excluded from the average, never counted as 0 (which dragged it down).
-  const _avail = [rScaled, lScaled, wScaled, sEst].filter(function (v) { return v !== null && v !== undefined; });
-  const totalScaled = _avail.length ? Math.round(_avail.reduce(function (s, v) { return s + v; }, 0) / _avail.length * 4) : 0;
-  return { reading: rScaled, listening: lScaled, writing: wScaled, speaking: sScaled, total: totalScaled, speakingEst: sEst };
+  const rlAvail = [rScaled, lScaled].filter(v => v !== null);
+  const rlAvg = rlAvail.length ? Math.round(rlAvail.reduce((s2, v) => s2 + v, 0) / rlAvail.length) : null;
+  // 生徒側と同じ: Writing（Build a Sentence）未実施の間は Total を出さない。
+  // Speaking は R/L 平均で推定して Total にのみ算入（カードは "—"）。
+  let totalScaled = 0;
+  if (wScaled !== null && wScaled !== undefined) {
+    const avail = [rScaled, lScaled, wScaled, rlAvg].filter(v => v !== null && v !== undefined);
+    totalScaled = avail.length ? Math.round(avail.reduce((s2, v) => s2 + v, 0) / avail.length * 4) : 0;
+  }
+  return { reading: rScaled, listening: lScaled, writing: wScaled, speaking: null, total: totalScaled, speakingEst: rlAvg };
 }
 
 const MOCK_USERS = [
@@ -1175,6 +1186,7 @@ function renderKarteDetail() {
      the learner's own menu (best score / 提出 / 中断中), rebuilt from server
      attempts, so staff can verify badges in an emergency. Completion always
      supersedes 中断中, exactly like the student menu. */
+  const kbuckets = buildPracticeBuckets(attempts);   // 生徒バッジ再現用（CTW Set 合算・切替ルール）
   const previewTasks = TASKS.map(t => {
     const items = attempts.filter(a => a.task === t.key);
     if (!items.length) return '';
@@ -1182,11 +1194,23 @@ function renderKarteDetail() {
     items.forEach(a => { (byP[a.practice] = byP[a.practice] || []).push(a); });
     const chips = Object.keys(byP).map(Number).sort((a, b) => a - b).map(pnum => {
       const arr = byP[pnum];
-      const ntry = arr.length;
       const scored = arr.filter(a => a.score !== null);
       const submitted = arr.filter(a => a.status === 'submitted');
+      // 生徒メニューのバッジと同じ値を出す: 切替ルールの「現在値」
+      // （CTW は Set 合算・×N は取り組みサイクル数）。バケットが無い
+      // 行（進行中のみ等）は従来表示にフォールバック。
+      const b = kbuckets[t.key + '#' + pnum];
+      let ntry = arr.length;
       let cls, txt;
-      if (t.autoGraded && scored.length) {
+      if (t.autoGraded && b) {
+        const cur = pickCurrentSrv(b);
+        const pct = cur && cur.total > 0 ? Math.round(cur.correct / cur.total * 100) : null;
+        ntry = b.count;
+        if (pct !== null) {
+          cls = pct === 100 ? 'done100' : pct >= 80 ? 'done80' : pct >= 50 ? 'done50' : 'doneLow';
+          txt = pct + '%';
+        } else { cls = 'inprog'; txt = '中断中'; }
+      } else if (t.autoGraded && scored.length) {
         const best = Math.max.apply(null, scored.map(a => a.score));
         cls = best === 100 ? 'done100' : best >= 80 ? 'done80' : best >= 50 ? 'done50' : 'doneLow';
         txt = best + '%';
