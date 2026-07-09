@@ -254,6 +254,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
           <option value="inprog">中断中</option>
           <option value="submitted">提出済み (自動採点なし)</option>
         </select>
+        <label style="display:inline-flex;align-items:center;gap:6px;font-size:.82em;color:var(--ink-500);white-space:nowrap;cursor:pointer"><input type="checkbox" id="toggleInternal" onchange="applyInternalFilter()">内部アカウントを含める</label>
       </div>
       <span class="count-badge"><strong id="overviewCount">0</strong> 件</span>
       <button class="btn btn-primary" onclick="exportCSV('overview')">
@@ -469,7 +470,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
 </div>
 
 <script src="../js/api.js?v=20260629"></script>
-<script src="../js/auth.js?v=20260629"></script>
+<script src="../js/auth.js?v=20260709"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -509,6 +510,15 @@ const TASKS = [
   {key:'lr', label:'Listen & Repeat', total:null, section:'Speaking', autoGraded:false},
   {key:'ti', label:'Take an Interview', total:null, section:'Speaking', autoGraded:false},
 ];
+
+/* GAS の timestamp は ISO(UTC) 文字列。生表示だと JST より9時間前に
+   見えるため、表示時は必ず JST に整形する（ソート・比較は生値のまま）。 */
+function fmtJst(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  if (isNaN(d.getTime())) return String(ts);
+  return d.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo', hour12: false });
+}
 
 function gradeFor(score) {
   if (score === null || score === undefined) return null;
@@ -731,6 +741,28 @@ function generateAttempts() {
 let MOCK_USERS_LIVE = MOCK_USERS;
 let ATTEMPTS = generateAttempts();
 
+/* 内部（モニター/スタッフ/テスト）アカウント — 集計・一覧から既定で除外する。
+   一覧は docs/internal-accounts.md と同期すること。「内部アカウントを含める」
+   チェックで表示に戻せる。 */
+const INTERNAL_IDS = new Set(('Nico,marisando,Nico1,andomarisa,mayu,yuna.kitamura,Momotaro,h.sakai,'
+  + 'satoshi.okadome,hananotck,tmashimo,saosao,monitor-kadowaki,monitor-murakami,'
+  + 'monitor-kusunoki,monitor-sato,burton,monitor-nanase,testuser,user01,allZero').split(','));
+let RAW_USERS_LIVE = null, RAW_ATTEMPTS_LIVE = null;
+function isInternalId(uid) { return INTERNAL_IDS.has(String(uid || '').trim()); }
+function applyInternalFilter() {
+  if (!RAW_USERS_LIVE) return;   // live データ未取得（モック表示中）は何もしない
+  const show = !!((document.getElementById('toggleInternal') || {}).checked);
+  const users = show ? RAW_USERS_LIVE : RAW_USERS_LIVE.filter(u => !isInternalId(u.userId));
+  MOCK_USERS_LIVE.length = 0;
+  users.forEach(u => MOCK_USERS_LIVE.push(u));
+  ATTEMPTS = show ? RAW_ATTEMPTS_LIVE : RAW_ATTEMPTS_LIVE.filter(a => !isInternalId(a.userId));
+  if (typeof renderOverview === 'function') renderOverview();
+  if (typeof renderByContent === 'function') renderByContent();
+  if (typeof renderReport === 'function') renderReport();
+  if (typeof renderKarteList === 'function') renderKarteList();
+  if (typeof renderProgress === 'function') renderProgress();
+}
+
 /* Parse an ANSWERS-sheet `set` string into task/practice/setNum.
    Expected formats (extend here as more tasks start saving):
      "CTW P5 Set 2"
@@ -779,7 +811,12 @@ function mapLiveAttempts(rawAttempts, users) {
     const meta = TASKS.find(t => t.key === parsed.task);
     if (!meta) return;
     const u = userIndex[r.userId] || { userName: r.userName || r.userId, displayName: '', email: '' };
-    const total = meta.total;
+    // 分母はシート自身の total 列（J列）を最優先、無ければ answers 配列長、
+    // 最後に TASKS の既定値。RDL は Practice ごとに実問題数が違う（P1=4,
+    // P2/P3=6, P4以降=5）ので固定既定値だけだと得点率が実際とズレる。
+    let total = Number(r.total) || 0;
+    if (!total) { try { const _a = JSON.parse(r.answers || 'null'); if (Array.isArray(_a) && _a.length) total = _a.length; } catch (e) {} }
+    if (!total) total = meta.total;
     const score = (total && meta.autoGraded) ? Math.round((r.score / total) * 100) : null;
     out.push({
       userId: r.userId,
@@ -818,15 +855,15 @@ function loadLiveData() {
     const users = (ures.users || []).map(u => Object.assign({ displayName: '' }, u));
     const liveAttempts = mapLiveAttempts(ares.attempts || [], users);
     // Overwrite module-level data
-    MOCK_USERS_LIVE.length = 0;
-    users.forEach(u => MOCK_USERS_LIVE.push(u));
-    ATTEMPTS = liveAttempts;
+    RAW_USERS_LIVE = users;
+    RAW_ATTEMPTS_LIVE = liveAttempts;
+    applyInternalFilter();   // 既定で内部アカウントを除外して MOCK_USERS_LIVE / ATTEMPTS を構築
     // Swap banner
     if (banner) {
       banner.style.background = '#E6F3EC';
       banner.style.borderBottomColor = 'var(--green)';
       banner.style.color = 'var(--green-dark)';
-      msg.innerHTML = '<strong>LIVE</strong> · GAS から ' + users.length + ' ユーザー / ' + liveAttempts.length + ' 件の受験履歴を読み込みました。';
+      msg.innerHTML = '<strong>LIVE</strong> · GAS から ' + MOCK_USERS_LIVE.length + ' ユーザー / ' + ATTEMPTS.length + ' 件の受験履歴を読み込みました（内部アカウント除外後）。';
       setTimeout(() => { banner.style.display = 'none'; }, 4000);
     }
     // Re-render all tabs that are already wired
@@ -944,6 +981,9 @@ function renderOverview() {
     return true;
   });
   rows = applySort(rows, 'overviewTable');
+  // 明示ソートが無い場合は新しい順に。シートは古い順で届くため、これが無いと
+  // 500件超のとき最新の受験が「最初の500件」から漏れて一覧に出なかった。
+  if (!sortState['overviewTable']) rows = rows.slice().sort((x, y) => String(y.updatedAt).localeCompare(String(x.updatedAt)));
   document.getElementById('overviewCount').textContent = rows.length.toLocaleString();
   const body = document.getElementById('overviewBody');
   if (!rows.length) {
@@ -964,10 +1004,10 @@ function renderOverview() {
       '<td>Practice ' + a.practice + '</td>' +
       '<td class="num">' + scoreText + '</td>' +
       '<td>' + statusPill + '</td>' +
-      '<td class="muted num">' + a.updatedAt + '</td>' +
+      '<td class="muted num">' + fmtJst(a.updatedAt) + '</td>' +
       '<td><button class="link-btn" onclick="showDetail(\'' + a.userId + '\',\'' + a.task + '\',' + a.practice + ')">詳細</button></td>' +
       '</tr>';
-  }).join('') + (rows.length > 500 ? '<tr><td colspan="9" class="muted" style="text-align:center;padding:12px">…最初の 500 件を表示。CSV でエクスポート可能。</td></tr>' : '');
+  }).join('') + (rows.length > 500 ? '<tr><td colspan="9" class="muted" style="text-align:center;padding:12px">…新しい順に最初の 500 件を表示。CSV でエクスポート可能。</td></tr>' : '');
 }
 
 /* ============================================================
@@ -1129,7 +1169,7 @@ function renderKarteDetail() {
     const status = '<span class="pill ' + a.status + '">' + (GRADE_LABELS[a.status] || a.status) + '</span>';
     const score = (a.status === 'inprog' || !a.autoGraded) ? '—' : (a.score + '%');
     const viewBtn = '<button class="link-btn" onclick="viewStudentAnswers(\'' + a.userId + '\',\'' + a.task + '\',' + a.practice + ',\'' + (a.set || '') + '\')">回答を見る</button>';
-    return '<tr><td class="muted">' + a.updatedAt + '</td><td><span class="task-tag">' + a.taskLabel + '</span></td><td>P' + a.practice + '</td><td class="num">' + score + '</td><td>' + status + '</td><td>' + viewBtn + '</td></tr>';
+    return '<tr><td class="muted">' + fmtJst(a.updatedAt) + '</td><td><span class="task-tag">' + a.taskLabel + '</span></td><td>P' + a.practice + '</td><td class="num">' + score + '</td><td>' + status + '</td><td>' + viewBtn + '</td></tr>';
   }).join('');
   /* ② Student-menu preview — mirror the badge each practice would show on
      the learner's own menu (best score / 提出 / 中断中), rebuilt from server

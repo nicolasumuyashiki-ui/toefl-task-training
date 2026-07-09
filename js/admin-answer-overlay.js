@@ -7,19 +7,27 @@
  * top of the existing answer-key page.
  *
  * Renderers per task live in `RENDERERS` below. Each one is given the
- * full attempts array (newest first) and decides:
- *   - whether to repopulate sessionStorage so the page's own renderAll
- *     picks up the student's score (CTW/RDL/Academic/LCR/Conv/Announce/Talk),
- *   - whether to inject a custom "Student Submission" banner
- *     (Writing email/discussion already have userPreview / userStats),
+ * attempts to show (newest first) and decides:
+ *   - whether to repopulate sessionStorage so the page's own renderer
+ *     picks up the student's score (CTW/RDL/Academic/LCR/Conv/Announce/
+ *     Talk/Sentence). The server stores answers as a 0-BASED ARRAY of
+ *     raw selections; each restore converts to the exact shape + key
+ *     the target answer page reads (they all differ — see each task).
+ *   - whether to inject a "Student Submission" panel (1-based question
+ *     numbers, letters instead of raw option indexes),
  *   - whether to additionally fetch the original practice page and
  *     inject the prompt (Speaking/Writing — the answer/tips page
  *     doesn't already display the prompt).
  *
+ * Because every answer page renders once at load (before this overlay's
+ * network fetch resolves), restores are followed by ONE guarded
+ * location.reload() so the page's own score/正誤 display reflects the
+ * student data. The guard (sessionStorage flag keyed by attempt index)
+ * prevents reload loops; CTW skips this because its page exposes
+ * renderAll() for an in-place re-render.
+ *
  * Speaking (LR/TI) is special: recordings live in a separate sheet, so
  * we go through renderSpeakingRecordings() instead of the answers API.
- * The prompt-fetch path still runs so admin sees the question audio
- * + script alongside the recording.
  */
 (function(){
   var qs = new URLSearchParams(location.search);
@@ -36,6 +44,27 @@
   var section = taskMatch[1].toLowerCase();
   var task    = taskMatch[2].toLowerCase();
   var practice = taskMatch[3];
+
+  /* Which attempt is being shown survives the post-restore reload and
+     the attempt-selector dropdown (index into the newest-first list).
+     Keyed by userId too: opening a DIFFERENT student in the same tab must
+     not reuse the previous student's "already restored" flag, or the page
+     would keep showing the previous student's data without reloading. */
+  var SEL_KEY  = 'tck_admin_att_' + userId + '_' + task + '_p' + practice;
+  var FLAG_KEY = 'tck_admin_restored_' + userId + '_' + task + '_p' + practice;
+
+  /* Tasks whose answer page reads sessionStorage once at load — after a
+     restore these need one reload for the page's own score display to
+     pick up the student data. CTW re-renders in place via renderAll(). */
+  var RELOAD_TASKS = { rdl:1, academic:1, lcr:1, conv:1, announce:1, talk:1, sentence:1 };
+  function maybeReloadForPage(idx) {
+    if (!RELOAD_TASKS[task]) return false;
+    var want = String(idx);
+    if (sessionStorage.getItem(FLAG_KEY) === want) return false;   // this attempt already rendered
+    try { sessionStorage.setItem(FLAG_KEY, want); } catch (e) { return false; }
+    location.reload();
+    return true;
+  }
 
   function ensureApiLoaded(cb) {
     if (typeof Api !== 'undefined' && Api.getAttemptAnswers) return cb();
@@ -65,26 +94,91 @@
     });
   }
 
-  /* (A) Detect a "score-only" record: every stored answer is 0/empty. The
-     auth.js auto-save historically pushed new Array(total).fill(0) because the
-     per-question selections weren't captured, so Admin used to see "0: 0…".
-     Now we show an honest note instead of a misleading list of zeros. */
-  function answersLookEmpty(ans) {
-    if (!ans) return true;
-    var vals = Array.isArray(ans) ? ans : Object.keys(ans).map(function(k){ return ans[k]; });
-    if (!vals.length) return true;
-    return vals.every(function(v){
-      var x = (v && typeof v === 'object' && 'selected' in v) ? v.selected : v;
-      return x === 0 || x === '0' || x === null || x === undefined || x === '';
-    });
+  function fmtJp(ts) {
+    if (!ts) return '';
+    var d = new Date(ts);
+    if (isNaN(d.getTime())) return String(ts);
+    try { return d.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo', hour12: false }); }
+    catch (e) { return d.toLocaleString('ja-JP', { hour12: false }); }
   }
-  var SCORE_ONLY_NOTE = '<div style="padding:10px 12px;background:#FFF4D6;border:1px solid #E3C871;border-radius:8px;color:#6B5A1E;font-size:.9em;line-height:1.6">\u3053\u306e\u8a18\u9332\u306f\u81ea\u52d5\u63a1\u70b9\u30bf\u30b9\u30af\u306e\u3082\u306e\u3067\u3001<strong>\u5f97\u70b9\u306f\u6709\u52b9</strong>\u3067\u3059\u304c\u3001\u8a2d\u554f\u3054\u3068\u306e\u9078\u629e\u5185\u5bb9\u306f\u4fdd\u5b58\u3055\u308c\u3066\u3044\u306a\u3044\u305f\u3081\u8868\u793a\u3067\u304d\u307e\u305b\u3093\uff08\u65e7\u4ed5\u69d8\u306e\u8a18\u9332\uff09\u3002<br><span style="font-size:.85em;color:#8A7B45">\u203b \u4eca\u5f8c\u306e\u53d6\u308a\u7d44\u307f\u304b\u3089\u306f\u9078\u629e\u5185\u5bb9\u3082\u8a18\u9332\u3055\u308c\u3001\u3053\u3053\u306b\u8868\u793a\u3055\u308c\u307e\u3059\u3002</span></div>';
+
+  /* ---- value helpers ------------------------------------------------ */
+  var LETTERS = 'ABCDEFGH';
+  function unwrap(v) { return (v && typeof v === 'object' && 'selected' in v) ? v.selected : v; }
+  function isBlankVal(v) { return v === null || v === undefined || v === ''; }
+  function toLetter(v) {
+    if (isBlankVal(v)) return null;
+    if (typeof v === 'string' && /^[A-Ha-h]$/.test(v)) return v.toUpperCase();
+    var n = Number(v);
+    if (!isNaN(n) && n >= 0 && n < LETTERS.length && String(v).trim() !== '') return LETTERS.charAt(n);
+    return String(v);
+  }
+  function valuesOf(ans) {
+    if (Array.isArray(ans)) return ans.map(unwrap);
+    if (ans && typeof ans === 'object') return Object.keys(ans).map(function(k){ return unwrap(ans[k]); });
+    return [];
+  }
+  /* Every value blank → nothing to show at all. */
+  function allBlank(ans) {
+    var vals = valuesOf(ans);
+    return !vals.length || vals.every(isBlankVal);
+  }
+  /* Every value exactly 0/'0'. For letter tasks (RDL/Academic/LCR) a 0 is
+     impossible as a real selection, so all-zero = the legacy auto-save
+     that recorded Array(total).fill(0) → show the score-only note. For
+     index tasks (Conv/Announce/Talk) 0 legitimately means "choice A", so
+     all-zero rows get rendered WITH a caution line instead of hidden. */
+  function allZero(ans) {
+    var vals = valuesOf(ans);
+    return vals.length > 0 && vals.every(function(v){ return v === 0 || v === '0'; });
+  }
+  /* Server answers (0-based array, or an object with 1-based / qN keys)
+     → {1:'A', 2:'B', ...} letters, blanks skipped. */
+  function toObj1(ans) {
+    var out = {};
+    if (Array.isArray(ans)) {
+      ans.forEach(function(v, i){ v = unwrap(v); if (!isBlankVal(v)) out[String(i + 1)] = toLetter(v); });
+    } else if (ans && typeof ans === 'object') {
+      Object.keys(ans).forEach(function(k){
+        var m = String(k).match(/^q?(\d+)$/i);
+        if (!m) return;
+        var v = unwrap(ans[k]);
+        if (!isBlankVal(v)) out[m[1]] = toLetter(v);
+      });
+    }
+    return out;
+  }
+  /* Server answers → plain 0-based array of RAW values (numeric option
+     indexes preserved — the Conv/Announce/Talk pages compare numerically
+     against their own correctAnswers). */
+  function toArr0(ans) {
+    if (Array.isArray(ans)) return ans.map(function(v){ v = unwrap(v); return isBlankVal(v) ? null : v; });
+    var out = [];
+    if (ans && typeof ans === 'object') {
+      Object.keys(ans).forEach(function(k){
+        var m = String(k).match(/^q?(\d+)$/i);
+        if (!m) return;
+        var v = unwrap(ans[k]);
+        out[Number(m[1]) - 1] = isBlankVal(v) ? null : v;
+      });
+    }
+    return out;
+  }
+
+  var SCORE_ONLY_NOTE = '<div style="padding:10px 12px;background:#FFF4D6;border:1px solid #E3C871;border-radius:8px;color:#6B5A1E;font-size:.9em;line-height:1.6">この記録は自動採点タスクのもので、<strong>得点は有効</strong>ですが、設問ごとの選択内容は保存されていないため表示できません（旧仕様の記録）。<br><span style="font-size:.85em;color:#8A7B45">※ 今後の取り組みからは選択内容も記録され、ここに表示されます。</span></div>';
+  var ZERO_CAUTION = '<div style="margin-top:8px;padding:8px 12px;background:#FFF4D6;border:1px solid #E3C871;border-radius:8px;color:#6B5A1E;font-size:.8em;line-height:1.5">※ 全問「A」表示は、選択内容が記録されていない旧仕様の記録（全ゼロ埋め）の可能性があります。得点は有効です。</div>';
 
   /* ============================================================
      Insert a styled panel into the page, right after the admin
-     banner (so it sits above the existing answer-key content).
+     banner. Same-id panels are REPLACED, not stacked — switching
+     attempts in the dropdown used to pile old panels on top of
+     each other.
      ============================================================ */
   function insertPanel(panel) {
+    if (panel && panel.id) {
+      var old = document.getElementById(panel.id);
+      if (old && old.parentNode) old.parentNode.removeChild(old);
+    }
     var banner = document.getElementById('tckAdminBanner');
     if (banner && banner.parentNode) {
       banner.parentNode.insertBefore(panel, banner.nextSibling);
@@ -116,9 +210,7 @@
   /* Fetch the original practice page (sibling of the current
      -answers.html / -tips.html), extract one or more nodes by CSS
      selector, and inject them as a Prompt panel above the rest of the
-     page. Used by Writing (email/discussion) and Speaking (lr/ti) to
-     give admin the original question + audio + script alongside the
-     student's submission. */
+     page. Used by Writing (email/discussion) and Speaking (lr/ti). */
   function fetchAndInjectPrompt(selectors, label) {
     var promptUrl = location.pathname.replace(/-answers\.html(?:[?#].*)?$/, '.html')
                                      .replace(/-tips\.html(?:[?#].*)?$/, '.html');
@@ -141,21 +233,51 @@
     });
   }
 
+  /* Shared panel body: 1-based question numbers + letter answers. */
+  function panelRows(obj1, marks) {
+    return Object.keys(obj1).sort(function(a,b){ return Number(a) - Number(b); }).map(function(n){
+      var mark = marks && (n in marks) && marks[n] !== null
+        ? (marks[n] ? ' <span style="color:#007646;font-weight:700">✓</span>' : ' <span style="color:#B85C3C;font-weight:700">✗</span>')
+        : '';
+      return '<div style="padding:4px 0">Q' + escapeHtml(n) + ': <strong style="color:#005434">' + escapeHtml(obj1[n] == null ? '—' : obj1[n]) + '</strong>' + mark + '</div>';
+    }).join('');
+  }
+
   /* ============================================================
-     Per-task renderers — given the full attempts array (newest first
-     by GAS sort), populate sessionStorage / inject panels as needed.
+     Per-task renderers — (attemptsToShow, idx) where attemptsToShow
+     is newest-first and idx is the position of attemptsToShow[0] in
+     the full list (for the reload guard).
      ============================================================ */
+  function readingRenderer(storageKey) {
+    return function(attempts, idx) {
+      var att = attempts[0] || {};
+      var raw = att.answers;
+      if (allZero(raw)) { insertPanel(makeSubmissionPanel(SCORE_ONLY_NOTE)); return; }
+      // The RDL/Academic answer pages read a 1-BASED OBJECT of letters
+      // ({'1':'A',...}) and grade against their own key — the server's
+      // 0-based array written as-is used to shift every answer by one.
+      var obj1 = toObj1(raw);
+      var wrote = false;
+      try { sessionStorage.setItem(storageKey, JSON.stringify(obj1)); wrote = true; } catch (e) {}
+      if (wrote && maybeReloadForPage(idx)) return;
+      insertPanel(makeSubmissionPanel(allBlank(raw) ? SCORE_ONLY_NOTE : (panelRows(obj1) || '<div style="color:#5A6861">回答データなし</div>')));
+    };
+  }
+
   var RENDERERS = {
 
     /* ---------- CTW ---------- */
     ctw: function(attempts) {
-      // GAS returns one row per Set ("CTW P5 Set 1" / "CTW P5 Set 2").
-      // Restore each set's sessionStorage so the answer page's renderAll
-      // shows the actual scores instead of 0/10.
+      // GAS returns rows newest-first, one per Set ("CTW P5 Set 1/2").
+      // Keep the NEWEST row per set — iterating blindly used to let the
+      // OLDEST row win because later writes overwrote earlier ones.
+      var seen = {};
       attempts.forEach(function(att){
         var m = String(att.set || '').match(/Set\s*(\d+)/i);
         if (!m) return;
         var setNum = m[1];
+        if (seen[setNum]) return;
+        seen[setNum] = true;
         var ua = Array.isArray(att.answers) ? att.answers : [];
         var sc = Number(att.score) || 0;
         try {
@@ -171,73 +293,50 @@
       }
     },
 
-    /* ---------- RDL ---------- */
-    rdl: function(attempts) {
-      var att = attempts[0];
-      var answers = (att && att.answers && typeof att.answers === 'object') ? att.answers : {};
-      try {
-        sessionStorage.setItem('training_rdl_p' + practice + '_answers', JSON.stringify(answers));
-      } catch (e) {}
-      // RDL answer pages don't auto-rerender on storage write — bounce a
-      // visual banner so admin sees the saved selections without needing
-      // to reload.
-      var rows = Object.keys(answers).sort(function(a,b){return Number(a)-Number(b);}).map(function(k){
-        return '<div style="padding:4px 0">Q' + escapeHtml(k) + ': <strong style="color:#005434">' + escapeHtml(answers[k]) + '</strong></div>';
-      }).join('');
-      insertPanel(makeSubmissionPanel(answersLookEmpty(answers) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
-    },
-
-    /* ---------- Academic ---------- */
-    academic: function(attempts) {
-      var att = attempts[0];
-      var answers = (att && att.answers && typeof att.answers === 'object') ? att.answers : {};
-      try {
-        sessionStorage.setItem('training_academic_p' + practice + '_answers', JSON.stringify(answers));
-      } catch (e) {}
-      var rows = Object.keys(answers).sort(function(a,b){return Number(a)-Number(b);}).map(function(k){
-        return '<div style="padding:4px 0">Q' + escapeHtml(k) + ': <strong style="color:#005434">' + escapeHtml(answers[k]) + '</strong></div>';
-      }).join('');
-      insertPanel(makeSubmissionPanel(answersLookEmpty(answers) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
-    },
+    /* ---------- RDL / Academic ---------- */
+    rdl: null,      // assigned below (needs `practice` at call time)
+    academic: null,
 
     /* ---------- LCR ---------- */
-    lcr: function(attempts) {
-      var att = attempts[0];
-      var answers = (att && att.answers && typeof att.answers === 'object') ? att.answers : {};
-      // LCR page expects { q1: {selected, correct, isCorrect}, ... } shape.
-      // The saved `ua` from practice-N.html is the raw answers object — try
-      // to coerce; if it's a plain {1:"A",2:"B"} map, lift into the
-      // expected shape so the answer page can still render.
-      try {
-        var lifted = {};
-        Object.keys(answers).forEach(function(k){
-          var v = answers[k];
-          var key = /^q\d+$/.test(k) ? k : ('q' + k);
-          if (v && typeof v === 'object' && 'selected' in v) {
-            lifted[key] = v;
-          } else {
-            lifted[key] = { selected: v, correct: null, isCorrect: null };
-          }
-        });
-        sessionStorage.setItem('lcrAnswers', JSON.stringify(lifted));
-      } catch (e) {}
-      var rows = Object.keys(answers).sort().map(function(k){
-        var v = answers[k];
-        var pick = (v && typeof v === 'object' && 'selected' in v) ? v.selected : v;
-        return '<div style="padding:4px 0">' + escapeHtml(k) + ': <strong style="color:#005434">' + escapeHtml(pick == null ? '—' : pick) + '</strong></div>';
-      }).join('');
-      insertPanel(makeSubmissionPanel(answersLookEmpty(answers) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
+    lcr: function(attempts, idx) {
+      var att = attempts[0] || {};
+      var raw = att.answers;
+      if (allZero(raw)) { insertPanel(makeSubmissionPanel(SCORE_ONLY_NOTE)); return; }
+      // The LCR answer page reads { q1: {selected, correct, isCorrect} …
+      // q8 } — 1-BASED. The server's 0-based array used to become q0..q7,
+      // shifting every answer down a question and zeroing the score.
+      var obj1 = toObj1(raw);
+      // The answer page defines its own key (global QS, correct = option
+      // index) — grade against it so the page's ✓/✗ and score are real.
+      var key = null;
+      try { if (typeof QS !== 'undefined' && Array.isArray(QS)) key = QS; } catch (e) {}
+      var lifted = {}, marks = {};
+      Object.keys(obj1).forEach(function(n){
+        var sel = obj1[n];
+        var corr = null, ic = null;
+        var q = key && key[Number(n) - 1];
+        if (q && typeof q.correct === 'number') {
+          corr = LETTERS.charAt(q.correct);
+          ic = (sel === corr);
+        }
+        lifted['q' + n] = { selected: sel, correct: corr, isCorrect: ic };
+        marks[n] = ic;
+      });
+      var wrote = false;
+      try { sessionStorage.setItem('lcrAnswers', JSON.stringify(lifted)); wrote = true; } catch (e) {}
+      if (wrote && maybeReloadForPage(idx)) return;
+      insertPanel(makeSubmissionPanel(allBlank(raw) ? SCORE_ONLY_NOTE : (panelRows(obj1, marks) || '<div style="color:#5A6861">回答データなし</div>')));
     },
 
     /* ---------- Conv / Announce / Talk ---------- */
-    conv: function(attempts) {
-      genericListeningRenderer(attempts, 'convAnswers');
+    conv: function(attempts, idx) {
+      genericListeningRenderer(attempts, 'convAnswers', idx);
     },
-    announce: function(attempts) {
-      genericListeningRenderer(attempts, 'announceAnswers');
+    announce: function(attempts, idx) {
+      genericListeningRenderer(attempts, 'announceAnswers', idx);
     },
-    talk: function(attempts) {
-      genericListeningRenderer(attempts, 'talkPractice' + practice + 'Answers');
+    talk: function(attempts, idx) {
+      genericListeningRenderer(attempts, 'talkPractice' + practice + 'Answers', idx);
     },
 
     /* ---------- Email ---------- */
@@ -251,32 +350,50 @@
     },
 
     /* ---------- Build a Sentence ---------- */
-    sentence: function(attempts) {
-      var att = attempts[0];
-      var answers = (att && att.answers && typeof att.answers === 'object') ? att.answers : {};
+    sentence: function(attempts, idx) {
+      var att = attempts[0] || {};
+      var raw = att.answers;
+      var arr = Array.isArray(raw) ? raw : [];
+      // The Sentence answer page reads `sentenceAnswers` = {score, total}
+      // for its score card. (The old overlay wrote to a key nothing reads.)
+      var wrote = false;
       try {
-        sessionStorage.setItem('training_sentence_p' + practice + '_answers', JSON.stringify(answers));
+        sessionStorage.setItem('sentenceAnswers', JSON.stringify({
+          score: Number(att.score) || 0,
+          total: arr.length || 10
+        }));
+        wrote = true;
       } catch (e) {}
-      var rows = Object.keys(answers).sort(function(a,b){return Number(a)-Number(b);}).map(function(k){
-        var v = answers[k];
-        return '<div style="padding:6px 0;border-bottom:1px solid #F5E9D3"><strong>Q' + escapeHtml(k) + '</strong>: ' + escapeHtml(typeof v === 'string' ? v : JSON.stringify(v)) + '</div>';
+      if (wrote && maybeReloadForPage(idx)) return;
+      var rows = arr.map(function(v, i){
+        v = unwrap(v);
+        var txt = isBlankVal(v) ? '—' : (typeof v === 'string' ? v : JSON.stringify(v));
+        return '<div style="padding:6px 0;border-bottom:1px solid #F5E9D3"><strong>Q' + (i + 1) + '</strong>: ' + escapeHtml(txt) + '</div>';
       }).join('');
-      insertPanel(makeSubmissionPanel(answersLookEmpty(answers) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
+      insertPanel(makeSubmissionPanel(allBlank(raw) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
     }
   };
 
-  function genericListeningRenderer(attempts, storageKey) {
-    var att = attempts[0];
-    var answers = (att && att.answers && typeof att.answers === 'object') ? att.answers : {};
-    try {
-      sessionStorage.setItem(storageKey, JSON.stringify(answers));
-    } catch (e) {}
-    var rows = Object.keys(answers).sort().map(function(k){
-      var v = answers[k];
-      var pick = (v && typeof v === 'object' && 'selected' in v) ? v.selected : v;
-      return '<div style="padding:4px 0">' + escapeHtml(k) + ': <strong style="color:#005434">' + escapeHtml(pick == null ? '—' : pick) + '</strong></div>';
+  RENDERERS.rdl      = readingRenderer('training_rdl_p' + practice + '_answers');
+  RENDERERS.academic = readingRenderer('training_academic_p' + practice + '_answers');
+
+  function genericListeningRenderer(attempts, storageKey, idx) {
+    var att = attempts[0] || {};
+    var raw = att.answers;
+    // These pages read a plain 0-BASED ARRAY of option indexes and grade
+    // against their own correctAnswers — restore the raw values untouched.
+    var arr = toArr0(raw);
+    var wrote = false;
+    try { sessionStorage.setItem(storageKey, JSON.stringify(arr)); wrote = true; } catch (e) {}
+    if (wrote && maybeReloadForPage(idx)) return;
+    // Panel: 1-based question numbers, indexes shown as letters (0 = A).
+    var rows = arr.map(function(v, i){
+      return '<div style="padding:4px 0">Q' + (i + 1) + ': <strong style="color:#005434">' + escapeHtml(isBlankVal(v) ? '—' : toLetter(v)) + '</strong></div>';
     }).join('');
-    insertPanel(makeSubmissionPanel(answersLookEmpty(answers) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
+    var body = allBlank(raw)
+      ? SCORE_ONLY_NOTE
+      : (rows || '<div style="color:#5A6861">回答データなし</div>') + (allZero(raw) ? ZERO_CAUTION : '');
+    insertPanel(makeSubmissionPanel(body));
   }
 
   /* Writing (email/discussion) — restore the existing userPreview/
@@ -298,8 +415,6 @@
      ANSWERS. Pull them via Api.listRecordings (admin auth, returns all)
      and inject a player panel at the top of the tips page. */
   function renderSpeakingRecordings() {
-    // Also fetch the prompt (audio + script) from the practice page so
-    // admin can compare the student's recording against the original.
     fetchAndInjectPrompt(
       ['.task-card', '.question-card', '.script-card', '.tck-instruction-card'],
       task.toUpperCase() + ' Prompt（出題音声・スクリプト）'
@@ -320,7 +435,7 @@
             && String(x.practiceSet) === String(practice);
       });
 
-      injectBanner(recs.length ? recs : [{ timestamp: '', set: task.toUpperCase() + ' P' + practice }]);
+      injectBanner(recs.length ? recs : [{ timestamp: '', set: task.toUpperCase() + ' P' + practice }], 0);
       hideStudentControls();
 
       if (!recs.length) {
@@ -337,7 +452,7 @@
       html += recs.map(function(rc){
         var previewUrl = rc.fileId ? 'https://drive.google.com/file/d/' + rc.fileId + '/preview' : '';
         var dur = rc.durationSec ? (Math.floor(rc.durationSec/60) + ':' + String(rc.durationSec%60).padStart(2,'0')) : '—';
-        var dt = rc.timestamp ? new Date(rc.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
+        var dt = fmtJp(rc.timestamp);
         var driveLink = rc.fileUrl ? '<a href="' + rc.fileUrl + '" target="_blank" rel="noopener" style="color:#005434;font-size:.82em;margin-left:8px;white-space:nowrap">Drive →</a>' : '';
         return '<div style="border-top:1px solid #F5E9D3;padding:14px 0;display:flex;align-items:center;gap:14px;flex-wrap:wrap">' +
           '<div style="font-weight:800;color:#005434;font-size:.95em;min-width:48px">Q' + rc.questionIndex + '</div>' +
@@ -374,20 +489,27 @@
     }
   }
 
-  function injectBanner(attempts) {
+  function injectBanner(attempts, useIdx) {
+    var old = document.getElementById('tckAdminBanner');
+    if (old && old.parentNode) old.parentNode.removeChild(old);
     var banner = document.createElement('div');
     banner.id = 'tckAdminBanner';
     banner.style.cssText = 'position:sticky;top:0;z-index:200;background:linear-gradient(135deg,#0F4E2A,#1A6F3F);color:#fff;padding:12px 20px;font-family:Manrope,sans-serif;font-size:.86em;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;box-shadow:0 4px 14px rgba(0,0,0,.18)';
+    var shown = attempts[useIdx] || attempts[0];
+    var shownLabel = useIdx === 0 ? '最新を表示中' : ('表示中: ' + fmtJp(shown && shown.timestamp));
     var label = '<strong style="font-weight:800;letter-spacing:.04em">ADMIN VIEW</strong> · ' +
       escapeHtml(userName || userId) +
       ' の回答 · ' + task.toUpperCase() + ' P' + practice +
-      (attempts.length > 1 ? ' （' + attempts.length + ' 回提出 — 最新を表示中）' : '');
+      (attempts.length > 1 ? ' （' + attempts.length + ' 回提出 — ' + shownLabel + '）' : '');
     var sel = '';
     if (attempts.length > 1) {
       sel = '<select id="tckAdminAttemptSel" style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);padding:5px 10px;border-radius:6px;font-family:inherit;font-size:.92em">' +
         attempts.map(function(a, i){
-          var ts = a.timestamp ? new Date(a.timestamp).toLocaleString('ja-JP', { hour12:false }) : '#' + (i+1);
-          return '<option value="' + i + '">' + escapeHtml(ts) + '</option>';
+          var ts = a.timestamp ? fmtJp(a.timestamp) : '#' + (i + 1);
+          var setFrag = '';
+          var sm = String(a.set || '').match(/Set\s*\d+/i);
+          if (sm) setFrag = ' · ' + sm[0];
+          return '<option value="' + i + '"' + (i === useIdx ? ' selected' : '') + '>' + escapeHtml(ts + setFrag) + '</option>';
         }).join('') + '</select>';
     }
     banner.innerHTML = '<span>' + label + '</span><span style="display:flex;gap:10px;align-items:center">' + sel + '<button onclick="window.close()" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:.88em">タブを閉じる</button></span>';
@@ -395,9 +517,13 @@
 
     var selEl = document.getElementById('tckAdminAttemptSel');
     if (selEl) selEl.addEventListener('change', function(){
-      var idx = Number(selEl.value);
+      var idx = Number(selEl.value) || 0;
+      try { sessionStorage.setItem(SEL_KEY, String(idx)); } catch (e) {}
       var fn = RENDERERS[task];
-      if (fn && attempts[idx]) fn([attempts[idx]]);
+      if (fn && attempts[idx]) {
+        injectBanner(attempts, idx);   // refresh the "表示中" label
+        fn([attempts[idx]], idx);      // restore + (reload tasks) refresh page
+      }
     });
   }
 
@@ -437,7 +563,9 @@
         showError(escapeHtml(userName || userId) + ' の ' + task.toUpperCase() + ' P' + practice + ' の提出は見つかりませんでした。');
         return;
       }
-      injectBanner(atts);
+      var savedIdx = parseInt(sessionStorage.getItem(SEL_KEY) || '0', 10) || 0;
+      var useIdx = Math.min(Math.max(savedIdx, 0), atts.length - 1);
+      injectBanner(atts, useIdx);
       hideStudentControls();
 
       var renderer = RENDERERS[task];
@@ -445,9 +573,10 @@
         showError('このタスクの回答表示はまだ未対応です（task=' + task + '）。');
         return;
       }
-      // CTW renderer takes all attempts (set 1 + set 2); others take
-      // newest only.
-      renderer(task === 'ctw' ? atts : [atts[0]]);
+      // CTW renderer takes all attempts (newest per set); a specific
+      // dropdown pick narrows it to that one row. Others take the
+      // selected (default: newest) attempt only.
+      renderer(task === 'ctw' && useIdx === 0 ? atts : [atts[useIdx]], useIdx);
     }).catch(function(err){
       showError('通信エラー：' + (err && err.message || err));
     });
