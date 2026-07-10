@@ -617,7 +617,7 @@ function buildPracticeBuckets(userAttempts) {
     const first = val(sr[0]);
     const latest = val(sr[sr.length - 1]);
     let best = first;
-    sr.forEach(x => { const v = val(x); if (pctOf(v) > pctOf(best)) best = v; });
+    sr.forEach(x => { const v = val(x); if (pctOf(v) > pctOf(best) || (pctOf(v) === pctOf(best) && v.total > best.total)) best = v; });
     return { first, best, latest, count: sr.length };
   }
   const buckets = {};
