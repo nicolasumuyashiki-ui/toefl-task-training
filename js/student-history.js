@@ -5,10 +5,21 @@
  * admin mode). Fetches the logged-in user's past attempts from GAS and
  * renders a "📜 これまでのあなたの回答" panel.
  *
- * Today only Writing (Email/Discussion) and Speaking (LR/TI) are wired
- * up — those are the non-auto-graded tasks where reviewing past
- * attempts adds the most value. The auto-graded tasks (CTW/LCR/etc.)
- * already show scores after each attempt.
+ * Roles:
+ *   - Writing (Email/Discussion): list past submissions with full text.
+ *   - Speaking (LR/TI): list past recordings with players.
+ *   - Auto-graded tasks (CTW/RDL/Academic/LCR/Conv/Announce/Talk/
+ *     Sentence): list past attempts WITH per-question ✓/✗ against the
+ *     answer key that lives on this very page, plus a "間違いのみ"
+ *     filter. If the page itself rendered with no data (sessionStorage
+ *     was empty and auth.js found no localStorage mirror — e.g. another
+ *     device), restore the newest server attempt into the page's own
+ *     display key and reload ONCE so the page shows the real result.
+ *
+ * CTW attempts saved before the 2026-07-02 full rebuild (#125) answered
+ * the OLD passages — they are never restored onto the current page;
+ * instead the panel links to the legacy archive (reading/ctw/legacy/)
+ * where the original questions live.
  */
 (function(){
   // Skip in admin mode — admin-answer-overlay.js owns the overlay.
@@ -16,8 +27,8 @@
   if (qs.get('fromAdmin') === '1') return;
 
   // Match either practice-N-answers.html, practice-N-tips.html,
-  // or practice-N-set-S-answers.html. (CTW uses the set form, but we
-  // skip CTW for now — keep the regex permissive for future use.)
+  // or practice-N-set-S-answers.html. The legacy archive
+  // (reading/ctw/legacy/…) intentionally does NOT match.
   var path = location.pathname;
   var match = path.match(/\/(reading|listening|writing|speaking)\/([a-z]+)\/practice-(\d+)(?:-set-(\d+))?(-answers|-tips)\.html/i);
   if (!match) return;
@@ -25,10 +36,9 @@
   var practice = match[3];
   var setNum   = match[4] || '';
 
-  // Need a logged-in student. (Admin sessions also have kickstart_user
-  // but the fromAdmin guard above already excludes the admin overlay
-  // path; an admin browsing the answer page directly would just see
-  // their own — which they don't have — and the panel renders nothing.)
+  var CTW_REBUILD_ISO = '2026-07-02T04:07:36Z';
+
+  // Need a logged-in student.
   var user = null;
   try { user = JSON.parse(sessionStorage.getItem('kickstart_user') || 'null'); } catch(e){}
   if (!user || !user.userId) return;
@@ -41,8 +51,96 @@
     });
   }
 
-  // Lazy-load api.js if the page doesn't include it (Reading/Listening
-  // answer pages typically only have auth.js).
+  /* ---- value helpers (same conventions as admin-answer-overlay) ---- */
+  var LETTERS = 'ABCDEFGH';
+  function unwrap(v){ return (v && typeof v === 'object' && 'selected' in v) ? v.selected : v; }
+  function isBlankVal(v){ return v === null || v === undefined || v === ''; }
+  function toLetter(v){
+    if (isBlankVal(v)) return null;
+    if (typeof v === 'string' && /^[A-Ha-h]$/.test(v)) return v.toUpperCase();
+    var n = Number(v);
+    if (!isNaN(n) && n >= 0 && n < LETTERS.length && String(v).trim() !== '') return LETTERS.charAt(n);
+    return String(v);
+  }
+  /* Server answers (0-based array, or object with 1-based / qN keys)
+     → {1:'A', 2:'B', …} letters, blanks skipped. */
+  function toObj1(ans){
+    var out = {};
+    if (Array.isArray(ans)) {
+      ans.forEach(function(v, i){ v = unwrap(v); if (!isBlankVal(v)) out[String(i + 1)] = toLetter(v); });
+    } else if (ans && typeof ans === 'object') {
+      Object.keys(ans).forEach(function(k){
+        var m = String(k).match(/^q?(\d+)$/i);
+        if (!m) return;
+        var v = unwrap(ans[k]);
+        if (!isBlankVal(v)) out[m[1]] = toLetter(v);
+      });
+    }
+    return out;
+  }
+  /* Server answers → plain 0-based array of RAW values (numeric option
+     indexes preserved — Conv/Announce/Talk pages compare numerically). */
+  function toArr0(ans){
+    if (Array.isArray(ans)) return ans.map(function(v){ v = unwrap(v); return isBlankVal(v) ? null : v; });
+    var out = [];
+    if (ans && typeof ans === 'object') {
+      Object.keys(ans).forEach(function(k){
+        var m = String(k).match(/^q?(\d+)$/i);
+        if (!m) return;
+        var v = unwrap(ans[k]);
+        out[Number(m[1]) - 1] = isBlankVal(v) ? null : v;
+      });
+    }
+    return out;
+  }
+  function rawSet(k, v){ try { Storage.prototype.setItem.call(sessionStorage, k, v); } catch (e) {} }
+
+  /* The answer key THIS page grades against, as a 1-based array of
+     letters (index 0 = Q1). Detected from the page's own globals so the
+     panel's ✓/✗ always agrees with the page itself. Null when the page
+     exposes no key (writing/speaking, or an unexpected page shape). */
+  function pageAnswerKey(){
+    try {
+      if (task === 'lcr' && typeof QS !== 'undefined' && Array.isArray(QS)) {
+        return QS.map(function(q){ return (q && typeof q.correct === 'number') ? LETTERS.charAt(q.correct) : null; });
+      }
+      if ((task === 'conv' || task === 'announce' || task === 'talk')
+          && typeof correctAnswers !== 'undefined' && Array.isArray(correctAnswers)) {
+        return correctAnswers.map(function(c){ return typeof c === 'number' ? LETTERS.charAt(c) : toLetter(c); });
+      }
+      if ((task === 'rdl' || task === 'academic')
+          && typeof correctAnswers !== 'undefined' && correctAnswers && typeof correctAnswers === 'object' && !Array.isArray(correctAnswers)) {
+        var out = [];
+        Object.keys(correctAnswers).forEach(function(k){
+          var n = Number(k);
+          if (!isNaN(n) && n >= 1) out[n - 1] = String(correctAnswers[k]).toUpperCase();
+        });
+        return out;
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  /* CTW: correct endings for a given set (1|2) from the page's SD. */
+  function ctwKeyForSet(setN){
+    try {
+      if (typeof SD !== 'undefined' && Array.isArray(SD) && SD[setN - 1]) {
+        return SD[setN - 1].target.filter(function(t){ return t.a !== null; }).map(function(t){ return t.a; });
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  /* Sentence: model sentences (+alt) from the page's `answers` global. */
+  function sentenceKey(){
+    try {
+      if (task === 'sentence' && typeof answers !== 'undefined' && Array.isArray(answers)) return answers;
+    } catch (e) {}
+    return null;
+  }
+  function normSentence(s){ return String(s || '').replace(/\s+/g, ' ').trim().toLowerCase(); }
+
+  // Lazy-load api.js if the page doesn't include it.
   function ensureApi(cb){
     if (typeof Api !== 'undefined' && Api.getMyAnswers) return cb();
     var here = '';
@@ -92,7 +190,8 @@
 
   // True when every stored selection is 0/empty — the old auth.js auto-save
   // pushed a score-only row (new Array(total).fill(0)) before per-question
-  // selections were captured. Show an honest note instead of "Q1: 0".
+  // selections were captured (2026-06-25, #89/#90). Show an honest note
+  // instead of "Q1: 0".
   function selectionsLookEmpty(ans){
     if (!ans) return true;
     var vals = Array.isArray(ans) ? ans : Object.keys(ans).map(function(k){ return ans[k]; });
@@ -103,77 +202,208 @@
     });
   }
 
-  // Render the learner's actual per-question selections (matches what staff
-  // see in the admin overlay). Handles array shape (CTW/Sentence), object
-  // map ({1:"A"} / {q1:{selected}}), and the {selected} wrapper.
-  function formatSelections(ans){
-    if (selectionsLookEmpty(ans)) {
-      return '<div style="padding:8px 10px;background:#FFF4D6;border:1px solid #E3C871;border-radius:8px;color:#6B5A1E;font-size:.84em;line-height:1.55">この記録は得点のみ保存された旧仕様のため、設問ごとの選択内容は表示できません（得点は有効です）。</div>';
+  var SCORE_ONLY_NOTE = '<div style="padding:8px 10px;background:#FFF4D6;border:1px solid #E3C871;border-radius:8px;color:#6B5A1E;font-size:.84em;line-height:1.55"><span class="jp">この記録は得点のみ保存された旧仕様（2026-06-25以前）のため、設問ごとの選択内容は表示できません（得点は有効です）。</span><span class="en">This attempt predates per-question recording (before 2026-06-25), so only the score is available.</span></div>';
+
+  /* Render the learner's per-question selections with ✓/✗ against the
+     page's own answer key. Rows carry data-ok for the 間違いのみ filter. */
+  function formatSelections(ans, att){
+    if (selectionsLookEmpty(ans)) return SCORE_ONLY_NOTE;
+
+    /* ---- CTW: typed word-endings vs SD ---- */
+    if (task === 'ctw') {
+      var sm = String(att && att.set || '').match(/Set\s*(\d)/i);
+      var key0 = sm ? ctwKeyForSet(Number(sm[1])) : null;
+      var arr = Array.isArray(ans) ? ans : toArr0(ans);
+      var rows0 = arr.map(function(v, i){
+        v = unwrap(v);
+        var corr = key0 ? key0[i] : null;
+        var ok = (corr != null && !isBlankVal(v)) ? (String(v).toLowerCase() === String(corr).toLowerCase()) : null;
+        return row(i + 1, isBlankVal(v) ? '—' : String(v), corr, ok);
+      }).join('');
+      return wrapRows(rows0);
     }
-    var keys = Array.isArray(ans)
-      ? ans.map(function(_, i){ return i; })
-      : Object.keys(ans).sort(function(a,b){ var na=Number(a.replace(/\D/g,'')), nb=Number(b.replace(/\D/g,'')); return (isNaN(na)||isNaN(nb)) ? String(a).localeCompare(String(b)) : na-nb; });
-    var rows = keys.map(function(k){
-      var v = ans[k];
-      var pick = (v && typeof v === 'object' && 'selected' in v) ? v.selected : v;
-      var qlabel = Array.isArray(ans) ? ('Q' + (Number(k) + 1)) : (/^q?\d+$/i.test(k) ? ('Q' + String(k).replace(/\D/g,'')) : k);
-      return '<div style="padding:4px 0;display:flex;gap:10px;font-size:.88em">' +
-        '<span style="min-width:42px;color:#5A6861;font-weight:600">' + escapeHtml(qlabel) + '</span>' +
-        '<strong style="color:#005434">' + escapeHtml(pick == null || pick === '' ? '—' : (typeof pick === 'string' ? pick : JSON.stringify(pick))) + '</strong>' +
-      '</div>';
+
+    /* ---- Sentence: built sentences vs model (+alt) ---- */
+    if (task === 'sentence') {
+      var models = sentenceKey();
+      var arr2 = Array.isArray(ans) ? ans : toArr0(ans);
+      var rows1 = arr2.map(function(v, i){
+        v = unwrap(v);
+        var mdl = models && models[i];
+        var ok = null;
+        if (mdl && !isBlankVal(v)) {
+          var u = normSentence(v);
+          ok = (u === normSentence(mdl.sentence)) || (mdl.alt ? u === normSentence(mdl.alt) : false);
+        }
+        return row(i + 1, isBlankVal(v) ? '—' : String(v), mdl ? mdl.sentence : null, ok, true);
+      }).join('');
+      return wrapRows(rows1);
+    }
+
+    /* ---- Letter tasks (RDL/Academic/LCR/Conv/Announce/Talk) ---- */
+    var key = pageAnswerKey();
+    var obj1 = toObj1(ans);
+    var nums = Object.keys(obj1).sort(function(a,b){ return Number(a) - Number(b); });
+    var rows2 = nums.map(function(n){
+      var sel = obj1[n];
+      var corr = key ? (key[Number(n) - 1] || null) : null;
+      var ok = (corr != null && sel != null) ? (sel === corr) : null;
+      return row(n, sel == null ? '—' : sel, corr, ok);
     }).join('');
-    return '<div style="margin-top:8px;padding:12px 14px;background:#fff;border:1px solid #F5E9D3;border-radius:8px">' +
-      '<div style="font-size:.78em;font-weight:700;color:#8A6D2A;margin-bottom:6px">あなたが選んだ答え</div>' + rows + '</div>';
+    return wrapRows(rows2);
+
+    function row(n, yours, corr, ok, isLong){
+      var mark = ok === null ? '' : (ok
+        ? '<span style="color:#007646;font-weight:800">✓</span>'
+        : '<span style="color:#B85C3C;font-weight:800">✗</span>');
+      var corrHtml = (ok === false && corr != null)
+        ? '<span style="color:#5A6861;font-size:.9em"><span class="jp">正解: </span><span class="en">Correct: </span><strong style="color:#007646">' + escapeHtml(String(corr)) + '</strong></span>'
+        : '';
+      return '<div data-ok="' + (ok === true ? '1' : '0') + '" style="padding:5px 0;display:flex;gap:10px;align-items:baseline;font-size:.88em;flex-wrap:wrap;border-bottom:1px dashed #F5E9D3">' +
+        '<span style="min-width:38px;color:#5A6861;font-weight:600">Q' + escapeHtml(String(n)) + '</span>' +
+        '<span style="min-width:16px">' + mark + '</span>' +
+        '<strong style="color:#005434;' + (isLong ? 'flex:1;min-width:180px' : '') + '">' + escapeHtml(String(yours)) + '</strong>' +
+        corrHtml +
+      '</div>';
+    }
+    function wrapRows(r){
+      return '<div style="margin-top:8px;padding:12px 14px;background:#fff;border:1px solid #F5E9D3;border-radius:8px">' +
+        '<div style="font-size:.78em;font-weight:700;color:#8A6D2A;margin-bottom:6px"><span class="jp">あなたが選んだ答え（✗の行に正解を表示）</span><span class="en">Your answers (correct answer shown on ✗ rows)</span></div>' + r + '</div>';
+    }
   }
 
-  // Auto-graded tasks (CTW/RDL/Academic/LCR/Conv/Announce/Talk/Sentence).
-  // For each attempt: date, score, total, percentage, set label (CTW only),
-  // plus an expandable list of the actual selections the learner made.
-  // Total is derived from answers array length.
+  /* If this page rendered with NO attempt data (sessionStorage empty and
+     no localStorage mirror — typically another device), restore the
+     newest usable server attempt into the page's own display key and
+     reload once. Returns true when a reload was triggered. */
+  function restorePageFromServer(attempts){
+    var displayKeys;
+    if (task === 'rdl' || task === 'academic') displayKeys = ['training_' + task + '_p' + practice + '_answers'];
+    else if (task === 'lcr') displayKeys = ['lcrAnswers'];
+    else if (task === 'conv' || task === 'announce') displayKeys = [task + 'Answers'];
+    else if (task === 'talk') displayKeys = ['talkPractice' + practice + 'Answers'];
+    else if (task === 'sentence') displayKeys = ['sentenceAnswers'];
+    else if (task === 'ctw') displayKeys = ['ctw_p' + practice + '_answers_1', 'ctw_p' + practice + '_answers_2'];
+    else return false;
+
+    var present = false;
+    try { present = displayKeys.some(function(k){ return sessionStorage.getItem(k) !== null; }); } catch (e) {}
+    if (present) return false;
+
+    function usable(a){ return a && a.answers && !selectionsLookEmpty(a.answers); }
+    var FLAG = 'tck_stu_restored_' + task + '_p' + practice;
+    var wrote = false, sig = '';
+
+    if (task === 'ctw') {
+      var seen = {};
+      attempts.forEach(function(a){
+        var m2 = String(a.set || '').match(/Set\s*(\d)/i);
+        if (!m2 || seen[m2[1]]) return;
+        // Pre-rebuild attempts answered the OLD passages — never map them
+        // onto today's questions. The panel links to the legacy archive.
+        if (String(a.timestamp || '') < CTW_REBUILD_ISO) return;
+        seen[m2[1]] = 1;
+        if (!usable(a)) return;
+        var ua = Array.isArray(a.answers) ? a.answers : [];
+        rawSet('ctw_p' + practice + '_answers_' + m2[1], JSON.stringify({ answers: ua, score: Number(a.score) || 0, total: ua.length || 10 }));
+        wrote = true; sig += String(a.timestamp || '') + ';';
+      });
+    } else {
+      var att = null;
+      for (var i = 0; i < attempts.length; i++) { if (usable(attempts[i])) { att = attempts[i]; break; } }
+      if (att) {
+        sig = String(att.timestamp || '1');
+        if (task === 'rdl' || task === 'academic') {
+          rawSet(displayKeys[0], JSON.stringify(toObj1(att.answers))); wrote = true;
+        } else if (task === 'lcr') {
+          var key = pageAnswerKey();
+          var obj1 = toObj1(att.answers), lifted = {};
+          Object.keys(obj1).forEach(function(n){
+            var sel = obj1[n];
+            var corr = key ? (key[Number(n) - 1] || null) : null;
+            lifted['q' + n] = { selected: sel, correct: corr, isCorrect: corr != null ? sel === corr : null };
+          });
+          rawSet(displayKeys[0], JSON.stringify(lifted)); wrote = true;
+        } else if (task === 'conv' || task === 'announce' || task === 'talk') {
+          rawSet(displayKeys[0], JSON.stringify(toArr0(att.answers))); wrote = true;
+        } else if (task === 'sentence') {
+          var arr = Array.isArray(att.answers) ? att.answers.map(unwrap) : [];
+          rawSet(displayKeys[0], JSON.stringify({ answers: arr, score: Number(att.score) || 0, total: arr.length || 10 })); wrote = true;
+        }
+      }
+    }
+
+    if (wrote && sessionStorage.getItem(FLAG) !== sig) {
+      rawSet(FLAG, sig);
+      location.reload();
+      return true;
+    }
+    return false;
+  }
+
+  // Auto-graded tasks: per-attempt score line + expandable graded answers.
   function renderAutoGraded(attempts){
     if (!attempts.length) return;
     var box = document.createElement('div');
     box.id = 'tckMyHistory';
     box.style.cssText = 'background:#FBF6EC;border:1px solid #F5E9D3;border-radius:14px;padding:18px 22px;margin:22px auto;max-width:840px;font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif';
-    var header = '<div style="font-weight:800;color:#005434;font-size:1em;margin-bottom:12px"><span class="jp">📊 これまでのあなたの記録（' + attempts.length + ' 回）</span><span class="en">📊 Your past attempts (' + attempts.length + ')</span></div>';
+
+    var header = '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px">' +
+      '<div style="font-weight:800;color:#005434;font-size:1em"><span class="jp">📊 これまでのあなたの記録（' + attempts.length + ' 回）</span><span class="en">📊 Your past attempts (' + attempts.length + ')</span></div>' +
+      '<button id="tckWrongOnlyBtn" type="button" style="margin-left:auto;background:#fff;border:1px solid #B85C3C;color:#B85C3C;border-radius:999px;padding:4px 14px;font-size:.78em;font-weight:700;cursor:pointer;font-family:inherit"><span class="jp">✗ 間違いのみ表示</span><span class="en">✗ Wrong only</span></button>' +
+    '</div>';
+
+    // CTW attempts predating the 2026-07-02 rebuild → link to the archive
+    // that still shows the questions as they were.
+    var legacyNote = '';
+    if (task === 'ctw' && attempts.some(function(a){ return a.timestamp && String(a.timestamp) < CTW_REBUILD_ISO; })) {
+      legacyNote = '<div style="margin-bottom:12px;padding:10px 14px;background:#FFF4D6;border:1px solid #E3C871;border-radius:10px;color:#6B5A1E;font-size:.86em;line-height:1.6">' +
+        '<span class="jp">⚠ 2026-07-02 の問題全面改訂より前の記録が含まれます。当時の問題文・自分の回答は <a href="legacy/practice-' + practice + '-answers.html" style="color:#8A3E24;font-weight:700">旧版アーカイブ</a> で確認できます（復習用の再挑戦も可能です）。</span>' +
+        '<span class="en">⚠ Some attempts predate the 2026-07-02 question rebuild. View them (and retry the original questions) in the <a href="legacy/practice-' + practice + '-answers.html" style="color:#8A3E24;font-weight:700">legacy archive</a>.</span></div>';
+    }
+
     var rows = attempts.map(function(att, i){
       var dt = att.timestamp ? new Date(att.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
       var sc = (att.score === null || att.score === undefined || att.score === '') ? null : Number(att.score);
       var ans = att.answers;
-      var total = Array.isArray(ans) ? ans.length : 0;
+      var total = Array.isArray(ans) ? ans.length : (ans && typeof ans === 'object' ? Object.keys(ans).length : 0);
       var pct = (sc !== null && total > 0) ? Math.round(sc / total * 100) : null;
-      // Performance colour code so trends are scannable at a glance.
-      var color = (pct === null) ? '#5A6861'
-                : (pct >= 80) ? '#005434'
-                : (pct >= 50) ? '#A47A1F'
-                : '#9C3D1F';
-      var icon  = (pct === null) ? '○'
-                : (pct >= 80) ? '🌟'
-                : (pct >= 50) ? '✓'
-                : '↻';
-      // CTW stores "CTW P1 Set 1" — surface the Set number when present.
+      var color = (pct === null) ? '#5A6861' : (pct >= 80) ? '#005434' : (pct >= 50) ? '#A47A1F' : '#9C3D1F';
+      var icon  = (pct === null) ? '○' : (pct >= 80) ? '🌟' : (pct >= 50) ? '✓' : '↻';
+      var isLegacyCtw = (task === 'ctw' && att.timestamp && String(att.timestamp) < CTW_REBUILD_ISO);
       var setLabel = '';
       var setMatch = String(att.set || '').match(/Set\s+(\d+)/);
       if (setMatch) setLabel = '<span style="color:#5A6861;font-family:Manrope,sans-serif;font-size:.78em;background:#F5E9D3;padding:2px 8px;border-radius:999px">Set ' + setMatch[1] + '</span>';
       var label = (i === 0 ? '🆕 ' : '#' + (attempts.length - i) + '  ');
       var scoreHtml = '<div style="font-family:Manrope,sans-serif;font-weight:800;color:' + color + ';font-size:1.05em;margin-left:auto">' +
-          icon + ' ' +
-          (sc !== null ? sc + (total > 0 ? ' / ' + total : '') : '—') +
+          icon + ' ' + (sc !== null ? sc + (total > 0 ? ' / ' + total : '') : '—') +
           (pct !== null ? '<span style="font-size:.82em;font-weight:600;margin-left:6px;color:#5A6861">(' + pct + '%)</span>' : '') +
         '</div>';
+      var body = isLegacyCtw
+        ? '<div style="margin-top:8px;padding:8px 12px;background:#FFF4D6;border:1px solid #E3C871;border-radius:8px;color:#6B5A1E;font-size:.84em"><span class="jp">この回は改訂前の問題への回答です → <a href="legacy/practice-' + practice + '-answers.html" style="color:#8A3E24;font-weight:700">旧版アーカイブで見る</a></span><span class="en">This attempt used the pre-rebuild questions → <a href="legacy/practice-' + practice + '-answers.html" style="color:#8A3E24;font-weight:700">view in the legacy archive</a></span></div>'
+        : formatSelections(ans, att);
       return '<details ' + (i === 0 ? 'open' : '') + ' style="border-top:1px solid #F5E9D3;padding:12px 0">' +
         '<summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;flex-wrap:wrap">' +
           '<span style="font-family:Manrope,sans-serif;font-size:.82em;color:#5A6861;min-width:170px">' + escapeHtml(label + dt) + '</span>' +
-          setLabel +
-          scoreHtml +
-          '<span style="font-size:.72em;color:#8A6D2A;font-weight:700;width:100%;margin-top:2px">▼ 答案を見る</span>' +
-        '</summary>' +
-        formatSelections(ans) +
+          setLabel + scoreHtml +
+          '<span style="font-size:.72em;color:#8A6D2A;font-weight:700;width:100%;margin-top:2px">▼ <span class="jp">答案を見る</span><span class="en">View answers</span></span>' +
+        '</summary>' + body +
       '</details>';
     }).join('');
-    box.innerHTML = header + rows;
-    // Insert just below the existing score summary card if it exists,
-    // otherwise append at end of body.
+
+    box.innerHTML = header + legacyNote + rows;
+
+    // 間違いのみ filter — hides data-ok="1" rows inside this panel.
+    var style = document.createElement('style');
+    style.textContent = '#tckMyHistory.tck-wrong-only [data-ok="1"]{display:none}';
+    box.appendChild(style);
+    var btn = box.querySelector('#tckWrongOnlyBtn');
+    if (btn) btn.addEventListener('click', function(){
+      var on = box.classList.toggle('tck-wrong-only');
+      btn.style.background = on ? '#B85C3C' : '#fff';
+      btn.style.color = on ? '#fff' : '#B85C3C';
+    });
+
     var ss = document.getElementById('scoreSummary') || document.querySelector('.score-summary');
     if (ss && ss.parentNode) {
       ss.parentNode.insertBefore(box, ss.nextSibling);
@@ -208,9 +438,6 @@
     document.body.appendChild(box);
   }
 
-  // For Writing answer pages: insert just below the existing
-  // userPreview card (the "あなたの回答" block). For other pages, fall
-  // back to appending at body end.
   function insertAfterUserPreview(box){
     var prev = document.getElementById('userPreview');
     if (prev) {
@@ -244,12 +471,15 @@
         renderWriting(r.attempts || []);
       }).catch(function(){});
     } else {
-      // Auto-graded tasks (CTW/RDL/Academic/LCR/Conv/Announce/Talk/Sentence).
-      // For CTW we deliberately do NOT pass setNum so the panel shows
-      // every set the student has tried for this practice.
+      // Auto-graded tasks. For CTW we deliberately do NOT pass setNum so
+      // the panel shows every set the student has tried for this practice.
       Api.getMyAnswers(task, practice, setNum).then(function(r){
         if (!r || !r.success) return;
-        renderAutoGraded(r.attempts || []);
+        var attempts = r.attempts || [];
+        // Other-device restore: fill the page's own display key from the
+        // newest server attempt and reload once so the page shows it.
+        if (attempts.length && restorePageFromServer(attempts)) return;
+        renderAutoGraded(attempts);
       }).catch(function(){});
     }
   });

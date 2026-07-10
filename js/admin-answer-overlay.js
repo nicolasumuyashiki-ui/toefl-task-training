@@ -277,7 +277,7 @@
         var note = document.createElement('div');
         note.id = 'tckAdminLegacyNote';
         note.style.cssText = 'background:#FFF4D6;border:2px solid #E3C871;border-radius:14px;padding:14px 20px;margin:18px auto;max-width:900px;color:#6B5A1E;font-size:.9em;line-height:1.6;font-family:Manrope,"Noto Sans JP",sans-serif';
-        note.innerHTML = '⚠ この生徒の記録には <strong>CTW 全面リビルド（2026-07-02・v3.5.2）以前</strong>の取り組みが含まれます。当時の問題文への回答のため、現在の解答ページ上では選択内容が問題と一致して見えません（<strong>得点は保存時のまま有効</strong>です）。';
+        note.innerHTML = '⚠ この生徒の記録には <strong>CTW 全面リビルド（2026-07-02・v3.5.2）以前</strong>の取り組みが含まれます。当時の問題文への回答のため、現在の解答ページ上では選択内容が問題と一致して見えません（<strong>得点は保存時のまま有効</strong>です）。&nbsp;<a href="legacy/practice-' + practice + '-answers.html' + location.search + '" style="color:#8A3E24;font-weight:700">当時の問題・回答を旧版アーカイブで見る →</a>';
         insertPanel(note);
       }
       // GAS returns rows newest-first, one per Set ("CTW P5 Set 1/2").

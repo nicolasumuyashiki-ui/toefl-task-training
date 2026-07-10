@@ -183,7 +183,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);color:var
   </div>
 </div>
 
-<script src="../../js/auth.js?v=20260710"></script>
+<script src="../../js/auth.js?v=20260711"></script>
 <script>
 /* i18n toggle */
 (function(){
@@ -199,11 +199,11 @@ var SD=[{intro:"Chocolate began its long history as a bitter ceremonial drink, p
 
 var posEn={'代名詞':'pronoun','冠詞':'article','前置詞':'preposition','副詞':'adverb','副詞（接続）':'adverb (connector)','助動詞':'auxiliary verb','動名詞':'gerund','動詞':'verb','名詞':'noun','名詞（主語）':'noun (subject)','固有名詞':'proper noun','形容詞':'adjective','形容詞（比較級）':'adjective (comparative)','指示形容詞':'demonstrative adjective','接続副詞':'conjunctive adverb','接続詞':'conjunction','数詞':'numeral','過去分詞':'past participle','関係代名詞':'relative pronoun','関係副詞':'relative adverb'};
 function renderAll(){
-  var ts=0,tq=0,harderCorrect=0,harderTotal=0,sh='';
+  var ts=0,tq=0,harderCorrect=0,harderTotal=0,sh='';var anySt=false;
   SD.forEach(function(s,si){
     var bl=s.target.filter(function(t){return t.a!==null;});
     var st=null;try{st=JSON.parse(sessionStorage.getItem('ctw_p1_answers_'+(si+1)));}catch(e){}
-    var ua=st?st.answers:[];var sc=st?st.score:0;var denom=(st&&typeof st.total==='number'&&st.total>0)?st.total:bl.length;if(denom<sc)denom=sc;ts+=sc;tq+=denom;if(si===1){harderCorrect+=sc;harderTotal+=bl.length;}
+    if(st)anySt=true;var ua=st?st.answers:[];var sc=st?st.score:0;var denom=(st&&typeof st.total==='number'&&st.total>0)?st.total:bl.length;if(denom<sc)denom=sc;ts+=sc;tq+=denom;if(si===1){harderCorrect+=sc;harderTotal+=bl.length;}
     sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+denom+'</div><div class="score-detail">'+(st?Math.round(sc/denom*100)+'%':'—')+'</div></div>';
     var ph='<span>'+s.intro+'</span> ';
     s.target.forEach(function(t){if(t.a!==null){ph+='<span class="blank-word">'+t.s+'<span class="blank-answer">'+t.a+'</span></span>';if(t.p)ph+=t.p;ph+=' ';}else{ph+=t.w+(t.p||'')+' ';}});
@@ -223,7 +223,7 @@ function renderAll(){
     document.getElementById('ag'+si).innerHTML=ag;
   });
   var pct=tq?Math.round(ts/tq*100):0;
-  sh+='<div class="score-card total"><h3>Total</h3><div class="score-num"><span class="correct">'+ts+'</span>/'+tq+'</div><div class="score-detail">'+pct+'%</div></div>';try{sessionStorage.setItem("training_score_ctw_p1",JSON.stringify({correct:ts,total:tq,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));}catch(e){}
+  sh+='<div class="score-card total"><h3>Total</h3><div class="score-num"><span class="correct">'+ts+'</span>/'+tq+'</div><div class="score-detail">'+pct+'%</div></div>';if(anySt){var _prev=null;try{_prev=JSON.parse(localStorage.getItem("training_score_ctw_p1")||"null");}catch(e){}if(!_prev||_prev.correct!==ts||_prev.total!==tq){try{sessionStorage.setItem("training_score_ctw_p1",JSON.stringify({correct:ts,total:tq,harderCorrect:harderCorrect,harderTotal:harderTotal,updatedAt:new Date().toISOString()}));}catch(e){}}}
   document.getElementById('scoreSummary').innerHTML=sh;
 }
 function showSet(i){document.querySelectorAll('.set-panel').forEach(function(p,j){p.classList.toggle('active',j===i);});document.querySelectorAll('.set-nav button').forEach(function(b,j){b.classList.toggle('active',j===i);});}
@@ -231,6 +231,6 @@ renderAll();
 </script>
 
 <script>if(typeof __i18n==='undefined'){window.__i18n=function(jp,en){return (localStorage.getItem('tck_lang')||'jp')==='en'?en:jp;};}</script>
-<script defer src="../../js/tm-footer.js?v=20260703"></script>
+<script defer src="../../js/tm-footer.js?v=20260711"></script>
 </body>
 </html>
