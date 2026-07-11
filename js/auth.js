@@ -453,6 +453,13 @@ if (typeof window !== 'undefined') {
   var origSet = sessionStorage.setItem.bind(sessionStorage);
   sessionStorage.setItem = function (key, value) {
     origSet(key, value);
+    // CTW set results only live in sessionStorage (the set pages save to the
+    // server themselves, so they're excluded from the training_answers_
+    // mirror below). Mirror them to durable localStorage so the answers
+    // page can restore "yesterday's" attempt on the same device.
+    if (/^ctw_p\d+_answers_[12]$/.test(String(key))) {
+      try { localStorage.setItem(key, value); } catch (e) {}
+    }
     var m = String(key).match(/^training_score_(.+)_p(\d+)$/);
     if (!m) return;
     var task = m[1], practice = m[2];
@@ -841,6 +848,67 @@ if (typeof window !== 'undefined') {
   tag.src = overlaySrc;
   tag.defer = true;
   document.head.appendChild(tag);
+})();
+
+/* ============================================================
+   Review-restore seeding — every answer page reads the student's
+   result from sessionStorage, which dies when the browser closes,
+   so "open the answers page tomorrow" used to show 0 points and no
+   answers. The attempt data survives in durable localStorage
+   (mirrored on save), so: if the page's display key is missing but
+   the localStorage mirror exists, copy it back and reload ONCE so
+   the page's own inline renderer (which already ran with empty
+   data — auth.js loads after it) re-renders with the real attempt.
+   Cross-device restore (no localStorage either) is handled by
+   student-history.js via the server. Admin mode is excluded — the
+   admin overlay is the only writer there. Never touches scores.
+   ============================================================ */
+(function(){
+  if (typeof location === 'undefined') return;
+  if (location.search.indexOf('fromAdmin=1') !== -1) return;
+  var m = location.pathname.match(/\/(reading|listening|writing|speaking)\/([a-z]+)\/practice-(\d+)(?:-set-\d+)?-answers\.html$/i);
+  if (!m) return;
+  var task = m[2].toLowerCase(), practice = m[3];
+  var FLAG = 'tck_seeded_' + task + '_p' + practice;   // one-shot reload guard
+  var seeded = false;
+  // Native setter — bypasses the auto-save hook above (this is a restore
+  // of an existing attempt, not a new one; it must never re-save).
+  function rawSet(k, v) { Storage.prototype.setItem.call(sessionStorage, k, v); }
+  function seed(sessKey, localKey, transform) {
+    try {
+      if (sessionStorage.getItem(sessKey) !== null) return;
+      var raw = localStorage.getItem(localKey);
+      if (raw == null) return;
+      var v = transform ? transform(raw) : raw;
+      if (v == null) return;
+      rawSet(sessKey, v);
+      seeded = true;
+    } catch (e) {}
+  }
+  var ta = 'training_answers_' + task + '_p' + practice;
+  if (task === 'rdl' || task === 'academic') {
+    seed('training_' + task + '_p' + practice + '_answers', ta);
+  } else if (task === 'lcr') {
+    seed('lcrAnswers', ta);
+  } else if (task === 'conv' || task === 'announce') {
+    seed(task + 'Answers', ta);
+  } else if (task === 'talk') {
+    seed('talkPractice' + practice + 'Answers', ta);
+  } else if (task === 'sentence') {
+    seed('sentenceAnswers', ta, function (raw) {
+      var arr = null, sc = null;
+      try { arr = JSON.parse(raw); } catch (e) {}
+      try { sc = JSON.parse(localStorage.getItem('training_score_sentence_p' + practice) || 'null'); } catch (e) {}
+      if (!sc || typeof sc.correct !== 'number') return null;
+      return JSON.stringify({ answers: Array.isArray(arr) ? arr : [], score: sc.correct, total: sc.total || 10 });
+    });
+  } else if (task === 'ctw') {
+    seed('ctw_p' + practice + '_answers_1', 'ctw_p' + practice + '_answers_1');
+    seed('ctw_p' + practice + '_answers_2', 'ctw_p' + practice + '_answers_2');
+  }
+  if (seeded && sessionStorage.getItem(FLAG) !== '1') {
+    try { rawSet(FLAG, '1'); location.reload(); } catch (e) {}
+  }
 })();
 
 /* ============================================================

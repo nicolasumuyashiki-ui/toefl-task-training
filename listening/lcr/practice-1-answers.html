@@ -276,6 +276,7 @@ const labels = ['A','B','C','D'];
 
 function render(){
   const stored = JSON.parse(sessionStorage.getItem('lcrAnswers')||'{}');
+  const hasRecord = Object.keys(stored).length > 0;
   let correct = 0, answered = 0;
   for(let i=1;i<=8;i++){
     if(stored['q'+i]){
@@ -310,9 +311,12 @@ function render(){
 
     let userLine = '';
     if(isSkip){
-      userLine = '<div class="q-user is-skip">'+
+      userLine = hasRecord ? '<div class="q-user is-skip">'+
         '<span class="jp">\u23f1\ufe0f \u672a\u56de\u7b54\uff08\u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\uff09</span>'+
         '<span class="en">\u23f1\ufe0f Not answered (timeout)</span>'+
+        '</div>' : '<div class="q-user is-skip">'+
+        '<span class="jp">この端末に回答記録が見つかりません（過去の記録がある場合は自動で復元されます）</span>'+
+        '<span class="en">No answer record on this device (past attempts are restored automatically)</span>'+
         '</div>';
     } else if(isCorrect){
       userLine = '<div class="q-user is-correct">'+
@@ -356,7 +360,7 @@ render();
 
 if(typeof Auth !== 'undefined'){ Auth.require(); }
 </script>
-<script src="../../js/auth.js?v=20260710"></script>
+<script src="../../js/auth.js?v=20260711"></script>
 
 <script>
 (function(){
@@ -366,6 +370,6 @@ if(typeof Auth !== 'undefined'){ Auth.require(); }
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260703"></script>
+<script defer src="../../js/tm-footer.js?v=20260711"></script>
 </body>
 </html>
