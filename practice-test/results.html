@@ -165,9 +165,9 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 
 <!-- One-time Listening retake (apology remedy for a specific user; gated by userId only) -->
 <div id="lstRetakeBanner" style="display:none;max-width:880px;margin:18px auto 0;padding:18px 22px;background:#fff8ec;border:1.5px solid #f0d9a8;border-radius:14px">
-  <div style="font-weight:700;color:#8a5a00;margin-bottom:6px">🎧 リスニングをもう一度受けられます（1回限り）</div>
-  <div style="font-size:.9em;color:#6b5a2e;line-height:1.7;margin-bottom:12px">先日の不具合でリスニングが正しく表示されなかった件のお詫びとして、<strong>リスニングセクションだけ</strong>もう一度チャレンジいただけます。下のボタンから開始してください（このボタンは1回のみご利用いただけます）。</div>
-  <button id="lstRetakeBtn" style="background:#007646;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer">リスニングを受け直す →</button>
+  <div style="font-weight:700;color:#8a5a00;margin-bottom:6px"><span class="jp">🎧 リスニングをもう一度受けられます（1回限り）</span><span class="en">🎧 You can retake the Listening section (one time only)</span></div>
+  <div style="font-size:.9em;color:#6b5a2e;line-height:1.7;margin-bottom:12px"><span class="jp">先日の不具合でリスニングが正しく表示されなかった件のお詫びとして、<strong>リスニングセクションだけ</strong>もう一度チャレンジいただけます。下のボタンから開始してください（このボタンは1回のみご利用いただけます）。</span><span class="en">As an apology for the recent issue where the Listening section did not display correctly, you may retake <strong>the Listening section only</strong>. Start from the button below (usable only once).</span></div>
+  <button id="lstRetakeBtn" style="background:#007646;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer"><span class="jp">リスニングを受け直す →</span><span class="en">Retake Listening →</span></button>
 </div>
 <script>
 (function(){
@@ -191,7 +191,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   <div class="total-inner">
     <div>
       <div class="total-label">Predicted Total <span style="font-size:.7em;opacity:.55;font-weight:500;text-transform:none;letter-spacing:.02em">· R + L + W</span></div>
-      <div class="total-big"><span id="totalScore">—</span> <small>/ 90 <span style="font-size:.55em;opacity:.7;font-weight:500;letter-spacing:.04em;margin-left:2px">(Speaking 採点なし)</span></small></div>
+      <div class="total-big"><span id="totalScore">—</span> <small>/ 90 <span style="font-size:.55em;opacity:.7;font-weight:500;letter-spacing:.04em;margin-left:2px"><span class="jp">(Speaking 採点なし)</span><span class="en">(Speaking not scored)</span></span></small></div>
       <div class="total-band">
         <span class="jp">新スコア</span><span class="en">New scale</span>
         <span style="margin-left:6px">Band <span id="totalBand">—</span> <small>/ 6.0</small></span>
@@ -864,6 +864,6 @@ render();
   <span> · </span>
   <a href="https://www.tckwshop.com/privacypolicy/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid #D6DAD7"><span class="jp">プライバシー</span><span class="en">Privacy</span></a>
 </footer>
-<script defer src="../js/tm-footer.js?v=20260711"></script>
+<script defer src="../js/tm-footer.js?v=20260712"></script>
 </body>
 </html>

@@ -182,7 +182,7 @@ Best regards
         <div class="check-item"><span class="icon">☑️</span> <span class="jp">Dear [Name] で始まり、Best regards で終わっている</span><span class="en">Begins with 'Dear [Name]' and ends with 'Best regards'</span></div>
         <div class="check-item"><span class="icon">☑️</span> <span class="jp">80〜120語の範囲に収まっている</span><span class="en">Total length stays in the 80–120 word range</span></div>
         <div class="check-item"><span class="icon">☑️</span> <span class="jp">スペルミス・文法ミスがない</span><span class="en">No spelling or grammar errors</span></div>
-        <div class="check-item"><span class="icon">☑️</span> 相手を責めすぎず丁寧なトーンを保っている</div>
+        <div class="check-item"><span class="icon">☑️</span> <span class="jp">相手を責めすぎず丁寧なトーンを保っている</span><span class="en">Keeps a polite tone without blaming the other person too much</span></div>
       </div>
     </div>
   </div>
@@ -194,8 +194,8 @@ Best regards
       <div class="mistakes-grid">
         <div class="mistake"><h5><span class="jp">✗ ポイント見落とし</span><span class="en">✗ Missing a required point</span></h5><p><span class="jp">3つのうち1つを書き忘れる → 大減点。書き終わったら必ず再確認</span><span class="en">Forgetting one of the three points = a big score hit. Always re-check after writing.</span></p></div>
         <div class="mistake"><h5><span class="jp">✗ 冗長な前置き</span><span class="en">✗ Long-winded openings</span></h5><p><span class="jp">"I hope this email finds you well..." は不要。すぐに目的を述べる</span><span class="en">"I hope this email finds you well..." is unnecessary — get to the point immediately.</span></p></div>
-        <div class="mistake"><h5>✗ 攻撃的なトーン</h5><p>"Why haven't you done anything?!" → "I have noticed..." と事実ベースで書く</p></div>
-        <div class="mistake"><h5>✗ 具体性の欠如</h5><p>"Let's meet sometime" → "Let's meet this Wednesday evening" と具体的な提案をする</p></div>
+        <div class="mistake"><h5><span class="jp">✗ 攻撃的なトーン</span><span class="en">✗ Aggressive tone</span></h5><p><span class="jp">"Why haven't you done anything?!" → "I have noticed..." と事実ベースで書く</span><span class="en">Instead of "Why haven't you done anything?!", write factually: "I have noticed..."</span></p></div>
+        <div class="mistake"><h5><span class="jp">✗ 具体性の欠如</span><span class="en">✗ Lack of specifics</span></h5><p><span class="jp">"Let's meet sometime" → "Let's meet this Wednesday evening" と具体的な提案をする</span><span class="en">Replace "Let's meet sometime" with a concrete proposal like "Let's meet this Wednesday evening"</span></p></div>
       </div>
     </div>
   </div>
@@ -207,7 +207,7 @@ Best regards
   <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
-<script src="../../js/auth.js?v=20260711"></script>
+<script src="../../js/auth.js?v=20260712"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -226,6 +226,6 @@ if(stored && stored.text){
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260711"></script>
+<script defer src="../../js/tm-footer.js?v=20260712"></script>
 </body>
 </html>

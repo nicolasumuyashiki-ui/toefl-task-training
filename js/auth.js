@@ -460,6 +460,13 @@ if (typeof window !== 'undefined') {
     if (/^ctw_p\d+_answers_[12]$/.test(String(key))) {
       try { localStorage.setItem(key, value); } catch (e) {}
     }
+    // Email/Discussion submissions also only live in sessionStorage. The
+    // key carries no practice number, so scope the durable mirror by the
+    // page path to keep practices from overwriting each other.
+    if (/^(email|discussion)Response$/.test(String(key))) {
+      var pm = location.pathname.match(/\/writing\/(?:email|discussion)\/practice-(\d+)\.html$/i);
+      if (pm) { try { localStorage.setItem(key + '_p' + pm[1], value); } catch (e) {} }
+    }
     var m = String(key).match(/^training_score_(.+)_p(\d+)$/);
     if (!m) return;
     var task = m[1], practice = m[2];
@@ -851,6 +858,28 @@ if (typeof window !== 'undefined') {
 })();
 
 /* ============================================================
+   Language persistence — pages that carry .jp/.en spans but never
+   set data-lang on <body> show BOTH languages at once and ignore
+   the learner's saved preference (tck_lang). Apply the saved
+   language globally when the page hasn't set it; pages that manage
+   data-lang themselves (setLang handlers, static attribute) are
+   left untouched. Every bilingual page repo-wide has symmetric
+   jp/en pairs (verified), so hiding one side never blanks content.
+   ============================================================ */
+(function(){
+  if (typeof document === 'undefined') return;
+  function applyLang(){
+    try {
+      var b = document.body;
+      if (!b || b.getAttribute('data-lang')) return;
+      b.setAttribute('data-lang', localStorage.getItem('tck_lang') === 'en' ? 'en' : 'jp');
+    } catch (e) {}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', applyLang);
+  else applyLang();
+})();
+
+/* ============================================================
    Review-restore seeding — every answer page reads the student's
    result from sessionStorage, which dies when the browser closes,
    so "open the answers page tomorrow" used to show 0 points and no
@@ -905,6 +934,8 @@ if (typeof window !== 'undefined') {
   } else if (task === 'ctw') {
     seed('ctw_p' + practice + '_answers_1', 'ctw_p' + practice + '_answers_1');
     seed('ctw_p' + practice + '_answers_2', 'ctw_p' + practice + '_answers_2');
+  } else if (task === 'email' || task === 'discussion') {
+    seed(task + 'Response', task + 'Response_p' + practice);
   }
   if (seeded && sessionStorage.getItem(FLAG) !== '1') {
     try { rawSet(FLAG, '1'); location.reload(); } catch (e) {}

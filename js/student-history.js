@@ -165,6 +165,26 @@
 
   function renderWriting(attempts){
     if (!attempts.length) return;
+    // Page-level restore: the page's own "あなたの回答" preview reads
+    // sessionStorage, which dies with the browser. When it still shows
+    // the placeholder, fill it with the newest server submission so the
+    // student sees their text on any device.
+    try {
+      var prev = document.getElementById('userPreview');
+      if (prev && (prev.querySelector('.no-response') || !prev.textContent.trim())) {
+        var newest = attempts[0];
+        var txt = (newest.answers && newest.answers.text) || '';
+        if (txt) {
+          prev.textContent = txt;
+          var stats = document.getElementById('userStats');
+          if (stats) {
+            var w0 = (newest.answers && newest.answers.words) || '—';
+            var t0 = (newest.answers && (newest.answers.time || newest.answers.timeUsed)) || '—';
+            stats.innerHTML = '<span class="jp">語数: ' + escapeHtml(String(w0)) + ' | 使用時間: ' + escapeHtml(String(t0)) + '</span><span class="en">Words: ' + escapeHtml(String(w0)) + ' | Time used: ' + escapeHtml(String(t0)) + '</span>';
+          }
+        }
+      }
+    } catch (e) {}
     var box = document.createElement('div');
     box.id = 'tckMyHistory';
     box.style.cssText = 'background:#FBF6EC;border:1px solid #F5E9D3;border-radius:14px;padding:18px 22px;margin:22px auto;max-width:840px;font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif';

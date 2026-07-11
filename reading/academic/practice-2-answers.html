@@ -125,7 +125,7 @@ body[data-lang="en"] .jp{display:none}
     <div class="tips-title"><span class="jp">Academic Reading 攻略 Tips</span><span class="en">Academic Reading Strategy Tips</span></div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">1</span> Correct answers are always paraphrases (パラフレーズを見抜く)</div>
+      <div class="tip-card-title"><span class="tip-num">1</span> Correct answers are always paraphrases <span class="jp">(パラフレーズを見抜く)</span></div>
       <div class="tip-card-body">
         <strong>The correct answer restates the passage in different words.</strong> Be suspicious of options that copy exact words from the passage &mdash; they are often traps.
         <div class="paraphrase-box">
@@ -137,7 +137,7 @@ body[data-lang="en"] .jp{display:none}
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">2</span> Vocabulary: identify the part of speech first (品詞特定)</div>
+      <div class="tip-card-title"><span class="tip-num">2</span> Vocabulary: identify the part of speech first <span class="jp">(品詞特定)</span></div>
       <div class="tip-card-body">
         Before looking at options, determine if the target word is a <strong>noun, verb, adjective, or adverb</strong>. Then substitute each option into the sentence to check which one fits both grammatically and logically.
         <div class="tip-example">
@@ -147,7 +147,7 @@ body[data-lang="en"] .jp{display:none}
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">3</span> Rhetorical Purpose: read the sentence before and after (前後の文を読む)</div>
+      <div class="tip-card-title"><span class="tip-num">3</span> Rhetorical Purpose: read the sentence before and after <span class="jp">(前後の文を読む)</span></div>
       <div class="tip-card-body">
         When asked "Why does the author mention X?", the answer is usually found in the sentence <strong>immediately before</strong> the mention. The author states a claim, then provides X as an example or evidence.
         <div class="tip-example">
@@ -157,7 +157,7 @@ body[data-lang="en"] .jp{display:none}
     </div>
 
     <div class="tip-card">
-      <div class="tip-card-title"><span class="tip-num">4</span> Use elimination for difficult questions (消去法)</div>
+      <div class="tip-card-title"><span class="tip-num">4</span> Use elimination for difficult questions <span class="jp">(消去法)</span></div>
       <div class="tip-card-body">
         When unsure, eliminate options that contain <strong>extreme words</strong> (always, never, only, all, none) or information <strong>not found in the passage</strong>.
         <div class="tip-warn">
@@ -453,7 +453,7 @@ var correctAnswers = {'1':'A','2':'B','3':'C','4':'D','5':'A','6':'A','7':'C','8
   document.getElementById('scoreDisplay').textContent = score+'/10';
 })();
 </script>
-<script src="../../js/auth.js?v=20260711"></script>
+<script src="../../js/auth.js?v=20260712"></script>
 <script>
 (function(){
   var stored=localStorage.getItem('tck_lang')||'jp';
@@ -462,6 +462,6 @@ var correctAnswers = {'1':'A','2':'B','3':'C','4':'D','5':'A','6':'A','7':'C','8
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260711"></script>
+<script defer src="../../js/tm-footer.js?v=20260712"></script>
 </body>
 </html>
