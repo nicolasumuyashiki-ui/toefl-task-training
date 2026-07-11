@@ -104,6 +104,18 @@
 
   /* ---- value helpers ------------------------------------------------ */
   var LETTERS = 'ABCDEFGH';
+  /* Per-question capture only exists since #89 deployed (2026-06-25).
+     Rows saved before that are Array(total).fill(0) — for index tasks
+     (Conv/Announce/Talk) those zeros look like "all A" and render as a
+     sea of ✗. Anything older than this is score-only by definition. */
+  var CAPTURE_START_ISO = '2026-06-25T03:18:00Z';
+  function preCapture(att) {
+    return att && att.timestamp && String(att.timestamp) < CAPTURE_START_ISO;
+  }
+  /* Native setter — the auth.js session hook mirrors some keys (ctw_p*)
+     to the ADMIN's own localStorage; a student-data restore must never
+     go through it, or student answers leak into the admin's own views. */
+  function rawSet(k, v) { try { Storage.prototype.setItem.call(sessionStorage, k, v); } catch (e) {} }
   function unwrap(v) { return (v && typeof v === 'object' && 'selected' in v) ? v.selected : v; }
   function isBlankVal(v) { return v === null || v === undefined || v === ''; }
   function toLetter(v) {
@@ -252,13 +264,13 @@
     return function(attempts, idx) {
       var att = attempts[0] || {};
       var raw = att.answers;
-      if (allZero(raw)) { insertPanel(makeSubmissionPanel(SCORE_ONLY_NOTE)); return; }
+      if (preCapture(att) || allZero(raw)) { insertPanel(makeSubmissionPanel(SCORE_ONLY_NOTE)); return; }
       // The RDL/Academic answer pages read a 1-BASED OBJECT of letters
       // ({'1':'A',...}) and grade against their own key — the server's
       // 0-based array written as-is used to shift every answer by one.
       var obj1 = toObj1(raw);
       var wrote = false;
-      try { sessionStorage.setItem(storageKey, JSON.stringify(obj1)); wrote = true; } catch (e) {}
+      rawSet(storageKey, JSON.stringify(obj1)); wrote = true;
       if (wrote && maybeReloadForPage(idx)) return;
       insertPanel(makeSubmissionPanel(allBlank(raw) ? SCORE_ONLY_NOTE : (panelRows(obj1) || '<div style="color:#5A6861">回答データなし</div>')));
     };
@@ -287,18 +299,20 @@
       attempts.forEach(function(att){
         var m = String(att.set || '').match(/Set\s*(\d+)/i);
         if (!m) return;
+        // Pre-rebuild rows answered the OLD passages — mapping them onto
+        // today's blanks renders garbage. The banner above links to the
+        // legacy archive where they display correctly.
+        if (String(att.timestamp || '') < CTW_REBUILD_ISO) return;
         var setNum = m[1];
         if (seen[setNum]) return;
         seen[setNum] = true;
         var ua = Array.isArray(att.answers) ? att.answers : [];
         var sc = Number(att.score) || 0;
-        try {
-          sessionStorage.setItem('ctw_p' + practice + '_answers_' + setNum, JSON.stringify({
-            answers: ua,
-            score: sc,
-            total: ua.length || 10
-          }));
-        } catch (e) {}
+        rawSet('ctw_p' + practice + '_answers_' + setNum, JSON.stringify({
+          answers: ua,
+          score: sc,
+          total: ua.length || 10
+        }));
       });
       if (typeof window.renderAll === 'function') {
         try { window.renderAll(); } catch (e) {}
@@ -313,7 +327,7 @@
     lcr: function(attempts, idx) {
       var att = attempts[0] || {};
       var raw = att.answers;
-      if (allZero(raw)) { insertPanel(makeSubmissionPanel(SCORE_ONLY_NOTE)); return; }
+      if (preCapture(att) || allZero(raw)) { insertPanel(makeSubmissionPanel(SCORE_ONLY_NOTE)); return; }
       // The LCR answer page reads { q1: {selected, correct, isCorrect} …
       // q8 } — 1-BASED. The server's 0-based array used to become q0..q7,
       // shifting every answer down a question and zeroing the score.
@@ -335,7 +349,7 @@
         marks[n] = ic;
       });
       var wrote = false;
-      try { sessionStorage.setItem('lcrAnswers', JSON.stringify(lifted)); wrote = true; } catch (e) {}
+      rawSet('lcrAnswers', JSON.stringify(lifted)); wrote = true;
       if (wrote && maybeReloadForPage(idx)) return;
       insertPanel(makeSubmissionPanel(allBlank(raw) ? SCORE_ONLY_NOTE : (panelRows(obj1, marks) || '<div style="color:#5A6861">回答データなし</div>')));
     },
@@ -369,20 +383,18 @@
       // The Sentence answer page reads `sentenceAnswers` = {score, total}
       // for its score card. (The old overlay wrote to a key nothing reads.)
       var wrote = false;
-      try {
-        sessionStorage.setItem('sentenceAnswers', JSON.stringify({
-          score: Number(att.score) || 0,
-          total: arr.length || 10
-        }));
-        wrote = true;
-      } catch (e) {}
+      rawSet('sentenceAnswers', JSON.stringify({
+        score: Number(att.score) || 0,
+        total: arr.length || 10
+      }));
+      wrote = true;
       if (wrote && maybeReloadForPage(idx)) return;
       var rows = arr.map(function(v, i){
         v = unwrap(v);
         var txt = isBlankVal(v) ? '—' : (typeof v === 'string' ? v : JSON.stringify(v));
         return '<div style="padding:6px 0;border-bottom:1px solid #F5E9D3"><strong>Q' + (i + 1) + '</strong>: ' + escapeHtml(txt) + '</div>';
       }).join('');
-      insertPanel(makeSubmissionPanel(allBlank(raw) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
+      insertPanel(makeSubmissionPanel((preCapture(att) || allBlank(raw) || allZero(raw)) ? SCORE_ONLY_NOTE : (rows || '<div style="color:#5A6861">回答データなし</div>')));
     }
   };
 
@@ -392,11 +404,15 @@
   function genericListeningRenderer(attempts, storageKey, idx) {
     var att = attempts[0] || {};
     var raw = att.answers;
+    // Rows saved before per-question capture existed hold Array(total).fill(0),
+    // which these index-based pages would render as "picked A everywhere" —
+    // a sea of ✗ that looks like a broken student. Score-only note instead.
+    if (preCapture(att)) { insertPanel(makeSubmissionPanel(SCORE_ONLY_NOTE)); return; }
     // These pages read a plain 0-BASED ARRAY of option indexes and grade
     // against their own correctAnswers — restore the raw values untouched.
     var arr = toArr0(raw);
     var wrote = false;
-    try { sessionStorage.setItem(storageKey, JSON.stringify(arr)); wrote = true; } catch (e) {}
+    rawSet(storageKey, JSON.stringify(arr)); wrote = true;
     if (wrote && maybeReloadForPage(idx)) return;
     // Panel: 1-based question numbers, indexes shown as letters (0 = A).
     var rows = arr.map(function(v, i){
