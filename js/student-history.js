@@ -292,23 +292,30 @@
     }
   }
 
+  function displayKeysFor(){
+    if (task === 'rdl' || task === 'academic') return ['training_' + task + '_p' + practice + '_answers'];
+    if (task === 'lcr') return ['lcrAnswers'];
+    if (task === 'conv' || task === 'announce') return [task + 'Answers'];
+    if (task === 'talk') return ['talkPractice' + practice + 'Answers'];
+    if (task === 'sentence') return ['sentenceAnswers'];
+    if (task === 'ctw') return ['ctw_p' + practice + '_answers_1', 'ctw_p' + practice + '_answers_2'];
+    return null;
+  }
+  function displayKeysPresent(){
+    var keys = displayKeysFor();
+    if (!keys) return true;
+    try { return keys.some(function(k){ return sessionStorage.getItem(k) !== null; }); } catch (e) {}
+    return true;
+  }
+
   /* If this page rendered with NO attempt data (sessionStorage empty and
      no localStorage mirror — typically another device), restore the
      newest usable server attempt into the page's own display key and
      reload once. Returns true when a reload was triggered. */
   function restorePageFromServer(attempts){
-    var displayKeys;
-    if (task === 'rdl' || task === 'academic') displayKeys = ['training_' + task + '_p' + practice + '_answers'];
-    else if (task === 'lcr') displayKeys = ['lcrAnswers'];
-    else if (task === 'conv' || task === 'announce') displayKeys = [task + 'Answers'];
-    else if (task === 'talk') displayKeys = ['talkPractice' + practice + 'Answers'];
-    else if (task === 'sentence') displayKeys = ['sentenceAnswers'];
-    else if (task === 'ctw') displayKeys = ['ctw_p' + practice + '_answers_1', 'ctw_p' + practice + '_answers_2'];
-    else return false;
-
-    var present = false;
-    try { present = displayKeys.some(function(k){ return sessionStorage.getItem(k) !== null; }); } catch (e) {}
-    if (present) return false;
+    var displayKeys = displayKeysFor();
+    if (!displayKeys) return false;
+    if (displayKeysPresent()) return false;
 
     function usable(a){ return a && a.answers && !selectionsLookEmpty(a.answers); }
     var FLAG = 'tck_stu_restored_' + task + '_p' + practice;
@@ -359,6 +366,56 @@
       return true;
     }
     return false;
+  }
+
+  /* Score rescue — when per-question data can NOT be put back on the page
+     (pre-capture zero rows, pre-rebuild CTW), the page's own header shows
+     a misleading 0/N even though the SCORE column on the server is real
+     (the "My Score says 65%, the page says 0%" complaint). Repaint the
+     score header from the server rows; the panel note below explains why
+     per-question detail isn't available. Touches DOM text only — never
+     writes storage. */
+  function rescueScoreHeader(attempts){
+    try {
+      if (displayKeysPresent()) return;
+      if (task === 'ctw') {
+        var el = document.getElementById('scoreSummary');
+        if (!el) return;
+        var seen = {}, cards = [];
+        attempts.forEach(function(a){
+          var m = String(a.set || '').match(/Set\s*(\d)/i);
+          if (!m || seen[m[1]]) return;
+          seen[m[1]] = 1;
+          var tot = (Array.isArray(a.answers) && a.answers.length) ? a.answers.length : 10;
+          cards[Number(m[1]) - 1] = { sc: Number(a.score) || 0, tot: tot };
+        });
+        if (!cards.length) return;
+        var ts = 0, tq = 0, html = '';
+        [0, 1].forEach(function(i){
+          var c = cards[i];
+          if (c) { ts += c.sc; tq += c.tot; }
+          html += '<div class="score-card"><h3>Set ' + (i + 1) + '</h3><div class="score-num"><span class="correct">' + (c ? c.sc : '—') + '</span>/' + (c ? c.tot : 10) + '</div><div class="score-detail">' + (c ? Math.round(c.sc / c.tot * 100) + '%' : '—') + '</div></div>';
+        });
+        html += '<div class="score-card total"><h3>Total</h3><div class="score-num"><span class="correct">' + ts + '</span>/' + (tq || 20) + '</div><div class="score-detail">' + (tq ? Math.round(ts / tq * 100) + '%' : '—') + '</div></div>';
+        el.innerHTML = html;
+        return;
+      }
+      // Letter/index tasks: newest attempt with a numeric score.
+      var att = null;
+      for (var i = 0; i < attempts.length; i++) {
+        var a = attempts[i];
+        if (a && a.score !== null && a.score !== undefined && a.score !== '') { att = a; break; }
+      }
+      if (!att) return;
+      var sc = Number(att.score) || 0;
+      var tot = Array.isArray(att.answers) ? att.answers.length
+              : (att.answers && typeof att.answers === 'object' ? Object.keys(att.answers).length : 0);
+      if (!tot) return;
+      var el2 = document.getElementById('scoreDisplay') || document.getElementById('scoreBig');
+      if (el2) el2.textContent = sc + ' / ' + tot;
+      var bar = document.getElementById('scoreBar');
+      if (bar) bar.style.width = (sc / tot * 100) + '%';
+    } catch (e) {}
   }
 
   // Auto-graded tasks: per-attempt score line + expandable graded answers.
@@ -499,6 +556,9 @@
         // Other-device restore: fill the page's own display key from the
         // newest server attempt and reload once so the page shows it.
         if (attempts.length && restorePageFromServer(attempts)) return;
+        // Restore impossible (old-era rows) → at least repaint the score
+        // header with the real server score instead of a misleading 0/N.
+        if (attempts.length) rescueScoreHeader(attempts);
         renderAutoGraded(attempts);
       }).catch(function(){});
     }
