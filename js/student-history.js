@@ -292,23 +292,30 @@
     }
   }
 
+  function displayKeysFor(){
+    if (task === 'rdl' || task === 'academic') return ['training_' + task + '_p' + practice + '_answers'];
+    if (task === 'lcr') return ['lcrAnswers'];
+    if (task === 'conv' || task === 'announce') return [task + 'Answers'];
+    if (task === 'talk') return ['talkPractice' + practice + 'Answers'];
+    if (task === 'sentence') return ['sentenceAnswers'];
+    if (task === 'ctw') return ['ctw_p' + practice + '_answers_1', 'ctw_p' + practice + '_answers_2'];
+    return null;
+  }
+  function displayKeysPresent(){
+    var keys = displayKeysFor();
+    if (!keys) return true;
+    try { return keys.some(function(k){ return sessionStorage.getItem(k) !== null; }); } catch (e) {}
+    return true;
+  }
+
   /* If this page rendered with NO attempt data (sessionStorage empty and
      no localStorage mirror — typically another device), restore the
      newest usable server attempt into the page's own display key and
      reload once. Returns true when a reload was triggered. */
   function restorePageFromServer(attempts){
-    var displayKeys;
-    if (task === 'rdl' || task === 'academic') displayKeys = ['training_' + task + '_p' + practice + '_answers'];
-    else if (task === 'lcr') displayKeys = ['lcrAnswers'];
-    else if (task === 'conv' || task === 'announce') displayKeys = [task + 'Answers'];
-    else if (task === 'talk') displayKeys = ['talkPractice' + practice + 'Answers'];
-    else if (task === 'sentence') displayKeys = ['sentenceAnswers'];
-    else if (task === 'ctw') displayKeys = ['ctw_p' + practice + '_answers_1', 'ctw_p' + practice + '_answers_2'];
-    else return false;
-
-    var present = false;
-    try { present = displayKeys.some(function(k){ return sessionStorage.getItem(k) !== null; }); } catch (e) {}
-    if (present) return false;
+    var displayKeys = displayKeysFor();
+    if (!displayKeys) return false;
+    if (displayKeysPresent()) return false;
 
     function usable(a){ return a && a.answers && !selectionsLookEmpty(a.answers); }
     var FLAG = 'tck_stu_restored_' + task + '_p' + practice;
@@ -359,6 +366,82 @@
       return true;
     }
     return false;
+  }
+
+  /* Score rescue — when per-question data can NOT be put back on the page
+     (pre-capture zero rows, pre-rebuild CTW), the page's own header shows
+     a misleading 0/N even though the SCORE column on the server is real
+     (the "My Score says 65%, the page says 0%" complaint).
+
+     The number shown here MUST equal the number the learner just clicked
+     in My Score, so this reproduces history-sync's aggregation and
+     my-score's pickCurrent EXACTLY: per-set buckets (CTW) summed as
+     latest / best (best skips 0-score sets), then latest wins only when
+     it lands at/after the switch-over and isn't a glitch zero — otherwise
+     best. Touches DOM text only — never writes storage. */
+  var SCORE_CUTOFF = '2026-06-29T15:00:00Z';   // keep in sync with js/history-sync.js + my-score.html
+  function rescueScoreHeader(attempts){
+    try {
+      if (displayKeysPresent()) return;
+
+      // ---- bucket per set (CTW: Set 1/2; others: one bucket) ----
+      var buckets = {};
+      attempts.forEach(function(a){
+        if (!a || a.score === null || a.score === undefined || a.score === '') return;
+        var tot = Array.isArray(a.answers) ? a.answers.length
+                : (a.answers && typeof a.answers === 'object' ? Object.keys(a.answers).length : 0);
+        if (!tot) return;
+        var sk = '0';
+        if (task === 'ctw') {
+          var m = String(a.set || '').match(/Set\s*(\d+)/i);
+          if (!m) return;                       // set-less CTW row = legacy garbage
+          sk = m[1];
+        }
+        (buckets[sk] = buckets[sk] || []).push({ score: Number(a.score) || 0, total: tot, ts: String(a.timestamp || '') });
+      });
+      var setKeys = Object.keys(buckets);
+      if (!setKeys.length) return;
+
+      var latestC = 0, latestT = 0, bestC = 0, bestT = 0, latestTs = '';
+      var perSetLatest = {}, perSetBest = {};
+      setKeys.forEach(function(sk){
+        var rows = buckets[sk];
+        rows.sort(function(x, y){ return x.ts.localeCompare(y.ts); });
+        var latest = rows[rows.length - 1];
+        latestC += latest.score; latestT += latest.total;
+        if (latest.ts > latestTs) latestTs = latest.ts;
+        perSetLatest[sk] = latest;
+        var bestRow = null;
+        rows.forEach(function(r){ if (bestRow === null || r.score > bestRow.score) bestRow = r; });
+        // Same rule as history-sync: a set whose best is 0 points is an
+        // "opened but not completed" artifact — leave it out of BEST sums.
+        if (bestRow && bestRow.score > 0) { bestC += bestRow.score; bestT += bestRow.total; perSetBest[sk] = bestRow; }
+      });
+
+      // ---- pickCurrent (identical to my-score / history-sync) ----
+      var useLatest = latestT > 0 && latestTs >= SCORE_CUTOFF && !(latestC === 0 && latestT > 0);
+      var pickC = useLatest ? latestC : (bestT > 0 ? bestC : latestC);
+      var pickT = useLatest ? latestT : (bestT > 0 ? bestT : latestT);
+      var perSet = useLatest ? perSetLatest : (bestT > 0 ? perSetBest : perSetLatest);
+      if (!pickT) return;
+
+      if (task === 'ctw') {
+        var el = document.getElementById('scoreSummary');
+        if (!el) return;
+        var html = '';
+        ['1', '2'].forEach(function(sk){
+          var c = perSet[sk];
+          html += '<div class="score-card"><h3>Set ' + sk + '</h3><div class="score-num"><span class="correct">' + (c ? c.score : '—') + '</span>/' + (c ? c.total : 10) + '</div><div class="score-detail">' + (c ? Math.round(c.score / c.total * 100) + '%' : '—') + '</div></div>';
+        });
+        html += '<div class="score-card total"><h3>Total</h3><div class="score-num"><span class="correct">' + pickC + '</span>/' + pickT + '</div><div class="score-detail">' + Math.round(pickC / pickT * 100) + '%</div></div>';
+        el.innerHTML = html;
+        return;
+      }
+      var el2 = document.getElementById('scoreDisplay') || document.getElementById('scoreBig');
+      if (el2) el2.textContent = pickC + ' / ' + pickT;
+      var bar = document.getElementById('scoreBar');
+      if (bar) bar.style.width = (pickC / pickT * 100) + '%';
+    } catch (e) {}
   }
 
   // Auto-graded tasks: per-attempt score line + expandable graded answers.
@@ -499,6 +582,9 @@
         // Other-device restore: fill the page's own display key from the
         // newest server attempt and reload once so the page shows it.
         if (attempts.length && restorePageFromServer(attempts)) return;
+        // Restore impossible (old-era rows) → at least repaint the score
+        // header with the real server score instead of a misleading 0/N.
+        if (attempts.length) rescueScoreHeader(attempts);
         renderAutoGraded(attempts);
       }).catch(function(){});
     }

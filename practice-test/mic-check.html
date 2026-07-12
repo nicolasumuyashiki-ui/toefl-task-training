@@ -148,6 +148,6 @@ window.playAudio=function(){var audio=document.getElementById("promptAudio"),btn
 function cleanupMic(){micLive=false;if(animId){cancelAnimationFrame(animId);animId=null;}if(micStream){micStream.getTracks().forEach(function(t){t.stop();});micStream=null;}if(micSource){try{micSource.disconnect();}catch(e){}micSource=null;}if(audioCtx){try{audioCtx.close();}catch(e){}audioCtx=null;}analyser=null;}
 function cleanupAll(){cleanupMic();if(simId){cancelAnimationFrame(simId);simId=null;}document.getElementById("recBadge").classList.remove("active");if(window.speechSynthesis)window.speechSynthesis.cancel();}
 </script>
-<script defer src="../js/tm-footer.js?v=20260713"></script>
+<script defer src="../js/tm-footer.js?v=20260715"></script>
 </body>
 </html>
