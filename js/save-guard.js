@@ -127,6 +127,20 @@
     });
   }
 
+  // Root-relative URL of the "server not connected" help page, derived from
+  // this script's own src (…/js/save-guard.js → …/connection-help.html) so it
+  // works from any page depth and on any host path.
+  function helpHref() {
+    var scripts = document.getElementsByTagName('script');
+    for (var i = 0; i < scripts.length; i++) {
+      var s = scripts[i].src || '';
+      if (/\/(save-guard|auth)\.js(\?|$)/.test(s)) {
+        return s.replace(/js\/(save-guard|auth)\.js(\?[^#]*)?(\#.*)?$/, 'connection-help.html');
+      }
+    }
+    return 'connection-help.html';
+  }
+
   // Practice page (an actual attempt) — not answers/tips/legacy/menu.
   var IS_PRACTICE = /\/(reading|listening|writing|speaking)\/[a-z]+\/practice-\d+(-set-\d+)?\.html$/i
     .test(location.pathname) && location.pathname.indexOf('/legacy/') === -1;
@@ -191,9 +205,9 @@
           n + ' result(s) not yet saved to the server. Tap to resend.'));
     } else if (pathWarned()) {
       setChip('pathwarn',
-        '⚠ ' + t('保存経路', 'Save path'),
-        t('この通信環境ではサーバー保存を確認できませんでした。タップで再確認します。',
-          'Could not verify the save path on this connection. Tap to re-test.'));
+        '⚠ ' + t('サーバー未接続', 'Server not connected'),
+        t('サーバーに接続できていません。タップで対処方法と接続テストのページを開きます。',
+          'Not connected to the server. Tap to open the help page with a connection test.'));
     } else {
       setChip('ok', '✓ ' + t('保存OK', 'Saved'),
         t('未送信の成績はありません。すべてサーバーに保存済みです。',
@@ -220,12 +234,9 @@
         setTimeout(settle, Math.min(before, 5) * 600 + 1500);
       });
     } else if (chipState === 'pathwarn') {
-      setChip('sending', '⏳ ' + t('確認中…', 'Testing…'));
-      ensureApi().then(function (Api) {
-        var done = function () { chipState = ''; renderChip(); };
-        if (Api && Api.savePathPreflight) Api.savePathPreflight(true).then(done, done);
-        else done();
-      });
+      // Straight to the help page — it explains the state, walks through the
+      // fixes, and has its own live connection test + resend button.
+      location.href = helpHref();
     }
   }
 
@@ -238,10 +249,12 @@
     var bar = makeBar('tckPreflightBar', '#FFF4D6', '#E3C871', '#6B5A1E');
     bar.innerHTML =
       '<span style="max-width:720px">⚠ ' + t(
-        'この通信環境では成績のサーバー保存が確認できませんでした。取り組み自体は可能で、成績はこの端末に保管され接続回復後に自動再送されますが、Wi-Fi など別の回線でのご利用をおすすめします。',
-        'We could not verify server saving on this connection. You can still practice — results are stored on this device and re-sent automatically — but we recommend switching to another network (e.g. Wi-Fi).'
+        'サーバー未接続: この回線では成績のサーバー保存が確認できませんでした。取り組み自体は可能で、成績はこの端末に保管され接続回復後に自動再送されます。',
+        'Server not connected: we could not verify server saving on this connection. You can still practice — results are stored on this device and re-sent automatically.'
       ) + '</span>' +
-      '<button type="button" id="tckPreflightRetry" style="background:#6B5A1E;color:#fff;border:0;border-radius:999px;padding:6px 14px;font:inherit;font-weight:700;cursor:pointer">' +
+      '<a href="' + helpHref() + '" id="tckPreflightHelp" style="background:#6B5A1E;color:#fff;border-radius:999px;padding:6px 16px;font:inherit;font-weight:700;text-decoration:none;cursor:pointer">' +
+        t('対処方法を見る', 'How to fix') + '</a>' +
+      '<button type="button" id="tckPreflightRetry" style="background:transparent;color:#6B5A1E;border:1.5px solid #C9B36A;border-radius:999px;padding:6px 14px;font:inherit;font-weight:700;cursor:pointer">' +
         t('再確認', 'Re-test') + '</button>' +
       '<button type="button" id="tckPreflightClose" style="background:transparent;color:#6B5A1E;border:1.5px solid #C9B36A;border-radius:999px;padding:6px 14px;font:inherit;font-weight:700;cursor:pointer">' +
         t('閉じる', 'Dismiss') + '</button>';

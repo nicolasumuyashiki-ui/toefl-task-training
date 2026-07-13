@@ -227,7 +227,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   © TCK Workshop
 </div>
 
-<script src="js/auth.js?v=20260719"></script>
+<script src="js/auth.js?v=20260720"></script>
 <script>
 if (typeof Auth !== 'undefined') { Auth.require(); Auth.showBadge('userBadge'); }
 var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
@@ -254,6 +254,6 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
   function setLang(l){ document.body.setAttribute('data-lang', l); document.documentElement.setAttribute('lang', l==='jp'?'ja':'en'); localStorage.setItem('tck_lang', l); document.querySelectorAll('[data-lang-btn]').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-lang-btn')===l); }); }
 })();
 </script>
-<script defer src="js/tm-footer.js?v=20260719"></script>
+<script defer src="js/tm-footer.js?v=20260720"></script>
 </body>
 </html>
