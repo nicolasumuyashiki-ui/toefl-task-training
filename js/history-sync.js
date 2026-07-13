@@ -224,8 +224,131 @@
       applyAttempts(res.attempts);
       reconcile(res.attempts);   // push back any local completions the server is missing
       mirrorProgress();          // pull server in-progress into local so the 中断中 badge shows cross-device
+      try { maybeShowRecoveryBanner(res.attempts); } catch (e) {}
       cb(true);
     }).catch(onFail);
+  }
+
+  /* ============================================================
+     Device-local recovery banner — some devices hold scores that never
+     reached the server (attempts predating auto-save, or a device where
+     the silent reconcile path is blocked). Those records exist ONLY in
+     this browser's localStorage: they vanish if the browser clears data,
+     and every other device shows lower numbers. Surface them VISIBLY
+     with a one-tap "save to my account" button instead of relying on the
+     silent path, and report how many made it so a failure is diagnosable
+     instead of invisible. ADD-ONLY: pushes new rows, never deletes.
+     ============================================================ */
+  function findLocalOnly(serverAttempts) {
+    var have = {};
+    (serverAttempts || []).forEach(function (a) {
+      var info = parseSet(a.set); if (info) have[info.task + '_p' + info.practice] = true;
+    });
+    var out = [];
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        var sm = k && k.match(/^training_score_(rdl|academic|lcr|conv|announce|talk|sentence)_p(\d+)$/);
+        if (!sm || have[sm[1] + '_p' + sm[2]]) continue;
+        var d = parse(lsGet(k));
+        if (d && typeof d.total === 'number' && d.total > 0 && typeof d.correct === 'number' && d.correct > 0) {
+          out.push({ key: sm[1] + '_p' + sm[2], task: sm[1], practice: sm[2], correct: d.correct, total: d.total, d: d });
+        }
+      }
+    } catch (e) {}
+    return out;
+  }
+
+  /* Called after the silent reconcile has had its chance: wait for its
+     staggered sends to land, then VERIFY against the server (cache
+     bypassed). Only when records are still missing does the banner
+     appear — on healthy devices nothing is ever shown. */
+  function maybeShowRecoveryBanner(serverAttempts) {
+    var uid = userId(); if (!uid) return;
+    var candidates = findLocalOnly(serverAttempts);
+    if (!candidates.length) {
+      var old0 = document.getElementById('tckRecoveryBanner');
+      if (old0 && old0.parentNode) old0.parentNode.removeChild(old0);
+      return;
+    }
+    // Give the silent reconcile's staggered pushes time to reach GAS,
+    // then check what actually landed.
+    setTimeout(function () {
+      if (typeof Api === 'undefined' || !Api.getMyHistory) return;
+      Api.getMyHistory().then(function (res) {
+        if (!res || !res.success || !Array.isArray(res.attempts)) return;
+        try { sessionStorage.setItem('tck_hist_cache_' + uid, JSON.stringify({ at: Date.now(), attempts: res.attempts })); } catch (e) {}
+        renderRecoveryBanner(res.attempts);
+      }).catch(function () {});
+    }, candidates.length * 600 + 6000);
+  }
+
+  function renderRecoveryBanner(serverAttempts) {
+    var uid = userId(); if (!uid) return;
+    var old = document.getElementById('tckRecoveryBanner');
+    var items = findLocalOnly(serverAttempts);
+    if (!items.length) { if (old && old.parentNode) old.parentNode.removeChild(old); return; }
+    if (old) {
+      var cnt = old.querySelector('[data-recover-count]');
+      if (cnt) cnt.textContent = String(items.length);
+      return;
+    }
+    var box = document.createElement('div');
+    box.id = 'tckRecoveryBanner';
+    box.style.cssText = 'margin:14px auto;max-width:920px;background:#FFF4D6;border:2px solid #E3C871;border-radius:12px;padding:14px 18px;font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;font-size:.9em;line-height:1.7;color:#6B5A1E;display:flex;align-items:center;gap:14px;flex-wrap:wrap';
+    box.innerHTML =
+      '<div style="flex:1;min-width:240px"><span class="jp">💾 この端末に、アカウント（' + uid.replace(/[<>&"]/g, '') + '）へ未保存の学習記録が <strong data-recover-count>' + items.length + '</strong> 件あります。保存しておくと、他の端末でも同じ成績が表示され、端末のデータが消えても記録が守られます。</span>' +
+      '<span class="en">💾 This device holds <strong data-recover-count>' + items.length + '</strong> study record(s) not yet saved to your account (' + uid.replace(/[<>&"]/g, '') + '). Saving protects them and syncs every device.</span></div>' +
+      '<button type="button" data-recover-btn style="background:#007646;color:#fff;border:none;border-radius:999px;padding:10px 22px;font-weight:800;cursor:pointer;font-family:inherit;font-size:.95em"><span class="jp">アカウントに保存する</span><span class="en">Save to my account</span></button>';
+    var btn = box.querySelector('[data-recover-btn]');
+    btn.addEventListener('click', function () {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="jp">保存中…</span><span class="en">Saving…</span>';
+      // User-confirmed attribution — safe to (re)stamp the cache owner.
+      try { localStorage.setItem('tck_cache_uid', String(uid)); } catch (e) {}
+      var current = findLocalOnly(serverAttempts);
+      // Mark as pushed BEFORE sending so the silent reconcile (and a second
+      // tap) can never send the same score twice.
+      try {
+        var g = 'tck_reconcile_pushed_' + uid;
+        var pushedMap = JSON.parse(sessionStorage.getItem(g) || '{}') || {};
+        current.forEach(function (p) { pushedMap[p.key] = true; });
+        sessionStorage.setItem(g, JSON.stringify(pushedMap));
+      } catch (e) {}
+      current.forEach(function (p, idx) {
+        setTimeout(function () {
+          try {
+            Api.saveAnswers(RECON_LABEL[p.task] + ' P' + p.practice,
+              reconAnswers(p.task, p.practice, p.total), p.correct,
+              { harderCorrect: p.d.harderCorrect || 0, harderTotal: p.d.harderTotal || 0, attemptNumber: 1, total: p.total });
+          } catch (e) {}
+        }, idx * 600);
+      });
+      // Verify against the server (cache bypassed) and report honestly.
+      setTimeout(function () {
+        Api.getMyHistory().then(function (res) {
+          var left = (res && res.success && Array.isArray(res.attempts)) ? findLocalOnly(res.attempts) : null;
+          if (left && left.length === 0) {
+            box.style.background = '#E8F5EC'; box.style.borderColor = '#7FBF9B'; box.style.color = '#0F4E2A';
+            box.innerHTML = '<span class="jp">✅ ' + current.length + ' 件をアカウントに保存しました。他の端末にも数分で反映されます。</span><span class="en">✅ Saved ' + current.length + ' record(s) to your account. Other devices update within minutes.</span>';
+            try { sessionStorage.removeItem('tck_hist_cache_' + uid); } catch (e) {}
+          } else if (left) {
+            btn.disabled = false;
+            btn.innerHTML = '<span class="jp">再試行（残り ' + left.length + ' 件）</span><span class="en">Retry (' + left.length + ' left)</span>';
+            box.insertBefore(btn, null);
+          } else {
+            btn.disabled = false;
+            btn.innerHTML = '<span class="jp">確認できませんでした — もう一度押してください</span><span class="en">Could not verify — please tap again</span>';
+          }
+        }).catch(function () {
+          btn.disabled = false;
+          btn.innerHTML = '<span class="jp">通信エラー — もう一度押してください</span><span class="en">Network error — please tap again</span>';
+        });
+      }, current.length * 600 + 4000);
+    });
+    var anchor = document.querySelector('.header') || document.body.firstElementChild;
+    if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(box, anchor.nextSibling);
+    else document.body.insertBefore(box, document.body.firstChild);
   }
 
   /* mount(render): draw from whatever's cached locally NOW (instant), then
