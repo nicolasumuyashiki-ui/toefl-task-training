@@ -101,6 +101,19 @@ function tckRootPrefix() {
       // Drop any not-yet-sent saves from the previous account so they cannot be
       // mis-attributed to the new account on the next outbox flush.
       try { localStorage.removeItem('tck_outbox'); } catch (e) {}
+      // SAME-TAB switch: sessionStorage survives a login change in the same
+      // tab, so the previous user's in-tab results (ctw_p*_answers_*,
+      // lcrAnswers, convAnswers, …) would render as the new user's own on
+      // answer pages — and CTW's renderAll would even mirror them into the
+      // new user's local score cache. Purge every display/result key too.
+      try {
+        var skill = [];
+        for (var si = 0; si < sessionStorage.length; si++) {
+          var sk = sessionStorage.key(si);
+          if (sk && /^(training_|ctw_p\d+_answers_|tck_(seeded|stu_restored|admin_att|admin_restored|retry_shown|hist_cache|sub_status|reconcile_pushed)_|lcrAnswers$|convAnswers$|announceAnswers$|talkPractice\d+Answers$|sentenceAnswers$|emailResponse$|discussionResponse$)/.test(sk)) skill.push(sk);
+        }
+        for (var sj = 0; sj < skill.length; sj++) { try { sessionStorage.removeItem(skill[sj]); } catch (e) {} }
+      } catch (e) {}
     }
     if (prev !== uid) { try { localStorage.setItem('tck_cache_uid', uid); } catch (e) {} }
   } catch (e) {}

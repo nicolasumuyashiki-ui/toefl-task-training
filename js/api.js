@@ -148,6 +148,18 @@ function _outboxRemove(id) {
   var n = a.filter(function (it) { return it && it.id !== id; });
   if (n.length !== a.length) _outboxWrite(n);
 }
+function _outboxUpdate(item) {
+  var a = _outboxRead();
+  for (var i = 0; i < a.length; i++) { if (a[i] && a[i].id === item.id) { a[i] = item; _outboxWrite(a); return; } }
+}
+/* Session user MAY be gone by send time (iOS suspends tabs and drops
+   sessionStorage) — that used to produce unattributable empty-userId rows.
+   Prefer the owner captured at ENQUEUE time. */
+function _itemUser(item) {
+  var u = (item && item.user && item.user.userId) ? item.user : null;
+  if (!u) { try { var s = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}'); if (s.userId) u = { userId: s.userId, userName: s.userName || s.name || '' }; } catch (e) {} }
+  return u || { userId: '', userName: '' };
+}
 function _genSaveId() { return 's_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9); }
 
 /* Build + transmit ONE save payload (hybrid GET / hidden-iframe POST).
@@ -157,7 +169,7 @@ function _genSaveId() { return 's_' + Date.now() + '_' + Math.random().toString(
    row, which the menu/predicted view already collapse per set). */
 /* Build the saveAnswers params object (shared by the proxy + POST paths). */
 function _saveParams(item) {
-  var user = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+  var user = _itemUser(item);
   var meta = item.meta || {};
   return {
     action: 'saveAnswers',
@@ -176,6 +188,10 @@ function _saveParams(item) {
    direct GET/iframe transport. The relay defeats domain-based blockers; the
    fallback guarantees we never do WORSE than today's direct method. */
 function _sendSavePayload(item) {
+  // Never transmit an unattributable save — without a userId the row can
+  // reach the sheet but belongs to no one (empty-userId rows existed in
+  // production). Keep it queued; the next flush runs with a live session.
+  if (!_itemUser(item).userId) return Promise.reject(new Error('no_user'));
   if (SAVE_PROXY_URL) {
     return _proxyPost(_saveParams(item)).then(function (res) {
       if (res && res.success !== false) return res;
@@ -188,7 +204,7 @@ function _sendSavePayload(item) {
 }
 
 function _sendSaveDirect(item) {
-  var user = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+  var user = _itemUser(item);
   var meta = item.meta || {};
   var answersStr = JSON.stringify(item.answers == null ? '' : item.answers);
   var getUrl = API_URL + '?action=saveAnswers'
@@ -238,8 +254,15 @@ function _sendSaveDirect(item) {
       }, 250);
       ok ? resolve(result) : reject(new Error((result && result.error) || 'post_failed'));
     }
-    iframe.onload = function () { cleanup({ success: true }, true); };
-    setTimeout(function () { cleanup({ success: true, timeout: true }, true); }, 30000);
+    // The iframe response is cross-origin and unreadable: onload proves a
+    // page loaded, NOT that GAS accepted the save (a captive portal / block
+    // page also fires onload). Report it as UNVERIFIED so the outbox keeps
+    // the item until a verifiable channel (proxy / JSONP) confirms it —
+    // clientSaveId lets the server dedupe the re-sends. A TIMEOUT is a
+    // failure, not a success (it used to delete the receipt on a save that
+    // may never have arrived).
+    iframe.onload = function () { cleanup({ success: true, unverified: true }, true); };
+    setTimeout(function () { cleanup({ success: false, error: 'post_timeout' }, false); }, 30000);
     try { form.submit(); } catch (e) { cleanup({ success: false, error: String(e) }, false); }
   });
 }
@@ -257,8 +280,21 @@ function _flushOutbox() {
   function step() {
     if (i >= arr.length) { _flushingOutbox = false; return Promise.resolve(); }
     var item = arr[i++];
+    // Legacy items predate the enqueue-time owner capture. The outbox is
+    // purged on account switch (auth.js), so the current session user is
+    // this device's owner — attach so the row is attributed correctly.
+    if ((!item.user || !item.user.userId) && u.userId) {
+      item.user = { userId: u.userId, userName: u.userName || u.name || '' };
+      _outboxUpdate(item);
+    }
+    item.tries = (item.tries || 0) + 1;
+    _outboxUpdate(item);
     return _sendSavePayload(item).then(function (res) {
-      if (res && res.success !== false) _outboxRemove(item.id);
+      var okVerified = res && res.success !== false && !res.unverified;
+      // An UNVERIFIED (iframe) ack keeps the item queued for a verifiable
+      // re-send — clientSaveId dedupes on the server. Bounded: after 6
+      // delivery attempts the odds every one vanished are negligible.
+      if (okVerified || (res && res.success !== false && item.tries >= 6)) _outboxRemove(item.id);
     }, function () {}).then(function () {
       return new Promise(function (r) { setTimeout(r, 500); }).then(step);
     });
@@ -320,10 +356,17 @@ var Api = {
    * it's re-sent on the next page load / login. Callers are unchanged.
    */
   saveAnswers: function(setName, answers, score, meta) {
-    var item = { id: _genSaveId(), setName: setName, answers: answers, score: score, meta: meta || {}, enqueuedAt: new Date().toISOString() };
+    // Capture the owner NOW, while the session is certainly alive — by
+    // send/retry time iOS may have dropped sessionStorage.
+    var owner = null;
+    try { var s = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}'); if (s.userId) owner = { userId: s.userId, userName: s.userName || s.name || '' }; } catch (e) {}
+    var item = { id: _genSaveId(), user: owner, setName: setName, answers: answers, score: score, meta: meta || {}, tries: 1, enqueuedAt: new Date().toISOString() };
     _outboxAdd(item);   // durable FIRST — survives navigation / offline / crash
     return _sendSavePayload(item).then(function (res) {
-      if (res && res.success !== false) _outboxRemove(item.id);
+      // Only a VERIFIED ack (proxy / JSONP — readable response) clears the
+      // receipt. An iframe onload is unverifiable: keep it queued for a
+      // verifiable re-send (clientSaveId dedupes server-side).
+      if (res && res.success !== false && !res.unverified) _outboxRemove(item.id);
       return res;
     }, function (err) {
       return { success: false, queued: true, error: String((err && err.message) || err) };
@@ -653,3 +696,19 @@ var Api = {
    completed attempt eventually reaches the server even if the original
    send failed (offline / GAS congestion / tab closed mid-send). */
 try { setTimeout(function () { try { _flushOutbox(); } catch (e) {} }, 1500); } catch (e) {}
+/* Mobile browsers park tabs for days — flush whenever the tab comes back
+   to the foreground (or is restored from the back/forward cache), so a
+   pending save doesn't wait for a full page reload that may never come. */
+try {
+  var _lastVisFlush = 0;
+  function _visFlush() {
+    var now = Date.now();
+    if (now - _lastVisFlush < 10000) return;   // throttle
+    _lastVisFlush = now;
+    try { _flushOutbox(); } catch (e) {}
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') _visFlush();
+  });
+  window.addEventListener('pageshow', _visFlush);
+} catch (e) {}
