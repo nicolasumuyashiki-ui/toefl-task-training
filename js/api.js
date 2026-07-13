@@ -377,6 +377,34 @@ var Api = {
   flushOutbox: function() { return _flushOutbox(); },
   outboxPending: function() { return _outboxRead().length; },
 
+  /* PREFLIGHT — test the REAL save transports from this device/network so a
+     hostile environment (extension / corporate filter / VPN dropping either
+     the relay or script.google.com) is detected at LOGIN TIME, not after a
+     practice's save silently fails. Probes are ?action=heartbeat GETs — they
+     write no ANSWERS rows (heartbeat only bumps last_seen_at). A parsed JSON
+     response through a channel proves that channel delivers, regardless of
+     the action's own result. Cached per session; pass force=true to re-test. */
+  savePathPreflight: function(force) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    if (!u.userId) return Promise.resolve(null);
+    if (!force) {
+      try {
+        var c = JSON.parse(sessionStorage.getItem('tck_preflight') || 'null');
+        if (c && typeof c.ok === 'boolean') return Promise.resolve(c);
+      } catch (e) {}
+    }
+    var url = API_URL + '?action=heartbeat&id=' + encodeURIComponent(u.userId);
+    var reached = function (r) { return !!(r && typeof r === 'object'); };
+    var no = function () { return false; };
+    var pProxy  = _proxyGet(url).then(reached, no);
+    var pDirect = _jsonpDirect(url, 9000).then(reached, no);
+    return Promise.all([pProxy, pDirect]).then(function (r) {
+      var res = { ok: r[0] || r[1], proxy: r[0], direct: r[1], at: new Date().toISOString() };
+      try { sessionStorage.setItem('tck_preflight', JSON.stringify(res)); } catch (e) {}
+      return res;
+    });
+  },
+
   /* ---- Cross-device band HIGH-WATER-MARK (see docs/gas-band-hwm.js) ----
      Persists the HIGHEST section bands / total a learner has ever reached so
      the predicted score is IDENTICAL on every device and can never "reset" on
@@ -711,4 +739,45 @@ try {
     if (document.visibilityState === 'visible') _visFlush();
   });
   window.addEventListener('pageshow', _visFlush);
+} catch (e) {}
+
+/* LAST-CHANCE flush — the one residual hole in the outbox was the tab being
+   force-closed in the ~seconds between enqueue and the async transmit
+   completing. `sendBeacon` is built for exactly this: the browser guarantees
+   delivery of the POST even after the page is gone. Fired on pagehide /
+   tab-hidden for any still-pending items, via the same-origin relay (the
+   Worker forwards the form body to GAS unchanged). Fire-and-forget: the
+   response is unreadable, so items are NOT removed from the outbox — the
+   next verifiable flush confirms and clears them, and clientSaveId dedupes
+   the extra delivery server-side. Per-item 5-min throttle so background/
+   foreground churn doesn't spray repeats of a permanently-stuck item. */
+try {
+  function _beaconFlush() {
+    try {
+      if (!navigator.sendBeacon || !SAVE_PROXY_URL) return;
+      var arr = _outboxRead();
+      if (!arr.length) return;
+      var now = Date.now(), sent = 0;
+      for (var i = 0; i < arr.length && sent < 3; i++) {
+        var item = arr[i];
+        if (!item || !_itemUser(item).userId) continue;
+        if (item.beaconAt && now - item.beaconAt < 300000) continue;
+        var params = _saveParams(item);
+        var body = Object.keys(params).map(function (k) {
+          return encodeURIComponent(k) + '=' + encodeURIComponent(params[k] == null ? '' : params[k]);
+        }).join('&');
+        if (body.length > 60000) continue;  // beacon payload cap ~64KB
+        var blob = new Blob([body], { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
+        if (navigator.sendBeacon(SAVE_PROXY_URL, blob)) {
+          item.beaconAt = now;
+          _outboxUpdate(item);
+          sent++;
+        }
+      }
+    } catch (e) {}
+  }
+  window.addEventListener('pagehide', _beaconFlush);
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') _beaconFlush();
+  });
 } catch (e) {}

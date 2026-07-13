@@ -192,7 +192,7 @@ Best regards
     <div class="card-body">
       <div class="mistakes-grid">
         <div class="mistake"><h5><span class="jp">✗ ポイント見落とし</span><span class="en">✗ Missing a required point</span></h5><p><span class="jp">3つのうち1つを書き忘れる → 大減点。書き終わったら必ず再確認</span><span class="en">Forgetting one of the three points = a big score hit. Always re-check after writing.</span></p></div>
-        <div class="mistake"><h5><span class="jp">✗ 冗長な前置き</span><span class="en">✗ Long-winded openings</span></h5><p><span class="jp">"I hope this email finds you well..." は不要。すぐに目的を述べる</span><span class="en">"I hope this email finds you well..." is unnecessary — get to the point immediately.</span></p></div>
+        <div class="mistake"><h5><span class="jp">✗ 前置きが長すぎる</span><span class="en">✗ Openings that run too long</span></h5><p><span class="jp">挨拶の1文（例: "I hope this email finds you well."）は減点されず、ETSが採点する丁寧さ（social conventions）にはむしろプラスに働き得る。ただし前置きは1文まで — 7分で3つの課題ポイントを書き切ることが最優先なので、2文目には必ず用件へ</span><span class="en">A one-line pleasantry (e.g. "I hope this email finds you well.") is not penalized — it can even support the politeness ETS scores under social conventions. But keep it to one sentence: covering all three task points in 7 minutes comes first, so state your purpose by sentence two.</span></p></div>
         <div class="mistake"><h5><span class="jp">✗ 具体性の欠如</span><span class="en">✗ Lack of specifics</span></h5><p><span class="jp">"I found your wallet somewhere" ではなく、場所・時間を具体的に書く</span><span class="en">Say exactly where and when you found it, not just "I found your wallet somewhere"</span></p></div>
         <div class="mistake"><h5><span class="jp">✗ 書きすぎ</span><span class="en">✗ Writing too much</span></h5><p><span class="jp">120語を超えても加点なし。簡潔に3ポイントを網羅することが重要</span><span class="en">Going over 120 words earns no extra credit. Cover the 3 points concisely.</span></p></div>
       </div>
@@ -206,7 +206,7 @@ Best regards
   <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
-<script src="../../js/auth.js?v=20260718"></script>
+<script src="../../js/auth.js?v=20260720"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -225,6 +225,6 @@ if(stored && stored.text){
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260718"></script>
+<script defer src="../../js/tm-footer.js?v=20260720"></script>
 </body>
 </html>

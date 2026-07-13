@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<title>サーバー未接続のとき — TCK Reps</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Zen Kaku Gothic New","Noto Sans JP",Manrope,system-ui,sans-serif;background:#FBF6EC;color:#1B2A22;line-height:1.8;-webkit-font-smoothing:antialiased}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;background:#fff;border-bottom:1px solid #EFE6D6}
+.back{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:#fff;border:1.5px solid #007646;border-radius:999px;color:#00402A;font-weight:700;font-size:.84em;text-decoration:none;cursor:pointer}
+.back:hover{background:#007646;color:#fff}
+.lang{display:inline-flex;border:1px solid #D6DAD7;border-radius:999px;overflow:hidden}
+.lang button{border:0;background:#fff;color:#5A6861;font-weight:700;font-size:.8em;padding:6px 13px;cursor:pointer;font-family:inherit}
+.lang button.active{background:#007646;color:#fff}
+.wrap{max-width:760px;margin:0 auto;padding:28px 22px 64px}
+h1{font-size:1.7em;font-weight:800;color:#00402A;letter-spacing:-.01em;margin-bottom:6px}
+.lead{color:#5A6861;font-size:.95em;margin-bottom:26px}
+.card{background:#fff;border:1px solid #EFE6D6;border-radius:14px;padding:22px 24px;margin-bottom:18px}
+.card h2{font-size:1.12em;font-weight:800;color:#005434;margin-bottom:10px;display:flex;align-items:center;gap:9px}
+.card h2 .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#007646;color:#fff;font-size:.72em;font-weight:800;flex:none}
+.card p{margin:0 0 10px}
+.card ol{margin:6px 0 6px 4px;padding:0;list-style:none;counter-reset:step}
+.card ol li{position:relative;padding-left:34px;margin-bottom:12px;counter-increment:step}
+.card ol li::before{content:counter(step);position:absolute;left:0;top:2px;width:24px;height:24px;border-radius:50%;background:#EAF4EE;border:1.5px solid #BFDCCB;color:#0F6B3F;font-size:.74em;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.safe{background:#E6F3EC;border:1px solid #BFDCCB;border-radius:10px;padding:13px 16px;color:#0F5A33;font-weight:600;margin:2px 0 4px}
+.hl{background:#FFF4D6;border:1px solid #E3C871;border-radius:10px;padding:13px 16px;color:#6B5A1E;font-weight:600;margin:10px 0 2px}
+.muted{color:#5A6861;font-size:.9em}
+em{font-style:normal;font-weight:800;color:#00402A}
+.btn{display:inline-flex;align-items:center;gap:8px;background:#007646;color:#fff;border:0;border-radius:999px;padding:10px 22px;font:inherit;font-weight:800;font-size:.9em;cursor:pointer}
+.btn[disabled]{opacity:.55;cursor:default}
+.btn.ghost{background:#fff;color:#00402A;border:1.5px solid #007646}
+.test-rows{margin:14px 0 6px;display:flex;flex-direction:column;gap:8px}
+.trow{display:flex;align-items:center;gap:10px;background:#FBF6EC;border:1px solid #EFE6D6;border-radius:10px;padding:10px 14px;font-size:.92em}
+.trow .st{margin-left:auto;font-weight:800;white-space:nowrap}
+.st.ok{color:#0F7A45}.st.ng{color:#B8422C}.st.run{color:#8A6D1E}
+.verdict{margin-top:12px;border-radius:10px;padding:12px 16px;font-weight:700;display:none}
+.verdict.ok{display:block;background:#E6F3EC;border:1px solid #0F7A45;color:#0F5A33}
+.verdict.ng{display:block;background:#FCEBE4;border:1px solid #B85C3C;color:#8A3E24}
+.pending-line{margin-top:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:.94em}
+[data-lang="jp"] .en{display:none}
+[data-lang="en"] .jp{display:none}
+</style>
+</head>
+<body data-lang="jp">
+<div class="top">
+  <a class="back" href="javascript:void(0)" onclick="(history.length>1)?history.back():(location.href='index.html')">
+    <span class="jp">← 戻る</span><span class="en">← Back</span>
+  </a>
+  <div class="lang">
+    <button type="button" data-lang-btn="jp" class="active">日本語</button>
+    <button type="button" data-lang-btn="en">EN</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <h1><span class="jp">「⚠ サーバー未接続」と表示されたら</span><span class="en">When you see “⚠ Server not connected”</span></h1>
+  <p class="lead">
+    <span class="jp">この表示の意味と、つながるようにするための手順をご案内します。</span>
+    <span class="en">What this message means, and the steps to get connected again.</span>
+  </p>
+
+  <!-- 0. Reassurance first -->
+  <div class="card">
+    <h2><span class="jp">まずご安心ください — 成績は消えません</span><span class="en">First: your results are not lost</span></h2>
+    <div class="safe">
+      <span class="jp">✓ 取り組んだ成績はすべて<em>この端末の中に保管</em>されています。接続が戻ると<em>自動でサーバーに送信</em>され、画面右下のチップが「✓ 保存OK」になれば完了です。</span>
+      <span class="en">✓ Everything you complete is <em>stored safely on this device</em>. Once the connection is back it is <em>sent to the server automatically</em> — when the chip at the bottom right shows “✓ Saved”, you're done.</span>
+    </div>
+    <p class="muted" style="margin-top:10px">
+      <span class="jp">※ 未接続のままでも練習は通常どおり行えます。</span>
+      <span class="en">※ You can keep practicing normally while not connected.</span>
+    </p>
+  </div>
+
+  <!-- 1. What it means -->
+  <div class="card">
+    <h2><span class="n">1</span><span class="jp">この表示の意味</span><span class="en">What the message means</span></h2>
+    <p>
+      <span class="jp">ログイン時に、成績の保存に使う<em>2つの通信ルート</em>（中継サーバー経由／直接送信）を実際にテストしています。<em>両方とも応答がなかった</em>ときにこの表示が出ます。つまり「今お使いの回線では、成績がサーバーに届かない可能性が高い」という<em>事前のお知らせ</em>です。</span>
+      <span class="en">When you log in, the app tests the <em>two routes</em> used to save your results (via our relay server, and directly). This message appears when <em>neither route responded</em> — an early notice that results are unlikely to reach the server on your current connection.</span>
+    </p>
+    <p class="muted">
+      <span class="jp">よくある原因: 学校・会社のネットワーク制限、セキュリティソフトや広告ブロッカー、VPN、不安定なモバイル回線。</span>
+      <span class="en">Common causes: school/office network filters, security software or ad blockers, VPNs, or an unstable mobile connection.</span>
+    </p>
+  </div>
+
+  <!-- 2. Live connection test -->
+  <div class="card">
+    <h2><span class="n">2</span><span class="jp">接続テスト</span><span class="en">Connection test</span></h2>
+    <p>
+      <span class="jp">いま接続できるか、その場でテストできます。</span>
+      <span class="en">Test your connection right now.</span>
+    </p>
+    <button type="button" class="btn" id="runTest"><span class="jp">接続テストを実行</span><span class="en">Run connection test</span></button>
+    <div class="test-rows" id="testRows" style="display:none">
+      <div class="trow"><span class="jp">中継サーバー経由</span><span class="en">Via relay server</span><span class="st" id="stProxy">—</span></div>
+      <div class="trow"><span class="jp">直接送信</span><span class="en">Direct route</span><span class="st" id="stDirect">—</span></div>
+    </div>
+    <div class="verdict" id="verdict"></div>
+    <div class="pending-line" id="pendingLine" style="display:none">
+      <span><span class="jp">未送信の成績: </span><span class="en">Unsent results: </span><em id="pendingCount">0</em><span class="jp"> 件</span></span>
+      <button type="button" class="btn ghost" id="resendBtn"><span class="jp">今すぐ再送</span><span class="en">Resend now</span></button>
+      <span id="resendResult" style="font-weight:700"></span>
+    </div>
+  </div>
+
+  <!-- 3. Steps -->
+  <div class="card">
+    <h2><span class="n">3</span><span class="jp">つながるようにする手順（上から順にお試しください）</span><span class="en">Steps to get connected (try in order)</span></h2>
+    <ol>
+      <li><span class="jp"><em>別の回線に切り替える</em> — 自宅Wi-Fi ⇔ スマホ回線（テザリング）を切り替えるのが最も効果的です。切り替えると自動で再テストされます。</span><span class="en"><em>Switch networks</em> — toggling between home Wi-Fi and mobile data (tethering) is the most effective fix. The app re-tests automatically when the network changes.</span></li>
+      <li><span class="jp"><em>広告ブロッカー・セキュリティ拡張を一時オフ</em>（例: McAfee WebAdvisor、AdBlock 等）にして、ページを再読み込みする。</span><span class="en"><em>Temporarily turn off ad-blocker / security extensions</em> (e.g. McAfee WebAdvisor, AdBlock) and reload the page.</span></li>
+      <li><span class="jp"><em>VPN を使っている場合は一時オフ</em>にする。</span><span class="en"><em>If you use a VPN, turn it off temporarily.</em></span></li>
+      <li><span class="jp"><em>シークレット／プライベートモードを使わない</em>（保存自体がブロックされることがあります）。</span><span class="en"><em>Avoid private/incognito mode</em> (it can block saving entirely).</span></li>
+      <li><span class="jp"><em>別のブラウザで開く</em>（Chrome / Safari / Edge）。</span><span class="en"><em>Try another browser</em> (Chrome / Safari / Edge).</span></li>
+      <li><span class="jp"><em>学校・会社のネットワークの場合</em>: 制限により接続できないことが多いため、スマホ回線（テザリング）やご自宅の Wi-Fi など<em>別のネットワークでのご利用</em>をおすすめします。</span><span class="en"><em>On a school/office network</em>: these are often restricted — we recommend using a <em>different network</em> instead, such as mobile data (tethering) or your home Wi-Fi.</span></li>
+    </ol>
+  </div>
+
+  <!-- 4. Still stuck -->
+  <div class="card" style="background:#FBF6EC">
+    <h2><span class="jp">それでも解決しないとき</span><span class="en">If it still doesn't work</span></h2>
+    <p>
+      <span class="jp">未接続のままでも成績は端末に残り続けます。後日、<em>同じ端末・同じブラウザ</em>で、つながる回線（例: ご自宅のWi-Fi）に接続してこのアプリを開くだけで自動送信されます。</span>
+      <span class="en">Your results stay on the device. Later, simply open the app on <em>the same device and browser</em> while on a working connection (e.g. home Wi-Fi) and they will be sent automatically.</span>
+    </p>
+    <div class="hl">
+      <span class="jp">数日たっても「⚠ 未送信」が消えない場合は、<a href="mailto:info@tckworkshop.co.jp" style="color:inherit"><em>info@tckworkshop.co.jp</em></a> までご連絡ください（お名前・ログインID・ご利用のネットワーク環境を添えていただけるとスムーズです）。</span>
+      <span class="en">If “⚠ Unsaved” persists for several days, contact <a href="mailto:info@tckworkshop.co.jp" style="color:inherit"><em>info@tckworkshop.co.jp</em></a> (please include your name, login ID, and network environment).</span>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js?v=20260720"></script>
+<script>
+function setLang(l){
+  document.body.setAttribute('data-lang', l);
+  document.documentElement.setAttribute('lang', l === 'jp' ? 'ja' : 'en');
+  try { localStorage.setItem('tck_lang', l); } catch(e){}
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-lang-btn') === l); });
+}
+document.querySelectorAll('[data-lang-btn]').forEach(function(b){
+  b.addEventListener('click', function(){ setLang(b.getAttribute('data-lang-btn')); });
+});
+(function(){ var l='jp'; try{ l = localStorage.getItem('tck_lang') || 'jp'; }catch(e){} setLang(l); })();
+
+/* ---- Live connection test (works logged-in or not) ---- */
+(function(){
+  function jp(){ try{ return (localStorage.getItem('tck_lang')||'jp') !== 'en'; }catch(e){ return true; } }
+  function heartbeatUrl(){
+    var uid = '';
+    try { uid = (JSON.parse(sessionStorage.getItem('kickstart_user')||'{}').userId) || ''; } catch(e){}
+    return API_URL + '?action=heartbeat&id=' + encodeURIComponent(uid);
+  }
+  // Reachability = a readable response through the channel; the action's own
+  // result is irrelevant. Mirrors Api.savePathPreflight but runs without login.
+  function probeProxy(){
+    if (typeof SAVE_PROXY_URL === 'undefined' || !SAVE_PROXY_URL || typeof fetch !== 'function') return Promise.resolve(false);
+    var qs = heartbeatUrl().split('?')[1];
+    var p = fetch(SAVE_PROXY_URL.replace(/\/$/,'') + '/?' + qs, { method:'GET' })
+      .then(function(r){ return r.ok ? r.text().then(function(t){ try{ JSON.parse(t.match(/\{[\s\S]*\}/)[0]); return true; }catch(e){ return false; } }) : false; })
+      .catch(function(){ return false; });
+    return Promise.race([p, new Promise(function(res){ setTimeout(function(){ res(false); }, 12000); })]);
+  }
+  function probeDirect(){
+    return new Promise(function(resolve){
+      var cb = '_pfCb_' + Date.now();
+      var done = false;
+      function finish(v){ if(done) return; done = true; try{ delete window[cb]; }catch(e){} if (s.parentNode) s.parentNode.removeChild(s); resolve(v); }
+      window[cb] = function(){ finish(true); };
+      var s = document.createElement('script');
+      s.src = heartbeatUrl() + '&callback=' + cb;
+      s.onerror = function(){ finish(false); };
+      document.head.appendChild(s);
+      setTimeout(function(){ finish(false); }, 9000);
+    });
+  }
+  function setSt(id, state){
+    var el = document.getElementById(id);
+    el.className = 'st ' + state;
+    el.textContent = state === 'run' ? (jp() ? '確認中…' : 'Testing…')
+                   : state === 'ok'  ? (jp() ? '✓ 接続OK' : '✓ OK')
+                   : (jp() ? '✗ 応答なし' : '✗ No response');
+  }
+  function pendingCount(){
+    try { return (JSON.parse(localStorage.getItem('tck_outbox')||'[]')||[]).length; } catch(e){ return 0; }
+  }
+  function refreshPending(){
+    var n = pendingCount();
+    var line = document.getElementById('pendingLine');
+    document.getElementById('pendingCount').textContent = String(n);
+    line.style.display = n > 0 ? 'flex' : 'none';
+  }
+  document.getElementById('runTest').addEventListener('click', function(){
+    var btn = this;
+    btn.disabled = true;
+    document.getElementById('testRows').style.display = 'flex';
+    document.getElementById('verdict').className = 'verdict';
+    setSt('stProxy','run'); setSt('stDirect','run');
+    Promise.all([
+      probeProxy().then(function(v){ setSt('stProxy', v ? 'ok' : 'ng'); return v; }),
+      probeDirect().then(function(v){ setSt('stDirect', v ? 'ok' : 'ng'); return v; })
+    ]).then(function(r){
+      var ok = r[0] || r[1];
+      var v = document.getElementById('verdict');
+      v.className = 'verdict ' + (ok ? 'ok' : 'ng');
+      v.textContent = ok
+        ? (jp() ? '✓ サーバーに接続できています。成績は保存されます。' : '✓ Connected — your results will be saved.')
+        : (jp() ? '✗ どちらのルートもつながりませんでした。下記の手順をお試しください。' : '✗ Neither route responded. Please try the steps below.');
+      // A successful test updates the session preflight so the chip recovers too.
+      try { sessionStorage.setItem('tck_preflight', JSON.stringify({ ok: ok, proxy: r[0], direct: r[1], at: new Date().toISOString() })); } catch(e){}
+      refreshPending();
+      btn.disabled = false;
+    });
+  });
+  document.getElementById('resendBtn').addEventListener('click', function(){
+    var btn = this, out = document.getElementById('resendResult');
+    // Sends run under the logged-in session; without one the queue stays put
+    // (it is delivered automatically on the next login).
+    var hasSession = false;
+    try { hasSession = !!(JSON.parse(sessionStorage.getItem('kickstart_user')||'{}').userId); } catch(e){}
+    if (!hasSession) {
+      out.style.color = '#8A6D1E';
+      out.textContent = jp() ? 'ログインすると自動で送信されます' : 'They will be sent automatically when you log in.';
+      return;
+    }
+    btn.disabled = true;
+    out.textContent = jp() ? '送信中…' : 'Sending…';
+    var before = pendingCount();
+    var done = function(){
+      setTimeout(function(){
+        refreshPending();
+        var after = pendingCount();
+        out.style.color = after === 0 ? '#0F7A45' : '#B8422C';
+        out.textContent = after === 0
+          ? (jp() ? '✓ すべて送信しました' : '✓ All sent')
+          : (jp() ? '残り ' + after + ' 件（接続をご確認ください）' : after + ' remaining — check your connection');
+        btn.disabled = false;
+      }, Math.min(before, 5) * 600 + 1500);
+    };
+    try {
+      if (typeof Api !== 'undefined' && Api.flushOutbox) Api.flushOutbox().then(done, done);
+      else done();
+    } catch(e){ done(); }
+  });
+  refreshPending();
+})();
+</script>
+<script defer src="js/tm-footer.js?v=20260720"></script>
+</body>
+</html>
