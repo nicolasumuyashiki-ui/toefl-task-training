@@ -110,7 +110,7 @@ function tckRootPrefix() {
         var skill = [];
         for (var si = 0; si < sessionStorage.length; si++) {
           var sk = sessionStorage.key(si);
-          if (sk && /^(training_|ctw_p\d+_answers_|tck_(seeded|stu_restored|admin_att|admin_restored|retry_shown|hist_cache|sub_status|reconcile_pushed)_|lcrAnswers$|convAnswers$|announceAnswers$|talkPractice\d+Answers$|sentenceAnswers$|emailResponse$|discussionResponse$)/.test(sk)) skill.push(sk);
+          if (sk && /^(training_|ctw_p\d+_answers_|ctwL_|tck_(seeded|stu_restored|admin_att|admin_restored|retry_shown|hist_cache|sub_status|reconcile_pushed)_|lcrAnswers$|convAnswers$|announceAnswers$|talkPractice\d+Answers$|sentenceAnswers(_p\d+)?$|(email|discussion)Response(_p\d+)?$)/.test(sk)) skill.push(sk);
         }
         for (var sj = 0; sj < skill.length; sj++) { try { sessionStorage.removeItem(skill[sj]); } catch (e) {} }
       } catch (e) {}
@@ -476,9 +476,17 @@ if (typeof window !== 'undefined') {
     // Email/Discussion submissions also only live in sessionStorage. The
     // key carries no practice number, so scope the durable mirror by the
     // page path to keep practices from overwriting each other.
-    if (/^(email|discussion)Response$/.test(String(key))) {
-      var pm = location.pathname.match(/\/writing\/(?:email|discussion)\/practice-(\d+)\.html$/i);
-      if (pm) { try { localStorage.setItem(key + '_p' + pm[1], value); } catch (e) {} }
+    // Writing pages use an unscoped key on P1 (`emailResponse`) but a
+    // practice-scoped one on P2..P10 (`emailResponse_pN`) — mirror both
+    // forms to a durable practice-scoped localStorage copy.
+    var wr = String(key).match(/^((?:email|discussion)Response)(_p\d+)?$/);
+    if (wr) {
+      if (wr[2]) {
+        try { localStorage.setItem(key, value); } catch (e) {}
+      } else {
+        var pm = location.pathname.match(/\/writing\/(?:email|discussion)\/practice-(\d+)\.html$/i);
+        if (pm) { try { localStorage.setItem(key + '_p' + pm[1], value); } catch (e) {} }
+      }
     }
     var m = String(key).match(/^training_score_(.+)_p(\d+)$/);
     if (!m) return;
@@ -937,7 +945,9 @@ if (typeof window !== 'undefined') {
   } else if (task === 'talk') {
     seed('talkPractice' + practice + 'Answers', ta);
   } else if (task === 'sentence') {
-    seed('sentenceAnswers', ta, function (raw) {
+    // Sentence pages read a practice-scoped key everywhere except P1
+    // (P1 = `sentenceAnswers`, P2..P10 = `sentenceAnswers_pN`).
+    seed(String(practice) === '1' ? 'sentenceAnswers' : 'sentenceAnswers_p' + practice, ta, function (raw) {
       var arr = null, sc = null;
       try { arr = JSON.parse(raw); } catch (e) {}
       try { sc = JSON.parse(localStorage.getItem('training_score_sentence_p' + practice) || 'null'); } catch (e) {}
@@ -948,7 +958,8 @@ if (typeof window !== 'undefined') {
     seed('ctw_p' + practice + '_answers_1', 'ctw_p' + practice + '_answers_1');
     seed('ctw_p' + practice + '_answers_2', 'ctw_p' + practice + '_answers_2');
   } else if (task === 'email' || task === 'discussion') {
-    seed(task + 'Response', task + 'Response_p' + practice);
+    // Page reads the unscoped key on P1, the practice-scoped one on P2..P10.
+    seed(task + 'Response' + (String(practice) === '1' ? '' : '_p' + practice), task + 'Response_p' + practice);
   }
   if (seeded && sessionStorage.getItem(FLAG) !== '1') {
     try { rawSet(FLAG, '1'); location.reload(); } catch (e) {}

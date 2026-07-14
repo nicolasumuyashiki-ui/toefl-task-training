@@ -184,7 +184,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);color:var
   </div>
 </div>
 
-<script src="../../../js/auth.js?v=20260720"></script>
+<script src="../../../js/auth.js?v=20260723"></script>
 <script>
 /* i18n toggle */
 (function(){
@@ -195,19 +195,17 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);color:var
 })();
 
 var SD=[
-{intro:"Chocolate is one of the most popular treats in the world today. However, its history stretches back thousands of years. The ancient Maya and Aztec civilizations valued cacao beans highly and used them to prepare bitter drinks for special ceremonies.",conclusion:"This simple change helped chocolate become the sweet treat that millions of people enjoy around the world.",target:[
-{w:"When",a:"en",s:"Wh",p:""},
+{intro:"Chocolate is one of the most popular treats in the world today. However, its history stretches back thousands of years. The ancient Maya and Aztec civilizations valued cacao beans highly and used them to prepare bitter drinks for special ceremonies.",conclusion:"This simple change helped chocolate become the sweet treat that millions of people enjoy around the world.",target:[{w:"When",a:"en",s:"Wh",p:""},
 {w:"European",a:null,s:null,p:""},
 {w:"traders",a:"ers",s:"trad",p:""},
 {w:"discovered",a:null,s:null,p:""},
-{w:"this",a:"is",s:"th",p:""},
+{w:"this",a:"s",s:"thi",p:""},
 {w:"product",a:null,s:null,p:""},
 {w:"they",a:"ey",s:"th",p:""},
 {w:"brought",a:null,s:null,p:""},
 {w:"the",a:"he",s:"t",p:""},
 {w:"beans",a:null,s:null,p:""},
-{w:"home",a:"me",s:"ho",p:""},
-{w:"and",a:null,s:null,p:""},
+{w:"home",a:"me",s:"ho",p:","},
 {w:"began",a:"gan",s:"be",p:""},
 {w:"adding",a:null,s:null,p:""},
 {w:"sugar",a:"gar",s:"su",p:""},
@@ -215,11 +213,12 @@ var SD=[
 {w:"create",a:"eate",s:"cr",p:""},
 {w:"a",a:null,s:null,p:""},
 {w:"very",a:"ry",s:"ve",p:""},
-{w:"pleasant",a:null,s:null,p:""},{w:"drink",a:null,s:null,p:"."}
+{w:"pleasant",a:null,s:null,p:""},
+{w:"drink",a:null,s:null,p:"."}
 ],exp:[
 {pos:"接続詞",d:"MOD",e:"「空欄＋主語(European traders)」→文頭の接続詞。\"Wh\"→When。時を表す副詞節。",e_en:"\"blank + subject (European traders)\" → sentence-initial conjunction. \"Wh\" → When. Adverbial clause of time."},
 {pos:"名詞",d:"MOD",e:"「European＋空欄」→名詞。\"trad\"→traders（貿易商）。",e_en:"\"European + blank\" → noun. \"trad\" → traders."},
-{pos:"指示形容詞",d:"MOD",e:"「discovered＋空欄＋product」→限定詞。\"th\"→this。",e_en:"\"discovered + blank + product\" → determiner. \"th\" → this."},
+{pos:"指示形容詞",d:"MOD",e:"「discovered＋空欄＋product」→限定詞。\"thi\"→this。",e_en:"\"discovered + blank + product\" → determiner. \"thi\" → this."},
 {pos:"代名詞",d:"MOD",e:"「空欄＋動詞(brought)」→主語。\"th\"→they。",e_en:"\"blank + verb (brought)\" → subject. \"th\" → they."},
 {pos:"冠詞",d:"HARD",e:"「brought＋空欄＋beans」→冠詞。\"t\"1文字→the。品詞パターンで即答。",e_en:"\"brought + blank + beans\" → article. \"t\" (1 letter) → the. Instant via POS pattern."},
 {pos:"名詞",d:"MOD",e:"「the beans＋空欄」→副詞的名詞。\"ho\"→home。",e_en:"\"the beans + blank\" → adverbial noun. \"ho\" → home."},
@@ -237,13 +236,28 @@ function renderAll(){
   SD.forEach(function(s,si){
     var bl=s.target.filter(function(t){return t.a!==null;});
     var st=null;try{st=JSON.parse(sessionStorage.getItem('ctwL_p1_answers_'+(si+1)));}catch(e){}
-    var ua=st?st.answers:[];var sc=st?st.score:0;ts+=sc;tq+=bl.length;if(si===1){harderCorrect+=sc;harderTotal+=bl.length;}
-    sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+bl.length+'</div><div class="score-detail">'+(st?Math.round(sc/bl.length*100)+'%':'—')+'</div></div>';
+    var ua=st?st.answers:[];var sc=st?st.score:0;var tot=(st&&Number(st.total))||bl.length;ts+=sc;tq+=tot;if(si===1){harderCorrect+=sc;harderTotal+=tot;}
+    // Server-restored rows (no correctAnswers snapshot from the same device)
+    // may predate this archived revision of the questions. If the stored
+    // answers cannot reproduce the stored score against THIS version's
+    // blanks, per-question marks would be false — fall back to an honest
+    // note + the raw typed inputs, keeping the saved score authoritative.
+    var mismatched=false;
+    if(st&&!st.correctAnswers){
+      if((ua.length||0)!==bl.length){mismatched=true;}
+      else{var rsc=0;bl.forEach(function(b,qi){var u=String(ua[qi]||'');if(u.toLowerCase()===b.a.toLowerCase())rsc++;});if(rsc!==sc)mismatched=true;}
+    }
+    sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+tot+'</div><div class="score-detail">'+(st?Math.round(sc/tot*100)+'%':'—')+'</div></div>';
     var ph='<span>'+s.intro+'</span> ';
     s.target.forEach(function(t){if(t.a!==null){ph+='<span class="blank-word">'+t.s+'<span class="blank-answer">'+t.a+'</span></span>';if(t.p)ph+=t.p;ph+=' ';}else{ph+=t.w+(t.p||'')+' ';}});
     ph+='<span>'+s.conclusion+'</span>';
     document.getElementById('passage'+si).innerHTML=ph;
     var ag='';
+    if(mismatched){
+      var esc=function(v){return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+      var typed=ua.map(function(v){v=String(v==null?'':v).trim();return v?'\u300c'+esc(v)+'\u300d':'\u2014';}).join(' ');
+      ag+='<div style="background:#FFF4D6;border:1px solid #E3C871;border-radius:10px;padding:12px 16px;margin-bottom:14px;color:#6B5A1E;font-weight:600;line-height:1.8">\u26a0 <span class="jp">\u3053\u306e\u56de\u306f\u3001\u3053\u306e\u30a2\u30fc\u30ab\u30a4\u30d6\u7248\u3068\u306f\u7570\u306a\u308b\u6642\u671f\u306e\u554f\u984c\u3067\u53d6\u308a\u7d44\u307e\u308c\u305f\u305f\u3081\u3001\u8a2d\u554f\u3054\u3068\u306e\u6b63\u8aa4\u306f\u518d\u73fe\u3067\u304d\u307e\u305b\u3093\u3002<strong>\u5f97\u70b9 '+sc+'/'+tot+' \u306f\u4fdd\u5b58\u6642\u306e\u307e\u307e\u6709\u52b9</strong>\u3067\u3059\u3002\u3042\u306a\u305f\u306e\u5165\u529b\uff08\u30bf\u30a4\u30d7\u3057\u305f\u90e8\u5206\uff09: '+typed+'</span><span class="en">This attempt was taken on a different revision of the questions than this archived version, so per-question marks cannot be reproduced. <strong>The saved score '+sc+'/'+tot+' remains valid.</strong> Your typed inputs: '+typed+'</span></div>';
+    }
     bl.forEach(function(b,qi){
       var ex=s.exp[qi];var uans=ua[qi]||'';
       var savedA=(st&&st.correctAnswers&&st.correctAnswers[qi])||b.a;
@@ -251,8 +265,8 @@ function renderAll(){
       var ok=uans.toLowerCase()===savedA.toLowerCase();
       var dt=ex.d==='HARD'?'<span class="q-tag tag-hard">HARD</span>':'<span class="q-tag tag-mod">MOD</span>';
       var ul='';
-      if(st){if(ok){ul='<div class="q-user" style="color:#007646">✓ <span class="jp">正解！ あなたの回答: </span><span class="en">Correct! Your answer: </span>'+savedS+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#B85C3C">□ <span class="jp">未回答 — 推測でも必ず埋めよう！</span><span class="en">Blank — always guess, never leave it empty!</span></div>';}else{ul='<div class="q-user" style="color:#B85C3C">✗ <span class="jp">あなた: </span><span class="en">You: </span><span style="text-decoration:line-through">'+savedS+uans+'</span> <span class="jp">→ 正解: </span><span class="en">→ Correct: </span>'+b.w+'</div>';}}
-      ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+savedS+'</span><span class="ans">'+savedA+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong><span class="jp">品詞：'+ex.pos+'</span><span class="en">POS: '+(posEn[ex.pos]||ex.pos)+'</span></strong> <span class="jp">'+ex.e+'</span><span class="en">'+(ex.e_en||ex.e)+'</span></div></div></div>';
+      if(st&&!mismatched){if(ok){ul='<div class="q-user" style="color:#007646">✓ <span class="jp">正解！ あなたの回答: </span><span class="en">Correct! Your answer: </span>'+savedS+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#B85C3C">□ <span class="jp">未回答 — 推測でも必ず埋めよう！</span><span class="en">Blank — always guess, never leave it empty!</span></div>';}else{ul='<div class="q-user" style="color:#B85C3C">✗ <span class="jp">あなた: </span><span class="en">You: </span><span style="text-decoration:line-through">'+savedS+uans+'</span> <span class="jp">→ 正解: </span><span class="en">→ Correct: </span>'+b.w+'</div>';}}
+      ag+='<div class="answer-row'+(st&&!mismatched&&!ok?' incorrect':'')+'"><div class="q-num '+((st&&!mismatched)?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+savedS+'</span><span class="ans">'+savedA+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong><span class="jp">品詞：'+ex.pos+'</span><span class="en">POS: '+(posEn[ex.pos]||ex.pos)+'</span></strong> <span class="jp">'+ex.e+'</span><span class="en">'+(ex.e_en||ex.e)+'</span></div></div></div>';
     });
     document.getElementById('ag'+si).innerHTML=ag;
   });
@@ -265,7 +279,7 @@ renderAll();
 </script>
 
 <script>if(typeof __i18n==='undefined'){window.__i18n=function(jp,en){return (localStorage.getItem('tck_lang')||'jp')==='en'?en:jp;};}</script>
-<script defer src="../../../js/tm-footer.js?v=20260720"></script>
+<script defer src="../../../js/tm-footer.js?v=20260723"></script>
 
 <script>
 /* 旧版アーカイブ: サーバに残る改訂前（2026-07-02以前）の自分の回答を復元して表示する。

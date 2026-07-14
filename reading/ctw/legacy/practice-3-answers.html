@@ -135,7 +135,7 @@ body[data-lang="en"] .jp{display:none}
 <div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 2: The Science Behind Earthquake Prediction</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
 <div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
 
-<script src="../../../js/auth.js?v=20260720"></script>
+<script src="../../../js/auth.js?v=20260723"></script>
 <script>
 var SD=[
 {intro:"The Olympic Games are among the oldest and most celebrated sporting traditions in the world. They began in ancient Greece over two thousand years ago as a religious festival honoring the god Zeus.",conclusion:"This long tradition of athletic competition continues to unite people from every corner of the globe.",target:[
@@ -180,13 +180,28 @@ function renderAll(){
   SD.forEach(function(s,si){
     var bl=s.target.filter(function(t){return t.a!==null;});
     var st=null;try{st=JSON.parse(sessionStorage.getItem('ctwL_p3_answers_'+(si+1)));}catch(e){}
-    var ua=st?st.answers:[];var sc=st?st.score:0;ts+=sc;tq+=bl.length;if(si===1){harderCorrect+=sc;harderTotal+=bl.length;}
-    sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+bl.length+'</div><div class="score-detail">'+(st?Math.round(sc/bl.length*100)+'%':'—')+'</div></div>';
+    var ua=st?st.answers:[];var sc=st?st.score:0;var tot=(st&&Number(st.total))||bl.length;ts+=sc;tq+=tot;if(si===1){harderCorrect+=sc;harderTotal+=tot;}
+    // Server-restored rows (no correctAnswers snapshot from the same device)
+    // may predate this archived revision of the questions. If the stored
+    // answers cannot reproduce the stored score against THIS version's
+    // blanks, per-question marks would be false — fall back to an honest
+    // note + the raw typed inputs, keeping the saved score authoritative.
+    var mismatched=false;
+    if(st&&!st.correctAnswers){
+      if((ua.length||0)!==bl.length){mismatched=true;}
+      else{var rsc=0;bl.forEach(function(b,qi){var u=String(ua[qi]||'');if(u.toLowerCase()===b.a.toLowerCase())rsc++;});if(rsc!==sc)mismatched=true;}
+    }
+    sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+tot+'</div><div class="score-detail">'+(st?Math.round(sc/tot*100)+'%':'—')+'</div></div>';
     var ph='<span>'+s.intro+'</span> ';
     s.target.forEach(function(t){if(t.a!==null){ph+='<span class="blank-word">'+t.s+'<span class="blank-answer">'+t.a+'</span></span>';if(t.p)ph+=t.p;ph+=' ';}else{ph+=t.w+(t.p||'')+' ';}});
     ph+='<span>'+s.conclusion+'</span>';
     document.getElementById('passage'+si).innerHTML=ph;
     var ag='';
+    if(mismatched){
+      var esc=function(v){return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+      var typed=ua.map(function(v){v=String(v==null?'':v).trim();return v?'\u300c'+esc(v)+'\u300d':'\u2014';}).join(' ');
+      ag+='<div style="background:#FFF4D6;border:1px solid #E3C871;border-radius:10px;padding:12px 16px;margin-bottom:14px;color:#6B5A1E;font-weight:600;line-height:1.8">\u26a0 <span class="jp">\u3053\u306e\u56de\u306f\u3001\u3053\u306e\u30a2\u30fc\u30ab\u30a4\u30d6\u7248\u3068\u306f\u7570\u306a\u308b\u6642\u671f\u306e\u554f\u984c\u3067\u53d6\u308a\u7d44\u307e\u308c\u305f\u305f\u3081\u3001\u8a2d\u554f\u3054\u3068\u306e\u6b63\u8aa4\u306f\u518d\u73fe\u3067\u304d\u307e\u305b\u3093\u3002<strong>\u5f97\u70b9 '+sc+'/'+tot+' \u306f\u4fdd\u5b58\u6642\u306e\u307e\u307e\u6709\u52b9</strong>\u3067\u3059\u3002\u3042\u306a\u305f\u306e\u5165\u529b\uff08\u30bf\u30a4\u30d7\u3057\u305f\u90e8\u5206\uff09: '+typed+'</span><span class="en">This attempt was taken on a different revision of the questions than this archived version, so per-question marks cannot be reproduced. <strong>The saved score '+sc+'/'+tot+' remains valid.</strong> Your typed inputs: '+typed+'</span></div>';
+    }
     bl.forEach(function(b,qi){
       var ex=s.exp[qi];var uans=ua[qi]||'';
       var savedA=(st&&st.correctAnswers&&st.correctAnswers[qi])||b.a;
@@ -194,8 +209,8 @@ function renderAll(){
       var ok=uans.toLowerCase()===savedA.toLowerCase();
       var dt=ex.d==='HARD'?'<span class="q-tag tag-hard">HARD</span>':'<span class="q-tag tag-mod">MOD</span>';
       var ul='';
-      if(st){if(ok){ul='<div class="q-user" style="color:#004D2E">&#10004; <span class="jp">正解！ あなたの回答: </span><span class="en">Correct! Your answer: </span>'+savedS+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#8A3E24">&#11036; <span class="jp">未回答 — 推測でも必ず埋めよう！</span><span class="en">Blank — always guess, never leave it empty!</span></div>';}else{ul='<div class="q-user" style="color:#8A3E24">&#10060; <span class="jp">あなた: </span><span class="en">You: </span><span style="text-decoration:line-through">'+savedS+uans+'</span> <span class="jp">&rarr; 正解: </span><span class="en">&rarr; Correct: </span>'+b.w+'</div>';}}
-      ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+savedS+'</span><span class="ans">'+savedA+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong><span class="jp">品詞：'+ex.pos+'</span><span class="en">POS: '+(posEn[ex.pos]||ex.pos)+'</span></strong> <span class="jp">'+ex.e+'</span><span class="en">'+(ex.e_en||ex.e)+'</span></div></div></div>';
+      if(st&&!mismatched){if(ok){ul='<div class="q-user" style="color:#004D2E">&#10004; <span class="jp">正解！ あなたの回答: </span><span class="en">Correct! Your answer: </span>'+savedS+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#8A3E24">&#11036; <span class="jp">未回答 — 推測でも必ず埋めよう！</span><span class="en">Blank — always guess, never leave it empty!</span></div>';}else{ul='<div class="q-user" style="color:#8A3E24">&#10060; <span class="jp">あなた: </span><span class="en">You: </span><span style="text-decoration:line-through">'+savedS+uans+'</span> <span class="jp">&rarr; 正解: </span><span class="en">&rarr; Correct: </span>'+b.w+'</div>';}}
+      ag+='<div class="answer-row'+(st&&!mismatched&&!ok?' incorrect':'')+'"><div class="q-num '+((st&&!mismatched)?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+savedS+'</span><span class="ans">'+savedA+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong><span class="jp">品詞：'+ex.pos+'</span><span class="en">POS: '+(posEn[ex.pos]||ex.pos)+'</span></strong> <span class="jp">'+ex.e+'</span><span class="en">'+(ex.e_en||ex.e)+'</span></div></div></div>';
     });
     document.getElementById('ag'+si).innerHTML=ag;
   });
@@ -215,7 +230,7 @@ renderAll();
   function setLang(l){document.body.setAttribute("data-lang",l);document.documentElement.setAttribute("lang",l==="jp"?"ja":"en");localStorage.setItem("tck_lang",l);document.querySelectorAll("[data-lang-btn]").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-lang-btn")===l);});}
 })();
 </script>
-<script defer src="../../../js/tm-footer.js?v=20260720"></script>
+<script defer src="../../../js/tm-footer.js?v=20260723"></script>
 
 <script>
 /* 旧版アーカイブ: サーバに残る改訂前（2026-07-02以前）の自分の回答を復元して表示する。

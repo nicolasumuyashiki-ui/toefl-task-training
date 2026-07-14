@@ -135,15 +135,14 @@ body[data-lang="en"] .jp{display:none}
 <div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 2: Dark Matter in Modern Cosmology</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
 <div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
 
-<script src="../../../js/auth.js?v=20260720"></script>
+<script src="../../../js/auth.js?v=20260723"></script>
 <script>
 var SD=[
-{intro:"Bees are among the most important creatures in the natural world. They play a vital role in agriculture by transferring pollen between flowering plants. Without bees, many of the fruits and vegetables that people depend on would not grow properly.",conclusion:"Protecting bee populations is therefore essential for maintaining a stable and productive food supply worldwide.",target:[
-{w:"Farmers",a:"ers",s:"Farm",p:""},
+{intro:"Bees are among the most important creatures in the natural world. They play a vital role in agriculture by transferring pollen between flowering plants. Without bees, many of the fruits and vegetables that people depend on would not grow properly.",conclusion:"Protecting bee populations is therefore essential for maintaining a stable and productive food supply worldwide.",target:[{w:"Farmers",a:"ers",s:"Farm",p:""},
 {w:"rely",a:null,s:null,p:""},
 {w:"heavily",a:"vily",s:"hea",p:""},
 {w:"on",a:null,s:null,p:""},
-{w:"these",a:"ese",s:"th",p:""},
+{w:"these",a:"se",s:"the",p:""},
 {w:"insects",a:null,s:null,p:""},
 {w:"because",a:"ause",s:"bec",p:""},
 {w:"they",a:null,s:null,p:""},
@@ -151,9 +150,9 @@ var SD=[
 {w:"pollinate",a:null,s:null,p:""},
 {w:"crops",a:"ops",s:"cr",p:""},
 {w:"such",a:null,s:null,p:""},
-{w:"as",a:null,s:null,p:""},
-{w:"apples",a:"les",s:"app",p:""},
-{w:"and",a:null,s:null,p:""},
+{w:"as",a:"s",s:"a",p:""},
+{w:"apples",a:null,s:null,p:""},
+{w:"and",a:"d",s:"an",p:""},
 {w:"almonds",a:null,s:null,p:""},
 {w:"during",a:"ring",s:"du",p:""},
 {w:"the",a:null,s:null,p:""},
@@ -162,11 +161,12 @@ var SD=[
 ],exp:[
 {pos:"名詞（主語）",d:"MOD",e:"「空欄＋rely」→主語。\"Farm\"→Farmers。文頭の主語パターン。",e_en:"\"blank + rely\" → subject. \"Farm\" → Farmers. Sentence-initial subject pattern."},
 {pos:"副詞",d:"MOD",e:"「rely＋空欄＋on」→副詞。\"hea\"→heavily。rely heavily onは頻出コロケーション。",e_en:"\"rely + blank + on\" → adverb. \"hea\" → heavily. rely heavily on is a frequent collocation."},
-{pos:"指示形容詞",d:"MOD",e:"「on＋空欄＋insects」→限定詞。\"th\"→these。",e_en:"\"on + blank + insects\" → determiner. \"th\" → these."},
+{pos:"指示形容詞",d:"MOD",e:"「on＋空欄＋insects」→限定詞。\"the\"→these。",e_en:"\"on + blank + insects\" → determiner. \"the\" → these."},
 {pos:"接続詞",d:"MOD",e:"「insects＋空欄＋they」→接続詞。\"bec\"→because。理由を述べる接続詞。",e_en:"\"insects + blank + they\" → conjunction. \"bec\" → because. Reason conjunction."},
 {pos:"動詞",d:"MOD",e:"「they＋空欄＋pollinate」→助動詞。\"he\"→help。help+動詞原形の構文。",e_en:"\"they + blank + pollinate\" → modal-like verb. \"he\" → help. help + bare-infinitive construction."},
 {pos:"名詞",d:"MOD",e:"「pollinate＋空欄」→名詞。\"cr\"→crops。農業の文脈で頻出。",e_en:"\"pollinate + blank\" → noun. \"cr\" → crops. Frequent in agricultural contexts."},
-{pos:"名詞",d:"HARD",e:"「such as＋空欄」→名詞。\"app\"→apples。具体例を挙げるパターン。",e_en:"\"such as + blank\" → noun. \"app\" → apples. Listing-example pattern."},
+{pos:"接続詞",d:"HARD",e:"「such＋空欄＋apples」の並び。\"a\"→as。",e_en:"\"such + blank + apples\" sequence. \"a\" → as."},
+{pos:"接続詞",d:"MOD",e:"「apples＋空欄＋almonds」の並び。\"an\"→and。",e_en:"\"apples + blank + almonds\" sequence. \"an\" → and."},
 {pos:"前置詞",d:"MOD",e:"「almonds＋空欄＋the」→前置詞。\"du\"→during。時期を示す前置詞。",e_en:"\"almonds + blank + the\" → preposition. \"du\" → during. Time-period preposition."},
 {pos:"名詞",d:"HARD",e:"「the＋空欄＋season」→形容詞/名詞。\"sp\"→spring。複合名詞パターン。",e_en:"\"the + blank + season\" → adjective / noun. \"sp\" → spring. Compound-noun pattern."}
 ]},
@@ -179,13 +179,28 @@ function renderAll(){
   SD.forEach(function(s,si){
     var bl=s.target.filter(function(t){return t.a!==null;});
     var st=null;try{st=JSON.parse(sessionStorage.getItem('ctwL_p7_answers_'+(si+1)));}catch(e){}
-    var ua=st?st.answers:[];var sc=st?st.score:0;ts+=sc;tq+=bl.length;if(si===1){harderCorrect+=sc;harderTotal+=bl.length;}
-    sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+bl.length+'</div><div class="score-detail">'+(st?Math.round(sc/bl.length*100)+'%':'—')+'</div></div>';
+    var ua=st?st.answers:[];var sc=st?st.score:0;var tot=(st&&Number(st.total))||bl.length;ts+=sc;tq+=tot;if(si===1){harderCorrect+=sc;harderTotal+=tot;}
+    // Server-restored rows (no correctAnswers snapshot from the same device)
+    // may predate this archived revision of the questions. If the stored
+    // answers cannot reproduce the stored score against THIS version's
+    // blanks, per-question marks would be false — fall back to an honest
+    // note + the raw typed inputs, keeping the saved score authoritative.
+    var mismatched=false;
+    if(st&&!st.correctAnswers){
+      if((ua.length||0)!==bl.length){mismatched=true;}
+      else{var rsc=0;bl.forEach(function(b,qi){var u=String(ua[qi]||'');if(u.toLowerCase()===b.a.toLowerCase())rsc++;});if(rsc!==sc)mismatched=true;}
+    }
+    sh+='<div class="score-card"><h3>Set '+(si+1)+'</h3><div class="score-num"><span class="correct">'+sc+'</span>/'+tot+'</div><div class="score-detail">'+(st?Math.round(sc/tot*100)+'%':'—')+'</div></div>';
     var ph='<span>'+s.intro+'</span> ';
     s.target.forEach(function(t){if(t.a!==null){ph+='<span class="blank-word">'+t.s+'<span class="blank-answer">'+t.a+'</span></span>';if(t.p)ph+=t.p;ph+=' ';}else{ph+=t.w+(t.p||'')+' ';}});
     ph+='<span>'+s.conclusion+'</span>';
     document.getElementById('passage'+si).innerHTML=ph;
     var ag='';
+    if(mismatched){
+      var esc=function(v){return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+      var typed=ua.map(function(v){v=String(v==null?'':v).trim();return v?'\u300c'+esc(v)+'\u300d':'\u2014';}).join(' ');
+      ag+='<div style="background:#FFF4D6;border:1px solid #E3C871;border-radius:10px;padding:12px 16px;margin-bottom:14px;color:#6B5A1E;font-weight:600;line-height:1.8">\u26a0 <span class="jp">\u3053\u306e\u56de\u306f\u3001\u3053\u306e\u30a2\u30fc\u30ab\u30a4\u30d6\u7248\u3068\u306f\u7570\u306a\u308b\u6642\u671f\u306e\u554f\u984c\u3067\u53d6\u308a\u7d44\u307e\u308c\u305f\u305f\u3081\u3001\u8a2d\u554f\u3054\u3068\u306e\u6b63\u8aa4\u306f\u518d\u73fe\u3067\u304d\u307e\u305b\u3093\u3002<strong>\u5f97\u70b9 '+sc+'/'+tot+' \u306f\u4fdd\u5b58\u6642\u306e\u307e\u307e\u6709\u52b9</strong>\u3067\u3059\u3002\u3042\u306a\u305f\u306e\u5165\u529b\uff08\u30bf\u30a4\u30d7\u3057\u305f\u90e8\u5206\uff09: '+typed+'</span><span class="en">This attempt was taken on a different revision of the questions than this archived version, so per-question marks cannot be reproduced. <strong>The saved score '+sc+'/'+tot+' remains valid.</strong> Your typed inputs: '+typed+'</span></div>';
+    }
     bl.forEach(function(b,qi){
       var ex=s.exp[qi];var uans=ua[qi]||'';
       var savedA=(st&&st.correctAnswers&&st.correctAnswers[qi])||b.a;
@@ -193,8 +208,8 @@ function renderAll(){
       var ok=uans.toLowerCase()===savedA.toLowerCase();
       var dt=ex.d==='HARD'?'<span class="q-tag tag-hard">HARD</span>':'<span class="q-tag tag-mod">MOD</span>';
       var ul='';
-      if(st){if(ok){ul='<div class="q-user" style="color:#004D2E">&#10004; <span class="jp">正解！ あなたの回答: </span><span class="en">Correct! Your answer: </span>'+savedS+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#8A3E24">&#11036; <span class="jp">未回答 — 推測でも必ず埋めよう！</span><span class="en">Blank — always guess, never leave it empty!</span></div>';}else{ul='<div class="q-user" style="color:#8A3E24">&#10060; <span class="jp">あなた: </span><span class="en">You: </span><span style="text-decoration:line-through">'+savedS+uans+'</span> <span class="jp">&rarr; 正解: </span><span class="en">&rarr; Correct: </span>'+b.w+'</div>';}}
-      ag+='<div class="answer-row'+(st&&!ok?' incorrect':'')+'"><div class="q-num '+(st?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+savedS+'</span><span class="ans">'+savedA+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong><span class="jp">品詞：'+ex.pos+'</span><span class="en">POS: '+(posEn[ex.pos]||ex.pos)+'</span></strong> <span class="jp">'+ex.e+'</span><span class="en">'+(ex.e_en||ex.e)+'</span></div></div></div>';
+      if(st&&!mismatched){if(ok){ul='<div class="q-user" style="color:#004D2E">&#10004; <span class="jp">正解！ あなたの回答: </span><span class="en">Correct! Your answer: </span>'+savedS+uans+'</div>';}else if(!uans.trim()){ul='<div class="q-user" style="color:#8A3E24">&#11036; <span class="jp">未回答 — 推測でも必ず埋めよう！</span><span class="en">Blank — always guess, never leave it empty!</span></div>';}else{ul='<div class="q-user" style="color:#8A3E24">&#10060; <span class="jp">あなた: </span><span class="en">You: </span><span style="text-decoration:line-through">'+savedS+uans+'</span> <span class="jp">&rarr; 正解: </span><span class="en">&rarr; Correct: </span>'+b.w+'</div>';}}
+      ag+='<div class="answer-row'+(st&&!mismatched&&!ok?' incorrect':'')+'"><div class="q-num '+((st&&!mismatched)?(ok?'correct':'wrong'):'correct')+'">'+(qi+1)+'</div><div class="q-content"><div class="q-word"><span class="shown">'+savedS+'</span><span class="ans">'+savedA+'</span> = '+b.w+' '+dt+'</div>'+ul+'<div class="q-explain"><strong><span class="jp">品詞：'+ex.pos+'</span><span class="en">POS: '+(posEn[ex.pos]||ex.pos)+'</span></strong> <span class="jp">'+ex.e+'</span><span class="en">'+(ex.e_en||ex.e)+'</span></div></div></div>';
     });
     document.getElementById('ag'+si).innerHTML=ag;
   });
@@ -214,7 +229,7 @@ renderAll();
   function setLang(l){document.body.setAttribute("data-lang",l);document.documentElement.setAttribute("lang",l==="jp"?"ja":"en");localStorage.setItem("tck_lang",l);document.querySelectorAll("[data-lang-btn]").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-lang-btn")===l);});}
 })();
 </script>
-<script defer src="../../../js/tm-footer.js?v=20260720"></script>
+<script defer src="../../../js/tm-footer.js?v=20260723"></script>
 
 <script>
 /* 旧版アーカイブ: サーバに残る改訂前（2026-07-02以前）の自分の回答を復元して表示する。
