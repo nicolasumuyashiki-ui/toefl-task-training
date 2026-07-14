@@ -297,7 +297,9 @@
     if (task === 'lcr') return ['lcrAnswers'];
     if (task === 'conv' || task === 'announce') return [task + 'Answers'];
     if (task === 'talk') return ['talkPractice' + practice + 'Answers'];
-    if (task === 'sentence') return ['sentenceAnswers'];
+    // Sentence pages use a practice-scoped key everywhere except P1
+    // (P1 = `sentenceAnswers`, P2..P10 = `sentenceAnswers_pN`).
+    if (task === 'sentence') return [String(practice) === '1' ? 'sentenceAnswers' : 'sentenceAnswers_p' + practice];
     if (task === 'ctw') return ['ctw_p' + practice + '_answers_1', 'ctw_p' + practice + '_answers_2'];
     return null;
   }

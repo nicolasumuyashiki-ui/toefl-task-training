@@ -380,13 +380,19 @@
       var att = attempts[0] || {};
       var raw = att.answers;
       var arr = Array.isArray(raw) ? raw : [];
-      // The Sentence answer page reads `sentenceAnswers` = {score, total}
-      // for its score card. (The old overlay wrote to a key nothing reads.)
+      // The Sentence answer page reads {score, total} for its score card —
+      // BUT the key is practice-scoped everywhere except P1:
+      // P1 = `sentenceAnswers`, P2..P10 = `sentenceAnswers_pN`. Writing only
+      // the unscoped key left the P2-P10 score card stuck on "— / 10".
+      // Write both so every page variant finds its data.
       var wrote = false;
-      rawSet('sentenceAnswers', JSON.stringify({
+      var payload = JSON.stringify({
+        answers: arr,
         score: Number(att.score) || 0,
         total: arr.length || 10
-      }));
+      });
+      rawSet('sentenceAnswers', payload);
+      rawSet('sentenceAnswers_p' + practice, payload);
       wrote = true;
       if (wrote && maybeReloadForPage(idx)) return;
       var rows = arr.map(function(v, i){
