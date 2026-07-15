@@ -357,7 +357,9 @@
           rawSet(displayKeys[0], JSON.stringify(toArr0(att.answers))); wrote = true;
         } else if (task === 'sentence') {
           var arr = Array.isArray(att.answers) ? att.answers.map(unwrap) : [];
-          rawSet(displayKeys[0], JSON.stringify({ answers: arr, score: Number(att.score) || 0, total: arr.length || 10 })); wrote = true;
+          // Carry the attempt timestamp so the answers page can show the
+          // era-correct prompt (prompts revised in #163; answers unchanged).
+          rawSet(displayKeys[0], JSON.stringify({ answers: arr, score: Number(att.score) || 0, total: arr.length || 10, ts: att.timestamp || '' })); wrote = true;
         }
       }
     }

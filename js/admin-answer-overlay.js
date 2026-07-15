@@ -389,7 +389,10 @@
       var payload = JSON.stringify({
         answers: arr,
         score: Number(att.score) || 0,
-        total: arr.length || 10
+        total: arr.length || 10,
+        // Timestamp so the answers page shows the era-correct prompt
+        // (prompts revised in #163; the scored answers are unchanged).
+        ts: att.timestamp || ''
       });
       rawSet('sentenceAnswers', payload);
       rawSet('sentenceAnswers_p' + practice, payload);
