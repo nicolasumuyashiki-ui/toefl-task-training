@@ -138,7 +138,7 @@ body[data-lang="en"] .jp{display:none}
   <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
-<script src="../../js/auth.js?v=20260723"></script>
+<script src="../../js/auth.js?v=20260725"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -149,7 +149,7 @@ const answers=[
 {id:5,prompt:"Why did you stop exercising in the morning?",sentence:"I was too tired to wake up early every day.",grammar:"too + 形容詞 + to不定詞: 「〜すぎて…できない」。too tired to wake up = 疲れすぎて起きられなかった。",grammar_en:"too + adj + to-infinitive: 'too ~ to ...'. 'too tired to wake up' = 'so tired I could not wake up'."},
 {id:6,prompt:"Can you eat the whole pizza by yourself?",sentence:"No, it is big enough for three people to share.",grammar:"形容詞 + enough + for + 人 + to不定詞: 「〜が…するのに十分な」。enough は形容詞の後に置く。",grammar_en:"adj + enough + for + person + to-infinitive: 'enough for ~ to ...'. 'enough' follows the adjective."},
 {id:7,prompt:"Do you know what time the gym closes tonight?",sentence:"I am not sure what time it closes on weekdays.",grammar:"間接疑問文: what time + S + V（平叙文語順）。直接疑問文の語順（does it close）にしない。",grammar_en:"Indirect question: 'what time + S + V' (statement order). Do not use direct-question order ('does it close')."},
-{id:8,prompt:"I've lived in this area for years, so ask me anything.",sentence:"Could you tell me where the nearest farmers market is?",grammar:"間接疑問文（丁寧な質問）: Could you tell me + wh語 + S + V。where the market is（×where is the market）。",grammar_en:"Indirect question (polite): 'Could you tell me + wh-word + S + V'. Use 'where the market is', not 'where is the market'."},
+{id:8,prompt:"I've lived in this area for years, so ask me anything.",promptLegacy:"Where can I buy organic vegetables around here?",sentence:"Could you tell me where the nearest farmers market is?",grammar:"間接疑問文（丁寧な質問）: Could you tell me + wh語 + S + V。where the market is（×where is the market）。",grammar_en:"Indirect question (polite): 'Could you tell me + wh-word + S + V'. Use 'where the market is', not 'where is the market'."},
 {id:10,prompt:"You missed the cooking class last weekend, right?",sentence:"I wish I had not forgotten to sign up for it.",grammar:"wish + had not + Vpp: 「〜しなければよかった」。過去にしてしまったことへの後悔。forgotten to sign up = 申し込みを忘れた。",grammar_en:"wish + had not + Vpp: 'I wish I had not ~' — regret about a past action. 'forgotten to sign up' = 'forgot to register'."},
 {id:11,prompt:"Why does your friend look so healthy these days?",sentence:"She used to skip breakfast, but now she eats a balanced meal every morning.",grammar:"used to + V（過去の習慣）と現在の対比: used to skip → but now she eats。過去と現在の変化を述べる。",grammar_en:"Contrast between past 'used to + V' and the present: 'used to skip → but now she eats'. Describes a change from past to present."},
 {id:12,prompt:"Is there a good restaurant near the station?",sentence:"There is a small Italian restaurant whose owner used to be a professional chef.",grammar:"whose + 名詞: whose owner = its owner。さらに used to be で「以前は〜だった」を組み合わせた文。",grammar_en:"whose + N: 'whose owner' = 'its owner'. Combined with 'used to be' = 'who/which used to be ~'."}
@@ -157,6 +157,12 @@ const answers=[
 
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p6')||'null');
 let score=0;
+
+// 会話文（prompt）の改訂境界（#163・2026-07-14）。この時刻より前に取り組んだ回は
+// 当時の会話文で解いているので、見返すときは当時の prompt を表示する（採点対象＝並べ替え
+// る英文は不変なのでスコア・正誤はそのまま有効）。attempt の時刻はサーバ復元時に stored.ts。
+const PROMPT_REV='2026-07-14T14:00:00Z';
+const usePreRev=!!(stored&&stored.ts&&String(stored.ts)<PROMPT_REV);
 
 if(stored){
   score=stored.score||0;
@@ -168,11 +174,19 @@ if(stored){
 
 let html='';
 answers.forEach((a,i)=>{
-  html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"</div></div>'
+  var showPrompt=(usePreRev&&a.promptLegacy)?a.promptLegacy:a.prompt;
+  var revTag=(usePreRev&&a.promptLegacy)?' <span style="font-style:normal;font-size:.82em;color:#8A6D1E;background:#FFF4D6;border:1px solid #E3C871;border-radius:6px;padding:1px 7px;margin-left:6px"><span class="jp">当時の問題文</span><span class="en">as-solved</span></span>':'';
+  html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+showPrompt+'"'+revTag+'</div></div>'
     +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
     +'<div class="q-grammar">📝 '+a.grammar+'</div></div></div>';
 });
 document.getElementById('qList').innerHTML=html;
+if(usePreRev){
+  var note=document.createElement('div');note.id='tckSentenceRevNote';
+  note.style.cssText='max-width:880px;margin:14px auto 0;background:#FFF4D6;border:1px solid #E3C871;border-radius:12px;padding:12px 18px;color:#6B5A1E;font-size:.9em;line-height:1.7';
+  note.innerHTML='<span class="jp">この回は会話文を改訂する前（2026-07-14以前）に取り組まれたものです。上に表示しているのは<strong>当時の問題文</strong>で、あなたの並べ替えた英文・スコアはそのまま有効です。</span><span class="en">This attempt was taken before the prompts were revised (before 2026-07-14). The prompts above are shown <strong>as you solved them</strong>; your arranged sentences and score remain valid.</span> <a href="practice-6.html?rev=legacy" style="color:#8A3E24;font-weight:700;white-space:nowrap"><span class="jp">▶ 当時の問題文で解き直す</span><span class="en">▶ Re-solve the original</span></a>';
+  var ql=document.getElementById('qList');ql.parentNode.insertBefore(note,ql);
+}
 </script>
 
 <script>
@@ -183,6 +197,6 @@ document.getElementById('qList').innerHTML=html;
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260723"></script>
+<script defer src="../../js/tm-footer.js?v=20260725"></script>
 </body>
 </html>

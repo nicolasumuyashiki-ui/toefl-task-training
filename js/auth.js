@@ -952,7 +952,9 @@ if (typeof window !== 'undefined') {
       try { arr = JSON.parse(raw); } catch (e) {}
       try { sc = JSON.parse(localStorage.getItem('training_score_sentence_p' + practice) || 'null'); } catch (e) {}
       if (!sc || typeof sc.correct !== 'number') return null;
-      return JSON.stringify({ answers: Array.isArray(arr) ? arr : [], score: sc.correct, total: sc.total || 10 });
+      // Carry the attempt time (training_score updatedAt) so the answers page
+      // can show the era-correct prompt for pre-#163 attempts on this device.
+      return JSON.stringify({ answers: Array.isArray(arr) ? arr : [], score: sc.correct, total: sc.total || 10, ts: sc.updatedAt || sc.capturedAt || '' });
     });
   } else if (task === 'ctw') {
     seed('ctw_p' + practice + '_answers_1', 'ctw_p' + practice + '_answers_1');

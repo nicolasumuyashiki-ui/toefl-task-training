@@ -56,6 +56,12 @@ speaking/ti/practice-{N}.html              — Take an Interview
 2. 改修時刻の era 境界を `js/student-history.js` と `js/admin-answer-overlay.js` に追加し、
    境界より古い attempt は現行ページへ復元せず旧版アーカイブへ誘導する（CTW_REBUILD_ISO と同じ方式）。
 3. 誤字修正など**回答の意味が変わらない軽微修正はアーカイブ不要**（例: #108 の文法修正）。判断に迷ったら退避する。
+4. **Build a Sentence の prompt（会話文）だけを改訂し `answer`/`blanks`（並べ替える語群・正解）を1文字も変えない場合**は、
+   重い旧版アーカイブの代わりに軽量な **promptLegacy / PROMPT_REV 方式**を使う（参照実装: #163→#165）。当該設問に
+   `promptLegacy`（旧 prompt）を残し、解答ページで attempt の `ts` が `PROMPT_REV` 境界より前なら当時の prompt を表示、
+   練習は `?rev=legacy` で当時のまま解き直せるようにする。**採点対象・履歴・スコアは表示のみ変わり、サーバ ANSWERS /
+   `training_score_*` には一切書き込まない**（詳細・§K会話整合とセットの手順は `.claude/commands/new-sentence.md`）。
+   `answer`/`blanks` を変える場合は 1〜2 の CTW 方式（旧版アーカイブ＋era境界）が必須。
 ※ Email/Discussion のプロンプトは 2026-07-12 時点で開設以来無改修（機械 diff で確認済み）。
   Writing の過去提出文は問題改修の有無に関わらずサーバに全文残り、パネル＋提出文復元で常に閲覧可能。
 
