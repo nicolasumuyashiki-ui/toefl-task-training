@@ -91,7 +91,7 @@ function handleGetConsultationStatus_(e, callback) {
     if (!latest || sessionDate.getTime() > latest.sessionDate.getTime()) {
       latest = {
         sessionDate: sessionDate,
-        sessionTime: String(d[i][5] || ''),
+        sessionTime: fmtSessionTime_(d[i][5]),
         status:      rowStatus
       };
     }
@@ -149,4 +149,20 @@ function fmtYmd_(d) {
   if (m.length === 1) m = '0' + m;
   if (day.length === 1) day = '0' + day;
   return y + '-' + m + '-' + day;
+}
+
+// Google Sheets stores a bare "19:15" as a time-of-day value, which reads
+// back as a 1899-epoch Date ("Sat Dec 30 1899 19:15:00 …"). Normalize any
+// Date to "HH:mm"; pass strings through (already "19:15").
+function fmtSessionTime_(v) {
+  if (v instanceof Date && !isNaN(v.getTime())) {
+    var h = String(v.getHours());
+    var mi = String(v.getMinutes());
+    if (h.length === 1) h = '0' + h;
+    if (mi.length === 1) mi = '0' + mi;
+    return h + ':' + mi;
+  }
+  var s = String(v == null ? '' : v).trim();
+  var m = s.match(/(\d{1,2}):(\d{2})/);   // pull HH:mm out of any stray formatting
+  return m ? (m[1].length === 1 ? '0' + m[1] : m[1]) + ':' + m[2] : s;
 }
