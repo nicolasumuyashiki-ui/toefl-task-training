@@ -162,7 +162,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
     <span class="en">Fill in your preferred time and topic.</span>
   </p>
 
-  <!-- Cooldown notice (shown when user booked within last 30 days) -->
+  <!-- Cooldown notice (shown when this month's consultation is already booked) -->
   <div id="cooldownCard" class="form-card" style="display:none;text-align:center;padding:44px 36px;background:var(--paper);border-color:var(--gold)">
     <div style="font-family:var(--font-en);font-size:.72em;font-weight:700;color:#8A6D2A;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px">This Month's Session Used</div>
     <h3 style="font-family:var(--font-en);font-size:1.3em;font-weight:700;color:var(--green-deep);margin-bottom:10px;letter-spacing:-0.01em">
@@ -206,8 +206,8 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
 
 <div class="note">
   <p>
-    <span class="jp">※ 学習相談は月 1 回（45 分）までのサブスク特典です。一度ご予約いただくと、次回は <strong>30 日後</strong> からご利用いただけます。急ぎのご相談は <a href="mailto:reps-support@tckworkshop.co.jp">reps-support@tckworkshop.co.jp</a> までご連絡ください。キャンセル・変更は前日 18 時までにお願いします。</span>
-    <span class="en">One 45-minute session per calendar month is included with your subscription. After booking, the next booking becomes available <strong>30 days later</strong>. For urgent inquiries, email <a href="mailto:reps-support@tckworkshop.co.jp">reps-support@tckworkshop.co.jp</a>. Please cancel or reschedule by 6 p.m. the day before.</span>
+    <span class="jp">※ 学習相談は月 1 回（45 分）までのサブスク特典です。一度ご予約いただくと、次回は <strong>ご予約月の翌月 1 日</strong> からご利用いただけます。急ぎのご相談は <a href="mailto:reps-support@tckworkshop.co.jp">reps-support@tckworkshop.co.jp</a> までご連絡ください。キャンセル・変更は前日 18 時までにお願いします。</span>
+    <span class="en">One 45-minute session per calendar month is included with your subscription. After booking, the next booking becomes available on the <strong>1st of the month following</strong> your session. For urgent inquiries, email <a href="mailto:reps-support@tckworkshop.co.jp">reps-support@tckworkshop.co.jp</a>. Please cancel or reschedule by 6 p.m. the day before.</span>
   </p>
 </div>
 
@@ -216,7 +216,7 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   <a class="footer-cta" href="menu.html"><span class="jp">メニューに戻る</span><span class="en">Back to menu</span><span class="arrow">→</span></a>
 </div>
 
-<script src="js/auth.js?v=20260725"></script>
+<script src="js/auth.js?v=20260727"></script>
 <script>
 (function(){
   var stored=localStorage.getItem('tck_lang')||'jp';
@@ -253,6 +253,16 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
   var nextBookableKey = 'tck_consult_next_bookable_' + (u.userId || 'anon');
   var legacyKey       = 'tck_consult_last_booked_'  + (u.userId || 'anon');
 
+  /* Server-verification state for the "available" indicator.
+     'pending' = haven't heard from the server yet; 'ok' = server confirmed
+     the current booking status; 'failed' = the check could not complete
+     (network / auth / not deployed). We must NOT assert 「利用可能（枠が空いています）」
+     until the server has actually CONFIRMED there's no active booking —
+     otherwise a booked user whose check silently failed sees an open slot
+     and may double-book. Until confirmed we show 「確認中」. A local optimistic
+     lock (nextBookableDate) still shows 「ご利用済み」 immediately regardless. */
+  var syncState = 'pending';
+
   function firstOfNextMonth(d) {
     return new Date(d.getFullYear(), d.getMonth() + 1, 1);
   }
@@ -280,37 +290,42 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
      status and write it into localStorage so subsequent renders see the
      same lock — and crucially, the lock survives across browsers /
      incognito sessions. localStorage is kept as a synchronous cache. */
-  function syncFromServer() {
-    if (typeof Api === 'undefined' || !Api.getConsultationStatus) return;
+  function syncFromServer(attempt) {
+    // api.js may load a moment after this page's inline script — wait for it
+    // instead of giving up (a missed check would leave us stuck on 確認中).
+    if (typeof Api === 'undefined' || !Api.getConsultationStatus) {
+      if ((attempt || 0) < 40) { setTimeout(function(){ syncFromServer((attempt || 0) + 1); }, 200); return; }
+      syncState = 'failed'; render(); return;   // Api never loaded → can't verify
+    }
     Api.getConsultationStatus().then(function(res){
-      if (!res || !res.success) return;
+      if (!res || !res.success) { syncState = 'failed'; render(); return; }
+      syncState = 'ok';   // server answered — we can trust the "available" state now
       if (res.locked && res.nextBookable) {
         var nb = new Date(res.nextBookable);
         if (!isNaN(nb.getTime())) {
           localStorage.setItem(nextBookableKey, nb.toISOString());
-          render();
         }
+        render();
       } else {
         // Server says no active booking — clear any stale local cooldown.
-        // (Don't touch localStorage if the user just booked but the Zap
-        //  hasn't propagated yet — only clear when local mirror points
+        // (Don't touch localStorage if the user just booked but the sheet
+        //  sync hasn't propagated yet — only clear when local mirror points
         //  to a past date or matches a stale legacy key.)
         var localNb = localStorage.getItem(nextBookableKey);
         if (localNb) {
           var d = new Date(localNb);
           var todayMid = new Date(); todayMid.setHours(0,0,0,0);
-          // Only clear if the locally recorded "next bookable" is in the
-          // past AND server agrees user is unlocked. Otherwise keep the
-          // optimistic local lock for a few minutes (Zap propagation lag).
           if (!isNaN(d.getTime()) && d.getTime() <= todayMid.getTime()) {
             localStorage.removeItem(nextBookableKey);
             localStorage.removeItem(legacyKey);
-            render();
           }
         }
+        render();
       }
     }).catch(function(){
-      /* Network/auth error — silently fall back to localStorage-only mode. */
+      // Network / auth error — do NOT fall back to 「利用可能」. Show 確認中 so a
+      // booked user is never shown an open slot they might double-book.
+      syncState = 'failed'; render();
     });
   }
 
@@ -353,8 +368,8 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
           '<span class="jp"><strong>ご利用済み</strong>：今月分の学習相談はご予約済みです。次回は <strong>' + nextStr + '</strong>（あと <strong>' + daysLeft + ' 日</strong>）から。</span>' +
           '<span class="en"><strong>Already booked</strong>: this month\'s consultation is reserved. Next booking opens on <strong>' + nextStr + '</strong> (<strong>' + daysLeft + ' days</strong> to go).</span>';
       }
-    } else {
-      // Available — show form
+    } else if (syncState === 'ok') {
+      // Server CONFIRMED no active booking — safe to show 「利用可能」 + form.
       if (bookingCard) bookingCard.style.display = '';
       if (cooldownCard) cooldownCard.style.display = 'none';
       if (planIcon) planIcon.textContent = '🗓';
@@ -367,6 +382,29 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
         planStatus.innerHTML =
           '<span class="jp"><strong>利用可能</strong>：今月分の学習相談はまだ利用していません。下のフォームから希望日時をお選びください。</span>' +
           '<span class="en"><strong>Available</strong>: You have not used this month\'s consultation yet. Book your preferred time below.</span>';
+      }
+    } else {
+      // Not yet confirmed by the server (pending) or the check failed. Do NOT
+      // imply an open slot. Hide the form and show 「確認中」 so a user who has
+      // already booked is never misled into double-booking.
+      if (bookingCard) bookingCard.style.display = 'none';
+      if (cooldownCard) cooldownCard.style.display = 'none';
+      if (planIcon) planIcon.textContent = (syncState === 'failed') ? '⚠️' : '⏳';
+      var planInner3 = document.getElementById('planInner');
+      if (planInner3) {
+        planInner3.style.background = 'var(--paper)';
+        planInner3.style.borderColor = (syncState === 'failed') ? 'var(--gold)' : '';
+      }
+      if (planStatus) {
+        if (syncState === 'failed') {
+          planStatus.innerHTML =
+            '<span class="jp"><strong>確認中</strong>：最新のご予約状況を反映できませんでした。すでにご予約済みの場合、二重予約を防ぐため、お手数ですが <a href="javascript:location.reload()" style="color:var(--green-dark);font-weight:700">ページを再読み込み</a> してください。解消しない場合は <a href="mailto:reps-support@tckworkshop.co.jp">reps-support@tckworkshop.co.jp</a> までご連絡ください。</span>' +
+            '<span class="en"><strong>Checking…</strong> We could not load your latest booking status. If you have already booked, please <a href="javascript:location.reload()" style="color:var(--green-dark);font-weight:700">reload the page</a> to avoid a double booking. If it persists, contact <a href="mailto:reps-support@tckworkshop.co.jp">reps-support@tckworkshop.co.jp</a>.</span>';
+        } else {
+          planStatus.innerHTML =
+            '<span class="jp"><strong>確認中…</strong> 最新のご予約状況を確認しています。</span>' +
+            '<span class="en"><strong>Checking…</strong> Loading your latest booking status.</span>';
+        }
       }
     }
   }
@@ -424,6 +462,6 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='i
   }
 })();
 </script>
-<script defer src="js/tm-footer.js?v=20260725"></script>
+<script defer src="js/tm-footer.js?v=20260727"></script>
 </body>
 </html>
