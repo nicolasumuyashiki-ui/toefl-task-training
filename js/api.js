@@ -405,6 +405,55 @@ var Api = {
     });
   },
 
+  /* ---- SAVE-HEALTH telemetry (admin visibility) ----
+     When a learner has saves stuck in the outbox (task and/or practice-test)
+     that keep failing, report a lightweight summary to the server so ADMIN
+     can proactively see "this account's results aren't reaching us" instead
+     of finding out only via a complaint. Sent relay-first (works even when
+     direct GAS is blocked — the very situation we're reporting). No answer
+     content is sent — only counts / age / UA. Throttled to once per 30 min
+     per session. Server body: docs/gas-save-health.js (SAVE_HEALTH sheet). */
+  reportSaveHealth: function (force) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    if (!u.userId) return Promise.resolve(null);
+    var task = _outboxRead();
+    var pt = []; try { pt = JSON.parse(localStorage.getItem('tck_pt_outbox') || '[]') || []; } catch (e) {}
+    var stuck = task.length, ptStuck = pt.length;
+    if (stuck + ptStuck === 0) return Promise.resolve(null);
+    var now = Date.now(), oldest = now, maxTries = 0;
+    task.concat(pt).forEach(function (it) {
+      var t = Date.parse((it && it.enqueuedAt) || ''); if (!isNaN(t) && t < oldest) oldest = t;
+      if (it && (it.tries || 0) > maxTries) maxTries = it.tries;
+    });
+    var ageMin = Math.round((now - oldest) / 60000);
+    // Only report genuinely-stuck saves (aged ≥3 min OR retried ≥3×), and only
+    // once per 30 min per session, unless forced.
+    if (!force) {
+      if (ageMin < 3 && maxTries < 3) return Promise.resolve(null);
+      try { var last = Number(sessionStorage.getItem('tck_health_reported') || 0); if (now - last < 30 * 60 * 1000) return Promise.resolve(null); } catch (e) {}
+    }
+    try { sessionStorage.setItem('tck_health_reported', String(now)); } catch (e) {}
+    var params = {
+      action: 'reportSaveHealth', userId: u.userId, userName: u.userName || u.name || '',
+      stuck: String(stuck), ptStuck: String(ptStuck), oldestAgeMin: String(ageMin),
+      maxTries: String(maxTries), ua: String((typeof navigator !== 'undefined' && navigator.userAgent) || '').slice(0, 180)
+    };
+    var qs = Object.keys(params).map(function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
+    var direct = function () { return _jsonpRequest(API_URL + '?' + qs); };
+    var send = SAVE_PROXY_URL ? _proxyPost(params).catch(direct) : direct();
+    return send.then(function (r) { return r; }, function () { return null; });
+  },
+
+  /* Admin read — flagged accounts whose saves aren't reaching the server.
+     Degrades to null if the GAS endpoint isn't deployed. */
+  listSaveHealth: function (id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=listSaveHealth'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p)).catch(function () { return null; });
+  },
+
   /* ---- Cross-device band HIGH-WATER-MARK (see docs/gas-band-hwm.js) ----
      Persists the HIGHEST section bands / total a learner has ever reached so
      the predicted score is IDENTICAL on every device and can never "reset" on
@@ -724,6 +773,10 @@ var Api = {
    completed attempt eventually reaches the server even if the original
    send failed (offline / GAS congestion / tab closed mid-send). */
 try { setTimeout(function () { try { _flushOutbox(); } catch (e) {} }, 1500); } catch (e) {}
+/* A bit later, after the flush has had a chance to clear transient failures,
+   report save-health to admin if anything is still stuck (throttled). */
+try { setTimeout(function () { try { if (Api.reportSaveHealth) Api.reportSaveHealth(); } catch (e) {} }, 12000); } catch (e) {}
+try { setInterval(function () { try { if (Api.reportSaveHealth) Api.reportSaveHealth(); } catch (e) {} }, 10 * 60 * 1000); } catch (e) {}
 /* Mobile browsers park tabs for days — flush whenever the tab comes back
    to the foreground (or is restored from the back/forward cache), so a
    pending save doesn't wait for a full page reload that may never come. */
