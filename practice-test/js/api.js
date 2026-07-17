@@ -153,6 +153,70 @@ function _ptFlushOutbox() {
   return step().then(null, function () { _ptFlushing = false; });
 }
 
+/* ---- Local result MIRROR (device-resident fallback) --------------------
+   The history views (results.html / my-results.html) are otherwise 100%
+   server-sourced. In an environment that BLOCKS the save (前田様 type) the
+   server has no rows, so the learner's OWN screen shows fewer attempts than
+   they actually took — "自分の画面が実績と食い違う". Mirroring every completed
+   result to localStorage gives each device a second source of truth: the
+   learner always sees at least what their own device recorded, and once the
+   outbox drains, the confirmed server rows merge in (server wins on the same
+   sessionId). Purely ADDITIVE — never deletes a server row, never lowers a
+   score, never writes to PT_RESULTS. Keyed per userId so a shared device
+   never shows another account's attempts. */
+var _PT_LOCAL_KEY = 'tck_pt_local';
+function _ptLocalReadAll() { try { return JSON.parse(localStorage.getItem(_PT_LOCAL_KEY) || '[]') || []; } catch (e) { return []; } }
+function _ptLocalWriteAll(a) { try { localStorage.setItem(_PT_LOCAL_KEY, JSON.stringify(a.slice(-80))); } catch (e) {} }
+function _ptLocalMirror(payload) {
+  var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+  if (!u.userId) return;
+  var row = {
+    userId:             u.userId,
+    timestamp:          new Date().toISOString(),
+    sessionId:          String(payload.sessionId || ''),
+    readingCorrect:     Number(payload.readingCorrect)   || 0,
+    readingTotal:       Number(payload.readingTotal)     || 0,
+    readingScaled:      Number(payload.readingScaled)    || 0,
+    listeningCorrect:   Number(payload.listeningCorrect) || 0,
+    listeningTotal:     Number(payload.listeningTotal)   || 0,
+    listeningScaled:    Number(payload.listeningScaled)  || 0,
+    writingSentCorrect: Number(payload.writingSentCorrect) || 0,
+    writingSentTotal:   Number(payload.writingSentTotal)   || 0,
+    writingScaled:      Number(payload.writingScaled)      || 0,
+    speakingLr:         !!payload.speakingLr,
+    speakingTi:         !!payload.speakingTi,
+    total:              Number(payload.total) || 0,
+    band:               String(payload.band || ''),
+    readingPath:        String(payload.readingPath || ''),
+    testId:             String(payload.testId || ''),
+    _local:             true
+  };
+  // Upsert by (userId, sessionId, testId) so a listening-retake re-save
+  // replaces that attempt's local row instead of duplicating it.
+  var key = row.userId + '|' + row.sessionId + '|' + row.testId;
+  var all = _ptLocalReadAll().filter(function (x) {
+    return x && (x.userId + '|' + String(x.sessionId || '') + '|' + String(x.testId || '')) !== key;
+  });
+  all.push(row);
+  _ptLocalWriteAll(all);
+}
+/* Merge server rows with the local mirror. Keyed by sessionId; the SERVER row
+   WINS when both exist (it is the confirmed canonical copy). Local-only rows
+   (that never reached the server) are surfaced so the learner still sees them. */
+function _ptMergeResults(serverRows, localRows) {
+  var map = {}, order = [], loose = [];
+  function put(row, fromServer) {
+    if (!row) return;
+    var k = String(row.sessionId || '');
+    if (!k) { loose.push(row); return; }        // no sessionId → can't dedupe
+    if (map[k] === undefined) order.push(k);
+    if (fromServer || map[k] === undefined) map[k] = row;   // server overwrites; local only fills a gap
+  }
+  (localRows || []).forEach(function (r) { put(r, false); });
+  (serverRows || []).forEach(function (r) { put(r, true); });
+  return order.map(function (k) { return map[k]; }).concat(loose);
+}
+
 /* POST helper (hidden iframe form-submit) for bodies too LARGE for a JSONP GET
    URL — e.g. archived answer contents. Same transport as uploadRecording, so it
    bypasses the GAS 302 → CORS issue. Resolves when the iframe loads (best-effort
@@ -269,6 +333,9 @@ var Api = {
     // fallback). A blocked/failed save is retried on the next load instead
     // of being lost. id = sessionId+testId so re-saves upsert (GAS also
     // dedups by sessionId → never a duplicate row).
+    // Mirror to the device FIRST (synchronous, never throws) so the learner's
+    // own screen shows this attempt even if every transport below is blocked.
+    try { _ptLocalMirror(payload); } catch (e) {}
     var item = { id: 'ptr_' + (payload.sessionId || '') + '_' + (payload.testId || ''), qs: qs, enqueuedAt: new Date().toISOString(), tries: 1 };
     _ptOutboxAdd(item);
     return _ptSendResult(item).then(function (res) {
@@ -284,10 +351,31 @@ var Api = {
   flushPtOutbox: function () { return _ptFlushOutbox(); },
   ptOutboxPending: function () { return _ptOutboxRead().length; },
 
-  /* Fetch all past Practice Test results for the current user */
+  /* Fetch all past Practice Test results for the current user (server only) */
   listPtResults: function(){
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     return _ptJsonp(REC_URL + '?action=listPtResults&userId=' + encodeURIComponent(u.userId || ''));
+  },
+
+  /* Device-resident copy of the current user's PT results (fallback source). */
+  listPtLocal: function(){
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var uid = u.userId || '';
+    return _ptLocalReadAll().filter(function (r) { return r && r.userId === uid; });
+  },
+
+  /* Server results UNION the local mirror (server wins per sessionId). ALWAYS
+     resolves success:true so the learner's own attempts show even when the
+     server is unreachable or has gaps (前田様 environment). Use this for
+     history display; listPtResults stays server-only for callers that need it. */
+  listPtResultsMerged: function(){
+    var local = this.listPtLocal();
+    return this.listPtResults().then(function (r) {
+      var server = (r && r.success && r.results) ? r.results : [];
+      return { success: true, results: _ptMergeResults(server, local), serverOk: !!(r && r.success) };
+    }, function () {
+      return { success: true, results: _ptMergeResults([], local), serverOk: false };
+    });
   },
 
   /* Archive the raw per-question ANSWER CONTENTS for a mock attempt so they can
