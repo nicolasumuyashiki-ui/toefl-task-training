@@ -190,7 +190,9 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');try{localStorage
   var groups=null;   // {'1':[...], '2':[...], '3':[...]} — populated once results arrive
   var activeTest='1';
 
-  Api.listPtResults().then(function(r){
+  var _fetchResults = (typeof Api.listPtResultsMerged === 'function')
+    ? Api.listPtResultsMerged() : Api.listPtResults();
+  _fetchResults.then(function(r){
     if(!r || !r.success){ showDegrade(); return; }
     var results = r.results || [];
     if(!results.length){ showEmpty(); return; }
