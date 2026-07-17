@@ -158,10 +158,10 @@ const answers=[
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p6')||'null');
 let score=0;
 
-// 会話文（prompt）の改訂境界（#163・2026-07-14）。この時刻より前に取り組んだ回は
+// 会話文（prompt）の改訂境界（#163・実際のデプロイ時刻 2026-07-15T06:46Z 直後）。この時刻より前に取り組んだ回は
 // 当時の会話文で解いているので、見返すときは当時の prompt を表示する（採点対象＝並べ替え
 // る英文は不変なのでスコア・正誤はそのまま有効）。attempt の時刻はサーバ復元時に stored.ts。
-const PROMPT_REV='2026-07-14T14:00:00Z';
+const PROMPT_REV='2026-07-15T07:00:00Z';
 const usePreRev=!!(stored&&stored.ts&&String(stored.ts)<PROMPT_REV);
 
 if(stored){
