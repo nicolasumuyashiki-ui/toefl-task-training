@@ -234,6 +234,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
     <button class="tab" data-panel="progress" type="button">進捗状況</button>
     <button class="tab" data-panel="recordings" type="button">スピーキング</button>
     <button class="tab" data-panel="writing" type="button">ライティング</button>
+    <button class="tab" data-panel="save-health" type="button">保存ヘルス</button>
     <button class="tab" data-panel="demo" type="button">デモ版 回答一覧</button>
   </nav>
 
@@ -421,6 +422,49 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
       <div class="karte-user-list" id="writingUserList"></div>
       <div class="karte-detail" id="writingDetail">
         <p style="color:var(--ink-500)">左のリストからユーザーを選択してください。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 保存ヘルス ==========
+       ログイン中のクライアントが「送信できずに溜まっている保存（outbox）」を
+       検知して自己申告してくる。ここに出るアカウントは結果がサーバに届いて
+       いない可能性が高い（前田様のような環境）。事前に気づいて先回りできる。 -->
+  <section class="panel" id="panel-save-health">
+    <div class="toolbar">
+      <span style="font-size:.9em;color:var(--ink-500);line-height:1.5">
+        保存がサーバに届かず<strong>クライアント側に溜まっている</strong>アカウントの一覧です。
+        ここに表示される＝<strong>要注意</strong>（環境要因で送信がブロックされている可能性）。
+        空＝現在検知されている異常はありません。
+      </span>
+      <span class="count-badge"><strong id="saveHealthCount">0</strong> 件</span>
+      <button class="btn btn-primary" onclick="loadSaveHealth(true)">
+        <span>⟳</span> 再読み込み
+      </button>
+    </div>
+    <div id="saveHealthStatus" style="padding:8px 0;color:var(--ink-500);font-size:.92em"></div>
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table id="saveHealthTable">
+          <thead>
+            <tr>
+              <th>氏名</th>
+              <th>ログインID</th>
+              <th>未送信（通常）</th>
+              <th>未送信（模試）</th>
+              <th>最古の滞留</th>
+              <th>最大リトライ</th>
+              <th>報告回数</th>
+              <th>最終報告</th>
+              <th>環境（UA）</th>
+            </tr>
+          </thead>
+          <tbody id="saveHealthBody">
+            <tr><td colspan="9" class="empty" style="text-align:center;padding:24px;color:var(--ink-500)">
+              「保存ヘルス」タブを開くと自動で読み込まれます。
+            </td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -922,6 +966,10 @@ function boot() {
       // Lazy-load demo (USERS_TRIAL) data the first time the tab is opened.
       if (btn.dataset.panel === 'demo' && !window.__demoLoaded) {
         loadDemoAttempts();
+      }
+      // Lazy-load save-health (stuck-outbox telemetry) the first time.
+      if (btn.dataset.panel === 'save-health' && !window.__saveHealthLoaded) {
+        loadSaveHealth();
       }
     });
   });
@@ -1501,6 +1549,97 @@ function loadDemoAttempts() {
     statusEl.textContent = window.__demoAttempts.length + ' 件 / 体験生 ' + window.__demoUsers.length + ' 人';
     renderDemoAttempts();
   }).catch(function(err){
+    statusEl.innerHTML = '<span style="color:var(--terracotta)">通信エラー：' +
+      escapeHtml(String(err && err.message || err)) + '</span>';
+  });
+}
+
+/* ============================================================
+   保存ヘルス — 送信できず溜まっている保存(outbox)を自己申告してきた
+   アカウントの一覧。ここに出る＝結果がサーバに届いていない可能性。
+   サーバ本体: docs/gas-save-health.js（SAVE_HEALTH シート）。
+   未デプロイなら listSaveHealth が null を返し、丁寧に degrade する。
+   ============================================================ */
+function fmtAgeMin(min) {
+  min = Number(min) || 0;
+  if (min < 60) return min + ' 分';
+  var h = Math.floor(min / 60), m = min % 60;
+  if (h < 24) return h + ' 時間' + (m ? ' ' + m + ' 分' : '');
+  var d = Math.floor(h / 24); h = h % 24;
+  return d + ' 日' + (h ? ' ' + h + ' 時間' : '');
+}
+function shortUA(ua) {
+  ua = String(ua || '');
+  if (!ua) return '—';
+  var os = /iPhone|iPad|iPod/.test(ua) ? 'iOS'
+         : /Android/.test(ua) ? 'Android'
+         : /Mac OS X/.test(ua) ? 'Mac'
+         : /Windows/.test(ua) ? 'Windows' : '';
+  var br = /Edg\//.test(ua) ? 'Edge'
+         : /CriOS|Chrome/.test(ua) ? 'Chrome'
+         : /FxiOS|Firefox/.test(ua) ? 'Firefox'
+         : /Safari/.test(ua) ? 'Safari' : '';
+  var label = [os, br].filter(Boolean).join(' / ');
+  return label || ua.slice(0, 40);
+}
+function fmtWhenLocal(iso) {
+  if (!iso) return '—';
+  var d = new Date(iso);
+  if (isNaN(d.getTime())) return escapeHtml(String(iso));
+  try {
+    return d.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+  } catch (e) { return escapeHtml(String(iso)); }
+}
+function loadSaveHealth(force) {
+  var statusEl = document.getElementById('saveHealthStatus');
+  var bodyEl = document.getElementById('saveHealthBody');
+  var countEl = document.getElementById('saveHealthCount');
+  statusEl.textContent = '読み込み中…';
+  if (!Api.listSaveHealth) {
+    statusEl.innerHTML = '<span style="color:var(--ink-500)">この機能は現在のフロントエンドでは利用できません（api.js を更新してください）。</span>';
+    return;
+  }
+  Api.listSaveHealth().then(function (res) {
+    window.__saveHealthLoaded = true;
+    if (!res) {
+      // GAS endpoint not deployed yet, or a transient failure. Degrade politely.
+      statusEl.innerHTML = '<span style="color:var(--ink-500)">保存ヘルスのサーバ機能がまだ有効化されていません' +
+        '（docs/gas-save-health.js を本番 GAS に追加→デプロイすると表示されます）。' +
+        'この機能が無くても生徒の保存・履歴には一切影響しません。</span>';
+      bodyEl.innerHTML = '';
+      countEl.textContent = '0';
+      return;
+    }
+    if (!res.success) {
+      statusEl.innerHTML = '<span style="color:var(--terracotta)">読み込みに失敗：' +
+        escapeHtml(res.error || 'unknown') + '</span>';
+      return;
+    }
+    var rows = res.rows || [];
+    countEl.textContent = rows.length;
+    if (!rows.length) {
+      statusEl.innerHTML = '<span style="color:var(--green-deep)">✓ 現在、保存がサーバに届いていないアカウントは検知されていません。</span>';
+      bodyEl.innerHTML = '<tr><td colspan="9" class="empty" style="text-align:center;padding:24px;color:var(--ink-500)">異常なし</td></tr>';
+      return;
+    }
+    statusEl.innerHTML = '<span style="color:var(--terracotta)">⚠ ' + rows.length +
+      ' 件のアカウントで、保存がサーバに届かず溜まっています。環境（会社/学校のネットワーク等）を確認し、必要なら別回線での再送を案内してください。</span>';
+    bodyEl.innerHTML = rows.map(function (r) {
+      var total = (Number(r.stuck) || 0) + (Number(r.ptStuck) || 0);
+      var sev = (Number(r.oldestAgeMin) || 0) >= 60 || total >= 3;
+      return '<tr' + (sev ? ' style="background:rgba(197,84,60,.06)"' : '') + '>' +
+        '<td>' + escapeHtml(r.userName || '—') + '</td>' +
+        '<td class="muted">' + escapeHtml(r.userId || '') + '</td>' +
+        '<td style="text-align:center">' + (Number(r.stuck) || 0) + '</td>' +
+        '<td style="text-align:center">' + (Number(r.ptStuck) || 0) + '</td>' +
+        '<td>' + fmtAgeMin(r.oldestAgeMin) + '</td>' +
+        '<td style="text-align:center">' + (Number(r.maxTries) || 0) + '</td>' +
+        '<td style="text-align:center">' + (Number(r.reportCount) || 0) + '</td>' +
+        '<td class="muted">' + fmtWhenLocal(r.lastReportAt) + '</td>' +
+        '<td class="muted" title="' + escapeHtml(r.ua || '') + '">' + escapeHtml(shortUA(r.ua)) + '</td>' +
+        '</tr>';
+    }).join('');
+  }).catch(function (err) {
     statusEl.innerHTML = '<span style="color:var(--terracotta)">通信エラー：' +
       escapeHtml(String(err && err.message || err)) + '</span>';
   });
