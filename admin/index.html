@@ -186,6 +186,22 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
 .modal-head h3{font-family:var(--font-en);font-size:1.15em;font-weight:800;color:var(--green-deep)}
 .modal-close{background:none;border:none;font-size:1.1em;color:var(--ink-500);cursor:pointer;padding:4px 10px;border-radius:6px}
 .modal-close:hover{background:var(--paper);color:var(--green-dark)}
+/* 保存ヘルス 自動アラート */
+.modal-panel.sh-alert{max-width:560px;border-top:4px solid var(--terracotta,#B14E2E)}
+.sh-alert-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
+.sh-alert-badge{flex:none;width:40px;height:40px;border-radius:50%;background:#F8DDD2;color:#8A3E24;display:flex;align-items:center;justify-content:center;font-size:1.25em;font-weight:800}
+.sh-alert-head h3{font-family:var(--font-en);font-size:1.15em;font-weight:800;color:var(--green-deep);margin:0 0 4px}
+.sh-alert-sub{font-size:.86em;color:var(--ink-500);line-height:1.55;margin:0}
+.sh-alert-list{display:flex;flex-direction:column;gap:8px;max-height:46vh;overflow-y:auto;margin-bottom:20px}
+.sh-alert-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--paper);border-radius:11px;background:var(--cream,#FAF8F2)}
+.sh-alert-item.sev{border-color:#E7C3B6;background:#FBEEE9}
+.sh-alert-item .who{flex:1;min-width:0}
+.sh-alert-item .nm{font-weight:700;font-size:.92em;color:var(--ink-900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sh-alert-item .id{font-family:var(--font-en);font-size:.76em;color:var(--ink-500)}
+.sh-alert-item .stat{flex:none;text-align:right;font-family:var(--font-en);font-size:.78em;color:var(--ink-500);line-height:1.4}
+.sh-alert-item .stat b{color:#8A3E24;font-size:1.05em}
+.sh-alert-more{font-size:.82em;color:var(--ink-500);text-align:center;padding:4px}
+.sh-alert-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
 </style>
 <!-- Start of HubSpot Embed Code --><script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242729130.js"></script><!-- End of HubSpot Embed Code -->
 </head>
@@ -511,6 +527,24 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
     </div>
   </section>
 
+</div>
+
+<!-- ===== 保存ヘルス 自動アラート（ログイン直後に該当があれば自動表示） ===== -->
+<div class="modal-overlay" id="saveHealthAlert" role="dialog" aria-modal="true" aria-labelledby="shAlertTitle">
+  <div class="modal-panel sh-alert">
+    <div class="sh-alert-head">
+      <div class="sh-alert-badge">⚠</div>
+      <div>
+        <h3 id="shAlertTitle">保存に問題の可能性があるアカウント</h3>
+        <p class="sh-alert-sub">結果がサーバに届かず、端末側に溜まっています。別回線での再送を案内してください。</p>
+      </div>
+    </div>
+    <div class="sh-alert-list" id="shAlertList"></div>
+    <div class="sh-alert-actions">
+      <button class="btn btn-ghost" type="button" onclick="dismissSaveHealthAlert()">後で</button>
+      <button class="btn btn-primary" type="button" onclick="openSaveHealthFromAlert()">保存ヘルスで詳細を見る →</button>
+    </div>
+  </div>
 </div>
 
 <script src="../js/api.js?v=20260730"></script>
@@ -997,6 +1031,9 @@ function boot() {
 
   // Try to replace mock data with live data from GAS
   if (typeof loadLiveData === 'function') loadLiveData();
+
+  // 保存ヘルス: 該当アカウントがあればログイン直後に自動ポップアップ
+  if (typeof checkSaveHealthAlert === 'function') checkSaveHealthAlert();
 }
 
 /* Sort state */
@@ -1643,6 +1680,47 @@ function loadSaveHealth(force) {
     statusEl.innerHTML = '<span style="color:var(--terracotta)">通信エラー：' +
       escapeHtml(String(err && err.message || err)) + '</span>';
   });
+}
+
+/* ---- 保存ヘルス 自動アラート ----
+   ログイン直後（boot）に1回だけ listSaveHealth を叩き、該当アカウントが
+   あればポップアップで即通知する。タブを見に行かなくても気づける。
+   何も無ければ静かに何も出さない。生徒データには一切触れない。 */
+function checkSaveHealthAlert() {
+  if (!Api.listSaveHealth) return;
+  Api.listSaveHealth().then(function (res) {
+    if (!res || !res.success) return;              // 未デプロイ/失敗 → 静かに無視
+    var rows = res.rows || [];
+    if (!rows.length) return;                      // 異常なし → 何も出さない
+    window.__saveHealthRows = rows;                // タブ側と共有（再取得を省く）
+    renderSaveHealthAlert(rows);
+  }).catch(function () {});
+}
+function renderSaveHealthAlert(rows) {
+  var listEl = document.getElementById('shAlertList');
+  var titleEl = document.getElementById('shAlertTitle');
+  if (!listEl) return;
+  titleEl.textContent = '保存に問題の可能性があるアカウント ' + rows.length + '件';
+  var top = rows.slice(0, 6);
+  listEl.innerHTML = top.map(function (r) {
+    var total = (Number(r.stuck) || 0) + (Number(r.ptStuck) || 0);
+    var sev = (Number(r.oldestAgeMin) || 0) >= 60 || total >= 3;
+    return '<div class="sh-alert-item' + (sev ? ' sev' : '') + '">' +
+      '<div class="who"><div class="nm">' + escapeHtml(r.userName || '（氏名なし）') + '</div>' +
+      '<div class="id">' + escapeHtml(r.userId || '') + '</div></div>' +
+      '<div class="stat"><b>' + total + '件</b>未送信<br>' + fmtAgeMin(r.oldestAgeMin) + '滞留</div>' +
+      '</div>';
+  }).join('') + (rows.length > top.length
+    ? '<div class="sh-alert-more">ほか ' + (rows.length - top.length) + ' 件</div>' : '');
+  document.getElementById('saveHealthAlert').classList.add('active');
+}
+function dismissSaveHealthAlert() {
+  document.getElementById('saveHealthAlert').classList.remove('active');
+}
+function openSaveHealthFromAlert() {
+  dismissSaveHealthAlert();
+  var tab = document.querySelector('.tab[data-panel="save-health"]');
+  if (tab) tab.click();   // タブ切替＋loadSaveHealth 発火
 }
 
 /* Parse "Task PN [Set N]" set-string into the task key used by
