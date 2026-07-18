@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>本番セルフテスト — TCK Reps</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+  body{font-family:var(--font-en,"Manrope"),var(--font-jp,"Noto Sans JP"),sans-serif;background:var(--cream,#FAF8F2);color:var(--ink-900,#23271F);margin:0;line-height:1.6}
+  .wrap{max-width:760px;margin:0 auto;padding:28px 22px 80px}
+  h1{font-size:1.5em;font-weight:800;color:var(--green-deep,#1E3B2E);margin:0 0 4px}
+  .sub{color:var(--ink-500,#5C6154);font-size:.9em;margin:0 0 8px}
+  .warn{background:#FFF4D6;border:1px solid #E3C871;border-radius:10px;padding:10px 14px;font-size:.85em;color:#6B5A1E;margin:14px 0 20px}
+  .bar{display:flex;gap:10px;align-items:center;margin:0 0 18px;flex-wrap:wrap}
+  .btn{background:var(--green,#2F6B4E);color:#fff;border:none;border-radius:999px;padding:10px 22px;font-weight:800;cursor:pointer;font-size:.95em;font-family:inherit}
+  .btn:disabled{opacity:.5;cursor:default}
+  .btn-ghost{background:#fff;border:1px solid #D9D3C4;color:var(--green-deep,#1E3B2E)}
+  .summary{font-weight:800}
+  .card{background:#fff;border:1px solid #E7E1D2;border-radius:12px;padding:14px 16px;margin:0 0 12px}
+  .card .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .card .name{font-weight:700}
+  .pill{font-size:.78em;font-weight:800;padding:4px 12px;border-radius:999px;white-space:nowrap}
+  .pill.run{background:#EEE9DA;color:#5C6154}
+  .pill.ok{background:#E6F2EA;color:#1E7A46}
+  .pill.ng{background:#F7E1D8;color:#A23A1C}
+  .pill.warn{background:#FBEED4;color:#8A6D2A}
+  .detail{margin-top:8px;font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.78em;color:#5C6154;background:#FAF8F2;border-radius:8px;padding:8px 10px;white-space:pre-wrap;word-break:break-word;display:none}
+  .detail.show{display:block}
+  .desc{font-size:.83em;color:#5C6154;margin-top:3px}
+  a{color:var(--green,#2F6B4E)}
+  .gate{background:#fff;border:1px solid #E7E1D2;border-radius:12px;padding:22px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>本番セルフテスト</h1>
+  <p class="sub">このページは <strong>本番サーバ（GAS・中継サーバ）に対して実際に</strong> 保存・読み戻し・疎通を行い、結果を正直に表示します。モックではありません。</p>
+  <div class="warn">⚠ 「保存→読み戻し」テストは、ログイン中のアカウントに <code>SELFTEST …</code> という無害な行を1件作成します（スコアには影響しません）。気になる場合は後で削除できます。</div>
+
+  <div id="gate" class="gate" style="display:none">
+    <p>このテストにはスタッフのログインが必要です。</p>
+    <a href="login.html">→ 管理用ログインへ</a>
+  </div>
+
+  <div id="app" style="display:none">
+    <div class="bar">
+      <button class="btn" id="runBtn" type="button">▶ すべて実行</button>
+      <button class="btn btn-ghost" id="againBtn" type="button" style="display:none">↻ もう一度</button>
+      <span class="summary" id="summary"></span>
+    </div>
+    <div id="cards"></div>
+  </div>
+</div>
+
+<script src="../js/api.js?v=20260731"></script>
+<script>
+(function () {
+  var user = null, pass = '';
+  try { user = JSON.parse(sessionStorage.getItem('kickstart_user') || 'null'); } catch (e) {}
+  try { pass = sessionStorage.getItem('kickstart_staff_pass') || ''; } catch (e) {}
+
+  if (!user || !user.userId || !pass) {
+    document.getElementById('gate').style.display = 'block';
+    return;
+  }
+  document.getElementById('app').style.display = 'block';
+
+  var cardsEl = document.getElementById('cards');
+  var runBtn = document.getElementById('runBtn');
+  var againBtn = document.getElementById('againBtn');
+  var summaryEl = document.getElementById('summary');
+
+  function nowNonce() { return 'ST' + Date.now() + Math.random().toString(36).slice(2, 6); }
+  function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]; }); }
+  function short(o) { try { return JSON.stringify(o).slice(0, 400); } catch (e) { return String(o); } }
+
+  // Each test returns a Promise<{status:'ok'|'ng'|'warn', detail:string}>
+  var TESTS = [
+    { name: '① 自動更新の版数チェック', desc: 'version.json（サーバ最新版）と、このブラウザが動かしている版を照合。', run: testVersion },
+    { name: '② 中継サーバー（リレー）疎通', desc: '中継サーバー経由 / 直接、どちらでサーバに到達できるかを実測。', run: testRelay },
+    { name: '③ 保存 → 読み戻し（本番・最重要）', desc: '実際に保存し、サーバから読み戻して同じ行が戻るか確認。', run: testRoundTrip },
+    { name: '④ 保存ヘルス読み出し（#168）', desc: '保存ヘルスのサーバ機能が有効か（スタッフ読み出し）。', run: testSaveHealth }
+  ];
+
+  function testVersion() {
+    var mV = (function () {
+      var ss = document.getElementsByTagName('script');
+      for (var i = 0; i < ss.length; i++) { var m = ss[i].src && ss[i].src.match(/api\.js\?v=(\d+)/); if (m) return m[1]; }
+      return '';
+    })();
+    return fetch('../version.json?ts=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        var latest = j && j.build ? String(j.build) : '';
+        if (!latest) return { status: 'warn', detail: 'version.json を取得できません（未デプロイの可能性）。running=' + mV };
+        if (mV && Number(mV) < Number(latest)) return { status: 'warn', detail: 'このブラウザは古い版です running=' + mV + ' / latest=' + latest + '（自動更新で次回リロード時に更新）' };
+        return { status: 'ok', detail: 'running=' + mV + ' / latest=' + latest + '（最新）' };
+      })
+      .catch(function (e) { return { status: 'warn', detail: 'version.json 取得エラー: ' + e }; });
+  }
+
+  function testRelay() {
+    if (!Api.savePathPreflight) return Promise.resolve({ status: 'warn', detail: 'savePathPreflight 未実装（api.js が古い）' });
+    return Api.savePathPreflight(true).then(function (r) {
+      if (!r) return { status: 'warn', detail: '結果なし' };
+      var ok = r.ok, parts = '中継=' + (r.proxy ? '到達' : '不可') + ' / 直接=' + (r.direct ? '到達' : '不可');
+      return { status: ok ? 'ok' : 'ng', detail: parts + '（' + (ok ? 'サーバに到達可能' : 'どちらの経路もサーバに到達できません') + '）' };
+    }).catch(function (e) { return { status: 'ng', detail: 'エラー: ' + e }; });
+  }
+
+  function testRoundTrip() {
+    var nonce = nowNonce();
+    var set = 'SELFTEST ' + nonce;
+    return Api.saveAnswers(set, [1], 1, { total: 1, attemptNumber: 1 })
+      .then(function (saveRes) {
+        return new Promise(function (res) { setTimeout(res, 2500); }).then(function () {
+          return Api.getMyHistory(user.userId, pass).then(function (h) {
+            var attempts = (h && h.success && h.attempts) || [];
+            var found = attempts.some(function (a) { return String(a.set || '').indexOf(nonce) !== -1; });
+            return {
+              status: found ? 'ok' : 'ng',
+              detail: (found
+                ? '✅ 保存が本番サーバに到達し、読み戻せました。'
+                : '❌ 保存した行がサーバに見つかりません（保存が届いていない）。')
+                + '\nsave結果: ' + short(saveRes)
+                + '\n読み戻し件数: ' + attempts.length + ' / 一致: ' + found
+            };
+          });
+        });
+      })
+      .catch(function (e) { return { status: 'ng', detail: 'エラー: ' + e }; });
+  }
+
+  function testSaveHealth() {
+    if (!Api.listSaveHealth) return Promise.resolve({ status: 'warn', detail: 'listSaveHealth 未実装（api.js が古い）' });
+    return Api.listSaveHealth(user.userId, pass).then(function (r) {
+      if (r === null) return { status: 'warn', detail: 'サーバ機能が未デプロイ（docs/gas-save-health.js 未追加）。フロントは正常に degrade。' };
+      if (r && r.success) return { status: 'ok', detail: '有効。未解決アカウント ' + ((r.rows && r.rows.length) || 0) + ' 件。' };
+      return { status: 'ng', detail: '応答: ' + short(r) };
+    }).catch(function (e) { return { status: 'ng', detail: 'エラー: ' + e }; });
+  }
+
+  function render() {
+    cardsEl.innerHTML = TESTS.map(function (t, i) {
+      return '<div class="card" id="card' + i + '">' +
+        '<div class="top"><div><div class="name">' + esc(t.name) + '</div><div class="desc">' + esc(t.desc) + '</div></div>' +
+        '<span class="pill run" id="pill' + i + '">待機</span></div>' +
+        '<div class="detail" id="det' + i + '"></div></div>';
+    }).join('');
+  }
+
+  function setPill(i, status, text) {
+    var p = document.getElementById('pill' + i);
+    p.className = 'pill ' + status;
+    p.textContent = text;
+  }
+
+  function runAll() {
+    runBtn.disabled = true; againBtn.style.display = 'none'; summaryEl.textContent = '';
+    render();
+    var okc = 0, ngc = 0, warnc = 0, chain = Promise.resolve();
+    TESTS.forEach(function (t, i) {
+      chain = chain.then(function () {
+        setPill(i, 'run', '実行中…');
+        return t.run().then(function (r) {
+          setPill(i, r.status, r.status === 'ok' ? '✅ PASS' : r.status === 'warn' ? '⚠ 注意' : '❌ FAIL');
+          var d = document.getElementById('det' + i); d.textContent = r.detail; d.className = 'detail show';
+          if (r.status === 'ok') okc++; else if (r.status === 'warn') warnc++; else ngc++;
+        });
+      });
+    });
+    chain.then(function () {
+      summaryEl.innerHTML = '結果: <span style="color:#1E7A46">' + okc + ' PASS</span> / ' +
+        '<span style="color:#A23A1C">' + ngc + ' FAIL</span> / ' +
+        '<span style="color:#8A6D2A">' + warnc + ' 注意</span>';
+      runBtn.disabled = false; againBtn.style.display = 'inline-block';
+    });
+  }
+
+  render();
+  runBtn.addEventListener('click', runAll);
+  againBtn.addEventListener('click', runAll);
+})();
+</script>
+</body>
+</html>
