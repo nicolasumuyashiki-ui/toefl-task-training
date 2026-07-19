@@ -171,6 +171,28 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   <div class="status-inner" id="statusInner"></div>
 </div>
 
+<!-- FREE-ACCESS WINDOW notice — auto-hides after Auth.FREE_ACCESS_UNTIL lapses. -->
+<div id="freeAccessNotice" style="display:none;max-width:880px;margin:18px auto 0;padding:0 28px">
+  <div style="background:#E6F3EC;border:1.5px solid #0F7A45;border-radius:12px;padding:14px 18px;color:#0F5A33;font-weight:600;line-height:1.7">
+    <span class="jp">🎁 大規模メンテナンスに伴い、<b><span data-free-until-jp>2026年7月31日</span>まで全機能を無料</b>でご利用いただけます。この期間中、お支払い手続きは不要です（お支払い済み分は別途返金のご案内をいたします）。</span>
+    <span class="en">🎁 Due to large-scale maintenance, <b>all features are free through <span data-free-until-en>July 31, 2026</span></b>. No payment is needed during this period (any charges already paid will be refunded separately).</span>
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  try {
+    if (window.Auth && Auth.FREE_ACCESS_UNTIL && Date.now() < Date.parse(Auth.FREE_ACCESS_UNTIL)) {
+      var until = new Date(Date.parse(Auth.FREE_ACCESS_UNTIL));
+      try {
+        document.querySelector('[data-free-until-jp]').textContent = until.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo', year: 'numeric', month: 'long', day: 'numeric' });
+        document.querySelector('[data-free-until-en]').textContent = until.toLocaleDateString('en-US', { timeZone: 'Asia/Tokyo', year: 'numeric', month: 'long', day: 'numeric' });
+      } catch (e2) {}
+      document.getElementById('freeAccessNotice').style.display = 'block';
+    }
+  } catch (e) {}
+});
+</script>
+
 <div class="plan-card">
   <div class="plan-inner">
     <div class="plan-head">

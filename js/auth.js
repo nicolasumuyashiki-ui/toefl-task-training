@@ -154,8 +154,15 @@ var Auth = {
     'menu.html',             // landing — a "subscribe" banner there is friendlier than a redirect
   ],
 
+  /* FREE-ACCESS WINDOW — 2026-07 大規模改修のお詫び措置: 7月末（JST）まで
+     全ユーザー（新規申込含む）に課金ゲートを開放する。期限を過ぎると
+     Date.now() 比較が偽になり、コード変更なしで自動的に通常課金へ戻る。 */
+  FREE_ACCESS_UNTIL: '2026-07-31T23:59:59+09:00',
+
   _enforceSubscriptionGate: function(user) {
     if (!user) return;
+    // Free-access window (see above) — everyone through until it lapses.
+    try { if (Date.now() < Date.parse(this.FREE_ACCESS_UNTIL)) return; } catch (e) {}
     // Staff bypass — TCK domain users always have access.
     if (tckIsStaff(user.email, user.userId)) return;
     // (Monitor / comp-tier bypass moved server-side — GAS returns
@@ -281,6 +288,9 @@ if (typeof window !== 'undefined') {
   function init() {
     var u; try { u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}'); } catch (e) { u = {}; }
     if (!u.userId) return;
+    // Free-access window — mirror Auth.FREE_ACCESS_UNTIL so menu tiles are
+    // not locked while the gate itself is open.
+    try { if (window.Auth && Auth.FREE_ACCESS_UNTIL && Date.now() < Date.parse(Auth.FREE_ACCESS_UNTIL)) return; } catch (e) {}
     if (typeof tckIsStaff === 'function' && tckIsStaff(u.email, u.userId)) return; // Staff bypass
     // (Monitor / comp-tier bypass moved server-side — GAS will return
     // status=active for those emails so applyLockedState never fires.)
