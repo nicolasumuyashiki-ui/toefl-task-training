@@ -811,7 +811,11 @@ render();
       ? Api.listPtResultsMerged() : Api.listPtResults();
     fetch.then(function(r){
       if (!r || !r.success || !r.results || !r.results.length) return;
-      renderHistory(r.results);
+      // This page is Test 1 — only show its own history. Rows saved before
+      // testId existed had no mock selector at all, so they were Test 1 too.
+      var mine = r.results.filter(function(x){ return String(x.testId || '') === '1' || !x.testId; });
+      if (!mine.length) return;
+      renderHistory(mine);
     }).catch(function(err){
       console.warn('[pt-results] fetch history failed:', err);
     });

@@ -117,6 +117,7 @@ tbody tr:last-child td{border-bottom:none}
       <thead>
         <tr>
           <th class="l"><span class="jp">回</span><span class="en">#</span></th>
+          <th class="l"><span class="jp">模試</span><span class="en">Test</span></th>
           <th class="l"><span class="jp">日時</span><span class="en">Date</span></th>
           <th>Reading</th>
           <th>Listening</th>
@@ -282,8 +283,10 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');try{localStorage
       var attemptN = lookup[row.timestamp] || '?';
       var dt = row.timestamp ? new Date(row.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
       var s = _saneRow(row);
+      var testN = String(row.testId || '1');  // rows saved before testId existed were all Test 1
       return '<tr>'
         + '<td class="l"><strong>' + attemptN + '</strong></td>'
+        + '<td class="l">Test ' + testN + '</td>'
         + '<td class="l" style="white-space:nowrap">' + dt + '</td>'
         + '<td>' + (s.r || '—') + '</td>'
         + '<td>' + (s.l || '—') + '</td>'
