@@ -218,6 +218,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
   <div class="admin-nav-right">
     <span class="admin-user" id="adminUser">—</span>
+    <a class="admin-link" href="selftest.html">🩺 セルフテスト</a>
     <a class="admin-link" href="../menu.html">← Task Training</a>
     <a class="admin-link" href="#" onclick="doLogout();return false;">Logout</a>
   </div>
@@ -547,8 +548,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
 </div>
 
-<script src="../js/api.js?v=20260730"></script>
-<script src="../js/auth.js?v=20260730"></script>
+<script src="../js/api.js?v=20260731"></script>
+<script src="../js/auth.js?v=20260731"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -1992,6 +1993,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260730"></script>
+<script defer src="../js/tm-footer.js?v=20260731"></script>
 </body>
 </html>
