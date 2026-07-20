@@ -291,10 +291,13 @@ function _flushOutbox() {
     _outboxUpdate(item);
     return _sendSavePayload(item).then(function (res) {
       var okVerified = res && res.success !== false && !res.unverified;
-      // An UNVERIFIED (iframe) ack keeps the item queued for a verifiable
-      // re-send — clientSaveId dedupes on the server. Bounded: after 6
-      // delivery attempts the odds every one vanished are negligible.
-      if (okVerified || (res && res.success !== false && item.tries >= 6)) _outboxRemove(item.id);
+      // Remove ONLY on a VERIFIED server ack. An UNVERIFIED (iframe) ack keeps
+      // the item queued for a verifiable re-send — clientSaveId dedupes on the
+      // server. We NEVER drop an unconfirmed record on a try-count: a completed
+      // record must never be discarded while it might still be unsaved (owner
+      // requirement). It simply keeps retrying on every load until the server
+      // confirms it — idempotent, so re-sends can't create duplicates.
+      if (okVerified) _outboxRemove(item.id);
     }, function () {}).then(function () {
       return new Promise(function (r) { setTimeout(r, 500); }).then(step);
     });
