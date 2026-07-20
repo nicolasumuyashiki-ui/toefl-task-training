@@ -66,6 +66,88 @@ function tckRootPrefix() {
 }
 
 /* ============================================================
+   PERMANENT LOCAL LEDGER — a completed record must NEVER disappear from the
+   learner's device, whether or not it reached the server. Every OTHER store
+   can lose a record: training_score_* is purged on an account switch and can
+   be overwritten by a server re-hydrate that lost the row; tck_outbox is
+   cleared once "sent" (or, previously, dropped after N tries). This ledger is
+   the ONE store that is only ever appended to / merged into — no code path
+   deletes from it. It is keyed per account (tck_ledger_<uid>) so one learner
+   never SEES another's records, but nobody's records are ever destroyed: when
+   a learner returns to their own account, their work is restored from here
+   even if the server never received it. (Owner requirement, restated many
+   times: "サーバーに送られようがローカルに留まろうが記録だけは絶対に消さない".)
+   ============================================================ */
+(function (global) {
+  if (global.TCKLedger) return;
+  var RE = /^(training_score_|training_best_|training_first_|training_attempts_|training_answers_|tck_done_|tck_hwm_|tck_progress_)/;
+  function lkey(uid) { return 'tck_ledger_' + uid; }
+  function readL(uid) { try { return JSON.parse(localStorage.getItem(lkey(uid)) || '{}') || {}; } catch (e) { return {}; } }
+  function writeL(uid, o) { try { localStorage.setItem(lkey(uid), JSON.stringify(o)); } catch (e) {} }
+  function pj(s) { try { return JSON.parse(s); } catch (e) { return null; } }
+
+  /* Merge ONE display key into `store` with a never-lose / never-lower rule.
+     Returns the merged raw string value for that key. `base` is the value to
+     start from (the ledger's current value, or the live value on restore). */
+  function mergeVal(k, base, incoming) {
+    if (incoming == null) return base;
+    if (base == null) return incoming;
+    if (k.indexOf('training_best_') === 0) {
+      var nb = pj(incoming), cb = pj(base);
+      var better = !cb || !(cb.total > 0) || (nb && nb.total > 0 && (nb.correct / nb.total) > (cb.correct / cb.total));
+      return better ? incoming : base;
+    }
+    if (k.indexOf('training_attempts_') === 0) {
+      return String(Math.max(parseInt(incoming, 10) || 0, parseInt(base, 10) || 0));
+    }
+    if (k.indexOf('training_score_') === 0 || k.indexOf('tck_progress_') === 0) {
+      var ns = pj(incoming), cs = pj(base);
+      var nt = (ns && (ns.updatedAt || ns.capturedAt)) || '';
+      var ct = (cs && (cs.updatedAt || cs.capturedAt)) || '';
+      return (nt >= ct) ? incoming : base;   // keep the latest attempt
+    }
+    // training_first_ / tck_done_ / training_answers_ / tck_hwm_ → set-if-absent
+    return base;
+  }
+
+  var TCKLedger = {
+    // Permanently record one completed key under uid (append/merge only).
+    record: function (uid, k, rawVal) {
+      if (!uid || !k || rawVal == null || !RE.test(k)) return;
+      var store = readL(uid);
+      store[k] = mergeVal(k, store[k] == null ? null : store[k], rawVal);
+      writeL(uid, store);
+    },
+    // Snapshot ALL of an account's live display keys before they are purged.
+    archive: function (uid) {
+      if (!uid) return;
+      var store = readL(uid), touched = false;
+      try {
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (!k || !RE.test(k)) continue;
+          store[k] = mergeVal(k, store[k] == null ? null : store[k], localStorage.getItem(k));
+          touched = true;
+        }
+      } catch (e) {}
+      if (touched) writeL(uid, store);
+    },
+    // Restore an account's kept records into the live keys (merge; never lower).
+    restore: function (uid) {
+      if (!uid) return;
+      var store = readL(uid);
+      Object.keys(store).forEach(function (k) {
+        try {
+          var live = localStorage.getItem(k);
+          localStorage.setItem(k, mergeVal(k, live, store[k]));
+        } catch (e) {}
+      });
+    }
+  };
+  global.TCKLedger = TCKLedger;
+})(window);
+
+/* ============================================================
    Account-cache isolation — prevents one account's history/scores from
    showing under ANOTHER account on the SAME browser.
 
@@ -91,16 +173,30 @@ function tckRootPrefix() {
     if (!uid) return;                       // logged out → nothing to isolate
     var prev = localStorage.getItem('tck_cache_uid');
     if (prev && prev !== uid) {
-      // A different account used this browser before → purge its display cache.
+      // A different account used this browser before → purge its display cache
+      // FROM VIEW so it can't show under the new account. But first archive it
+      // permanently so it is HIDDEN, never DESTROYED: the leaving learner gets
+      // it all back (restore()) the moment they log into their own account
+      // again — even for work the server never received.
+      if (window.TCKLedger) { try { window.TCKLedger.archive(prev); } catch (e) {} }
       var kill = [];
       for (var i = 0; i < localStorage.length; i++) {
         var k = localStorage.key(i);
         if (k && /^(training_score_|training_best_|training_first_|training_attempts_|training_answers_|tck_done_|tck_progress_|tck_hwm_|tck_retry_shown_)/.test(k)) kill.push(k);
       }
       for (var j = 0; j < kill.length; j++) { try { localStorage.removeItem(kill[j]); } catch (e) {} }
-      // Drop any not-yet-sent saves from the previous account so they cannot be
-      // mis-attributed to the new account on the next outbox flush.
-      try { localStorage.removeItem('tck_outbox'); } catch (e) {}
+      // NEVER delete not-yet-sent saves. Each outbox item carries its OWN
+      // captured owner (item.user), so it flushes under the RIGHT account and is
+      // never mis-attributed. Only stamp owner-less legacy items with the
+      // LEAVING account so the new session can't accidentally claim them.
+      try {
+        var _ob = JSON.parse(localStorage.getItem('tck_outbox') || '[]') || [];
+        var _obChanged = false;
+        for (var _oi = 0; _oi < _ob.length; _oi++) {
+          if (_ob[_oi] && (!_ob[_oi].user || !_ob[_oi].user.userId)) { _ob[_oi].user = { userId: prev, userName: '' }; _obChanged = true; }
+        }
+        if (_obChanged) localStorage.setItem('tck_outbox', JSON.stringify(_ob));
+      } catch (e) {}
       // SAME-TAB switch: sessionStorage survives a login change in the same
       // tab, so the previous user's in-tab results (ctw_p*_answers_*,
       // lcrAnswers, convAnswers, …) would render as the new user's own on
@@ -116,6 +212,18 @@ function tckRootPrefix() {
       } catch (e) {}
     }
     if (prev !== uid) { try { localStorage.setItem('tck_cache_uid', uid); } catch (e) {} }
+    // On EVERY load, first snapshot whatever completed work is live right now
+    // into this account's immortal ledger (captures auto-graded scores AND
+    // free-response done-markers / answers written directly to localStorage),
+    // then bring the ledger back into the live keys (merge; never lowers, never
+    // deletes). Net effect: any completed record is continuously immortalised
+    // and self-heals — work that only ever lived on this device (server never
+    // got it) is restored whenever the learner is on their own account, and
+    // survives anything that clears the live keys.
+    if (window.TCKLedger && uid) {
+      try { window.TCKLedger.archive(uid); } catch (e) {}
+      try { window.TCKLedger.restore(uid); } catch (e) {}
+    }
   } catch (e) {}
 })();
 
@@ -472,6 +580,44 @@ if (typeof window !== 'undefined') {
     // page can restore "yesterday's" attempt on the same device.
     if (/^ctw_p\d+_answers_[12]$/.test(String(key))) {
       try { localStorage.setItem(key, value); } catch (e) {}
+      // DEVICE-LOCAL "done" for CTW — independent of the server.
+      // Every other auto-graded task writes training_score_<task>_pN, which the
+      // block below mirrors to localStorage so its menu badge appears the instant
+      // the learner finishes, WHETHER OR NOT the save reached the server. CTW was
+      // the sole exception: its set pages only store ctw_pN_answers_SET + push
+      // "CTW PN Set X" to the server, and never write training_score_ctw_pN — so
+      // the reading-menu CTW badge appeared ONLY after history-sync hydrated the
+      // SERVER rows. If that save never landed (offline / relay down / stale
+      // api.js), a finished CTW practice showed as NOT done, and the recovery
+      // banner couldn't see CTW either. Fold the two per-set snapshots (this
+      // write + whatever the other set stored, session or the localStorage mirror
+      // above) into an aggregate training_score_ctw_pN so the badge is driven by
+      // THIS device's own record. CTW is excluded from AUTO_SAVE_LABELS and from
+      // history-sync's reconcile, so this creates NO extra server write and NO
+      // phantom row — it only fixes the on-device display.
+      try {
+        var _cpm = String(key).match(/^ctw_p(\d+)_answers_[12]$/);
+        if (_cpm) {
+          var _cpn = _cpm[1], _cCorr = 0, _cTot = 0, _cSeen = 0;
+          for (var _csi = 1; _csi <= 2; _csi++) {
+            var _csk = 'ctw_p' + _cpn + '_answers_' + _csi;
+            var _craw = (_csk === String(key)) ? value
+              : (sessionStorage.getItem(_csk) || localStorage.getItem(_csk));
+            if (!_craw) continue;
+            var _csd = JSON.parse(_craw);
+            if (_csd && typeof _csd.score === 'number' && typeof _csd.total === 'number' && _csd.total > 0) {
+              _cCorr += _csd.score; _cTot += _csd.total; _cSeen++;
+            }
+          }
+          if (_cSeen > 0 && _cTot > 0) {
+            // Re-enters this override on the training_score_ branch (which mirrors
+            // to localStorage + best/first); CTW has no AUTO_SAVE label, so it is
+            // NOT re-sent to the server. updatedAt=now marks it a fresh attempt.
+            sessionStorage.setItem('training_score_ctw_p' + _cpn,
+              JSON.stringify({ correct: _cCorr, total: _cTot, updatedAt: new Date().toISOString() }));
+          }
+        }
+      } catch (e) {}
     }
     // Email/Discussion submissions also only live in sessionStorage. The
     // key carries no practice number, so scope the durable mirror by the
@@ -534,6 +680,22 @@ if (typeof window !== 'undefined') {
             || (d.correct / d.total) > (_cb.correct / _cb.total)
             || ((d.correct / d.total) === (_cb.correct / _cb.total) && d.total > _cb.total);
           if (_better) localStorage.setItem(_bk, JSON.stringify({ correct: d.correct, total: d.total }));
+        }
+      } catch (e) {}
+
+      // (1c) PERMANENT LEDGER — record this completed attempt the instant it is
+      // done, so it can NEVER disappear from this device: it survives the
+      // account-switch purge, a server that never received it, and cache
+      // eviction of the live keys. Keyed per account; restored on next login.
+      try {
+        var _luid = (JSON.parse(sessionStorage.getItem('kickstart_user') || '{}') || {}).userId || '';
+        if (_luid && window.TCKLedger) {
+          window.TCKLedger.record(_luid, 'training_score_' + task + '_p' + practice, localStorage.getItem('training_score_' + task + '_p' + practice));
+          window.TCKLedger.record(_luid, 'training_best_' + task + '_p' + practice, localStorage.getItem('training_best_' + task + '_p' + practice));
+          window.TCKLedger.record(_luid, 'training_first_' + task + '_p' + practice, localStorage.getItem(firstKey));
+          window.TCKLedger.record(_luid, 'training_attempts_' + task + '_p' + practice, localStorage.getItem(countKey));
+          var _la = localStorage.getItem('training_answers_' + task + '_p' + practice);
+          if (_la) window.TCKLedger.record(_luid, 'training_answers_' + task + '_p' + practice, _la);
         }
       } catch (e) {}
 
