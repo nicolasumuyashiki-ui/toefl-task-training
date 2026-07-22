@@ -344,6 +344,7 @@ function _ptFlushAnsOutbox() {
    that causes plain fetch to lose the body. Same pattern as Task Training. */
 var Api = {
   uploadRecording: function(meta, base64Audio){
+    if (window.__PT_PREVIEW__) return Promise.resolve({ success: true, preview: true }); // Admin preview: never upload
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     var data = {
       action:        'uploadRecording',
@@ -397,6 +398,7 @@ var Api = {
 
   /* Save the current Practice Test result (every attempt — no dedup) */
   savePtResult: function(payload){
+    if (window.__PT_PREVIEW__) return Promise.resolve({ success: true, preview: true }); // Admin preview: never save a result row
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     var qs = '?action=savePtResult'
       + '&userId='   + encodeURIComponent(u.userId   || '')
@@ -474,6 +476,7 @@ var Api = {
      GAS endpoint is not deployed yet it degrades to a no-op and never blocks the
      score save. */
   savePtAnswers: function(sessionId, answersObj){
+    if (window.__PT_PREVIEW__) return Promise.resolve({ success: true, preview: true }); // Admin preview: never archive answers
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     var json; try { json = JSON.stringify(answersObj || {}); } catch(e){ json = '{}'; }
     // Mirror to the device FIRST (synchronous) so the snapshot survives even if

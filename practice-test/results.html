@@ -281,8 +281,8 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   </div>
 </section>
 
-<script src="js/auth.js?v=20260810"></script>
-<script src="js/api.js?v=20260810"></script>
+<script src="js/auth.js?v=20260722"></script>
+<script src="js/api.js?v=20260722"></script>
 <script>
 /* ===== Language toggle (mirrors my-score.html) ===== */
 (function(){
@@ -748,7 +748,7 @@ render();
       try {
         for (var i = 0; i < store.length; i++) {
           var k = store.key(i);
-          if (/answer|practice_reading|practice_listening|^m1_|^m2[eh]?_|^results_m/i.test(k)) {
+          if (/answer|practice_reading|practice_listening|practice_writing|^m1_|^m2[eh]?_|^results_m/i.test(k)) {
             snap[tag + ':' + k] = store.getItem(k);
           }
         }
@@ -868,6 +868,6 @@ render();
   <span> · </span>
   <a href="https://www.tckwshop.com/privacypolicy/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid #D6DAD7"><span class="jp">プライバシー</span><span class="en">Privacy</span></a>
 </footer>
-<script defer src="../js/tm-footer.js?v=20260810"></script>
+<script defer src="../js/tm-footer.js?v=20260722"></script>
 </body>
 </html>
