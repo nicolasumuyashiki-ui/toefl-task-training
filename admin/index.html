@@ -1562,8 +1562,11 @@ function ptQuestionLink(testId, page){
     'style="font-size:.74em;font-weight:700;color:var(--green,#0F7A45);text-decoration:none;border:1px solid var(--line,#cfe0d6);border-radius:999px;padding:2px 9px;white-space:nowrap">問題を確認する ↗</a>';
 }
 
-function openPtDetail(uidEnc, sidEnc, testId, readingPath){
+function openPtDetail(uidEnc, sidEnc, testIdEnc, readingPathEnc){
   var uid=decodeURIComponent(uidEnc), sid=decodeURIComponent(sidEnc);
+  // testId / readingPath are encodeURIComponent'd in the card onclick — decode
+  // them too so the key lookup and module detection use the real values.
+  var testId=decodeURIComponent(testIdEnc||''), readingPath=decodeURIComponent(readingPathEnc||'');
   var el=document.getElementById('ptDetail');
   el.innerHTML='<div style="padding:12px;color:var(--ink-500)">回答を読み込み中…</div>';
   el.scrollIntoView({behavior:'smooth',block:'nearest'});
@@ -1610,15 +1613,26 @@ function renderPtDetail(sid, data, ctx){
   if(lis && typeof lis==='object'){
     var qs=Object.keys(lis).sort(function(a,b){return (parseInt(a.replace(/\D/g,''),10)||0)-(parseInt(b.replace(/\D/g,''),10)||0);});
     var corr=0;
+    // Only LCR (q1–8) is reliably on listening-lcr.html. Conversation/Announcement/
+    // Academic-talk questions are stored under running page offsets ('q'+pg) that are
+    // NOT statically mappable back to a single page, so linking them to LCR would be a
+    // wrong-question link. Send q9+ to the listening section entry instead (honest).
     var rows=qs.map(function(k){ var it=lis[k]||{}; var ok=String(it.selected)===String(it.correct); if(ok)corr++;
-      return qrow(k.toUpperCase(), it.selected, it.correct, 'listening-lcr.html'); }).join('');
+      var qn=parseInt(k.replace(/\D/g,''),10)||0;
+      return qrow(k.toUpperCase(), it.selected, it.correct, qn>=1&&qn<=8 ? 'listening-lcr.html' : 'listening-intro.html'); }).join('');
     out+=qtable('Listening（'+corr+'/'+qs.length+' 正解）', rows);
   }
 
   // ---- Reading (student selections from reading-state; keys from the bank) ----
   var rAns = pj(get('practice_reading_ans')) || {};
   var rCtw = pj(get('practice_reading_ctw')) || {};
-  var mod = Object.keys(rCtw).some(function(p){return /m2h/.test(p);}) ? 'm2h'
+  // Prefer the authoritative branch recorded in PT_RESULTS (readingPath =
+  // 'harder'/'easier'); only fall back to guessing from CTW page names when it's
+  // missing. This is what keeps each Reading question matched to the RIGHT key
+  // (Module-2 Harder vs Easier answers differ).
+  var mod = ctx.readingPath==='harder' ? 'm2h'
+          : ctx.readingPath==='easier' ? 'm2e'
+          : Object.keys(rCtw).some(function(p){return /m2h/.test(p);}) ? 'm2h'
           : Object.keys(rCtw).some(function(p){return /m2e/.test(p);}) ? 'm2e' : 'm1';
   function findRK(q){
     var pref=null, any=null;
@@ -1654,12 +1668,17 @@ function renderPtDetail(sid, data, ctx){
   }
 
   // ---- Speaking (recordings from RECORDINGS_PT) ----
+  // NOTE: RECORDINGS_PT has no sessionId column, so these cannot be pinned to THIS
+  // specific attempt — they are all of this student's Practice-Test speaking
+  // recordings. Each row carries its own timestamp so staff can match by date.
+  // Label it honestly rather than implying it belongs to this session only.
   var recs=(ctx.recordings||[]).filter(function(r){var t=String(r.task||'').toLowerCase();return t==='lr'||t==='ti'||t==='speaking'||!!r.fileUrl;});
-  out+='<div style="font-weight:700;margin:14px 0 4px">Speaking（発話の録音）</div>';
+  out+='<div style="font-weight:700;margin:14px 0 4px">Speaking（この生徒の模試録音・全回分）</div>';
   if(recs.length){
+    out+='<div style="color:var(--ink-500);font-size:.78em;margin-bottom:6px">※ 録音は受験回（session）単位で紐づかない仕様のため、この生徒の模試スピーキング録音をすべて表示しています。収録日時で照合してください。</div>';
     out+=recs.map(function(r){ var url=r.fileUrl||('https://drive.google.com/uc?export=download&id='+r.fileId);
       return '<div style="margin:6px 0;padding:8px 10px;border:1px solid var(--line,#e3e3e3);border-radius:8px">'+
-        '<div style="font-size:.82em;color:var(--ink-500)">'+escapeHtml(String(r.task).toUpperCase())+' P'+escapeHtml(String(r.practiceSet||''))+' Q'+escapeHtml(String(r.questionIndex||''))+' ・ '+Math.round(r.durationSec||0)+'秒</div>'+
+        '<div style="font-size:.82em;color:var(--ink-500)">'+escapeHtml(String(r.task).toUpperCase())+' P'+escapeHtml(String(r.practiceSet||''))+' Q'+escapeHtml(String(r.questionIndex||''))+' ・ '+Math.round(r.durationSec||0)+'秒'+(r.timestamp?(' ・ '+ptFmtWhen(r.timestamp)):'')+'</div>'+
         '<audio controls preload="none" src="'+escapeHtml(url)+'" style="width:100%;margin-top:4px"></audio></div>'; }).join('');
   } else {
     out+='<div style="color:var(--ink-500);font-size:.9em">この生徒の模試スピーキング録音は見つかりませんでした（未提出、または adminListPtRecordings 未デプロイ）。</div>';
