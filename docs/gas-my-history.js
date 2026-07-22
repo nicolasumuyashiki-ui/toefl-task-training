@@ -77,6 +77,26 @@ function handleGetMyHistory_(e, callback) {
       var score = (scoreRaw === '' || scoreRaw === null || scoreRaw === undefined)
         ? null : Number(scoreRaw);
 
+      // Count how many answers the learner actually ENTERED (non-blank), so the
+      // client can reflect a graded attempt only when they genuinely engaged:
+      // a blank click-through ("入って出ただけ" — all '', all 0, or the reconcile
+      // [0,0,…] placeholder) has answered=0 and is NOT counted; a real attempt
+      // that scored 0 (all wrong / timed out WITH answers) has answered>0 and IS
+      // counted. Treats '', 0 and '0' as "not answered" (matches the [0,0,…]
+      // blank convention). Free-response (object answers) → answered stays 0,
+      // which the client ignores (it keeps unscored submissions regardless).
+      var answered = 0;
+      try {
+        var pans = (typeof row[4] === 'string' && row[4]) ? JSON.parse(row[4]) : row[4];
+        if (Array.isArray(pans)) {
+          for (var _ai = 0; _ai < pans.length; _ai++) {
+            var _v = pans[_ai];
+            if (_v && typeof _v === 'object' && 'selected' in _v) _v = _v.selected;
+            if (!(_v === '' || _v === null || _v === undefined || _v === 0 || _v === '0')) answered++;
+          }
+        }
+      } catch (e2) {}
+
       var tsRaw = row[0];
       var tsStr = (tsRaw instanceof Date) ? tsRaw.toISOString() : String(tsRaw || '');
 
@@ -84,6 +104,7 @@ function handleGetMyHistory_(e, callback) {
         set: setName,        // e.g. "CTW P1 Set 1", "LCR P3", "Discussion P2"
         score: score,        // raw correct count (null for unscored)
         total: total,        // question count (0 for free-response)
+        answered: answered,  // non-blank answers entered (0 = blank click-through → not reflected)
         timestamp: tsStr
       });
     }

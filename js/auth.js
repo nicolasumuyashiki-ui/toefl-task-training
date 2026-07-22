@@ -615,13 +615,15 @@ if (typeof window !== 'undefined') {
               : (sessionStorage.getItem(_csk) || localStorage.getItem(_csk));
             if (!_craw) continue;
             var _csd = JSON.parse(_craw);
-            // Only count a set that was genuinely COMPLETED. A set left with a
-            // 0 score (opened / quit midway, all blanks empty) is not a real
-            // attempt and must never reflect in the aggregate — otherwise a
-            // finished 20/20 practice could show a lowered score after someone
-            // merely reopens a set and abandons it. (Owner rule: 正式に完了した
-            // 取り組み以外はスコア反映しない.)
-            if (_csd && typeof _csd.score === 'number' && typeof _csd.total === 'number' && _csd.total > 0 && _csd.score > 0) {
+            // Only count a set the learner actually ENGAGED with — at least one
+            // blank filled in. A set left entirely empty (opened then left /
+            // clicked through) is not a real attempt and must never reflect,
+            // otherwise a finished 20/20 could drop after someone merely reopens
+            // a set and abandons it. A genuinely-attempted set that scored 0
+            // (all wrong) IS counted. (Owner rule: 解答解説に到達＝実際に解答した回
+            // だけ反映。時間切れでも解答があれば反映。)
+            var _cAnswered = _csd && Array.isArray(_csd.answers) && _csd.answers.some(function (x) { return x !== '' && x != null; });
+            if (_csd && typeof _csd.score === 'number' && typeof _csd.total === 'number' && _csd.total > 0 && _cAnswered) {
               _cCorr += _csd.score; _cTot += _csd.total; _cSeen++;
             }
           }
