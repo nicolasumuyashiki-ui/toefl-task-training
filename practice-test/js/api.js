@@ -143,9 +143,11 @@ function _ptFlushOutbox() {
     item.tries = (item.tries || 0) + 1;
     _ptOutboxAdd(item);   // persist the incremented try count
     return _ptSendResult(item).then(function (res) {
-      // Both channels return a readable object, so success is verifiable —
-      // remove on confirmed success, or after 6 tries give up retrying.
-      if ((res && res.success !== false) || item.tries >= 6) _ptOutboxRemove(item.id);
+      // Remove ONLY on a confirmed server ack. Never drop an unconfirmed result
+      // on a try-count — a mock score must not be discarded while it might still
+      // be unsaved. It keeps retrying every load until the server confirms
+      // (GAS dedups by sessionId, so re-sends never create duplicate rows).
+      if (res && res.success !== false) _ptOutboxRemove(item.id);
     }, function () {}).then(function () {
       return new Promise(function (r) { setTimeout(r, 500); }).then(step);
     });
@@ -249,6 +251,92 @@ function _ptPost(data) {
     setTimeout(function(){ cleanup({ success: true, timeout: true }); }, 30000);
     form.submit();
   });
+}
+
+/* ============================================================
+   Durable ANSWERS archive — mirror + outbox (never lose 模試 answers)
+   ------------------------------------------------------------
+   savePtAnswers used to be a single UNVERIFIED hidden-iframe POST: if the
+   server was blocked/unreachable the per-question answer snapshot was LOST.
+   This ports the never-lose pattern already used for PT RESULTS:
+     1. mirror the snapshot to localStorage FIRST (device-resident, keyed per
+        userId+sessionId — a shared device never shows another account's data),
+     2. queue it and send via the same-origin relay POST (VERIFIABLE) first,
+        hidden-iframe POST as a fallback,
+     3. retry every load until the relay confirms — NEVER dropped on a
+        try-count. GAS upserts by (userId, sessionId) so re-sends never dup.
+   Isolation: tck_pt_answers_local / tck_pt_ans_outbox are keyed by userId and
+   are NOT matched by the auth.js account-switch purge, so they survive a
+   switch and never leak between accounts. ============================================================ */
+function _ptProxyPost(data) {
+  if (!PT_SAVE_PROXY_URL || typeof fetch !== 'function') return Promise.reject(new Error('no_proxy'));
+  var body = Object.keys(data).map(function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k] == null ? '' : data[k]); }).join('&');
+  var p = fetch(PT_SAVE_PROXY_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: body })
+    .then(function (r) { if (!r.ok) throw new Error('proxy_http_' + r.status); return r.text(); })
+    .then(function (txt) {
+      try { var o = JSON.parse(txt); if (o && typeof o === 'object') return o; } catch (e) {}
+      var m = txt && txt.match(/\{[\s\S]*\}/);
+      if (m) { try { var o2 = JSON.parse(m[0]); if (o2 && typeof o2 === 'object') return o2; } catch (e2) {} }
+      throw new Error('proxy_bad_response');
+    });
+  var t = new Promise(function (_, rej) { setTimeout(function () { rej(new Error('proxy_timeout')); }, 20000); });
+  return Promise.race([p, t]);
+}
+
+var _PT_ANS_LOCAL_KEY = 'tck_pt_answers_local';
+function _ptAnsLocalReadAll() { try { return JSON.parse(localStorage.getItem(_PT_ANS_LOCAL_KEY) || '[]') || []; } catch (e) { return []; } }
+function _ptAnsLocalWriteAll(a) { try { localStorage.setItem(_PT_ANS_LOCAL_KEY, JSON.stringify(a.slice(-60))); } catch (e) {} }
+function _ptAnsLocalMirror(userId, sessionId, json) {
+  if (!userId) return;
+  var key = userId + '|' + String(sessionId || '');
+  var all = _ptAnsLocalReadAll().filter(function (x) { return x && (x.userId + '|' + String(x.sessionId || '')) !== key; });
+  all.push({ userId: userId, sessionId: String(sessionId || ''), answersJson: json, timestamp: new Date().toISOString() });
+  _ptAnsLocalWriteAll(all);
+}
+function _ptAnsLocalGet(userId, sessionId) {
+  var key = (userId || '') + '|' + String(sessionId || '');
+  var hit = _ptAnsLocalReadAll().filter(function (x) { return x && (x.userId + '|' + String(x.sessionId || '')) === key; })[0];
+  return hit ? hit.answersJson : '';
+}
+
+var _PT_ANS_OUTBOX_KEY = 'tck_pt_ans_outbox';
+function _ptAnsOutboxRead() { try { return JSON.parse(localStorage.getItem(_PT_ANS_OUTBOX_KEY) || '[]') || []; } catch (e) { return []; } }
+function _ptAnsOutboxWrite(a) { try { localStorage.setItem(_PT_ANS_OUTBOX_KEY, JSON.stringify(a.slice(-40))); } catch (e) {} }
+function _ptAnsOutboxAdd(it) { var a = _ptAnsOutboxRead().filter(function (x) { return x && x.id !== it.id; }); a.push(it); _ptAnsOutboxWrite(a); }
+function _ptAnsOutboxRemove(id) { var a = _ptAnsOutboxRead(); var n = a.filter(function (x) { return x && x.id !== id; }); if (n.length !== a.length) _ptAnsOutboxWrite(n); }
+
+// Verifiable relay POST first, then the unverified iframe POST. Resolves
+// { verified:true } ONLY on a readable relay ack so the outbox keeps the item
+// until the server truly has it.
+function _ptSendAnswers(item) {
+  return _ptProxyPost(item.data).then(function (res) {
+    if (res && res.success !== false) return { verified: true };
+    return _ptPost(item.data).then(function () { return { verified: false }; });
+  }, function () {
+    return _ptPost(item.data).then(function () { return { verified: false }; });
+  });
+}
+var _ptAnsFlushing = false;
+function _ptFlushAnsOutbox() {
+  if (_ptAnsFlushing) return Promise.resolve();
+  var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+  if (!u.userId) return Promise.resolve();
+  var arr = _ptAnsOutboxRead();
+  if (!arr.length) return Promise.resolve();
+  _ptAnsFlushing = true;
+  var i = 0;
+  function step() {
+    if (i >= arr.length) { _ptAnsFlushing = false; return Promise.resolve(); }
+    var item = arr[i++];
+    item.tries = (item.tries || 0) + 1;
+    _ptAnsOutboxAdd(item);
+    return _ptSendAnswers(item).then(function (r) {
+      if (r && r.verified) _ptAnsOutboxRemove(item.id);   // never drop unconfirmed
+    }, function () {}).then(function () {
+      return new Promise(function (r) { setTimeout(r, 600); }).then(step);
+    });
+  }
+  return step().then(null, function () { _ptAnsFlushing = false; });
 }
 
 /* Lower-case `Api` mirror — speaking-recorder-hook.js looks for this name.
@@ -388,26 +476,37 @@ var Api = {
   savePtAnswers: function(sessionId, answersObj){
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     var json; try { json = JSON.stringify(answersObj || {}); } catch(e){ json = '{}'; }
-    return _ptPost({
-      action:      'savePtAnswers',
-      userId:      u.userId   || '',
-      userName:    u.userName || '',
-      sessionId:   String(sessionId || ''),
-      answersJson: json
-    });
+    // Mirror to the device FIRST (synchronous) so the snapshot survives even if
+    // every transport is blocked; then queue + send (relay-verifiable → iframe)
+    // and retry until confirmed. Keyed by (userId, sessionId) — no cross-account mix.
+    try { _ptAnsLocalMirror(u.userId || '', sessionId, json); } catch (e) {}
+    var data = { action:'savePtAnswers', userId:u.userId||'', userName:u.userName||'', sessionId:String(sessionId||''), answersJson:json };
+    var item = { id: 'pta_' + (u.userId||'') + '_' + (sessionId||''), data: data, enqueuedAt: new Date().toISOString(), tries: 1 };
+    _ptAnsOutboxAdd(item);
+    return _ptSendAnswers(item).then(function (r) {
+      if (r && r.verified) _ptAnsOutboxRemove(item.id);
+      return { success: true };
+    }, function () { return { success: true, queued: true }; });
   },
+  ptAnsOutboxPending: function () { return _ptAnsOutboxRead().length; },
 
-  /* Fetch archived answer contents for (current user, sessionId) — recovery/audit. */
+  /* Fetch archived answer contents for (current user, sessionId) — recovery/audit.
+     Falls back to the device mirror when the server has no row yet (blocked save). */
   getPtAnswers: function(sessionId){
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
-    return _ptJsonp(REC_URL + '?action=getPtAnswers&userId=' + encodeURIComponent(u.userId || '') + '&sessionId=' + encodeURIComponent(sessionId || ''));
+    var local = _ptAnsLocalGet(u.userId || '', sessionId);
+    return _ptJsonp(REC_URL + '?action=getPtAnswers&userId=' + encodeURIComponent(u.userId || '') + '&sessionId=' + encodeURIComponent(sessionId || ''))
+      .then(function (r) {
+        if (r && r.success && r.answersJson) return r;
+        return { success: true, answersJson: local || (r && r.answersJson) || '' };
+      }, function () { return { success: true, answersJson: local || '' }; });
   }
 };
 
 /* On every load, retry any Practice-Test results the server has not
    confirmed yet — so a mock score lost to a blocked/failed save (前田様
    type environment) eventually reaches the server on a later visit. */
-try { setTimeout(function () { try { _ptFlushOutbox(); } catch (e) {} }, 1500); } catch (e) {}
+try { setTimeout(function () { try { _ptFlushOutbox(); } catch (e) {} try { _ptFlushAnsOutbox(); } catch (e) {} }, 1500); } catch (e) {}
 try {
   var _ptLastVis = 0;
   function _ptVisFlush() {
@@ -415,6 +514,7 @@ try {
     if (now - _ptLastVis < 10000) return;
     _ptLastVis = now;
     try { _ptFlushOutbox(); } catch (e) {}
+    try { _ptFlushAnsOutbox(); } catch (e) {}
   }
   document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') _ptVisFlush(); });
   window.addEventListener('pageshow', _ptVisFlush);
