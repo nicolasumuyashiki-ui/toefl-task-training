@@ -457,6 +457,45 @@ var Api = {
       + '&pass=' + encodeURIComponent(p)).catch(function () { return null; });
   },
 
+  /* ---- Admin: Practice Test (模試) across ALL students ----------------
+     Prefers the staff-authed admin endpoints (docs/gas-pt-admin.js); if those
+     aren't deployed yet, falls back to the existing single-endpoint listing
+     (listPtResults with no userId already returns every row) so the admin tab
+     works immediately. Returns { success, results:[...] }. */
+  ptResultsAll: function (id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
+    var open = function () { return _jsonpRequest(API_URL + '?action=listPtResults'); }; // no userId → all rows
+    return _jsonpRequest(API_URL + '?action=adminListPtResults'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p)
+    ).then(function (r) {
+      if (r && r.success && Array.isArray(r.results)) return r;
+      return open();
+    }, open);
+  },
+
+  /* Answer snapshot for ONE attempt (userId + sessionId). Prefers the
+     staff-authed admin endpoint; falls back to the existing getPtAnswers. */
+  ptAnswers: function (userId, sessionId, id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
+    var open = function () {
+      return _jsonpRequest(API_URL + '?action=getPtAnswers'
+        + '&userId=' + encodeURIComponent(userId || '')
+        + '&sessionId=' + encodeURIComponent(sessionId || ''));
+    };
+    return _jsonpRequest(API_URL + '?action=adminGetPtAnswers'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p)
+      + '&userId=' + encodeURIComponent(userId || '')
+      + '&sessionId=' + encodeURIComponent(sessionId || '')
+    ).then(function (r) {
+      if (r && r.success && (r.answersJson !== undefined)) return r;
+      return open();
+    }, open);
+  },
+
   /* ---- Cross-device band HIGH-WATER-MARK (see docs/gas-band-hwm.js) ----
      Persists the HIGHEST section bands / total a learner has ever reached so
      the predicted score is IDENTICAL on every device and can never "reset" on
