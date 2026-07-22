@@ -85,6 +85,13 @@ function tckRootPrefix() {
   function readL(uid) { try { return JSON.parse(localStorage.getItem(lkey(uid)) || '{}') || {}; } catch (e) { return {}; } }
   function writeL(uid, o) { try { localStorage.setItem(lkey(uid), JSON.stringify(o)); } catch (e) {} }
   function pj(s) { try { return JSON.parse(s); } catch (e) { return null; } }
+  // A 0-score auto-graded attempt (correct 0 of a real total) is an
+  // "opened / quit midway", NOT a completion — never immortalise it as a
+  // reflected score. (Owner rule: 正式に完了した取り組み以外はスコア反映しない.)
+  function zeroScore(k, raw) {
+    if (String(k).indexOf('training_score_') !== 0) return false;
+    var d = pj(raw); return !!(d && d.total > 0 && (d.correct || 0) === 0);
+  }
 
   /* Merge ONE display key into `store` with a never-lose / never-lower rule.
      Returns the merged raw string value for that key. `base` is the value to
@@ -114,6 +121,7 @@ function tckRootPrefix() {
     // Permanently record one completed key under uid (append/merge only).
     record: function (uid, k, rawVal) {
       if (!uid || !k || rawVal == null || !RE.test(k)) return;
+      if (zeroScore(k, rawVal)) return;   // don't keep an abandoned 0-score
       var store = readL(uid);
       store[k] = mergeVal(k, store[k] == null ? null : store[k], rawVal);
       writeL(uid, store);
@@ -126,7 +134,9 @@ function tckRootPrefix() {
         for (var i = 0; i < localStorage.length; i++) {
           var k = localStorage.key(i);
           if (!k || !RE.test(k)) continue;
-          store[k] = mergeVal(k, store[k] == null ? null : store[k], localStorage.getItem(k));
+          var raw = localStorage.getItem(k);
+          if (zeroScore(k, raw)) continue;   // skip abandoned 0-score attempts
+          store[k] = mergeVal(k, store[k] == null ? null : store[k], raw);
           touched = true;
         }
       } catch (e) {}
@@ -605,16 +615,37 @@ if (typeof window !== 'undefined') {
               : (sessionStorage.getItem(_csk) || localStorage.getItem(_csk));
             if (!_craw) continue;
             var _csd = JSON.parse(_craw);
-            if (_csd && typeof _csd.score === 'number' && typeof _csd.total === 'number' && _csd.total > 0) {
+            // Only count a set that was genuinely COMPLETED. A set left with a
+            // 0 score (opened / quit midway, all blanks empty) is not a real
+            // attempt and must never reflect in the aggregate — otherwise a
+            // finished 20/20 practice could show a lowered score after someone
+            // merely reopens a set and abandons it. (Owner rule: 正式に完了した
+            // 取り組み以外はスコア反映しない.)
+            if (_csd && typeof _csd.score === 'number' && typeof _csd.total === 'number' && _csd.total > 0 && _csd.score > 0) {
               _cCorr += _csd.score; _cTot += _csd.total; _cSeen++;
             }
           }
           if (_cSeen > 0 && _cTot > 0) {
-            // Re-enters this override on the training_score_ branch (which mirrors
-            // to localStorage + best/first); CTW has no AUTO_SAVE label, so it is
-            // NOT re-sent to the server. updatedAt=now marks it a fresh attempt.
-            sessionStorage.setItem('training_score_ctw_p' + _cpn,
-              JSON.stringify({ correct: _cCorr, total: _cTot, updatedAt: new Date().toISOString() }));
+            // NEVER LOWER an already-recorded genuine CTW score from this path.
+            // Recomputing from the two current per-set snapshots can under-count
+            // when one set wasn't (re)done this session — e.g. a finished 20/20
+            // where only one set is revisited. The badge must reflect the best
+            // completed result (same as the server's best-per-set badge), so
+            // only write when the aggregate does not reduce the current score.
+            var _prevCtw = null;
+            try { _prevCtw = JSON.parse(localStorage.getItem('training_score_ctw_p' + _cpn) || 'null'); } catch (e) {}
+            // "Worse" = fewer sets counted (less complete, e.g. 10/10 vs a
+            // finished 20/20 when only one set was revisited), or — at the same
+            // completeness — a lower raw score. Either way, don't overwrite.
+            var _worse = _prevCtw && typeof _prevCtw.correct === 'number' && _prevCtw.total > 0 &&
+              (_cTot < _prevCtw.total || (_cTot === _prevCtw.total && _cCorr < _prevCtw.correct));
+            if (!_worse) {
+              // Re-enters this override on the training_score_ branch (which mirrors
+              // to localStorage + best/first); CTW has no AUTO_SAVE label, so it is
+              // NOT re-sent to the server. updatedAt=now marks it a fresh attempt.
+              sessionStorage.setItem('training_score_ctw_p' + _cpn,
+                JSON.stringify({ correct: _cCorr, total: _cTot, updatedAt: new Date().toISOString() }));
+            }
           }
         }
       } catch (e) {}
