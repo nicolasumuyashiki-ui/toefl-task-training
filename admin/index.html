@@ -253,6 +253,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
     <button class="tab" data-panel="writing" type="button">ライティング</button>
     <button class="tab" data-panel="save-health" type="button">保存ヘルス</button>
     <button class="tab" data-panel="demo" type="button">デモ版 回答一覧</button>
+    <button class="tab" data-panel="practice-test" type="button">模試</button>
   </nav>
 
   <!-- ========== 一覧 ========== -->
@@ -528,6 +529,20 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
     </div>
   </section>
 
+  <!-- ========== 模試（Practice Test） ========== -->
+  <section class="panel" id="panel-practice-test">
+    <div class="toolbar">
+      <div class="filter-group">
+        <input type="search" id="searchPt" class="input" placeholder="氏名・IDで検索…" oninput="renderPtList()">
+      </div>
+      <span class="count-badge"><strong id="ptCount">0</strong> 回</span>
+      <button class="btn btn-primary" onclick="loadPtResults()"><span>⟳</span> 再読み込み</button>
+    </div>
+    <div id="ptStatus" style="padding:8px 0;color:var(--ink-500);font-size:.92em"></div>
+    <div id="ptList" style="display:flex;flex-direction:column;gap:18px"></div>
+    <div id="ptDetail" style="margin-top:18px"></div>
+  </section>
+
 </div>
 
 <!-- ===== 保存ヘルス 自動アラート（ログイン直後に該当があれば自動表示） ===== -->
@@ -548,8 +563,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
 </div>
 
-<script src="../js/api.js?v=20260804"></script>
-<script src="../js/auth.js?v=20260804"></script>
+<script src="../js/api.js?v=20260806"></script>
+<script src="../js/auth.js?v=20260806"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -1006,6 +1021,10 @@ function boot() {
       if (btn.dataset.panel === 'save-health' && !window.__saveHealthLoaded) {
         loadSaveHealth();
       }
+      // Lazy-load Practice Test (模試) results the first time.
+      if (btn.dataset.panel === 'practice-test' && !window.__ptLoaded) {
+        loadPtResults();
+      }
     });
   });
 
@@ -1442,6 +1461,149 @@ function exportCSV(kind) {
 }
 function today() { const d = new Date(); return d.toISOString().slice(0, 10); }
 function escapeHtml(s) { return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ===== Practice Test (模試) admin viewer =====
+   Section band/score: recomputed from the corrected section scaled scores
+   (legacy PT_RESULTS rows hold concatenation-corrupted values like 3030→30 and
+   totals like 4687 — never trust the stored total/band, recompute). Per-question
+   answers: reliably available only for Listening (self-scoring {selected,correct}
+   blob); Reading/Writing pages persisted counts only, so selections can't be
+   shown. Mirrors practice-test/test3/results.html scoring. */
+window.__ptResults = [];
+function ptSane(v){ v=Number(v)||0; if(v>30)v=Math.floor(v/100); if(v>30)v=30; if(v<0)v=0; return v; }
+function ptTotalToBand(t){ t=Number(t)||0;
+  if(t>=114)return 6.0; if(t>=107)return 5.5; if(t>=95)return 5.0; if(t>=86)return 4.5; if(t>=72)return 4.0;
+  if(t>=58)return 3.5; if(t>=44)return 3.0; if(t>=34)return 2.5; if(t>=24)return 2.0; if(t>=12)return 1.5; return 1.0; }
+function ptSectionToBand(s30){ return ptTotalToBand((Number(s30)||0)*4); }
+function ptFmtBand(b){ return (Math.round(b*2)/2).toFixed(1); }
+function ptRecompute(a){
+  var R=ptSane(a.readingScaled), L=ptSane(a.listeningScaled), W=ptSane(a.writingScaled);
+  return { R:R, L:L, W:W, total:R+L+W,
+    band:Math.round(((ptSectionToBand(R)+ptSectionToBand(L)+ptSectionToBand(W))/3)*2)/2,
+    Rb:ptSectionToBand(R), Lb:ptSectionToBand(L), Wb:ptSectionToBand(W) };
+}
+function ptFmtWhen(iso){ try{ var d=new Date(iso); return d.getFullYear()+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+('0'+d.getDate()).slice(-2)+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);}catch(e){return String(iso||'');} }
+
+function loadPtResults(){
+  var st=document.getElementById('ptStatus'); st.textContent='読み込み中…';
+  Api.ptResultsAll().then(function(res){
+    if(!res || !res.success || !Array.isArray(res.results)){
+      st.innerHTML='<span style="color:var(--terracotta)">読み込みに失敗しました。</span>'; return;
+    }
+    var bySession={};
+    res.results.forEach(function(a){
+      var k=a.sessionId||(a.userId+'|'+a.timestamp);
+      if(!bySession[k] || (a.timestamp||'')>(bySession[k].timestamp||'')) bySession[k]=a;
+    });
+    window.__ptResults=Object.keys(bySession).map(function(k){return bySession[k];});
+    window.__ptLoaded=true; st.textContent=''; renderPtList();
+  }).catch(function(err){
+    st.innerHTML='<span style="color:var(--terracotta)">通信エラー：'+escapeHtml(String(err&&err.message||err))+'</span>';
+  });
+}
+
+function renderPtList(){
+  var q=(document.getElementById('searchPt').value||'').toLowerCase().trim();
+  var rows=window.__ptResults.filter(function(a){
+    if(!q) return true;
+    return (a.userName||'').toLowerCase().indexOf(q)>=0 || (a.userId||'').toLowerCase().indexOf(q)>=0;
+  });
+  document.getElementById('ptCount').textContent=rows.length;
+  var byU={}; rows.forEach(function(a){ (byU[a.userId]=byU[a.userId]||[]).push(a); });
+  var order=Object.keys(byU).sort(function(x,y){ return (byU[x][0].userName||x).localeCompare(byU[y][0].userName||y); });
+  var html=order.map(function(uid){
+    var atts=byU[uid].sort(function(a,b){return (b.timestamp||'').localeCompare(a.timestamp||'');});
+    var head='<div style="font-weight:800;font-size:1.02em;margin-bottom:6px">'+escapeHtml(atts[0].userName||uid)+
+      ' <span style="color:var(--ink-500);font-weight:500;font-size:.8em;font-family:var(--font-en)">'+escapeHtml(uid)+' · '+atts.length+'回</span></div>';
+    var cards=atts.map(function(a){
+      var c=ptRecompute(a);
+      function sec(lab,corr,tot,sc,bd){
+        return '<div style="flex:1;min-width:100px;background:var(--paper,#fff);border:1px solid var(--line,#e3e3e3);border-radius:8px;padding:7px 9px">'+
+          '<div style="font-size:.66em;letter-spacing:.06em;color:var(--ink-500);font-weight:700">'+lab+'</div>'+
+          '<div style="font-weight:800">Band '+ptFmtBand(bd)+'</div>'+
+          '<div style="font-size:.75em;color:var(--ink-500)">'+corr+'/'+tot+' → 換算'+sc+'</div></div>';
+      }
+      return '<div class="pt-card" style="border:1px solid var(--line,#e3e3e3);border-radius:10px;padding:11px 12px;margin-bottom:8px;cursor:pointer" onclick="openPtDetail(\''+encodeURIComponent(a.userId)+'\',\''+encodeURIComponent(a.sessionId)+'\')">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">'+
+          '<div><strong>'+(a.testId?('模試'+escapeHtml(a.testId)):'模試')+'</strong> <span style="color:var(--ink-500);font-size:.85em">'+ptFmtWhen(a.timestamp)+'</span></div>'+
+          '<div style="font-weight:800;font-size:1.05em">総合 Band '+ptFmtBand(c.band)+' <span style="color:var(--ink-500);font-weight:500;font-size:.8em">（合計 '+c.total+'/90）</span></div>'+
+        '</div>'+
+        '<div style="display:flex;gap:8px;flex-wrap:wrap">'+
+          sec('READING',a.readingCorrect,a.readingTotal,c.R,c.Rb)+
+          sec('LISTENING',a.listeningCorrect,a.listeningTotal,c.L,c.Lb)+
+          sec('WRITING',a.writingSentCorrect,a.writingSentTotal,c.W,c.Wb)+
+          '<div style="flex:1;min-width:100px;background:var(--paper,#fff);border:1px solid var(--line,#e3e3e3);border-radius:8px;padding:7px 9px">'+
+            '<div style="font-size:.66em;letter-spacing:.06em;color:var(--ink-500);font-weight:700">SPEAKING</div>'+
+            '<div style="font-weight:800">'+(a.speakingLr?'LR ✓':'LR —')+' / '+(a.speakingTi?'TI ✓':'TI —')+'</div>'+
+            '<div style="font-size:.75em;color:var(--ink-500)">録音提出</div></div>'+
+        '</div>'+
+        '<div style="font-size:.78em;color:var(--ink-500);margin-top:7px">タップで1問ずつの回答・正誤を表示 →</div>'+
+      '</div>';
+    }).join('');
+    return '<div>'+head+cards+'</div>';
+  }).join('');
+  document.getElementById('ptList').innerHTML = html || '<div class="empty" style="padding:24px;text-align:center;color:var(--ink-500)">模試の記録がありません。</div>';
+  document.getElementById('ptDetail').innerHTML='';
+}
+
+function openPtDetail(uidEnc, sidEnc){
+  var uid=decodeURIComponent(uidEnc), sid=decodeURIComponent(sidEnc);
+  var el=document.getElementById('ptDetail');
+  el.innerHTML='<div style="padding:12px;color:var(--ink-500)">回答を読み込み中…</div>';
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  Api.ptAnswers(uid, sid).then(function(res){
+    var raw=(res && res.answersJson) ? res.answersJson : '';
+    if(!raw){
+      el.innerHTML='<div style="border:1px solid var(--line,#e3e3e3);border-radius:10px;padding:14px"><strong>この回は1問ずつの回答が保存されていません（素点のみ）。</strong>'+
+        '<div style="color:var(--ink-500);font-size:.9em;margin-top:6px">1問ずつの回答保存は新しい機能のため、それ以前の受験には回答データがありません。今後の受験分から蓄積されます。セクション別のバンド・素点は上のカードでご確認いただけます。</div></div>';
+      return;
+    }
+    var data={}; try{ data=JSON.parse(raw); }catch(e){}
+    el.innerHTML=renderPtDetail(sid, data);
+  }).catch(function(){ el.innerHTML='<div style="color:var(--terracotta);padding:12px">回答の取得に失敗しました。</div>'; });
+}
+
+function renderPtDetail(sid, data){
+  function pj(s){ try{return JSON.parse(s);}catch(e){return null;} }
+  var out='<div style="border:1px solid var(--line,#e3e3e3);border-radius:10px;padding:14px">';
+  out+='<div style="font-weight:800;margin-bottom:4px">回答内容と正誤</div>';
+  out+='<div style="color:var(--ink-500);font-size:.82em;margin-bottom:12px;font-family:var(--font-en)">'+escapeHtml(sid)+'</div>';
+  var lisRaw = data['s:practice_listening_answers'] || data['l:practice_listening_answers'];
+  var lis = lisRaw ? pj(lisRaw) : null;
+  if(lis && typeof lis==='object'){
+    var qs=Object.keys(lis).sort(function(a,b){return (parseInt(a.replace(/\D/g,''),10)||0)-(parseInt(b.replace(/\D/g,''),10)||0);});
+    var corr=0;
+    var rowsH=qs.map(function(k){
+      var it=lis[k]||{}; var sel=it.selected, cor=it.correct; var ok=String(sel)===String(cor); if(ok)corr++;
+      return '<tr><td style="padding:4px 10px">'+escapeHtml(k.toUpperCase())+'</td>'+
+        '<td style="padding:4px 10px;text-align:center;font-weight:700">'+(sel==null||sel===''?'—':escapeHtml(String(sel)))+'</td>'+
+        '<td style="padding:4px 10px;text-align:center;color:var(--ink-500)">'+(cor==null?'—':escapeHtml(String(cor)))+'</td>'+
+        '<td style="padding:4px 10px;text-align:center;font-weight:800;color:'+(ok?'#0F7A45':'#B23A2C')+'">'+(ok?'✓':'✗')+'</td></tr>';
+    }).join('');
+    out+='<div style="font-weight:700;margin:6px 0">Listening（'+corr+'/'+qs.length+' 正解）</div>'+
+      '<div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:.9em;min-width:340px">'+
+      '<thead><tr style="border-bottom:1px solid var(--line,#e3e3e3)"><th style="padding:4px 10px;text-align:left">設問</th><th style="padding:4px 10px">回答</th><th style="padding:4px 10px">正解</th><th style="padding:4px 10px">正誤</th></tr></thead>'+
+      '<tbody>'+rowsH+'</tbody></table></div>';
+  } else {
+    out+='<div style="color:var(--ink-500);font-size:.9em;margin-bottom:8px">Listening の1問ずつの回答は保存されていません。</div>';
+  }
+  var counts=[];
+  Object.keys(data).forEach(function(k){
+    var m=k.match(/^[sl]:((?:m1|m2h|m2e|practice_writing_sentence)_[a-z0-9]+)_correct$/i);
+    if(m){
+      var base=k.replace(/_correct$/,'');
+      var totRaw=data[base+'_total']||data[('l:'+base.replace(/^[sl]:/,''))+'_total']||data[('s:'+base.replace(/^[sl]:/,''))+'_total'];
+      counts.push(m[1]+': '+data[k]+(totRaw!=null?('/'+totRaw):''));
+    }
+  });
+  out+='<div style="margin-top:14px;font-weight:700">Reading / Writing（正解数のみ）</div>';
+  out+= counts.length
+    ? '<div style="font-size:.88em;margin-top:4px">'+counts.map(escapeHtml).join(' ／ ')+'</div>'
+    : '<div style="color:var(--ink-500);font-size:.9em;margin-top:4px">この回は Reading/Writing の個別集計も保存されていません。セクション合計は上のカードをご覧ください。</div>';
+  out+='<div style="color:var(--ink-500);font-size:.78em;margin-top:12px">※ Reading/Writing は、練習ページが「正解数」だけを保存し1問ずつの選択内容を保存していないため、選択の再現はできません（仕様上の制約）。Listening は1問ずつ保存されます。</div>';
+  out+='</div>';
+  return out;
+}
 
 /* Human-friendly relative time ("2分前", "昨日", "3日前", "2026-04-12").
    Used for last_login_at displays so admin can scan recency at a glance. */
@@ -1993,6 +2155,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260804"></script>
+<script defer src="../js/tm-footer.js?v=20260806"></script>
 </body>
 </html>
