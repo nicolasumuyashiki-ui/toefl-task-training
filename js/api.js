@@ -475,6 +475,17 @@ var Api = {
     }, open);
   },
 
+  /* Admin: a student's Practice Test speaking recordings (RECORDINGS_PT).
+     Staff-authed; resolves null if the endpoint isn't deployed. */
+  ptRecordings: function (userId, id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=adminListPtRecordings'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p)
+      + '&userId=' + encodeURIComponent(userId || '')).catch(function () { return null; });
+  },
+
   /* Answer snapshot for ONE attempt (userId + sessionId). Prefers the
      staff-authed admin endpoint; falls back to the existing getPtAnswers. */
   ptAnswers: function (userId, sessionId, id, pass) {
