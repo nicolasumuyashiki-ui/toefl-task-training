@@ -44,6 +44,25 @@ const Auth = {
     sessionStorage.removeItem('kickstart_user');
   },
   require() {
+    // --- Admin/staff preview -------------------------------------------------
+    // Opened from the Admin console's "問題を確認する" link with ?preview=1.
+    // A rel="noopener" tab starts with an EMPTY sessionStorage, so the staff
+    // kickstart_user does NOT carry over here — we cannot rely on it. The
+    // explicit flag is what makes the button open the question directly every
+    // time. Preview is view-only: no login, no saving, no heartbeat (see
+    // getUserId → null), and js/api.js short-circuits every save.
+    let isPreview = false;
+    try {
+      isPreview = /[?&]preview=1(?:&|$)/.test(location.search) ||
+                  sessionStorage.getItem('pt_preview') === '1';
+    } catch (e) {}
+    if (isPreview) {
+      try { sessionStorage.setItem('pt_preview', '1'); } catch (e) {} // survive in-tab nav
+      window.__PT_PREVIEW__ = true;
+      Auth._showPreviewBanner();
+      return { id: '', name: 'プレビュー', email: '', preview: true };
+    }
+    // -------------------------------------------------------------------------
     const u = this.get();
     if (!u) {
       // If we're in a sub-folder (TT context), bounce up to TT's login.
@@ -61,9 +80,28 @@ const Auth = {
   showBadge(elementId) {
     const u = this.get();
     const el = document.getElementById(elementId);
+    if (window.__PT_PREVIEW__ && el) { el.innerHTML = '<strong>プレビュー（採点・保存なし）</strong>'; return; }
     if (u && u.name && el) {
       el.innerHTML = 'Welcome, <strong>' + u.name + '</strong>';
     }
+  },
+  // Fixed banner shown in Admin preview so staff know this view is read-only
+  // and nothing they touch here is graded or saved.
+  _showPreviewBanner() {
+    try {
+      if (document.getElementById('pt-preview-banner')) return;
+      var add = function () {
+        if (document.getElementById('pt-preview-banner')) return;
+        var b = document.createElement('div');
+        b.id = 'pt-preview-banner';
+        b.textContent = '👁 プレビュー表示（Admin）— 採点も保存もされません';
+        b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#0F5C3A;color:#fff;' +
+          'font:600 13px/1.4 system-ui,sans-serif;text-align:center;padding:6px 10px;letter-spacing:.02em';
+        document.body.appendChild(b);
+        document.body.style.paddingTop = (b.offsetHeight || 30) + 'px';
+      };
+      if (document.body) add(); else document.addEventListener('DOMContentLoaded', add);
+    } catch (e) {}
   }
 };
 

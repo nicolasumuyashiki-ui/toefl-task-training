@@ -77,7 +77,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
   </button>
 </div>
 
-<script src="js/auth.js?v=20260810"></script>
+<script src="js/auth.js?v=20260722"></script>
 <script>
 /* ===== SCORE CALCULATION ===== */
 var assignedPath = 'easy';
@@ -150,11 +150,28 @@ function startModule2(){
      does not inherit them. Matches real TOEFL: you cannot return to a previous
      module. (Snapshot/scoring above already preserved the M1 result.) */
   try {
-    var _mc = JSON.parse(sessionStorage.getItem('practice_reading_ans') || '{}');
-    ['q11','q12','q13','q14','q15','q16','q17','q18','q19','q20'].forEach(function(q){ delete _mc[q]; });
-    sessionStorage.setItem('practice_reading_ans', JSON.stringify(_mc));
-    var _ctw = JSON.parse(sessionStorage.getItem('practice_reading_ctw') || '{}');
-    delete _ctw['reading-ctw.html'];
+    // ARCHIVE Module-1 selections before removing them from the live keys.
+    // We must remove them from practice_reading_ans so Module 2 (which REUSES
+    // q11–q20) does not inherit them, BUT the learner's Module-1 answers must
+    // NEVER be lost — they are needed for the results/answer snapshot and for
+    // the Admin per-question review (面談で弱点を相談するため). So we move them
+    // into m1-namespaced keys that survive into the snapshot and are never read
+    // back by Module-2 restore.
+    var _mc  = JSON.parse(sessionStorage.getItem('practice_reading_ans')     || '{}');
+    var _m1  = JSON.parse(sessionStorage.getItem('practice_reading_m1_ans')  || '{}');
+    ['q11','q12','q13','q14','q15','q16','q17','q18','q19','q20'].forEach(function(q){
+      if (_mc[q] !== undefined && _mc[q] !== null && _mc[q] !== '') _m1[q] = _mc[q];
+      delete _mc[q];
+    });
+    sessionStorage.setItem('practice_reading_m1_ans', JSON.stringify(_m1));
+    sessionStorage.setItem('practice_reading_ans',    JSON.stringify(_mc));
+    var _ctw = JSON.parse(sessionStorage.getItem('practice_reading_ctw')     || '{}');
+    if (_ctw['reading-ctw.html'] !== undefined) {
+      var _m1c = JSON.parse(sessionStorage.getItem('practice_reading_m1_ctw') || '{}');
+      _m1c['reading-ctw.html'] = _ctw['reading-ctw.html'];
+      sessionStorage.setItem('practice_reading_m1_ctw', JSON.stringify(_m1c));
+      delete _ctw['reading-ctw.html'];
+    }
     sessionStorage.setItem('practice_reading_ctw', JSON.stringify(_ctw));
   } catch(e){}
 
@@ -185,6 +202,6 @@ if(typeof Auth !== 'undefined'){
   Auth.showBadge('userBadge');
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260810"></script>
+<script defer src="../js/tm-footer.js?v=20260722"></script>
 </body>
 </html>

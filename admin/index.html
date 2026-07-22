@@ -563,8 +563,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
 </div>
 
-<script src="../js/api.js?v=20260810"></script>
-<script src="../js/auth.js?v=20260810"></script>
+<script src="../js/api.js?v=20260722"></script>
+<script src="../js/auth.js?v=20260722"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -1558,7 +1558,9 @@ function loadPtKeys(){
 // Directory of the given test's pages, relative to admin/.
 function ptDir(testId){ return '../practice-test/' + (String(testId)==='2'?'test2/':String(testId)==='3'?'test3/':''); }
 function ptQuestionLink(testId, page){
-  return '<a href="'+ptDir(testId)+escapeHtml(page)+'" target="_blank" rel="noopener" '+
+  // ?preview=1 → practice-test/js/auth.js opens the page in view-only preview
+  // (no student login, no saving), so Admin can open the question directly.
+  return '<a href="'+ptDir(testId)+escapeHtml(page)+'?preview=1" target="_blank" rel="noopener" '+
     'style="font-size:.74em;font-weight:700;color:var(--green,#0F7A45);text-decoration:none;border:1px solid var(--line,#cfe0d6);border-radius:999px;padding:2px 9px;white-space:nowrap">問題を確認する ↗</a>';
 }
 
@@ -1607,6 +1609,52 @@ function renderPtDetail(sid, data, ctx){
       '<td style="padding:5px 10px;text-align:center">'+mark+'</td>'+
       '<td style="padding:5px 10px;text-align:right">'+(page?ptQuestionLink(tId,page):'')+'</td></tr>';
   }
+  // CTW typed entries rendered as readable numbered chips (was a mashed string).
+  function ctwChips(arr){
+    return (arr||[]).map(function(x,i){
+      var blank=(x===''||x==null);
+      return '<span style="display:inline-block;border:1px solid var(--line,#dcdcdc);border-radius:6px;'+
+        'padding:2px 9px;margin:3px 3px 0 0;font-family:var(--font-en);font-size:.92em;vertical-align:top;'+
+        (blank?'color:var(--ink-400,#b0a99e);background:var(--paper,#faf7f2)':'font-weight:700')+'">'+
+        '<span style="color:var(--ink-500);font-weight:400;font-size:.78em">'+(i+1)+'.</span> '+
+        escapeHtml(blank?'—':String(x))+'</span>';
+    }).join('');
+  }
+  function ctwBlock(title, ctwObj){
+    var pages=Object.keys(ctwObj||{});
+    if(!pages.length) return '';
+    var body=pages.map(function(pg){
+      return '<div style="margin:6px 0;padding:9px 11px;border:1px solid var(--line,#e3e3e3);border-radius:8px">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px">'+
+          '<span style="font-size:.78em;color:var(--ink-500);font-family:var(--font-en)">'+escapeHtml(pg)+'</span>'+
+          ptQuestionLink(tId,pg)+'</div>'+
+        '<div>'+ctwChips(ctwObj[pg])+'</div></div>';
+    }).join('');
+    return '<div style="font-weight:700;margin:12px 0 4px">'+title+'</div>'+body;
+  }
+  // Reading key lookup for a SPECIFIC module (m1 / m2h / m2e) so Module 1 and
+  // Module 2 each match against their own page's answers even though q11–q20
+  // collide across modules.
+  function findRKmod(q, useMod){
+    var pref=null, any=null;
+    Object.keys(rk).forEach(function(pg){
+      if(rk[pg][q]==null) return; any={correct:rk[pg][q],page:pg};
+      var isM2=/m2[he]/.test(pg);
+      if(useMod==='m1' && !isM2) pref=pref||{correct:rk[pg][q],page:pg};
+      if(useMod!=='m1' && pg.indexOf(useMod)>=0) pref={correct:rk[pg][q],page:pg};
+    });
+    return pref||any;
+  }
+  // Returns {html,n} for a reading MC table, or '' when the student answered none.
+  function readingTable(title, ansObj, useMod){
+    var qs=Object.keys(ansObj||{}).filter(function(q){return ansObj[q]!=='' && ansObj[q]!=null;})
+      .sort(function(a,b){return (parseInt(a.replace(/\D/g,''),10)||0)-(parseInt(b.replace(/\D/g,''),10)||0);});
+    if(!qs.length) return '';
+    var rc=0, rows=qs.map(function(q){ var k=findRKmod(q,useMod)||{};
+      if(k.correct!=null && String(ansObj[q]).toUpperCase()===String(k.correct).toUpperCase()) rc++;
+      return qrow(q.toUpperCase(), ansObj[q], k.correct, k.page); }).join('');
+    return { html: qtable(title+'（'+rc+'/'+qs.length+' 正解）', rows), n:qs.length };
+  }
 
   // ---- Listening (self-scoring {selected,correct} in the snapshot) ----
   var lis = pj(get('practice_listening_answers'));
@@ -1623,48 +1671,37 @@ function renderPtDetail(sid, data, ctx){
     out+=qtable('Listening（'+corr+'/'+qs.length+' 正解）', rows);
   }
 
-  // ---- Reading (student selections from reading-state; keys from the bank) ----
+  // ---- Reading Module 1 (archived selections — 面談で弱点を相談するため必ず保存) ----
+  // For attempts from 2026-07 on, Module-1 selections are archived under
+  // practice_reading_m1_* before Module 2 reuses q11–q20. Keyed as 'm1'.
+  var m1Ans = pj(get('practice_reading_m1_ans')) || {};
+  var m1Ctw = pj(get('practice_reading_m1_ctw')) || {};
+  var m1t = readingTable('Reading Module 1（選択式）', m1Ans, 'm1');
+  if(m1t) out+=m1t.html;
+  out+=ctwBlock('Reading Module 1（Complete the Words・入力内容）', m1Ctw);
+
+  // ---- Reading Module 2 (live keys; module from the authoritative readingPath) ----
+  // Prefer the branch recorded in PT_RESULTS (readingPath = 'harder'/'easier');
+  // only fall back to guessing from CTW page names when it's missing. This keeps
+  // each Module-2 question matched to the RIGHT key (Harder vs Easier differ).
   var rAns = pj(get('practice_reading_ans')) || {};
   var rCtw = pj(get('practice_reading_ctw')) || {};
-  // Prefer the authoritative branch recorded in PT_RESULTS (readingPath =
-  // 'harder'/'easier'); only fall back to guessing from CTW page names when it's
-  // missing. This is what keeps each Reading question matched to the RIGHT key
-  // (Module-2 Harder vs Easier answers differ).
   var mod = ctx.readingPath==='harder' ? 'm2h'
           : ctx.readingPath==='easier' ? 'm2e'
           : Object.keys(rCtw).some(function(p){return /m2h/.test(p);}) ? 'm2h'
           : Object.keys(rCtw).some(function(p){return /m2e/.test(p);}) ? 'm2e' : 'm1';
-  function findRK(q){
-    var pref=null, any=null;
-    Object.keys(rk).forEach(function(pg){
-      if(rk[pg][q]==null) return; any={correct:rk[pg][q],page:pg};
-      var isM2=/m2[he]/.test(pg);
-      if(mod==='m1' && !isM2) pref=pref||{correct:rk[pg][q],page:pg};
-      if(mod!=='m1' && pg.indexOf(mod)>=0) pref={correct:rk[pg][q],page:pg};
-    });
-    return pref||any;
-  }
-  var rQs=Object.keys(rAns).sort(function(a,b){return (parseInt(a.replace(/\D/g,''),10)||0)-(parseInt(b.replace(/\D/g,''),10)||0);});
-  if(rQs.length){
-    var rc=0, rrows=rQs.map(function(q){ var k=findRK(q)||{}; if(k.correct!=null && String(rAns[q]).toUpperCase()===String(k.correct).toUpperCase()) rc++;
-      return qrow(q.toUpperCase(), rAns[q], k.correct, k.page); }).join('');
-    out+=qtable('Reading（選択式 '+rc+'/'+rQs.length+' 正解）', rrows);
-  }
-  // Reading CTW (typed letters — link to the page; auto-grading of letters not shown)
-  var ctwRows=Object.keys(rCtw).map(function(pg){
-    var arr=rCtw[pg]||[]; var typed=arr.map(function(x){return (x===''||x==null)?'␣':x;}).join(' ');
-    return '<tr style="border-bottom:1px solid var(--line,#eee)"><td style="padding:5px 10px;font-weight:700">CTW</td>'+
-      '<td colspan="3" style="padding:5px 10px;font-family:var(--font-en);word-break:break-all">'+escapeHtml(typed)+'</td>'+
-      '<td style="padding:5px 10px;text-align:right">'+ptQuestionLink(tId,pg)+'</td></tr>';
-  }).join('');
-  if(ctwRows) out+=qtable('Reading（Complete the Words・入力内容）', ctwRows);
+  var m2t = readingTable('Reading Module 2（選択式）', rAns, mod);
+  if(m2t) out+=m2t.html;
+  out+=ctwBlock('Reading Module 2（Complete the Words・入力内容）', rCtw);
+
+  var hasReading = !!m1t || !!m2t || Object.keys(m1Ctw).length || Object.keys(rCtw).length;
 
   // ---- Writing (sentence counts; essay text isn't in the snapshot yet) ----
   var wsCorr=get('practice_writing_sentence_correct'), wsTot=get('practice_writing_sentence_total');
   if(wsCorr!=null){
     out+='<div style="font-weight:700;margin:12px 0 4px">Writing（Build a Sentence）</div>'+
       '<div style="font-size:.9em">正解数：<strong>'+escapeHtml(String(wsCorr))+(wsTot!=null?('/'+escapeHtml(String(wsTot))):'')+'</strong> '+
-      '<a href="'+ptDir(tId)+'writing-sentence.html" target="_blank" rel="noopener" style="margin-left:8px;font-size:.82em;color:var(--green,#0F7A45)">問題を確認する ↗</a></div>';
+      '<a href="'+ptDir(tId)+'writing-sentence.html?preview=1" target="_blank" rel="noopener" style="margin-left:8px;font-size:.82em;color:var(--green,#0F7A45)">問題を確認する ↗</a></div>';
   }
 
   // ---- Speaking (recordings from RECORDINGS_PT) ----
@@ -1684,18 +1721,33 @@ function renderPtDetail(sid, data, ctx){
     out+='<div style="color:var(--ink-500);font-size:.9em">この生徒の模試スピーキング録音は見つかりませんでした（未提出、または adminListPtRecordings 未デプロイ）。</div>';
   }
 
-  // ---- Non-scored Writing essay text (email/discussion) ----
+  // ---- Non-scored Writing essay text (Write an Email / Academic Discussion) ----
+  // Stored as practice_writing_email_response / practice_writing_discussion_response
+  // (plain text). The snapshot now captures practice_writing_* (results.html regex).
   var essays=[];
-  Object.keys(data).forEach(function(k){ if(/(email|discussion)Response/i.test(k)){ var v=pj(data[k]); var txt=(v&&v.text!=null)?v.text:(typeof data[k]==='string'?data[k]:''); if(txt) essays.push({k:k,txt:txt}); } });
+  Object.keys(data).forEach(function(k){
+    if(/practice_writing_(email|discussion)_response/i.test(k)){
+      var raw=data[k], v=pj(raw);
+      var txt=(v && typeof v==='object' && v.text!=null) ? v.text : (typeof raw==='string' ? raw : '');
+      if(txt && String(txt).trim()){
+        essays.push({ kind: /email/i.test(k) ? 'Write an Email' : 'Academic Discussion', txt: String(txt) });
+      }
+    }
+  });
   if(essays.length){
     out+='<div style="font-weight:700;margin:14px 0 4px">Writing（提出文・採点対象外）</div>'+
-      essays.map(function(e){return '<div style="margin:6px 0;padding:10px;border:1px solid var(--line,#e3e3e3);border-radius:8px;white-space:pre-wrap;font-size:.9em;line-height:1.6">'+escapeHtml(e.txt)+'</div>';}).join('');
+      essays.map(function(e){return '<div style="margin:6px 0;padding:10px 12px;border:1px solid var(--line,#e3e3e3);border-radius:8px">'+
+        '<div style="font-size:.8em;color:var(--ink-500);font-weight:700;margin-bottom:5px">'+escapeHtml(e.kind)+'</div>'+
+        '<div style="white-space:pre-wrap;font-size:.92em;line-height:1.7">'+escapeHtml(e.txt)+'</div></div>';}).join('');
   }
 
-  if(!lis && !rQs.length && !ctwRows && wsCorr==null && !recs.length && !essays.length){
+  if(!lis && !hasReading && wsCorr==null && !recs.length && !essays.length){
     out+='<div style="color:var(--ink-500);font-size:.9em">この回は1問ずつの回答が保存されていません（素点のみ）。今後の受験分から蓄積されます。</div>';
   }
-  out+='<div style="color:var(--ink-500);font-size:.76em;margin-top:14px">※ Reading の Module 1（最初の読解）は仕様上、次モジュール移行時に選択が消えるため、過去の受験では Module 2 の選択のみ再現されます。今後の受験からは全問記録されるよう順次改善します。CTW の入力は「問題を確認する」で正解と照合できます。</div>';
+  out+='<div style="color:var(--ink-500);font-size:.76em;margin-top:14px;line-height:1.6">'+
+    '※ 2026-07 の改修以降の受験は Reading Module 1・Module 2 とも全問（選択・CTW 入力）が記録されます。'+
+    'それ以前の受験は仕様上 Module 1 の選択が保存されておらず再現できません（Module 2 のみ表示）。'+
+    'CTW の入力内容は各行の「問題を確認する」で本文・正解と照合してください。</div>';
   out+='</div>';
   return out;
 }
@@ -2250,6 +2302,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260810"></script>
+<script defer src="../js/tm-footer.js?v=20260722"></script>
 </body>
 </html>
