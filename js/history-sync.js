@@ -125,11 +125,20 @@
       // is the legacy reconcile garbage — ignore it so its junk score can't
       // drag the practice's accuracy down.
       if (info.task === 'ctw' && (info.setNum === undefined || info.setNum === null || info.setNum === '')) return;
+      var _sc = (a.score === null || a.score === undefined) ? null : Number(a.score);
+      var _tot = Number(a.total) || 0;
+      // "入って出ただけ" — a GRADED attempt scored 0 (opened then left, or timed
+      // out with nothing answered) must NEVER count. It must not overwrite a
+      // genuine score, lower the predicted band, or register as an attempt, so a
+      // learner who scored well isn't dropped to 0 just for reopening. Drop it
+      // here so latest/first/best are computed only from real attempts.
+      // Free-response submissions carry score null (not 0) and are kept.
+      if (_sc !== null && _tot > 0 && _sc === 0) return;
       var gk = info.task + '_p' + info.practice;
       (groups[gk] = groups[gk] || {});
       (groups[gk][info.setNum] = groups[gk][info.setNum] || []).push({
-        score: (a.score === null || a.score === undefined) ? null : Number(a.score),
-        total: Number(a.total) || 0,
+        score: _sc,
+        total: _tot,
         ts: a.timestamp || ''
       });
     });
