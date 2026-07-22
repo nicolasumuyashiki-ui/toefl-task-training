@@ -127,13 +127,20 @@
       if (info.task === 'ctw' && (info.setNum === undefined || info.setNum === null || info.setNum === '')) return;
       var _sc = (a.score === null || a.score === undefined) ? null : Number(a.score);
       var _tot = Number(a.total) || 0;
-      // "入って出ただけ" — a GRADED attempt scored 0 (opened then left, or timed
-      // out with nothing answered) must NEVER count. It must not overwrite a
-      // genuine score, lower the predicted band, or register as an attempt, so a
-      // learner who scored well isn't dropped to 0 just for reopening. Drop it
-      // here so latest/first/best are computed only from real attempts.
-      // Free-response submissions carry score null (not 0) and are kept.
-      if (_sc !== null && _tot > 0 && _sc === 0) return;
+      var _answered = (a.answered === undefined || a.answered === null) ? null : Number(a.answered);
+      // Reflect a GRADED attempt only when the learner actually ENGAGED — i.e.
+      // reached the results/answer screen having entered answers. A blank
+      // click-through ("入って出ただけ") must never count: it must not overwrite a
+      // genuine score, lower the predicted band, or register as an attempt. But a
+      // real attempt that happens to score 0 (all wrong, or timed out WITH some
+      // answers) IS counted. The server reports `answered` (non-empty answer
+      // count); when present, drop only fully-blank rows. When the server doesn't
+      // report it yet (older GAS), fall back to the score heuristic (drop 0).
+      // Free-response submissions carry score null (not 0) and are always kept.
+      if (_sc !== null && _tot > 0) {
+        if (_answered !== null) { if (_answered === 0) return; }
+        else if (_sc === 0) return;
+      }
       var gk = info.task + '_p' + info.practice;
       (groups[gk] = groups[gk] || {});
       (groups[gk][info.setNum] = groups[gk][info.setNum] || []).push({
