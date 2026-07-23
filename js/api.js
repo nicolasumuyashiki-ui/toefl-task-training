@@ -695,6 +695,19 @@ var Api = {
       + '&pass=' + encodeURIComponent(p));
   },
 
+  /* Admin (staff-auth) — every student's Stripe subscription status in one call,
+     so the karte can show 課金状態 without an N-call sweep. Reads the
+     SUBSCRIPTIONS sheet server-side (handleAdminListSubscriptions_). Degrades to
+     a rejected promise if the endpoint isn't deployed — the admin UI then shows
+     "情報なし" rather than breaking. */
+  adminListSubscriptions: function(id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_staff_pass') || sessionStorage.getItem('kickstart_pass') || '';
+    return _jsonpRequest(API_URL + '?action=adminListSubscriptions'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p));
+  },
+
   listInvoices: function(id, pass) {
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
     var p = pass || sessionStorage.getItem('kickstart_pass') || sessionStorage.getItem('kickstart_staff_pass') || '';

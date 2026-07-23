@@ -582,7 +582,23 @@ if (typeof window !== 'undefined') {
   }
 
   var origSet = sessionStorage.setItem.bind(sessionStorage);
+  // Admin "回答を見る" opens answer pages with ?fromAdmin=1 to overlay a
+  // STUDENT's answers. Those pages — and admin-answer-overlay's renderAll() —
+  // write training_score_* / ctw_p*_answers_* through this hooked setItem. If we
+  // mirrored or auto-saved them, the STUDENT's data would land in the ADMIN's
+  // own localStorage (menu-badge contamination — another student's scores show
+  // up as the admin's) and, for auto-saved tasks, on the server under the admin.
+  // In admin-view we pass straight through to sessionStorage only: the overlay
+  // display still works, but nothing touches the admin's durable record. The
+  // flag is sticky per-tab so it survives in-page navigation.
+  var _isAdminView = (function () {
+    try {
+      if (/[?&]fromAdmin=1(?:&|$)/.test(location.search)) { try { origSet('tck_admin_view', '1'); } catch (e) {} return true; }
+      return sessionStorage.getItem('tck_admin_view') === '1';
+    } catch (e) { return false; }
+  })();
   sessionStorage.setItem = function (key, value) {
+    if (_isAdminView) { origSet(key, value); return; }  // admin view: sessionStorage only, never mirror/save
     origSet(key, value);
     // CTW set results only live in sessionStorage (the set pages save to the
     // server themselves, so they're excluded from the training_answers_
