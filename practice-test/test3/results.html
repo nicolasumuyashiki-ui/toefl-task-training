@@ -207,6 +207,39 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   </div>
 </div>
 
+<!-- ===== Your submitted Writing (self-review) ===== -->
+<div class="section" id="myWritingSection" style="display:none">
+  <h2><span class="jp">あなたの提出文（Writing）</span><span class="en">Your submitted writing</span></h2>
+  <p class="section-sub"><span class="jp">今回提出した Email / Academic Discussion の本文です。自己添削や講師の採点セッションにお使いください。</span><span class="en">The Email / Academic Discussion you submitted this time. Use it for self-review or your coaching session.</span></p>
+  <div id="myWritingBody"></div>
+</div>
+<script>
+/* Restore the student's own Email / Discussion essays so they can read back
+   what they wrote (same device → localStorage). Purely display; never saves. */
+(function renderMyWriting(){
+  function esc(s){return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+  var items=[
+    {k:'practice_writing_email_response', label:'Write an Email'},
+    {k:'practice_writing_discussion_response', label:'Academic Discussion'}
+  ];
+  var html='';
+  items.forEach(function(it){
+    var txt=''; try{ txt=localStorage.getItem(it.k)||''; }catch(e){}
+    if(txt && txt.trim()){
+      var wc=txt.trim().split(/\s+/).length;
+      html+='<div style="margin:8px 0;padding:12px 14px;border:1px solid var(--line,#e3e3e3);border-radius:10px;background:#fff">'+
+        '<div style="font-weight:700;font-size:.92em;margin-bottom:6px">'+esc(it.label)+
+          ' <span style="color:var(--ink-500);font-weight:500;font-size:.85em">（'+wc+' words）</span></div>'+
+        '<div style="white-space:pre-wrap;line-height:1.7;font-size:.95em">'+esc(txt)+'</div></div>';
+    }
+  });
+  if(html){
+    var b=document.getElementById('myWritingBody'), s=document.getElementById('myWritingSection');
+    if(b&&s){ b.innerHTML=html; s.style.display=''; }
+  }
+})();
+</script>
+
 <div class="cta-row">
   <button class="cta-btn" onclick="window.print()">
     <span class="jp">このページを印刷</span><span class="en">Print this page</span>
