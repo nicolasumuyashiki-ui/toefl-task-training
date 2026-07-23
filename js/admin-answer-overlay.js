@@ -232,12 +232,21 @@
       return res.text();
     }).then(function(html){
       var doc = new DOMParser().parseFromString(html, 'text/html');
-      var fragments = [];
+      // Collect every matched node (unique), then keep only the OUTERMOST ones:
+      // drop any node that is nested inside another matched node. Without this,
+      // overlapping selectors (e.g. `.left-panel` which itself contains
+      // `.scenario-box`) render the same content twice — the Email/Discussion
+      // prompt showed the Scenario duplicated.
+      var matched = [];
       (Array.isArray(selectors) ? selectors : [selectors]).forEach(function(sel){
         doc.querySelectorAll(sel).forEach(function(el){
-          fragments.push(el.outerHTML);
+          if (matched.indexOf(el) === -1) matched.push(el);
         });
       });
+      var outermost = matched.filter(function(el){
+        return !matched.some(function(other){ return other !== el && other.contains(el); });
+      });
+      var fragments = outermost.map(function(el){ return el.outerHTML; });
       if (!fragments.length) return;
       insertPanel(makePromptPanel(fragments.join('\n'), label));
     }).catch(function(err){
