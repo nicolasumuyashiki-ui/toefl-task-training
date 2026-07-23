@@ -977,6 +977,7 @@ function loadLiveData() {
     if (typeof renderReport === 'function') renderReport();
     if (typeof renderKarteList === 'function') renderKarteList();
     if (typeof renderProgress === 'function') renderProgress();
+    if (typeof loadSubscriptions === 'function') loadSubscriptions();
   }).catch(function(err){
     if (msg) {
       banner.style.background = '#FDF4F0';
@@ -1248,6 +1249,68 @@ function selectKarte(userId) {
   renderKarteList();
   renderKarteDetail();
 }
+/* ============================================================
+   Subscription status (Stripe) — shown on each student's karte.
+   Fetched once via the staff-auth bulk endpoint; degrades to
+   "情報なし" if the endpoint isn't deployed. Keyed by userId, with
+   an email fallback (Payment-Link rows can lack a user_id).
+   ============================================================ */
+var SUBS_BY_UID = {}, SUBS_BY_EMAIL = {}, SUBS_LOADED = false;
+function loadSubscriptions() {
+  if (!Api || typeof Api.adminListSubscriptions !== 'function') return;
+  Api.adminListSubscriptions().then(function (res) {
+    if (!res || !res.success || !Array.isArray(res.subscriptions)) return;
+    SUBS_BY_UID = {}; SUBS_BY_EMAIL = {};
+    res.subscriptions.forEach(function (s) {
+      // Keep the most recent row per key (endpoint returns newest-first).
+      var uid = String(s.userId || '').trim();
+      var em = String(s.email || '').trim().toLowerCase();
+      if (uid && !SUBS_BY_UID[uid]) SUBS_BY_UID[uid] = s;
+      if (em && !SUBS_BY_EMAIL[em]) SUBS_BY_EMAIL[em] = s;
+    });
+    SUBS_LOADED = true;
+    // Re-render the karte if one is open so the status appears without a click.
+    if (selectedKarteUser && typeof renderKarteDetail === 'function') renderKarteDetail();
+  }).catch(function () { /* undeployed / network — degrade silently */ });
+}
+/* Map a Stripe status to a colored chip + Japanese label. */
+function subStatusChip(status) {
+  var s = String(status || '').toLowerCase();
+  var map = {
+    active:              ['#E6F3EC', '#005434', '有効（active）'],
+    trialing:            ['#E7F0FB', '#1E4E8C', 'トライアル中（trialing）'],
+    past_due:            ['#FBF3E7', '#8A6D2A', '⚠ 支払い延滞（past due）'],
+    unpaid:              ['#FDF4F0', '#B23A2C', '未払い（unpaid）'],
+    canceled:            ['#F1EEEA', '#6B5E52', '解約済み（canceled）'],
+    incomplete:          ['#FDF4F0', '#B23A2C', '決済未完了（incomplete）'],
+    incomplete_expired:  ['#F1EEEA', '#6B5E52', '決済未完了・失効'],
+    paused:              ['#F1EEEA', '#6B5E52', '一時停止（paused）']
+  };
+  var m = map[s] || ['#F1EEEA', '#6B5E52', (status ? escapeHtml(String(status)) : '不明')];
+  return '<span style="display:inline-block;background:' + m[0] + ';color:' + m[1] +
+    ';font-weight:700;font-size:.82em;padding:3px 11px;border-radius:999px;letter-spacing:.02em">' + m[2] + '</span>';
+}
+/* The subscription block shown at the top of a student's karte. */
+function subBlockFor(u) {
+  var sub = SUBS_BY_UID[String(u.userId || '').trim()] ||
+            SUBS_BY_EMAIL[String(u.email || '').trim().toLowerCase()] || null;
+  if (!SUBS_LOADED && !sub) {
+    return '<div style="margin:2px 0 16px;font-size:.82em;color:var(--ink-500)">課金状態: 取得中… <span style="font-size:.9em">（adminListSubscriptions 未デプロイの場合は表示されません）</span></div>';
+  }
+  if (!sub) {
+    return '<div style="margin:2px 0 16px;font-size:.82em;color:var(--ink-500)">課金状態: <strong>サブスク情報なし</strong>（未契約、または Stripe 未連携）</div>';
+  }
+  var end = sub.currentPeriodEnd ? (' · 現期間終了 ' + escapeHtml(String(sub.currentPeriodEnd).slice(0, 10))) : '';
+  var note = (String(sub.status || '').toLowerCase() === 'past_due')
+    ? '<div style="margin-top:6px;font-size:.78em;color:#8A6D2A;line-height:1.6">直近の請求が失敗し再試行中です。カード更新で <strong>active</strong> に復帰します。未解決の間、生徒は練習ページを開けません（billing へ誘導されます）。</div>'
+    : '';
+  return '<div style="margin:2px 0 16px;padding:10px 14px;background:#fff;border:1px solid var(--paper,#eee);border-radius:10px">' +
+    '<span style="font-size:.82em;color:var(--ink-500);font-weight:600;margin-right:8px">課金状態</span>' +
+    subStatusChip(sub.status) +
+    '<span style="font-size:.78em;color:var(--ink-500);font-family:var(--font-en)">' + end + '</span>' +
+    note + '</div>';
+}
+
 function renderKarteDetail() {
   const u = MOCK_USERS.find(x => x.userId === selectedKarteUser);
   const el = document.getElementById('karteDetail');
@@ -1340,6 +1403,7 @@ function renderKarteDetail() {
     ? '<span style="display:inline-flex;align-items:center;gap:5px;background:#E6F3EC;color:#005434;font-family:var(--font-en);font-size:.7em;font-weight:700;padding:3px 9px;border-radius:999px;margin-left:8px;letter-spacing:.04em"><span style="width:7px;height:7px;background:#22C55E;border-radius:50%;box-shadow:0 0 0 3px rgba(34,197,94,.25);animation:tckPulse 1.6s ease-in-out infinite"></span>ACTIVE NOW</span>'
     : '';
   el.innerHTML = '<div class="karte-head"><h3>' + escapeHtml(u.userName) + ' <span style="color:var(--ink-500);font-weight:500;font-size:.7em">(' + u.displayName + ')</span>' + activeDot + '</h3><div class="kmeta">' + u.userId + ' · ' + escapeHtml(u.email) + ' · 登録 ' + u.joined + loginTag + '</div></div>'
+    + subBlockFor(u)
     + totalPredBlock
     + '<div class="skill-scores">' + sectionBlocks + '</div>'
     + '<div class="karte-activity"><h4>全学習履歴（新しい順） · ' + allAtts.length + ' 件</h4><table class="atable"><thead><tr><th>日付</th><th>タスク</th><th>Practice</th><th class="num">スコア</th><th>評価</th><th>回答</th></tr></thead><tbody>' + activityRows + '</tbody></table></div>'
