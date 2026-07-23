@@ -123,6 +123,7 @@ tbody tr:last-child td{border-bottom:none}
           <th>Writing</th>
           <th><span class="jp">合計 / 90</span><span class="en">Total / 90</span></th>
           <th>Band</th>
+          <th><span class="jp">提出文</span><span class="en">Writing</span></th>
         </tr>
       </thead>
       <tbody id="historyBody"></tbody>
@@ -282,6 +283,12 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');try{localStorage
       var attemptN = lookup[row.timestamp] || '?';
       var dt = row.timestamp ? new Date(row.timestamp).toLocaleString('ja-JP', { hour12:false }) : '';
       var s = _saneRow(row);
+      var sid = row.sessionId || row.session_id || '';
+      var essayBtn = sid
+        ? '<button type="button" class="essay-btn" onclick="showMyEssays(\'' + encodeURIComponent(sid) + '\', this)" '
+          + 'style="background:#fff;border:1px solid #cfe0d6;color:#0F7A45;border-radius:999px;padding:3px 11px;font-size:.82em;font-weight:700;cursor:pointer">'
+          + '<span class="jp">提出文を見る</span><span class="en">View</span></button>'
+        : '—';
       return '<tr>'
         + '<td class="l"><strong>' + attemptN + '</strong></td>'
         + '<td class="l" style="white-space:nowrap">' + dt + '</td>'
@@ -290,10 +297,48 @@ function doLogout(){sessionStorage.removeItem('kickstart_user');try{localStorage
         + '<td>' + (s.w || '—') + '</td>'
         + '<td class="col-total">' + (s.total || '—') + '</td>'
         + '<td>' + (s.band || '—') + '</td>'
+        + '<td>' + essayBtn + '</td>'
         + '</tr>';
     }).join('');
   }
 })();
+
+/* Fetch and show the student's OWN Email / Discussion essays for a specific
+   past attempt, keyed by sessionId (server snapshot — attempt-specific, works
+   cross-device). Api.getPtAnswers is scoped to the logged-in user's own userId,
+   so this can never read another student's answers. Purely display; never saves. */
+window.showMyEssays = function(sidEnc, btn){
+  var sid = decodeURIComponent(sidEnc || ''); if(!sid) return;
+  var tr = btn.closest('tr');
+  var next = tr.nextElementSibling;
+  if(next && next.classList.contains('essay-row')){ next.remove(); btn.innerHTML='<span class="jp">提出文を見る</span><span class="en">View</span>'; return; }
+  function esc(s){return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+  function show(email, disc){
+    var body='';
+    [['Write an Email', email],['Academic Discussion', disc]].forEach(function(p){
+      if(p[1] && String(p[1]).trim()){
+        body+='<div style="margin:8px 0;padding:12px 14px;border:1px solid #e3e3e3;border-radius:10px;background:#fff">'+
+          '<div style="font-weight:700;font-size:.9em;margin-bottom:6px">'+p[0]+'</div>'+
+          '<div style="white-space:pre-wrap;line-height:1.7;font-size:.95em">'+esc(p[1])+'</div></div>';
+      }
+    });
+    if(!body) body='<div style="color:#5A6861;padding:8px 2px"><span class="jp">この回の提出文は保存されていません（2026-07 の改修より前の回、または未提出）。</span><span class="en">No saved writing for this attempt (taken before the 2026-07 update, or not submitted).</span></div>';
+    var row=document.createElement('tr'); row.className='essay-row';
+    row.innerHTML='<td colspan="8" style="background:#faf7f2;padding:14px 18px">'+
+      '<div style="font-weight:700;margin-bottom:8px"><span class="jp">あなたの提出文</span><span class="en">Your submitted writing</span></div>'+body+'</td>';
+    tr.parentNode.insertBefore(row, tr.nextSibling);
+    btn.innerHTML='<span class="jp">閉じる</span><span class="en">Hide</span>';
+  }
+  btn.disabled=true; var _old=btn.innerHTML; btn.textContent='…';
+  function done(){ btn.disabled=false; }
+  if(typeof Api!=='undefined' && Api.getPtAnswers){
+    Api.getPtAnswers(sid).then(function(res){
+      var data={}; try{ data = (res && res.answersJson) ? JSON.parse(res.answersJson) : {}; }catch(e){}
+      function pick(name){ return data['l:'+name]!==undefined?data['l:'+name]:(data['s:'+name]!==undefined?data['s:'+name]:''); }
+      show(pick('practice_writing_email_response'), pick('practice_writing_discussion_response')); done();
+    }).catch(function(){ show('',''); done(); });
+  } else { show('',''); done(); }
+};
 </script>
 
 <div class="tck-footer-brand">
