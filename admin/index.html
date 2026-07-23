@@ -1551,7 +1551,7 @@ function renderPtList(){
 window.__ptKeys = null;
 function loadPtKeys(){
   if(window.__ptKeys) return Promise.resolve(window.__ptKeys);
-  return fetch('pt-keys.json?v=20260810').then(function(r){return r.json();})
+  return fetch('pt-keys.json?v=20260722b').then(function(r){return r.json();})
     .then(function(k){ window.__ptKeys=k||{}; return window.__ptKeys; })
     .catch(function(){ window.__ptKeys={}; return window.__ptKeys; });
 }
@@ -1581,7 +1581,11 @@ function openPtDetail(uidEnc, sidEnc, testIdEnc, readingPathEnc){
     var raw=(res && res.answersJson) ? res.answersJson : '';
     var data={}; try{ data=raw?JSON.parse(raw):{}; }catch(e){}
     var recs=(recRes && recRes.success && recRes.recordings) ? recRes.recordings : [];
-    el.innerHTML=renderPtDetail(sid, data, { testId:String(testId||''), readingPath:String(readingPath||''), keys:keys, recordings:recs });
+    // null / !success ⇒ the staff recordings endpoint is not deployed (or errored),
+    // NOT that the student didn't record. Pass the distinction so the UI never
+    // implies speaking data was lost.
+    var recordingsAvailable = !!(recRes && recRes.success);
+    el.innerHTML=renderPtDetail(sid, data, { testId:String(testId||''), readingPath:String(readingPath||''), keys:keys, recordings:recs, recordingsAvailable:recordingsAvailable });
   }).catch(function(){ el.innerHTML='<div style="color:var(--terracotta);padding:12px">回答の取得に失敗しました。</div>'; });
 }
 
@@ -1609,7 +1613,7 @@ function renderPtDetail(sid, data, ctx){
       '<td style="padding:5px 10px;text-align:center">'+mark+'</td>'+
       '<td style="padding:5px 10px;text-align:right">'+(page?ptQuestionLink(tId,page):'')+'</td></tr>';
   }
-  // CTW typed entries rendered as readable numbered chips (was a mashed string).
+  // Fallback: raw per-blank letters when we have no key for the page.
   function ctwChips(arr){
     return (arr||[]).map(function(x,i){
       var blank=(x===''||x==null);
@@ -1620,15 +1624,48 @@ function renderPtDetail(sid, data, ctx){
         escapeHtml(blank?'—':String(x))+'</span>';
     }).join('');
   }
+  // One reconstructed CTW word: shown prefix (given) + the letters the student
+  // typed into the blanks, graded against the correct completion.
+  function ctwWordChip(given, typed, answer){
+    var ok = String(typed).toLowerCase()===String(answer).toLowerCase();
+    var col = ok ? '#0F7A45' : '#B23A2C';
+    return '<span style="display:inline-block;border:1px solid '+col+';border-radius:6px;'+
+      'background:'+(ok?'#eaf6ee':'#fdf2ef')+';padding:3px 10px;margin:3px 4px 0 0;'+
+      'font-family:var(--font-en);font-size:.95em;vertical-align:top">'+
+      '<span style="color:var(--ink-500);font-weight:400">'+escapeHtml(given||'')+'</span>'+
+      '<span style="font-weight:800;color:'+col+';text-decoration:underline">'+escapeHtml(typed||'▢')+'</span> '+
+      (ok ? '<span style="color:#0F7A45;font-weight:800">✓</span>'
+          : '<span style="color:#B23A2C;font-weight:800">✗</span> '+
+            '<span style="color:var(--ink-500);font-size:.85em">正解: '+escapeHtml((given||'')+(answer||''))+'</span>')+
+      '</span>';
+  }
+  // Render a CTW block. When we have the page's word spec (given/answer per
+  // blank), reconstruct each word from the flat typed-letter array and grade it
+  // — so staff see real words + ✓/✗ instead of a stream of single letters.
   function ctwBlock(title, ctwObj){
     var pages=Object.keys(ctwObj||{});
     if(!pages.length) return '';
+    var ctwKeys=(ctx.keys[tId]||{}).ctw||{};
     var body=pages.map(function(pg){
+      var arr=ctwObj[pg]||[], spec=ctwKeys[pg], inner, score='';
+      if(spec && spec.length){
+        var cur=0, correct=0;
+        inner=spec.map(function(wd){
+          var len=(wd.answer||'').length;
+          var typed=arr.slice(cur,cur+len).map(function(x){return (x==null?'':x);}).join('');
+          cur+=len;
+          if(String(typed).toLowerCase()===String(wd.answer||'').toLowerCase()) correct++;
+          return ctwWordChip(wd.given||'', typed, wd.answer||'');
+        }).join('');
+        score=' <span style="color:var(--ink-500);font-weight:600;font-size:.85em">（'+correct+'/'+spec.length+' 正解）</span>';
+      } else {
+        inner=ctwChips(arr);
+      }
       return '<div style="margin:6px 0;padding:9px 11px;border:1px solid var(--line,#e3e3e3);border-radius:8px">'+
-        '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px">'+
-          '<span style="font-size:.78em;color:var(--ink-500);font-family:var(--font-en)">'+escapeHtml(pg)+'</span>'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px">'+
+          '<span style="font-size:.78em;color:var(--ink-500);font-family:var(--font-en)">'+escapeHtml(pg)+score+'</span>'+
           ptQuestionLink(tId,pg)+'</div>'+
-        '<div>'+ctwChips(ctwObj[pg])+'</div></div>';
+        '<div>'+inner+'</div></div>';
     }).join('');
     return '<div style="font-weight:700;margin:12px 0 4px">'+title+'</div>'+body;
   }
@@ -1717,8 +1754,13 @@ function renderPtDetail(sid, data, ctx){
       return '<div style="margin:6px 0;padding:8px 10px;border:1px solid var(--line,#e3e3e3);border-radius:8px">'+
         '<div style="font-size:.82em;color:var(--ink-500)">'+escapeHtml(String(r.task).toUpperCase())+' P'+escapeHtml(String(r.practiceSet||''))+' Q'+escapeHtml(String(r.questionIndex||''))+' ・ '+Math.round(r.durationSec||0)+'秒'+(r.timestamp?(' ・ '+ptFmtWhen(r.timestamp)):'')+'</div>'+
         '<audio controls preload="none" src="'+escapeHtml(url)+'" style="width:100%;margin-top:4px"></audio></div>'; }).join('');
+  } else if (ctx.recordingsAvailable) {
+    out+='<div style="color:var(--ink-500);font-size:.9em">この生徒の模試スピーキング録音は提出されていません（未提出）。</div>';
   } else {
-    out+='<div style="color:var(--ink-500);font-size:.9em">この生徒の模試スピーキング録音は見つかりませんでした（未提出、または adminListPtRecordings 未デプロイ）。</div>';
+    out+='<div style="font-size:.9em;background:#FBF3E7;border:1px solid #E4C77A;border-radius:8px;padding:9px 11px;line-height:1.6">'+
+      '⚠ 録音取得の Admin エンドポイント（<code>adminListPtRecordings</code>）が<strong>未デプロイ</strong>のため、ここに一覧表示できていません。'+
+      '<br><strong>録音データ自体は受験時にサーバ（RECORDINGS_PT シート）へ保存されており、消えていません。</strong>'+
+      '<code>docs/gas-pt-admin.js</code> をデプロイすると表示されます。</div>';
   }
 
   // ---- Non-scored Writing essay text (Write an Email / Academic Discussion) ----
