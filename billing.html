@@ -278,6 +278,26 @@ var STRIPE_PK = 'pk_live_51MR92iIgy4CGuWKoiyc0xcL7lTYMv2zpqBlK9crbcfu18H2uzo0a1m
 var STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/aFa28rbGj9mYe446Rf1kA3w';
 var stripe = (typeof Stripe === 'function') ? Stripe(STRIPE_PK) : null;
 
+/* Carry the logged-in identity into the Stripe Payment Link so the resulting
+   subscription can be matched back to THIS account. We do this on load (not
+   only in the click handler) so EVERY navigation path — direct href,
+   open-in-new-tab, right-click→open, or JS-disabled — carries
+   client_reference_id and the account email. Without it the SUBSCRIPTIONS row
+   lands with a blank user_id (and, if the customer types a different email at
+   checkout, no email match either), so a genuinely paid account is still shown
+   "サブスク未登録" and gated to billing. (小山さま 2026-07-24 で実際に発生。) */
+(function primeSubscribeLink(){
+  try {
+    var btn = document.getElementById('subscribeBtn');
+    if (!btn || !u) return;
+    var href = STRIPE_PAYMENT_LINK
+      + '?prefilled_email=' + encodeURIComponent(u.email || '')
+      + '&client_reference_id=' + encodeURIComponent(u.userId || '')
+      + '&utm_source=tck_app';
+    btn.setAttribute('href', href);
+  } catch (e) {}
+})();
+
 /* ============================================================
    Subscription state — sourced from GAS (Stripe webhook → sheet)
    Mirror kept in localStorage so the UI reacts instantly if GAS
