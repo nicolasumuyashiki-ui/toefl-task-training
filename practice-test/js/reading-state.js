@@ -22,9 +22,11 @@
  * a new mock is started. Restoring is additive and never deletes answers.
  *
  * Real-TOEFL module boundary: going back is only meaningful WITHIN a module.
- * reading-m2-select.html calls PTReadingState.clearModule1() at the
- * Module 1 → Module 2 handoff so Module 2 starts clean and a learner cannot
- * reach back into the previous module (matches ETS adaptive behaviour).
+ * The `clearModule1()` export below exists for that Module 1 → Module 2
+ * handoff so Module 2 starts clean and a learner cannot reach back into the
+ * previous module (matches ETS adaptive behaviour); reading-m2-select.html's
+ * startModule2() currently duplicates this same q11–q20 wipe inline instead
+ * of calling this export — behaviour is identical, just not wired through here.
  */
 (function () {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;

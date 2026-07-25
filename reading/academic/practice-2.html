@@ -452,7 +452,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
   </div>
 </div>
 
-<script src="../../js/progress.js?v=20260813"></script>
+<script src="../../js/progress.js?v=20260628b"></script>
 <script>
 var currentQ = 1;
 var totalQ = 10;
@@ -609,7 +609,7 @@ function closeReview(){
 
 /* ===== SENTENCE INSERTION SETUP ===== */
 var normalParagraphHTML = 'Environmental factors have also shaped primate social behavior. In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced.';
-var insertionParagraphHTML = 'Environmental factors have also shaped primate social behavior. <span class="insert-square" data-insert="A">\u25A0</span> In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. <span class="insert-square" data-insert="B">\u25A0</span> In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced. <span class="insert-square" data-insert="C">\u25A0</span>';
+var insertionParagraphHTML = '<span class="insert-square" data-insert="D">\u25A0</span> Environmental factors have also shaped primate social behavior. <span class="insert-square" data-insert="A">\u25A0</span> In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. <span class="insert-square" data-insert="B">\u25A0</span> In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced. <span class="insert-square" data-insert="C">\u25A0</span>';
 var insertSentenceText = "As a result, these larger groups develop complex social hierarchies in which individuals must constantly compete for access to limited food supplies.";
 var correctInsertion = "B";
 var insertionQuestionPage = 8;
@@ -654,6 +654,11 @@ function rebuildParagraphWithInsertion(position){
   ];
   var labels = ['A','B','C'];
   var html = '';
+  // 4th insertion square (D) \u2014 before sentence 1. The inserted sentence does
+  // not fit here ("As a result"/"these larger groups" have no antecedent yet),
+  // so D is a valid-but-wrong position; the unique answer stays B (after S2).
+  if(position === 'D'){ html += '<span class="inserted-sentence">' + insertSentenceText + '</span> '; }
+  html += '<span class="insert-square' + (position === 'D' ? ' selected-square' : '') + '" data-insert="D">\u25A0</span> ';
   for(var i = 0; i < sentences.length; i++){
     html += sentences[i] + ' ';
     if(labels[i] === position){
@@ -704,8 +709,8 @@ if(typeof Auth !== 'undefined'){
   Auth.showBadge('userBadge');
 }
 </script>
-<script src="../../js/auth.js?v=20260813"></script><script src="../../js/difficulty-badge.js?v=20260813"></script>
+<script src="../../js/auth.js?v=20260628b"></script><script src="../../js/difficulty-badge.js?v=20260628b"></script>
 <script>function tckStartTask(){var ov=document.getElementById('tckInstructionOverlay');if(ov&&ov.parentNode){ov.parentNode.removeChild(ov);}if(typeof __tckOnStart==='function'){try{__tckOnStart();}catch(e){}}}</script>
-<script defer src="../../js/tm-footer.js?v=20260813"></script>
+<script defer src="../../js/tm-footer.js?v=20260628b"></script>
 </body>
 </html>
