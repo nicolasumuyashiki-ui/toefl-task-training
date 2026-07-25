@@ -290,8 +290,8 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   </div>
 </section>
 
-<script src="../js/auth.js?v=20260811"></script>
-<script src="../js/api.js?v=20260811"></script>
+<script src="../js/auth.js?v=20260813"></script>
+<script src="../js/api.js?v=20260813"></script>
 <script>
 /* ===== Language toggle (mirrors my-score.html) ===== */
 (function(){
@@ -812,9 +812,16 @@ render();
   }
 
   function fetchHistory() {
-    Api.listPtResults().then(function(r){
+    // Merged source (server ∪ device-local mirror) so the learner's own
+    // attempts show even when the save was blocked in their environment.
+    var fetch = (typeof Api.listPtResultsMerged === 'function')
+      ? Api.listPtResultsMerged() : Api.listPtResults();
+    fetch.then(function(r){
       if (!r || !r.success || !r.results || !r.results.length) return;
-      renderHistory(r.results);
+      // This page is Test 2 — only show its own history.
+      var mine = r.results.filter(function(x){ return String(x.testId || '') === '2'; });
+      if (!mine.length) return;
+      renderHistory(mine);
     }).catch(function(err){
       console.warn('[pt-results] fetch history failed:', err);
     });
@@ -837,6 +844,14 @@ render();
     return { r: r, l: l, w: w, total: total, band: band };
   }
   function renderHistory(results) {
+    // Ghost-row guard: a saved attempt with total===0 across every section
+    // is essentially never a genuine result (Reading/Listening are
+    // objectively auto-graded) — it's a glitched/partial save (e.g. a
+    // reload before any section was attempted). Hide it rather than
+    // confuse the learner with a "0/90" row. Mirrors the same 偽0点/ゴミ行
+    // 除外 principle used for task-history badges (history-sync.js).
+    results = results.filter(function(r){ return Number(r.total) > 0; });
+    if (!results.length) return;
     document.getElementById('historySection').style.display = 'block';
     var tbody = document.getElementById('historyBody');
     // Oldest first for "1回目, 2回目..." numbering, but display newest first
@@ -871,6 +886,6 @@ render();
   <span> · </span>
   <a href="https://www.tckwshop.com/privacypolicy/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid #D6DAD7"><span class="jp">プライバシー</span><span class="en">Privacy</span></a>
 </footer>
-<script defer src="../../js/tm-footer.js?v=20260811"></script>
+<script defer src="../../js/tm-footer.js?v=20260813"></script>
 </body>
 </html>

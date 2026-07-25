@@ -138,7 +138,7 @@ body[data-lang="en"] .jp{display:none}
   <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
-<script src="../../js/auth.js?v=20260811"></script>
+<script src="../../js/auth.js?v=20260813"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -158,11 +158,11 @@ const answers=[
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p2')||'null');
 let score=0;
 
-// 会話文（prompt）の改訂境界（#163・2026-07-14）。この時刻より前に取り組んだ回は
+// 会話文（prompt）の改訂境界（#163・実際のデプロイ時刻 2026-07-15T06:46Z 直後）。この時刻より前に取り組んだ回は
 // 当時の会話文で解いているので、見返すときは当時の prompt を表示する（採点対象＝並べ替え
 // る英文は不変なのでスコア・正誤はそのまま有効）。attempt の時刻はサーバ復元時に stored.ts
 // として渡ってくる。無い場合（＝その場で解いた直後）は現行の改訂後 prompt を表示する。
-const PROMPT_REV='2026-07-14T14:00:00Z';
+const PROMPT_REV='2026-07-15T07:00:00Z';
 const usePreRev=!!(stored&&stored.ts&&String(stored.ts)<PROMPT_REV);
 
 if(stored){
@@ -199,6 +199,6 @@ if(usePreRev){
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260811"></script>
+<script defer src="../../js/tm-footer.js?v=20260813"></script>
 </body>
 </html>

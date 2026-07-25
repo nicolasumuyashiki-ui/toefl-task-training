@@ -280,9 +280,11 @@ function _flushOutbox() {
   function step() {
     if (i >= arr.length) { _flushingOutbox = false; return Promise.resolve(); }
     var item = arr[i++];
-    // Legacy items predate the enqueue-time owner capture. The outbox is
-    // purged on account switch (auth.js), so the current session user is
-    // this device's owner — attach so the row is attributed correctly.
+    // Legacy items predate the enqueue-time owner capture. The outbox is NEVER
+    // purged on account switch (auth.js) — instead, any owner-less item is
+    // stamped there with the LEAVING account. So an item still owner-less here
+    // was enqueued in the current session — attach the current user so the row
+    // is attributed correctly.
     if ((!item.user || !item.user.userId) && u.userId) {
       item.user = { userId: u.userId, userName: u.userName || u.name || '' };
       _outboxUpdate(item);
