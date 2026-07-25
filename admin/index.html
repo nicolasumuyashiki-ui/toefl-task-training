@@ -563,8 +563,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
 </div>
 
-<script src="../js/api.js?v=20260723"></script>
-<script src="../js/auth.js?v=20260723"></script>
+<script src="../js/api.js?v=20260811"></script>
+<script src="../js/auth.js?v=20260811"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -1615,7 +1615,7 @@ function renderPtList(){
 window.__ptKeys = null;
 function loadPtKeys(){
   if(window.__ptKeys) return Promise.resolve(window.__ptKeys);
-  return fetch('pt-keys.json?v=20260722b').then(function(r){return r.json();})
+  return fetch('pt-keys.json?v=20260811b').then(function(r){return r.json();})
     .then(function(k){ window.__ptKeys=k||{}; return window.__ptKeys; })
     .catch(function(){ window.__ptKeys={}; return window.__ptKeys; });
 }
@@ -2408,6 +2408,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260723"></script>
+<script defer src="../js/tm-footer.js?v=20260811"></script>
 </body>
 </html>
