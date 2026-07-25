@@ -779,7 +779,11 @@ render();
   }
 
   function fetchHistory() {
-    Api.listPtResults().then(function(r){
+    // Merged source (server ∪ device-local mirror) so the learner's own
+    // attempts show even when the save was blocked in their environment.
+    var fetch = (typeof Api.listPtResultsMerged === 'function')
+      ? Api.listPtResultsMerged() : Api.listPtResults();
+    fetch.then(function(r){
       if (!r || !r.success || !r.results || !r.results.length) return;
       renderHistory(r.results);
     }).catch(function(err){

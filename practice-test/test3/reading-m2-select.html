@@ -187,6 +187,12 @@ function startModule2(){
   localStorage.removeItem('m1_rdl2_correct');
   localStorage.removeItem('m1_rdl2_total');
 
+  // Module 2 開始 → 通しタイマーの締切をリセット（分岐ごとに持ち時間が異なる）
+  try {
+    sessionStorage.removeItem('pt3_read_m2e_deadline');
+    sessionStorage.removeItem('pt3_read_m2h_deadline');
+  } catch(e){}
+
   if(assignedPath === 'easy'){
     window.location.href = 'reading-m2e-ctw.html';
   } else {

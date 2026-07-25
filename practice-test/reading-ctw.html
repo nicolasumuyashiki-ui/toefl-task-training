@@ -222,15 +222,35 @@ var questions = [
 })();
 
 /* ===== TIMER ===== */
-var timeLeft = 36*60;
+/* モジュール全体の「通し」制限時間。
+ * 締切時刻を sessionStorage に持つため、ページを進んでも戻っても時計は連続し、
+ * リセットされない（従来はページごとに固定値から数え直していた）。
+ * 毎秒 壁時計から残り時間を再計算するので、タブを離れている間のドリフトも出ない。 */
+var PT_TIMER_KEY = 'pt1_read_m1_deadline';
+var PT_TIMER_BUDGET = 2160;
+function ptTimeLeft(){
+  var dl = 0;
+  try { dl = Number(sessionStorage.getItem(PT_TIMER_KEY) || 0); } catch(e){}
+  if (!dl || !isFinite(dl)) {
+    dl = Date.now() + PT_TIMER_BUDGET * 1000;
+    try { sessionStorage.setItem(PT_TIMER_KEY, String(dl)); } catch(e){}
+  }
+  return Math.max(0, Math.round((dl - Date.now()) / 1000));
+}
+function ptRenderTimer(){
+  var t = ptTimeLeft();
+  var m = Math.floor(t / 60);
+  var s = t % 60;
+  var el = document.getElementById('timer');
+  if (el) el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+  if (t <= 0 && timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  return t;
+}
+var timerInterval = null;
+var timeLeft = ptTimeLeft();
 var timerVisible = true;
-var timerInterval = setInterval(function(){
-  timeLeft--;
-  if(timeLeft <= 0){ clearInterval(timerInterval); timeLeft = 0; }
-  var m = Math.floor(timeLeft/60);
-  var s = timeLeft%60;
-  document.getElementById('timer').textContent = m + ':' + (s<10?'0':'') + s;
-}, 1000);
+timerInterval = setInterval(function(){ timeLeft = ptRenderTimer(); }, 1000);
+ptRenderTimer();
 
 function toggleTimer(){
   timerVisible = !timerVisible;

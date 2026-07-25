@@ -106,6 +106,12 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
   }
 
   function startReading() {
+    // Reading セクションを最初から始める → モジュール通しタイマーの締切をリセット
+    try {
+      sessionStorage.removeItem('pt1_read_m1_deadline');
+      sessionStorage.removeItem('pt1_read_m2e_deadline');
+      sessionStorage.removeItem('pt1_read_m2h_deadline');
+    } catch(e){}
     window.location.href = 'reading-ctw.html';
   }
 </script>
