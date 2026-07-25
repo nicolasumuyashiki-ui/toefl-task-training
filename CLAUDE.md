@@ -76,6 +76,27 @@ GitHub Pages は静的配信で、ブラウザは `js/*.js` を**数日キャッ
   ローダ側の正規表現が `$1` で**自分のバージョンを引き継ぐ**ので、静的タグだけ bump すれば全体に伝播する。
 - お客様には初回のみ強制再読み込み（Ctrl+Shift+R / スマホはタブを閉じて開き直す）も案内する。
 
+### 版番号は「単調増加」が絶対条件（2026-07-25 事故・再発防止）
+`js/version-guard.js` は自動更新の判定に版番号を使うため、**一度でも番号を下げると、下げる前の版を
+掴んだ端末が更新不能のまま取り残される**。実際 2026-07-19〜07-22 に実日付を超える未来日
+（最大 `20260810`）が7回連続で配布され、その後 `20260723` へ巻き戻された。
+- **`version.json` の `build` と全 HTML の `?v=` は常に同じ値**にする（ずれている間は全端末がリロードを繰り返す）。
+- **新しい版は必ず過去最大より大きい値**にする。事故で `20260810` まで配布済みのため、**以後は `20260811` 以上のみ有効**
+  （実日付より進んでいて構わない。版番号は日付ではなく単調増加トークンとして扱う）。
+- bump 時は「過去に配布した全 `?v=` の最大値」を全 git 履歴から確認してから採番すること
+  （`tools/bump-cache-version.py` が自動で確認し、下回る値なら実行を拒否する）。
+
+**CI が自動で検証する（人の記憶に依存しない）**
+`.github/workflows/cache-version-guard.yml` が全 PR と main への push で
+`python3 tools/bump-cache-version.py --check` を実行し、以下を満たさなければマージを落とす。
+1. 全 HTML の `?v=` と `version.json` の `build` が一致している
+2. `build` が過去に配布した最大値以上（＝下げていない）
+3. `js/` または `practice-test/js/` を変更したなら版番号も上がっている（bump 忘れの検出）
+
+落ちたらログに日本語で直し方が出る。基本は `python3 tools/bump-cache-version.py <過去最大より大きい版>`
+を同じコミットに含めるだけ。検証ロジックは bump 本体と同じ実装を共有しているので二重管理にならない。
+※ `tools/bump-cache-version.py` は `.gitignore` の `*.py` を `!tools/bump-cache-version.py` で例外化して追跡している。
+
 ## コミットメッセージの規則
 - `feat: add Reading CTW Practice 2` — 新しい問題を追加
 - `fix: correct answer key in rdl practice-1` — 正解の修正
@@ -126,6 +147,15 @@ GitHub Pages は静的配信で、ブラウザは `js/*.js` を**数日キャッ
   放置すると、そのタスクだけ履歴が消える（過去の RDL/Academic/LCR 等で実際に発生 → 修正済み）。
 - **日付表示**: `training_score_*` の `updatedAt`（各ページが書く ISO）と `training_first_*` の `capturedAt` を
   サーバ復元時も `history-sync` が引き継ぐ。my-score の学習履歴テーブルは `fmtWhen()` で JST 整形して表示する。
+
+### docs/gas-*.js は「デプロイ済み GAS の正本」— ずれたら監査が実物と違うものを読む
+`docs/gas-*.js` は GAS にペースト＆デプロイする元であり、**GAS 側を変更したら必ず同じコミットで
+docs/ も更新する**。2026-07-25 の監査で、デプロイ済みの `handleSaveAnswers_`（`clientSaveId` による
+重複排除を含む）が docs/ に一切存在せず、**「重複排除は未実装」と誤判定した**（実際は実装済み）。
+現在の写しは `docs/gas-save-answers.js`。
+- **`docs/` は GitHub Pages でそのまま公開配信される**（リポジトリ直下に `.nojekyll` があるため
+  `_` 始まり以外は全て配信対象）。**顧客のメールアドレス・氏名などの個人情報を docs/ に書かない**。
+  実データが必要な場合は Script Properties か非公開の `docs/internal-accounts.md` 運用に寄せる。
 
 ### Practice Test（模試）の履歴
 模試は `practice-test/js/api.js` の `savePtResult`/`listPtResults` で**集約 GAS（REC_URL = 本番 API_URL と同じ）**に保存。

@@ -9,13 +9,20 @@
  * HOW:
  *  - このスクリプト自身の ?v=YYYYMMDD を「動作中の版(BUILD)」として読む。
  *  - 同ディレクトリ基準の version.json（no-store・キャッシュ回避）を取得し、
- *    build がより新しければ location.reload()。
+ *    build と一致しなければ（新旧どちらでも）location.reload()。
  *  - 無限ループ防止: sessionStorage で試行回数を数え、最大2回で打ち切り。
  *    最新に追いついたらカウンタをクリア。
  *  - 安全側: メニュー/トップ/マイスコア等「リロードで失うものが無いページ」
  *    にのみ読み込む（練習中ページには入れない）。取得失敗・オフラインは無視。
  *
  * DEPLOY: tools/bump-cache-version.py が version.json の build も同時に更新する。
+ *   version.json の build と、全 HTML の ?v= は「常に同じ値」でなければならない。
+ *   ずれている間、全端末が（上限2回まで）リロードを繰り返す。
+ *
+ * ⚠️ 版番号は必ず単調増加させること（実日付より進んでいても構わない）。
+ *   2026-07-19〜07-22 の事故で最大 20260810 まで配布済みのため、以後の版は
+ *   20260811 以上のみ有効。ここを下回る値を出すと、旧ロジック（数値比較）を
+ *   掴んだままの端末が更新不能のまま取り残される。
  */
 (function () {
   function selfScript() {
@@ -45,7 +52,13 @@
       if (!j) return;                                  // 取得不可 → 無視（degrade）
       var latest = String(j.build || '');
       if (!latest || !/^\d+$/.test(latest)) return;
-      if (Number(latest) <= Number(BUILD)) { clearTries(); return; }  // 最新 → 何もしない
+      // 一致 → 何もしない。不一致なら「新しい/古い」を問わず1回だけ揃えにいく。
+      // 旧実装は Number(latest) <= Number(BUILD) で「サーバの方が数値的に大きい時だけ」
+      // 更新していた。そのため版番号が一度でも誤って未来日で配布されると（実際に
+      // 2026-07-19〜07-22 に最大 20260810 まで逸脱・その後 20260723 へ巻き戻し）、
+      // その版を掴んだ端末は latest <= BUILD が永久に真になり二度と更新されなくなる。
+      // 方向を問わない不一致判定にすることで、同じ事故が起きても自己修復する。
+      if (latest === BUILD) { clearTries(); return; }
 
       var tries = 0;
       try { tries = Number(sessionStorage.getItem('tck_update_tries') || '0'); } catch (e) {}

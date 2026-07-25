@@ -212,7 +212,7 @@ body[data-lang="en"] .jp{display:none}
         <div class="option-review" id="opt2D"><span class="label">D</span> <span class="jp">認識された</span><span class="en">recognized</span></div>
       </div>
       <div class="explanation"><strong><span class="jp">文脈確認:</span><span class="en">Context check:</span></strong>
-        <span class="jp">第1段落は認知バイアスを意思決定に影響する系統的パターンとして導入する。第2段落はアンカリング効果を例示する。第3段落は利用可能性ヒューリスティックを描き、バイアス理解がより良い決定につながると結論する。すべての段落をつなぐのはバイアスが決定にどう影響するか = B。<br><br>A は誤り。パッセージは心理学研究の<strong>歴史</strong>を辿らない。C は根拠なし。パッセージは急いだ決定を勧めない。D は誤り。パッセージは認知バイアス全般を論じ、専門家戦略ではない。</span>
+        <span class="jp">本文には、アンカーが「完全にarbitraryな場合でも」推定値に影響すると書かれている。次の文はこれを、数字がホイールの回転から「ランダムに生成された」という例で裏付けている。つまり「arbitrary」＝論理的根拠のないランダムなもの = C。<br><br>A（計算された）は意味が<strong>逆</strong>である。B（証明された）は数字がランダムだったという考えと矛盾する。D（認識された）はランダムな数字という文脈に合わない。</span>
         <span class="en">The passage says the anchor influences estimates "even when it is completely arbitrary." The next sentence confirms this with an example where the number was "randomly generated" from a wheel spin. This means "arbitrary" = random, without logical basis = C.<br><br>
         A (calculated) is the <strong>opposite</strong> of the meaning. B (proven) contradicts the idea that the number was random. D (recognized) does not fit the context of a random number.</span>
       </div>
@@ -463,7 +463,7 @@ var correctAnswers = {'1':'B','2':'C','3':'A','4':'A','5':'D','6':'D','7':'B','8
   document.getElementById('scoreDisplay').textContent = score+'/10';
 })();
 </script>
-<script src="../../js/auth.js?v=20260723"></script>
+<script src="../../js/auth.js?v=20260811"></script>
 <script>
 (function(){
   var stored=localStorage.getItem('tck_lang')||'jp';
@@ -472,6 +472,6 @@ var correctAnswers = {'1':'B','2':'C','3':'A','4':'A','5':'D','6':'D','7':'B','8
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260723"></script>
+<script defer src="../../js/tm-footer.js?v=20260811"></script>
 </body>
 </html>
