@@ -563,8 +563,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
 </div>
 
-<script src="../js/api.js?v=20260813"></script>
-<script src="../js/auth.js?v=20260813"></script>
+<script src="../js/api.js?v=20260814"></script>
+<script src="../js/auth.js?v=20260814"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -711,7 +711,7 @@ function buildPracticeBuckets(userAttempts) {
     const first = val(sr[0]);
     const latest = val(sr[sr.length - 1]);
     let best = first;
-    sr.forEach(x => { const v = val(x); if (pctOf(v) > pctOf(best)) best = v; });
+    sr.forEach(x => { const v = val(x); if (pctOf(v) > pctOf(best) || (pctOf(v) === pctOf(best) && v.total > best.total)) best = v; });
     return { first, best, latest, count: sr.length };
   }
   const buckets = {};
@@ -2408,6 +2408,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260813"></script>
+<script defer src="../js/tm-footer.js?v=20260814"></script>
 </body>
 </html>

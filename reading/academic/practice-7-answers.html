@@ -454,7 +454,7 @@ var correctAnswers = {'1':'A','2':'B','3':'C','4':'D','5':'A','6':'A','7':'C','8
   document.getElementById('scoreDisplay').textContent = score+'/10';
 })();
 </script>
-<script src="../../js/auth.js?v=20260813"></script>
+<script src="../../js/auth.js?v=20260814"></script>
 <script>
 (function(){
   var stored=localStorage.getItem('tck_lang')||'jp';
@@ -463,6 +463,6 @@ var correctAnswers = {'1':'A','2':'B','3':'C','4':'D','5':'A','6':'A','7':'C','8
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260813"></script>
+<script defer src="../../js/tm-footer.js?v=20260814"></script>
 </body>
 </html>
