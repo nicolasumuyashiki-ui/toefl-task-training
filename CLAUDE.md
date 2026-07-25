@@ -148,6 +148,15 @@ GitHub Pages は静的配信で、ブラウザは `js/*.js` を**数日キャッ
 - **日付表示**: `training_score_*` の `updatedAt`（各ページが書く ISO）と `training_first_*` の `capturedAt` を
   サーバ復元時も `history-sync` が引き継ぐ。my-score の学習履歴テーブルは `fmtWhen()` で JST 整形して表示する。
 
+### docs/gas-*.js は「デプロイ済み GAS の正本」— ずれたら監査が実物と違うものを読む
+`docs/gas-*.js` は GAS にペースト＆デプロイする元であり、**GAS 側を変更したら必ず同じコミットで
+docs/ も更新する**。2026-07-25 の監査で、デプロイ済みの `handleSaveAnswers_`（`clientSaveId` による
+重複排除を含む）が docs/ に一切存在せず、**「重複排除は未実装」と誤判定した**（実際は実装済み）。
+現在の写しは `docs/gas-save-answers.js`。
+- **`docs/` は GitHub Pages でそのまま公開配信される**（リポジトリ直下に `.nojekyll` があるため
+  `_` 始まり以外は全て配信対象）。**顧客のメールアドレス・氏名などの個人情報を docs/ に書かない**。
+  実データが必要な場合は Script Properties か非公開の `docs/internal-accounts.md` 運用に寄せる。
+
 ### Practice Test（模試）の履歴
 模試は `practice-test/js/api.js` の `savePtResult`/`listPtResults` で**集約 GAS（REC_URL = 本番 API_URL と同じ）**に保存。
 本体は `docs/gas-pt-results.js`（`PT_RESULTS` シート、userId 紐付け、sessionId で重複排除）。results.html は
