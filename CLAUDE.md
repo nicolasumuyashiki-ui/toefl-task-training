@@ -83,9 +83,19 @@ GitHub Pages は静的配信で、ブラウザは `js/*.js` を**数日キャッ
 - **`version.json` の `build` と全 HTML の `?v=` は常に同じ値**にする（ずれている間は全端末がリロードを繰り返す）。
 - **新しい版は必ず過去最大より大きい値**にする。事故で `20260810` まで配布済みのため、**以後は `20260811` 以上のみ有効**
   （実日付より進んでいて構わない。版番号は日付ではなく単調増加トークンとして扱う）。
-- bump 時は「過去に配布した全 `?v=` の最大値」を全 git 履歴から確認してから採番すること。
-- ※ `tools/bump-cache-version.py` は `.gitignore` の `*.py` に阻まれて**リポジトリに存在しない**（PR #157 が復活させる予定・未マージ）。
-  存在しない間は手作業 bump になり、今回の日付逸脱もそれが原因。復活まではこの単調増加チェックを必ず人手で行う。
+- bump 時は「過去に配布した全 `?v=` の最大値」を全 git 履歴から確認してから採番すること
+  （`tools/bump-cache-version.py` が自動で確認し、下回る値なら実行を拒否する）。
+
+**CI が自動で検証する（人の記憶に依存しない）**
+`.github/workflows/cache-version-guard.yml` が全 PR と main への push で
+`python3 tools/bump-cache-version.py --check` を実行し、以下を満たさなければマージを落とす。
+1. 全 HTML の `?v=` と `version.json` の `build` が一致している
+2. `build` が過去に配布した最大値以上（＝下げていない）
+3. `js/` または `practice-test/js/` を変更したなら版番号も上がっている（bump 忘れの検出）
+
+落ちたらログに日本語で直し方が出る。基本は `python3 tools/bump-cache-version.py <過去最大より大きい版>`
+を同じコミットに含めるだけ。検証ロジックは bump 本体と同じ実装を共有しているので二重管理にならない。
+※ `tools/bump-cache-version.py` は `.gitignore` の `*.py` を `!tools/bump-cache-version.py` で例外化して追跡している。
 
 ## コミットメッセージの規則
 - `feat: add Reading CTW Practice 2` — 新しい問題を追加

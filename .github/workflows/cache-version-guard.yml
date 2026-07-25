@@ -1,0 +1,77 @@
+# キャッシュ版番号ガード
+#
+# 2026-07-19〜07-22、version.json と全 HTML の ?v= が実日付を超える未来日で
+# 7回連続配布され（最大 20260810）、その後 20260723 へ巻き戻された。
+# js/version-guard.js（自動更新）は版番号の大小で「自分は最新か」を判定して
+# いたため、逸脱期間の版を掴んだ端末は「自分の方が新しい」と誤判定し、
+# 二度と自動更新されなくなった＝修正が客に永久に届かない状態になった。
+#
+# 根因は「js/ を変えたら bump スクリプトを実行する」という運用が人の記憶に
+# 依存していたこと（当時スクリプト自体がリポジトリに存在せず手作業だった）。
+# このワークフローがその依存を消す。検証ロジックは bump と同じ実装を共有する
+# （tools/bump-cache-version.py --check）ので、二重管理にはならない。
+#
+# 落ちたときの直し方はジョブのログに日本語で出る。基本は
+#   python3 tools/bump-cache-version.py <過去最大より大きい版>
+# を同じコミットに含めるだけ。
+name: cache-version-guard
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    name: 版番号の整合・単調増加・bump 忘れ
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # version.json の全履歴から「過去に配布した最大値」を求めるため、
+          # および base との差分を取るため、浅いクローンでは不可。
+          fetch-depth: 0
+
+      - name: 比較元（base）を決める
+        id: base
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        shell: bash
+        run: |
+          ref=""
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            ref="$PR_BASE_SHA"
+          elif [ -n "$PUSH_BEFORE" ] && [[ ! "$PUSH_BEFORE" =~ ^0+$ ]]; then
+            # ブランチ新規作成時の push は before が全ゼロ → 差分比較できないので空にする
+            ref="$PUSH_BEFORE"
+          fi
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
+          echo "base = ${ref:-（なし・js/ 変更チェックは省略）}"
+
+      - name: 版番号チェック
+        env:
+          BASE_REF: ${{ steps.base.outputs.ref }}
+        shell: bash
+        run: |
+          rc=0
+          if [ -n "$BASE_REF" ]; then
+            out=$(python3 tools/bump-cache-version.py --check --base "$BASE_REF" 2>&1) || rc=$?
+          else
+            out=$(python3 tools/bump-cache-version.py --check 2>&1) || rc=$?
+          fi
+          echo "$out"
+          {
+            echo '## キャッシュ版番号チェック'
+            echo ''
+            echo '```'
+            echo "$out"
+            echo '```'
+            if [ "$rc" -ne 0 ]; then
+              echo ''
+              echo '> 直し方: `python3 tools/bump-cache-version.py <過去最大より大きい版>` を同じコミットに含めてください。'
+              echo '> 詳細は CLAUDE.md「共有JSのキャッシュバスティング」/「版番号は単調増加」。'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
