@@ -35,7 +35,11 @@ from pathlib import Path
 SKIP_DIRS = {".git", "node_modules"}
 
 SRC_RE = re.compile(r'(src=["\'][^"\']*js/[A-Za-z0-9_-]+\.js)(\?v=\d{8})?(["\'])')
-VER_RE = re.compile(r"\?v=(\d{8})")
+# 共有JS のトークンだけを対象にする。admin/index.html の
+# `pt-keys.json?v=20260722b` のように英字サフィックス付きの手動トークンは
+# 別系統（version-guard とは無関係なデータファイルのキャッシュ避け）なので、
+# 走査・検証のどちらからも除外する。
+VER_RE = re.compile(r"\?v=(\d{8})(?![0-9A-Za-z])")
 
 
 def highest_ever_shipped(root: Path) -> str:
