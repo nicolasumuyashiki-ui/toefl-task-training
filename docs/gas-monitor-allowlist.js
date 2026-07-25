@@ -54,7 +54,14 @@ var MONITOR_EMAILS = [
   // account email because GAS matches on the email column (u.email); both
   // are included so the comp activates regardless of which field is checked.
   'kyo.maeda2015@gmail.com',
-  'soichiro941@gmail.com'
+  'soichiro941@gmail.com',
+  // 矢口 洪太 (login id: yagu1004) — goodwill comp (2026-07, 今後無料).
+  // 経緯: 6/25〜7/20 の間、送信未確認の保存を再送打ち切りで破棄する実装が
+  // あり、娘さまの Read in Daily Life Practice 3〜6 の記録が失われたため。
+  // GAS は USERS の email 列で照合するので、アカウント email を登録する。
+  // ※ 娘さまご本人の email (yagucchan0625@yahoo.co.jp) で別アカウントを
+  //   作られた場合は、その email もここに追加すること。
+  'rena.yon811@gmail.com'
 ];
 
 function isMonitorEmail_(email) {
