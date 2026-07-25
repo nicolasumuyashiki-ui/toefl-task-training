@@ -9,24 +9,24 @@
 |----------|-----|--------|-------|
 | 1 | 1 | M1 | The History of Chocolate |
 | 1 | 2 | M2H | The Role of Microorganisms in Soil Ecology |
-| 2 | 1 | M1 | The Development of Modern Zoos |
-| 2 | 2 | M2H | Volcanic Activity and Climate Change |
-| 3 | 1 | M1 | The Origins of the Olympic Games |
-| 3 | 2 | M2H | The Science Behind Earthquake Prediction |
-| 4 | 1 | M1 | The Invention of the Printing Press |
-| 4 | 2 | M2H | Advances in Renewable Energy Technology |
-| 5 | 1 | M1 | The History of Coffee |
-| 5 | 2 | M2H | Bioluminescence in Marine Life |
-| 6 | 1 | M1 | The History of Vaccination |
+| 2 | 1 | M1 | Comets |
+| 2 | 2 | M2H | Volcanic Eruptions and Climate |
+| 3 | 1 | M1 | Weathering and the Rock Cycle |
+| 3 | 2 | M2H | The Science of Earthquake Prediction |
+| 4 | 1 | M1 | Simple Machines |
+| 4 | 2 | M2H | Renewable Energy Technology |
+| 5 | 1 | M1 | Pollination |
+| 5 | 2 | M2H | Deep-Sea Bioluminescence |
+| 6 | 1 | M1 | States of Matter |
 | 6 | 2 | M2H | The Chemistry of Cooking |
-| 7 | 1 | M1 | The Role of Bees in Agriculture |
-| 7 | 2 | M2H | Dark Matter in Modern Cosmology |
-| 8 | 1 | M1 | The History of Paper and Printing |
-| 8 | 2 | M2H | The Science of Nutrition and Metabolism |
-| 9 | 1 | M1 | The Discovery of Antibiotics |
+| 7 | 1 | M1 | The Solar System |
+| 7 | 2 | M2H | Dark Matter |
+| 8 | 1 | M1 | The Human Digestive System |
+| 8 | 2 | M2H | Metabolism and Nutrition |
+| 9 | 1 | M1 | How Human Memory Works |
 | 9 | 2 | M2H | The Neuroscience of Language Learning |
-| 10 | 1 | M1 | The Science of Sleep |
-| 10 | 2 | M2H | The Economics of International Trade |
+| 10 | 1 | M1 | Supply and Demand |
+| 10 | 2 | M2H | International Trade |
 
 ### Read in Daily Life (RDL)
 | Practice | # | Topic |
