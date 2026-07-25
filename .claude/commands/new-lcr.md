@@ -68,6 +68,7 @@ TOEFL iBT - Listen and Choose a Response 問題作成ガイド v2.4.1（Module 1
 ■ Listen and Choose a Response の特徴
 - 約5秒の短い1文を聞く（音声のみ、テキスト表示なし）
 - 4つの書かれた選択肢から最も適切な応答を選ぶ
+- **各問題20秒カウントダウン**（ETS 公式で唯一明示された問題別タイマー。CLAUDE.md タイマー値表と一致させること）
 - キャンパスライフ・日常生活の場面
 - pragmatic understanding（語用論的理解）を測定
 - 話者の意図、トーン、文脈の理解が鍵

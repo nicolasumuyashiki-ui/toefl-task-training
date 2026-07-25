@@ -140,13 +140,12 @@ function renderModal(){
         '</div>' +
         '<div class="retry-body">' +
           '<span class="attempt-pill">⚡ Attempt #' + v.replace('n','5') + '</span>' +
-          '<p><strong>予想スコア（Predicted Score）</strong> には <strong>1回目の結果のみ</strong> が反映されます。' +
-          'この練習の予想スコアは既に記録済みです。</p>' +
+          '<p><strong>予想スコア（Predicted Score）</strong> には <strong>最新の取り組みの結果</strong> が反映されます。' +
+          '解き直すとスコアは上がることも、下がることもあります。</p>' +
           '<p>このページは<strong>復習用</strong>として、何度でも取り組んでください。' +
-          '解き直した結果は <strong>「習得率（Mastery Rate）」</strong> に反映されます。</p>' +
-          '<div class="hint">💡 TOEFL® テストは一発勝負。' +
-          '初回の素点が本番の実力を最も正確に予測します。' +
-          'じっくり復習して、解法の定着を目指しましょう。</div>' +
+          '解き直した結果は <strong>「習得率（Mastery Rate）」</strong> にも反映されます。</p>' +
+          '<div class="hint">💡 予想スコアは「今の実力」を正直に反映する方式です。' +
+          'じっくり復習して解法を定着させてから取り組みましょう。</div>' +
         '</div>' +
         '<div class="retry-actions">' +
           '<button class="btn btn-ghost" onclick="this.closest(\'.retry-backdrop\').remove()">戻る</button>' +
@@ -157,6 +156,6 @@ function renderModal(){
 }
 renderModal();
 </script>
-<script defer src="../js/tm-footer.js?v=20260722"></script>
+<script defer src="../js/tm-footer.js?v=20260725"></script>
 </body>
 </html>

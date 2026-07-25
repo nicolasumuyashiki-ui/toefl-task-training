@@ -75,6 +75,7 @@ print("✅ PASS")
 - Page 0: 説明ページ
 - Page 1: トーク再生（話者画像+「Now listening...」、1.5秒後に自動再生）
 - Page 2-5: 問題ページ（4問）
+- **各問題30秒カウントダウン**（ETS は問題別秒数を非公開のため設計値。CLAUDE.md タイマー値表と一致させること）
 - 音声終了後自動遷移（またはNextボタン）
 - Backボタンなし
 - フッター: Check All Answers / Reset All / Show All Answers

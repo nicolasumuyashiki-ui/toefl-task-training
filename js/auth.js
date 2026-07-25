@@ -873,9 +873,9 @@ if (typeof window !== 'undefined') {
         '</div>' +
         '<div class="bd">' +
           '<span class="pill">⚡ Attempt #' + attemptN + '</span>' +
-          '<p>予想スコアには <strong>最初に完了した結果のみ</strong> が反映されます（中断含む）。この練習の予想スコアは既に記録済みです。</p>' +
-          '<p>このページは復習用として、何度でも取り組んでください。解き直した結果は <strong>「習得率（Mastery Rate）」</strong> に反映されます。</p>' +
-          '<div class="hint">💡 TOEFL® テストは一発勝負。初回の素点が本番の実力を最も正確に予測します。じっくり復習して、解法の定着を目指しましょう。</div>' +
+          '<p>予想スコアには <strong>最新の取り組みの結果</strong> が反映されます。解き直すとスコアは上がることも、下がることもあります。</p>' +
+          '<p>このページは復習用として、何度でも取り組んでください。解き直した結果は <strong>「習得率（Mastery Rate）」</strong> にも反映されます。</p>' +
+          '<div class="hint">💡 予想スコアは「今の実力」を正直に反映する方式です。じっくり復習して解法を定着させてから取り組みましょう。</div>' +
         '</div>' +
         '<div class="ac">' +
           '<button class="b gh" type="button" onclick="window.history.back()">戻る</button>' +

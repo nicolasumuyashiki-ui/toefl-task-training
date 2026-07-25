@@ -338,7 +338,7 @@ body[data-lang="en"] .jp{display:none}
     <!-- Q8 -->
     <div class="q-card" id="card8">
       <div class="q-num"><span class="jp">設問 8 — 文挿入</span><span class="en">Question 8 — Sentence Insertion</span></div>
-      <div class="q-text">Look at the three squares in paragraph 3 that indicate where the following sentence could be added:<br><br><em>"As a result, these larger groups develop complex social hierarchies in which individuals must constantly compete for access to limited food supplies."</em></div>
+      <div class="q-text">Look at the four squares in paragraph 3 that indicate where the following sentence could be added:<br><br><em>"As a result, these larger groups develop complex social hierarchies in which individuals must constantly compete for access to limited food supplies."</em></div>
       <div class="answer-row">
         <span class="answer-tag tag-correct"><span class="jp">正解: B</span><span class="en">Correct: B</span></span>
         <span class="answer-tag" id="yours8"><span class="jp">あなたの回答: &mdash;</span><span class="en">Your answer: &mdash;</span></span>
@@ -347,12 +347,13 @@ body[data-lang="en"] .jp{display:none}
         <div class="option-review" id="opt8A"><span class="label">A</span> <span class="jp">文1の後（「…primate social behavior.」の後）</span><span class="en">After sentence 1 (after "...primate social behavior.")</span></div>
         <div class="option-review is-correct" id="opt8B"><span class="label">B</span> <span class="jp">文2の後（「…better protection against predators.」の後） &#10003;</span><span class="en">After sentence 2 (after "...better protection against predators.") &#10003;</span></div>
         <div class="option-review" id="opt8C"><span class="label">C</span> <span class="jp">文3の後（「…the pressure to cooperate is reduced.」の後）</span><span class="en">After sentence 3 (after "...the pressure to cooperate is reduced.")</span></div>
+        <div class="option-review" id="opt8D"><span class="label">D</span> <span class="jp">文4の後（「…a key predictor of primate social structure.」の後）</span><span class="en">After sentence 4 (after "...a key predictor of primate social structure.")</span></div>
       </div>
       <div class="explanation">
         <strong>Discourse marker clue:</strong>
-        <span class="jp">「As a result」は前の内容の<strong>結果</strong>を示す接続表現。文2は食料が乏しいときに霊長類が<strong>大きな集団</strong>を作ることを説明する。挿入文はその大きな集団の<strong>結果</strong>として複雑な階層と競争が生じることを述べる。「these larger groups（これらの大きな集団）」は文2で言及された大きな集団を直接指す = B。<br><br>A は誤り。文1は一般的な導入で、「larger groups」がまだ言及されていないため「these larger groups」の指示対象がない。C は誤り。文3は資源が豊富な環境での<strong>小さな</strong>集団を論じており、「these larger groups」と矛盾する。</span>
+        <span class="jp">「As a result」は前の内容の<strong>結果</strong>を示す接続表現。文2は食料が乏しいときに霊長類が<strong>大きな集団</strong>を作ることを説明する。挿入文はその大きな集団の<strong>結果</strong>として複雑な階層と競争が生じることを述べる。「these larger groups（これらの大きな集団）」は文2で言及された大きな集団を直接指す = B。<br><br>A は誤り。文1は一般的な導入で、「larger groups」がまだ言及されていないため「these larger groups」の指示対象がない。C は誤り。文3は資源が豊富な環境での<strong>小さな</strong>集団を論じており、「these larger groups」と矛盾する。D は誤り。文4は段落全体を締めくくる一般化であり、その後に大きな集団の帰結を述べる文を置くと論の流れが崩れる。</span>
         <span class="en">"As a result" signals a consequence of the preceding idea. Sentence 2 explains that primates form <strong>larger groups</strong> when food is scarce. The insertion sentence describes what happens as a consequence of those larger groups &mdash; they develop complex hierarchies and competition. "These larger groups" directly refers back to the larger groups mentioned in sentence 2 = B.<br><br>
-        A is incorrect because sentence 1 is a general introduction; no "larger groups" have been mentioned yet, so "these larger groups" has no referent. C is incorrect because sentence 3 discusses <em>smaller</em> groups in resource-rich environments, making "these larger groups" contradictory.</span>
+        A is incorrect because sentence 1 is a general introduction; no "larger groups" have been mentioned yet, so "these larger groups" has no referent. C is incorrect because sentence 3 discusses <em>smaller</em> groups in resource-rich environments, making "these larger groups" contradictory. D is incorrect because sentence 4 is a concluding generalization for the whole paragraph; placing a consequence of larger groups after it breaks the logical flow.</span>
       </div>
     </div>
 
@@ -453,7 +454,7 @@ var correctAnswers = {'1':'A','2':'B','3':'C','4':'D','5':'A','6':'A','7':'C','8
   document.getElementById('scoreDisplay').textContent = score+'/10';
 })();
 </script>
-<script src="../../js/auth.js?v=20260722"></script>
+<script src="../../js/auth.js?v=20260725"></script>
 <script>
 (function(){
   var stored=localStorage.getItem('tck_lang')||'jp';
@@ -462,6 +463,6 @@ var correctAnswers = {'1':'A','2':'B','3':'C','4':'D','5':'A','6':'A','7':'C','8
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260722"></script>
+<script defer src="../../js/tm-footer.js?v=20260725"></script>
 </body>
 </html>

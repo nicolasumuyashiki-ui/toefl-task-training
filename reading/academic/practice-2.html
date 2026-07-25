@@ -303,7 +303,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     <div class="passage-content">
       <p>Primates are among the most socially complex animals on Earth. From small family groups of marmosets to the hierarchical communities of baboons, primate social structures are remarkably diverse. Current research suggests that both environmental pressures and cognitive abilities have shaped this elaborate evolution.</p>
       <p>The social brain hypothesis proposes that the demands of living in large groups drove the evolution of larger brains in primates. Maintaining relationships, recognizing allies and rivals, and navigating complex hierarchies require significant <span class="highlight-word">cognitive</span> resources. Studies show a strong correlation between a primate species' average group size and the size of its neocortex, the brain region linked to higher-order thinking.</p>
-      <p id="insertionParagraph">Environmental factors have also shaped primate social behavior. In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced.</p>
+      <p id="insertionParagraph">Environmental factors have also shaped primate social behavior. In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced. Researchers therefore treat habitat quality as a key predictor of primate social structure.</p>
       <p>Grooming is another important aspect of primate social life. Beyond hygiene, it acts as social bonding that strengthens alliances and reduces tension. Researchers have observed that primates spend disproportionate time grooming higher-ranking individuals, suggesting grooming serves as a strategic tool for gaining social advantages.</p>
     </div>
   </div>
@@ -452,7 +452,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
   </div>
 </div>
 
-<script src="../../js/progress.js?v=20260722"></script>
+<script src="../../js/progress.js?v=20260725"></script>
 <script>
 var currentQ = 1;
 var totalQ = 10;
@@ -608,8 +608,8 @@ function closeReview(){
 }
 
 /* ===== SENTENCE INSERTION SETUP ===== */
-var normalParagraphHTML = 'Environmental factors have also shaped primate social behavior. In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced.';
-var insertionParagraphHTML = 'Environmental factors have also shaped primate social behavior. <span class="insert-square" data-insert="A">\u25A0</span> In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. <span class="insert-square" data-insert="B">\u25A0</span> In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced. <span class="insert-square" data-insert="C">\u25A0</span>';
+var normalParagraphHTML = 'Environmental factors have also shaped primate social behavior. In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced. Researchers therefore treat habitat quality as a key predictor of primate social structure.';
+var insertionParagraphHTML = 'Environmental factors have also shaped primate social behavior. <span class="insert-square" data-insert="A">\u25A0</span> In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators. <span class="insert-square" data-insert="B">\u25A0</span> In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced. <span class="insert-square" data-insert="C">\u25A0</span> Researchers therefore treat habitat quality as a key predictor of primate social structure. <span class="insert-square" data-insert="D">\u25A0</span>';
 var insertSentenceText = "As a result, these larger groups develop complex social hierarchies in which individuals must constantly compete for access to limited food supplies.";
 var correctInsertion = "B";
 var insertionQuestionPage = 8;
@@ -650,9 +650,10 @@ function rebuildParagraphWithInsertion(position){
   var sentences = [
     'Environmental factors have also shaped primate social behavior.',
     'In habitats where food sources are scattered and unpredictable, primates tend to form larger groups because cooperation improves foraging success and provides better protection against predators.',
-    'In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced.'
+    'In contrast, species living in environments with abundant, evenly distributed resources often form smaller, more loosely organized groups since the pressure to cooperate is reduced.',
+    'Researchers therefore treat habitat quality as a key predictor of primate social structure.'
   ];
-  var labels = ['A','B','C'];
+  var labels = ['A','B','C','D'];
   var html = '';
   for(var i = 0; i < sentences.length; i++){
     html += sentences[i] + ' ';
@@ -704,8 +705,8 @@ if(typeof Auth !== 'undefined'){
   Auth.showBadge('userBadge');
 }
 </script>
-<script src="../../js/auth.js?v=20260722"></script><script src="../../js/difficulty-badge.js?v=20260722"></script>
+<script src="../../js/auth.js?v=20260725"></script><script src="../../js/difficulty-badge.js?v=20260725"></script>
 <script>function tckStartTask(){var ov=document.getElementById('tckInstructionOverlay');if(ov&&ov.parentNode){ov.parentNode.removeChild(ov);}if(typeof __tckOnStart==='function'){try{__tckOnStart();}catch(e){}}}</script>
-<script defer src="../../js/tm-footer.js?v=20260722"></script>
+<script defer src="../../js/tm-footer.js?v=20260725"></script>
 </body>
 </html>
