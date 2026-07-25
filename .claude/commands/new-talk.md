@@ -12,16 +12,24 @@ $ARGUMENTS
 - 例: `random` or 空 → 全てランダム生成
 
 ## 出力ファイル（Phase 1）
-1. `docs/scripts/talk-practice-{N}-scripts.md` — 録音用スクリプト＋問題＋Answer Key
+1. `docs/scripts/talk-practice-{N}-scripts.md` — 録音用スクリプト＋問題＋Answer Key（**talk 2本分**）
 2. `listening/talk/practice-{N}.html` — HTML（音声はプレースホルダー）
+   - 音声は `audio/talk/practice-{N}/talkAudio0.mp3`（Talk 1）と `talkAudio1.mp3`（Talk 2）の**2本**
 
 ## Academic Talk 問題仕様
 
 ### 概要
-- 100-250語の短い学術トーク（音声）→ 4問の多肢選択
-- 話者: 教授/講師 1名
+- **1 practice = 2題（talk 2本）× 各4問 = 計8問**（ETS 仕様）。
+  以下の「トーク仕様」は **talk 1本あたり**の要件なので、**必ず2本分を通しで作成**すること。
+  - **Talk 1（Standard / Q1-Q4）** — 音声 `talkAudio0.mp3`、問題データは `talk:0` でタグ付け
+  - **Talk 2（Harder Module / Q5-Q8）** — 音声 `talkAudio1.mp3`、問題データは `talk:1` でタグ付け
+  - 後半 talk を Harder Module とする（プロジェクト内の擬似 Harder 慣習）。
+    語数は同一レンジのまま、**語彙・概念の抽象度と推論負荷**で難化させる（Academic Passage と同じ方針）。
+- 1本あたり 100-250語の短い学術トーク（音声）→ 4問の多肢選択
+- 話者: 教授/講師 1名（talk ごとに別トピック・別分野が望ましい）
 - 背景知識不要
 - 音声は1回のみ再生（リプレイ不可）
+- 制限時間: 30秒/問
 
 ### トピック分野（以下から選択）
 History / Art and Music / Life Science / Physical Science / Business and Economics / Social Science
@@ -73,8 +81,10 @@ print("✅ PASS")
 ### HTML仕様
 - 既存の listening-academic.html の構造を完全に踏襲
 - Page 0: 説明ページ
-- Page 1: トーク再生（話者画像+「Now listening...」、1.5秒後に自動再生）
-- Page 2-5: 問題ページ（4問）
+- Page 1: Talk 1 再生（話者画像+「Now listening...」、1.5秒後に自動再生 / `talkAudio0.mp3`）
+- Page 2-5: Talk 1 の問題ページ（Q1-Q4 / `talk:0`）
+- Page 6: Talk 2 再生（Harder Module / `talkAudio1.mp3`）
+- Page 7-10: Talk 2 の問題ページ（Q5-Q8 / `talk:1`）
 - 音声終了後自動遷移（またはNextボタン）
 - Backボタンなし
 - フッター: Check All Answers / Reset All / Show All Answers
@@ -82,11 +92,13 @@ print("✅ PASS")
 - auth.js連携
 
 ### 作成後
-1. スクリプト＋問題＋Answer Keyをmdファイルに出力
+1. スクリプト＋問題＋Answer Keyをmdファイルに出力（**talk 2本分**）
 2. HTML雛形を作成
-3. `docs/topic-history.md` のAcademic Talkセクションに使用したトピックを追記
-4. 語数検証をPythonで実行
+3. `docs/topic-history.md` のAcademic Talkセクションに使用したトピックを追記（**2本とも**）
+4. 語数検証をPythonで実行（**talk 1本ごとに** 100-250語を確認）
 5. 検証サマリーを表示
+6. **最終チェック**: 総問数8（`talk:0` が4問・`talk:1` が4問）、音声2本、
+   後半4問が Harder Module になっているかを確認する
 
 ## 音源ポーズ仕様（必読）
 スクリプトを TTS（ElevenLabs 等）に渡す前に、必ずターン交代・文間に
