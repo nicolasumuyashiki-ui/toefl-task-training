@@ -370,7 +370,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
     <!-- Q8: Sentence Insertion -->
     <div class="question-page" id="page8">
       <div class="question-text">
-        <span class="question-number">8.</span>Look at the four squares [<span style="display:inline-block;width:16px;height:16px;background:#007646;color:white;font-size:.6rem;font-weight:700;text-align:center;line-height:16px;border-radius:3px;vertical-align:middle">&#9632;</span>] that indicate where the following sentence could be added to the passage.
+        <span class="question-number">8.</span>Look at the three squares [<span style="display:inline-block;width:16px;height:16px;background:#007646;color:white;font-size:.6rem;font-weight:700;text-align:center;line-height:16px;border-radius:3px;vertical-align:middle">&#9632;</span>] that indicate where the following sentence could be added to the passage.
       </div>
       <div class="insertion-sentence-display">Furthermore, these improved crops would be especially valuable in tropical regions, where rising temperatures already threaten staple food production.</div>
       <div class="insertion-instruction">Click on a square [<span style="display:inline-block;width:16px;height:16px;background:#007646;color:white;font-size:.6rem;font-weight:700;text-align:center;line-height:16px;border-radius:3px;vertical-align:middle">&#9632;</span>] to add the sentence to the passage. You can click a different square to change your selection.</div>
@@ -608,7 +608,7 @@ function closeReview(){
 }
 
 /* ===== SENTENCE INSERTION SETUP ===== */
-var normalParagraphHTML = 'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. Understanding how plants adjust their photosynthetic processes in response to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties that are more resilient to environmental stress. In this way, research into photosynthesis has implications that extend well beyond basic biology and into the fields of agriculture and food security.';
+var normalParagraphHTML = 'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress. In this way, photosynthesis research has implications extending well beyond basic biology, reaching into agriculture and food security.';
 var insertionParagraphHTML = 'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. <span class="insert-square" data-insert="A">\u25A0</span> Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress. <span class="insert-square" data-insert="B">\u25A0</span> In this way, photosynthesis research has implications extending well beyond basic biology, reaching into agriculture and food security. <span class="insert-square" data-insert="C">\u25A0</span>';
 var insertSentenceText = "Furthermore, these improved crops would be especially valuable in tropical regions, where rising temperatures already threaten staple food production.";
 var correctInsertion = "B";
@@ -649,8 +649,8 @@ function bindSquareClicks(){
 function rebuildParagraphWithInsertion(position){
   var sentences = [
     'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change.',
-    'Understanding how plants adjust their photosynthetic processes in response to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties that are more resilient to environmental stress.',
-    'In this way, research into photosynthesis has implications that extend well beyond basic biology and into the fields of agriculture and food security.'
+    'Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress.',
+    'In this way, photosynthesis research has implications extending well beyond basic biology, reaching into agriculture and food security.'
   ];
   var labels = ['A','B','C'];
   var html = '';
