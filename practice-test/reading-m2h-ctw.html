@@ -99,7 +99,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
     <span>Reading &mdash; Module 2</span>
   </div>
   <div class="top-nav-right">
-    <span class="timer-display" id="timer">12:00</span>
+    <span class="timer-display" id="timer">7:00</span>
     <button class="timer-btn" onclick="toggleTimer()">Hide Time</button>
     <button class="review-btn" onclick="openReview()">Review</button>
     <span class="user-badge" id="userBadge"></span>
@@ -272,7 +272,7 @@ function setupInputs(){
 setupInputs();
 
 /* ===== TIMER (12 minutes for Hard Module 2) ===== */
-var timeLeft = 12 * 60;
+var timeLeft = 7 * 60;
 var timerVisible = true;
 var timerInterval = setInterval(function(){
   timeLeft--;
@@ -386,9 +386,9 @@ if(typeof Auth !== 'undefined'){
   });
 })();
 </script>
-<script src="js/difficulty-badge.js?v=20260814"></script>
-<script src="js/auth.js?v=20260814"></script>
-<script src="js/reading-state.js?v=20260814"></script>
-<script defer src="../js/tm-footer.js?v=20260814"></script>
+<script src="js/difficulty-badge.js?v=20260815"></script>
+<script src="js/auth.js?v=20260815"></script>
+<script src="js/reading-state.js?v=20260815"></script>
+<script defer src="../js/tm-footer.js?v=20260815"></script>
 </body>
 </html>

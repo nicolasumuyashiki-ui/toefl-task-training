@@ -138,7 +138,7 @@ body[data-lang="en"] .jp{display:none}
   <a class="btn-back" href="../menu.html" style="background:#002817;color:#fff;border-color:#0F1511"><span class="jp">📋 メニューに戻る</span><span class="en">📋 Back to menu</span></a>
 </div>
 
-<script src="../../js/auth.js?v=20260814"></script>
+<script src="../../js/auth.js?v=20260815"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 
@@ -158,11 +158,11 @@ const answers=[
 const stored=JSON.parse(sessionStorage.getItem('sentenceAnswers_p6')||'null');
 let score=0;
 
-// 会話文（prompt）の改訂境界（#163・実際のデプロイ時刻 2026-07-15T06:46Z 直後）。この時刻より前に取り組んだ回は
-// 当時の会話文で解いているので、見返すときは当時の prompt を表示する（採点対象＝並べ替え
-// る英文は不変なのでスコア・正誤はそのまま有効）。attempt の時刻はサーバ復元時に stored.ts。
-const PROMPT_REV='2026-07-15T07:00:00Z';
-const usePreRev=!!(stored&&stored.ts&&String(stored.ts)<PROMPT_REV);
+// 会話文（prompt）を改訂しても、見返すときは常に「現行の問題文」を表示する。
+// #163 の改訂は並べ替える英文（blanks / answer）を1文字も変えていないので、
+// 改訂前に取り組んだ回でも正誤・スコアはそのまま有効。当時の問題文をわざわざ
+// 出し分けると復習しづらいだけなので、旧 prompt は promptLegacy に記録として
+// 残すのみで画面には出さない（2026-07-25 方針変更）。
 
 if(stored){
   score=stored.score||0;
@@ -174,19 +174,11 @@ if(stored){
 
 let html='';
 answers.forEach((a,i)=>{
-  var showPrompt=(usePreRev&&a.promptLegacy)?a.promptLegacy:a.prompt;
-  var revTag=(usePreRev&&a.promptLegacy)?' <span style="font-style:normal;font-size:.82em;color:#8A6D1E;background:#FFF4D6;border:1px solid #E3C871;border-radius:6px;padding:1px 7px;margin-left:6px"><span class="jp">当時の問題文</span><span class="en">as-solved</span></span>':'';
-  html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+showPrompt+'"'+revTag+'</div></div>'
+  html+='<div class="q-card"><div class="q-header"><div class="q-num default">'+(i+1)+'</div><div class="q-prompt">"'+a.prompt+'"'+'</div></div>'
     +'<div class="q-body"><div class="q-sentence">→ '+a.sentence+'</div>'
     +'<div class="q-grammar">📝 '+a.grammar+'</div></div></div>';
 });
 document.getElementById('qList').innerHTML=html;
-if(usePreRev){
-  var note=document.createElement('div');note.id='tckSentenceRevNote';
-  note.style.cssText='max-width:880px;margin:14px auto 0;background:#FFF4D6;border:1px solid #E3C871;border-radius:12px;padding:12px 18px;color:#6B5A1E;font-size:.9em;line-height:1.7';
-  note.innerHTML='<span class="jp">この回は会話文を改訂する前（2026-07-14以前）に取り組まれたものです。上に表示しているのは<strong>当時の問題文</strong>で、あなたの並べ替えた英文・スコアはそのまま有効です。</span><span class="en">This attempt was taken before the prompts were revised (before 2026-07-14). The prompts above are shown <strong>as you solved them</strong>; your arranged sentences and score remain valid.</span> <a href="practice-6.html?rev=legacy" style="color:#8A3E24;font-weight:700;white-space:nowrap"><span class="jp">▶ 当時の問題文で解き直す</span><span class="en">▶ Re-solve the original</span></a>';
-  var ql=document.getElementById('qList');ql.parentNode.insertBefore(note,ql);
-}
 </script>
 
 <script>
@@ -197,6 +189,6 @@ if(usePreRev){
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260814"></script>
+<script defer src="../../js/tm-footer.js?v=20260815"></script>
 </body>
 </html>

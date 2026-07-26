@@ -110,7 +110,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
   </div>
   <div class="top-nav-right">
     <span class="user-badge" id="userBadge"></span>
-    <span class="timer-display" id="timerDisplay">32:00</span>
+    <span class="timer-display" id="timerDisplay">21:00</span>
     <button class="timer-btn" id="timerToggle" onclick="toggleTimer()">Hide Time</button>
     <button class="review-btn" onclick="openReview()">Review</button>
   </div>
@@ -219,10 +219,10 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
   </div>
 </div>
 
-<script src="../js/auth.js?v=20260814"></script>
+<script src="../js/auth.js?v=20260815"></script>
 <script>
 /* ===== TIMER ===== */
-var timerSeconds = 32 * 60;
+var timerSeconds = 21 * 60;
 var timerRunning = true;
 var timerHidden = false;
 var timerInterval = setInterval(function(){
@@ -407,7 +407,7 @@ if(typeof Auth !== 'undefined'){
   Auth.showBadge('userBadge');
 }
 </script>
-<script src="../js/reading-state.js?v=20260814"></script>
-<script defer src="../../js/tm-footer.js?v=20260814"></script>
+<script src="../js/reading-state.js?v=20260815"></script>
+<script defer src="../../js/tm-footer.js?v=20260815"></script>
 </body>
 </html>

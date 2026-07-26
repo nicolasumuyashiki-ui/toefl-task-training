@@ -105,7 +105,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
     <span>Reading &mdash; Module 2</span>
   </div>
   <div class="top-nav-right">
-    <span class="timer-display" id="timer">9:30</span>
+    <span class="timer-display" id="timer">6:00</span>
     <button class="timer-btn" onclick="toggleTimer()">Hide Time</button>
     <button class="review-btn" onclick="openReview()">Review</button>
     <span class="user-badge" id="userBadge"></span>
@@ -145,7 +145,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
   </div>
 </div>
 
-<script src="../js/auth.js?v=20260814"></script>
+<script src="../js/auth.js?v=20260815"></script>
 <script>
 /* ===== PASSAGE DATA =====
    Topic: Afternoon naps / short daytime rest
@@ -244,7 +244,7 @@ function setupInputs(){
 setupInputs();
 
 /* ===== TIMER ===== */
-var timeLeft = 9*60+30;
+var timeLeft = 6*60+30;
 var timerVisible = true;
 var timerInterval = setInterval(function(){
   timeLeft--;
@@ -342,7 +342,7 @@ if(typeof Auth !== 'undefined'){
   });
 })();
 </script>
-<script src="../js/reading-state.js?v=20260814"></script>
-<script defer src="../../js/tm-footer.js?v=20260814"></script>
+<script src="../js/reading-state.js?v=20260815"></script>
+<script defer src="../../js/tm-footer.js?v=20260815"></script>
 </body>
 </html>
