@@ -135,7 +135,7 @@ body[data-lang="en"] .jp{display:none}
 <div class="set-panel" id="set1"><div class="set-section"><div class="set-header"><span class="set-badge m2">M2H</span><h2>Set 2: Dark Matter in Modern Cosmology</h2></div><div class="passage-block"><div class="passage-label">Passage（正解入り）</div><div class="passage-text" id="passage1"></div></div><div class="answers-block"><h3>&#128221; 各問 解答＆解説</h3><div id="ag1"></div></div></div></div>
 <div class="scoring-reminder"><div class="icon">&#9888;&#65039;</div><div class="text"><h3>スコアリングのルール — 推測しないと損！</h3><p>Complete the Words では、<strong>正解 &rarr; 得点</strong>、<strong>不正解 &rarr; 0点</strong>、<strong>空欄 &rarr; 0点</strong> です。不正解でも空欄でも結果は同じ0点。<strong>わからなくても必ず何か入力しましょう</strong>。</p></div></div>
 
-<script src="../../../js/auth.js?v=20260814"></script>
+<script src="../../../js/auth.js?v=20260815"></script>
 <script>
 var SD=[
 {intro:"Bees are among the most important creatures in the natural world. They play a vital role in agriculture by transferring pollen between flowering plants. Without bees, many of the fruits and vegetables that people depend on would not grow properly.",conclusion:"Protecting bee populations is therefore essential for maintaining a stable and productive food supply worldwide.",target:[{w:"Farmers",a:"ers",s:"Farm",p:""},
@@ -229,7 +229,7 @@ renderAll();
   function setLang(l){document.body.setAttribute("data-lang",l);document.documentElement.setAttribute("lang",l==="jp"?"ja":"en");localStorage.setItem("tck_lang",l);document.querySelectorAll("[data-lang-btn]").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-lang-btn")===l);});}
 })();
 </script>
-<script defer src="../../../js/tm-footer.js?v=20260814"></script>
+<script defer src="../../../js/tm-footer.js?v=20260815"></script>
 
 <script>
 /* 旧版アーカイブ: サーバに残る改訂前（2026-07-02以前）の自分の回答を復元して表示する。
@@ -258,7 +258,7 @@ renderAll();
     }).catch(function(){});
   }
   if(typeof Api!=='undefined'&&Api.getMyAnswers){go();return;}
-  var s=document.createElement('script');s.src='../../../js/api.js?v=20260814';s.onload=go;document.head.appendChild(s);
+  var s=document.createElement('script');s.src='../../../js/api.js?v=20260815';s.onload=go;document.head.appendChild(s);
 })();
 </script>
 </body>

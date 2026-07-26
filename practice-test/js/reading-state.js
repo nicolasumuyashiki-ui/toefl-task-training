@@ -117,17 +117,24 @@
    * real TOEFL single section clock). Instead we keep one deadline per module
    * in sessionStorage and drive the timer element from it, so the countdown is
    * continuous across back/forward within a module. Module totals mirror the
-   * old per-first-page values: Module 1 = 36:00; Module 2 easy = 9:30, hard =
-   * 12:00 (the two Module-2 paths are mutually exclusive per attempt). Keys are
+   * ETS 2026 official Reading timing: the routing module and the second module
+   * together run about 27 minutes (27-30 across both adaptive modules). The
+   * mock previously ran 36:00 + 9:30/12:00 = 45:30/48:00 — roughly 1.6x the
+   * real thing — so the totals below were rescaled to land inside the official
+   * range while keeping the old internal balance (M1 : M2 was about 3 : 1, and
+   * the harder Module 2 stays longer than the easier one):
+   *   Module 1 = 21:00; Module 2 easy = 6:00, hard = 7:00
+   *   -> 27:00 total on the easy path, 28:00 on the hard path.
+   * (The two Module-2 paths are mutually exclusive per attempt.) Keys are
    * practice_-prefixed so test-select's cross-test wipe clears them.
    */
   function initTimer() {
     var el = document.getElementById('timerDisplay') || document.getElementById('timer');
     if (!el) return;
     var pk = pageKey(), mod, total;
-    if (pk.indexOf('m2e') !== -1)      { mod = 'm2'; total = 9 * 60 + 30; }
-    else if (pk.indexOf('m2h') !== -1) { mod = 'm2'; total = 12 * 60; }
-    else                                { mod = 'm1'; total = 36 * 60; } // ctw / rdl1 / rdl2 / academic
+    if (pk.indexOf('m2e') !== -1)      { mod = 'm2'; total = 6 * 60; }
+    else if (pk.indexOf('m2h') !== -1) { mod = 'm2'; total = 7 * 60; }
+    else                                { mod = 'm1'; total = 21 * 60; } // ctw / rdl1 / rdl2 / academic
     // Stop the page's own per-page countdown (it stores its handle in the
     // global `timerInterval`); we render the element from the shared deadline.
     try { if (window.timerInterval) clearInterval(window.timerInterval); } catch (e) {}
