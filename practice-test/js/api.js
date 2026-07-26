@@ -441,10 +441,18 @@ var Api = {
   flushPtOutbox: function () { return _ptFlushOutbox(); },
   ptOutboxPending: function () { return _ptOutboxRead().length; },
 
-  /* Fetch all past Practice Test results for the current user (server only) */
+  /* Fetch all past Practice Test results for the current user (server only).
+     id + pass も送る: サーバ側が「本人であること」を検証できるようにするため。
+     これが無いと userId を知っているだけで他人の模試結果が読める（listPtResults
+     は無認証だった）。認証は TT に一本化済みなので kickstart_pass が必ずある。 */
   listPtResults: function(){
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
-    return _ptJsonp(REC_URL + '?action=listPtResults&userId=' + encodeURIComponent(u.userId || ''));
+    var p = '';
+    try { p = sessionStorage.getItem('kickstart_pass') || ''; } catch (e) {}
+    return _ptJsonp(REC_URL + '?action=listPtResults'
+      + '&userId=' + encodeURIComponent(u.userId || '')
+      + '&id='     + encodeURIComponent(u.userId || '')
+      + '&pass='   + encodeURIComponent(p));
   },
 
   /* Device-resident copy of the current user's PT results (fallback source). */
@@ -497,8 +505,16 @@ var Api = {
      Falls back to the device mirror when the server has no row yet (blocked save). */
   getPtAnswers: function(sessionId){
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = '';
+    try { p = sessionStorage.getItem('kickstart_pass') || ''; } catch (e) {}
     var local = _ptAnsLocalGet(u.userId || '', sessionId);
-    return _ptJsonp(REC_URL + '?action=getPtAnswers&userId=' + encodeURIComponent(u.userId || '') + '&sessionId=' + encodeURIComponent(sessionId || ''))
+    // id + pass も送る（listPtResults と同じ理由）。サーバが弾いた場合も
+    // 端末ローカルのミラーへフォールバックするので表示は壊れない。
+    return _ptJsonp(REC_URL + '?action=getPtAnswers'
+      + '&userId='    + encodeURIComponent(u.userId || '')
+      + '&sessionId=' + encodeURIComponent(sessionId || '')
+      + '&id='        + encodeURIComponent(u.userId || '')
+      + '&pass='      + encodeURIComponent(p))
       .then(function (r) {
         if (r && r.success && r.answersJson) return r;
         return { success: true, answersJson: local || (r && r.answersJson) || '' };

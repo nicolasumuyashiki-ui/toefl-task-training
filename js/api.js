@@ -509,6 +509,23 @@ var Api = {
     }, open);
   },
 
+  /* Practice Test answer-key bank for the Admin viewer's Reading ✓/✗ marks.
+     Staff-authed only (docs/gas-pt-keys.js). There is deliberately NO fallback
+     to a bundled file: the keys used to live at admin/pt-keys.json, which
+     GitHub Pages served to anyone who knew the URL. If the endpoint isn't
+     deployed yet this resolves {} and the viewer simply shows the student's
+     answers without ✓/✗ — never by re-exposing the keys. */
+  ptKeys: function (id, pass) {
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var p = pass || sessionStorage.getItem('kickstart_staff_pass') || '';
+    return _jsonpRequest(API_URL + '?action=adminGetPtKeys'
+      + '&id=' + encodeURIComponent(id || u.userId || '')
+      + '&pass=' + encodeURIComponent(p)
+    ).then(function (r) {
+      return (r && r.success && r.keys) ? r.keys : {};
+    }, function () { return {}; });
+  },
+
   /* ---- Cross-device band HIGH-WATER-MARK (see docs/gas-band-hwm.js) ----
      Persists the HIGHEST section bands / total a learner has ever reached so
      the predicted score is IDENTICAL on every device and can never "reset" on

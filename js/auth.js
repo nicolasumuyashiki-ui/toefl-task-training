@@ -766,8 +766,13 @@ if (typeof window !== 'undefined') {
               // Build a length=total answers array so getMyHistory still derives
               // the question count from .length. Fill REAL selected answers from
               // the page's training_answers_* snapshot when present (so Admin can
-              // see what the student chose); fall back to 0 when unavailable.
-              var ansArr = new Array(total).fill(0);
+              // see what the student chose).
+              // Unanswered slots are padded with null — NOT 0 — because conv /
+              // announce / talk record the chosen option as a 0-BASED INDEX, so
+              // 0 is a legitimate answer (choice A). Padding with 0 made a skipped
+              // question indistinguishable from "picked A", which the server's
+              // answered-count then read as a blank attempt. null is unambiguous.
+              var ansArr = new Array(total).fill(null);
               try {
                 var _raw = sessionStorage.getItem('training_answers_' + task + '_p' + practice);
                 var _parsed = _raw ? JSON.parse(_raw) : null;
