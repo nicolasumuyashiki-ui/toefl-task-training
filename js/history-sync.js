@@ -137,7 +137,16 @@
       // count); when present, drop only fully-blank rows. When the server doesn't
       // report it yet (older GAS), fall back to the score heuristic (drop 0).
       // Free-response submissions carry score null (not 0) and are always kept.
-      if (_sc !== null && _tot > 0) {
+      //
+      // SAFETY NET (2026-07-25): a row that SCORED is proof the learner engaged,
+      // so it is NEVER dropped, whatever `answered` says. This is required
+      // because conv / announce / talk store the chosen option as a 0-BASED
+      // INDEX, and the server counts 0 as "not answered" — a learner who picked
+      // choice A everywhere would otherwise report answered=0 and lose the whole
+      // attempt from history despite having a real score (e.g. conv P1 = 1/4).
+      // Losing earned history is the one thing that must never happen, so score
+      // takes precedence over the blank-detection heuristic.
+      if (_sc !== null && _tot > 0 && !(_sc > 0)) {
         if (_answered !== null) { if (_answered === 0) return; }
         else if (_sc === 0) return;
       }

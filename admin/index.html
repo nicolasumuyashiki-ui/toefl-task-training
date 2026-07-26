@@ -563,8 +563,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
 </div>
 
-<script src="../js/api.js?v=20260815"></script>
-<script src="../js/auth.js?v=20260815"></script>
+<script src="../js/api.js?v=20260817"></script>
+<script src="../js/auth.js?v=20260817"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -1611,11 +1611,17 @@ function renderPtList(){
 }
 
 /* Answer-key bank (extracted from the practice-test pages) for Reading ✓/✗
-   and the "問題を確認する" links. Loaded once, cached. */
+   and the "問題を確認する" links. Loaded once, cached.
+   Fetched from the staff-authed GAS endpoint (docs/gas-pt-keys.js). This used
+   to be a plain fetch of admin/pt-keys.json, which GitHub Pages served without
+   any authentication — the whole key bank was downloadable by URL. If the
+   endpoint isn't deployed yet, Api.ptKeys resolves {} and the detail view shows
+   the student's answers without ✓/✗ rather than falling back to a public file. */
 window.__ptKeys = null;
 function loadPtKeys(){
   if(window.__ptKeys) return Promise.resolve(window.__ptKeys);
-  return fetch('pt-keys.json?v=20260722b').then(function(r){return r.json();})
+  if(!(window.Api && Api.ptKeys)){ window.__ptKeys={}; return Promise.resolve(window.__ptKeys); }
+  return Api.ptKeys()
     .then(function(k){ window.__ptKeys=k||{}; return window.__ptKeys; })
     .catch(function(){ window.__ptKeys={}; return window.__ptKeys; });
 }
@@ -2408,6 +2414,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260815"></script>
+<script defer src="../js/tm-footer.js?v=20260817"></script>
 </body>
 </html>
