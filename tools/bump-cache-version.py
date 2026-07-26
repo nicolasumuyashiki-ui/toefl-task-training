@@ -39,12 +39,19 @@ from pathlib import Path
 
 SKIP_DIRS = {".git", "node_modules"}
 
-SRC_RE = re.compile(r'(src=["\'][^"\']*js/[A-Za-z0-9_-]+\.js)(\?v=\d{8})?(["\'])')
+SRC_RE = re.compile(r'(src=["\'][^"\']*js/[A-Za-z0-9_-]+\.js)(\?v=[0-9A-Za-z]+)?(["\'])')
 # 共有JS のトークンだけを対象にする。admin/index.html の
-# `pt-keys.json?v=20260722b` のように英字サフィックス付きの手動トークンは
-# 別系統（version-guard とは無関係なデータファイルのキャッシュ避け）なので、
-# 走査・検証のどちらからも除外する。
-VER_RE = re.compile(r"\?v=(\d{8})(?![0-9A-Za-z])")
+# `pt-keys.json?v=20260722b` のように別系統（version-guard とは無関係な
+# データファイルのキャッシュ避け）のトークンは走査・検証から除外する。
+#
+# 除外は「英字サフィックスの有無」ではなく「参照先が js/NAME.js か」で判定する
+# （2026-07-26 監査・再発防止）。旧実装は `\?v=(\d{8})(?![0-9A-Za-z])` で、
+# 英字サフィックス付きトークンを一律に無視していた。その結果
+# `js/auth.js?v=20260628b` のような**共有JSの巻き戻り**まで検査の穴を通り抜け、
+# reading/academic/practice-2・4 が 6/28 版の auth.js を掴んだまま
+# 7回の bump をすり抜けた（bump 側の SRC_RE も同じ穴で書き換えを取りこぼす）。
+# サフィックスまで含めて捕捉し、`20260814b` のような紛れも stray として落とす。
+VER_RE = re.compile(r"js/[A-Za-z0-9_-]+\.js\?v=([0-9A-Za-z]+)")
 
 # 共有JS の置き場所。ここが変わったら版を上げなければ客に届かない。
 JS_DIRS = ("js/", "practice-test/js/")
