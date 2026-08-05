@@ -1,0 +1,30 @@
+{
+  "_comment": "既知・未修正の未定義参照。CI はこれに無い新規のみで落ちる。 減らすのが正、増やすときは PR で理由を書くこと。",
+  "known": [
+    "connection-help.html::API_URL",
+    "practice-test/reading-ctw.html::changePage",
+    "practice-test/reading-ctw.html::startQ",
+    "practice-test/reading-m2e-ctw.html::changePage",
+    "practice-test/reading-m2e-ctw.html::startQ",
+    "practice-test/reading-m2h-academic1.html::questions",
+    "practice-test/reading-m2h-academic2.html::questions",
+    "practice-test/reading-m2h-ctw.html::changePage",
+    "practice-test/reading-m2h-ctw.html::startQ",
+    "practice-test/test2/reading-ctw.html::changePage",
+    "practice-test/test2/reading-ctw.html::startQ",
+    "practice-test/test2/reading-m2e-ctw.html::changePage",
+    "practice-test/test2/reading-m2e-ctw.html::startQ",
+    "practice-test/test2/reading-m2h-academic1.html::questions",
+    "practice-test/test2/reading-m2h-academic2.html::questions",
+    "practice-test/test2/reading-m2h-ctw.html::changePage",
+    "practice-test/test2/reading-m2h-ctw.html::startQ",
+    "practice-test/test3/reading-ctw.html::changePage",
+    "practice-test/test3/reading-ctw.html::startQ",
+    "practice-test/test3/reading-m2e-ctw.html::changePage",
+    "practice-test/test3/reading-m2e-ctw.html::startQ",
+    "practice-test/test3/reading-m2h-academic1.html::questions",
+    "practice-test/test3/reading-m2h-academic2.html::questions",
+    "practice-test/test3/reading-m2h-ctw.html::changePage",
+    "practice-test/test3/reading-m2h-ctw.html::startQ"
+  ]
+}
