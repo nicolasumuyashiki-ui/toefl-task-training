@@ -42,9 +42,10 @@
 - 重複あり → 候補から除外、別の問題を引く（or 当該問題を**書き換え**）
 
 ### [3] Skill 仕様チェック
-- 仕様書: `C:\Users\umuyashikin\toefl-task-training\.claude\commands\new-{task}.md`
+- 仕様書: `.claude/commands/new-{task}.md`
   - `new-email.md` / `new-discussion.md` / `new-sentence.md`
   - `new-lr.md` / `new-ti.md`（Speaking）
+  - **`new-ctw.md` / `new-rdl.md` / `new-academic.md`（Reading）**
 - チェック項目（タスクごと）:
   - 制限時間（Email 7分 / Discussion 10分 / Sentence 6分）
   - 構造（プロンプト・選択肢・モデル解答 etc）
@@ -52,6 +53,23 @@
   - 採点ルーブリック
   - HTML テンプレート構造
 - 不備あり → 修正案作成
+
+> **⚠️ Reading（CTW/RDL/Academic）は 2026-08-07 まで本チェックの対象外だった。**
+> その結果、2026-07-02 の CTW v3.5.2 制定 (#124) と全面リビルド (#125) が
+> `reading/ctw/` のみを対象とし、`practice-test/` 配下の CTW 9 ファイルが
+> 制定前の状態のまま取り残された（50/89 空所が floor(n/2) 逸脱）。
+> **模試は「Task Training と同じ仕様書に従う」という前提が、この一覧に
+> Reading が無いことで実質破られていた。** 以後 Reading も必ず含めること。
+>
+> CTW の空所ルール（表示＝先頭 floor(n/2) 文字・厳密交互・空所は len>=2）は
+> 完全に機械判定できるため、**目視ではなく `tools/check-ctw.py` で検証する**。
+> CI（`.github/workflows/ctw-spec-guard.yml`）が全 PR で自動実行し、
+> 逸脱が増えるとマージを落とす。手元では:
+>
+> ```
+> python3 tools/check-ctw.py          # 全ファイルの詳細レポート
+> python3 tools/check-ctw.py --check  # CI と同じ判定
+> ```
 
 ### [4] 修正適用
 - skill 仕様に合わせて自動修正
