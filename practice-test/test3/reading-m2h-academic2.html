@@ -263,8 +263,22 @@ function showComplete(){
   document.getElementById('completeOverlay').classList.add('active');
 }
 
+var questions = [
+  {no:"1-10", title:"Complete the Words", desc:"Fill in the missing letters in a paragraph about the mathematics of cryptography.", section:"Reading", page:"reading-m2h-ctw.html"},
+  {no:"11", title:"Academic Passage 1 (Q11)", desc:"Answer a vocabulary question about the word \"ancestral\".", section:"Reading", page:"reading-m2h-academic1.html"},
+  {no:"12", title:"Academic Passage 1 (Q12)", desc:"Draw an inference from the Larson study.", section:"Reading", page:"reading-m2h-academic1.html"},
+  {no:"13", title:"Academic Passage 1 (Q13)", desc:"Identify why the author mentions distributed evidence.", section:"Reading", page:"reading-m2h-academic1.html"},
+  {no:"14", title:"Academic Passage 1 (Q14)", desc:"Identify a limitation of archaeogenomic research.", section:"Reading", page:"reading-m2h-academic1.html"},
+  {no:"15", title:"Academic Passage 1 (Q15)", desc:"Summarize the main argument of the passage.", section:"Reading", page:"reading-m2h-academic1.html"},
+  {no:"16", title:"Academic Passage 2 (Q16)", desc:"Compare the strong and weak versions of the patronage hypothesis.", section:"Reading", page:"reading-m2h-academic2.html", qPage:1},
+  {no:"17", title:"Academic Passage 2 (Q17)", desc:"Draw an inference from the Medici study.", section:"Reading", page:"reading-m2h-academic2.html", qPage:2},
+  {no:"18", title:"Academic Passage 2 (Q18)", desc:"Identify the meaning of a word in context.", section:"Reading", page:"reading-m2h-academic2.html", qPage:3},
+  {no:"19", title:"Academic Passage 2 (Q19)", desc:"Explain why the author mentions courts where patrons exerted little stylistic influence.", section:"Reading", page:"reading-m2h-academic2.html", qPage:4},
+  {no:"20", title:"Academic Passage 2 (Q20)", desc:"Identify the author's conclusion about the patronage hypothesis.", section:"Reading", page:"reading-m2h-academic2.html", qPage:5}
+];
+
 /* ===== REVIEW ===== */
-function openReview(){var qs=window._rq||[];var html='';qs.forEach(function(q,i){var st='Not Answered',cl='not-answered';if(q.no==='1-10'){st='Completed';cl='answered';}else if(userAnswers['q'+q.no]){st='Answered';cl='answered';}html+='<div class="review-row" onclick="showDetail('+i+')" data-idx="'+i+'"><span class="review-no">'+q.no+'</span><span class="review-q">'+q.title+'</span><span class="review-status '+cl+'">'+st+'</span></div>';});document.getElementById('reviewList').innerHTML=html;document.getElementById('reviewOverlay').classList.add('active');showDetail(0);}
+function openReview(){var qs=window._rq||questions;var html='';qs.forEach(function(q,i){var st='Not Answered',cl='not-answered';if(q.no==='1-10'){st='Completed';cl='answered';}else if(userAnswers['q'+q.no]){st='Answered';cl='answered';}html+='<div class="review-row" onclick="showDetail('+i+')" data-idx="'+i+'"><span class="review-no">'+q.no+'</span><span class="review-q">'+q.title+'</span><span class="review-status '+cl+'">'+st+'</span></div>';});document.getElementById('reviewList').innerHTML=html;document.getElementById('reviewOverlay').classList.add('active');showDetail(0);}
 
 function showDetail(idx){var q=(window._rq||questions)[idx];document.querySelectorAll('.review-row').forEach(function(r){r.classList.remove('active')});var rows=document.querySelectorAll('.review-row');if(rows[idx])rows[idx].classList.add('active');var btn;if(q.qPage!==undefined&&q.page==='reading-m2h-academic2.html'){btn='<button class="btn-goto" onclick="closeReview();goToPage('+q.qPage+')">Go to Question &#8250;<\/button>';}else if(q.page&&q.page!=='reading-m2h-academic2.html'){btn='<button class="btn-goto" onclick="window.location.href=\''+q.page+'\'">Go to Question &#8250;<\/button>';}else if(q.page){btn='<button class="btn-goto" onclick="closeReview()">Go to Question &#8250;<\/button>';}else{btn='<button class="btn-goto disabled" disabled>Coming Soon<\/button>';}document.getElementById('reviewDetail').innerHTML='<div class="detail-label">Reading — Module 2<\/div><div class="detail-title">'+q.title+'<\/div><div class="detail-desc">'+q.desc+'<\/div>'+btn;}
 
