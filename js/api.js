@@ -307,6 +307,29 @@ function _flushOutbox() {
   return step().then(null, function () { _flushingOutbox = false; });
 }
 
+/* Send one SAVE_HEALTH report. Relay-first so it still lands when direct GAS
+   is blocked — which is exactly the situation being reported. Counts of 0 are
+   a valid, meaningful payload: they are the "this account is fine now" signal
+   that clears the admin panel. */
+function _sendSaveHealth(u, stuck, ptStuck, ageMin, maxTries) {
+  var params = {
+    action: 'reportSaveHealth',
+    userId: u.userId,
+    userName: u.userName || u.name || '',
+    stuck: String(stuck),
+    ptStuck: String(ptStuck),
+    oldestAgeMin: String(ageMin),
+    maxTries: String(maxTries),
+    ua: String((typeof navigator !== 'undefined' && navigator.userAgent) || '').slice(0, 180)
+  };
+  var qs = Object.keys(params).map(function (k) {
+    return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+  }).join('&');
+  var direct = function () { return _jsonpRequest(API_URL + '?' + qs); };
+  var send = SAVE_PROXY_URL ? _proxyPost(params).catch(direct) : direct();
+  return send.then(function (r) { return r; }, function () { return null; });
+}
+
 var Api = {
   login: function(id, pass) {
     return _jsonpRequest(API_URL + '?action=login&id=' + encodeURIComponent(id) + '&pass=' + encodeURIComponent(pass));
@@ -424,7 +447,20 @@ var Api = {
     var task = _outboxRead();
     var pt = []; try { pt = JSON.parse(localStorage.getItem('tck_pt_outbox') || '[]') || []; } catch (e) {}
     var stuck = task.length, ptStuck = pt.length;
-    if (stuck + ptStuck === 0) return Promise.resolve(null);
+
+    /* Outbox is empty. If this device previously reported a stuck save we MUST
+       say so, otherwise the SAVE_HEALTH row keeps the last non-zero counts
+       forever and admin sees a red row for an account whose saves have long
+       since gone through (rows were sitting at 2 weeks old before this fix).
+       The all-clear ignores the 30-min throttle — it is rare and important. */
+    if (stuck + ptStuck === 0) {
+      var wasFlagged = false;
+      try { wasFlagged = localStorage.getItem('tck_health_flagged') === '1'; } catch (e) {}
+      if (!wasFlagged) return Promise.resolve(null);
+      try { localStorage.removeItem('tck_health_flagged'); } catch (e) {}
+      return _sendSaveHealth(u, 0, 0, 0, 0);
+    }
+
     var now = Date.now(), oldest = now, maxTries = 0;
     task.concat(pt).forEach(function (it) {
       var t = Date.parse((it && it.enqueuedAt) || ''); if (!isNaN(t) && t < oldest) oldest = t;
@@ -438,15 +474,11 @@ var Api = {
       try { var last = Number(sessionStorage.getItem('tck_health_reported') || 0); if (now - last < 30 * 60 * 1000) return Promise.resolve(null); } catch (e) {}
     }
     try { sessionStorage.setItem('tck_health_reported', String(now)); } catch (e) {}
-    var params = {
-      action: 'reportSaveHealth', userId: u.userId, userName: u.userName || u.name || '',
-      stuck: String(stuck), ptStuck: String(ptStuck), oldestAgeMin: String(ageMin),
-      maxTries: String(maxTries), ua: String((typeof navigator !== 'undefined' && navigator.userAgent) || '').slice(0, 180)
-    };
-    var qs = Object.keys(params).map(function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]); }).join('&');
-    var direct = function () { return _jsonpRequest(API_URL + '?' + qs); };
-    var send = SAVE_PROXY_URL ? _proxyPost(params).catch(direct) : direct();
-    return send.then(function (r) { return r; }, function () { return null; });
+    /* Remember that this device has an outstanding flag, so the next flush that
+       empties the outbox knows to send the all-clear. localStorage (not
+       session) because the save may only succeed in a later visit. */
+    try { localStorage.setItem('tck_health_flagged', '1'); } catch (e) {}
+    return _sendSaveHealth(u, stuck, ptStuck, ageMin, maxTries);
   },
 
   /* Admin read — flagged accounts whose saves aren't reaching the server.

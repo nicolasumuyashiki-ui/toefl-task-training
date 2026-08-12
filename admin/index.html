@@ -563,8 +563,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
 </div>
 
-<script src="../js/api.js?v=20260817"></script>
-<script src="../js/auth.js?v=20260817"></script>
+<script src="../js/api.js?v=20260818"></script>
+<script src="../js/auth.js?v=20260818"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -2118,6 +2118,17 @@ function checkSaveHealthAlert() {
     renderSaveHealthAlert(rows);
   }).catch(function () {});
 }
+/* 最終報告からの経過を「3分前 / 4時間前 / 12日前」で返す。日単位まで開いた
+   行は、いま起きている障害ではなく解消済みの取り残しである可能性が高い。 */
+function fmtReportAgo(iso) {
+  var t = Date.parse(iso);
+  if (isNaN(t)) return '不明';
+  var min = Math.max(0, Math.round((Date.now() - t) / 60000));
+  if (min < 1) return 'たった今';
+  if (min < 60) return min + '分前';
+  if (min < 60 * 24) return Math.round(min / 60) + '時間前';
+  return Math.round(min / (60 * 24)) + '日前';
+}
 function renderSaveHealthAlert(rows) {
   var listEl = document.getElementById('shAlertList');
   var titleEl = document.getElementById('shAlertTitle');
@@ -2127,9 +2138,12 @@ function renderSaveHealthAlert(rows) {
   listEl.innerHTML = top.map(function (r) {
     var total = (Number(r.stuck) || 0) + (Number(r.ptStuck) || 0);
     var sev = (Number(r.oldestAgeMin) || 0) >= 60 || total >= 3;
+    // 「滞留」は報告された時点の値なので、いつの報告かを併記しないと古い行が
+    // 現在進行形の障害に見えてしまう（実際に数週間前の行が残り続けていた）。
     return '<div class="sh-alert-item' + (sev ? ' sev' : '') + '">' +
       '<div class="who"><div class="nm">' + escapeHtml(r.userName || '（氏名なし）') + '</div>' +
-      '<div class="id">' + escapeHtml(r.userId || '') + '</div></div>' +
+      '<div class="id">' + escapeHtml(r.userId || '') + '</div>' +
+      '<div class="id">最終報告: ' + escapeHtml(fmtReportAgo(r.lastReportAt)) + '</div></div>' +
       '<div class="stat"><b>' + total + '件</b>未送信<br>' + fmtAgeMin(r.oldestAgeMin) + '滞留</div>' +
       '</div>';
   }).join('') + (rows.length > top.length
@@ -2414,6 +2428,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260817"></script>
+<script defer src="../js/tm-footer.js?v=20260818"></script>
 </body>
 </html>
