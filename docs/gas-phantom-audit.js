@@ -222,11 +222,12 @@ function auditDriveCustomers() {
   return { total: tot, ok: ok, priv: priv, gone: gone };
 }
 
-// 個別ユーザー用（引数なしで実行できる呼び出しラッパー）
-function runKirari()   { auditDriveFiles('Kirari'); }
-function runYagu()     { auditDriveFiles('yagu1004'); }
-function runAiriseko() { auditDriveFiles('airiseko2021'); }
-function runMaeda()    { auditDriveFiles('soichiro941@gmail.com'); }
+// 個別ユーザーを調べたいときは、GAS エディタの実行ログから
+//   auditDriveFiles('<userId>')
+// を直接呼ぶこと（読み取り専用）。
+// 以前ここに顧客ごとの呼び出しラッパーを置いていたが、userId や
+// メールアドレスがコードに残り、public な docs/ 経由で公開されて
+// しまうため撤去した（2026-08-07 監査で是正）。
 
 /**
  * 【削除用・承認後のみ】既定は dryRun=true（消さない）。

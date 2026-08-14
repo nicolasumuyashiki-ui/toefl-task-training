@@ -49,7 +49,23 @@ $ARGUMENTS
    - 検証: 各 practice-N.html で `mountExitButton` の行番号 > `progress.js` の行番号
 10. **CTW 入力欄スペーシング CSS**: `.sh{margin-right:.22em}` / `.word-blank{margin-right:.45em}` が適用されているか
 11. **CTW 入力フィルタ**: input イベントでの `[^A-Za-z]` 除去が全 CTW ファイルにあるか
+11b. **CTW 空所仕様（v3.5.2）**: `python3 tools/check-ctw.py --check` を実行する。
+   - 目視でチェックしないこと。floor(n/2)・厳密交互・件数・最小長は全て機械判定できる。
+   - **`reading/` の曜日だけでなく `practice-test/` の曜日でも必ず実行する**。
+     2026-08-07 の監査で、v3.5.2 リビルド (#125) が `reading/ctw/` のみを対象とし、
+     `practice-test/` の CTW 9 ファイルが 6 週間逸脱したまま放置されていたことが判明した。
+     曜日ローテーションで領域を分けていたことが発見を遅らせた直接の原因。
+   - CI（`.github/workflows/ctw-spec-guard.yml`）が同じ判定を全 PR で実行する。
 12. **Build a Sentence**: 文末ピリオドが word bank の最後の piece に混入していないか
+12b. **`docs/` への個人情報混入**（2026-08-07 監査で実際に発生・最重要）:
+   このリポジトリは **public** かつ `docs/` は GitHub Pages でそのまま配信される。
+   `docs/` に顧客のメールアドレス・氏名を書くと、GitHub とカスタムドメインの
+   両方で誰でも閲覧できる状態になる。
+   - 検証: `grep -rhoE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' docs/ | sort -u`
+     → `example.com` 系のダミーと自社ドメイン（`@tckworkshop.co.jp`）以外が出たら **即対応**。
+   - 実データが必要な場合は GAS の **Script Properties** に置く
+     （`MONITOR_EMAILS_JSON` / `SUB_EMAIL_ALIASES` が実例）。
+   - サンプル・コメント・障害の経緯にも実在顧客の氏名を書かないこと。
 
 ### C. 数値・タイマー・リンク
 13. **リンク切れ**: `href` / `src` の参照先ファイルが実在するか

@@ -5,3 +5,4 @@ audio_backup/
 audio_audit.json
 *.py
 !tools/bump-cache-version.py
+!tools/check-ctw.py

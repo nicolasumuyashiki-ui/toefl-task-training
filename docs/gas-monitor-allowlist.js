@@ -1,30 +1,42 @@
 /**
  * gas-monitor-allowlist.js
  *
- * Moves the monitor / comp-tier allowlist from the client-side
- * js/auth.js (where it was visible to anyone via View Source) into
- * the GAS backend so the emails never reach the browser.
+ * Moves the monitor / comp-tier allowlist out of client-side js/auth.js
+ * (where it was visible via View Source) into the GAS backend, so the
+ * emails never reach the browser.
  *
- * After this change, monitor users see "active" subscription status
- * coming back from GAS, and the client-side gate lets them through
- * exactly like a paying customer — but the monitor list itself is
- * never transmitted to browsers.
+ * ⚠️ 個人情報を本ファイルに書かないこと（2026-08-07 監査で是正）
+ *   このリポジトリは **public**、かつ `docs/` は GitHub Pages でそのまま
+ *   配信される（リポジトリ直下に .nojekyll があるため）。したがって
+ *   docs/ に書いたメールアドレスは
+ *     - https://github.com/<owner>/<repo>/blob/main/docs/…
+ *     - https://apps.tckworkshop.co.jp/toefl-task-training/docs/…
+ *   の両方で誰でも閲覧できる。
+ *   以前この位置に実在顧客のメールアドレス9件・氏名・login id が
+ *   ベタ書きされていた（「emails never reach the browser」と書いた
+ *   ファイル自身が公開配信されていた）。
+ *   → 実データは **Script Properties** に置き、本ファイルには
+ *     仕組みだけを書く。氏名・comp の経緯などもここには残さない。
  *
  * Paste flow:
- *   1. Add the MONITOR_EMAILS constant + isMonitorEmail_ helper
- *      (block 1 below) somewhere near the top of the file — right
- *      under the existing constant block (DATETIME_FMT etc.) is fine.
- *   2. REPLACE your existing `handleGetSubscription_` function with
- *      the new version below (block 2). The only diff is a 4-line
- *      monitor short-circuit at the top.
- *   3. ALSO patch `handleLogin_` to return `isMonitor` (block 3).
- *      The index.html login flow uses this flag to skip the
- *      domain whitelist check so monitor gmail addresses can sign in.
- *   4. Save (Ctrl+S) → Deploy → Manage deployments → 鉛筆 →
- *      New version → Deploy.
+ *   1. Script Properties に `MONITOR_EMAILS_JSON` を追加する。
+ *      値は小文字のメールアドレスの JSON 配列。例:
+ *        ["someone@example.com","another@example.net"]
+ *      （⚙ プロジェクトの設定 → スクリプト プロパティ）
+ *   2. BLOCK 1（下）を GAS の定数ブロック付近に貼る。
+ *   3. 既存の `handleGetSubscription_` を BLOCK 2 で置き換える。
+ *   4. `handleLogin_` に BLOCK 3 の 1 行を追加する。
+ *   5. Save → Deploy → Manage deployments → 鉛筆 → New version → Deploy.
  *
- * To add / remove monitors later: edit MONITOR_EMAILS, save, redeploy.
- * No client-side code change needed.
+ * モニターの追加・削除は Script Properties の値を編集するだけ。
+ * 再デプロイもコード変更も不要になる（従来はコード編集＋再デプロイが必要だった）。
+ *
+ * 運用メモ: ここに登録すると APP へのアクセスが ¥0 になるだけで、
+ * その人の Stripe サブスクは解約されない。実際に課金を止めるには
+ * Stripe ダッシュボード側でも解約すること。
+ * 誰がどの理由で comp なのか（goodwill comp の経緯・氏名・日付）は
+ * **公開されない場所**に記録する（Script Properties のコメント欄、
+ * 社内 Drive、非公開の運用メモ等）。
  */
 
 
@@ -34,39 +46,42 @@
 
 /* Monitor / comp-tier accounts — these emails get an "active"
    subscription synthesised by GAS, so they can use all paid features
-   without going through Stripe. The list lives server-side so it
-   never appears in the browser. Lowercase.
+   without going through Stripe.
 
-   This list also covers GOODWILL LIFETIME COMPS — paying customers we
-   have granted free-forever access (e.g. as compensation). Mark each
-   with a dated comment so nobody removes them later thinking they are a
-   stale monitor. IMPORTANT: adding an email here grants APP ACCESS at
-   ¥0, but does NOT cancel that person's existing Stripe subscription —
-   to actually stop charging a paying customer you must ALSO cancel
-   their subscription in the Stripe Dashboard. */
-var MONITOR_EMAILS = [
-  'saekadowaki322@gmail.com',
-  'bellsince2004@gmail.com',
-  'mkusunoki0811@gmail.com',
-  'soccerzurdo1@gmail.com',
-  'nanasey103@gmail.com',
-  // 前田 宗一郎 — goodwill comp (2026-06, 今後無料). Listed BOTH login-id and
-  // account email because GAS matches on the email column (u.email); both
-  // are included so the comp activates regardless of which field is checked.
-  'kyo.maeda2015@gmail.com',
-  'soichiro941@gmail.com',
-  // 矢口 洪太 (login id: yagu1004) — goodwill comp (2026-07, 今後無料).
-  // 経緯: 6/25〜7/20 の間、送信未確認の保存を再送打ち切りで破棄する実装が
-  // あり、娘さまの Read in Daily Life Practice 3〜6 の記録が失われたため。
-  // GAS は USERS の email 列で照合するので、アカウント email を登録する。
-  // ※ 娘さまご本人の email (yagucchan0625@yahoo.co.jp) で別アカウントを
-  //   作られた場合は、その email もここに追加すること。
-  'rena.yon811@gmail.com'
-];
+   実データは Script Properties `MONITOR_EMAILS_JSON`（小文字メールの
+   JSON 配列）から読む。コードにも docs にも実アドレスを置かないため、
+   public リポジトリ／GitHub Pages に載らない。
+   未設定・JSON 破損時は空リストになり、comp が効かなくなるだけで
+   他機能は壊れない（fail-closed）。 */
+function getMonitorEmails_() {
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get('monitor_emails');
+  if (cached) {
+    try { return JSON.parse(cached); } catch (e) {}
+  }
+  var out = [];
+  try {
+    var raw = PropertiesService.getScriptProperties().getProperty('MONITOR_EMAILS_JSON');
+    if (raw) {
+      var arr = JSON.parse(raw);
+      if (Object.prototype.toString.call(arr) === '[object Array]') {
+        for (var i = 0; i < arr.length; i++) {
+          var em = String(arr[i] || '').toLowerCase().trim();
+          if (em) out.push(em);
+        }
+      }
+    }
+  } catch (err) {
+    Logger.log('MONITOR_EMAILS_JSON の読み取りに失敗: ' + err);
+    return [];
+  }
+  try { cache.put('monitor_emails', JSON.stringify(out), 300); } catch (e) {}
+  return out;
+}
 
 function isMonitorEmail_(email) {
   if (!email) return false;
-  return MONITOR_EMAILS.indexOf(String(email).toLowerCase().trim()) !== -1;
+  return getMonitorEmails_().indexOf(String(email).toLowerCase().trim()) !== -1;
 }
 
 
@@ -79,7 +94,6 @@ function handleGetSubscription_(e, callback) {
   if (!u) return jsonpResponse_(callback, { success: false, error: 'auth_failed' });
 
   // Monitor / comp-tier — return synthetic active subscription.
-  // Keeps the email list off the client and out of any Git history.
   if (isMonitorEmail_(u.email)) {
     return jsonpResponse_(callback, {
       success: true,
@@ -137,5 +151,21 @@ function handleGetSubscription_(e, callback) {
 //     isMonitor: isMonitorEmail_(String(d[i][3] || ''))   // <-- ADD THIS
 //   });
 //
-// That's the only diff. index.html consumes `isMonitor` to skip the
-// TCK-domain check for comp-tier accounts.
+// index.html consumes `isMonitor` to skip the TCK-domain check for
+// comp-tier accounts.
+
+
+// =============================================================
+// 移行用ヘルパー — 現行のベタ書きリストを Script Properties へ移す
+// =============================================================
+// GAS 側にまだ `var MONITOR_EMAILS = [...]` が残っている場合、
+// 一度だけ実行するとその中身を Script Properties へ移送できる。
+// 実行後は GAS から `var MONITOR_EMAILS = [...]` を削除すること。
+//
+// function migrateMonitorEmailsOnce() {
+//   PropertiesService.getScriptProperties()
+//     .setProperty('MONITOR_EMAILS_JSON', JSON.stringify(MONITOR_EMAILS));
+//   CacheService.getScriptCache().remove('monitor_emails');
+//   Logger.log('移送しました: ' + MONITOR_EMAILS.length + ' 件');
+//   Logger.log('★ GAS から var MONITOR_EMAILS = [...] を削除してください');
+// }
