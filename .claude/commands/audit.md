@@ -79,6 +79,14 @@ $ARGUMENTS
 
 問題ゼロの場合も「本日は異常なし」と必ず報告。
 
+## 既知の例外（対応不要・再掲不要）
+以下はユーザー承認済みで「変更しない」と判断済みのため、次回以降の監査レポートで再度フラグを立てないこと。
+該当ファイルの内容（該当箇所）が今後変更された場合はこの限りではない（再度対象になり得る）。
+- 2026-08-03: `reading/academic/practice-5.html` / `practice-5-answers.html` Q9 の
+  `According to paragraph 4, ...` 表現（new-academic.md の禁止形式）→ 修正不要と判断。
+- 2026-08-03: `reading/ctw/practice-2-set-2.html` / `practice-2-answers.html` の Set 2 パッセージ
+  総語数69語（仕様70-100語を1語下回る）→ 修正不要と判断。
+
 ## 禁止事項
 - `js/api.js` の `GAS_URL` を変更しない
 - `index.html` の認証ロジックを変更しない
