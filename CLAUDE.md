@@ -151,6 +151,21 @@ GitHub Pages は静的配信で、ブラウザは `js/*.js` を**数日キャッ
 - **日付表示**: `training_score_*` の `updatedAt`（各ページが書く ISO）と `training_first_*` の `capturedAt` を
   サーバ復元時も `history-sync` が引き継ぐ。my-score の学習履歴テーブルは `fmtWhen()` で JST 整形して表示する。
 
+### 保存呼び出しは CI が検証する（2026-08-19 事故・再発防止・最重要）
+`Api.saveAnswers(...)` は例外を握りつぶす `try{...}catch(e){}` の中から呼ばれる。そのため
+**引数の組み立てで ReferenceError が起きると、保存が一度も実行されないまま画面上は正常に見える**。
+実際 `writing/discussion/practice-{1..10}.html` は `words:wordCount` と書いていたが、その場に存在する
+変数は `wc` だけで `wordCount` はどこにも無く、**2026-06-28（53460a6）から約 7 週間、Academic Discussion の
+提出文がサーバ ANSWERS に一切保存されていなかった**（同じ関数内の sessionStorage 保存は `wc` を正しく参照して
+成功し、`tck_done_*` も立つため「提出済み」と表示され、発見が遅れた）。
+- **保存呼び出しの引数に、その場で定義されていない変数を書かない。** 変数名を変えたら呼び出し側も必ず追随させる。
+- **`.github/workflows/save-integrity-guard.yml`** が全 PR と main への push で
+  `python3 tools/check-save-calls.py` を実行し、保存呼び出しの引数で参照している識別子が解決できなければ
+  マージを落とす。落ちたらログに日本語で直し方が出る。
+- ※ `tools/check-save-calls.py` は `.gitignore` の `*.py` を `!tools/check-save-calls.py` で例外化して追跡している。
+- 保存周りを触ったら、**実際に `Api.saveAnswers` が呼ばれることを確認してから**マージすること
+  （画面が「提出済み」になることは保存された証拠にならない）。
+
 ### docs/gas-*.js は「デプロイ済み GAS の正本」— ずれたら監査が実物と違うものを読む
 `docs/gas-*.js` は GAS にペースト＆デプロイする元であり、**GAS 側を変更したら必ず同じコミットで
 docs/ も更新する**。2026-07-25 の監査で、デプロイ済みの `handleSaveAnswers_`（`clientSaveId` による
