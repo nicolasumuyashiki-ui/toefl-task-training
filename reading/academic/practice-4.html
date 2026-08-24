@@ -304,7 +304,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
       <p>Photosynthesis is the process by which green plants, algae, and certain bacteria convert sunlight into chemical energy. Using water and carbon dioxide, these organisms produce glucose, a sugar that fuels their growth. Oxygen is released as a byproduct, sustaining the oxygen levels most living things depend on.</p>
       <p>The mechanism takes place in chloroplasts, structures containing a green pigment called chlorophyll. Chlorophyll absorbs red and blue light while reflecting green — which is why plants appear green. Chemical reactions inside the chloroplast convert this energy into glucose through two stages: light-dependent reactions and the Calvin cycle.</p>
       <p>Although all photosynthetic plants share this process, different species have developed <span class="highlight-word">remarkable</span> adaptations to challenging environments. Desert plants such as cacti use a modified form called CAM photosynthesis, opening their stomata only at night to minimize water loss. Tropical rainforest plants, competing for sunlight, have developed broad, thin leaves that maximize light absorption. These adaptations show that while the chemistry is shared, plant strategies vary by habitat.</p>
-      <p id="insertionParagraph">Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress. In this way, photosynthesis research has implications extending well beyond basic biology, reaching into agriculture and food security.</p>
+      <p id="insertionParagraph">Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress. Taken together, these efforts show that photosynthesis research reaches well beyond basic biology into agriculture and food security.</p>
     </div>
   </div>
 
@@ -608,8 +608,8 @@ function closeReview(){
 }
 
 /* ===== SENTENCE INSERTION SETUP ===== */
-var normalParagraphHTML = 'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. Understanding how plants adjust their photosynthetic processes in response to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties that are more resilient to environmental stress. In this way, research into photosynthesis has implications that extend well beyond basic biology and into the fields of agriculture and food security.';
-var insertionParagraphHTML = '<span class="insert-square" data-insert="D">\u25A0</span> Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. <span class="insert-square" data-insert="A">\u25A0</span> Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress. <span class="insert-square" data-insert="B">\u25A0</span> In this way, photosynthesis research has implications extending well beyond basic biology, reaching into agriculture and food security. <span class="insert-square" data-insert="C">\u25A0</span>';
+var normalParagraphHTML = 'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress. Taken together, these efforts show that photosynthesis research reaches well beyond basic biology into agriculture and food security.';
+var insertionParagraphHTML = '<span class="insert-square" data-insert="D">\u25A0</span> Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change. <span class="insert-square" data-insert="A">\u25A0</span> Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress. <span class="insert-square" data-insert="B">\u25A0</span> Taken together, these efforts show that photosynthesis research reaches well beyond basic biology into agriculture and food security. <span class="insert-square" data-insert="C">\u25A0</span>';
 var insertSentenceText = "Furthermore, these improved crops would be especially valuable in tropical regions, where rising temperatures already threaten staple food production.";
 var correctInsertion = "B";
 var insertionQuestionPage = 8;
@@ -649,8 +649,8 @@ function bindSquareClicks(){
 function rebuildParagraphWithInsertion(position){
   var sentences = [
     'Scientists continue to study photosynthetic adaptations with growing interest, particularly in the context of climate change.',
-    'Understanding how plants adjust their photosynthetic processes in response to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties that are more resilient to environmental stress.',
-    'In this way, research into photosynthesis has implications that extend well beyond basic biology and into the fields of agriculture and food security.'
+    'Understanding how plants adjust to rising temperatures, drought, and changing light conditions could help researchers develop crop varieties more resilient to environmental stress.',
+    'Taken together, these efforts show that photosynthesis research reaches well beyond basic biology into agriculture and food security.'
   ];
   var labels = ['A','B','C'];
   var html = '';
