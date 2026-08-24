@@ -1,0 +1,55 @@
+# 未定義識別子ガード（＝「保存が静かに死ぬ」事故の再発防止）
+#
+# 2026-06-28（#111）から 2026-08-05 まで、writing/discussion/practice-{1..10}.html の
+# finishWriting() が Api.saveAnswers の引数で未宣言の `wordCount` を参照していた
+# （正しくは同関数内の `wc`）。未宣言変数の読み取りは ReferenceError になるため、
+# 引数オブジェクトの評価時点で例外が発生し、Api.saveAnswers は一度も呼ばれていなかった。
+# しかも
+#     try{ Api.saveAnswers(...) }catch(e){}
+# が例外を握り潰していたため、画面上は正常に完了したように見え、
+# Academic Discussion 全10 Practice の提出がサーバ ANSWERS に 5 週間以上
+# 一切保存されていなかった。Discussion は auth.js の AUTO_SAVE_LABELS に
+# 含まれない（自前保存が前提）ため、フォールバックも効かなかった。
+#
+# 「レビューで気をつける」では同じことがまた起きる。静的解析なら
+# try/catch に隠れていても必ず見つかるので、CI で機械的に止める。
+# cache-version-guard.yml と同じ思想（人の記憶に依存しない）。
+#
+# 落ちたときの直し方はジョブのログに日本語で出る。
+name: js-undefined-guard
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    name: インライン JS の未定義識別子
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 未定義識別子チェック
+        shell: bash
+        run: |
+          rc=0
+          out=$(python3 tools/check-js-undefined.py 2>&1) || rc=$?
+          echo "$out"
+          {
+            echo '## 未定義識別子チェック'
+            echo ''
+            echo '```'
+            echo "$out"
+            echo '```'
+            if [ "$rc" -ne 0 ]; then
+              echo ''
+              echo '> 未宣言変数の読み取りは ReferenceError になります。'
+              echo '> `Api.saveAnswers(...)` の引数の中で起きると saveAnswers 自体が呼ばれず、'
+              echo '> 周囲の `try/catch` が例外を握り潰すため、画面上は正常に見えたまま'
+              echo '> **履歴だけがサーバに残らない**状態になります。'
+              echo '>'
+              echo '> 詳細は CLAUDE.md「履歴は絶対にリセットしない」。'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
