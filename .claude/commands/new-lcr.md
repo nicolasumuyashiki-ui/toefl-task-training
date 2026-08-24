@@ -71,6 +71,7 @@ TOEFL iBT - Listen and Choose a Response 問題作成ガイド v2.4.1（Module 1
 - キャンパスライフ・日常生活の場面
 - pragmatic understanding（語用論的理解）を測定
 - 話者の意図、トーン、文脈の理解が鍵
+- 制限時間: 20秒/問
 
 ■ CEFR B1-B2 の特徴（問題作成の指針）
 - B1: 日常的な話題について明確な標準語を理解できる
