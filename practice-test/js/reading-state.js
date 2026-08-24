@@ -22,11 +22,18 @@
  * a new mock is started. Restoring is additive and never deletes answers.
  *
  * Real-TOEFL module boundary: going back is only meaningful WITHIN a module.
- * The `clearModule1()` export below exists for that Module 1 → Module 2
- * handoff so Module 2 starts clean and a learner cannot reach back into the
- * previous module (matches ETS adaptive behaviour); reading-m2-select.html's
- * startModule2() currently duplicates this same q11–q20 wipe inline instead
- * of calling this export — behaviour is identical, just not wired through here.
+ * That Module 1 → Module 2 handoff is owned entirely by reading-m2-select.html's
+ * startModule2(), and it is NOT a plain wipe: it first ARCHIVES the learner's
+ * q11–q20 answers into the m1-namespaced keys (practice_reading_m1_ans /
+ * practice_reading_m1_ctw), and only then clears the live keys. Module 2 REUSES
+ * the q11–q20 ids, so the live keys must be cleared — but the Module-1 answers
+ * themselves must survive, because the results snapshot and the Admin
+ * per-question review both read them back.
+ *
+ * Do NOT add a bare "clear Module 1" helper here and wire it into that handoff:
+ * a wipe that skips the archive step would silently destroy answers the learner
+ * is entitled to keep. (Such a helper used to live here, unused, described as
+ * "behaviour is identical" to startModule2() — it was not, and it was removed.)
  */
 (function () {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
@@ -157,14 +164,8 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', restoreAll);
   else restoreAll();
 
-  /* ---------- module boundary ---------- */
-
-  window.PTReadingState = {
-    clearModule1: function () {
-      var mc = readJSON(MC_KEY);
-      ['q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19', 'q20'].forEach(function (q) { delete mc[q]; });
-      writeJSON(MC_KEY, mc);
-      var ctw = readJSON(CTW_KEY); delete ctw['reading-ctw.html']; writeJSON(CTW_KEY, ctw);
-    }
-  };
+  /* ---------- module boundary ----------
+   * Intentionally no export here — see the header comment. The Module 1 → Module 2
+   * handoff (archive, then clear) belongs to reading-m2-select.html's startModule2().
+   */
 })();
