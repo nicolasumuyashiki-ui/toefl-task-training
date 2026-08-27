@@ -6,7 +6,7 @@ TCK Workshop の TOEFL® 学習アプリ「TCK Reps」をご利用中の生徒�
 
 ## 1. アプリの全体像
 
-- **URL**: https://apps.tckworkshop.co.jp/toefl-task-training/
+- **URL**: https://apps.tckworkshop.co.jp/tck-reps/
 - **対象**: 月額サブスクで利用する TOEFL iBT（2026 年新形式）対策アプリ
 - **タスク数**: 全 4 技能 × 約 12 種類のタスクトレーニング、各 10 Practice ずつ
 - **採点**: Reading・Listening は自動採点、Writing・Speaking は**自動採点なし**

@@ -37,7 +37,7 @@ function tckIsStaff(email, userId) {
 }
 
 /* Figure out the absolute URL of the app root (where index.html /
-   menu.html live). Returns e.g. "https://apps.tckworkshop.co.jp/toefl-task-training/"
+   menu.html live). Returns e.g. "https://apps.tckworkshop.co.jp/tck-reps/"
    or "/" depending on deployment.
 
    Strategy: locate the <script> tag that loaded this auth.js. Its src
