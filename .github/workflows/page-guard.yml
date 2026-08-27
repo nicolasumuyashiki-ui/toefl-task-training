@@ -1,0 +1,35 @@
+# ページ健全性ガード（画面が「進まなくなる」事故の再発防止）
+#
+# 2026-08、模試3の practice-test/test3/reading-rdl2.html で、設問ブロックの id が
+# page13/14/15 なのにページ送りの実装は page1/2/3 を探しており、getElementById が
+# null を返して例外になった。結果、Next ボタンを押しても先へ進めず、お客さまは
+# 模試3を途中から受けられなくなった（茶谷さまのご報告）。
+#
+# この不具合は「構文エラーなし・リンク切れなし」だったため、既存の検査も人の
+# 目視レビューも素通りした。tools/check-pages.js は同じ形の事故を機械で止める。
+#
+# 検査は読み取り専用で、問題文・正解・レイアウトには一切触れない。
+#   ① インライン script が構文として解釈できる
+#   ② getElementById('x') の 'x' が同じページに実在する
+#   ③ totalPages=N のページに id="page1"…"pageN" が揃っている
+#   ④ 内部リンクの遷移先 HTML が実在する
+#
+# 落ちたらログに該当ファイルと理由が日本語で出る。手元で同じものを流せる:
+#   node tools/check-pages.js
+name: page-guard
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: ページ健全性チェック
+        run: node tools/check-pages.js
