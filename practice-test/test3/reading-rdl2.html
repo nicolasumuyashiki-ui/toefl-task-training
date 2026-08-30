@@ -343,7 +343,20 @@ function openReview(){
   showDetail(0);
 }
 
-function showDetail(idx){var q=(window._rq||questions)[idx];document.querySelectorAll('.review-row').forEach(function(r){r.classList.remove('active')});var rows=document.querySelectorAll('.review-row');if(rows[idx])rows[idx].classList.add('active');var btn;if(q.qPage!==undefined&&q.page==='reading-rdl2.html'){btn='<button class="btn-goto" onclick="closeReview();goToPage('+q.qPage+')">Go to Question &#8250;<\/button>';}else if(q.page&&q.page!=='reading-rdl2.html'){btn='<button class="btn-goto" onclick="window.location.href=\''+q.page+'\'">Go to Question &#8250;<\/button>';}else if(q.page){btn='<button class="btn-goto" onclick="closeReview()">Go to Question &#8250;<\/button>';}else{btn='<button class="btn-goto disabled" disabled>Coming Soon<\/button>';}document.getElementById('reviewDetail').innerHTML='<div class="detail-label">Reading<\/div><div class="detail-title">'+q.title+'<\/div><div class="detail-desc">'+q.desc+'<\/div>'+btn;}
+/* Review パネルから別ページへ飛ぶ前に、このページの採点を必ず保存する。
+   Next を押さずに離脱すると、そのページぶんの問題が採点されないまま Reading の
+   分母だけが減る（模試3 で Reading が 40 点満点 → 37 点満点になった原因）。
+   各ページは自分の save…Score だけを定義しているので、実際に走るのは 1 つだけ。 */
+function ptSaveBeforeLeave(){
+  var names=['saveM1CTWScore','saveM1RDL1Score','saveM1RDL2Score','saveM1Score',
+             'saveM2eCTWScore','saveM2eRDL1Score','saveM2eRDL2Score',
+             'saveM2hCTWScore','saveM2hAcademic1Score','saveM2hAcademic2Score'];
+  for(var i=0;i<names.length;i++){
+    try{ if(typeof window[names[i]]==='function') window[names[i]](); }catch(e){}
+  }
+}
+
+function showDetail(idx){var q=(window._rq||questions)[idx];document.querySelectorAll('.review-row').forEach(function(r){r.classList.remove('active')});var rows=document.querySelectorAll('.review-row');if(rows[idx])rows[idx].classList.add('active');var btn;if(q.qPage!==undefined&&q.page==='reading-rdl2.html'){btn='<button class="btn-goto" onclick="closeReview();goToPage('+q.qPage+')">Go to Question &#8250;<\/button>';}else if(q.page&&q.page!=='reading-rdl2.html'){btn='<button class="btn-goto" onclick="ptSaveBeforeLeave();window.location.href=\''+q.page+'\'">Go to Question &#8250;<\/button>';}else if(q.page){btn='<button class="btn-goto" onclick="closeReview()">Go to Question &#8250;<\/button>';}else{btn='<button class="btn-goto disabled" disabled>Coming Soon<\/button>';}document.getElementById('reviewDetail').innerHTML='<div class="detail-label">Reading<\/div><div class="detail-title">'+q.title+'<\/div><div class="detail-desc">'+q.desc+'<\/div>'+btn;}
 
 function closeReview(){ document.getElementById('reviewOverlay').classList.remove('active'); }
 document.getElementById('reviewOverlay').addEventListener('click', function(e){ if(e.target===this) closeReview(); });
