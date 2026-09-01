@@ -6,7 +6,7 @@
  *   school networks, VPNs) drop the browser's cross-origin request to
  *   `script.google.com` — so their completed work never reaches the GAS
  *   backend, even though login (a tiny request) still works. Symptom seen
- *   with 前田様: reads OK, large writes (answers / recordings) silently
+ *   in a reported case: reads OK, large writes (answers / recordings) silently
  *   dropped, history "reverts".
  *
  * WHY A RELAY FIXES IT

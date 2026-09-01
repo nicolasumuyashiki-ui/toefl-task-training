@@ -3,7 +3,7 @@
  *
  * WHY: 2026-08 に模試3の reading-rdl2.html で、設問ブロックの id が page13/14/15
  *   なのにページ送りは page1/2/3 を探す実装だったため、getElementById が null を
- *   返して例外になり、Next ボタンを押しても先へ進めなくなった（茶谷さまのご報告）。
+ *   返して例外になり、Next ボタンを押しても先へ進めなくなった（お客さまからのご報告）。
  *   構文は正しく、リンク切れも無いため既存の検査では素通りしていた。人の目視に
  *   頼らず、同じ形の事故を機械で止めるための検査。
  *
@@ -51,7 +51,7 @@ function check(file) {
 
   // ② 存在しない id への無防備な参照（プロパティに直接アクセスしている箇所のみ）
   const refs = new Set([...js.matchAll(
-    /getElementById\(\s*['"]([A-Za-z0-9_-]+)['"]\s*\)\s*\.\s*(classList|style|textContent|innerHTML|innerText|value|disabled|onclick|src|play|pause|focus|remove|setAttribute|checked|files)/g
+    /getElementById\(\s*['"]([A-Za-z0-9_-]+)['"]\s*\)\s*\.\s*(classList|style|textContent|innerHTML|innerText|value|disabled|onclick|src|play|pause|focus|remove|setAttribute|checked|files|addEventListener|removeEventListener|querySelector|querySelectorAll|getAttribute|removeAttribute|appendChild|dataset|className|scrollIntoView|currentTime|blur|reset|submit)/g
   )].map(m => m[1]));
   const missing = [...refs].filter(r => !ids.has(r));
   if (missing.length) add('存在しない id を無防備に参照: ' + missing.join(', '));

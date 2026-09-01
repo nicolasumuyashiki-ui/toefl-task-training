@@ -447,7 +447,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   <!-- ========== 保存ヘルス ==========
        ログイン中のクライアントが「送信できずに溜まっている保存（outbox）」を
        検知して自己申告してくる。ここに出るアカウントは結果がサーバに届いて
-       いない可能性が高い（前田様のような環境）。事前に気づいて先回りできる。 -->
+       いない可能性が高い（保存がブロックされる環境）。事前に気づいて先回りできる。 -->
   <section class="panel" id="panel-save-health">
     <div class="toolbar">
       <span style="font-size:.9em;color:var(--ink-500);line-height:1.5">
@@ -563,8 +563,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
 </div>
 
-<script src="../js/api.js?v=20260818"></script>
-<script src="../js/auth.js?v=20260818"></script>
+<script src="../js/api.js?v=20260901"></script>
+<script src="../js/auth.js?v=20260901"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -2428,6 +2428,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260818"></script>
+<script defer src="../js/tm-footer.js?v=20260901"></script>
 </body>
 </html>

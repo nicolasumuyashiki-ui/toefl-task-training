@@ -81,7 +81,7 @@ function _ptJsonp(url) {
    ------------------------------------------------------------
    The mock-exam result save used to be a single fire-and-forget JSONP to
    script.google.com. In environments that block direct writes to that host
-   (privacy/security software, school/office filters — the 前田様 case) EVERY
+   (privacy/security software, school/office filters — a reported case) EVERY
    result save silently failed and the score was lost. The task-side app
    already routes saves through a same-origin Cloudflare relay + a durable
    outbox; this ports the SAME proven pattern to the Practice Test:
@@ -157,7 +157,7 @@ function _ptFlushOutbox() {
 
 /* ---- Local result MIRROR (device-resident fallback) --------------------
    The history views (results.html / my-results.html) are otherwise 100%
-   server-sourced. In an environment that BLOCKS the save (前田様 type) the
+   server-sourced. In an environment that BLOCKS the save (blocked-write type) the
    server has no rows, so the learner's OWN screen shows fewer attempts than
    they actually took — "自分の画面が実績と食い違う". Mirroring every completed
    result to localStorage gives each device a second source of truth: the
@@ -464,7 +464,7 @@ var Api = {
 
   /* Server results UNION the local mirror (server wins per sessionId). ALWAYS
      resolves success:true so the learner's own attempts show even when the
-     server is unreachable or has gaps (前田様 environment). Use this for
+     server is unreachable or has gaps (blocked-write environment). Use this for
      history display; listPtResults stays server-only for callers that need it. */
   listPtResultsMerged: function(){
     var local = this.listPtLocal();
@@ -523,7 +523,7 @@ var Api = {
 };
 
 /* On every load, retry any Practice-Test results the server has not
-   confirmed yet — so a mock score lost to a blocked/failed save (前田様
+   confirmed yet — so a mock score lost to a blocked/failed save (blocked-write
    type environment) eventually reaches the server on a later visit. */
 try { setTimeout(function () { try { _ptFlushOutbox(); } catch (e) {} try { _ptFlushAnsOutbox(); } catch (e) {} }, 1500); } catch (e) {}
 try {

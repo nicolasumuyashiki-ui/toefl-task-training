@@ -4,7 +4,7 @@
  * Paste-in code for the TCK Reps GAS backend to receive SAVE-HEALTH telemetry
  * from the front-end and let admin see which accounts have results that are
  * NOT reaching the server (stuck outbox items) — so staff can reach out
- * proactively instead of finding out only via a complaint (前田様 type).
+ * proactively instead of finding out only via a customer complaint.
  *
  * INSTALLATION (one-time)
  *   1. Add TWO lines to your existing doGet()/doPost() if-chain (both, so the

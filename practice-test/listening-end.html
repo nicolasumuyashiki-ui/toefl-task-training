@@ -65,8 +65,8 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
   </button>
 </div>
 
-<script src="js/auth.js?v=20260818"></script>
-<script src="js/api.js?v=20260818"></script>
+<script src="js/auth.js?v=20260901"></script>
+<script src="js/api.js?v=20260901"></script>
 <script>
 if (typeof Auth !== 'undefined') {
   Auth.require();
@@ -93,7 +93,7 @@ function goNext() {
   // CRITICAL: do NOT burn the one-time "used" flag here. Previously it was set
   // synchronously at the top of this IIFE — so a JSONP timeout, an empty run, or
   // a wrong-row/failed save would permanently consume the button with NOTHING
-  // saved (exactly what happened to Kirari: 1 record, never overwritten, button
+  // saved (exactly what happened to the first eligible account: 1 record, never overwritten, button
   // dead). The flag is now set ONLY inside the confirmed save-success callback
   // (markRetakeUsed, below). Key bumped to "…used2…" so an already-burned old
   // flag no longer blocks eligible users → they get one clean retry.
@@ -249,6 +249,6 @@ function goNext() {
   <span>Powered by TCK Workshop</span>
 </div>
 
-<script defer src="../js/tm-footer.js?v=20260818"></script>
+<script defer src="../js/tm-footer.js?v=20260901"></script>
 </body>
 </html>
