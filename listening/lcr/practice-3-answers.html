@@ -145,7 +145,7 @@ body[data-lang="en"] .jp{display:none}
   <button class="btn-menu" onclick="location.href='../menu.html'" style="background:#002817"><span class="jp">&#128203; &#12513;&#12491;&#12517;&#12540;&#12395;&#25147;&#12427;</span><span class="en">&#128203; Back to menu</span></button>
 </div>
 
-<script src="../../js/auth.js?v=20260818"></script>
+<script src="../../js/auth.js?v=20260901"></script>
 <script>
 const QS = [
   {
@@ -367,6 +367,6 @@ if(typeof Auth !== 'undefined'){ Auth.require(); }
   function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}
 })();
 </script>
-<script defer src="../../js/tm-footer.js?v=20260818"></script>
+<script defer src="../../js/tm-footer.js?v=20260901"></script>
 </body>
 </html>

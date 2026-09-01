@@ -222,11 +222,15 @@ function auditDriveCustomers() {
   return { total: tot, ok: ok, priv: priv, gone: gone };
 }
 
-// 個別ユーザー用（引数なしで実行できる呼び出しラッパー）
-function runKirari()   { auditDriveFiles('Kirari'); }
-function runYagu()     { auditDriveFiles('yagu1004'); }
-function runAiriseko() { auditDriveFiles('airiseko2021'); }
-function runMaeda()    { auditDriveFiles('soichiro941@gmail.com'); }
+// 個別ユーザーを調べたいときは、GAS エディタで auditDriveFiles('<userId>') を
+// 直接実行する（引数は実行時に入力する）。
+//
+// ⚠️ 特定のお客さまの userId / email を埋め込んだ「引数なしラッパー関数」は置かないこと。
+//    理由は2つ:
+//    ① このリポジトリは public で docs/ は GitHub Pages がそのまま配信されるため、
+//       関数名・引数がそのまま個人情報の公開になる（CLAUDE.md「docs/ に個人情報を書かない」）。
+//    ② GAS のドロップダウンに特定顧客名の関数が並ぶと、誤選択で意図しない対象に
+//       実行してしまう（CLAUDE.md: holdYaguBands を同じ理由で削除済み）。
 
 /**
  * 【削除用・承認後のみ】既定は dryRun=true（消さない）。

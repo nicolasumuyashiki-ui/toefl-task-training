@@ -43,25 +43,32 @@
    stale monitor. IMPORTANT: adding an email here grants APP ACCESS at
    ¥0, but does NOT cancel that person's existing Stripe subscription —
    to actually stop charging a paying customer you must ALSO cancel
-   their subscription in the Stripe Dashboard. */
+   their subscription in the Stripe Dashboard.
+
+   ============================================================
+   ⚠️ REDACTED — 実データはこのリポジトリに置かない
+   ============================================================
+   このリポジトリは PUBLIC で、かつ docs/ は GitHub Pages がそのまま配信する
+   （リポジトリ直下の .nojekyll のため）。顧客のメールアドレス・氏名を書くと
+   誰でも閲覧できる。CLAUDE.md「docs/ に個人情報を書かない」参照。
+   このファイルは「GAS へ貼る手順書」であって、名簿ではない。
+
+   ⚠️ このブロックを稼働中の GAS にそのまま貼らないこと。
+      空の MONITOR_EMAILS で上書きすると、対象アカウント全員の無料アクセスが
+      即座に失効する。編集は GAS エディタ側で直接行うこと。
+
+   ▼ 恒久対策（推奨）: 名簿をコードから外し Script Properties に移す。
+      Script Properties に MONITOR_EMAILS = "a@x.com,b@y.com" を登録し、
+        var MONITOR_EMAILS = (PropertiesService.getScriptProperties()
+          .getProperty('MONITOR_EMAILS') || '')
+          .split(',').map(function(s){ return s.trim().toLowerCase(); })
+          .filter(String);
+      とすれば、以後この手順書に実データが載ることはない。
+   ============================================================ */
 var MONITOR_EMAILS = [
-  'saekadowaki322@gmail.com',
-  'bellsince2004@gmail.com',
-  'mkusunoki0811@gmail.com',
-  'soccerzurdo1@gmail.com',
-  'nanasey103@gmail.com',
-  // 前田 宗一郎 — goodwill comp (2026-06, 今後無料). Listed BOTH login-id and
-  // account email because GAS matches on the email column (u.email); both
-  // are included so the comp activates regardless of which field is checked.
-  'kyo.maeda2015@gmail.com',
-  'soichiro941@gmail.com',
-  // 矢口 洪太 (login id: yagu1004) — goodwill comp (2026-07, 今後無料).
-  // 経緯: 6/25〜7/20 の間、送信未確認の保存を再送打ち切りで破棄する実装が
-  // あり、娘さまの Read in Daily Life Practice 3〜6 の記録が失われたため。
-  // GAS は USERS の email 列で照合するので、アカウント email を登録する。
-  // ※ 娘さまご本人の email (yagucchan0625@yahoo.co.jp) で別アカウントを
-  //   作られた場合は、その email もここに追加すること。
-  'rena.yon811@gmail.com'
+  // 実データは GAS 側（または Script Properties）にのみ存在する。ここには書かない。
+  // 追加・削除の経緯（誰に・いつ・なぜ無料付与したか）も個人情報のため、
+  // このファイルではなく非公開の運用メモ側で管理すること。
 ];
 
 function isMonitorEmail_(email) {

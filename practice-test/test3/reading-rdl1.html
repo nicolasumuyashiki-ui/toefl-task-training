@@ -223,7 +223,7 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',system-ui,sans-s
   </div>
 </div>
 
-<script src="../js/auth.js?v=20260818"></script>
+<script src="../js/auth.js?v=20260901"></script>
 <script>
 /* ===== DATA ===== */
 var answers = { q11: "B", q12: "C" };
@@ -338,7 +338,7 @@ function goToPage(p){if(typeof totalPages!=='undefined'&&p>=1&&p<=totalPages){do
 
 /* Persist Module 1 RDL1 score so reading-m2-select can route. */
 function saveM1RDL1Score(){
-  var key = { q11: 'B', q12: 'C' };  // notice: heating repairs / 24-hour study room
+  var key = { q11: 'B', q12: 'C' };  // notice: audition requirement / rehearsal-conflict option
   var correct = 0;
   for (var k in key) if (userAnswers[k] === key[k]) correct++;
   localStorage.setItem('m1_rdl1_correct', String(correct));
@@ -353,7 +353,7 @@ function goNext(){
 /* ===== AUTH ===== */
 if(typeof Auth !== 'undefined'){ Auth.require(); Auth.showBadge('userBadge'); }
 </script>
-<script src="../js/reading-state.js?v=20260818"></script>
-<script defer src="../../js/tm-footer.js?v=20260818"></script>
+<script src="../js/reading-state.js?v=20260901"></script>
+<script defer src="../../js/tm-footer.js?v=20260901"></script>
 </body>
 </html>

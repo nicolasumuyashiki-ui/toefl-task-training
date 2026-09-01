@@ -96,7 +96,8 @@ h1{font-size:2em;font-weight:800;color:#002817;letter-spacing:-0.02em;margin-bot
   <div class="wrap">
     <h1 style="margin-bottom:32px"><span class="jp">受験する模試を選択</span><span class="en">Choose Your Mock Test</span></h1>
 
-    <!-- One-time Listening retake (apology remedy for a specific user; gated by userId only).
+    <!-- One-time Listening retake (apology remedy; eligibility matched by salted SHA-256 digest,
+         never by a plaintext login ID — this page is public).
          Placed here so it is reachable from the main menu — results.html is only shown at the
          end of a completed mock and cannot be navigated to afterwards. -->
     <div id="lstRetakeBanner" style="display:none;margin:0 0 28px;padding:18px 22px;background:#fff8ec;border:1.5px solid #f0d9a8;border-radius:14px">
@@ -127,7 +128,7 @@ h1{font-size:2em;font-weight:800;color:#002817;letter-spacing:-0.02em;margin-bot
     </div>
   </div>
 </div>
-<script src="js/auth.js?v=20260818"></script>
+<script src="js/auth.js?v=20260901"></script>
 <script>
 if (typeof Auth !== 'undefined') { Auth.require(); Auth.showBadge('userBadge'); }
 function doLogout(){ Auth.clear(); location.href='../index.html'; }
@@ -136,17 +137,30 @@ function doLogout(){ Auth.clear(); location.href='../index.html'; }
    Reachable from the main menu so the eligible user can start it even after closing the mock tab. */
 (function(){
   try{
-    var RETAKE_IDS=['Kirari','Kotaro'];                                     // courtesy remedy — eligible accounts only. NEVER put customer real names here: this file ships to every browser.
+    /* Eligible accounts are matched by SALTED SHA-256 DIGEST, never by login ID.
+       This file ships to every browser, so a plaintext list would expose customer
+       identities in page source and in Git history. Same rationale as the monitor
+       allowlist that was moved out of client source (see js/auth.js).
+       To grant an account: node -e "console.log(require('crypto').createHash('sha256').update('tck-pt-lst-retake-v2:'+process.argv[1]).digest('hex'))" <userId> */
+    var RETAKE_SALT='tck-pt-lst-retake-v2';
+    var RETAKE_HASHES=['2b029045c155ebed9c4154ef5b21e8336f4351c6f4ced33e84df246ea1a3462e',
+                       '02382a4739ccde4b61797c6c53eb5a277e08db75e8a48dabf232151e4e7a2275'];
     var u={}; try{ u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
-    if(!u || RETAKE_IDS.indexOf(u.userId)===-1) return;                     // eligible accounts only
+    if(!u || !u.userId) return;
     if(localStorage.getItem('tck_lst_retake_used2_'+u.userId)==='1') return; // one time only (per-user key). v2: old "used_" flags no longer block, re-granting one clean retry after the save-fail bug. Flag is set ONLY after a confirmed save (listening-end.html).
     var b=document.getElementById('lstRetakeBanner'), btn=document.getElementById('lstRetakeBtn');
     if(!b||!btn) return;
-    b.style.display='block';
-    btn.addEventListener('click',function(){
-      try{ sessionStorage.setItem('tck_lst_retake','1'); sessionStorage.setItem('practice_test_id','1'); }catch(e){}
-      window.location.href='listening-intro.html';   // top-level = Test 1 (the mock affected)
-    });
+    var subtle=(window.crypto&&window.crypto.subtle)?window.crypto.subtle:null;
+    if(!subtle||typeof TextEncoder==='undefined') return;                   // HTTPS-only API; degrade silently rather than exposing the list
+    subtle.digest('SHA-256', new TextEncoder().encode(RETAKE_SALT+':'+u.userId)).then(function(buf){
+      var hex=Array.prototype.map.call(new Uint8Array(buf),function(x){return ('0'+x.toString(16)).slice(-2);}).join('');
+      if(RETAKE_HASHES.indexOf(hex)===-1) return;                           // eligible accounts only
+      b.style.display='block';
+      btn.addEventListener('click',function(){
+        try{ sessionStorage.setItem('tck_lst_retake','1'); sessionStorage.setItem('practice_test_id','1'); }catch(e){}
+        window.location.href='listening-intro.html';   // top-level = Test 1 (the mock affected)
+      });
+    }).catch(function(){});
   }catch(e){}
 })();
 
@@ -191,9 +205,9 @@ function selectTest(n){
   }
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260818"></script>
+<script defer src="../js/tm-footer.js?v=20260901"></script>
 <!-- 自動更新: サーバ最新版と照合し、古ければ1回だけ自動リロードする。
      模試の入口。解答中ページには入れない（回答が消えるため）。 -->
-<script src="../js/version-guard.js?v=20260818"></script>
+<script src="../js/version-guard.js?v=20260901"></script>
 </body>
 </html>
