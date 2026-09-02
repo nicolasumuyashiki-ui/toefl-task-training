@@ -196,3 +196,115 @@ function checkSubEmailAliases() {
                ' → 紐づけ待ちの行: ' + hit + ' / 紐づけ済みの行: ' + already);
   });
 }
+
+
+// =============================================================
+// BLOCK 4 — 別名を使って「既存の」SUBSCRIPTIONS 行を埋める
+// =============================================================
+// なぜ必要か:
+//   BLOCK 2 の linkSubscriptionByEmail_ は handleRegister_ / handleLogin_
+//   から呼ばれるので、別名が効くのは **お客さまが次にログイン（または新規
+//   登録）したとき**。既に SUBSCRIPTIONS に空欄の行がある状態で別名を
+//   足しても、それだけでは何も起きない。
+//
+//   また backfillSubscriptionUserIdsV2（docs/gas-subscription-userid-
+//   fallback-v2.js）は SUBSCRIPTIONS.email / Stripe の customer.email を
+//   USERS.email と **直接** 突き合わせるだけで、別名表は見ない。
+//   つまり「決済メール ≠ 登録メール」の行は、あの backfill を何度流しても
+//   埋まらない。
+//
+//   この関数はその隙間を埋める。既存関数には一切手を触れない独立版なので、
+//   貼り付けても他の挙動は変わらない。
+//
+// 使い方（GAS エディタで関数を選んで実行 → 実行ログを見る）:
+//   backfillSubscriptionUserIdsByAlias()             … 確認のみ（既定）
+//   backfillSubscriptionUserIdsByAlias({apply:true}) … 実際に user_id を埋める
+//
+// 安全性:
+//   - 触るのは SUBSCRIPTIONS の user_id 列のみ。しかも **空欄の行だけ**。
+//     既に入っている user_id は絶対に上書きしない（他人の契約を奪わない）。
+//   - USERS は読むだけ。ANSWERS / PT_RESULTS / BANDS には一切触れない。
+//   - 別名表に明示したアドレスとしか一致しない。空欄同士では一致しない。
+
+function backfillSubscriptionUserIdsByAlias(opts) {
+  opts = opts || {};
+  var APPLY = opts.apply === true;
+
+  var aliases = _subEmailAliases_();          // { 登録メール : 決済メール }
+  var keys = Object.keys(aliases);
+  if (!keys.length) {
+    Logger.log('SUB_EMAIL_ALIASES が未設定です。先に対応表を登録してください。');
+    return 0;
+  }
+
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName('SUBSCRIPTIONS');
+  if (!sh) { Logger.log('SUBSCRIPTIONS シートが見つかりません'); return 0; }
+
+  var d = sh.getDataRange().getValues();
+  if (d.length < 2) { Logger.log('SUBSCRIPTIONS にデータ行がありません'); return 0; }
+
+  var headers = d[0];
+  var iUserId = headers.indexOf('user_id');
+  var iEmail  = headers.indexOf('email');
+  if (iUserId < 0 || iEmail < 0) {
+    Logger.log('SUBSCRIPTIONS に user_id / email 列がありません');
+    return 0;
+  }
+
+  // 決済メール → 登録メール（逆引き）
+  var payToApp = _subEmailAliasesReverse_();
+
+  // USERS: email → user_id
+  var emailToId = {};
+  var usersSh = ss.getSheetByName('USERS');
+  if (usersSh) {
+    var ud = usersSh.getDataRange().getValues();
+    for (var u = 1; u < ud.length; u++) {
+      var e = String(ud[u][3] || '').toLowerCase().trim();
+      var id = String(ud[u][0] || '').trim();
+      if (e && id) emailToId[e] = id;
+    }
+  }
+
+  Logger.log('=== 別名による SUBSCRIPTIONS の紐づけ' +
+             (APPLY ? '（実行）' : '（確認のみ・書き換えません）') + ' ===');
+  Logger.log('登録されている別名: ' + keys.length + ' 件');
+
+  var filled = 0, noAccount = 0;
+
+  for (var r = 1; r < d.length; r++) {
+    if (String(d[r][iUserId] || '').trim() !== '') continue;   // 埋まっている行は触らない
+
+    var rowEmail = String(d[r][iEmail] || '').toLowerCase().trim();
+    if (!rowEmail) continue;
+
+    var appEmail = payToApp[rowEmail];
+    if (!appEmail) continue;              // 別名表に載っていない行は対象外
+
+    var uid = emailToId[appEmail] || '';
+    if (!uid) {
+      // 別名は登録済みだが、その登録メールのアカウントがまだ存在しない
+      noAccount++;
+      Logger.log('  △ 行' + (r + 1) + ' : 別名は登録済みですが、対応する' +
+                 'アプリのアカウントがまだありません（ご登録のご案内が必要）');
+      continue;
+    }
+
+    Logger.log('  ✓ 行' + (r + 1) + ' : user_id=' + uid + ' を紐づけ' +
+               (APPLY ? 'ました' : 'られます'));
+    if (APPLY) sh.getRange(r + 1, iUserId + 1).setValue(uid);
+    filled++;
+  }
+
+  Logger.log('--------');
+  Logger.log((APPLY ? '紐づけました: ' : '紐づけられる見込み: ') + filled + ' 行' +
+             ' / アカウント未作成: ' + noAccount + ' 行');
+  if (!APPLY && filled) {
+    Logger.log('→ 実行するには backfillSubscriptionUserIdsByAlias({apply:true})');
+  }
+  if (filled && APPLY) {
+    Logger.log('※ お客さまは再ログインすれば（キャッシュ次第では即座に）使えるようになります。');
+  }
+  return filled;
+}
