@@ -563,8 +563,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
 </div>
 
-<script src="../js/api.js?v=20260818"></script>
-<script src="../js/auth.js?v=20260818"></script>
+<script src="../js/api.js?v=20260922"></script>
+<script src="../js/auth.js?v=20260922"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -1660,9 +1660,38 @@ function ptUnq(s){
 }
 function ptClean(s){ return String(s||'').replace(/\s+/g,' ').trim(); }
 
+/* どのタスクの設問かを示すラベル。面談で「CTW が弱い / Academic が弱い」と
+   切り分けられるよう、設問カードと見出しの両方に出す。 */
+function ptTaskLabel(page){
+  page = String(page||'');
+  if(/ctw/.test(page))                 return 'Complete the Words';
+  if(/rdl/.test(page))                 return 'Read in Daily Life';
+  if(/reading-.*academic/.test(page))  return 'Read an Academic Passage';
+  if(/listening-lcr/.test(page))       return 'Listen and Choose a Response';
+  if(/listening-conv/.test(page))      return 'Listen to a Conversation';
+  if(/listening-announce/.test(page))  return 'Listen to an Announcement';
+  if(/listening-academic/.test(page))  return 'Listen to an Academic Talk';
+  return '';
+}
+function ptTaskBadge(page){
+  var t=ptTaskLabel(page);
+  if(!t) return '';
+  return '<span style="display:inline-block;font-size:.68em;font-weight:700;letter-spacing:.02em;white-space:nowrap;'+
+    'color:var(--green-deep,#0F7A45);background:#EAF6EE;border:1px solid #CFE0D6;border-radius:999px;padding:1px 8px">'+
+    escapeHtml(t)+'</span>';
+}
+/* 出題順（＝生徒が解いた順）。番号順ではなくページ順で並べないと、CTW が
+   後ろに回ったり Module 1 と Module 2 が混ざったりする。 */
+var PT_READING_ORDER = {
+  m1:  ['reading-ctw.html','reading-rdl1.html','reading-rdl2.html','reading-academic.html'],
+  m2h: ['reading-m2h-ctw.html','reading-m2h-academic1.html','reading-m2h-academic2.html'],
+  m2e: ['reading-m2e-ctw.html','reading-m2e-rdl1.html','reading-m2e-rdl2.html']
+};
+var PT_LISTENING_ORDER = ['listening-lcr.html','listening-conv.html','listening-announce.html','listening-academic.html'];
+
 /* 1ページ分を解析して {mc:{qN:{…}}, ctw:{blanks,intro,conclusion}} を返す。 */
 function ptParsePage(txt, page){
-  var out = { page:page, module:ptModuleOf(page), mc:{}, ctw:null, intro:'', conclusion:'' };
+  var out = { page:page, module:ptModuleOf(page), mc:{}, ctw:null, intro:'', conclusion:'', passage:null };
 
   // --- 正答キー: `var correctAnswers = {q16:'C', …}` / `var answers = {q11:"B", …}`
   var keys={}, m, re=/(?:correctAnswers|answers)\s*=\s*\{([\s\S]{0,800}?)\}/g;
@@ -1675,6 +1704,20 @@ function ptParsePage(txt, page){
   // --- Reading の選択式: .question-page ごとに設問文と選択肢を取る
   var doc=null; try{ doc=new DOMParser().parseFromString(txt,'text/html'); }catch(e){}
   if(doc){
+    // パッセージ本文（左ペイン）。設問だけ見えても分析できないので必ず添える。
+    var pp=doc.querySelector('.passage-panel');
+    if(pp){
+      var ttl=pp.querySelector('.passage-title');
+      var body=pp.querySelector('.passage-content') || pp;
+      var paras=[];
+      Array.prototype.forEach.call(body.querySelectorAll('p'), function(el){
+        if(el.classList && el.classList.contains('instruction')) return;
+        var t=ptClean(el.textContent);
+        if(t) paras.push(t);
+      });
+      if(!paras.length){ var whole=ptClean(body.textContent); if(whole) paras.push(whole); }
+      if(paras.length) out.passage={ title: ttl?ptClean(ttl.textContent):'', paragraphs:paras };
+    }
     Array.prototype.forEach.call(doc.querySelectorAll('.question-page'), function(pg){
       var opts=pg.querySelectorAll('.option[data-q][data-v]');
       var insEl=pg.querySelector('.insertion-sentence-display');
@@ -1760,22 +1803,84 @@ function ptPagesFor(readingPath){
   return pages.concat(h).concat(e);
 }
 
-/* バンク: { mc:{ 'm1:q16':{…}, 'lis:q13':{…} }, ctw:{ 'reading-ctw.html':{…} } } */
-function ptBuildBank(testId, readingPath){
-  return Promise.all(ptPagesFor(readingPath).map(function(p){ return ptFetchPage(testId,p); }))
-    .then(function(list){
-      var bank={ mc:{}, ctw:{} };
-      list.forEach(function(pg){
-        if(!pg) return;
-        Object.keys(pg.mc).forEach(function(q){
-          var k=pg.module+':'+q;
-          // 同じモジュール内で番号が重複することはない。先に読めた方を残す。
-          if(!bank.mc[k]) bank.mc[k]=pg.mc[q];
-        });
-        if(pg.ctw) bank.ctw[pg.page]={ blanks:pg.ctw, intro:pg.intro, conclusion:pg.conclusion };
+/* リスニングの音声原稿（practice-test/<test>/scripts/listening.md）。
+   模試2・3 にはあるが模試1には存在しない。見出し（## …）でざっくり
+   セクション分けし、出題ページごとに該当部分だけ出す。 */
+function ptFetchScripts(testId){
+  var url=ptDir(testId)+'scripts/listening.md';
+  if(window.__ptPageCache[url]) return window.__ptPageCache[url];
+  var pr=fetch(url, {credentials:'same-origin'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
+    .then(function(md){
+      var sections=[], cur=null;
+      md.split('\n').forEach(function(line){
+        if(/^##\s+/.test(line)){ cur={ head:line.replace(/^#+\s*/,''), body:[] }; sections.push(cur); }
+        else if(cur) cur.body.push(line);
       });
-      return bank;
+      return { raw:md, sections:sections };
+    })
+    .catch(function(){ return null; });   // 模試1には原稿ファイルが無い
+  window.__ptPageCache[url]=pr;
+  return pr;
+}
+function ptScriptFor(scripts, page){
+  if(!scripts) return '';
+  var want = /lcr/.test(page) ? /lcr|choose a response/i
+           : /conv/.test(page) ? /conversation/i
+           : /announce/.test(page) ? /announcement|announce/i
+           : /academic/.test(page) ? /talk|lecture|academic/i : null;
+  if(!want) return '';
+  var hit=scripts.sections.filter(function(s){ return want.test(s.head); });
+  if(!hit.length) return '';
+  return hit.map(function(s){ return s.head + '\n' + s.body.join('\n'); }).join('\n\n').trim();
+}
+
+/* バンク: { mc:{ 'm1:q16':{…}, 'lis:q13':{…} }, pages:{ '<page>':{…} }, scripts:{…} } */
+function ptBuildBank(testId, readingPath){
+  return Promise.all([
+    Promise.all(ptPagesFor(readingPath).map(function(p){ return ptFetchPage(testId,p); })),
+    ptFetchScripts(testId)
+  ]).then(function(r){
+    var list=r[0], scripts=r[1];
+    var bank={ mc:{}, ctw:{}, pages:{}, scripts:scripts };
+    list.forEach(function(pg){
+      if(!pg) return;
+      bank.pages[pg.page]=pg;
+      Object.keys(pg.mc).forEach(function(q){
+        var k=pg.module+':'+q;
+        // 同じモジュール内で番号が重複することはない。先に読めた方を残す。
+        if(!bank.mc[k]) bank.mc[k]=pg.mc[q];
+      });
+      if(pg.ctw) bank.ctw[pg.page]={ blanks:pg.ctw, intro:pg.intro, conclusion:pg.conclusion };
     });
+    return bank;
+  });
+}
+
+/* 模試スピーキングの録音を取りに行く。
+   ① adminListPtRecordings（docs/gas-pt-admin.js・RECORDINGS_PT）。
+   ② それが使えないときは、録音タブが使っている listRecordings から
+      この生徒の LR / TI を拾う（模試以外も混ざりうるので画面で明示する）。
+   どちらも駄目なら、サーバが返したエラー文字列をそのまま画面に出す。
+   「未デプロイ」と決めつけると auth_failed の切り分けができないため。 */
+function ptLoadRecordings(uid){
+  var viaAll = function(err){
+    if(!(window.Api && Api.listRecordings)) return { recordings:[], available:false, error:err||'' };
+    return Api.listRecordings().then(function(all){
+      if(!all || !all.success) return { recordings:[], available:false, error:err||(all && all.error)||'' };
+      var mine=(all.recordings||[]).filter(function(x){
+        var t=String(x.task||'').toLowerCase();
+        return String(x.userId)===String(uid) && (t==='lr'||t==='ti');
+      });
+      if(!mine.length) return { recordings:[], available:false, error:err||'' };
+      return { recordings:mine, available:true, source:'fallback', error:'' };
+    }).catch(function(){ return { recordings:[], available:false, error:err||'' }; });
+  };
+  if(!(window.Api && Api.ptRecordings)) return Promise.resolve(viaAll('api_method_missing'));
+  return Api.ptRecordings(uid).then(function(res){
+    if(res && res.success) return { recordings:res.recordings||[], available:true, source:'pt', error:'' };
+    return viaAll((res && res.error) || 'not_deployed');
+  }).catch(function(){ return viaAll('request_failed'); });
 }
 
 function ptToggleAll(btn){
@@ -1812,35 +1917,60 @@ function openPtDetail(uidEnc, sidEnc, testIdEnc, readingPathEnc){
     }
     return Promise.all([
       loadPtKeys(),
-      (Api.ptRecordings ? Api.ptRecordings(uid) : Promise.resolve(null)),
+      ptLoadRecordings(uid),
       ptBuildBank(testId, readingPath)
     ]).then(function(r){ return [data, r[0], r[1], r[2]]; });
   }).then(function(r){
-    var data=r[0], keys=r[1]||{}, recRes=r[2], bank=r[3]||{mc:{},ctw:{}};
-    var recs=(recRes && recRes.success && recRes.recordings) ? recRes.recordings : [];
-    // null / !success ⇒ the staff recordings endpoint is not deployed (or errored),
-    // NOT that the student didn't record. Pass the distinction so the UI never
-    // implies speaking data was lost.
-    var recordingsAvailable = !!(recRes && recRes.success);
+    var data=r[0], keys=r[1]||{}, rec=r[2]||{}, bank=r[3]||{mc:{},ctw:{}};
     el.innerHTML=renderPtDetail(sid, data, { testId:String(testId||''), readingPath:String(readingPath||''),
-      keys:keys, bank:bank, recordings:recs, recordingsAvailable:recordingsAvailable, row:row });
+      keys:keys, bank:bank,
+      recordings:rec.recordings||[], recordingsAvailable:!!rec.available,
+      recordingsError:rec.error||'', recordingsSource:rec.source||'', row:row });
   }).catch(function(){ el.innerHTML='<div style="color:var(--terracotta);padding:12px">回答の取得に失敗しました。</div>'; });
 }
 
 function renderPtDetail(sid, data, ctx){
   function pj(s){ try{return typeof s==='string'?JSON.parse(s):s;}catch(e){return null;} }
   function get(name){ return data['s:'+name]!==undefined?data['s:'+name]:data['l:'+name]; }
-  var tId=ctx.testId, row=ctx.row||{}, bank=ctx.bank||{mc:{},ctw:{}};
+  var tId=ctx.testId, row=ctx.row||{}, bank=ctx.bank||{mc:{},ctw:{},pages:{},scripts:null};
   var rk=((ctx.keys[tId]||{}).reading)||{};   // GAS 由来の補助キー（未デプロイなら空）
   var out='<div style="border:1px solid var(--line,#e3e3e3);border-radius:10px;padding:14px">';
   out+='<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">'+
     '<div style="font-weight:800">回答内容と正誤</div>'+
     '<button type="button" data-open="0" onclick="ptToggleAll(this)" style="font-family:inherit;font-size:.78em;font-weight:700;'+
       'color:var(--green,#0F7A45);background:var(--paper,#fff);border:1px solid var(--line,#cfe0d6);border-radius:999px;padding:4px 12px;cursor:pointer">'+
-      'すべての設問文を開く</button></div>';
-  out+='<div style="color:var(--ink-500);font-size:.82em;margin-bottom:14px;font-family:var(--font-en)">'+escapeHtml(sid)+(tId?(' ・ 模試'+escapeHtml(tId)):'')+(ctx.readingPath?(' ・ '+escapeHtml(ctx.readingPath)):'')+'</div>';
+      'すべて開く（本文・原稿・設問）</button></div>';
+  out+='<div style="color:var(--ink-500);font-size:.82em;margin-bottom:6px;font-family:var(--font-en)">'+escapeHtml(sid)+(tId?(' ・ 模試'+escapeHtml(tId)):'')+(ctx.readingPath?(' ・ '+escapeHtml(ctx.readingPath)):'')+'</div>';
+  out+='<div style="color:var(--ink-500);font-size:.78em;margin-bottom:14px">出題順（生徒が解いた順）に並べています：Reading → Listening → Writing → Speaking。</div>';
 
-  /* 1設問 = 1カード。見出し行に「回答 / 正解 / 正誤」、開くと設問文と選択肢。
+  /* ---- 折りたたみブロック（本文・原稿） ---- */
+  function foldBlock(label, innerHtml){
+    return '<details class="ptq" style="margin:6px 0;border:1px solid var(--line,#e3e3e3);border-radius:9px;background:var(--paper,#fff)">'+
+      '<summary style="cursor:pointer;padding:7px 11px;font-size:.82em;font-weight:700;color:var(--green-deep,#0F7A45)">'+escapeHtml(label)+'</summary>'+
+      '<div style="padding:2px 13px 11px">'+innerHtml+'</div></details>';
+  }
+  function passageBlock(pg){
+    if(!pg || !pg.passage) return '';
+    var p=pg.passage;
+    return foldBlock('本文を表示' + (p.title?('（'+p.title+'）'):''),
+      (p.title?'<div style="font-weight:700;margin-bottom:6px">'+escapeHtml(p.title)+'</div>':'')+
+      p.paragraphs.map(function(t){ return '<p style="margin:0 0 9px;font-size:.92em;line-height:1.8">'+escapeHtml(t)+'</p>'; }).join(''));
+  }
+  function ctwPassageBlock(pageName){
+    var c=bank.ctw[pageName]; if(!c) return '';
+    if(!c.intro && !c.conclusion) return '';
+    return foldBlock('本文（前後）を表示',
+      (c.intro?'<p style="margin:0 0 8px;font-size:.92em;line-height:1.8">'+escapeHtml(c.intro)+'</p>':'')+
+      (c.conclusion?'<p style="margin:0;font-size:.92em;line-height:1.8;color:var(--ink-500)">…'+escapeHtml(c.conclusion)+'</p>':''));
+  }
+  function scriptBlock(pageName){
+    var s=ptScriptFor(bank.scripts, pageName);
+    if(!s) return '';
+    return foldBlock('音声の原稿（スクリプト）を表示',
+      '<pre style="white-space:pre-wrap;font-family:var(--font-jp),var(--font-en);font-size:.88em;line-height:1.75;margin:0">'+escapeHtml(s)+'</pre>');
+  }
+
+  /* 1設問 = 1カード。見出し行に「タスク名 / 回答 / 正解 / 正誤」、開くと設問文と選択肢。
      間違えた設問は最初から開いておく（面談で見たいのはそこなので）。 */
   function qcard(label, sel, info){
     info = info || {};
@@ -1849,8 +1979,9 @@ function renderPtDetail(sid, data, ctx){
     var ok = known && String(sel).toUpperCase()===String(cor).toUpperCase();
     var mark = !known ? '<span style="color:var(--ink-500)">—</span>'
       : (ok?'<span style="color:#0F7A45;font-weight:800">✓</span>':'<span style="color:#B23A2C;font-weight:800">✗</span>');
-    var head='<summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:7px 10px">'+
-      '<span style="font-weight:800;min-width:46px">'+escapeHtml(label)+'</span>'+
+    var head='<summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:7px 10px">'+
+      '<span style="font-weight:800;min-width:44px">'+escapeHtml(label)+'</span>'+
+      ptTaskBadge(info.page)+
       '<span style="font-size:.86em">回答 <strong>'+(sel==null||sel===''?'—':escapeHtml(String(sel)))+'</strong></span>'+
       '<span style="font-size:.86em;color:var(--ink-500)">正解 '+(known?escapeHtml(String(cor)):'—')+'</span>'+
       '<span>'+mark+'</span>'+
@@ -1904,44 +2035,23 @@ function renderPtDetail(sid, data, ctx){
         escapeHtml(blank?'—':String(x))+'</span>';
     }).join('');
   }
-  /* CTW ブロック。ページから読んだ語の仕様（given+answer）があれば、
+  /* CTW 1ページ分の本体。ページから読んだ語の仕様（given+answer）があれば、
      1文字ずつの配列を語に組み直して ✓/✗ を付ける。 */
-  function ctwBlock(title, ctwObj){
-    var pages=Object.keys(ctwObj||{});
-    if(!pages.length) return '';
+  function ctwBody(pageName, arr){
     var gasCtw=(ctx.keys[tId]||{}).ctw||{};
-    var body=pages.map(function(pg){
-      var arr=ctwObj[pg]||[];
-      var fromPage=(bank.ctw[pg]||{});
-      var spec=fromPage.blanks || gasCtw[pg];
-      var inner, score='', context='';
-      if(spec && spec.length){
-        var cur=0, correct=0;
-        inner=spec.map(function(wd){
-          var len=(wd.answer||'').length;
-          var typed=arr.slice(cur,cur+len).map(function(x){return (x==null?'':x);}).join('');
-          cur+=len;
-          if(String(typed).toLowerCase()===String(wd.answer||'').toLowerCase()) correct++;
-          return ctwWordChip(wd.given||'', typed, wd.answer||'');
-        }).join('');
-        score=' <span style="color:var(--ink-500);font-weight:600;font-size:.85em">（'+correct+'/'+spec.length+' 正解）</span>';
-      } else {
-        inner=ctwChips(arr);
-      }
-      if(fromPage.intro || fromPage.conclusion){
-        context='<details class="ptq" style="margin-top:7px"><summary style="cursor:pointer;font-size:.8em;color:var(--ink-500)">パッセージの前後を表示</summary>'+
-          '<div style="font-size:.88em;line-height:1.7;padding:6px 2px">'+
-          (fromPage.intro?'<div>'+escapeHtml(fromPage.intro)+'</div>':'')+
-          (fromPage.conclusion?'<div style="margin-top:5px;color:var(--ink-500)">…'+escapeHtml(fromPage.conclusion)+'</div>':'')+
-          '</div></details>';
-      }
-      return '<div style="margin:6px 0;padding:9px 11px;border:1px solid var(--line,#e3e3e3);border-radius:8px">'+
-        '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px">'+
-          '<span style="font-size:.78em;color:var(--ink-500);font-family:var(--font-en)">'+escapeHtml(pg)+score+'</span>'+
-          ptQuestionLink(tId,pg)+'</div>'+
-        '<div>'+inner+'</div>'+context+'</div>';
-    }).join('');
-    return '<div style="font-weight:700;margin:12px 0 4px">'+title+'</div>'+body;
+    var spec=(bank.ctw[pageName]||{}).blanks || gasCtw[pageName];
+    if(spec && spec.length){
+      var cur=0, correct=0;
+      var inner=spec.map(function(wd){
+        var len=(wd.answer||'').length;
+        var typed=(arr||[]).slice(cur,cur+len).map(function(x){return (x==null?'':x);}).join('');
+        cur+=len;
+        if(String(typed).toLowerCase()===String(wd.answer||'').toLowerCase()) correct++;
+        return ctwWordChip(wd.given||'', typed, wd.answer||'');
+      }).join('');
+      return { html:inner, correct:correct, total:spec.length };
+    }
+    return { html:ctwChips(arr), correct:null, total:(arr||[]).length };
   }
 
   /* 設問の情報を引く。まずページ解析のバンク（モジュール別）→ 無ければ GAS キー。 */
@@ -1960,71 +2070,127 @@ function renderPtDetail(sid, data, ctx){
     }
     return null;
   }
-  // Returns {html,n} for a reading MC block, or '' when the student answered none.
-  function mcBlock(title, ansObj, mod){
-    var qs=Object.keys(ansObj||{}).filter(function(q){return ansObj[q]!=='' && ansObj[q]!=null;})
-      .sort(function(a,b){return (parseInt(a.replace(/\D/g,''),10)||0)-(parseInt(b.replace(/\D/g,''),10)||0);});
-    if(!qs.length) return '';
-    var rc=0, cards=qs.map(function(q){
-      var info=infoFor(q,mod)||{};
-      if(info.answer!=null && info.answer!=='' && String(ansObj[q]).toUpperCase()===String(info.answer).toUpperCase()) rc++;
-      return qcard(q.toUpperCase(), ansObj[q], info);
-    }).join('');
-    return { html:'<div style="font-weight:700;margin:14px 0 4px">'+title+'（'+rc+'/'+qs.length+' 正解）</div>'+cards, n:qs.length };
+  function qnum(q){ return parseInt(String(q).replace(/\D/g,''),10)||0; }
+
+  /* 出題ページ1枚分のまとまり。見出し（タスク名＋正解数）→ 本文／原稿 → 設問カード。 */
+  function pageGroup(pageName, headHtml, bodyHtml, scoreTxt){
+    return '<div style="margin:10px 0 0;padding:10px 11px;border:1px solid var(--line,#e3e3e3);border-radius:10px;background:#FCFBF8">'+
+      '<div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:4px">'+
+        ptTaskBadge(pageName)+
+        (scoreTxt?'<span style="font-size:.84em;font-weight:700">'+escapeHtml(scoreTxt)+'</span>':'')+
+        '<span style="margin-left:auto;display:flex;gap:8px;align-items:center">'+
+          '<span style="font-size:.72em;color:var(--ink-500);font-family:var(--font-en)">'+escapeHtml(pageName)+'</span>'+
+          ptQuestionLink(tId,pageName)+'</span>'+
+      '</div>'+headHtml+bodyHtml+'</div>';
   }
 
-  // ---- Listening (self-scoring {selected,correct} in the snapshot) ----
-  var lis = pj(get('practice_listening_answers'));
-  if(lis && typeof lis==='object' && Object.keys(lis).length){
-    var lqs=Object.keys(lis).sort(function(a,b){return (parseInt(a.replace(/\D/g,''),10)||0)-(parseInt(b.replace(/\D/g,''),10)||0);});
-    var lcorr=0;
-    var lcards=lqs.map(function(k){
-      var it=lis[k]||{};
-      var info=bank.mc['lis:'+k] || {};
-      // 正答はスナップショット側（受験時に記録された値）を最優先する。
-      var merged={ page:info.page||'listening-intro.html', text:info.text||'', choices:info.choices||[],
-                   answer: (it.correct!=null && it.correct!=='') ? it.correct : (info.answer||'') };
-      if(String(it.selected)===String(merged.answer)) lcorr++;
-      return qcard(k.toUpperCase(), it.selected, merged);
-    }).join('');
-    out+='<div style="font-weight:700;margin:14px 0 4px">Listening（'+lcorr+'/'+lqs.length+' 正解）</div>'+lcards;
+  /* Reading の1モジュールを、出題ページ順にまとめて描く。 */
+  function readingModule(title, ansObj, ctwObj, mod, orderKey){
+    var order=PT_READING_ORDER[orderKey]||[];
+    var used={}, html='', any=false;
+    order.forEach(function(pageName){
+      if(/ctw/.test(pageName)){
+        var arr=(ctwObj||{})[pageName];
+        if(!arr) return;
+        var b=ctwBody(pageName, arr);
+        any=true;
+        html+=pageGroup(pageName, ctwPassageBlock(pageName), '<div>'+b.html+'</div>',
+          b.correct==null ? '' : ('Complete the Words　'+b.correct+'/'+b.total+' 正解'));
+        return;
+      }
+      var qs=Object.keys(ansObj||{}).filter(function(q){
+        if(ansObj[q]===''||ansObj[q]==null) return false;
+        var info=infoFor(q,mod);
+        return info && info.page===pageName;
+      }).sort(function(a,b){ return qnum(a)-qnum(b); });
+      if(!qs.length) return;
+      any=true;
+      var corr=0, cards=qs.map(function(q){
+        var info=infoFor(q,mod)||{};
+        if(info.answer!=null && info.answer!=='' && String(ansObj[q]).toUpperCase()===String(info.answer).toUpperCase()) corr++;
+        used[q]=1;
+        return qcard(q.toUpperCase(), ansObj[q], info);
+      }).join('');
+      html+=pageGroup(pageName, passageBlock(bank.pages[pageName]), cards, corr+'/'+qs.length+' 正解');
+    });
+    // どのページにも結び付けられなかった設問（古い回・キー未取得）は落とさず末尾に出す。
+    var orphans=Object.keys(ansObj||{}).filter(function(q){
+      return !(ansObj[q]===''||ansObj[q]==null) && !used[q] &&
+             !(infoFor(q,mod) && order.indexOf(infoFor(q,mod).page)>=0);
+    }).sort(function(a,b){ return qnum(a)-qnum(b); });
+    if(orphans.length){
+      any=true;
+      html+=pageGroup('', '', orphans.map(function(q){ return qcard(q.toUpperCase(), ansObj[q], infoFor(q,mod)||{}); }).join(''),
+        'ページを特定できなかった設問 '+orphans.length+' 問');
+    }
+    if(!any) return '';
+    return '<div style="font-weight:800;margin:18px 0 2px;font-size:1.02em">'+escapeHtml(title)+'</div>'+html;
   }
 
-  // ---- Reading Module 1 (archived selections — 面談で弱点を相談するため必ず保存) ----
+  // ================= Reading（最初に解くセクション） =================
   // For attempts from 2026-07 on, Module-1 selections are archived under
   // practice_reading_m1_* before Module 2 reuses q11–q20. Keyed as 'm1'.
   var m1Ans = pj(get('practice_reading_m1_ans')) || {};
   var m1Ctw = pj(get('practice_reading_m1_ctw')) || {};
-  var m1t = mcBlock('Reading Module 1（選択式）', m1Ans, 'm1');
-  if(m1t) out+=m1t.html;
-  out+=ctwBlock('Reading Module 1（Complete the Words・入力内容）', m1Ctw);
-
-  // ---- Reading Module 2 (module from the authoritative readingPath) ----
-  // Prefer the branch recorded in PT_RESULTS (readingPath = 'harder'/'easier');
-  // only fall back to guessing from CTW page names when it's missing. This keeps
-  // each Module-2 question matched to the RIGHT key (Harder vs Easier differ).
-  var rAns = pj(get('practice_reading_ans')) || {};
-  var rCtw = pj(get('practice_reading_ctw')) || {};
-  var mod = ctx.readingPath==='harder' ? 'm2'
-          : ctx.readingPath==='easier' ? 'm2'
-          : (Object.keys(rCtw).some(function(p){return /m2[he]/.test(p);}) ? 'm2' : 'm1');
-  var m2t = mcBlock('Reading Module 2（選択式）', rAns, mod);
-  if(m2t) out+=m2t.html;
-  out+=ctwBlock('Reading Module 2（Complete the Words・入力内容）', rCtw);
-
-  var hasReading = !!m1t || !!m2t || Object.keys(m1Ctw).length || Object.keys(rCtw).length;
-  if(!hasReading){
-    out+='<div style="font-weight:700;margin:14px 0 4px">Reading</div>'+
+  var rAns  = pj(get('practice_reading_ans')) || {};
+  var rCtw  = pj(get('practice_reading_ctw')) || {};
+  var branch = ctx.readingPath==='easier' ? 'm2e'
+             : ctx.readingPath==='harder' ? 'm2h'
+             : Object.keys(rCtw).some(function(p){return /m2e/.test(p);}) ? 'm2e'
+             : Object.keys(rCtw).some(function(p){return /m2h/.test(p);}) ? 'm2h' : 'm2h';
+  var m1Html = readingModule('Reading — Module 1', m1Ans, m1Ctw, 'm1', 'm1');
+  var m2Html = readingModule('Reading — Module 2（'+(branch==='m2e'?'Easier':'Harder')+'）', rAns, rCtw, 'm2', branch);
+  out += m1Html + m2Html;
+  if(!m1Html && !m2Html){
+    out+='<div style="font-weight:800;margin:18px 0 2px;font-size:1.02em">Reading</div>'+
       '<div style="font-size:.9em;color:var(--ink-500);line-height:1.7">この回は1問ずつの回答が保存されていません（素点のみ）。'+
       '<br>素点：<strong>'+escapeHtml(String(row.readingCorrect!=null?row.readingCorrect:'—'))+'/'+escapeHtml(String(row.readingTotal!=null?row.readingTotal:'—'))+'</strong>'+
       (row.readingPath?('　振り分け：'+escapeHtml(String(row.readingPath))):'')+'</div>';
   }
 
-  // ---- Writing ----
+  // ================= Listening =================
+  var lis = pj(get('practice_listening_answers')) || {};
+  var lisKeys = Object.keys(lis);
+  if(lisKeys.length){
+    out+='<div style="font-weight:800;margin:18px 0 2px;font-size:1.02em">Listening</div>';
+    var lUsed={};
+    PT_LISTENING_ORDER.forEach(function(pageName){
+      var qs=lisKeys.filter(function(k){
+        var info=bank.mc['lis:'+k];
+        return info && info.page===pageName;
+      }).sort(function(a,b){ return qnum(a)-qnum(b); });
+      if(!qs.length) return;
+      var corr=0, cards=qs.map(function(k){
+        lUsed[k]=1;
+        var it=lis[k]||{}, info=bank.mc['lis:'+k]||{};
+        // 正答は受験時に記録された値を最優先（当時の出題が正本）。
+        var merged={ page:info.page||pageName, text:info.text||'', choices:info.choices||[],
+                     answer:(it.correct!=null && it.correct!=='') ? it.correct : (info.answer||'') };
+        if(String(it.selected)===String(merged.answer)) corr++;
+        return qcard(k.toUpperCase(), it.selected, merged);
+      }).join('');
+      out+=pageGroup(pageName, scriptBlock(pageName), cards, corr+'/'+qs.length+' 正解');
+    });
+    var lOrphans=lisKeys.filter(function(k){ return !lUsed[k]; }).sort(function(a,b){ return qnum(a)-qnum(b); });
+    if(lOrphans.length){
+      out+=pageGroup('', '', lOrphans.map(function(k){
+        var it=lis[k]||{};
+        return qcard(k.toUpperCase(), it.selected, { page:'listening-intro.html', answer:it.correct, text:'', choices:[] });
+      }).join(''), 'ページを特定できなかった設問 '+lOrphans.length+' 問');
+    }
+    if(!bank.scripts){
+      out+='<div style="font-size:.8em;color:var(--ink-500);margin-top:6px;line-height:1.6">'+
+        '※ この模試には音声の原稿ファイル（<code>practice-test/'+(String(tId)==='1'||!tId?'':('test'+escapeHtml(tId)+'/'))+'scripts/listening.md</code>）がまだありません。'+
+        '模試2・模試3 には収録済みで、ここに原稿が表示されます。</div>';
+    }
+  }
+
+  // ================= Writing =================
   // 素点は PT_RESULTS にあるので、スナップショットが無い回でも必ず出す。
   var wsCorr=get('practice_writing_sentence_correct'), wsTot=get('practice_writing_sentence_total');
   if(wsCorr==null && row.writingSentTotal){ wsCorr=row.writingSentCorrect; wsTot=row.writingSentTotal; }
-  out+='<div style="font-weight:700;margin:14px 0 4px">Writing（Build a Sentence）</div>';
+  out+='<div style="font-weight:800;margin:18px 0 2px;font-size:1.02em">Writing</div>';
+  out+='<div style="font-weight:700;margin:8px 0 4px;font-size:.92em">Build a Sentence</div>';
   if(wsCorr!=null){
     out+='<div style="font-size:.9em">正解数：<strong>'+escapeHtml(String(wsCorr))+(wsTot!=null?('/'+escapeHtml(String(wsTot))):'')+'</strong> '+
       '<a href="'+ptDir(tId)+'writing-sentence.html?preview=1" target="_blank" rel="noopener" style="margin-left:8px;font-size:.82em;color:var(--green,#0F7A45)">問題ページ ↗</a></div>';
@@ -2032,7 +2198,6 @@ function renderPtDetail(sid, data, ctx){
     out+='<div style="font-size:.9em;color:var(--ink-500)">この回は記録がありません（未受験、または保存前の受験）。</div>';
   }
 
-  // ---- Writing の提出文（Write an Email / Academic Discussion・採点対象外） ----
   // Stored as practice_writing_email_response / practice_writing_discussion_response
   // (plain text). The snapshot captures practice_writing_* (results.html regex).
   var essays=[];
@@ -2041,14 +2206,18 @@ function renderPtDetail(sid, data, ctx){
       var raw=data[k], v=pj(raw);
       var txt=(v && typeof v==='object' && v.text!=null) ? v.text : (typeof raw==='string' ? raw : '');
       if(txt && String(txt).trim()){
-        essays.push({ kind: /email/i.test(k) ? 'Write an Email' : 'Academic Discussion', txt: String(txt) });
+        essays.push({ kind: /email/i.test(k) ? 'Write an Email' : 'Academic Discussion',
+                      page: /email/i.test(k) ? 'writing-email.html' : 'writing-discussion.html',
+                      txt: String(txt) });
       }
     }
   });
-  out+='<div style="font-weight:700;margin:14px 0 4px">Writing（提出文・採点対象外）</div>';
+  out+='<div style="font-weight:700;margin:12px 0 4px;font-size:.92em">提出文（採点対象外）</div>';
   if(essays.length){
     out+=essays.map(function(e){return '<div style="margin:6px 0;padding:10px 12px;border:1px solid var(--line,#e3e3e3);border-radius:8px">'+
-      '<div style="font-size:.8em;color:var(--ink-500);font-weight:700;margin-bottom:5px">'+escapeHtml(e.kind)+'</div>'+
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">'+
+        '<span style="font-size:.8em;color:var(--ink-500);font-weight:700">'+escapeHtml(e.kind)+'</span>'+
+        '<span style="margin-left:auto">'+ptQuestionLink(tId,e.page)+'</span></div>'+
       '<div style="white-space:pre-wrap;font-size:.92em;line-height:1.7">'+escapeHtml(e.txt)+'</div></div>';}).join('');
   } else {
     var wEm=get('practice_writing_email_words'), wDi=get('practice_writing_discussion_words');
@@ -2057,32 +2226,36 @@ function renderPtDetail(sid, data, ctx){
         '<br>※ 2026-07 の改修より前の受験、または Writing 未受験の回では本文が残っていません。')+'</div>';
   }
 
-  // ---- Speaking ----
+  // ================= Speaking =================
   // この回の提出有無は PT_RESULTS（カード一覧と同じ行）に入っているので必ず出す。
   // 音声そのものは RECORDINGS_PT（sessionId 列が無いため回ごとには紐づかない）。
   var recs=(ctx.recordings||[]).filter(function(r){var t=String(r.task||'').toLowerCase();return t==='lr'||t==='ti'||t==='speaking'||!!r.fileUrl;});
-  out+='<div style="font-weight:700;margin:14px 0 4px">Speaking</div>';
+  out+='<div style="font-weight:800;margin:18px 0 2px;font-size:1.02em">Speaking</div>';
   out+='<div style="font-size:.9em;margin-bottom:6px">この回の提出：'+
     '<strong>Listen &amp; Repeat '+(row.speakingLr?'提出済み ✓':'未提出 —')+'</strong>'+
     '　/　<strong>Take an Interview '+(row.speakingTi?'提出済み ✓':'未提出 —')+'</strong>'+
     '　<a href="'+ptDir(tId)+'speaking-intro.html?preview=1" target="_blank" rel="noopener" style="margin-left:6px;font-size:.82em;color:var(--green,#0F7A45)">問題ページ ↗</a></div>';
   if(recs.length){
-    out+='<div style="color:var(--ink-500);font-size:.78em;margin-bottom:6px">※ 録音は受験回（session）単位で紐づかない仕様のため、この生徒の模試スピーキング録音をすべて表示しています。収録日時で照合してください。</div>';
+    out+='<div style="color:var(--ink-500);font-size:.78em;margin-bottom:6px">※ 録音は受験回（session）単位で紐づかない仕様のため、この生徒の模試スピーキング録音をすべて表示しています。収録日時で照合してください。'+
+      (ctx.recordingsSource==='fallback'?'<br>※ 模試専用の一覧が取得できなかったため、通常の録音一覧（RECORDINGS）から抽出しています。模試以外の録音が混ざる場合があります。':'')+'</div>';
     out+=recs.map(function(r){ var url=r.fileUrl||('https://drive.google.com/uc?export=download&id='+r.fileId);
       return '<div style="margin:6px 0;padding:8px 10px;border:1px solid var(--line,#e3e3e3);border-radius:8px">'+
         '<div style="font-size:.82em;color:var(--ink-500)">'+escapeHtml(String(r.task).toUpperCase())+' P'+escapeHtml(String(r.practiceSet||''))+' Q'+escapeHtml(String(r.questionIndex||''))+' ・ '+Math.round(r.durationSec||0)+'秒'+(r.timestamp?(' ・ '+ptFmtWhen(r.timestamp)):'')+'</div>'+
         '<audio controls preload="none" src="'+escapeHtml(url)+'" style="width:100%;margin-top:4px"></audio></div>'; }).join('');
   } else if (ctx.recordingsAvailable) {
-    out+='<div style="color:var(--ink-500);font-size:.9em">この生徒の模試スピーキング録音は提出されていません（未提出）。</div>';
+    out+='<div style="color:var(--ink-500);font-size:.9em">この生徒の模試スピーキング録音は見つかりませんでした（未提出、または RECORDINGS_PT に行がありません）。</div>';
   } else {
     out+='<div style="font-size:.9em;background:#FBF3E7;border:1px solid #E4C77A;border-radius:8px;padding:9px 11px;line-height:1.6">'+
-      '⚠ 録音取得の Admin エンドポイント（<code>adminListPtRecordings</code>）が<strong>未デプロイ</strong>のため、音声をここに一覧表示できていません。'+
+      '⚠ 録音の一覧を取得できませんでした'+(ctx.recordingsError?('（サーバの応答: <code>'+escapeHtml(String(ctx.recordingsError))+'</code>）'):'')+'。'+
       '<br><strong>録音データ自体は受験時にサーバ（RECORDINGS_PT シート）へ保存されており、消えていません。</strong>'+
-      '<code>docs/gas-pt-admin.js</code> をデプロイすると表示されます。</div>';
+      '<br>' + (String(ctx.recordingsError||'')==='auth_failed'
+        ? 'スタッフ認証が通っていません。Admin にログインし直すと解消することがあります。'
+        : '<code>docs/gas-pt-admin.js</code> の <code>handleAdminListPtRecordings_</code> を GAS に貼り、<code>doGet()</code> に <code>adminListPtRecordings</code> の1行を足して<strong>新しいバージョンでデプロイ</strong>してください。')+
+      '</div>';
   }
 
-  out+='<div style="color:var(--ink-500);font-size:.76em;margin-top:14px;line-height:1.6">'+
-    '※ 設問文・選択肢・正答は、この画面が practice-test の各ページを直接読み込んで表示しています（GAS へのデプロイは不要）。'+
+  out+='<div style="color:var(--ink-500);font-size:.76em;margin-top:16px;line-height:1.6">'+
+    '※ 本文・設問文・選択肢・正答は、この画面が practice-test の各ページを直接読み込んで表示しています（GAS へのデプロイは不要）。'+
     '<br>※ 2026-07 の改修以降の受験は Reading Module 1・Module 2 とも全問（選択・CTW 入力）が記録されます。'+
     'それ以前の受験は仕様上 Module 1 の選択が保存されておらず再現できません（Module 2 のみ表示）。</div>';
   out+='</div>';
@@ -2306,13 +2479,33 @@ function loadSaveHealth(force) {
       bodyEl.innerHTML = '<tr><td colspan="9" class="empty" style="text-align:center;padding:24px;color:var(--ink-500)">異常なし</td></tr>';
       return;
     }
-    statusEl.innerHTML = '<span style="color:var(--terracotta)">⚠ ' + rows.length +
-      ' 件のアカウントで、保存がサーバに届かず溜まっています。環境（会社/学校のネットワーク等）を確認し、必要なら別回線での再送を案内してください。</span>';
+    var liveRows = rows.filter(function (r) { return !shIsStale(r); });
+    var staleRows = rows.length - liveRows.length;
+    statusEl.innerHTML =
+      (liveRows.length
+        ? '<span style="color:var(--terracotta)">⚠ ' + liveRows.length +
+          ' 件のアカウントで、保存がサーバに届かず溜まっています（直近 ' + SH_STALE_DAYS +
+          ' 日以内の報告）。環境（会社/学校のネットワーク等）を確認し、必要なら別回線での再送を案内してください。</span>'
+        : '<span style="color:var(--green-deep)">✓ 直近 ' + SH_STALE_DAYS + ' 日以内に報告された滞留はありません。</span>') +
+      (staleRows
+        ? '<div style="margin-top:6px;font-size:.92em;color:var(--ink-500);line-height:1.7">' +
+          'ほかに <strong>' + staleRows + ' 件</strong>、' + SH_STALE_DAYS + ' 日以上前の報告のまま更新されていない行があります（下の表でグレー表示）。' +
+          '<details style="margin-top:4px"><summary style="cursor:pointer;color:var(--green-deep);font-weight:700">古い行が残る理由と消し方</summary>' +
+          '<div style="padding:6px 0 0">保存は「検証できたサーバ応答」でしか outbox から消えません。' +
+          'Academic Discussion / Email のような長い答案は URL が 1500 字を超えるため、検証できない hidden-iframe POST で送られます。' +
+          'このとき保存proxy（<code>*.workers.dev</code>）も広告ブロッカーや社内フィルタで遮断されていると、' +
+          '<strong>答案はサーバに届いているのに</strong> client 側では確認できず、滞留フラグが立ったまま残ります。' +
+          '滞留 0 の報告（自動解除）は outbox が空にならないと送られないため、再訪しない限り消えません。' +
+          '<br>GAS で <code>reconcileSaveHealth()</code> を実行すると、ANSWERS / PT_RESULTS の実績を根拠に解消判定ができます' +
+          '（引数なしは確認のみ。実際に消すのは <code>reconcileSaveHealth({apply:true})</code>）。</div></details></div>'
+        : '');
     bodyEl.innerHTML = rows.map(function (r) {
       var total = (Number(r.stuck) || 0) + (Number(r.ptStuck) || 0);
-      var sev = (Number(r.oldestAgeMin) || 0) >= 60 || total >= 3;
-      return '<tr' + (sev ? ' style="background:rgba(197,84,60,.06)"' : '') + '>' +
-        '<td>' + escapeHtml(r.userName || '—') + '</td>' +
+      var stale = shIsStale(r);
+      var sev = !stale && ((Number(r.oldestAgeMin) || 0) >= 60 || total >= 3);
+      return '<tr' + (sev ? ' style="background:rgba(197,84,60,.06)"'
+                          : (stale ? ' style="opacity:.55"' : '')) + '>' +
+        '<td>' + escapeHtml(r.userName || '—') + (stale ? ' <span style="font-size:.72em;color:var(--ink-500);white-space:nowrap">（古い報告）</span>' : '') + '</td>' +
         '<td class="muted">' + escapeHtml(r.userId || '') + '</td>' +
         '<td style="text-align:center">' + (Number(r.stuck) || 0) + '</td>' +
         '<td style="text-align:center">' + (Number(r.ptStuck) || 0) + '</td>' +
@@ -2333,6 +2526,25 @@ function loadSaveHealth(force) {
    ログイン直後（boot）に1回だけ listSaveHealth を叩き、該当アカウントが
    あればポップアップで即通知する。タブを見に行かなくても気づける。
    何も無ければ静かに何も出さない。生徒データには一切触れない。 */
+/* 報告が SH_STALE_DAYS 日以上更新されていない行は、いま起きている障害ではない。
+
+   なぜ古い行が残るのか（2026-09 調査）: 保存は「検証できたサーバ応答」でしか
+   outbox から消えない。長い答案（Academic Discussion / Email の 130 語前後以上）は
+   URL が 1500 字を超えて JSONP ではなく hidden-iframe POST になり、その応答は
+   cross-origin で読めない。GAS には届いていても client は「未検証」としか言えず、
+   さらに SAVE_PROXY_URL（*.workers.dev）が広告ブロッカーや社内フィルタで遮断されて
+   いると検証できる経路が一つも無くなり、item が outbox に残り続ける。すると
+   保存ヘルスはそのアカウントを永久に赤く表示し、all-clear（滞留 0 の報告）は
+   outbox が空にならないので二度と送られない——**答案自体は保存されているのに**。
+   js/api.js 側でサーバに実在するかを読み返して消す修正を入れたが、その修正前に
+   付いた古い行は、その生徒が再訪するまで残る。
+   → ポップアップは「新しい報告」だけに限定し、古い行はタブ側で区別して見せる。 */
+var SH_STALE_DAYS = 7;
+function shIsStale(r) {
+  var t = Date.parse(r && r.lastReportAt);
+  if (isNaN(t)) return false;
+  return (Date.now() - t) > SH_STALE_DAYS * 24 * 60 * 60 * 1000;
+}
 function checkSaveHealthAlert() {
   if (!Api.listSaveHealth) return;
   Api.listSaveHealth().then(function (res) {
@@ -2340,7 +2552,11 @@ function checkSaveHealthAlert() {
     var rows = res.rows || [];
     if (!rows.length) return;                      // 異常なし → 何も出さない
     window.__saveHealthRows = rows;                // タブ側と共有（再取得を省く）
-    renderSaveHealthAlert(rows);
+    var live = rows.filter(function (r) { return !shIsStale(r); });
+    // 古い行しかないなら、いま対応が要る障害ではない。毎回のログインで
+    // 数週間前の行に驚かされると、本当の障害を見落とすようになる。
+    if (!live.length) return;
+    renderSaveHealthAlert(live, rows.length - live.length);
   }).catch(function () {});
 }
 /* 最終報告からの経過を「3分前 / 4時間前 / 12日前」で返す。日単位まで開いた
@@ -2354,7 +2570,8 @@ function fmtReportAgo(iso) {
   if (min < 60 * 24) return Math.round(min / 60) + '時間前';
   return Math.round(min / (60 * 24)) + '日前';
 }
-function renderSaveHealthAlert(rows) {
+function renderSaveHealthAlert(rows, staleCount) {
+  staleCount = Number(staleCount) || 0;
   var listEl = document.getElementById('shAlertList');
   var titleEl = document.getElementById('shAlertTitle');
   if (!listEl) return;
@@ -2372,7 +2589,11 @@ function renderSaveHealthAlert(rows) {
       '<div class="stat"><b>' + total + '件</b>未送信<br>' + fmtAgeMin(r.oldestAgeMin) + '滞留</div>' +
       '</div>';
   }).join('') + (rows.length > top.length
-    ? '<div class="sh-alert-more">ほか ' + (rows.length - top.length) + ' 件</div>' : '');
+    ? '<div class="sh-alert-more">ほか ' + (rows.length - top.length) + ' 件</div>' : '')
+    + (staleCount
+    ? '<div class="sh-alert-more">これとは別に、' + staleCount + ' 件は ' + SH_STALE_DAYS +
+      ' 日以上前の報告のまま更新されていません（すでに解消している可能性が高いため、ここには出していません）。保存ヘルスタブで確認できます。</div>'
+    : '');
   document.getElementById('saveHealthAlert').classList.add('active');
 }
 function dismissSaveHealthAlert() {
@@ -2653,6 +2874,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260818"></script>
+<script defer src="../js/tm-footer.js?v=20260922"></script>
 </body>
 </html>
