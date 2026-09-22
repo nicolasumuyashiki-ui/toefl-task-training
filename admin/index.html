@@ -563,8 +563,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
 </div>
 
-<script src="../js/api.js?v=20260922"></script>
-<script src="../js/auth.js?v=20260922"></script>
+<script src="../js/api.js?v=20260923"></script>
+<script src="../js/auth.js?v=20260923"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -2235,19 +2235,40 @@ function renderPtDetail(sid, data, ctx){
     '<strong>Listen &amp; Repeat '+(row.speakingLr?'提出済み ✓':'未提出 —')+'</strong>'+
     '　/　<strong>Take an Interview '+(row.speakingTi?'提出済み ✓':'未提出 —')+'</strong>'+
     '　<a href="'+ptDir(tId)+'speaking-intro.html?preview=1" target="_blank" rel="noopener" style="margin-left:6px;font-size:.82em;color:var(--green,#0F7A45)">問題ページ ↗</a></div>';
+  /* 受験回で絞り込む。RECORDINGS_PT に session_id が入っている録音は
+     この回のものだけを出す。入っていない古い録音は捨てず「受験回が未記録」
+     として別枠に出す（日時で照合してもらう）。 */
+  var mine   = recs.filter(function(r){ return String(r.sessionId||'')===String(sid); });
+  var untag  = recs.filter(function(r){ return !String(r.sessionId||''); });
+  var others = recs.length - mine.length - untag.length;   // 別の受験回のもの
+  var pinned = recs.some(function(r){ return !!String(r.sessionId||''); });
+  var shown  = pinned ? mine : recs;
+
   if(recs.length){
-    out+='<div style="color:var(--ink-500);font-size:.78em;margin-bottom:6px;line-height:1.7">'+
-      '※ 録音データには「どの受験回のものか」を示す情報（sessionId）が保存されていないため、'+
-      '<strong>この生徒の模試スピーキング録音をすべて</strong>並べています。'+
-      '同じ模試を複数回受けている生徒の場合は、各行の収録日時でどの回のものかを判断してください。'+
-      '<br>（1回しか受けていない生徒であれば、ここに出ているものがそのままこの回の録音です。）'+
-      (ctx.recordingsSource==='fallback'?'<br>※ 模試専用の一覧が取得できなかったため、通常の録音一覧（RECORDINGS）から抽出しています。模試以外の録音が混ざる場合があります。':'')+'</div>';
+    if(pinned){
+      out+='<div style="color:var(--ink-500);font-size:.78em;margin-bottom:6px;line-height:1.7">'+
+        '※ <strong>この受験回の録音</strong>だけを表示しています（録音に受験回 ID が記録されています）。'+
+        (others?('<br>この生徒には別の受験回の録音が '+others+' 件あります（ここには出していません）。'):'')+
+        (untag.length?('<br>受験回が記録されていない録音が '+untag.length+' 件あります（下に別枠で表示）。'):'')+
+        '</div>';
+    } else {
+      out+='<div style="color:var(--ink-500);font-size:.78em;margin-bottom:6px;line-height:1.7">'+
+        '※ この生徒の録音には「どの受験回のものか」を示す ID がまだ入っていないため、'+
+        '<strong>模試スピーキング録音をすべて</strong>並べています。'+
+        '同じ模試を複数回受けている生徒の場合は、各行の収録日時でどの回のものかを判断してください。'+
+        '<br>（1回しか受けていない生徒であれば、ここに出ているものがそのままこの回の録音です。）'+
+        '<br>GAS で <code>backfillPtRecordingSessions()</code> を実行すると、PT_RESULTS の受験時刻を根拠に過去の録音も受験回へ紐づけられます。'+
+        '</div>';
+    }
+    if(ctx.recordingsSource==='fallback'){
+      out+='<div style="color:var(--ink-500);font-size:.78em;margin-bottom:6px">※ 模試専用の一覧が取得できなかったため、通常の録音一覧（RECORDINGS）から抽出しています。模試以外の録音が混ざる場合があります。</div>';
+    }
     /* 再生は録音タブと同じ方式にする。Drive の uc?export=download URL は
        ウイルススキャンの中間ページ / CORS のせいで <audio> に安定して
        ストリームされず、0:00 のまま鳴らないプレイヤーになる（録音タブは
        同じ理由で Drive の /preview iframe に移行済み）。クリックされて
        初めて iframe を差し込む＝同時接続の上限も踏まない。 */
-    out+=recs.map(function(r){
+    var recRow = function(r){
       var player = r.fileId
         ? '<button type="button" onclick="tckLoadPlayer(this,\''+escapeHtml(String(r.fileId))+'\')" style="font-family:inherit;font-size:.82em;font-weight:600;color:#fff;background:var(--green,#0F7A45);border:0;border-radius:999px;padding:6px 16px;cursor:pointer;margin-top:5px">▶ 再生</button>'
         : (r.fileUrl ? '<audio controls preload="none" src="'+escapeHtml(r.fileUrl)+'" style="width:100%;margin-top:4px"></audio>' : '<span style="color:var(--ink-500)">—</span>');
@@ -2256,7 +2277,20 @@ function renderPtDetail(sid, data, ctx){
         : '';
       return '<div style="margin:6px 0;padding:8px 10px;border:1px solid var(--line,#e3e3e3);border-radius:8px">'+
         '<div style="font-size:.82em;color:var(--ink-500)">'+escapeHtml(String(r.task).toUpperCase())+' P'+escapeHtml(String(r.practiceSet||''))+' Q'+escapeHtml(String(r.questionIndex||''))+' ・ '+Math.round(r.durationSec||0)+'秒'+(r.timestamp?(' ・ '+ptFmtWhen(r.timestamp)):'')+'</div>'+
-        player + driveLink + '</div>'; }).join('');
+        player + driveLink + '</div>';
+    };
+    if(shown.length){
+      out+=shown.map(recRow).join('');
+    } else {
+      out+='<div style="color:var(--ink-500);font-size:.9em">この受験回に紐づく録音はありません。</div>';
+    }
+    // 受験回が未記録の録音は捨てずに別枠で出す（日時で照合してもらう）。
+    if(pinned && untag.length){
+      out+='<details class="ptq" style="margin-top:8px;border:1px solid var(--line,#e3e3e3);border-radius:9px;background:var(--paper,#fff)">'+
+        '<summary style="cursor:pointer;padding:7px 11px;font-size:.82em;font-weight:700;color:var(--green-deep,#0F7A45)">'+
+        '受験回が未記録の録音 '+untag.length+' 件を表示（収録日時で照合してください）</summary>'+
+        '<div style="padding:2px 11px 10px">'+untag.map(recRow).join('')+'</div></details>';
+    }
   } else if (ctx.recordingsAvailable) {
     out+='<div style="color:var(--ink-500);font-size:.9em">この生徒の模試スピーキング録音は見つかりませんでした（未提出、または RECORDINGS_PT に行がありません）。</div>';
   } else {
@@ -2889,6 +2923,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260922"></script>
+<script defer src="../js/tm-footer.js?v=20260923"></script>
 </body>
 </html>

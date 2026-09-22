@@ -343,9 +343,29 @@ function _ptFlushAnsOutbox() {
    Uses hidden iframe form-submit POST to bypass the GAS 302 → CORS issue
    that causes plain fetch to lose the body. Same pattern as Task Training. */
 var Api = {
+  /* This mock attempt's id. Created once per browser tab and reused by every
+     section, so a recording made during Speaking carries the SAME id that
+     results.html later saves to PT_RESULTS. Previously the id was minted
+     lazily inside results.html — i.e. AFTER Speaking — so recordings had no
+     attempt to belong to and admin had to show every recording a student ever
+     made. The format matches what results.html used to generate. */
+  ptSessionId: function () {
+    var id = '';
+    try { id = sessionStorage.getItem('practice_test_session_id') || ''; } catch (e) {}
+    if (!id) {
+      id = 'pt_' + new Date().toISOString().replace(/[^0-9]/g, '').slice(0, 14)
+         + '_' + Math.random().toString(36).slice(2, 7);
+      try { sessionStorage.setItem('practice_test_session_id', id); } catch (e) {}
+    }
+    return id;
+  },
+
   uploadRecording: function(meta, base64Audio){
     if (window.__PT_PREVIEW__) return Promise.resolve({ success: true, preview: true }); // Admin preview: never upload
     var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    var ptSession = Api.ptSessionId();
+    var ptTestId = '';
+    try { ptTestId = sessionStorage.getItem('practice_test_id') || ''; } catch (e) {}
     var data = {
       action:        'uploadRecording',
       source:        'pt',                                // <- Practice Test marker
@@ -358,6 +378,10 @@ var Api = {
       ext:           meta.ext  || 'webm',
       durationSec:   String(meta.durationSec || 0),
       attemptNumber: String(meta.attemptNumber || 1),
+      // どの受験回の録音かを示す。現行の GAS がこの2つを無視しても害は無く、
+      // 下の tagPtRecording が別経路で RECORDINGS_PT に書き込む。
+      sessionId:     ptSession,
+      testId:        String(ptTestId || ''),
       audioB64:      base64Audio || ''
     };
     return new Promise(function(resolve){
@@ -393,6 +417,36 @@ var Api = {
       iframe.onload = function(){ cleanup({ success: true, transparent: true }); };
       setTimeout(function(){ cleanup({ success: true, timeout: true }); }, 30000);
       form.submit();
+    }).then(function (res) {
+      /* Stamp the attempt id onto the row that was just appended.
+         本番の uploadRecording ハンドラは RECORDINGS_PT に固定の列だけを
+         append しており、上で足した sessionId / testId は捨てられる。その
+         ハンドラを書き換えずに済むよう、直後に別エンドポイントで「いま入れた
+         行」に受験回を書き込む（docs/gas-pt-recording-session.js）。
+         best-effort: 失敗しても録音の保存には一切影響しない。 */
+      try { Api.tagPtRecording(ptSession, ptTestId, data); } catch (e) {}
+      return res;
+    });
+  },
+
+  /* Write session_id / test_id onto the newest still-untagged RECORDINGS_PT row
+     for (userId, task, questionIndex). Needs docs/gas-pt-recording-session.js
+     deployed; without it this resolves null and nothing breaks. */
+  tagPtRecording: function (sessionId, testId, meta) {
+    if (window.__PT_PREVIEW__) return Promise.resolve(null);
+    if (!sessionId) return Promise.resolve(null);
+    var u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}');
+    // 録音の append がシートに反映されてから呼ぶ（GAS の書き込み順序待ち）。
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        _ptJsonp(REC_URL + '?action=tagPtRecording'
+          + '&userId='        + encodeURIComponent((meta && meta.userId) || u.userId || '')
+          + '&task='          + encodeURIComponent((meta && meta.task) || '')
+          + '&questionIndex=' + encodeURIComponent((meta && meta.questionIndex) || '')
+          + '&sessionId='     + encodeURIComponent(sessionId)
+          + '&testId='        + encodeURIComponent(testId || ''))
+          .then(resolve, function () { resolve(null); });
+      }, 2500);
     });
   },
 

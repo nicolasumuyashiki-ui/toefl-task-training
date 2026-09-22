@@ -76,6 +76,9 @@ function handleAdminGetPtAnswers_(e, callback) {
 
 // 指定ユーザーの Practice Test スピーキング録音（RECORDINGS_PT）を返す（staff 認証必須）。
 // RECORDINGS_PT columns: 0 ts,1 userId,2 name,3 task,4 practice_set,5 q_index,6 dur,7 attempt,8 file_id,9 file_url,10 mime,11 source
+// session_id / test_id は docs/gas-pt-recording-session.js が右端に足す列なので、
+// 位置ではなく**見出し名**で引く（無ければ空文字で返し、client 側は従来どおり
+// 「この生徒の録音を全部表示」に degrade する）。
 function handleAdminListPtRecordings_(e, callback) {
   if (!verifyStaff_(e.parameter.id, e.parameter.pass)) {
     return jsonpResponse_(callback, { success: false, error: 'auth_failed' });
@@ -84,6 +87,10 @@ function handleAdminListPtRecordings_(e, callback) {
   var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('RECORDINGS_PT');
   if (!sh) return jsonpResponse_(callback, { success: true, recordings: [] });
   var d = sh.getDataRange().getValues();
+  if (!d.length) return jsonpResponse_(callback, { success: true, recordings: [] });
+  var header = d[0].map(function (h) { return String(h || ''); });
+  var iSes = header.indexOf('session_id');
+  var iTst = header.indexOf('test_id');
   var out = [];
   for (var i = 1; i < d.length; i++) {
     if (uid && String(d[i][1]) !== uid) continue;
@@ -92,7 +99,9 @@ function handleAdminListPtRecordings_(e, callback) {
       userId: String(d[i][1] || ''), userName: String(d[i][2] || ''),
       task: String(d[i][3] || ''), practiceSet: String(d[i][4] || ''),
       questionIndex: Number(d[i][5] || 0), durationSec: Number(d[i][6] || 0),
-      fileId: String(d[i][8] || ''), fileUrl: String(d[i][9] || '')
+      fileId: String(d[i][8] || ''), fileUrl: String(d[i][9] || ''),
+      sessionId: (iSes >= 0 && iSes < d[i].length) ? String(d[i][iSes] || '') : '',
+      testId:    (iTst >= 0 && iTst < d[i].length) ? String(d[i][iTst] || '') : ''
     });
   }
   out.sort(function (a, b) { return (a.timestamp || '').localeCompare(b.timestamp || ''); });
