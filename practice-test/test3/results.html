@@ -757,7 +757,7 @@ render();
       try {
         for (var i = 0; i < store.length; i++) {
           var k = store.key(i);
-          if (/answer|practice_reading|practice_listening|practice_writing|^m1_|^m2[eh]?_|^results_m/i.test(k)) {
+          if (/answer|practice_reading|practice_listening|practice_writing|practice_speaking|^m1_|^m2[eh]?_|^results_m/i.test(k)) {
             snap[tag + ':' + k] = store.getItem(k);
           }
         }
