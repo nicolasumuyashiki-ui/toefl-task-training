@@ -165,6 +165,26 @@ docs/ も更新する**。2026-07-25 の監査で、デプロイ済みの `handl
 本体は `docs/gas-pt-results.js`（`PT_RESULTS` シート、userId 紐付け、sessionId で重複排除）。results.html は
 `Api.savePtResult` が無いと "history disabled" で degrade する。模試の素点/換算/Band は results.html が DOM から再収集して送る。
 
+### 模試の「1問ずつの回答」（PT_ANSWERS）と Admin 詳細ビュー
+- 回答スナップショットは `results.html` の `snapshotAnswers()` が sessionStorage / localStorage を
+  正規表現で一括収集し、`Api.savePtAnswers(sessionId, snap)` で `PT_ANSWERS` に保存する。
+  キーは `s:<元のキー名>` / `l:<元のキー名>`。Admin はこの名前で読むので、**別の形（`{listening:…}` など）で
+  保存してはいけない**。
+- `PT_ANSWERS` は (userId, sessionId) で**行ごと上書き**される。したがって
+  **部分的な payload を同じ sessionId に送ると、それ以外のセクションの回答が消える**。
+  実際 `listening-end.html` のリスニング再受験がこれで Reading/Writing を消していた（2026-09 修正）。
+  部分保存が必要なときは必ず `Api.getPtAnswers(sessionId)` で既存を取ってからマージして送ること。
+- Admin の模試詳細（`admin/index.html` の `ptParsePage` / `ptBuildBank` / `renderPtDetail`）は、
+  **practice-test の各ページを同一オリジンで fetch して設問文・選択肢・正答・CTW の語を取り出す**。
+  GAS の `adminGetPtKeys`（`docs/gas-pt-keys.js`）は補助にすぎず、未デプロイでも正誤・設問文が出る。
+  → practice-test 側の**マークアップ規約を壊すと Admin の表示が壊れる**。維持すべき形:
+  Reading = `.question-page` > `.question-text` + `label.option[data-q][data-v]` > `.option-text`、
+  正答 = `var correctAnswers = {qN:'X'}` または `var answers = {qN:"X"}`、挿入問題 = `correctInsertion`、
+  Listening = `questionNum:` / `questionText:` / `choices:[{letter,text}]` / `answer:`（LCR のみ `id:`）、
+  CTW = `var blanks = [{given,answer}]` または `var D = { target:[{w,a,s,p}] }`。
+- Speaking の録音は `RECORDINGS_PT`（`sessionId` 列が無いので受験回ごとには紐づかない）。
+  回ごとの提出有無は `PT_RESULTS` の `speakingLr` / `speakingTi` を使う。
+
 ### 復習モード（retry）ポップアップ
 `auth.js` の `maybeShowRetryModal` は **1 practice につきセッション 1 回だけ**表示する（`sessionStorage tck_retry_shown_<task>_p<N>`）。
 CTW の Set1→Set2 等、複数ページにまたがる practice で毎回出ないようにするため。「practice 開始時だけ」が要件。
