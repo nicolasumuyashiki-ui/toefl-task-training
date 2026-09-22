@@ -182,8 +182,18 @@ docs/ も更新する**。2026-07-25 の監査で、デプロイ済みの `handl
   正答 = `var correctAnswers = {qN:'X'}` または `var answers = {qN:"X"}`、挿入問題 = `correctInsertion`、
   Listening = `questionNum:` / `questionText:` / `choices:[{letter,text}]` / `answer:`（LCR のみ `id:`）、
   CTW = `var blanks = [{given,answer}]` または `var D = { target:[{w,a,s,p}] }`。
-- Speaking の録音は `RECORDINGS_PT`（`sessionId` 列が無いので受験回ごとには紐づかない）。
-  回ごとの提出有無は `PT_RESULTS` の `speakingLr` / `speakingTi` を使う。
+- Speaking の録音は `RECORDINGS_PT`。回ごとの提出有無は `PT_RESULTS` の `speakingLr` / `speakingTi`。
+- **録音と受験回の紐づけ（2026-09 追加）**: 受験回 ID は `Api.ptSessionId()`（`practice-test/js/api.js`）が
+  `sessionStorage practice_test_session_id` に**タブ単位で1つだけ**作る。以前は results.html が
+  遅延生成していたため、その前に走る Speaking の録音には紐づけ先が無かった。**results.html で
+  作り直してはいけない**（`Api.ptSessionId()` を呼ぶこと）。
+  - 本番の `uploadRecording` ハンドラは docs/ に写しが無いため書き換えない。代わりに録音アップロード直後に
+    `Api.tagPtRecording` が `tagPtRecording`（`docs/gas-pt-recording-session.js`）を叩き、
+    `RECORDINGS_PT` の**見出し名** `session_id` / `test_id` 列へ書き込む（列が無ければ右端に追加）。
+    未デプロイでも録音の保存には影響しない（degrade）。
+  - 過去の録音は `backfillPtRecordingSessions()` が `PT_RESULTS` の受験時刻を根拠にさかのぼって紐づける
+    （引数なしは確認のみ。`{apply:true}` で書き込み。触るのは `session_id` / `test_id` 列だけ）。
+  - Admin は `session_id` がある録音だけをその受験回に出し、未記録の録音は捨てずに別枠で出す。
 
 ### 復習モード（retry）ポップアップ
 `auth.js` の `maybeShowRetryModal` は **1 practice につきセッション 1 回だけ**表示する（`sessionStorage tck_retry_shown_<task>_p<N>`）。

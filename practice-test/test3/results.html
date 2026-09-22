@@ -290,8 +290,8 @@ body{font-family:var(--font-en),var(--font-jp);background:var(--cream);min-heigh
   </div>
 </section>
 
-<script src="../js/auth.js?v=20260922"></script>
-<script src="../js/api.js?v=20260922"></script>
+<script src="../js/auth.js?v=20260923"></script>
+<script src="../js/api.js?v=20260923"></script>
 <script>
 /* ===== Language toggle (mirrors my-score.html) ===== */
 (function(){
@@ -718,7 +718,11 @@ render();
 
   // Stable session id so reloading results.html in the same tab doesn't
   // double-save. Persist for this PT session in sessionStorage.
-  var sessionId = sessionStorage.getItem('practice_test_session_id');
+  // Api.ptSessionId() が同じキーを使う。Speaking の録音は受験中（この
+  // ページより前）に同じ id を刻んでいるので、ここで作り直してはいけない。
+  var sessionId = (typeof Api !== 'undefined' && Api.ptSessionId)
+    ? Api.ptSessionId()
+    : sessionStorage.getItem('practice_test_session_id');
   if (!sessionId) {
     sessionId = 'pt_' + new Date().toISOString().replace(/[^0-9]/g,'').slice(0,14)
               + '_' + Math.random().toString(36).slice(2,7);
@@ -886,6 +890,6 @@ render();
   <span> · </span>
   <a href="https://www.tckwshop.com/privacypolicy/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid #D6DAD7"><span class="jp">プライバシー</span><span class="en">Privacy</span></a>
 </footer>
-<script defer src="../../js/tm-footer.js?v=20260922"></script>
+<script defer src="../../js/tm-footer.js?v=20260923"></script>
 </body>
 </html>
