@@ -2236,12 +2236,27 @@ function renderPtDetail(sid, data, ctx){
     '　/　<strong>Take an Interview '+(row.speakingTi?'提出済み ✓':'未提出 —')+'</strong>'+
     '　<a href="'+ptDir(tId)+'speaking-intro.html?preview=1" target="_blank" rel="noopener" style="margin-left:6px;font-size:.82em;color:var(--green,#0F7A45)">問題ページ ↗</a></div>';
   if(recs.length){
-    out+='<div style="color:var(--ink-500);font-size:.78em;margin-bottom:6px">※ 録音は受験回（session）単位で紐づかない仕様のため、この生徒の模試スピーキング録音をすべて表示しています。収録日時で照合してください。'+
+    out+='<div style="color:var(--ink-500);font-size:.78em;margin-bottom:6px;line-height:1.7">'+
+      '※ 録音データには「どの受験回のものか」を示す情報（sessionId）が保存されていないため、'+
+      '<strong>この生徒の模試スピーキング録音をすべて</strong>並べています。'+
+      '同じ模試を複数回受けている生徒の場合は、各行の収録日時でどの回のものかを判断してください。'+
+      '<br>（1回しか受けていない生徒であれば、ここに出ているものがそのままこの回の録音です。）'+
       (ctx.recordingsSource==='fallback'?'<br>※ 模試専用の一覧が取得できなかったため、通常の録音一覧（RECORDINGS）から抽出しています。模試以外の録音が混ざる場合があります。':'')+'</div>';
-    out+=recs.map(function(r){ var url=r.fileUrl||('https://drive.google.com/uc?export=download&id='+r.fileId);
+    /* 再生は録音タブと同じ方式にする。Drive の uc?export=download URL は
+       ウイルススキャンの中間ページ / CORS のせいで <audio> に安定して
+       ストリームされず、0:00 のまま鳴らないプレイヤーになる（録音タブは
+       同じ理由で Drive の /preview iframe に移行済み）。クリックされて
+       初めて iframe を差し込む＝同時接続の上限も踏まない。 */
+    out+=recs.map(function(r){
+      var player = r.fileId
+        ? '<button type="button" onclick="tckLoadPlayer(this,\''+escapeHtml(String(r.fileId))+'\')" style="font-family:inherit;font-size:.82em;font-weight:600;color:#fff;background:var(--green,#0F7A45);border:0;border-radius:999px;padding:6px 16px;cursor:pointer;margin-top:5px">▶ 再生</button>'
+        : (r.fileUrl ? '<audio controls preload="none" src="'+escapeHtml(r.fileUrl)+'" style="width:100%;margin-top:4px"></audio>' : '<span style="color:var(--ink-500)">—</span>');
+      var driveLink = r.fileUrl
+        ? ' <a href="'+escapeHtml(r.fileUrl)+'" target="_blank" rel="noopener" style="color:var(--green-dark,#00593A);font-size:.82em;margin-left:8px">Drive で開く →</a>'
+        : '';
       return '<div style="margin:6px 0;padding:8px 10px;border:1px solid var(--line,#e3e3e3);border-radius:8px">'+
         '<div style="font-size:.82em;color:var(--ink-500)">'+escapeHtml(String(r.task).toUpperCase())+' P'+escapeHtml(String(r.practiceSet||''))+' Q'+escapeHtml(String(r.questionIndex||''))+' ・ '+Math.round(r.durationSec||0)+'秒'+(r.timestamp?(' ・ '+ptFmtWhen(r.timestamp)):'')+'</div>'+
-        '<audio controls preload="none" src="'+escapeHtml(url)+'" style="width:100%;margin-top:4px"></audio></div>'; }).join('');
+        player + driveLink + '</div>'; }).join('');
   } else if (ctx.recordingsAvailable) {
     out+='<div style="color:var(--ink-500);font-size:.9em">この生徒の模試スピーキング録音は見つかりませんでした（未提出、または RECORDINGS_PT に行がありません）。</div>';
   } else {
