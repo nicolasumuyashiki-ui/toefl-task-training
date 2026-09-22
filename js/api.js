@@ -267,6 +267,50 @@ function _sendSaveDirect(item) {
   });
 }
 
+/* Confirm from the SERVER that a queued save actually landed.
+
+   Why this exists: `_sendSaveDirect` can only use the verifiable JSONP GET
+   while the URL fits in 1500 chars. A long answer — an Academic Discussion or
+   Email of roughly 130 words or more — exceeds that and falls back to the
+   hidden-iframe POST, whose cross-origin response is unreadable. GAS receives
+   and stores that save, but the client can only report it as UNVERIFIED, so
+   the item stays queued. If the learner's browser also cannot reach
+   SAVE_PROXY_URL (ad blockers and corporate/school filters commonly block
+   *.workers.dev), NO verifiable channel exists and the item is pinned in the
+   outbox forever: 保存ヘルス then flags that account permanently even though
+   every answer is safely on the server, and the all-clear can never fire
+   because the outbox never empties.
+
+   So instead of trusting the transport, read the record back: if the server's
+   own history already holds an attempt for this set at or after the moment
+   this item was queued, the save demonstrably landed and the item can go.
+   This is the same evidence `reconcileSaveHealth()` uses server-side.
+
+   Fail-safe: when the history cannot be read we return false, so an
+   unconfirmed record is still never dropped. */
+var _landedAttempts = null;   // one getMyHistory read per flush run
+function _confirmLanded(item) {
+  if (!item || !item.setName || !item.enqueuedAt) return Promise.resolve(false);
+  var queuedAt = Date.parse(item.enqueuedAt);
+  if (isNaN(queuedAt)) return Promise.resolve(false);
+  if (!_landedAttempts) {
+    _landedAttempts = (Api && Api.getMyHistory ? Api.getMyHistory() : Promise.reject(new Error('no_api')))
+      .then(function (r) { return (r && r.success && r.attempts) ? r.attempts : null; })
+      .catch(function () { return null; });   // null = 確認できなかった（≠ 未保存）
+  }
+  return _landedAttempts.then(function (attempts) {
+    if (!attempts) return false;              // 確認できない → 消さない
+    var floor = queuedAt - 60000;             // 端末時計のズレを 1 分だけ許容
+    for (var n = 0; n < attempts.length; n++) {
+      var a = attempts[n];
+      if (!a || String(a.set) !== String(item.setName)) continue;
+      var t = Date.parse(a.timestamp);
+      if (!isNaN(t) && t >= floor) return true;
+    }
+    return false;
+  });
+}
+
 /* Re-send every pending save until the server confirms. Safe to call on
    every page load — staggered, guarded against concurrent runs. */
 function _flushOutbox() {
@@ -276,9 +320,18 @@ function _flushOutbox() {
   var arr = _outboxRead();
   if (!arr.length) return Promise.resolve();
   _flushingOutbox = true;
+  _landedAttempts = null;   // re-read the server history on every flush run
   var i = 0;
   function step() {
-    if (i >= arr.length) { _flushingOutbox = false; return Promise.resolve(); }
+    if (i >= arr.length) {
+      _flushingOutbox = false;
+      /* The outbox just emptied — send the all-clear NOW so 保存ヘルス stops
+         showing this account. It used to wait for the load+12s / 10-min timer,
+         so closing the tab before the next tick left a red row behind for
+         weeks. reportSaveHealth() is a no-op unless this device had flagged. */
+      if (!_outboxRead().length) { try { if (Api.reportSaveHealth) Api.reportSaveHealth(); } catch (e) {} }
+      return Promise.resolve();
+    }
     var item = arr[i++];
     // Legacy items predate the enqueue-time owner capture. The outbox is NEVER
     // purged on account switch (auth.js) — instead, any owner-less item is
@@ -299,7 +352,14 @@ function _flushOutbox() {
       // record must never be discarded while it might still be unsaved (owner
       // requirement). It simply keeps retrying on every load until the server
       // confirms it — idempotent, so re-sends can't create duplicates.
-      if (okVerified) _outboxRemove(item.id);
+      if (okVerified) { _outboxRemove(item.id); return; }
+      // Only an UNVERIFIED ack got through (long answer → iframe POST, and no
+      // usable proxy). Ask the server whether the record is already there; if
+      // it is, this item is a ghost and keeping it would flag the account in
+      // 保存ヘルス forever. See _confirmLanded above.
+      return _confirmLanded(item).then(function (landed) {
+        if (landed) _outboxRemove(item.id);
+      });
     }, function () {}).then(function () {
       return new Promise(function (r) { setTimeout(r, 500); }).then(step);
     });
