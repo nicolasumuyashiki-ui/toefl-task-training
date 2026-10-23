@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "CTW 仕様(v3.5.2)の既知の逸脱を凍結したベースライン。",
+    "practice-test/ 配下は v3.5.2 制定(2026-07-02, #124/#125)より前に",
+    "作られたまま残っており、answer/blanks を修正すると CLAUDE.md の",
+    "旧版アーカイブ＋era 境界の手続きが必要になるため据え置いている。",
+    "件数が増えたら CI が落ちる。減らしたら",
+    "  python3 tools/check-ctw.py --update-baseline",
+    "でこのファイルを更新すること。新規ファイルは 0 件が必須。"
+  ],
+  "known_violations": {
+    "practice-test/reading-ctw.html": 4,
+    "practice-test/reading-m2e-ctw.html": 1,
+    "practice-test/reading-m2h-ctw.html": 6,
+    "practice-test/test2/reading-ctw.html": 5,
+    "practice-test/test2/reading-m2e-ctw.html": 6,
+    "practice-test/test2/reading-m2h-ctw.html": 5,
+    "practice-test/test3/reading-ctw.html": 6,
+    "practice-test/test3/reading-m2e-ctw.html": 12,
+    "practice-test/test3/reading-m2h-ctw.html": 8
+  }
+}
