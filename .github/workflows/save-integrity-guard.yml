@@ -1,0 +1,56 @@
+# 保存ガード — 「保存が静かに失敗する」状態がマージされるのを防ぐ
+#
+# 2026-08-19 の朝次監査で発覚した事故:
+#   writing/discussion/practice-{1..10}.html が finishWriting() の中で
+#     Api.saveAnswers("Discussion PN", {text:text, words:wordCount, ...}, ...)
+#   と書いていたが、その場に存在する変数は `wc` で `wordCount` はどこにも無かった。
+#   引数のオブジェクトを組み立てる時点で ReferenceError になり、呼び出し全体が
+#   try{...}catch(e){} に飲み込まれるため、Api.saveAnswers は **一度も実行されな
+#   かった**。2026-06-28（53460a6）から約 7 週間、Academic Discussion の提出文は
+#   サーバ ANSWERS に一切保存されていなかった。
+#
+#   発見が遅れた理由: sessionStorage への保存（同じ関数内・こちらは `wc` を正しく
+#   参照）は成功し、tck_done_* も立つので、画面上は「提出済み」と正常に見えた。
+#   例外も握りつぶされるのでコンソールにも何も出なかった。
+#
+# 根因は「保存が本当に実行されたか」を機械が確認していなかったこと。
+# このワークフローがその依存を消す。tools/check-save-calls.py が全 HTML の
+# 保存呼び出しを走査し、引数で参照している識別子がその場で解決できるかを検証する。
+#
+# 落ちたときの直し方はジョブのログに日本語で出る。基本はその場で定義されている
+# 正しい変数名に直すだけ。
+name: save-integrity-guard
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    name: 保存呼び出しの引数が解決できるか
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 保存呼び出しチェック
+        shell: bash
+        run: |
+          rc=0
+          out=$(python3 tools/check-save-calls.py 2>&1) || rc=$?
+          echo "$out"
+          {
+            echo '## 保存呼び出しチェック'
+            echo ''
+            echo '```'
+            echo "$out"
+            echo '```'
+            if [ "$rc" -ne 0 ]; then
+              echo ''
+              echo '> 保存の引数に、その場で解決できない変数があります。'
+              echo '> 引数の組み立てで ReferenceError になり、try/catch に飲み込まれて'
+              echo '> **保存が静かに失敗**します（画面上は正常に見えます）。'
+              echo '> 詳細は CLAUDE.md「履歴は絶対にリセットしない」。'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $rc

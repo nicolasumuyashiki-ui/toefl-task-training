@@ -312,7 +312,7 @@ function finishWriting(method){
   document.getElementById('previewText').textContent=text||'(No response written)';
 
   sessionStorage.setItem('discussionResponse_p10', JSON.stringify({text:text, words:wc, time:m+':'+String(s).padStart(2,'0')}));
-  if(typeof Api!=="undefined"&&Api.saveAnswers){try{Api.saveAnswers("Discussion P10",{text:text,words:wordCount,time:m+":"+String(s).padStart(2,"0")},0,{attemptNumber:1});}catch(e){}}
+  if(typeof Api!=="undefined"&&Api.saveAnswers){try{Api.saveAnswers("Discussion P10",{text:text,words:wc,time:m+":"+String(s).padStart(2,"0")},0,{attemptNumber:1});}catch(e){}}
   if(typeof TCKProgress!=='undefined')TCKProgress.clear(TCK_TASK,TCK_PRACTICE); if(window.TCKProgress)TCKProgress.markDone(TCK_TASK,TCK_PRACTICE);
 
   document.getElementById('writingPage').style.display='none';
