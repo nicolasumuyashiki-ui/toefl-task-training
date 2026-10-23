@@ -67,6 +67,8 @@ speaking/ti/practice-{N}.html              — Take an Interview
    `answer`/`blanks` を変える場合は 1〜2 の CTW 方式（旧版アーカイブ＋era境界）が必須。
 ※ Email/Discussion のプロンプトは 2026-07-12 時点で開設以来無改修（機械 diff で確認済み）。
   Writing の過去提出文は問題改修の有無に関わらずサーバに全文残り、パネル＋提出文復元で常に閲覧可能。
+  **ただし Academic Discussion は 2026-10-23 の修正まで、有料会員の提出が1件もサーバに保存されていなかった**
+  （下記「保存呼び出しの未定義変数」参照）。それ以前の Discussion 提出文は `ANSWERS` に存在しない。
 
 ## 共有JSのキャッシュバスティング（再発防止・最重要）
 GitHub Pages は静的配信で、ブラウザは `js/*.js` を**数日キャッシュ**する。保存POST化・履歴復元・ベスト表示
@@ -220,6 +222,18 @@ CTW の Set1→Set2 等、複数ページにまたがる practice で毎回出�
 - `progress.js`：`save()`→`Api.saveProgress`（POST/大きい本文対応）、`clear()`→`Api.clearProgress`、`promptResume()` はローカルが無ければ `Api.getProgress` で**サーバから復元**。`api.js` 未読込のページでも遅延ロードする。
 - `history-sync` の `mirrorProgress()` がメニュー hydrate 時にサーバの中断をローカル `tck_progress_*` へ写し、別端末でも「中断中」バッジが出る。
 - サーバ本体は `docs/gas-progress-sync.js`（`PROGRESS` シート、userId+task+practice で upsert）。**未デプロイでも従来どおりローカル中断で動作**（degrade）。
+
+## 保存呼び出しの未定義変数（再発防止・最重要・2026-10-23）
+`writing/discussion/practice-1〜10.html` が `Api.saveAnswers("Discussion PN",{…words:wordCount…})` と書いていたが、
+ページ内で定義されていたのは `wc`（`wordCount` は Email ページにしか無い）。参照した瞬間に `ReferenceError` になり、
+周りの `try{}catch(e){}` がそれを**黙って捨てた**。完了画面は正常時と同じ「submitted」表示、`markDone` で端末の
+メニューも「提出済み」、直後に下書きも消去されるため、**7/2 から 10/23 まで有料会員の Discussion 提出が1件も
+サーバに届かず、誰も気づけなかった**（修正依頼は複数回あったが、毎回「表示側」だけを確認していた）。
+- `tools/check-pages.js` の検査⑤が、`Api.saveAnswers` / `savePtAnswers` / `savePtResult` の引数に
+  未定義の変数があれば CI（page-guard）を落とす。
+- **保存まわりを直したら、必ずシートに行が増えたことを実データで確認する**。画面・端末の表示が正しいことは
+  保存できた証拠にならない。
+- 保存の `catch` は空にしない（`console.error` で痕跡を残す）。
 
 ## Writing 完了時の markDone / clear（再発防止）
 free-response タスク（Email / Discussion）の練習ページは、**完了関数（`finishWriting`/`complete`）の中で**
