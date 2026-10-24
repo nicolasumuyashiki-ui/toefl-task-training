@@ -234,6 +234,11 @@ CTW の Set1→Set2 等、複数ページにまたがる practice で毎回出�
 - **保存まわりを直したら、必ずシートに行が増えたことを実データで確認する**。画面・端末の表示が正しいことは
   保存できた証拠にならない。
 - 保存の `catch` は空にしない（`console.error` で痕跡を残す）。
+- **Writing の保存・表示まわりを触ったら `node tools/e2e/writing-save.mjs` を通す**（使い方はファイル冒頭）。
+  本物のページ＋`docs/gas-*.js` の本物のハンドラで、提出→ANSWERS→生徒画面（別端末含む）→Admin までを確かめる。
+- 同じテストで見つかった2件目（2026-10-24 修正）: Discussion の `restoreState` が `isWriting=!!st.started` だったため、
+  **説明画面で中断した下書きを再開すると、書いても「Finish」が反応せず、時間切れでも提出されなかった**
+  （自動保存も止まる）。Email と同じく再開時は常に `isWriting=true`。
 
 ## Writing 完了時の markDone / clear（再発防止）
 free-response タスク（Email / Discussion）の練習ページは、**完了関数（`finishWriting`/`complete`）の中で**
