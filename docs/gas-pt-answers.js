@@ -19,7 +19,24 @@
  *
  * Transport: savePtAnswers is a POST (hidden-iframe form, so large bodies are
  * fine) → route it in doPost(). getPtAnswers is a JSONP GET → route it in
- * doGet(). Auth mirrors the rest of the PT flow: userId trust, no pass.
+ * doGet().
+ *
+ * ※ この写しは **デプロイ済み GAS の正本** です（CLAUDE.md の
+ *   「docs/gas-*.js は実物と一致させる」ルール）。GAS 側を変更したら
+ *   必ず同じコミットで本ファイルも更新すること。
+ *
+ * AUTH（重要・2026-07-25 監査 6-B で導入済み）
+ *   getPtAnswers は staff、または本人（id + pass 一致）のみ許可する。
+ *   回答内容そのもの（＝答案）を返すエンドポイントなので、userId を
+ *   知っているだけで他人の答案が読めてはいけない。認証情報を送らない
+ *   古いクライアントは弾かれる。
+ *   savePtAnswers は書き込み専用（他人のデータは読めない）のため、
+ *   録音アップロードと同じ fire-and-forget 設計で userId のみ。
+ *
+ * DEPENDENCIES（同じ GAS プロジェクト内の他ファイルで定義）
+ *   verifyStaff_(id, pass)    — @tckworkshop.co.jp / @tck-workshop.com のみ
+ *   verifyAnyUser_(id, pass)  — USERS と USERS_TRIAL の両方を見る
+ *   jsonpResponse_(callback, payload)
  *
  * ----------------------------------------------------------------------
  * PASTE FLOW (one-time):
@@ -92,12 +109,21 @@ function handleSavePtAnswers_(e) {
 }
 
 /* GET (JSONP) — fetch the archived answer contents for (userId, sessionId).
-   Used for recovery / audit. */
+   Used for recovery / audit. staff は任意ユーザー、学習者は本人のみ。 */
 function handleGetPtAnswers_(e, callback) {
   try {
     var p = (e && e.parameter) || {};
     var userId = String(p.userId || '');
     var sessionId = String(p.sessionId || '');
+    var isStaff = !!verifyStaff_(p.id, p.pass);
+    if (!isStaff) {
+      var me = verifyAnyUser_(p.id, p.pass);
+      if (!me || (userId && String(me.userId) !== userId)) {
+        return jsonpResponse_(callback, { success: false, error: 'auth_failed' });
+      }
+      // URL を書き換えても他人の答案には到達できないよう自分に固定する。
+      userId = String(me.userId);
+    }
     if (!userId) return jsonpResponse_(callback, { success: false, error: 'missing_user' });
 
     var sheet = _ptAnswersSheet_();

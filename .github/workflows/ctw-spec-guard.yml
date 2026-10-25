@@ -1,0 +1,61 @@
+# CTW 空所仕様ガード
+#
+# CTW の空所の作り方は v3.5.2（.claude/commands/new-ctw.md）で
+# 「表示＝先頭 floor(n/2) 文字・手調整禁止・厳密交互」と完全に機械的な
+# ルールとして定義されている。つまり人間が目視で守る種類のものではない。
+#
+# 2026-08-07 の朝次監査で、practice-test/ 配下の CTW 9 ファイルの
+# 50/89 空所がこのルールから外れていることが判明した。原因は
+# 2026-07-02 の v3.5.2 制定 (#124) と同 9 秒後の全面リビルド (#125) が
+# reading/ctw/ のみを対象としており、practice-test/ が対象から漏れて
+# 制定前の状態のまま残っていたこと。監査は月曜に reading/、金曜に
+# practice-test/ を見る分割だったため、6 週間気付かれなかった。
+#
+# このワークフローがその「気付けなさ」を消す。判定ロジックは
+# tools/check-ctw.py に一本化してあるので二重管理にならない。
+#
+# 既知の逸脱は tools/ctw-baseline.json に凍結してある。practice-test/ の
+# answer/blanks を修正すると CLAUDE.md の旧版アーカイブ＋era 境界の
+# 手続きが必要になり、受講記録の復元性に影響するため据え置いている
+# （2026-08-07 オーナー判断 = B案）。したがって本ガードは
+#   - 逸脱が増えたら          → 落とす
+#   - 新規ファイルが汚れたら  → 落とす（新規は 0 件必須）
+#   - 逸脱が減ったら          → 通す（ベースライン更新を促す）
+# という「これ以上悪化させない」ガードとして働く。
+#
+# 落ちたときの直し方はジョブのログに日本語で出る。
+name: ctw-spec-guard
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    name: CTW 空所仕様（floor(n/2)・厳密交互・件数）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: CTW 仕様チェック
+        shell: bash
+        run: |
+          rc=0
+          out=$(python3 tools/check-ctw.py --check 2>&1) || rc=$?
+          echo "$out"
+          {
+            echo '## CTW 空所仕様チェック'
+            echo ''
+            echo '```'
+            echo "$out"
+            echo '```'
+            if [ "$rc" -ne 0 ]; then
+              echo ''
+              echo '> 空所は「表示＝先頭 floor(n/2) 文字」で機械的に決まります。手で調整しないでください。'
+              echo '> 全体レポート: `python3 tools/check-ctw.py`'
+              echo '> 既知の逸脱を減らせた場合: `python3 tools/check-ctw.py --update-baseline` を同じコミットに含めてください。'
+              echo '> 詳細は `.claude/commands/new-ctw.md` / CLAUDE.md の CTW 行。'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $rc

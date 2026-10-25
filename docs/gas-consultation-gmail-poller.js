@@ -132,10 +132,14 @@ function pollConsultationBookings() {
  * eeasy bodies are formatted with full-width colons and padded
  * full-width spaces, roughly:
  *
- *   　件名：　　　　　　面談（TOEFL Reps）：矢口 瑠夏
+ *   　件名：　　　　　　面談（TOEFL Reps）：山田 太郎
  *   　日程：　　　　　　06/16（火） 18:00～18:45(日本時間(UTC+9))
- *   　氏名：　　　　　　矢口 瑠夏
- *   　メールアドレス：　yagucchan0625@yahoo.co.jp
+ *   　氏名：　　　　　　山田 太郎
+ *   　メールアドレス：　taro.yamada@example.com
+ *
+ *   ※ 上記はフォーマット説明用のダミー。docs/ は public リポジトリ＋
+ *     GitHub Pages でそのまま配信されるため、実在のお客様の氏名・
+ *     メールアドレスをサンプルに使わないこと（2026-08-07 監査で是正）。
  */
 function parseEeasyBookingEmail_(msg) {
   var body = msg.getPlainBody();
