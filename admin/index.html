@@ -910,7 +910,20 @@ function mapLiveAttempts(rawAttempts, users) {
   const userIndex = {};
   users.forEach(u => { userIndex[u.userId] = u; });
   const out = [];
+  // 2026-10 まで、1 回の保存が同じ秒に 2〜3 行重なって入ることがあった（同時再送が
+  // サーバの重複防止をすり抜けた）。中身がまったく同じ行が 10 秒以内に続く場合は
+  // 1 回の受験として数える。シートの行は消さない（表示上の集計だけ）。
+  const _seen = {};
+  const isDupRow = r => {
+    const t = Date.parse(r.timestamp || r.updatedAt || '');
+    if (isNaN(t)) return false;
+    const k = [r.userId, r.set, r.answers, r.score, r.attemptNumber].join('\u0001');
+    const prev = _seen[k];
+    _seen[k] = t;
+    return prev !== undefined && Math.abs(t - prev) <= 10000;
+  };
   (rawAttempts || []).forEach(r => {
+    if (isDupRow(r)) return;
     const parsed = parseSetLabel(r.set);
     if (!parsed) return;
     const meta = TASKS.find(t => t.key === parsed.task);

@@ -34,9 +34,18 @@ export function makeGas(seed) {
     insertSheet: n => (sheets[n] = new Sheet(n, [])),
   };
   const cache = new Map();
+  // LockService: GAS runs requests in parallel, this fake runs them one by one,
+  // so a race can't be reproduced here. Instead record whether every ANSWERS
+  // append happens while the script lock is held (the fix for duplicate rows).
+  const lockStats = { held: false, acquired: 0, unlockedAppends: 0 };
+  if (sheets.ANSWERS) {
+    const ans = sheets.ANSWERS, orig = ans.appendRow.bind(ans);
+    ans.appendRow = row => { if (!lockStats.held) lockStats.unlockedAppends++; return orig(row); };
+  }
   const out = (content, mime) => ({ content, mime, setMimeType(m) { this.mime = m; return this; } });
   const ctx = {
     SpreadsheetApp: { getActiveSpreadsheet: () => ss },
+    LockService: { getScriptLock: () => ({ waitLock() { lockStats.held = true; lockStats.acquired++; }, tryLock() { lockStats.held = true; lockStats.acquired++; return true; }, releaseLock() { lockStats.held = false; } }) },
     CacheService: { getScriptCache: () => ({ get: k => cache.get(k) || null, put: (k, v) => cache.set(k, v) }) },
     ContentService: { createTextOutput: s => out(s, 'text'), MimeType: { JSON: 'json', JAVASCRIPT: 'js' } },
     Utilities: { formatDate: d => new Date(d).toISOString() },
@@ -99,5 +108,5 @@ export function makeGas(seed) {
     if (cb && r.mime === 'json') r = ctx.jsonpResponse_(cb, JSON.parse(r.content));
     return { body: r.content, contentType: r.mime === 'js' ? 'application/javascript' : 'application/json' };
   }
-  return { sheets, handle, calls, cache };
+  return { sheets, handle, calls, cache, lockStats };
 }

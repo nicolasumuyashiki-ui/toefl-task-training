@@ -567,7 +567,7 @@ if (typeof window !== 'undefined') {
     rdl: 'RDL', academic: 'Academic', lcr: 'LCR', conv: 'Conv',
     announce: 'Announce', talk: 'Talk', sentence: 'Sentence'
   };
-  var _apiLoading = null, _lastSaved = {};
+  var _apiLoading = null, _lastSaved = {}, _recentDone = {};
   function _ensureApi(cb) {
     if (typeof Api !== 'undefined' && Api.saveAnswers) return cb();
     if (_apiLoading) { _apiLoading.then(cb, function () {}); return; }
@@ -691,6 +691,16 @@ if (typeof window !== 'undefined') {
     try {
       var d = JSON.parse(value);
       if (!d || typeof d.total !== 'number') return;
+      // Double-fire guard (2026-10): a double-click on a finish button writes the
+      // SAME result twice within a moment. updatedAt differs per write, so the
+      // value-based de-dupe below let both through — the attempt counter jumped
+      // and ANSWERS got two rows with different attempt numbers. Compare the
+      // result itself (not the timestamp) and ignore a repeat within 5 s.
+      var _core = JSON.stringify([d.correct, d.total, d.harderCorrect || 0, d.harderTotal || 0,
+        sessionStorage.getItem('training_answers_' + task + '_p' + practice) || '']);
+      var _rk = task + '_p' + practice, _prev = _recentDone[_rk];
+      if (_prev && _prev.sig === _core && Date.now() - _prev.at < 5000) return;
+      _recentDone[_rk] = { sig: _core, at: Date.now() };
       // Mirror the page's selection snapshot to DURABLE localStorage so
       // reconcile can recover it on a later login if this attempt's immediate
       // save fails. (The page writes training_answers_* just before training_score.)
@@ -761,42 +771,62 @@ if (typeof window !== 'undefined') {
           // left 0 (display can also derive it from answers.length, but storing
           // it keeps the sheet honest for admin/export).
           var meta = { harderCorrect: d.harderCorrect || 0, harderTotal: d.harderTotal || 0, attemptNumber: n + 1, total: total };
-          _ensureApi(function () {
+          try {
+            // Build a length=total answers array so getMyHistory still derives
+            // the question count from .length. Fill REAL selected answers from
+            // the page's training_answers_* snapshot when present (so Admin can
+            // see what the student chose).
+            // Unanswered slots are padded with null — NOT 0 — because conv /
+            // announce / talk record the chosen option as a 0-BASED INDEX, so
+            // 0 is a legitimate answer (choice A). Padding with 0 made a skipped
+            // question indistinguishable from "picked A", which the server's
+            // answered-count then read as a blank attempt. null is unambiguous.
+            var ansArr = new Array(total).fill(null);
             try {
-              // Build a length=total answers array so getMyHistory still derives
-              // the question count from .length. Fill REAL selected answers from
-              // the page's training_answers_* snapshot when present (so Admin can
-              // see what the student chose).
-              // Unanswered slots are padded with null — NOT 0 — because conv /
-              // announce / talk record the chosen option as a 0-BASED INDEX, so
-              // 0 is a legitimate answer (choice A). Padding with 0 made a skipped
-              // question indistinguishable from "picked A", which the server's
-              // answered-count then read as a blank attempt. null is unambiguous.
-              var ansArr = new Array(total).fill(null);
-              try {
-                var _raw = sessionStorage.getItem('training_answers_' + task + '_p' + practice);
-                var _parsed = _raw ? JSON.parse(_raw) : null;
-                if (Array.isArray(_parsed)) {
-                  for (var _i = 0; _i < total; _i++) {
-                    var _v = _parsed[_i];
-                    if (_v !== undefined && _v !== null) ansArr[_i] = (_v && typeof _v === 'object' && 'selected' in _v) ? _v.selected : _v;
-                  }
-                } else if (_parsed && typeof _parsed === 'object') {
-                  Object.keys(_parsed).forEach(function (k) {
-                    var _idx = parseInt(String(k).replace(/[^0-9]/g, ''), 10);
-                    if (!isNaN(_idx)) {
-                      var _pos = _idx >= 1 ? _idx - 1 : _idx;   // q-keys are 1-based
-                      if (_pos >= 0 && _pos < total) {
-                        var _w = _parsed[k];
-                        ansArr[_pos] = (_w && typeof _w === 'object' && 'selected' in _w) ? _w.selected : _w;
-                      }
-                    }
-                  });
+              var _raw = sessionStorage.getItem('training_answers_' + task + '_p' + practice);
+              var _parsed = _raw ? JSON.parse(_raw) : null;
+              if (Array.isArray(_parsed)) {
+                for (var _i = 0; _i < total; _i++) {
+                  var _v = _parsed[_i];
+                  if (_v !== undefined && _v !== null) ansArr[_i] = (_v && typeof _v === 'object' && 'selected' in _v) ? _v.selected : _v;
                 }
-              } catch (e) {}
-              Api.saveAnswers(label + ' P' + practice, ansArr, correct, meta);
+              } else if (_parsed && typeof _parsed === 'object') {
+                Object.keys(_parsed).forEach(function (k) {
+                  var _idx = parseInt(String(k).replace(/[^0-9]/g, ''), 10);
+                  if (!isNaN(_idx)) {
+                    var _pos = _idx >= 1 ? _idx - 1 : _idx;   // q-keys are 1-based
+                    if (_pos >= 0 && _pos < total) {
+                      var _w = _parsed[k];
+                      ansArr[_pos] = (_w && typeof _w === 'object' && 'selected' in _w) ? _w.selected : _w;
+                    }
+                  }
+                });
+              }
             } catch (e) {}
-          });
+            var setName = label + ' P' + practice;
+            if (typeof Api !== 'undefined' && Api.saveAnswers) {
+              Api.saveAnswers(setName, ansArr, correct, meta);
+            } else {
+              // api.js is not loaded yet (it is fetched lazily). Most finish
+              // handlers navigate away immediately after this, which used to
+              // abort the api.js download — the save was never even queued, so
+              // the attempt was silently lost (a retake is never recovered by
+              // history-sync's reconcile, which only fills practices the server
+              // has no row for). Write the item into the durable outbox NOW, in
+              // the same shape api.js uses, and let api.js send it — on this
+              // page if it loads in time, otherwise on the next page.
+              try {
+                var _u = JSON.parse(sessionStorage.getItem('kickstart_user') || '{}') || {};
+                var _ob = JSON.parse(localStorage.getItem('tck_outbox') || '[]') || [];
+                _ob.push({ id: 's_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9),
+                  user: _u.userId ? { userId: _u.userId, userName: _u.userName || _u.name || '' } : null,
+                  setName: setName, answers: ansArr, score: correct, meta: meta, tries: 0,
+                  enqueuedAt: new Date().toISOString() });
+                localStorage.setItem('tck_outbox', JSON.stringify(_ob));
+              } catch (e) {}
+              _ensureApi(function () { try { if (Api.flushOutbox) Api.flushOutbox(); } catch (e) {} });
+            }
+          } catch (e) { try { console.error('[auth] 自動保存に失敗', e); } catch (e2) {} }
         }
       }
     } catch (e) {}

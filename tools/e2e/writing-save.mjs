@@ -1,4 +1,4 @@
-// tools/e2e/writing-save.mjs — Writing（Discussion / Email）の「提出→保存→表示」を端から端まで確かめる
+// tools/e2e/writing-save.mjs — 「提出→保存→表示」を端から端まで確かめる（Writing 中心＋CTW/RDL の重複保存）
 //
 // WHY: 2026-10-23、Discussion の提出が 7/2 から1件もサーバに届いていなかったことが発覚した
 //   （未定義変数 → ReferenceError → 空の catch）。それまでの修正は毎回「表示側」しか確認して
@@ -20,7 +20,7 @@ import fs from 'fs';
 import { makeGas } from './fakegas.mjs';
 
 const BASE = 'http://127.0.0.1:8777';
-const EXE = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
+const EXE = process.env.CHROMIUM || undefined;   // 未指定なら Playwright 標準の Chromium
 const ONLY = process.argv[2] || '';
 const results = [];
 function check(name, ok, detail = '') { results.push({ name, ok: !!ok, detail }); console.log((ok ? '  ✅ ' : '  ❌ ') + name + (detail ? '  — ' + detail : '')); }
@@ -129,6 +129,7 @@ async function T1_allPractices() {
       shown && row && a.text === txt && a.words === wordsOf(txt) && row[2] === STU.name && /^\d+:\d\d$/.test(a.time),
       row ? `words=${a.words} time=${a.time}` : '行なし');
   }
+  await waitFor(async () => (await outbox(p)) === 0, 15000);   // 最後の提出が送信中のことがある
   check('送信待ち（outbox）が残っていない', (await outbox(p)) === 0);
   check('下書き（PROGRESS）がサーバに残っていない', gas.sheets.PROGRESS.rows.length === 1);
   check('ページエラーなし', ctx.errors.length === 0, ctx.errors.slice(0, 3).join(' | '));
@@ -434,9 +435,73 @@ async function T11_legacyDraft() {
   await ctx.close();
 }
 
+async function T12_doubleFire() {
+  console.log('\n[T12] 完了ボタンの二度押し（CTW / RDL）でも 1 行・回数 +1 だけ');
+  const gas = makeGas(baseSeed());
+  const ctx = await newCtx(gas);
+  const p = await studentLogin(ctx, STU);
+  await p.goto(BASE + '/reading/ctw/practice-1-set-1.html'); await sleep(1200);
+  if (await p.locator('.tck-resume-overlay [data-restart]').count()) await p.click('.tck-resume-overlay [data-restart]');
+  await Promise.all([p.waitForURL(/practice-1-set-2\.html/, { timeout: 15000 }), p.evaluate(() => { goNext(); goNext(); goNext(); })]);
+  await sleep(4000);
+  const ctwRows = gas.sheets.ANSWERS.rows.filter(r => r[1] === STU.id && r[3] === 'CTW P1 Set 1');
+  check('CTW：Next を 3 連打しても ANSWERS は 1 行', ctwRows.length === 1, `行=${ctwRows.length}`);
+  await p.goto(BASE + '/reading/rdl/practice-1.html'); await sleep(1200);
+  if (await p.locator('.tck-resume-overlay [data-restart]').count()) await p.click('.tck-resume-overlay [data-restart]');
+  await p.evaluate(() => { currentQ = totalQ; navigate(1); navigate(1); }).catch(() => {});   // 2 回目の遷移指示で 1 回目が中断されるのは正常
+  await p.waitForURL(/practice-1-answers\.html/, { timeout: 15000 }).catch(() => {});
+  await sleep(4000);
+  const rdlRows = gas.sheets.ANSWERS.rows.filter(r => r[1] === STU.id && r[3] === 'RDL P1');
+  const cnt = await p.evaluate(() => localStorage.getItem('training_attempts_rdl_p1'));
+  check('RDL：最後の Next を 2 連打しても ANSWERS は 1 行・回数は 1', rdlRows.length === 1 && cnt === '1', `行=${rdlRows.length} 回数=${cnt}`);
+  check('サーバ：ANSWERS への追加はすべてロック中に行われる', gas.lockStats.acquired > 0 && gas.lockStats.unlockedAppends === 0,
+    `lock=${gas.lockStats.acquired} ロック外の追加=${gas.lockStats.unlockedAppends}`);
+  check('ページエラーなし', ctx.errors.length === 0, ctx.errors.slice(0, 3).join(' | '));
+  await ctx.close();
+}
+
+async function T13_existingDuplicates() {
+  console.log('\n[T13] すでに重なって入っている行は 1 回として数える（行は消さない）');
+  const t = new Date(Date.now() - 3600e3);
+  const row = (d, att) => [new Date(t.getTime() + d), STU.id, STU.name, 'RDL P1', JSON.stringify(['B', 'B', 'C', 'B']), 4, 0, 0, att, 4];
+  // 1 回目が 3 行に重複、2 回目（10 分後）は 1 行
+  const gas = makeGas(baseSeed([], [row(0, 1), row(0, 1), row(800, 1), row(600e3, 2)]));
+  const ctx = await newCtx(gas);
+  const p = await studentLogin(ctx, STU);
+  await p.goto(BASE + '/reading/menu.html'); await sleep(4500);
+  const cnt = await p.evaluate(() => localStorage.getItem('training_attempts_rdl_p1'));
+  check('生徒：受験回数は 2（重複 3 行 ＋ 別の回 1 行）', cnt === '2', `回数=${cnt}`);
+  await ctx.close();
+  const ctxA = await newCtx(gas);
+  const pa = await staffLogin(ctxA);
+  await pa.waitForFunction(() => typeof ATTEMPTS !== 'undefined' && ATTEMPTS.some(a => a.task === 'rdl'), null, { timeout: 20000 }).catch(() => {});
+  const n = await pa.evaluate(id => ATTEMPTS.filter(a => a.userId === id && a.task === 'rdl').length, STU.id);
+  check('Admin：受験履歴の件数も 2', n === 2, `件数=${n}`);
+  check('シートの行は 4 行のまま（削除しない）', gas.sheets.ANSWERS.rows.length === 5);
+  await ctxA.close();
+}
+
+async function T14_slowApiLoad() {
+  console.log('\n[T14] 保存用スクリプトの読み込みが遅い時に完了→即移動しても、記録が消えない（RDL 2 回目）');
+  const prevRow = [new Date(Date.now() - 86400e3), STU.id, STU.name, 'RDL P1', JSON.stringify(['B', 'B', 'C', 'B']), 4, 0, 0, 1, 4];
+  const gas = makeGas(baseSeed([], [prevRow]));
+  const ctx = await newCtx(gas);
+  const p = await studentLogin(ctx, STU);
+  // api.js の読み込みを遅らせる（回線が遅い・初回アクセス直後の状態を再現）
+  await p.route(/\/js\/api\.js/, async r => { await sleep(3000); await r.continue(); });
+  await p.goto(BASE + '/reading/rdl/practice-1.html', { waitUntil: 'domcontentloaded' }); await sleep(300);
+  await p.evaluate(() => { currentQ = totalQ; navigate(1); }).catch(() => {});
+  await p.waitForURL(/practice-1-answers\.html/, { timeout: 15000 }).catch(() => {});
+  await p.unroute(/\/js\/api\.js/);
+  await waitFor(async () => gas.sheets.ANSWERS.rows.filter(r => r[3] === 'RDL P1').length >= 2, 20000);
+  const rows = gas.sheets.ANSWERS.rows.filter(r => r[1] === STU.id && r[3] === 'RDL P1');
+  check('2 回目の記録がサーバに届く（重複なし）', rows.length === 2, `行=${rows.length}`);
+  await ctx.close();
+}
+
 const OUT = process.env.E2E_OUT || '/tmp/tck-e2e-out'; fs.mkdirSync(OUT, { recursive: true });
 browser = await chromium.launch({ executablePath: EXE });
-const ALL = { T1_allPractices, T2_transports, T3_timeout, T4_offline, T5_specialChars, T6_resume, T7_displayEverywhere, T8_prodRows, T9_edge, T10_email, T11_legacyDraft };
+const ALL = { T1_allPractices, T2_transports, T3_timeout, T4_offline, T5_specialChars, T6_resume, T7_displayEverywhere, T8_prodRows, T9_edge, T10_email, T11_legacyDraft, T12_doubleFire, T13_existingDuplicates, T14_slowApiLoad };
 for (const [k, fn] of Object.entries(ALL)) {
   if (ONLY && !k.startsWith(ONLY)) continue;
   try { await fn(); } catch (e) { check(k + ' 実行中に例外', false, String(e.message).split('\n')[0]); }
