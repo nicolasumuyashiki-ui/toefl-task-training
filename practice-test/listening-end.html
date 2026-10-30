@@ -93,7 +93,7 @@ function goNext() {
   // CRITICAL: do NOT burn the one-time "used" flag here. Previously it was set
   // synchronously at the top of this IIFE — so a JSONP timeout, an empty run, or
   // a wrong-row/failed save would permanently consume the button with NOTHING
-  // saved (exactly what happened to Kirari: 1 record, never overwritten, button
+  // saved (exactly what happened to one customer: 1 record, never overwritten, button
   // dead). The flag is now set ONLY inside the confirmed save-success callback
   // (markRetakeUsed, below). Key bumped to "…used2…" so an already-burned old
   // flag no longer blocks eligible users → they get one clean retry.
