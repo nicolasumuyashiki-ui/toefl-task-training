@@ -222,11 +222,9 @@ function auditDriveCustomers() {
   return { total: tot, ok: ok, priv: priv, gone: gone };
 }
 
-// 個別ユーザー用（引数なしで実行できる呼び出しラッパー）
-function runKirari()   { auditDriveFiles('Kirari'); }
-function runYagu()     { auditDriveFiles('yagu1004'); }
-function runAiriseko() { auditDriveFiles('airiseko2021'); }
-function runMaeda()    { auditDriveFiles('soichiro941@gmail.com'); }
+// 個別ユーザーの確認は auditDriveFiles('<userId>') を直接実行する。
+// （特定のお客さまの ID を書き込んだ呼び出しラッパーは、公開リポジトリに個人情報を
+//   残さないため削除した。GAS 側に残っていても動作には影響しない。）
 
 /**
  * 【削除用・承認後のみ】既定は dryRun=true（消さない）。

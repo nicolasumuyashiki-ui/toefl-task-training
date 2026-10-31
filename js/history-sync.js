@@ -171,7 +171,17 @@
         var rows = buckets[sk];
         rows.sort(function (x, y) { return (x.ts || '').localeCompare(y.ts || ''); });
         var first = rows[0], latest = rows[rows.length - 1];
-        if (rows.length > maxAttempts) maxAttempts = rows.length;
+        // Count ATTEMPTS, not rows: until 2026-10 one save could land 2–3 times
+        // within the same second (concurrent re-sends slipped past the server
+        // de-dupe). Rows with the same score/total within 10 s are one attempt.
+        // Display-only — the rows themselves are never deleted.
+        var nAtt = 0, prevRow = null;
+        rows.forEach(function (r) {
+          var dt = prevRow ? Math.abs(Date.parse(r.ts) - Date.parse(prevRow.ts)) : NaN;
+          if (!(prevRow && r.score === prevRow.score && r.total === prevRow.total && dt <= 10000)) nAtt++;
+          prevRow = r;
+        });
+        if (nAtt > maxAttempts) maxAttempts = nAtt;
         if (latest.total > 0 && latest.score !== null) {
           graded = true;
           firstCorrect += (first.score || 0); firstTotal += first.total;

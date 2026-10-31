@@ -228,9 +228,9 @@ body{font-family:'Manrope','Zen Kaku Gothic New','Noto Sans JP',sans-serif;backg
   </div>
 </div>
 
-<script src="../../js/auth.js?v=20260923"></script>
-<script src="../../js/api.js?v=20260923"></script>
-<script src="../../js/progress.js?v=20260923"></script>
+<script src="../../js/auth.js?v=20261031"></script>
+<script src="../../js/api.js?v=20261031"></script>
+<script src="../../js/progress.js?v=20261031"></script>
 <script>
 if(typeof Auth!=='undefined'){Auth.require();Auth.showBadge('userBadge');}
 const TCK_TASK='discussion', TCK_PRACTICE=1, MENU_URL='../menu.html';
@@ -238,7 +238,7 @@ let _saveDebounce=null;
 function snapshotState(){return {text:document.getElementById('writingArea').value, timeLeft:secondsLeft, started:isWriting};}
 function saveProgress(){if(typeof TCKProgress!=='undefined'&&isWriting)TCKProgress.save(TCK_TASK,TCK_PRACTICE,snapshotState());}
 function debouncedSave(){clearTimeout(_saveDebounce);_saveDebounce=setTimeout(saveProgress,2000);}
-function restoreState(st){if(!st)return;document.getElementById('instructionPage').style.display='none';document.getElementById('writingPage').style.display='flex';document.getElementById('btnFinish').style.display='inline-block';document.getElementById('btnReset').style.display='inline-block';document.getElementById('writingArea').value=st.text||'';secondsLeft=(typeof st.timeLeft==='number')?st.timeLeft:600;isWriting=!!st.started;updateWordCount();startTimer();document.getElementById('writingArea').focus();}
+function restoreState(st){if(!st)return;document.getElementById('instructionPage').style.display='none';document.getElementById('writingPage').style.display='flex';document.getElementById('btnFinish').style.display='inline-block';document.getElementById('btnReset').style.display='inline-block';document.getElementById('writingArea').value=st.text||'';secondsLeft=(typeof st.timeLeft==='number')?st.timeLeft:600;isWriting=true;updateWordCount();startTimer();document.getElementById('writingArea').focus();}
 
 
 let timerInterval=null, totalSeconds=600, secondsLeft=600, isWriting=false, wordCountVisible=true;
@@ -335,6 +335,6 @@ function resetAll(){
   document.getElementById('writingArea').focus();
 }
 </script>
-<script defer src="../../js/tm-footer.js?v=20260923"></script>
+<script defer src="../../js/tm-footer.js?v=20261031"></script>
 </body>
 </html>

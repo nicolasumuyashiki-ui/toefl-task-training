@@ -447,7 +447,7 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   <!-- ========== 保存ヘルス ==========
        ログイン中のクライアントが「送信できずに溜まっている保存（outbox）」を
        検知して自己申告してくる。ここに出るアカウントは結果がサーバに届いて
-       いない可能性が高い（前田様のような環境）。事前に気づいて先回りできる。 -->
+       いない可能性が高い（保存がブロックされる環境のお客さま）。事前に気づいて先回りできる。 -->
   <section class="panel" id="panel-save-health">
     <div class="toolbar">
       <span style="font-size:.9em;color:var(--ink-500);line-height:1.5">
@@ -563,8 +563,8 @@ td.task-tag{font-family:var(--font-en);font-size:.78em;color:var(--green-dark);b
   </div>
 </div>
 
-<script src="../js/api.js?v=20260923"></script>
-<script src="../js/auth.js?v=20260923"></script>
+<script src="../js/api.js?v=20261031"></script>
+<script src="../js/auth.js?v=20261031"></script>
 <script>
 /* ============================================================
    Access gate — staff only
@@ -910,7 +910,20 @@ function mapLiveAttempts(rawAttempts, users) {
   const userIndex = {};
   users.forEach(u => { userIndex[u.userId] = u; });
   const out = [];
+  // 2026-10 まで、1 回の保存が同じ秒に 2〜3 行重なって入ることがあった（同時再送が
+  // サーバの重複防止をすり抜けた）。中身がまったく同じ行が 10 秒以内に続く場合は
+  // 1 回の受験として数える。シートの行は消さない（表示上の集計だけ）。
+  const _seen = {};
+  const isDupRow = r => {
+    const t = Date.parse(r.timestamp || r.updatedAt || '');
+    if (isNaN(t)) return false;
+    const k = [r.userId, r.set, r.answers, r.score, r.attemptNumber].join('\u0001');
+    const prev = _seen[k];
+    _seen[k] = t;
+    return prev !== undefined && Math.abs(t - prev) <= 10000;
+  };
   (rawAttempts || []).forEach(r => {
+    if (isDupRow(r)) return;
     const parsed = parseSetLabel(r.set);
     if (!parsed) return;
     const meta = TASKS.find(t => t.key === parsed.task);
@@ -2923,6 +2936,6 @@ if (__currentUser && isAdmin(__currentUser)) {
   document.getElementById('adminUser').textContent = __currentUser.email || __currentUser.userId || '';
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260923"></script>
+<script defer src="../js/tm-footer.js?v=20261031"></script>
 </body>
 </html>

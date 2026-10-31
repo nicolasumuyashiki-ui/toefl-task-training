@@ -169,7 +169,7 @@ function linkSubscriptionByEmail_(userId, email) {
 // 関数を選んで実行し、ログを確認する。シートは書き換えない。
 
 /* メールを伏せ字にする（ログは共有され得るので全文は出さない）。
-   ドメインは残す。`happycloversae524@gmai.com` → `hap…@gmai.com`
+   ドメインは残す。`taro.yamada@gmai.com` → `tar…@gmai.com`
    ＝ gmail/gmai のような綴り間違いはこの形でも見抜ける。 */
 function _subMaskEmail_(e) {
   e = String(e || '');

@@ -96,15 +96,6 @@ h1{font-size:2em;font-weight:800;color:#002817;letter-spacing:-0.02em;margin-bot
   <div class="wrap">
     <h1 style="margin-bottom:32px"><span class="jp">受験する模試を選択</span><span class="en">Choose Your Mock Test</span></h1>
 
-    <!-- One-time Listening retake (apology remedy for a specific user; gated by userId only).
-         Placed here so it is reachable from the main menu — results.html is only shown at the
-         end of a completed mock and cannot be navigated to afterwards. -->
-    <div id="lstRetakeBanner" style="display:none;margin:0 0 28px;padding:18px 22px;background:#fff8ec;border:1.5px solid #f0d9a8;border-radius:14px">
-      <div style="font-weight:700;color:#8a5a00;margin-bottom:6px"><span class="jp">🎧 リスニングをもう一度受けられます（1回限り）</span><span class="en">🎧 You can retake the Listening section (one time only)</span></div>
-      <div style="font-size:.9em;color:#6b5a2e;line-height:1.7;margin-bottom:12px"><span class="jp">先日の不具合でリスニングが正しく表示されなかった件のお詫びとして、<strong>リスニングセクションだけ</strong>もう一度チャレンジいただけます。下のボタンから開始してください（このボタンは1回のみご利用いただけます）。</span><span class="en">As an apology for the recent issue where the Listening section did not display correctly, you may retake <strong>the Listening section only</strong>. Start from the button below (usable only once).</span></div>
-      <button id="lstRetakeBtn" style="background:#007646;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer"><span class="jp">リスニングを受け直す →</span><span class="en">Retake Listening →</span></button>
-    </div>
-
     <div class="cards">
       <a class="card card-1" href="javascript:void(0)" onclick="selectTest(1)">
         <div class="card-label">Mock Test</div>
@@ -127,28 +118,10 @@ h1{font-size:2em;font-weight:800;color:#002817;letter-spacing:-0.02em;margin-bot
     </div>
   </div>
 </div>
-<script src="js/auth.js?v=20260923"></script>
+<script src="js/auth.js?v=20261031"></script>
 <script>
 if (typeof Auth !== 'undefined') { Auth.require(); Auth.showBadge('userBadge'); }
 function doLogout(){ Auth.clear(); location.href='../index.html'; }
-
-/* One-time Listening retake entry (apology remedy; gated by userId only, same as results.html).
-   Reachable from the main menu so the eligible user can start it even after closing the mock tab. */
-(function(){
-  try{
-    var RETAKE_IDS=['Kirari','Kotaro'];                                     // courtesy remedy — eligible accounts only. NEVER put customer real names here: this file ships to every browser.
-    var u={}; try{ u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}'); }catch(e){}
-    if(!u || RETAKE_IDS.indexOf(u.userId)===-1) return;                     // eligible accounts only
-    if(localStorage.getItem('tck_lst_retake_used2_'+u.userId)==='1') return; // one time only (per-user key). v2: old "used_" flags no longer block, re-granting one clean retry after the save-fail bug. Flag is set ONLY after a confirmed save (listening-end.html).
-    var b=document.getElementById('lstRetakeBanner'), btn=document.getElementById('lstRetakeBtn');
-    if(!b||!btn) return;
-    b.style.display='block';
-    btn.addEventListener('click',function(){
-      try{ sessionStorage.setItem('tck_lst_retake','1'); sessionStorage.setItem('practice_test_id','1'); }catch(e){}
-      window.location.href='listening-intro.html';   // top-level = Test 1 (the mock affected)
-    });
-  }catch(e){}
-})();
 
 /* JP/EN toggle — mirrors the pattern used on TT menu / consultation /
    my-score / billing. Persists choice in localStorage.tck_lang. */
@@ -191,9 +164,9 @@ function selectTest(n){
   }
 }
 </script>
-<script defer src="../js/tm-footer.js?v=20260923"></script>
+<script defer src="../js/tm-footer.js?v=20261031"></script>
 <!-- 自動更新: サーバ最新版と照合し、古ければ1回だけ自動リロードする。
      模試の入口。解答中ページには入れない（回答が消えるため）。 -->
-<script src="../js/version-guard.js?v=20260923"></script>
+<script src="../js/version-guard.js?v=20261031"></script>
 </body>
 </html>

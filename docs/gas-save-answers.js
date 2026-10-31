@@ -39,67 +39,53 @@
 // ============================================================
 // Answers (sheet: ANSWERS, 10 cols — 上記コメント参照)
 // ============================================================
-function handleSaveAnswers_(e, callback) {
-  var p = e.parameter;
+// ■ 2026-10 修正: 同時に届いた再送が重複行になっていた
+//   CTW / RDL は保存直後にページを移動するため、同じ保存（同じ clientSaveId）が
+//   「ページ自身の送信」「ページを離れる瞬間の sendBeacon」「次ページでの再送」の
+//   3 経路から 1〜2 秒以内に届く。以前は「キャッシュ確認 → appendRow → 書式 →
+//   キャッシュ記録」をロック無しで行っていたため、ほぼ同時の 3 件が全員キャッシュを
+//   すり抜けて 3 行になっていた（本番で同一秒・同一内容の 2〜3 行を確認）。
+//   書式設定も getLastRow() を使っていたため、重なると別の行に掛かり、
+//   「4:22:52」と「04:22:52」が混在していた。
+//   → スクリプトロックで「確認 → 追加 → 記録」を 1 件ずつ行い、書式は自分が
+//     追加した行番号に掛ける。ロックを取れなかった時も保存は捨てない（従来どおり追加）。
+function _appendAnswerOnce_(p) {
   var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ANSWERS');
   var _sid = String(p.clientSaveId || '');
-  if (_sid) {
-    var _c = CacheService.getScriptCache();
-    if (_c.get('save_' + _sid)) {
-      // 既に保存済み（再送）→ 重複させない
-      return (typeof callback !== 'undefined')
-        ? jsonpResponse_(callback, { success: true, dedup: true })
-        : ContentService.createTextOutput(JSON.stringify({ success:true, dedup:true })).setMimeType(ContentService.MimeType.JSON);
-    }
+  var cache = CacheService.getScriptCache();
+  var lock = LockService.getScriptLock();
+  var locked = false;
+  try { lock.waitLock(20000); locked = true; } catch (e) {}
+  try {
+    if (_sid && cache.get('save_' + _sid)) return { success: true, dedup: true };
+    sh.appendRow([
+      new Date(),
+      normalizeSaveUserId_(p.userId),
+      normalizeSaveUserName_(p.userId, p.userName),
+      p.set      || '',
+      p.answers  || '',
+      p.score    || '',
+      p.harderCorrect || 0,
+      p.harderTotal   || 0,
+      p.attemptNumber || 1,
+      Number(p.total  || 0)
+    ]);
+    var row = sh.getLastRow();   // ロック中なので、いま追加した行
+    sh.getRange(row, 1).setNumberFormat(DATETIME_FMT);
+    if (_sid) { try { cache.put('save_' + _sid, '1', 21600); } catch (e) {} }
+    return { success: true };
+  } finally {
+    if (locked) { try { lock.releaseLock(); } catch (e) {} }
   }
-  sh.appendRow([
-    new Date(),
-    normalizeSaveUserId_(p.userId),
-    normalizeSaveUserName_(p.userId, p.userName),
-    p.set      || '',
-    p.answers  || '',
-    p.score    || '',
-    p.harderCorrect || 0,
-    p.harderTotal   || 0,
-    p.attemptNumber || 1,
-    Number(p.total  || 0)
-  ]);
-  sh.getRange(sh.getLastRow(), 1).setNumberFormat(DATETIME_FMT);
-  if (_sid) { try { CacheService.getScriptCache().put('save_' + _sid, '1', 21600); } catch (e) {} }
-  return jsonpResponse_(callback, { success: true });
+}
+
+function handleSaveAnswers_(e, callback) {
+  return jsonpResponse_(callback, _appendAnswerOnce_(e.parameter || {}));
 }
 
 function handleSaveAnswersPost_(e) {
-  var p = e.parameter || {};
-  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ANSWERS');
-  var _sid = String(p.clientSaveId || '');
-  if (_sid) {
-    var _c = CacheService.getScriptCache();
-    if (_c.get('save_' + _sid)) {
-      // 既に保存済み（再送）→ 重複させない
-      // ※ callback はこの関数のスコープに存在しない。typeof は未宣言変数でも
-      //    ReferenceError にならず 'undefined' を返すので、必ず下の JSON 側に落ちる
-      //    （POST 経路に JSONP 応答は不要）。紛らわしいが動作は正しい。
-      return (typeof callback !== 'undefined')
-        ? jsonpResponse_(callback, { success: true, dedup: true })
-        : ContentService.createTextOutput(JSON.stringify({ success:true, dedup:true })).setMimeType(ContentService.MimeType.JSON);
-    }
-  }
-  sh.appendRow([
-    new Date(),
-    normalizeSaveUserId_(p.userId),
-    normalizeSaveUserName_(p.userId, p.userName),
-    p.set      || '',
-    p.answers  || '',
-    p.score    || '',
-    p.harderCorrect || 0,
-    p.harderTotal   || 0,
-    p.attemptNumber || 1,
-    Number(p.total  || 0)
-  ]);
-  sh.getRange(sh.getLastRow(), 1).setNumberFormat(DATETIME_FMT);
-  if (_sid) { try { CacheService.getScriptCache().put('save_' + _sid, '1', 21600); } catch (e) {} }
-  return ContentService.createTextOutput(JSON.stringify({ success: true })).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify(_appendAnswerOnce_(e.parameter || {})))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 // ---- 空 userId のフォールバック（本体の解説は docs/gas-empty-userid.js） ----

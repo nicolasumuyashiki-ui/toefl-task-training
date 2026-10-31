@@ -10,6 +10,11 @@
  * exactly like a paying customer — but the monitor list itself is
  * never transmitted to browsers.
  *
+ * ⚠️ 2026-10: 下の MONITOR_EMAILS は個人情報保護のため例示アドレスに置き換えてある。
+ *    このファイルを GAS にそのまま貼ると、本番のモニター／無償提供の方が全員
+ *    「未契約」扱いになる。貼り直す場合は、GAS 側の既存の MONITOR_EMAILS の中身を
+ *    残したまま、それ以外の部分だけを差し替えること。
+ *
  * Paste flow:
  *   1. Add the MONITOR_EMAILS constant + isMonitorEmail_ helper
  *      (block 1 below) somewhere near the top of the file — right
@@ -45,23 +50,13 @@
    to actually stop charging a paying customer you must ALSO cancel
    their subscription in the Stripe Dashboard. */
 var MONITOR_EMAILS = [
-  'saekadowaki322@gmail.com',
-  'bellsince2004@gmail.com',
-  'mkusunoki0811@gmail.com',
-  'soccerzurdo1@gmail.com',
-  'nanasey103@gmail.com',
-  // 前田 宗一郎 — goodwill comp (2026-06, 今後無料). Listed BOTH login-id and
-  // account email because GAS matches on the email column (u.email); both
-  // are included so the comp activates regardless of which field is checked.
-  'kyo.maeda2015@gmail.com',
-  'soichiro941@gmail.com',
-  // 矢口 洪太 (login id: yagu1004) — goodwill comp (2026-07, 今後無料).
-  // 経緯: 6/25〜7/20 の間、送信未確認の保存を再送打ち切りで破棄する実装が
-  // あり、娘さまの Read in Daily Life Practice 3〜6 の記録が失われたため。
-  // GAS は USERS の email 列で照合するので、アカウント email を登録する。
-  // ※ 娘さまご本人の email (yagucchan0625@yahoo.co.jp) で別アカウントを
-  //   作られた場合は、その email もここに追加すること。
-  'rena.yon811@gmail.com'
+  // ⚠️ 実在のメールアドレスはここ（公開リポジトリ）には書かない。
+  //    本番の GAS エディタ上のリストが正本。追加・削除は GAS 側で行い、
+  //    ここは形だけを示す写しとする（2026-10 個人情報除去）。
+  //    無償提供（goodwill comp）の方は、日付と経緯を GAS 側のコメントに残すこと。
+  //    GAS は USERS の email 列で照合するので、ログイン ID ではなくアカウントの email を登録する。
+  'monitor-1@example.com',
+  'monitor-2@example.com'
 ];
 
 function isMonitorEmail_(email) {
