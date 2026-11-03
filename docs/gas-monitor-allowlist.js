@@ -103,7 +103,8 @@ function handleGetSubscription_(e, callback) {
   if (!sh) return jsonpResponse_(callback, { success: true, subscription: null });
   var rows = readSheetAsObjects_(sh);
   var sub = rows.filter(function(r){ return String(r.user_id) === String(u.userId); })
-                .sort(function(a,b){ return (b.updated_at || '').localeCompare(a.updated_at || ''); })[0];
+                .sort(function(a,b){ var d = _subRank_(a) - _subRank_(b); if (d) return d;
+                                     return (b.updated_at || '').localeCompare(a.updated_at || ''); })[0];
   return jsonpResponse_(callback, { success: true, subscription: sub || null });
 }
 
