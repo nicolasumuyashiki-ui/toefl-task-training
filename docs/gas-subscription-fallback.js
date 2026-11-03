@@ -48,6 +48,12 @@
  */
 
 
+/* 有効な契約を先に並べるための順位（小さいほど優先）。 */
+function _subRank_(r) {
+  var s = String((r && r.status) || '').toLowerCase().trim();
+  return (s === 'active' || s === 'trialing') ? 0 : 1;
+}
+
 function handleGetSubscription_(e, callback) {
   var u = verifyUser_(e.parameter.id, e.parameter.pass);
   if (!u) return jsonpResponse_(callback, { success: false, error: 'auth_failed' });
@@ -98,7 +104,13 @@ function handleGetSubscription_(e, callback) {
     });
   }
 
+  // 有効な契約（active / trialing）を最優先し、その中で最新のものを返す。
+  // 2026-11: 二重決済の片方を解約すると、解約した行の updated_at の方が新しくなり、
+  // 「最新の行」だけを見ていたために払い続けている契約があっても Canceled と判定され、
+  // アプリから締め出されていた。
   var sub = matches.sort(function(a,b){
+    var d = _subRank_(a) - _subRank_(b);
+    if (d) return d;
     return String(b.updated_at || '').localeCompare(String(a.updated_at || ''));
   })[0];
 
