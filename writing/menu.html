@@ -69,6 +69,12 @@ body[data-lang="jp"] .en{display:none}body[data-lang="en"] .jp{display:none}
 .score-badge.keep-trying{background:#B85C3C;color:var(--white)}
 .score-badge.in-progress{background:var(--gold);color:var(--green-deep)}
 .score-badge.submitted{background:var(--green-deep);color:var(--white)}
+.practice-cell{display:flex;flex-direction:column;gap:6px;min-width:0}
+.practice-cell>.practice-btn{flex:1}
+.review-link{display:block;text-align:center;font-size:.72em;font-weight:600;line-height:1.6;padding:2px 4px;border-radius:999px;color:var(--green-dark);text-decoration:underline;text-underline-offset:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.review-link:hover{background:rgba(0,118,70,.08)}
+.review-link.empty{visibility:hidden}
+.review-link.empty::before{content:"\00a0"}
 .score-fraction{font-family:var(--font-en);font-size:.62em;font-weight:600;color:var(--ink-500);margin-top:2px}
 .score-gauge{width:72%;height:2px;background:var(--ink-200);border-radius:2px;margin-top:6px;overflow:hidden}
 .score-gauge-fill{height:100%;transition:width .3s}
@@ -129,7 +135,7 @@ body[data-lang="jp"] .en{display:none}body[data-lang="en"] .jp{display:none}
     </div>
   </div>
 </div>
-<script src="../js/tips-library.js?v=20261031"></script>
+<script src="../js/tips-library.js?v=20261108"></script>
 <script>
 (function(){
   if (!window.TCK_TIPS || !window.TCK_TIPS.writing || !window.TCK_TIPS.writing.length) return;
@@ -216,16 +222,21 @@ body[data-lang="jp"] .en{display:none}body[data-lang="en"] .jp{display:none}
   <a class="next-cta" href="../menu.html"><span class="jp">他の技能を見る</span><span class="en">Other skills</span><span class="arrow">→</span></a>
 </div>
 
-<script src="../js/version-guard.js?v=20261031"></script>
-<script src="../js/auth.js?v=20261031"></script>
-<script src="../js/api.js?v=20261031"></script>
-<script src="../js/history-sync.js?v=20261031"></script>
+<script src="../js/version-guard.js?v=20261108"></script>
+<script src="../js/auth.js?v=20261108"></script>
+<script src="../js/api.js?v=20261108"></script>
+<script src="../js/history-sync.js?v=20261108"></script>
 <script>
 // Score / submitted / in-progress badges — sourced from the server
 // (history-sync) so they survive a browser close and follow the account
 // across devices. Falls back to whatever is locally cached if the server
 // is unreachable. NEVER clears history; only adds/refreshes.
-if (window.TCKHistory) TCKHistory.renderMenu(["sentence","email","discussion"], { showDone:true });
+// 提出済み／採点済みの Practice の下に「答案を見る」（解答ページで自分の回答と
+// これまでの回答がサーバから表示される）。
+if (window.TCKHistory) TCKHistory.renderMenu(["sentence","email","discussion"], {
+  showDone:true,
+  answerPath: function (task, n) { return task + '/practice-' + n + '-answers.html'; }
+});
 </script>
 <script>
 (function(){var stored=localStorage.getItem('tck_lang')||'jp';setLang(stored);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang-btn'));});});function setLang(l){document.body.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='jp'?'ja':'en');localStorage.setItem('tck_lang',l);document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-btn')===l);});}})();
@@ -234,6 +245,6 @@ var u=JSON.parse(sessionStorage.getItem('kickstart_user')||'{}');
 if(u.userName){document.getElementById('userName').textContent=u.userName;document.getElementById('avatarInit').textContent=u.userName.charAt(0).toUpperCase();}
 function doLogout(){sessionStorage.removeItem('kickstart_user');location.href='../index.html';}
 </script>
-<script defer src="../js/tm-footer.js?v=20261031"></script>
+<script defer src="../js/tm-footer.js?v=20261108"></script>
 </body>
 </html>

@@ -404,7 +404,21 @@
 
      Rendering is idempotent — every injected node carries `.tckhb` and is
      removed before re-drawing — so it can safely run once from the local
-     cache and again after the server hydrate lands. */
+     cache and again after the server hydrate lands.
+
+     opts.answerPath(task, n) → URL: when given, each tile is wrapped in a
+     .practice-cell and a 「答案を見る」 link to that URL is drawn under every
+     submitted / scored practice (a link can't live inside the tile's <a>). */
+  function practiceCell(btn) {
+    var p = btn.parentNode;
+    if (p && p.classList && p.classList.contains('practice-cell')) return p;
+    var cell = document.createElement('div');
+    cell.className = 'practice-cell';
+    p.insertBefore(cell, btn);
+    cell.appendChild(btn);
+    return cell;
+  }
+
   function renderMenu(tasks, opts) {
     opts = opts || {};
     var lang = (lsGet('tck_lang') || 'jp');
@@ -420,10 +434,23 @@
           var btn = btns[i - 1];
           if (!btn || btn.classList.contains('locked')) continue;
           // idempotent: clear nodes we injected on a previous pass
-          Array.prototype.forEach.call(btn.querySelectorAll('.tckhb'), function (n) {
+          var cell = opts.answerPath ? practiceCell(btn) : null;
+          Array.prototype.forEach.call((cell || btn).querySelectorAll('.tckhb'), function (n) {
             if (n.parentNode) n.parentNode.removeChild(n);
           });
           var d = readScore(task, i);
+          if (cell) {
+            // 「答案を見る」: 提出済み／採点済みの回だけリンク。それ以外は
+            // 高さをそろえるための空枠（タイルの大きさが行ごとにずれないように）。
+            var href = (d || isDone(task, i)) ? opts.answerPath(task, i) : null;
+            var slot = document.createElement(href ? 'a' : 'span');
+            slot.className = 'review-link tckhb' + (href ? '' : ' empty');
+            if (href) {
+              slot.href = href;
+              slot.innerHTML = '<span class="jp">答案を見る</span><span class="en">My answers</span>';
+            }
+            cell.appendChild(slot);
+          }
           if (d) {
             var pct = Math.round(d.correct / d.total * 100);
             var grade = pct === 100 ? 'perfect' : pct >= 80 ? 'great' : pct >= 50 ? 'good' : 'keep-trying';
